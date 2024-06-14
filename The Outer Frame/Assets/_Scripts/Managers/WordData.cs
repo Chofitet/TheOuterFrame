@@ -20,6 +20,10 @@ public class WordData : ScriptableObject
     [SerializeField] string TVhacked;
     [SerializeField] string TVinvestigated;
 
+    [Header("BD Data")]
+
+    [SerializeField] string BdData;
+
     public string GetActionPlanResult(Word.WordState _wordState) 
     {
         if(_wordState == Word.WordState.dead)
@@ -61,4 +65,11 @@ public class WordData : ScriptableObject
         }
         return "";
     }
+
+    public string GetDataBD()
+    {
+        return BdData;
+    }
+
+
 }

@@ -24,7 +24,6 @@ public class SmoothMoveObjectToPoints : MonoBehaviour
     public void ChangePosition()
     {
         currentPos = TakenPos;
-        Debug.Log(currentPos);
         GetComponent<BoxCollider>().enabled = false;
     }
 
@@ -40,6 +39,7 @@ public class SmoothMoveObjectToPoints : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (ObjectToMove == null) return;
 
         Quaternion currentAngle;
 
@@ -52,5 +52,14 @@ public class SmoothMoveObjectToPoints : MonoBehaviour
         ObjectToMove.rotation = currentAngle;
 
 
+    }
+    public void setFinalSpot(Transform _transform)
+    {
+        TakenPos = _transform;
+    }
+
+    public void SetObjectToMove(Transform _object)
+    {
+        ObjectToMove = _object;
     }
 }

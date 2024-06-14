@@ -40,16 +40,24 @@ public class WordsManager : MonoBehaviour
         }
     }
 
-    public void RequestInput(string _word)
+    public string RequestInput(string _word)
     {
-        wordsDic[_word].GetActionPlanResult();
-       
-            // pedir input segun el ultimo estado que tenga el objeto (sacar que se tenga que pasar estado) necesita una forma de aclarar si es para TV, BASE DE DATOS, RESULTS...
+       return wordsDic[_word].GetActionPlanResult();
+    }
+
+    public string RequestInputAccordingState(Word.WordState state, string _word)
+    {
+        return wordsDic[_word].RequestInputAccordingState(state);
     }
 
     public string RequestNew(string _word)
     {
         return wordsDic[_word].GetLastTVNew();
+    }
+
+    public string RequestBDWikiData(string _word)
+    {
+        return wordsDic[_word].GetDataBD();
     }
 
     public void RequestChangeState(string _word, Word.WordState WordState)
@@ -60,7 +68,14 @@ public class WordsManager : MonoBehaviour
 
     public bool CheckIfStateWasDone(string _word, Word.WordState WordState)
     {
+        Debug.Log(_word);
+        Debug.Log(WordState);
         return wordsDic[_word].CheckIfStateWasDone(WordState);
+    }
+
+    public Dictionary<Word.WordState,TimeData> RequestStateTimeHistory(string _word)
+    {
+      return wordsDic[_word].GetStateTimeHistory();
     }
      
 
