@@ -7,6 +7,7 @@ public class Word : MonoBehaviour
     //Clase de la que heredan los scripts de las palabras, acá estaran las funcionalidades comunes entre todas ellas
     [SerializeField] WordData SO;
     private List<WordState> stateHistory = new List<WordState>();
+    private List<WordState> CheckedStateHistory = new List<WordState>();
     private Dictionary<WordState, TimeData> stateTimeHistory = new Dictionary<WordState, TimeData>();
     private WordState currentState = WordState.none;
 
@@ -35,7 +36,18 @@ public class Word : MonoBehaviour
         }
         currentState = newState;
         stateHistory.Add(currentState);
-        stateTimeHistory.Add(currentState, TimeManager.timeManager.GetTime());
+       
+    }
+
+    public void CheckStateSeen(WordState newState)
+    {
+        if (CheckIfStateSeenWasDone(newState))
+        {
+            Debug.LogWarning("The state " + newState.ToString() + " was seen");
+            return;
+        }
+        CheckedStateHistory.Add(newState);
+        stateTimeHistory.Add(newState, TimeManager.timeManager.GetTime());
     }
 
     public string GetActionPlanResult()
@@ -71,9 +83,21 @@ public class Word : MonoBehaviour
             {
                 return true;
             }
-            
         }
         return false;
     }
+
+    public bool CheckIfStateSeenWasDone(WordState state)
+    {
+        for (int i = 0; i < CheckedStateHistory.Count; i++)
+        {
+            if (CheckedStateHistory[i] == state)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

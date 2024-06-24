@@ -59,7 +59,8 @@ public class SlotController : MonoBehaviour
     private void CompleteAction()
     {
         WordsManager.WM.RequestChangeState(_word, WordsManager.WM.ConvertStringToState(_state));
-        ProgressorReference.ActionFinish(_word, gameObject);
+        ProgressorReference.ActionFinish(gameObject);
+        AgentManager.AM.SetActiveOrDesactive(_state, true);
         SetLEDState();
     }
 
@@ -73,6 +74,13 @@ public class SlotController : MonoBehaviour
     public void AbortAction()
     {
         Destroy(gameObject);
+        AgentManager.AM.SetActiveOrDesactive(_state, true);
+    }
+
+    public void CleanSlot()
+    {
+        WordsManager.WM.RequestChangeStateSeen(_word, WordsManager.WM.ConvertStringToState(_state));
+        Destroy(gameObject);
     }
 
 
@@ -84,5 +92,19 @@ public class SlotController : MonoBehaviour
         }
     }
 
+    public string GetWord()
+    {
+        return _word;
+    }
+
+    public string GetState()
+    {
+        return _state;
+    }
+
+    public bool IsActionComplete()
+    {
+        return isActionComplete;
+    }
 
 }

@@ -6,27 +6,50 @@ using TMPro;
 
 public class ActionPlan : MonoBehaviour
 {
-    [SerializeField] ProgressorManager PM;
-    [SerializeField] TMP_Text[] TxtInputsFields;
-    string selectedWord;
+    
+    [SerializeField] GameObject ActionsContainer;
+    Dictionary<string,ActionRowController> ActionRows = new Dictionary<string, ActionRowController>();
     string state;
 
-    public void WriteWordText(int Num)
+    public void RegisterRow(string _name, ActionRowController script)
     {
-        for (int i = 0; i < TxtInputsFields.Length; i++)
-        {
-            TxtInputsFields[i].text = "";
-        }
+        ActionRows.Add(_name, script);
+        Debug.Log(_name);
 
-        state = TxtInputsFields[Num].gameObject.name;
-        
-        selectedWord = WordSelectedInNotebook.Notebook.GetSelectedWord();
-        TxtInputsFields[Num].text = selectedWord;
+    }
+
+    private void Start()
+    {
+        DisableRows();
+    }
+
+    void DisableRows()
+    {
+        List<string> InactiveAgents = AgentManager.AM.GetInactiveAgents();
+
+        if (InactiveAgents.Count == 0) return;
+
+        for (int i = 0; i < InactiveAgents.Count; i++)
+        {
+            ActionRows[InactiveAgents[i]].DesactiveRow();
+        }
+    }
+
+
+    public void WriteWordText(string _state)
+    {
+        state = _state;
+
+        foreach(string row in ActionRows.Keys)
+        {
+            ActionRows[row].DeletWord();
+        }
     }
 
     public void ApprovedActionPlan()
     {
-        PM.SetActionInCourse(selectedWord, state);
+        GetComponentInParent<ActionPlanManager>().SetActionInCourse(state);
+        Destroy(gameObject);
     }
 
 }

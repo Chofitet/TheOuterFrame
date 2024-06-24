@@ -24,12 +24,17 @@ public class PCController : MonoBehaviour
 
     public void SearchWordInWiki()
     {
-        WikiWindow.SetActive(true);
-        ReportsWindow.SetActive(false);
-        CallsWindow.SetActive(false);
+        ShowWikiWindow();
 
         wikiData.text = WordsManager.WM.RequestBDWikiData(word);
         InstanciateBtnReport();
+    }
+
+    public void ShowWikiWindow()
+    {
+        WikiWindow.SetActive(true);
+        ReportsWindow.SetActive(false);
+        CallsWindow.SetActive(false);
     }
 
     public void ShowReportsWindow()

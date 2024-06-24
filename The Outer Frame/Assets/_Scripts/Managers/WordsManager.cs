@@ -10,6 +10,7 @@ public class WordsManager : MonoBehaviour
     [SerializeField] Word.WordState estado;
     public static WordsManager WM { get; private set; }
     public event Action<string> OnChangeStateOfWord;
+    public event Action<string> OnChangeStateSeenOfWord;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class WordsManager : MonoBehaviour
     {
        // RequestInput();
     }
+
 
     private Dictionary<string, Word> wordsDic = new Dictionary<string, Word>();
 
@@ -66,10 +68,14 @@ public class WordsManager : MonoBehaviour
         OnChangeStateOfWord?.Invoke(_word);
     }
 
+    public void RequestChangeStateSeen(string _word, Word.WordState WordState)
+    {
+        wordsDic[_word].CheckStateSeen(WordState);
+        OnChangeStateSeenOfWord?.Invoke(_word);
+    }
+
     public bool CheckIfStateWasDone(string _word, Word.WordState WordState)
     {
-        Debug.Log(_word);
-        Debug.Log(WordState);
         return wordsDic[_word].CheckIfStateWasDone(WordState);
     }
 

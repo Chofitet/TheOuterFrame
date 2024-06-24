@@ -10,15 +10,32 @@ public class ProgressorManager : MonoBehaviour
     List<GameObject> Slots = new List<GameObject>();
 
 
-    public void SetActionInCourse(string _word, string state)
+    public bool IsPossibleSetASlot()
     {
+
         Slots.RemoveAll(s => s == null);
+        bool auxbool = false;
+
+        foreach (GameObject slot in Slots)
+        {
+            if (slot.GetComponent<SlotController>().IsActionComplete()) auxbool = true;
+        }
+
 
         if (Slots.Count == 5)
         {
             Debug.LogWarning("Todos los Slots estan ocupados");
-            return;
+            return false;
         }
+        else if (auxbool) return false;
+        else return true;
+
+    }
+
+    public void SetActionInCourse(string _word, string state)
+    {
+
+       
         if (WordsManager.WM.CheckIfStateWasDone(_word, WordsManager.WM.ConvertStringToState(state)))
         {
             GameObject slot = Instantiate(SlotPrefab);
@@ -32,6 +49,7 @@ public class ProgressorManager : MonoBehaviour
             slot.GetComponent<SlotController>().initParameters(_word, state, GetMinutesOfAction(state),this);
             slot.transform.SetParent(transform, false);
             Slots.Add(slot);
+            AgentManager.AM.SetActiveOrDesactive(state, false);
             
         }
 
@@ -42,11 +60,18 @@ public class ProgressorManager : MonoBehaviour
 
     }
 
-    public void ActionFinish(string word, GameObject slotReference)
+    public void ActionFinish(GameObject slotReference)
     {
-        Printer.InstanciateReport(word, slotReference);
+        Printer.InstanciateReport(slotReference);
     }
 
+    public void TakeLastReport()
+    {
+        Slots.RemoveAll(s => s == null);
+        if (Slots.Count == 0) return;
+        Slots[0].GetComponent<SlotController>().CleanSlot();
+        
+    }
 
     int GetMinutesOfAction(string state)
     {
