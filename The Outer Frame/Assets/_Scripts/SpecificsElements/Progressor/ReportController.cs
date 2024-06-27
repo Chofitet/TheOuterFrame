@@ -10,7 +10,7 @@ public class ReportController : MonoBehaviour
 
     public void initReport(string word)
     {
-        reporttxt.text = WordsManager.WM.RequestInput(word);
+        reporttxt.text = WordsManager.WM.RequestLastReport(word).GetText();
 
     }
 

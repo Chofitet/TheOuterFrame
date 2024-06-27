@@ -25,7 +25,7 @@ public class ActionPlanManager : MonoBehaviour
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
     }
 
-    public void SetActionInCourse(string state)
+    public void SetActionInCourse(StateEnum state)
     {
         if (!progressor.IsPossibleSetASlot()) return;
         progressor.SetActionInCourse(WordSelectedInNotebook.Notebook.GetSelectedWord(), state);

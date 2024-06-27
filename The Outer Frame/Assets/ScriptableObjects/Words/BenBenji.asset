@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: BenBenji
   m_EditorClassIdentifier: 
-  dead: "No la cuenta m\xE1s el pobre chico"
-  brainwashed: Le dejamos la cabeza limpita
-  hacked: 
-  investigated: 
-  TVdead: 'se murio otra vez que pena '
-  TVbrainwashed: "NI\xF1o testigo con complejo de Dory"
-  TVhacked: 
-  TVinvestigated: 
-  BdData: "Es un ni\xF1o muyy aburrido zzz"
+  wordName: Ben Benji
+  reportTypes:
+  - {fileID: 11400000, guid: 7ff74da789c41774a9f02899668407e6, type: 2}
+  - {fileID: 11400000, guid: 27325c1ad690a4d4bb616d1f1f8e7c8b, type: 2}
+  - {fileID: 11400000, guid: c646b9aade7a9b54da8430c52661886b, type: 2}
+  TVNewTypes:
+  - {fileID: 11400000, guid: 7e23ac47d502dc14986161e60ceed181, type: 2}
+  DBTypes: {fileID: 11400000, guid: fe809e30edb37ce40855dc54a20566b1, type: 2}
+  exceptions:
+  - {fileID: 11400000, guid: 6ce00e2aea268a741b75088274ff1705, type: 2}
+  - {fileID: 11400000, guid: 2a5961fe963ae4041942fa0c0f9e8264, type: 2}

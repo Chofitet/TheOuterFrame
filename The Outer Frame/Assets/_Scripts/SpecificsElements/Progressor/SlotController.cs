@@ -15,7 +15,7 @@ public class SlotController : MonoBehaviour
     int actionDuration;
     int minuteProgress;
     string _word;
-    string _state;
+    StateEnum _state;
     bool isActionComplete;
     ProgressorManager ProgressorReference;
 
@@ -30,13 +30,13 @@ public class SlotController : MonoBehaviour
     }
 
 
-    public void initParameters(string word, string action, int ActionDuration, ProgressorManager reference) 
+    public void initParameters(string word, StateEnum state, int ActionDuration, ProgressorManager reference) 
     {
         actionDuration = ActionDuration;
         _word = word;
-        _state = action;
+        _state = state;
         Wordtxt.text = word;
-        Actiontxt.text = action;
+        Actiontxt.text = state.GetActionVerb();
         ProgressorReference = reference;
 
         ProgressBar.maxValue = actionDuration;
@@ -58,7 +58,7 @@ public class SlotController : MonoBehaviour
 
     private void CompleteAction()
     {
-        WordsManager.WM.RequestChangeState(_word, WordsManager.WM.ConvertStringToState(_state));
+        WordsManager.WM.RequestChangeState(_word, _state);
         ProgressorReference.ActionFinish(gameObject);
         AgentManager.AM.SetActiveOrDesactive(_state, true);
         SetLEDState();
@@ -79,7 +79,7 @@ public class SlotController : MonoBehaviour
 
     public void CleanSlot()
     {
-        WordsManager.WM.RequestChangeStateSeen(_word, WordsManager.WM.ConvertStringToState(_state));
+        WordsManager.WM.RequestChangeStateSeen(_word,_state);
         Destroy(gameObject);
     }
 
@@ -97,7 +97,7 @@ public class SlotController : MonoBehaviour
         return _word;
     }
 
-    public string GetState()
+    public StateEnum GetState()
     {
         return _state;
     }

@@ -10,10 +10,11 @@ public class PCReportController : MonoBehaviour
     string _input;
     GameObject _panel;
 
-    public void Inicialization(Word.WordState state, TimeData time, string _word , GameObject Panel)
+    public void Inicialization(StateEnum state, string _word , GameObject Panel)
     {
-        txt.text = state.ToString() + " " + time.ToString();
-        _input = WordsManager.WM.RequestInputAccordingState(state,_word);
+        ReportType input = WordsManager.WM.RequestReport(_word, state);
+        txt.text = state.name + input.GetTimeWhenWasDone().ToString();
+        _input = input.GetText();
         _panel = Panel;
     }
 

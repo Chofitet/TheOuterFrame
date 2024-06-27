@@ -8,14 +8,12 @@ public class ActionPlan : MonoBehaviour
 {
     
     [SerializeField] GameObject ActionsContainer;
-    Dictionary<string,ActionRowController> ActionRows = new Dictionary<string, ActionRowController>();
-    string state;
+    Dictionary<StateEnum, ActionRowController> ActionRows = new Dictionary<StateEnum, ActionRowController>();
+    StateEnum state;
 
-    public void RegisterRow(string _name, ActionRowController script)
+    public void RegisterRow(StateEnum _name, ActionRowController script)
     {
         ActionRows.Add(_name, script);
-        Debug.Log(_name);
-
     }
 
     private void Start()
@@ -25,7 +23,7 @@ public class ActionPlan : MonoBehaviour
 
     void DisableRows()
     {
-        List<string> InactiveAgents = AgentManager.AM.GetInactiveAgents();
+        List<StateEnum> InactiveAgents = AgentManager.AM.GetInactiveAgents();
 
         if (InactiveAgents.Count == 0) return;
 
@@ -36,11 +34,11 @@ public class ActionPlan : MonoBehaviour
     }
 
 
-    public void WriteWordText(string _state)
+    public void WriteWordText(StateEnum _state)
     {
         state = _state;
 
-        foreach(string row in ActionRows.Keys)
+        foreach(StateEnum row in ActionRows.Keys)
         {
             ActionRows[row].DeletWord();
         }

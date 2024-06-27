@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AgentManager : MonoBehaviour
 {
-    Dictionary<string, Agent> Agents = new Dictionary<string , Agent>();
+    [SerializeField] List<StateEnum> Agents = new List<StateEnum>();
     public static AgentManager AM { get; private set; }
     private void Awake()
     {
@@ -20,47 +20,48 @@ public class AgentManager : MonoBehaviour
 
     }
 
-    public void RegisterAgent(string AgentName,Agent agent)
+    public void SetActiveOrDesactive(StateEnum state,bool x)
     {
-        Agents.Add(GetAgentTypeWithState(AgentName), agent);
-    }
+        x = x == true ? false : true;
 
-    public void SetActiveOrDesactive(string state,bool x)
-    {
         if (state == null) return;
-        Agents[state].SetActiveOrDesactive(x);
+        FindAgentInList(state).SetActiveOrDesactive(x);
     }
 
-    public bool GetIfIsActive(string state)
+    public bool GetIfIsActive(StateEnum state)
     {
-        return Agents[state].GetIfIsActive();
+        return FindAgentInList(state).GetIfIsActive();
     }
 
-    public List<string> GetInactiveAgents()
+    public List<StateEnum> GetInactiveAgents()
     {
-        List<string> AuxAgentList = new List<string>();
+        List<StateEnum> AuxAgentList = new List<StateEnum>();
 
-        foreach (string key in Agents.Keys)
+        foreach (StateEnum agent in Agents)
         {
-            if (!Agents[key].GetIfIsActive())
+            if (!agent.GetIfIsActive())
             {
-                AuxAgentList.Add(key);
+                AuxAgentList.Add(agent);
             }
         }
         return AuxAgentList;
 
     }
 
-    string GetAgentTypeWithState(string AgentName)
+    StateEnum FindAgentInList(StateEnum state)
     {
-        switch (AgentName)
+        StateEnum aux = state; 
+        foreach(StateEnum agent in Agents)
         {
-            case "hitman": return "dead";
-            case "scientist": return "brainwashed";
+            if(agent == state)
+            {
+                aux = agent;
+            }
         }
 
-        return "none";
+        return aux;
     }
+
 }
 
 

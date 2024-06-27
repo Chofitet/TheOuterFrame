@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
-    private void Start()
-    {
-        AgentManager agentManager = GetComponentInParent<AgentManager>();
-        agentManager.RegisterAgent(name, this);
-    }
-
+    [SerializeField] StateEnum SO;
+    
     bool isActive = true;
 
     public void SetActiveOrDesactive(bool x)

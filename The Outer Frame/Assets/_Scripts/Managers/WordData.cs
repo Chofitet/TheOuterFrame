@@ -5,70 +5,186 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Word", menuName ="Word")]
 public class WordData : ScriptableObject
 {
+    [Header("Word Name")]
+    [SerializeField] string wordName;
 
     [Header("Action Plan Results")]
-
-    [SerializeField] string dead;
-    [SerializeField] string brainwashed;
-    [SerializeField] string hacked;
-    [SerializeField] string investigated;
+    [SerializeField] List<ReportType> reportTypes = new List<ReportType>();
 
     [Header("TV News")]
-
-    [SerializeField] string TVdead;
-    [SerializeField] string TVbrainwashed;
-    [SerializeField] string TVhacked;
-    [SerializeField] string TVinvestigated;
+    [SerializeField] List<TVNewType> TVNewTypes = new List<TVNewType>();
 
     [Header("BD Data")]
+    [SerializeField] DataBaseType DBTypes;
 
-    [SerializeField] string BdData;
+    [Header("Exceptions")]
+    [SerializeField] List<Exceptions> exceptions = new List<Exceptions>();
 
-    public string GetActionPlanResult(Word.WordState _wordState) 
+    private List<StateEnum> stateHistory = new List<StateEnum>();
+    private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
+    private Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
+    StateEnum currentState;
+
+    public void ChangeState(StateEnum newState)
     {
-        if(_wordState == Word.WordState.dead)
+
+        if (CheckIfStateWasDone(newState))
         {
-            return dead;
+            Debug.LogWarning("The state " + newState.name + " was done");
+            return;
         }
-        else if(_wordState == Word.WordState.brainwashed)
+
+        Exceptions exception = GetExceptions(newState);
+
+        if (exception.GetState().name != "none")
         {
-            return brainwashed;
+            currentState = exception.GetState();
+            
+            if(currentState != newState)
+            {
+                if(exception.GetAlsoSetDefaultState())
+                {
+                    stateHistory.Add(newState);
+                    StateHistoryTime.Add(newState, TimeManager.timeManager.GetTime());
+                }
+            }
         }
-        else if (_wordState == Word.WordState.hacked)
+        else
         {
-            return hacked;
+            currentState = newState;
         }
-        else if (_wordState == Word.WordState.investigated)
+
+        stateHistory.Add(currentState);
+        StateHistoryTime.Add(currentState, TimeManager.timeManager.GetTime());
+
+
+        string estados = wordName + ": ";
+        foreach (StateEnum s in stateHistory)
         {
-            return investigated;
+
+            estados += s.name + ", ";
         }
-        return "";
+
+        Debug.Log(estados);
+
     }
 
-    public string GetTVNews(Word.WordState _wordState)
+    public void CheckStateSeen(StateEnum newState)
     {
-        if (_wordState == Word.WordState.dead)
+        if (CheckIfStateSeenWasDone(newState))
         {
-            return TVdead;
+            Debug.LogWarning("The state " + newState.name + " was seen");
+            return;
         }
-        else if (_wordState == Word.WordState.brainwashed)
-        {
-            return TVbrainwashed;
-        }
-        else if (_wordState == Word.WordState.hacked)
-        {
-            return TVhacked;
-        }
-        else if (_wordState == Word.WordState.investigated)
-        {
-            return TVinvestigated;
-        }
-        return "";
+        CheckedStateHistory.Add(newState);
     }
 
-    public string GetDataBD()
+    public string GetName() { return wordName; }
+
+    public Exceptions GetExceptions(StateEnum state)
     {
-        return BdData;
+        return FindException(state);
+    }
+    
+    public TVNewType GetTVnew(StateEnum state)
+    {
+        return FindInputInList(TVNewTypes, state);
+    }
+
+    public ReportType GetReport(StateEnum state, bool isSetTime = false)
+    {
+        ReportType input = FindInputInList(reportTypes, state);
+        if(isSetTime) input.GetTimeWhenWasDone();
+        return input;
+    }
+
+    public ReportType GetLastReport()
+    {
+        return GetReport(currentState, true);
+    }
+
+    public DataBaseType GetDB()
+    {
+        return DBTypes;
+    }
+
+    T  FindInputInList<T>(List<T> list, StateEnum state) where T : IStateComparable
+    {
+        T aux = list[0];
+
+        foreach(T input in list)
+        {
+           if (state == input.GetState())
+           {
+                aux = input;
+           }
+        }
+        return aux;
+    }
+
+    public List<StateEnum> GetHistory()
+    {
+        return CheckedStateHistory;
+    }
+
+    Exceptions FindException ( StateEnum state)
+    {
+        Exceptions aux = exceptions[0];
+
+        foreach(Exceptions ex in exceptions)
+        {
+            if (state == ex.GetStateDefault())
+            {
+                if(state != ex.GetState())
+                {
+                    aux = ex;
+                }
+            }
+        }
+
+        return aux;
+    }
+
+    public bool CheckIfStateWasDone(StateEnum state)
+    {
+        for (int i = 0; i < stateHistory.Count; i++)
+        {
+            if (stateHistory[i] == state)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool CheckIfStateSeenWasDone(StateEnum state)
+    {
+        for (int i = 0; i < CheckedStateHistory.Count; i++)
+        {
+            if (CheckedStateHistory[i] == state)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public TimeData GetTimeOfState(StateEnum state)
+    {
+        foreach(StateEnum s in StateHistoryTime.Keys)
+        {
+            if (s == state)
+            {
+                return StateHistoryTime[s];
+            }
+        }
+        return TimeManager.timeManager.GetTime();
+    }
+
+    public void CleanHistory()
+    {
+        stateHistory.Clear();
+        CheckedStateHistory.Clear();
     }
 
 

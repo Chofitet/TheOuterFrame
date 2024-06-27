@@ -19,7 +19,7 @@ public class TVManager : MonoBehaviour
 
     void RegisterChangeState(string word)
     {
-        NewsText.text = WordsManager.WM.RequestNew(word);
+       // NewsText.text = WordsManager.WM.RequestNew(word);
     }
 
 }

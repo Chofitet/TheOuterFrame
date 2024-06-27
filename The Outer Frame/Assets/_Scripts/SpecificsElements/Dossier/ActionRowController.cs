@@ -9,6 +9,7 @@ public class ActionRowController : MonoBehaviour
     TMP_Text textTofill;
     Button button;
     ActionPlan ActionPlanReference;
+    [SerializeField] StateEnum state;
 
     private void Awake()
     {
@@ -16,14 +17,12 @@ public class ActionRowController : MonoBehaviour
         button = transform.GetChild(2).GetComponent<Button>();
         button.onClick.AddListener(OnButtonClick);
         ActionPlanReference = GetComponentInParent<ActionPlan>();
-        ActionPlanReference.RegisterRow(name, this);
+        ActionPlanReference.RegisterRow(state, this);
     }
 
     void OnButtonClick()
     {
-        Debug.Log(ActionPlanReference);
-
-        ActionPlanReference.WriteWordText(name);
+        ActionPlanReference.WriteWordText(state);
         textTofill.text = WordSelectedInNotebook.Notebook.GetSelectedWord();
     }
 

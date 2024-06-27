@@ -32,11 +32,11 @@ public class ProgressorManager : MonoBehaviour
 
     }
 
-    public void SetActionInCourse(string _word, string state)
+    public void SetActionInCourse(string _word, StateEnum state)
     {
 
        
-        if (WordsManager.WM.CheckIfStateWasDone(_word, WordsManager.WM.ConvertStringToState(state)))
+        if (WordsManager.WM.CheckIfStateWasDone(_word, state))
         {
             GameObject slot = Instantiate(SlotPrefab);
             slot.GetComponent<SlotController>().ActionWasDone();
@@ -46,7 +46,7 @@ public class ProgressorManager : MonoBehaviour
         else
         {
             GameObject slot = Instantiate(SlotPrefab);
-            slot.GetComponent<SlotController>().initParameters(_word, state, GetMinutesOfAction(state),this);
+            slot.GetComponent<SlotController>().initParameters(_word, state, state.GetTime(),this);
             slot.transform.SetParent(transform, false);
             Slots.Add(slot);
             AgentManager.AM.SetActiveOrDesactive(state, false);
@@ -71,19 +71,6 @@ public class ProgressorManager : MonoBehaviour
         if (Slots.Count == 0) return;
         Slots[0].GetComponent<SlotController>().CleanSlot();
         
-    }
-
-    int GetMinutesOfAction(string state)
-    {
-        switch (state)
-        {
-            case "dead":
-             return 30;
-
-            case "brainwashed":
-                return 60;
-        }
-        return 0;
     }
 
 }
