@@ -20,10 +20,11 @@ public class NotebookController : MonoBehaviour
         }
     }
 
-    //Conectarlo despues al evento de levantarlibreta
-    public void RefreshWords()
+    public void RefreshWords(Component component, object obj)
     {
         List<WordData> Words = WordSelectedInNotebook.Notebook.GetWordsList();
+        DeleteWords();
+        WordsInstances.Clear();
 
         int i = 0;
 
@@ -45,6 +46,14 @@ public class NotebookController : MonoBehaviour
         foreach(GameObject word in WordsInstances)
         {
             word.GetComponent<NotebookWordInstance>().ClearUnderline();
+        }
+    }
+
+    void DeleteWords()
+    {
+        for(int i = 0; i < WordContainer.childCount; i++)
+        {
+            Destroy(WordContainer.GetChild(i).gameObject);
         }
     }
     

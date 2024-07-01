@@ -8,6 +8,8 @@ public class CamController : MonoBehaviour
     [SerializeField] Transform[] posCamara;
     [SerializeField] Transform CamTransform;
     [SerializeField] SmoothMoveObjectToPoints NotebookMove;
+    [SerializeField] GameEvent OnNotebookView;
+    [SerializeField] GameEvent OnGeneralView;
     public float transitionSpeed;
     Transform currentview { get; set; }
     int currentviewNum;
@@ -40,7 +42,7 @@ public class CamController : MonoBehaviour
     {
         currentview = posCamara[currentviewNum];
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && currentViewState != ViewStates.GeneralView)
         {
             currentviewNum = 0;
             UpdateViewState(ViewStates.GeneralView);
@@ -73,7 +75,8 @@ public class CamController : MonoBehaviour
     {
         GeneralView,
         SpecificView,
-        NotebookView
+        NotebookView,
+        PrinterView
     }
 
     public void UpdateViewState(ViewStates newView)
@@ -81,11 +84,15 @@ public class CamController : MonoBehaviour
         switch (newView)
         {
             case ViewStates.GeneralView:
+                OnGeneralView?.Invoke(this, null);
                 break;
             case ViewStates.SpecificView:
                 break;
             case ViewStates.NotebookView:
                 NotebookMove.ChangePosition();
+                OnNotebookView?.Invoke(this, null);
+                break;
+            case ViewStates.PrinterView:
                 break;
 
         }

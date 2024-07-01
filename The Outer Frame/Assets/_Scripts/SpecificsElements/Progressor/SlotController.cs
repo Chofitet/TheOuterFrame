@@ -10,7 +10,8 @@ public class SlotController : MonoBehaviour
     [SerializeField] TMP_Text Wordtxt;
     [SerializeField] TMP_Text Actiontxt;
     [SerializeField] Slider ProgressBar;
-
+    [SerializeField] GameEvent OnFinishActionProgress;
+ 
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
     int minuteProgress;
@@ -30,14 +31,13 @@ public class SlotController : MonoBehaviour
     }
 
 
-    public void initParameters(WordData word, StateEnum state, int ActionDuration, ProgressorManager reference) 
+    public void initParameters(WordData word, StateEnum state, int ActionDuration) 
     {
         actionDuration = ActionDuration;
         _word = word;
         _state = state;
         Wordtxt.text = word.GetName();
         Actiontxt.text = state.GetActionVerb();
-        ProgressorReference = reference;
 
         ProgressBar.maxValue = actionDuration;
         ProgressBar.value = 0;
@@ -59,8 +59,8 @@ public class SlotController : MonoBehaviour
     private void CompleteAction()
     {
         WordsManager.WM.RequestChangeState(_word, _state);
-        ProgressorReference.ActionFinish(gameObject);
         AgentManager.AM.SetActiveOrDesactive(_state, true);
+        OnFinishActionProgress?.Invoke(this, this);
         SetLEDState();
     }
 

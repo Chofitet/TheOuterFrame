@@ -9,10 +9,8 @@ public class ProgressorManager : MonoBehaviour
     [SerializeField] PrinterController Printer;
     List<GameObject> Slots = new List<GameObject>();
 
-
-    public bool IsPossibleSetASlot()
+    bool IsPossibleSetASlot()
     {
-
         Slots.RemoveAll(s => s == null);
         bool auxbool = false;
 
@@ -21,7 +19,6 @@ public class ProgressorManager : MonoBehaviour
             if (slot.GetComponent<SlotController>().IsActionComplete()) auxbool = true;
         }
 
-
         if (Slots.Count == 5)
         {
             Debug.LogWarning("Todos los Slots estan ocupados");
@@ -29,7 +26,6 @@ public class ProgressorManager : MonoBehaviour
         }
         else if (auxbool) return false;
         else return true;
-
     }
 
 
@@ -50,31 +46,13 @@ public class ProgressorManager : MonoBehaviour
         else
         {
             GameObject slot = Instantiate(SlotPrefab);
-            slot.GetComponent<SlotController>().initParameters(_word, state, state.GetTime(),this);
+            slot.GetComponent<SlotController>().initParameters(_word, state, state.GetTime());
             slot.transform.SetParent(transform, false);
             Slots.Add(slot);
             AgentManager.AM.SetActiveOrDesactive(state, false);
             
         }
 
-        for (int i = 0; i < Slots.Count; i++)
-        {
-            Debug.Log(Slots[i].name);
-        }
-
-    }
-
-    public void ActionFinish(GameObject slotReference)
-    {
-        Printer.InstanciateReport(slotReference);
-    }
-
-    public void TakeLastReport()
-    {
-        Slots.RemoveAll(s => s == null);
-        if (Slots.Count == 0) return;
-        Slots[0].GetComponent<SlotController>().CleanSlot();
-        
     }
 
 }

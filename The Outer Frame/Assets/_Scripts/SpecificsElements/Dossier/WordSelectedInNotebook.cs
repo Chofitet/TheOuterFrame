@@ -28,27 +28,22 @@ public class WordSelectedInNotebook : MonoBehaviour
 
     private void Start()
     {
-
         foreach (WordData w in WordsfromBeginning)
         {
             AddWordToNotebook(w);
         }
     }
 
-    public void AddWordToNotebook(WordData word)
-    {
-        WordsFound.Add(word);
-    }
+    public void AddWordToNotebook(WordData word) => WordsFound.Add(word);
+    
 
-    public void SetSelectedWord(WordData word)
-    {
-        SelectedWord = word;
-    }
+    public void UnselectWord() => SelectedWord = null;
 
-    public WordData GetSelectedWord()
-    {
-        return SelectedWord;
-    }
+
+    public void SetSelectedWord(WordData word) => SelectedWord = word;
+    
+
+    public WordData GetSelectedWord(){return SelectedWord;}
 
     public List<WordData> GetWordsList() { return WordsFound; }
 
