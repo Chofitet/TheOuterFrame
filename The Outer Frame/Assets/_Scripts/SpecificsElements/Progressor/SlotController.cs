@@ -14,7 +14,7 @@ public class SlotController : MonoBehaviour
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
     int minuteProgress;
-    string _word;
+    WordData _word;
     StateEnum _state;
     bool isActionComplete;
     ProgressorManager ProgressorReference;
@@ -30,12 +30,12 @@ public class SlotController : MonoBehaviour
     }
 
 
-    public void initParameters(string word, StateEnum state, int ActionDuration, ProgressorManager reference) 
+    public void initParameters(WordData word, StateEnum state, int ActionDuration, ProgressorManager reference) 
     {
         actionDuration = ActionDuration;
         _word = word;
         _state = state;
-        Wordtxt.text = word;
+        Wordtxt.text = word.GetName();
         Actiontxt.text = state.GetActionVerb();
         ProgressorReference = reference;
 
@@ -92,7 +92,7 @@ public class SlotController : MonoBehaviour
         }
     }
 
-    public string GetWord()
+    public WordData GetWord()
     {
         return _word;
     }

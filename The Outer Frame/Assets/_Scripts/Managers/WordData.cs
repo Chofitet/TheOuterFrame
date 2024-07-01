@@ -20,71 +20,16 @@ public class WordData : ScriptableObject
     [Header("Exceptions")]
     [SerializeField] List<Exceptions> exceptions = new List<Exceptions>();
 
+    [Header("Inactive Conditions")]
+    [SerializeField] List<ScriptableObject> InactiveConditions = new List<ScriptableObject>();
+
     private List<StateEnum> stateHistory = new List<StateEnum>();
     private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
     private Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
     StateEnum currentState;
 
-    public void ChangeState(StateEnum newState)
-    {
-
-        if (CheckIfStateWasDone(newState))
-        {
-            Debug.LogWarning("The state " + newState.name + " was done");
-            return;
-        }
-
-        Exceptions exception = GetExceptions(newState);
-
-        if (exception.GetState().name != "none")
-        {
-            currentState = exception.GetState();
-            
-            if(currentState != newState)
-            {
-                if(exception.GetAlsoSetDefaultState())
-                {
-                    stateHistory.Add(newState);
-                    StateHistoryTime.Add(newState, TimeManager.timeManager.GetTime());
-                }
-            }
-        }
-        else
-        {
-            currentState = newState;
-        }
-
-        stateHistory.Add(currentState);
-        StateHistoryTime.Add(currentState, TimeManager.timeManager.GetTime());
-
-
-        string estados = wordName + ": ";
-        foreach (StateEnum s in stateHistory)
-        {
-
-            estados += s.name + ", ";
-        }
-
-        Debug.Log(estados);
-
-    }
-
-    public void CheckStateSeen(StateEnum newState)
-    {
-        if (CheckIfStateSeenWasDone(newState))
-        {
-            Debug.LogWarning("The state " + newState.name + " was seen");
-            return;
-        }
-        CheckedStateHistory.Add(newState);
-    }
-
-    public string GetName() { return wordName; }
-
-    public Exceptions GetExceptions(StateEnum state)
-    {
-        return FindException(state);
-    }
+    #region GetInputLogic
+    
     
     public TVNewType GetTVnew(StateEnum state)
     {
@@ -122,20 +67,66 @@ public class WordData : ScriptableObject
         return aux;
     }
 
-    public List<StateEnum> GetHistory()
+    #endregion
+
+    #region ChangeStateLogic
+    public void ChangeState(StateEnum newState)
     {
-        return CheckedStateHistory;
+
+        if (CheckIfStateWasDone(newState))
+        {
+            Debug.LogWarning("The state " + newState.name + " was done");
+            return;
+        }
+
+        Exceptions exception = GetExceptions(newState);
+
+        if (exception.GetState().name != "none")
+        {
+            currentState = exception.GetState();
+
+            if (currentState != newState)
+            {
+                if (exception.GetAlsoSetDefaultState())
+                {
+                    stateHistory.Add(newState);
+                    StateHistoryTime.Add(newState, TimeManager.timeManager.GetTime());
+                }
+            }
+        }
+        else
+        {
+            currentState = newState;
+        }
+
+        stateHistory.Add(currentState);
+        StateHistoryTime.Add(currentState, TimeManager.timeManager.GetTime());
+
+
+        string estados = wordName + ": ";
+        foreach (StateEnum s in stateHistory)
+        {
+
+            estados += s.name + ", ";
+        }
+
+        Debug.Log(estados);
+
+    }
+    public Exceptions GetExceptions(StateEnum state)
+    {
+        return FindException(state);
     }
 
-    Exceptions FindException ( StateEnum state)
+    Exceptions FindException(StateEnum state)
     {
         Exceptions aux = exceptions[0];
 
-        foreach(Exceptions ex in exceptions)
+        foreach (Exceptions ex in exceptions)
         {
             if (state == ex.GetStateDefault())
             {
-                if(state != ex.GetState())
+                if (state != ex.GetState())
                 {
                     aux = ex;
                 }
@@ -168,10 +159,55 @@ public class WordData : ScriptableObject
         }
         return false;
     }
+    public void CheckStateSeen(StateEnum newState)
+    {
+        if (CheckIfStateSeenWasDone(newState))
+        {
+            Debug.LogWarning("The state " + newState.name + " was seen");
+            return;
+        }
+        CheckedStateHistory.Add(newState);
+    }
+
+    #endregion
+
+    #region InactiveLogic
+
+    public bool GetInactiveState() {
+
+        return CheckInactiveConditions();
+    }
+
+     bool CheckInactiveConditions()
+    {
+        if (InactiveConditions.Count == 0) return false;
+
+        foreach (ScriptableObject conditional in InactiveConditions)
+        {
+            IConditionable auxInterface = conditional as IConditionable;
+
+            if (!auxInterface.GetStateCondition())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    #endregion
+
+    public string GetName() { return wordName; }
+    public List<StateEnum> GetHistory() { return CheckedStateHistory; }
+    
+    public void CleanHistory()
+    {
+        stateHistory.Clear();
+        CheckedStateHistory.Clear();
+    }
 
     public TimeData GetTimeOfState(StateEnum state)
     {
-        foreach(StateEnum s in StateHistoryTime.Keys)
+        foreach (StateEnum s in StateHistoryTime.Keys)
         {
             if (s == state)
             {
@@ -180,12 +216,5 @@ public class WordData : ScriptableObject
         }
         return TimeManager.timeManager.GetTime();
     }
-
-    public void CleanHistory()
-    {
-        stateHistory.Clear();
-        CheckedStateHistory.Clear();
-    }
-
 
 }

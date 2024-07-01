@@ -14,12 +14,12 @@ public class PCController : MonoBehaviour
     [SerializeField] GameObject PrefabBtneport;
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelReporte;
-    string word;
+    WordData word;
 
     public void CompleteSeachBar()
     {
         word = WordSelectedInNotebook.Notebook.GetSelectedWord();
-        SearchBar.text = word;
+        SearchBar.text = word.GetName();
     }
 
     public void SearchWordInWiki()

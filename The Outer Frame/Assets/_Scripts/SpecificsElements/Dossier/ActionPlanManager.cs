@@ -7,7 +7,6 @@ public class ActionPlanManager : MonoBehaviour
 {
     [SerializeField] GameObject ActionPlanPrefab;
     [SerializeField] ButtonElement btnElement;
-    [SerializeField] ProgressorManager progressor;
 
     private void OnEnable()
     {
@@ -17,6 +16,10 @@ public class ActionPlanManager : MonoBehaviour
     {
         btnElement.Onclik -= OnButtonClick;
     }
+    void OnButtonClick()
+    {
+        SetActionPlan();
+    }
 
     public void SetActionPlan()
     {
@@ -25,14 +28,4 @@ public class ActionPlanManager : MonoBehaviour
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
     }
 
-    public void SetActionInCourse(StateEnum state)
-    {
-        if (!progressor.IsPossibleSetASlot()) return;
-        progressor.SetActionInCourse(WordSelectedInNotebook.Notebook.GetSelectedWord(), state);
-    }
-
-    void OnButtonClick()
-    {
-        SetActionPlan();
-    }
 }

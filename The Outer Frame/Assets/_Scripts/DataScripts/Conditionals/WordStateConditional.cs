@@ -16,11 +16,11 @@ public class WordStateConditional : ScriptableObject, IConditionable
 
     public bool GetStateCondition()
     {
-        return WordsManager.WM.CheckIfStateWasDone(word.GetName(), state);
+        return WordsManager.WM.CheckIfStateWasDone(word, state);
     }
 
     public TimeData GetTimeWhenWasComplete()
     {
-        return WordsManager.WM.RequestTimeDataOfState(word.GetName(), state);
+        return WordsManager.WM.RequestTimeDataOfState(word, state);
     }
 }

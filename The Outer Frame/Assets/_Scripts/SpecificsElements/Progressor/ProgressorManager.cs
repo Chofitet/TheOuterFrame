@@ -32,10 +32,14 @@ public class ProgressorManager : MonoBehaviour
 
     }
 
-    public void SetActionInCourse(string _word, StateEnum state)
-    {
 
-       
+    public void SetActionInCourse(Component c, object _state)
+    {
+        WordData _word = WordSelectedInNotebook.Notebook.GetSelectedWord();
+        StateEnum state = (StateEnum) _state;
+
+        if (!IsPossibleSetASlot()) return;
+
         if (WordsManager.WM.CheckIfStateWasDone(_word, state))
         {
             GameObject slot = Instantiate(SlotPrefab);

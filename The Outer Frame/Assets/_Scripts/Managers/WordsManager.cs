@@ -9,8 +9,8 @@ public class WordsManager : MonoBehaviour
     [SerializeField] List<WordData> wordsDic = new List<WordData>();
     [SerializeField] bool SaveProgress;
     public static WordsManager WM { get; private set; }
-    public event Action<string> OnChangeStateOfWord;
-    public event Action<string> OnChangeStateSeenOfWord;
+    public event Action<WordData> OnChangeStateOfWord;
+    public event Action<WordData> OnChangeStateSeenOfWord;
 
 
     private void Awake()
@@ -31,63 +31,68 @@ public class WordsManager : MonoBehaviour
         }
     }
 
-    public ReportType RequestLastReport(string _word)
+    public ReportType RequestLastReport(WordData _word)
     {
         return FindWordInList(_word).GetLastReport();
     }
 
-    public ReportType RequestReport(string _word, StateEnum state)
+    public ReportType RequestReport(WordData _word, StateEnum state)
     {
         return FindWordInList(_word).GetReport(state);
     }
 
-    public TVNewType RequestNew(string _word, StateEnum state)
+    public TVNewType RequestNew(WordData _word, StateEnum state)
     {
         return FindWordInList(_word).GetTVnew(state);
     }
 
-    public DataBaseType RequestBDWikiData(string _word)
+    public DataBaseType RequestBDWikiData(WordData _word)
     {
         return FindWordInList(_word).GetDB();
     }
 
-    public void RequestChangeState(string _word, StateEnum WordState)
+    public void RequestChangeState(WordData _word, StateEnum WordState)
     {
         FindWordInList(_word).ChangeState(WordState);
         OnChangeStateOfWord?.Invoke(_word);
     }
 
-    public void RequestChangeStateSeen(string _word, StateEnum WordState)
+    public void RequestChangeStateSeen(WordData _word, StateEnum WordState)
     {
         FindWordInList(_word).CheckStateSeen(WordState);
         OnChangeStateSeenOfWord?.Invoke(_word);
     }
 
-    public bool CheckIfStateWasDone(string _word, StateEnum WordState)
+    public bool CheckIfStateWasDone(WordData _word, StateEnum WordState)
     {
         return FindWordInList(_word).CheckIfStateWasDone(WordState);
     }
 
-    public TimeData RequestTimeDataOfState(string _word, StateEnum WordState)
+    public TimeData RequestTimeDataOfState(WordData _word, StateEnum WordState)
     {
         return FindWordInList(_word).GetTimeOfState(WordState);
     }
-    public List<StateEnum> GetHistory(string _word)
+    public List<StateEnum> GetHistory(WordData _word)
     {
         return FindWordInList(_word).GetHistory();
     }
 
-    WordData FindWordInList(string _word)
+    WordData FindWordInList(WordData _word)
     {
         foreach(WordData w in wordsDic)
         {
-            if(w.GetName()==_word)
+            if(w==_word)
             {
                 return w;
             }
         }
 
         return wordsDic[0];
+    }
+
+    public bool GetInactiveState(WordData _word)
+    {
+        return FindWordInList(_word).GetInactiveState();
     }
 
 }

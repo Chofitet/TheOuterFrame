@@ -33,6 +33,8 @@ public class AgentManager : MonoBehaviour
         return FindAgentInList(state).GetIfIsActive();
     }
 
+    public List<StateEnum> GetAgentList() { return Agents; }
+
     public List<StateEnum> GetInactiveAgents()
     {
         List<StateEnum> AuxAgentList = new List<StateEnum>();

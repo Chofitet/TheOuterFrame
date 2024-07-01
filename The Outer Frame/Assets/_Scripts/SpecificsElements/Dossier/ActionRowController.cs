@@ -6,39 +6,42 @@ using TMPro;
 
 public class ActionRowController : MonoBehaviour
 {
-    TMP_Text textTofill;
-    Button button;
-    ActionPlan ActionPlanReference;
-    [SerializeField] StateEnum state;
+    [SerializeField] TMP_Text Wordtext;
+    [SerializeField] GameObject strikethrough;
+    [SerializeField] TMP_Text ActionText;
+    [SerializeField] Toggle toggle;
+    [SerializeField] Button btn;
+    StateEnum state;
 
-    private void Awake()
+    public void Initialization(StateEnum _state)
     {
-        textTofill = transform.GetChild(1).GetComponent<TMP_Text>();
-        button = transform.GetChild(2).GetComponent<Button>();
-        button.onClick.AddListener(OnButtonClick);
-        ActionPlanReference = GetComponentInParent<ActionPlan>();
-        ActionPlanReference.RegisterRow(state, this);
+        state = _state;
+        Debug.Log(state.name);
+        ActionText.text = _state.GetActionVerb();
+        btn.onClick.AddListener(OnButtonClick);
     }
 
     void OnButtonClick()
     {
-        ActionPlanReference.WriteWordText(state);
-        textTofill.text = WordSelectedInNotebook.Notebook.GetSelectedWord();
+        if (!WordSelectedInNotebook.Notebook.GetSelectedWord()) return;
+        Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
+        toggle.isOn = true;
     }
 
-    public void PassReference(ActionPlan AP)
-    {
-        ActionPlanReference = AP;
-    }
+    public Button GetButton() { return btn; }
 
-    public void DeletWord()
+    public StateEnum GetState() { return state; }
+
+    public void ResetRow()
     {
-        textTofill.text = "";
+        toggle.isOn = false;
+        Wordtext.text = "";
     }
 
     public void DesactiveRow()
     {
-        gameObject.SetActive(false);
+        btn.enabled = false;
+        strikethrough.SetActive(true);
 
     }
 

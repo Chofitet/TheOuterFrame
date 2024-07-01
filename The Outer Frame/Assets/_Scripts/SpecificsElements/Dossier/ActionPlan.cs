@@ -6,47 +6,49 @@ using TMPro;
 
 public class ActionPlan : MonoBehaviour
 {
-    
-    [SerializeField] GameObject ActionsContainer;
-    Dictionary<StateEnum, ActionRowController> ActionRows = new Dictionary<StateEnum, ActionRowController>();
+    [SerializeField] GameObject ActionRowPrefab;
+    [SerializeField] Transform ActionsContainer;
+    [SerializeField] GameEvent OnApprovedActionPlan;
+    List<ActionRowController> Actions = new List<ActionRowController>();
     StateEnum state;
 
-    public void RegisterRow(StateEnum _name, ActionRowController script)
+    private void OnEnable()
     {
-        ActionRows.Add(_name, script);
+        InstantiateActionRows();
     }
 
-    private void Start()
+    void InstantiateActionRows()
     {
-        DisableRows();
-    }
+        List<StateEnum> Agents = AgentManager.AM.GetAgentList();
 
-    void DisableRows()
-    {
-        List<StateEnum> InactiveAgents = AgentManager.AM.GetInactiveAgents();
-
-        if (InactiveAgents.Count == 0) return;
-
-        for (int i = 0; i < InactiveAgents.Count; i++)
+        foreach(StateEnum actions in Agents)
         {
-            ActionRows[InactiveAgents[i]].DesactiveRow();
+            GameObject AgentInstantiate = Instantiate(ActionRowPrefab, ActionsContainer, false);
+            ActionRowController script = AgentInstantiate.GetComponent<ActionRowController>();
+            script.Initialization(actions);
+            script.GetButton().onClick.AddListener(() => OnButtonRowPress(script));
+            Actions.Add(script);
+
+            
+            if (!actions.GetIfIsActive())
+            {
+                AgentInstantiate.GetComponent<ActionRowController>().DesactiveRow();
+            }
         }
     }
 
-
-    public void WriteWordText(StateEnum _state)
+    void OnButtonRowPress(ActionRowController script)
     {
-        state = _state;
-
-        foreach(StateEnum row in ActionRows.Keys)
+        foreach(ActionRowController actions in Actions)
         {
-            ActionRows[row].DeletWord();
+            if (script != actions) actions.ResetRow();
+            else state = script.GetState();
         }
     }
 
     public void ApprovedActionPlan()
     {
-        GetComponentInParent<ActionPlanManager>().SetActionInCourse(state);
+        OnApprovedActionPlan.Invoke(this,state);
         Destroy(gameObject);
     }
 

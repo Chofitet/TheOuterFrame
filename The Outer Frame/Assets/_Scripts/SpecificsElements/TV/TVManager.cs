@@ -17,7 +17,7 @@ public class TVManager : MonoBehaviour
         WordsManager.WM.OnChangeStateOfWord -= RegisterChangeState;
     }
 
-    void RegisterChangeState(string word)
+    void RegisterChangeState(WordData word)
     {
        // NewsText.text = WordsManager.WM.RequestNew(word);
     }

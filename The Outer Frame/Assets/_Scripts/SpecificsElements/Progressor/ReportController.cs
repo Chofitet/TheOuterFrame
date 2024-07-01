@@ -8,7 +8,7 @@ public class ReportController : MonoBehaviour
     [SerializeField] TMP_Text reporttxt;
 
 
-    public void initReport(string word)
+    public void initReport(WordData word)
     {
         reporttxt.text = WordsManager.WM.RequestLastReport(word).GetText();
 
