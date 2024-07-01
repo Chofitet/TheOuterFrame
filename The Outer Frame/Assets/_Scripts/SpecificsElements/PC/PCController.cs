@@ -14,22 +14,27 @@ public class PCController : MonoBehaviour
     [SerializeField] GameObject PrefabBtneport;
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelReporte;
-    string word;
+    WordData word;
 
     public void CompleteSeachBar()
     {
         word = WordSelectedInNotebook.Notebook.GetSelectedWord();
-        SearchBar.text = word;
+        SearchBar.text = word.GetName();
     }
 
     public void SearchWordInWiki()
     {
+        ShowWikiWindow();
+
+        wikiData.text = WordsManager.WM.RequestBDWikiData(word).GetText();
+        InstanciateBtnReport();
+    }
+
+    public void ShowWikiWindow()
+    {
         WikiWindow.SetActive(true);
         ReportsWindow.SetActive(false);
         CallsWindow.SetActive(false);
-
-        wikiData.text = WordsManager.WM.RequestBDWikiData(word);
-        InstanciateBtnReport();
     }
 
     public void ShowReportsWindow()
@@ -55,12 +60,12 @@ public class PCController : MonoBehaviour
             }
         }
 
-        Dictionary<Word.WordState, TimeData> stateTimeHistory = WordsManager.WM.RequestStateTimeHistory(word);
+        List<StateEnum> stateHistory = WordsManager.WM.GetHistory(word);
 
-        foreach (var key in stateTimeHistory.Keys)
+        foreach (var state in stateHistory)
         {
             GameObject btn = Instantiate(PrefabBtneport, Grid.transform,false);
-            btn.GetComponent<PCReportController>().Inicialization(key, stateTimeHistory[key], word, panelReporte);
+            btn.GetComponent<PCReportController>().Inicialization(state, word, panelReporte);
         }
     }
 

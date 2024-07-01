@@ -10,12 +10,13 @@ public class SlotController : MonoBehaviour
     [SerializeField] TMP_Text Wordtxt;
     [SerializeField] TMP_Text Actiontxt;
     [SerializeField] Slider ProgressBar;
-
+    [SerializeField] GameEvent OnFinishActionProgress;
+ 
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
     int minuteProgress;
-    string _word;
-    string _state;
+    WordData _word;
+    StateEnum _state;
     bool isActionComplete;
     ProgressorManager ProgressorReference;
 
@@ -30,14 +31,13 @@ public class SlotController : MonoBehaviour
     }
 
 
-    public void initParameters(string word, string action, int ActionDuration, ProgressorManager reference) 
+    public void initParameters(WordData word, StateEnum state, int ActionDuration) 
     {
         actionDuration = ActionDuration;
         _word = word;
-        _state = action;
-        Wordtxt.text = word;
-        Actiontxt.text = action;
-        ProgressorReference = reference;
+        _state = state;
+        Wordtxt.text = word.GetName();
+        Actiontxt.text = state.GetActionVerb();
 
         ProgressBar.maxValue = actionDuration;
         ProgressBar.value = 0;
@@ -58,8 +58,9 @@ public class SlotController : MonoBehaviour
 
     private void CompleteAction()
     {
-        WordsManager.WM.RequestChangeState(_word, WordsManager.WM.ConvertStringToState(_state));
-        ProgressorReference.ActionFinish(_word, gameObject);
+        WordsManager.WM.RequestChangeState(_word, _state);
+        AgentManager.AM.SetActiveOrDesactive(_state, true);
+        OnFinishActionProgress?.Invoke(this, this);
         SetLEDState();
     }
 
@@ -73,6 +74,13 @@ public class SlotController : MonoBehaviour
     public void AbortAction()
     {
         Destroy(gameObject);
+        AgentManager.AM.SetActiveOrDesactive(_state, true);
+    }
+
+    public void CleanSlot()
+    {
+        WordsManager.WM.RequestChangeStateSeen(_word,_state);
+        Destroy(gameObject);
     }
 
 
@@ -84,5 +92,19 @@ public class SlotController : MonoBehaviour
         }
     }
 
+    public WordData GetWord()
+    {
+        return _word;
+    }
+
+    public StateEnum GetState()
+    {
+        return _state;
+    }
+
+    public bool IsActionComplete()
+    {
+        return isActionComplete;
+    }
 
 }

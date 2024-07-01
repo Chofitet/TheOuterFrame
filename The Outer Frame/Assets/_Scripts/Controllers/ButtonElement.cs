@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class ButtonElement : MonoBehaviour
 {
     [SerializeField] int NumCam;
     [SerializeField] CamController.ViewStates View = CamController.ViewStates.SpecificView;
+    public Action Onclik; 
     private void Awake()
     {
         CamController.OnViewStateChanged += DisableBtnInSpecificWiew;
@@ -20,6 +22,7 @@ public class ButtonElement : MonoBehaviour
     {
         CamController.camController.UpdateCurrentView(NumCam);
         CamController.camController.UpdateViewState(View);
+        Onclik?.Invoke();
     }
 
     void DisableBtnInSpecificWiew(CamController.ViewStates view)

@@ -80,6 +80,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+
     private void OnEnable()
     {
         OnHourChange += MakeDayChange;
@@ -119,6 +120,8 @@ public class TimeManager : MonoBehaviour
     {
         TimeVariation = 0;
     }
+
+    
 }
 
 public struct TimeData
@@ -137,6 +140,14 @@ public struct TimeData
     public override string ToString()
     {
         return $"Day: {Day}, Hour: {Hour}, Minute: {Minute}";
+    }
+
+    public  int GetTimeInNum()
+    {
+        string auxString = Day.ToString() + Hour.ToString() + Minute.ToString();
+        int auxInt;
+        int.TryParse(auxString, out auxInt);
+        return auxInt;
     }
 }
 

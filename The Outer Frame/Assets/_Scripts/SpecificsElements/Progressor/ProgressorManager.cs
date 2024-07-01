@@ -9,17 +9,34 @@ public class ProgressorManager : MonoBehaviour
     [SerializeField] PrinterController Printer;
     List<GameObject> Slots = new List<GameObject>();
 
-
-    public void SetActionInCourse(string _word, string state)
+    bool IsPossibleSetASlot()
     {
         Slots.RemoveAll(s => s == null);
+        bool auxbool = false;
+
+        foreach (GameObject slot in Slots)
+        {
+            if (slot.GetComponent<SlotController>().IsActionComplete()) auxbool = true;
+        }
 
         if (Slots.Count == 5)
         {
             Debug.LogWarning("Todos los Slots estan ocupados");
-            return;
+            return false;
         }
-        if (WordsManager.WM.CheckIfStateWasDone(_word, WordsManager.WM.ConvertStringToState(state)))
+        else if (auxbool) return false;
+        else return true;
+    }
+
+
+    public void SetActionInCourse(Component c, object _state)
+    {
+        WordData _word = WordSelectedInNotebook.Notebook.GetSelectedWord();
+        StateEnum state = (StateEnum) _state;
+
+        if (!IsPossibleSetASlot()) return;
+
+        if (WordsManager.WM.CheckIfStateWasDone(_word, state))
         {
             GameObject slot = Instantiate(SlotPrefab);
             slot.GetComponent<SlotController>().ActionWasDone();
@@ -29,36 +46,13 @@ public class ProgressorManager : MonoBehaviour
         else
         {
             GameObject slot = Instantiate(SlotPrefab);
-            slot.GetComponent<SlotController>().initParameters(_word, state, GetMinutesOfAction(state),this);
+            slot.GetComponent<SlotController>().initParameters(_word, state, state.GetTime());
             slot.transform.SetParent(transform, false);
             Slots.Add(slot);
+            AgentManager.AM.SetActiveOrDesactive(state, false);
             
         }
 
-        for (int i = 0; i < Slots.Count; i++)
-        {
-            Debug.Log(Slots[i].name);
-        }
-
-    }
-
-    public void ActionFinish(string word, GameObject slotReference)
-    {
-        Printer.InstanciateReport(word, slotReference);
-    }
-
-
-    int GetMinutesOfAction(string state)
-    {
-        switch (state)
-        {
-            case "dead":
-             return 30;
-
-            case "brainwashed":
-                return 60;
-        }
-        return 0;
     }
 
 }

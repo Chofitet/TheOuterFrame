@@ -6,27 +6,50 @@ using TMPro;
 
 public class ActionPlan : MonoBehaviour
 {
-    [SerializeField] ProgressorManager PM;
-    [SerializeField] TMP_Text[] TxtInputsFields;
-    string selectedWord;
-    string state;
+    [SerializeField] GameObject ActionRowPrefab;
+    [SerializeField] Transform ActionsContainer;
+    [SerializeField] GameEvent OnApprovedActionPlan;
+    List<ActionRowController> Actions = new List<ActionRowController>();
+    StateEnum state;
 
-    public void WriteWordText(int Num)
+    private void OnEnable()
     {
-        for (int i = 0; i < TxtInputsFields.Length; i++)
-        {
-            TxtInputsFields[i].text = "";
-        }
+        InstantiateActionRows();
+    }
 
-        state = TxtInputsFields[Num].gameObject.name;
-        
-        selectedWord = WordSelectedInNotebook.Notebook.GetSelectedWord();
-        TxtInputsFields[Num].text = selectedWord;
+    void InstantiateActionRows()
+    {
+        List<StateEnum> Agents = AgentManager.AM.GetAgentList();
+
+        foreach(StateEnum actions in Agents)
+        {
+            GameObject AgentInstantiate = Instantiate(ActionRowPrefab, ActionsContainer, false);
+            ActionRowController script = AgentInstantiate.GetComponent<ActionRowController>();
+            script.Initialization(actions);
+            script.GetButton().onClick.AddListener(() => OnButtonRowPress(script));
+            Actions.Add(script);
+
+            
+            if (!actions.GetIfIsActive())
+            {
+                AgentInstantiate.GetComponent<ActionRowController>().DesactiveRow();
+            }
+        }
+    }
+
+    void OnButtonRowPress(ActionRowController script)
+    {
+        foreach(ActionRowController actions in Actions)
+        {
+            if (script != actions) actions.ResetRow();
+            else state = script.GetState();
+        }
     }
 
     public void ApprovedActionPlan()
     {
-        PM.SetActionInCourse(selectedWord, state);
+        OnApprovedActionPlan.Invoke(this,state);
+        Destroy(gameObject);
     }
 
 }

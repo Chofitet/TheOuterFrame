@@ -6,12 +6,12 @@ using TMPro;
 public class ReportController : MonoBehaviour
 {
     [SerializeField] TMP_Text reporttxt;
+    [SerializeField] GameEventListener LeaveReportListener;
 
 
-    public void initReport(string word)
+    public void initReport(WordData word)
     {
-        reporttxt.text = WordsManager.WM.RequestInput(word);
-
+        reporttxt.text = WordsManager.WM.RequestLastReport(word).GetText();
     }
 
 }

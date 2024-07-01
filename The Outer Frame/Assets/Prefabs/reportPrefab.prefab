@@ -1443,6 +1443,9 @@ GameObject:
   - component: {fileID: 7037141663930976052}
   - component: {fileID: 7502035540380240527}
   - component: {fileID: 4596450347146456161}
+  - component: {fileID: 7146452894943114339}
+  - component: {fileID: 7505981498728773304}
+  - component: {fileID: 815726962956174113}
   m_Layer: 0
   m_Name: reportPrefab
   m_TagString: Untagged
@@ -1460,7 +1463,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.55145997, y: 0.02035, z: 0.8849482}
+  m_LocalScale: {x: 0.55145997, y: 0.020350004, z: 0.88494813}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3113105833530671892}
@@ -1550,3 +1553,81 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reporttxt: {fileID: 2354806404615635326}
+  LeaveReportListener: {fileID: 815726962956174113}
+--- !u!95 &7146452894943114339
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8818181090750843214}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 26832b4efe2380d4c805d4b52c5da866, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7505981498728773304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8818181090750843214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerEvent: {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7146452894943114339}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: TakeReport
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &815726962956174113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8818181090750843214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerEvent: {fileID: 11400000, guid: ba541de4869c40440bbb35baf0c98c81, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7146452894943114339}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveReport
+          m_BoolArgument: 0
+        m_CallState: 2

@@ -6,14 +6,15 @@ using UnityEngine;
 public class WordsManager : MonoBehaviour
 {
     //Sistema encargado de solicitar requests a Words específicas para que devuelvan un input
-    [SerializeField] string testRequest;
-    [SerializeField] Word.WordState estado;
+    [SerializeField] List<WordData> wordsDic = new List<WordData>();
+    [SerializeField] bool SaveProgress;
     public static WordsManager WM { get; private set; }
-    public event Action<string> OnChangeStateOfWord;
+    public event Action<WordData> OnChangeStateOfWord;
+    public event Action<WordData> OnChangeStateSeenOfWord;
+
 
     private void Awake()
     {
-
         if (WM != null && WM != this)
         {
             Destroy(this.gameObject);
@@ -23,78 +24,75 @@ public class WordsManager : MonoBehaviour
             WM = this;
         }
 
-    }
-
-    private void Start()
-    {
-       // RequestInput();
-    }
-
-    private Dictionary<string, Word> wordsDic = new Dictionary<string, Word>();
-
-    public void RegisterWord(string id, Word word)
-    {
-        if (!wordsDic.ContainsKey(id))
+        if (SaveProgress) return;
+        foreach(WordData word in wordsDic)
         {
-            wordsDic.Add(id, word);
+            word.CleanHistory();
         }
     }
 
-    public string RequestInput(string _word)
+    public ReportType RequestLastReport(WordData _word)
     {
-       return wordsDic[_word].GetActionPlanResult();
+        return FindWordInList(_word).GetLastReport();
     }
 
-    public string RequestInputAccordingState(Word.WordState state, string _word)
+    public ReportType RequestReport(WordData _word, StateEnum state)
     {
-        return wordsDic[_word].RequestInputAccordingState(state);
+        return FindWordInList(_word).GetReport(state);
     }
 
-    public string RequestNew(string _word)
+    public TVNewType RequestNew(WordData _word, StateEnum state)
     {
-        return wordsDic[_word].GetLastTVNew();
+        return FindWordInList(_word).GetTVnew(state);
     }
 
-    public string RequestBDWikiData(string _word)
+    public DataBaseType RequestBDWikiData(WordData _word)
     {
-        return wordsDic[_word].GetDataBD();
+        return FindWordInList(_word).GetDB();
     }
 
-    public void RequestChangeState(string _word, Word.WordState WordState)
+    public void RequestChangeState(WordData _word, StateEnum WordState)
     {
-        wordsDic[_word].ChangeState(WordState);
+        FindWordInList(_word).ChangeState(WordState);
         OnChangeStateOfWord?.Invoke(_word);
     }
 
-    public bool CheckIfStateWasDone(string _word, Word.WordState WordState)
+    public void RequestChangeStateSeen(WordData _word, StateEnum WordState)
     {
-        Debug.Log(_word);
-        Debug.Log(WordState);
-        return wordsDic[_word].CheckIfStateWasDone(WordState);
+        FindWordInList(_word).CheckStateSeen(WordState);
+        OnChangeStateSeenOfWord?.Invoke(_word);
     }
 
-    public Dictionary<Word.WordState,TimeData> RequestStateTimeHistory(string _word)
+    public bool CheckIfStateWasDone(WordData _word, StateEnum WordState)
     {
-      return wordsDic[_word].GetStateTimeHistory();
+        return FindWordInList(_word).CheckIfStateWasDone(WordState);
     }
-     
 
-    public Word.WordState ConvertStringToState(string _state)
+    public TimeData RequestTimeDataOfState(WordData _word, StateEnum WordState)
     {
-        switch(_state)
+        return FindWordInList(_word).GetTimeOfState(WordState);
+    }
+    public List<StateEnum> GetHistory(WordData _word)
+    {
+        return FindWordInList(_word).GetHistory();
+    }
+
+    WordData FindWordInList(WordData _word)
+    {
+        foreach(WordData w in wordsDic)
         {
-            case "brainwashed":
-                return Word.WordState.brainwashed;
-            case "dead":
-                return Word.WordState.dead;
-            case "hacked":
-                return Word.WordState.hacked;
-            case "investigated":
-                return Word.WordState.investigated;
+            if(w==_word)
+            {
+                return w;
+            }
         }
-        Debug.LogWarning("State not setted: The string value don't match with any state");
-        return Word.WordState.none;
+
+        return wordsDic[0];
     }
 
+    public bool GetInactiveState(WordData _word)
+    {
+        return FindWordInList(_word).GetInactiveState();
+    }
 
 }

@@ -6,12 +6,11 @@ using TMPro;
 
 public class WordSelectedInNotebook : MonoBehaviour
 {
-   
-    string SelectedWord;
-
     public static WordSelectedInNotebook Notebook { get; private set; }
-    private List<string> CleanwordsTexts = new List<string>();
-    private Dictionary<int, GameObject> wordsTexts = new Dictionary<int, GameObject>();
+    WordData SelectedWord;
+
+    List<WordData> WordsFound = new List<WordData>();
+    [SerializeField] List<WordData> WordsfromBeginning = new List<WordData>();
 
     private void Awake()
     {
@@ -25,45 +24,28 @@ public class WordSelectedInNotebook : MonoBehaviour
             Notebook = this;
         }
 
-        SetDictionary();
     }
 
-    void SetDictionary()
+    private void Start()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        foreach (WordData w in WordsfromBeginning)
         {
-            Transform child = transform.GetChild(i);
-
-            wordsTexts.Add(i, child.gameObject);
-
-            CleanwordsTexts.Add(child.name);
+            AddWordToNotebook(w);
         }
     }
 
-    public void SetSelectedWord(int Num)
-    {
-        SelectedWord = wordsTexts[Num].name;
-        SetUnderline(Num);
-    }
+    public void AddWordToNotebook(WordData word) => WordsFound.Add(word);
+    
 
-    public string GetSelectedWord()
-    {
-        return SelectedWord;
-    }
+    public void UnselectWord() => SelectedWord = null;
 
-    void SetUnderline(int Num)
-    {
-        TMP_Text auxText = wordsTexts[Num].transform.GetChild(0).GetComponent<TMP_Text>();
-        CleanUnderline();
-        auxText.text = "<u>" + auxText.text + "</u>";
-    }
 
-    void CleanUnderline()
-    {
-        for (int i = 0; i < wordsTexts.Count; i++)
-        {
-            TMP_Text auxText = wordsTexts[i].transform.GetChild(0).GetComponent<TMP_Text>();
-            auxText.text = CleanwordsTexts[i];
-        }
-    }
+    public void SetSelectedWord(WordData word) => SelectedWord = word;
+    
+
+    public WordData GetSelectedWord(){return SelectedWord;}
+
+    public List<WordData> GetWordsList() { return WordsFound; }
+
 }
+
