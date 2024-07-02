@@ -5,40 +5,24 @@ using UnityEngine;
 
 public class ButtonElement : MonoBehaviour
 {
-    [SerializeField] int NumCam;
-    [SerializeField] CamController.ViewStates View = CamController.ViewStates.SpecificView;
-    public Action Onclik; 
-    private void Awake()
-    {
-        CamController.OnViewStateChanged += DisableBtnInSpecificWiew;
-    }
-
-    private void OnDestroy()
-    {
-        CamController.OnViewStateChanged -= DisableBtnInSpecificWiew;
-    }
+    [SerializeField] GameEvent OnButtonElementClick;
+    [SerializeField] ViewStates view;
 
     private void OnMouseUpAsButton()
     {
-        CamController.camController.UpdateCurrentView(NumCam);
-        CamController.camController.UpdateViewState(View);
-        Onclik?.Invoke();
+        OnButtonElementClick?.Invoke(this, view);
     }
 
-    void DisableBtnInSpecificWiew(CamController.ViewStates view)
+    public void DisableEnableButton(Component sender, object view)
     {
-        if (view == CamController.ViewStates.SpecificView)
-        {
-            GetComponent<BoxCollider>().enabled = false;
-        }
-        else if (view == CamController.ViewStates.GeneralView)
+        ViewStates newState = (ViewStates)view;
+
+        if(newState == ViewStates.GeneralView)
         {
             GetComponent<BoxCollider>().enabled = true;
         }
-        else if (view == CamController.ViewStates.NotebookView)
-        {
-            GetComponent<BoxCollider>().enabled = false;
-        }
+        else GetComponent<BoxCollider>().enabled = false;
+
     }
 }
 

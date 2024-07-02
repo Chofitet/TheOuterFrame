@@ -81,7 +81,7 @@ public class WordData : ScriptableObject
 
         Exceptions exception = GetExceptions(newState);
 
-        if (exception.GetState().name != "none")
+        if (exception)
         {
             currentState = exception.GetState();
 
@@ -120,7 +120,7 @@ public class WordData : ScriptableObject
 
     Exceptions FindException(StateEnum state)
     {
-        Exceptions aux = exceptions[0];
+        Exceptions aux = null;
 
         foreach (Exceptions ex in exceptions)
         {

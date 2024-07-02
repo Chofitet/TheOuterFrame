@@ -1587,6 +1587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsDesactive: 0
   TriggerEvent: {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
   Event:
     m_PersistentCalls:
@@ -1595,6 +1596,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: Play
         m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: TakeReport
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 815726962956174113}
+        m_TargetAssemblyTypeName: GameEventListener, Assembly-CSharp
+        m_MethodName: ActiveListener
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1615,6 +1628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsDesactive: 1
   TriggerEvent: {fileID: 11400000, guid: ba541de4869c40440bbb35baf0c98c81, type: 2}
   Event:
     m_PersistentCalls:

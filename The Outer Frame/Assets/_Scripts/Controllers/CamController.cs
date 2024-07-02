@@ -7,29 +7,9 @@ public class CamController : MonoBehaviour
 {
     [SerializeField] Transform[] posCamara;
     [SerializeField] Transform CamTransform;
-    [SerializeField] SmoothMoveObjectToPoints NotebookMove;
-    [SerializeField] GameEvent OnNotebookView;
-    [SerializeField] GameEvent OnGeneralView;
-    public float transitionSpeed;
+    [SerializeField] float transitionSpeed;
     Transform currentview { get; set; }
     int currentviewNum;
-    ViewStates currentViewState;
-    public static event Action<ViewStates> OnViewStateChanged;
-
-    public static CamController camController { get; private set; }
-    private void Awake()
-    {
-
-        if (camController != null && camController != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            camController = this;
-        }
-
-    }
 
     void Start()
     {
@@ -37,17 +17,9 @@ public class CamController : MonoBehaviour
         currentviewNum = 0;
     }
 
-
-    void Update()
+    private void Update()
     {
         currentview = posCamara[currentviewNum];
-
-        if (Input.GetKeyDown(KeyCode.Mouse1) && currentViewState != ViewStates.GeneralView)
-        {
-            currentviewNum = 0;
-            UpdateViewState(ViewStates.GeneralView);
-        }
-
     }
 
     private void LateUpdate()
@@ -65,46 +37,30 @@ public class CamController : MonoBehaviour
 
     }
 
-    public void UpdateCurrentView(int num)
+    public void UpdateCurrentView(Component sender, object View)
     {
-        currentviewNum = num;
-        Debug.Log("Num of Cam: " + num);
-    }
-
-    public enum ViewStates
-    {
-        GeneralView,
-        SpecificView,
-        NotebookView,
-        PrinterView
-    }
-
-    public void UpdateViewState(ViewStates newView)
-    {
-        switch (newView)
+        ViewStates newview = (ViewStates)View;
+        switch(newview)
         {
             case ViewStates.GeneralView:
-                OnGeneralView?.Invoke(this, null);
+                currentviewNum = 0;
                 break;
-            case ViewStates.SpecificView:
+            case ViewStates.PinchofonoView:
+                currentviewNum = 1;
                 break;
-            case ViewStates.NotebookView:
-                NotebookMove.ChangePosition();
-                OnNotebookView?.Invoke(this, null);
+            case ViewStates.BoardView:
+                currentviewNum = 2;
                 break;
-            case ViewStates.PrinterView:
+            case ViewStates.PCView:
+                currentviewNum = 3;
                 break;
-
+            case ViewStates.ProgressorView:
+                currentviewNum = 4;
+                break;
+            case ViewStates.TVView:
+                currentviewNum = 5;
+                break;
         }
-        OnViewStateChanged?.Invoke(newView);
-        currentViewState = newView;
-    }
-
-    
-
-    public ViewStates GiveCurrentViewState()
-    {
-        return currentViewState;
     }
 
 }

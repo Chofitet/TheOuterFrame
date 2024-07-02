@@ -18,7 +18,6 @@ public class SlotController : MonoBehaviour
     WordData _word;
     StateEnum _state;
     bool isActionComplete;
-    ProgressorManager ProgressorReference;
 
     void OnEnable()
     {
