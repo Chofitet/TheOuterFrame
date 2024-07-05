@@ -5,21 +5,34 @@ using TMPro;
 
 public class TVManager : MonoBehaviour
 {
-    [SerializeField] TMP_Text NewsText;
 
-    private void Start()
+    [SerializeField] List<TVScheduledNewType> ScheduledNews = new List<TVScheduledNewType>();
+
+    List<TVNewType> ReactiveNews = new List<TVNewType>();
+
+    [SerializeField] List<TVRandomNewType> RandomNews = new List<TVRandomNewType>();
+   void NewsDirector()
     {
-        WordsManager.WM.OnChangeStateOfWord += RegisterChangeState;
+        //Chequear Noticias programadas
+
+        //Chequear Noticias Reactivas
+
+        //Chequear Noticias Random
     }
 
-    private void OnDestroy()
-    {
-        WordsManager.WM.OnChangeStateOfWord -= RegisterChangeState;
-    }
+    void AddNewToReactiveNewList(Component sender, object obj)
+     {
+        //agregar un delay con corrutina para agregarlo a la pull (que el dalay dependa de qué acción es la realizada)
 
-    void RegisterChangeState(WordData word)
-    {
-       // NewsText.text = WordsManager.WM.RequestNew(word);
-    }
+        TVNewType _new = (TVNewType)obj;
 
+        ReactiveNews.Add(_new);
+     }
+
+    void OrderListDate(List<TVNewType> list)
+    {
+        
+
+
+    }
 }

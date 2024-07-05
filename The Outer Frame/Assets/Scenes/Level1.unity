@@ -2555,6 +2555,7 @@ GameObject:
   - component: {fileID: 616417594}
   - component: {fileID: 616417595}
   - component: {fileID: 616417596}
+  - component: {fileID: 616417597}
   m_Layer: 0
   m_Name: Words
   m_TagString: Untagged
@@ -2598,7 +2599,6 @@ MonoBehaviour:
   WordsfromBeginning:
   - {fileID: 11400000, guid: 524b09f33816c7d469de8f6961241a9c, type: 2}
   - {fileID: 11400000, guid: 327f3e2fef319f44b9b688a901b37aad, type: 2}
-  - {fileID: 11400000, guid: 33a2003a8941528409371f65d9ef5e32, type: 2}
 --- !u!114 &616417594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2663,6 +2663,35 @@ MonoBehaviour:
       - m_Target: {fileID: 616417594}
         m_TargetAssemblyTypeName: NotebookController, Assembly-CSharp
         m_MethodName: RefreshWords
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &616417597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 616417590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 19b3d96066d6b17418f480bb95f3c8d7, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 616417593}
+        m_TargetAssemblyTypeName: WordSelectedInNotebook, Assembly-CSharp
+        m_MethodName: AddWordToNotebook
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2788,7 +2817,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed62809505cbb1f40a78b793bd2c5d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NewsText: {fileID: 197520312}
+  ScheduledNews: []
+  RandomNews: []
 --- !u!1 &654645291
 GameObject:
   m_ObjectHideFlags: 0
@@ -5345,6 +5375,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 524b09f33816c7d469de8f6961241a9c, type: 2}
   - {fileID: 11400000, guid: 327f3e2fef319f44b9b688a901b37aad, type: 2}
   - {fileID: 11400000, guid: 33a2003a8941528409371f65d9ef5e32, type: 2}
+  - {fileID: 11400000, guid: db08422f7b12ee04d9d1c8d8d4a64aa3, type: 2}
+  - {fileID: 11400000, guid: 9154087ec8daa00488a81064d73b573e, type: 2}
   SaveProgress: 0
 --- !u!1 &1077515595
 GameObject:
@@ -9199,7 +9231,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2916c24cebdee424885cf69371932564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeVariation: 50
+  NormalTimeValue: 0.125
+  AcceleratedTimeValue: 10
 --- !u!1 &2013871607
 GameObject:
   m_ObjectHideFlags: 0

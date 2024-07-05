@@ -30,13 +30,16 @@ public class WordSelectedInNotebook : MonoBehaviour
     {
         foreach (WordData w in WordsfromBeginning)
         {
-            AddWordToNotebook(w);
+            AddWordToNotebook(null,w);
         }
     }
 
-    public void AddWordToNotebook(WordData word) => WordsFound.Add(word);
-    
-
+    public void AddWordToNotebook(Component sender, object obj)
+    {
+        WordData word = (WordData)obj;
+        if (!word) return;
+        WordsFound.Add(word);
+    }
     public void UnselectWord() => SelectedWord = null;
 
 
