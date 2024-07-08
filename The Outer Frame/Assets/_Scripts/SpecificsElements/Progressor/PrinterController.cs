@@ -8,7 +8,6 @@ public class PrinterController : MonoBehaviour
     [SerializeField] Transform InstanciateSpot;
     List<SlotController> SlotsInQueue = new List<SlotController>();
     [SerializeField] GameEvent OnTakeReport;
-    ReportController LastReportInstance;
 
     public void AddToQueue(Component component, object sc)
     {
@@ -28,13 +27,13 @@ public class PrinterController : MonoBehaviour
 
     public void InstanciateReport(GameObject slotReference)
     {
+        GetComponent<BoxCollider>().enabled = true;
         GameObject report = Instantiate(ReportPrefab, InstanciateSpot.position,InstanciateSpot.rotation, InstanciateSpot);
         report.GetComponent<ReportController>().initReport(slotReference.GetComponent<SlotController>().GetWord());
-        LastReportInstance = report.GetComponent<ReportController>();
     }
     private void OnMouseUpAsButton()
     {
-        
+        GetComponent<BoxCollider>().enabled = false;
         if (GetIsQueueFree()) return;
         Destroy(SlotsInQueue[0].gameObject);
         SlotsInQueue.Remove(SlotsInQueue[0]);

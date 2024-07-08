@@ -8,7 +8,11 @@ public class TimeManager : MonoBehaviour
     public static Action OnMinuteChange;
     public static Action OnHourChange;
     public static Action OnDayChange;
-    public float TimeVariation = 50;
+    [SerializeField] float NormalTimeValue;
+    [SerializeField] float AcceleratedTimeValue;
+
+    float TimeVariation;
+
     bool isTimeAccelerated;
 
     public static TimeManager timeManager { get; private set; }
@@ -24,7 +28,7 @@ public class TimeManager : MonoBehaviour
         {
             timeManager = this;
         }
-
+        TimeVariation = NormalTimeValue * 60;
     }
 
     int Day;
@@ -104,7 +108,7 @@ public class TimeManager : MonoBehaviour
     {
         if (!isTimeAccelerated)
         {
-            TimeVariation = 900f;
+            TimeVariation = AcceleratedTimeValue *60;
             isTimeAccelerated = true;
         }
         else { NormalizeTime(); }
@@ -112,7 +116,7 @@ public class TimeManager : MonoBehaviour
 
     public void NormalizeTime()
     {
-        TimeVariation = 30;
+        TimeVariation = NormalTimeValue * 60;
         isTimeAccelerated = false;
     }
 

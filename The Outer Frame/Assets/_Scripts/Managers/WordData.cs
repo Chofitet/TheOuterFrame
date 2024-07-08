@@ -27,10 +27,11 @@ public class WordData : ScriptableObject
     private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
     private Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
     StateEnum currentState;
+    bool isFound;
 
     #region GetInputLogic
-    
-    
+
+
     public TVNewType GetTVnew(StateEnum state)
     {
         return FindInputInList(TVNewTypes, state);
@@ -81,7 +82,7 @@ public class WordData : ScriptableObject
 
         Exceptions exception = GetExceptions(newState);
 
-        if (exception.GetState().name != "none")
+        if (exception)
         {
             currentState = exception.GetState();
 
@@ -120,7 +121,7 @@ public class WordData : ScriptableObject
 
     Exceptions FindException(StateEnum state)
     {
-        Exceptions aux = exceptions[0];
+        Exceptions aux = null;
 
         foreach (Exceptions ex in exceptions)
         {
@@ -216,5 +217,9 @@ public class WordData : ScriptableObject
         }
         return TimeManager.timeManager.GetTime();
     }
+
+    public void SetIsFound(bool x = true) => isFound = x;
+
+    public bool GetIsFound() { return isFound; }
 
 }

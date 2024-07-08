@@ -8,13 +8,23 @@ using UnityEngine.Events;
 public class CustomGameEvent : UnityEvent<Component, object> { }
 public class GameEventListener : MonoBehaviour
 {
+    [SerializeField] bool IsDesactive;
     [SerializeField] GameEvent TriggerEvent;
     [SerializeField] CustomGameEvent Event;
 
-    private void OnEnable() => TriggerEvent.registerListener(this);
+    private void Awake() => TriggerEvent.registerListener(this);
 
     private void OnDisable() => TriggerEvent.UnregisterListener(this);
 
-    public void Raise(Component sender, object data ) => Event.Invoke(sender, data);
+    public void Raise(Component sender, object data)
+    {
+        if (IsDesactive) return;
+        Event.Invoke(sender, data);
+    }
+
+    public void ActiveListener(Component sender ,object var)
+    {
+        IsDesactive = false;
+    }
 
 }

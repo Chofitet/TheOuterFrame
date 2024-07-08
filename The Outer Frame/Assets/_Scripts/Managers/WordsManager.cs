@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 
 public class WordsManager : MonoBehaviour
@@ -12,7 +15,7 @@ public class WordsManager : MonoBehaviour
     public event Action<WordData> OnChangeStateOfWord;
     public event Action<WordData> OnChangeStateSeenOfWord;
 
-
+    public List<WordData> GetWordsDic() { return wordsDic; }
     private void Awake()
     {
         if (WM != null && WM != this)
@@ -28,6 +31,7 @@ public class WordsManager : MonoBehaviour
         foreach(WordData word in wordsDic)
         {
             word.CleanHistory();
+            word.SetIsFound(false);
         }
     }
 
@@ -94,5 +98,17 @@ public class WordsManager : MonoBehaviour
     {
         return FindWordInList(_word).GetInactiveState();
     }
-
+    public WordData FindWordDataWithString(string WordToCompare)
+    {
+        WordData WD = null;
+        foreach (WordData w in wordsDic)
+        {
+            if (w.GetName().Contains(WordToCompare))
+            {
+                WD = w;
+            }
+        }
+        return WD;
+    }
 }
+
