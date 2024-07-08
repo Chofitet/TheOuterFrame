@@ -27,10 +27,11 @@ public class WordData : ScriptableObject
     private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
     private Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
     StateEnum currentState;
+    bool isFound;
 
     #region GetInputLogic
-    
-    
+
+
     public TVNewType GetTVnew(StateEnum state)
     {
         return FindInputInList(TVNewTypes, state);
@@ -216,5 +217,9 @@ public class WordData : ScriptableObject
         }
         return TimeManager.timeManager.GetTime();
     }
+
+    public void SetIsFound(bool x = true) => isFound = x;
+
+    public bool GetIsFound() { return isFound; }
 
 }

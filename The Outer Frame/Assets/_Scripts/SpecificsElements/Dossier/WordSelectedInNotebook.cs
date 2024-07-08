@@ -39,6 +39,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         WordData word = (WordData)obj;
         if (!word) return;
         WordsFound.Add(word);
+        word.SetIsFound();
     }
     public void UnselectWord() => SelectedWord = null;
 
