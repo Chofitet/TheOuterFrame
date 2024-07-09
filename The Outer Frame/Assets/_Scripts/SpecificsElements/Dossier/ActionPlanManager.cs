@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ActionPlanManager : MonoBehaviour
 {
     [SerializeField] GameObject ActionPlanPrefab;
+    [SerializeField] Transform parent;
 
     public void SetActionPlan(Component sender, object obj)
     {

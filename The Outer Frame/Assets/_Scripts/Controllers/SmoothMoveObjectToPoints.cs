@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class SmoothMoveObjectToPoints : MonoBehaviour
 {
     [SerializeField] Transform ObjectToMove;
-    [SerializeField] Transform TakenPos;
+    [SerializeField] Transform FinalPos;
     [SerializeField] float transitionSpeed;
     [SerializeField] Transform initPos;
     Transform currentPos;
@@ -16,26 +15,17 @@ public class SmoothMoveObjectToPoints : MonoBehaviour
         currentPos = initPos;
     }
 
-    private void OnMouseUpAsButton()
+    public void ChangePosition(Component sender, object obj)
     {
-        ChangePosition();
-    }
+        bool istrue = (bool)obj;
 
-    public void ChangePosition()
-    {
-        currentPos = TakenPos;
-        GetComponent<BoxCollider>().enabled = false;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (istrue)
         {
-            currentPos = initPos;
-            GetComponent<BoxCollider>().enabled = true;
+            currentPos = FinalPos;
         }
-
+        else currentPos = initPos;
     }
+
 
     private void LateUpdate()
     {
@@ -52,14 +42,5 @@ public class SmoothMoveObjectToPoints : MonoBehaviour
         ObjectToMove.rotation = currentAngle;
 
 
-    }
-    public void setFinalSpot(Transform _transform)
-    {
-        TakenPos = _transform;
-    }
-
-    public void SetObjectToMove(Transform _object)
-    {
-        ObjectToMove = _object;
     }
 }

@@ -19,27 +19,19 @@ public class SlotController : MonoBehaviour
     StateEnum _state;
     bool isActionComplete;
 
-    void OnEnable()
-    {
-        TimeManager.OnMinuteChange += UpdateProgress; 
-    }
-
-    void OnDisable()
-    {
-        TimeManager.OnMinuteChange -= UpdateProgress; 
-    }
-
-
     public void initParameters(WordData word, StateEnum state, int ActionDuration) 
     {
+        gameObject.SetActive(true);
         actionDuration = ActionDuration;
         _word = word;
         _state = state;
         Wordtxt.text = word.GetName();
         Actiontxt.text = state.GetActionVerb();
 
+        minuteProgress = 0;
         ProgressBar.maxValue = actionDuration;
         ProgressBar.value = 0;
+        TimeManager.OnMinuteChange += UpdateProgress;
     }
 
     void UpdateProgress()
@@ -60,34 +52,42 @@ public class SlotController : MonoBehaviour
         WordsManager.WM.RequestChangeState(_word, _state);
         AgentManager.AM.SetActiveOrDesactive(_state, true);
         OnFinishActionProgress?.Invoke(this, this);
-        SetLEDState();
+        SetLEDState(Color.yellow);
     }
 
     public void ActionWasDone()
     {
-        TimeManager.OnMinuteChange -= UpdateProgress;
         Wordtxt.text = "the action has already been done";
         Invoke("AbortAction", 3);
     }
 
     public void AbortAction()
     {
-        Destroy(gameObject);
+        OnFinishActionProgress?.Invoke(this, this);
+        ResetSlot();
         AgentManager.AM.SetActiveOrDesactive(_state, true);
     }
 
     public void CleanSlot()
     {
+        ResetSlot();
         WordsManager.WM.RequestChangeStateSeen(_word,_state);
-        Destroy(gameObject);
+       
     }
 
+    void ResetSlot()
+    {
+        gameObject.SetActive(false);
+        isActionComplete = false;
+        TimeManager.OnMinuteChange -= UpdateProgress;
+        SetLEDState(Color.green);
+    }
 
-    void SetLEDState()
+    void SetLEDState(Color _color)
     {
         foreach (Image O in LEDObjects)
         {
-            O.color = Color.yellow;
+            O.color = _color;
         }
     }
 

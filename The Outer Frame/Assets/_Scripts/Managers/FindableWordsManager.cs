@@ -127,6 +127,7 @@ public class FindableWordsManager : MonoBehaviour
 
     public void ChangeCusorIcon(Component sender, object index)
     {
+        return;
         if (index is WordData) index = 0;
         int i = (int)index;
 
