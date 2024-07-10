@@ -18,28 +18,36 @@ public class SlotController : MonoBehaviour
     WordData _word;
     StateEnum _state;
     bool isActionComplete;
-
-    void OnEnable()
-    {
-        TimeManager.OnMinuteChange += UpdateProgress; 
-    }
-
-    void OnDisable()
-    {
-        TimeManager.OnMinuteChange -= UpdateProgress; 
-    }
-
+    bool isAborted;
+    bool isNotPossible;
+    bool inFillFast;
 
     public void initParameters(WordData word, StateEnum state, int ActionDuration) 
     {
+        gameObject.SetActive(true);
         actionDuration = ActionDuration;
         _word = word;
         _state = state;
         Wordtxt.text = word.GetName();
         Actiontxt.text = state.GetActionVerb();
+        isAborted = false;
+        isNotPossible = false;
 
+        minuteProgress = 0;
         ProgressBar.maxValue = actionDuration;
         ProgressBar.value = 0;
+        
+
+        if (WordsManager.WM.CheckIfStateWasDone(word, state))
+        {
+            inFillFast = true;
+            ProgressBar.maxValue = 1.5f;
+            isNotPossible = true;
+        }
+        else
+        {
+            TimeManager.OnMinuteChange += UpdateProgress;
+        }
     }
 
     void UpdateProgress()
@@ -50,9 +58,30 @@ public class SlotController : MonoBehaviour
 
         if (minuteProgress >= actionDuration)
         {
-            CompleteAction();
+            if(isNotPossible)
+            {
+                ActionWasDone();
+            }
+            else CompleteAction();
             isActionComplete = true;
         }
+    }
+
+    private void Update()
+    {
+        if (inFillFast && ProgressBar.value <= ProgressBar.maxValue)
+        {
+            ProgressBar.value += Time.deltaTime;
+            Debug.Log(ProgressBar.value);
+            Debug.Log(ProgressBar.maxValue);
+        }
+        
+        if (inFillFast && ProgressBar.value == ProgressBar.maxValue)
+        {
+            Debug.Log("full");
+            ActionWasDone();
+        }
+
     }
 
     private void CompleteAction()
@@ -60,34 +89,48 @@ public class SlotController : MonoBehaviour
         WordsManager.WM.RequestChangeState(_word, _state);
         AgentManager.AM.SetActiveOrDesactive(_state, true);
         OnFinishActionProgress?.Invoke(this, this);
-        SetLEDState();
+        SetLEDState(Color.yellow);
     }
 
-    public void ActionWasDone()
+    void ActionWasDone()
     {
+        inFillFast = false;
+        OnFinishActionProgress?.Invoke(this, this);
+        AgentManager.AM.SetActiveOrDesactive(_state, true);
+        SetLEDState(Color.red);
         TimeManager.OnMinuteChange -= UpdateProgress;
-        Wordtxt.text = "the action has already been done";
-        Invoke("AbortAction", 3);
+        ProgressBar.value = 0;
     }
 
     public void AbortAction()
     {
-        Destroy(gameObject);
+        isAborted = true;
+        OnFinishActionProgress?.Invoke(this, this);
         AgentManager.AM.SetActiveOrDesactive(_state, true);
+        SetLEDState(Color.yellow);
+        TimeManager.OnMinuteChange -= UpdateProgress;
+        ProgressBar.value = 0;
     }
 
     public void CleanSlot()
     {
+        ResetSlot();
         WordsManager.WM.RequestChangeStateSeen(_word,_state);
-        Destroy(gameObject);
     }
 
+    void ResetSlot()
+    {
+        gameObject.SetActive(false);
+        isActionComplete = false;
+        TimeManager.OnMinuteChange -= UpdateProgress;
+        SetLEDState(Color.green);
+    }
 
-    void SetLEDState()
+    void SetLEDState(Color _color)
     {
         foreach (Image O in LEDObjects)
         {
-            O.color = Color.yellow;
+            O.color = _color;
         }
     }
 
@@ -104,6 +147,14 @@ public class SlotController : MonoBehaviour
     public bool IsActionComplete()
     {
         return isActionComplete;
+    }
+    public bool GetIsAborted()
+    {
+        return isAborted;
+    }
+    public bool GetIsNotPossible()
+    {
+        return isNotPossible;
     }
 
 }

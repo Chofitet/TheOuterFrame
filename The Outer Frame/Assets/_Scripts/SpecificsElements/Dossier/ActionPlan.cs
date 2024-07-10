@@ -37,6 +37,7 @@ public class ActionPlan : MonoBehaviour
         }
     }
 
+
     void OnButtonRowPress(ActionRowController script)
     {
         foreach(ActionRowController actions in Actions)
@@ -51,5 +52,6 @@ public class ActionPlan : MonoBehaviour
         OnApprovedActionPlan.Invoke(this,state);
         Destroy(gameObject);
     }
+
 
 }

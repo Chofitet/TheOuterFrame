@@ -5,34 +5,155 @@ using TMPro;
 
 public class TVManager : MonoBehaviour
 {
+    [SerializeField] List<ChannelController> Channels = new List<ChannelController>();
+    // Está suscripto al evento de chequeo de noticias
+    // Tiene referenciado los canales por tipo
+    // Tiene las listas de las noticias programadas y random
+    // Manejará el embudo de noticias. Sacará como conclusión en qué canal y por cuanto tiempo irá una noticia
+    // Manejo de cronograma de programación.
+    private void OnEnable()
+    {
+        TimeManager.OnNewsChange += NewsDirector;
+    }
+    private void OnDisable()
+    {
+        TimeManager.OnNewsChange -= NewsDirector;
+    }
 
     [SerializeField] List<TVScheduledNewType> ScheduledNews = new List<TVScheduledNewType>();
 
     List<TVNewType> ReactiveNews = new List<TVNewType>();
 
     [SerializeField] List<TVRandomNewType> RandomNews = new List<TVRandomNewType>();
-   void NewsDirector()
+    void NewsDirector()
     {
-        //Chequear Noticias programadas
+        ResetChannels();
+        Debug.Log("checkingNew");
+        CheckForScheduledNews();
 
-        //Chequear Noticias Reactivas
+        CheckForReactiveNews();
+
 
         //Chequear Noticias Random
     }
 
-    void AddNewToReactiveNewList(Component sender, object obj)
-     {
+    public void AddNewToReactiveNewList(Component sender, object obj)
+    {
         //agregar un delay con corrutina para agregarlo a la pull (que el dalay dependa de qué acción es la realizada)
 
-        TVNewType _new = (TVNewType)obj;
+        WordData word = (WordData)obj;
 
+        List<StateEnum> history = WordsManager.WM.GetHistory(word);
+        StateEnum LastState = history[history.Count - 1];
+        TVNewType _new = WordsManager.WM.RequestNew(word, LastState);
+
+        StartCoroutine("DelayToAddReactiveNew", _new);
+        
+    }
+
+    void CheckForScheduledNews()
+    {
+        if (ScheduledNews.Count == 0) return;
+
+        List<TVScheduledNewType> newsToRemove = new List<TVScheduledNewType>();
+
+        foreach (TVScheduledNewType _new in ScheduledNews)
+        {
+            TimeData timeNew = _new.GetTimeToShow();
+            TimeData ActualTime = TimeManager.timeManager.GetTime();
+
+            if (timeNew.Day == ActualTime.Day && timeNew.Hour == ActualTime.Hour && timeNew.Minute == ActualTime.Minute)
+            {
+                SetNewInChannel(_new);
+                newsToRemove.Add(_new);
+            }
+        }
+
+        foreach (TVScheduledNewType _new in newsToRemove)
+        {
+            ScheduledNews.Remove(_new);
+        }
+    }
+
+    void CheckForReactiveNews()
+    {
+        List<TVNewType> newsToRemove = new List<TVNewType>();
+        if (ReactiveNews.Count == 0) return;
+        foreach(TVNewType _new in ReactiveNews)
+        {
+            SetNewInChannel(_new);
+            newsToRemove.Add(_new);
+        }
+
+        foreach(TVNewType n in newsToRemove)
+        {
+            ReactiveNews.Remove(n);
+        }
+    }
+
+    void SetRandomNew()
+    {
+        TVRandomNewType randomTVNewRandom = RandomNews[Random.Range(0, RandomNews.Count - 1)];
+        SetNewInChannel(randomTVNewRandom);
+    }
+
+
+    void SetNewInChannel(INewType _new)
+    {
+        if (!GetEmpyChannel()) return;
+        ChannelController channelToSet = GetEmpyChannel();
+        channelToSet.SetNew(_new);
+        channelToSet.SetIsFull(true);
+    }
+
+    ChannelController GetEmpyChannel()
+    {
+        foreach(ChannelController channel in Channels)
+        {
+            if(!channel.GetIsFull())
+            {
+                return channel;
+            }
+        }
+
+        return null;
+    }
+
+    IEnumerator DelayToAddReactiveNew(TVNewType _new)
+    {
+        // A esto le falta depender del Time Manager
+        yield return new WaitForSeconds(0);
         ReactiveNews.Add(_new);
-     }
+    }
+
+    void ResetChannels()
+    {
+        foreach(ChannelController ch in Channels)
+        {
+            ch.SetIsFull(false);
+        }
+    }
+
+    public void ChangeChannel(Component sender, object obj)
+    {
+        GameObject aux = (GameObject)obj;
+        aux.SetActive(true);
+        ChannelController channel = aux.GetComponent<ChannelController>();
+        
+        foreach(ChannelController ch in Channels)
+        {
+            if(ch != channel)
+            {
+                ch.gameObject.SetActive(false);
+            }
+        }
+    }
 
     void OrderListDate(List<TVNewType> list)
     {
-        
+
 
 
     }
+
 }

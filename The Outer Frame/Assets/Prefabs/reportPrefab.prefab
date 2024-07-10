@@ -1446,6 +1446,7 @@ GameObject:
   - component: {fileID: 7146452894943114339}
   - component: {fileID: 7505981498728773304}
   - component: {fileID: 815726962956174113}
+  - component: {fileID: 7877078697688773515}
   m_Layer: 0
   m_Name: reportPrefab
   m_TagString: Untagged
@@ -1463,7 +1464,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.55145997, y: 0.020350004, z: 0.88494813}
+  m_LocalScale: {x: 0.14689791, y: 0.0054208343, z: 0.2357325}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3113105833530671892}
@@ -1484,7 +1485,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8818181090750843214}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1553,8 +1554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reporttxt: {fileID: 2354806404615635326}
-  LeaveReportListener: {fileID: 815726962956174113}
-  ButtonFindableWordPrefab: {fileID: 8898949953936741358, guid: 91d2710dbeb3dce4caf8ae33ef0d511d, type: 3}
+  OnPCReportActiualization: {fileID: 11400000, guid: 6b096e601cd93b1439a4117112ebc370, type: 2}
 --- !u!95 &7146452894943114339
 Animator:
   serializedVersion: 5
@@ -1617,6 +1617,7 @@ MonoBehaviour:
           m_StringArgument: TakeReport
           m_BoolArgument: 0
         m_CallState: 2
+  DelayCall: 0
 --- !u!114 &815726962956174113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1646,3 +1647,46 @@ MonoBehaviour:
           m_StringArgument: LeaveReport
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4596450347146456161}
+        m_TargetAssemblyTypeName: ReportController, Assembly-CSharp
+        m_MethodName: OnLeveReportInPC
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveReport
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &7877078697688773515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8818181090750843214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 6b096e601cd93b1439a4117112ebc370, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4596450347146456161}
+        m_TargetAssemblyTypeName: ReportController, Assembly-CSharp
+        m_MethodName: DeleteReport
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 2

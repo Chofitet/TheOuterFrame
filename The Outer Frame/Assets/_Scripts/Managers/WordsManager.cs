@@ -11,9 +11,10 @@ public class WordsManager : MonoBehaviour
     //Sistema encargado de solicitar requests a Words específicas para que devuelvan un input
     [SerializeField] List<WordData> wordsDic = new List<WordData>();
     [SerializeField] bool SaveProgress;
+    [SerializeField] GameEvent OnChangeStateOfWord;
+    [SerializeField] GameEvent OnChangeStateSeenOfWord;
     public static WordsManager WM { get; private set; }
-    public event Action<WordData> OnChangeStateOfWord;
-    public event Action<WordData> OnChangeStateSeenOfWord;
+
 
     public List<WordData> GetWordsDic() { return wordsDic; }
     private void Awake()
@@ -58,13 +59,13 @@ public class WordsManager : MonoBehaviour
     public void RequestChangeState(WordData _word, StateEnum WordState)
     {
         FindWordInList(_word).ChangeState(WordState);
-        OnChangeStateOfWord?.Invoke(_word);
+        OnChangeStateOfWord?.Invoke(this,_word);
     }
 
     public void RequestChangeStateSeen(WordData _word, StateEnum WordState)
     {
         FindWordInList(_word).CheckStateSeen(WordState);
-        OnChangeStateSeenOfWord?.Invoke(_word);
+       // OnChangeStateSeenOfWord?.Invoke(this,_word);
     }
 
     public bool CheckIfStateWasDone(WordData _word, StateEnum WordState)
@@ -79,6 +80,10 @@ public class WordsManager : MonoBehaviour
     public List<StateEnum> GetHistory(WordData _word)
     {
         return FindWordInList(_word).GetHistory();
+    }
+    public List<StateEnum> GetHistorySeen(WordData _word)
+    {
+        return FindWordInList(_word).GetHistorySeen();
     }
 
     WordData FindWordInList(WordData _word)

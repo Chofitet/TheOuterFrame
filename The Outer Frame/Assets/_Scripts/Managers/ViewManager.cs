@@ -13,6 +13,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnDossierView;
     [SerializeField] GameEvent OnPrinterView;
     [SerializeField] GameEvent OnViewStateChange;
+    [SerializeField] GameEvent OnNotebookTake;
     ViewStates currentviewState;
 
     void Update()
@@ -29,16 +30,19 @@ public class ViewManager : MonoBehaviour
         switch (NewView)
         {
             case ViewStates.GeneralView:
-                OnGeneralView?.Invoke(this, null);
+                OnGeneralView?.Invoke(this, false);
                 break;
             case ViewStates.PinchofonoView:
                 OnPinchofonoView?.Invoke(this, null);
+                OnNotebookTake.Invoke(this, true);
                 break;
             case ViewStates.BoardView:
                 OnBoardView?.Invoke(this, null);
+                OnNotebookTake.Invoke(this, true);
                 break;
             case ViewStates.PCView:
                 OnPCWiew?.Invoke(this, null);
+                OnNotebookTake.Invoke(this, true);
                 break;
             case ViewStates.ProgressorView:
                 OnProgressorView?.Invoke(this, null);
@@ -48,6 +52,7 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.DossierView:
                 OnDossierView?.Invoke(this, null);
+                OnNotebookTake.Invoke(this, true);
                 break;
             case ViewStates.PrinterView:
                 OnPrinterView?.Invoke(this, null);

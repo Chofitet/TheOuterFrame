@@ -18,26 +18,21 @@ public class PrinterController : MonoBehaviour
         {
             InstanciateReport(slot.gameObject);
         }
-
-        foreach(SlotController scs in SlotsInQueue)
-        {
-            Debug.Log(scs.GetWord().GetName());
-        }
     }
 
     public void InstanciateReport(GameObject slotReference)
     {
         GetComponent<BoxCollider>().enabled = true;
         GameObject report = Instantiate(ReportPrefab, InstanciateSpot.position,InstanciateSpot.rotation, InstanciateSpot);
-        report.GetComponent<ReportController>().initReport(slotReference.GetComponent<SlotController>().GetWord());
+        SlotController slotController = slotReference.GetComponent<SlotController>();
+        report.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetState(), slotController.GetIsAborted(), slotController.GetIsNotPossible());
     }
     private void OnMouseUpAsButton()
     {
         GetComponent<BoxCollider>().enabled = false;
         if (GetIsQueueFree()) return;
-        Destroy(SlotsInQueue[0].gameObject);
+        OnTakeReport?.Invoke(this, SlotsInQueue[0].gameObject);
         SlotsInQueue.Remove(SlotsInQueue[0]);
-        OnTakeReport?.Invoke(this, null);
         if (GetIsQueueFree()) return;
         InstanciateReport(SlotsInQueue[0].gameObject);
     }
