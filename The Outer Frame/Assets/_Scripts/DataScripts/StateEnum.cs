@@ -7,7 +7,7 @@ public class StateEnum : ScriptableObject
 {
     [SerializeField] string action;
     [SerializeField] int TimeToComplete;
-
+    [SerializeField] int TimeToShowNew;
     [SerializeField] bool isInactive;
 
     private void Awake()
@@ -16,6 +16,8 @@ public class StateEnum : ScriptableObject
     }
 
     public int GetTime() { return TimeToComplete; }
+
+    public int GetTimeToShowNew() { return TimeToShowNew; }
 
     public string GetActionVerb() { return action; }
 

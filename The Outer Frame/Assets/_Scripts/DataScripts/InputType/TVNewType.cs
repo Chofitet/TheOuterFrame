@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New TVNew", menuName = "Input/TVNew")]
-public class TVNewType : ScriptableObject, IStateComparable
+[CreateAssetMenu(fileName = "New TVNew", menuName = "Input/News/TVNew")]
+public class TVNewType : ScriptableObject, IStateComparable, INewType
 {
     [SerializeField] StateEnum state;
     [SerializeField] string headline;
@@ -24,6 +24,7 @@ public class TVNewType : ScriptableObject, IStateComparable
         CompleteTime = TimeManager.timeManager.GetTime();
     }
 
+    public string GetHeadline() { return headline; }
     public TimeData GetTimeWhenWasDone() { return CompleteTime;}
 
 }

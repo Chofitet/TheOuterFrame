@@ -16,7 +16,8 @@ public class PCWikiController : MonoBehaviour
 
         DataBaseType input = WordsManager.WM.RequestBDWikiData(wordData);
 
-        WikiData.text = input.GetText();
+
+        if(input.GetText() != null) WikiData.text = input.GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData);
         image.sprite = input.GetImage();
         PhoneNumber.text = input.GetPhoneNum();

@@ -8,8 +8,10 @@ public class TimeManager : MonoBehaviour
     public static Action OnMinuteChange;
     public static Action OnHourChange;
     public static Action OnDayChange;
+    public static Action OnNewsChange;
     [SerializeField] float NormalTimeValue;
     [SerializeField] float AcceleratedTimeValue;
+    [SerializeField] int MinutesToChangeNews;
 
     float TimeVariation;
 
@@ -74,11 +76,16 @@ public class TimeManager : MonoBehaviour
         {
             Minute++;
             OnMinuteChange?.Invoke();
+            
             if (Minute >= 60)
             {
                 Hour++;
                 Minute = 0;
                 OnHourChange?.Invoke();
+            }
+            if (Minute % MinutesToChangeNews == 0)
+            {
+                OnNewsChange?.Invoke();
             }
             seconds++;
         }

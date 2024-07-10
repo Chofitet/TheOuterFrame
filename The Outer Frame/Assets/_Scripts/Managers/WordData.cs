@@ -198,7 +198,8 @@ public class WordData : ScriptableObject
     #endregion
 
     public string GetName() { return wordName; }
-    public List<StateEnum> GetHistory() { return CheckedStateHistory; }
+    public List<StateEnum> GetHistorySeen() { return CheckedStateHistory; }
+    public List<StateEnum> GetHistory() { return stateHistory; }
     
     public void CleanHistory()
     {
