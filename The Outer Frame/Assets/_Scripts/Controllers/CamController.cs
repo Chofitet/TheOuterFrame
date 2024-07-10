@@ -2,40 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Cinemachine;
 
 public class CamController : MonoBehaviour
 {
-    [SerializeField] Transform[] posCamara;
-    [SerializeField] Transform CamTransform;
-    [SerializeField] float transitionSpeed;
-    Transform currentview { get; set; }
-    int currentviewNum;
+    [SerializeField] CinemachineVirtualCamera[] posCamara;
 
-    void Start()
-    {
-        currentview = CamTransform;
-        currentviewNum = 0;
-    }
-
-    private void Update()
-    {
-        currentview = posCamara[currentviewNum];
-    }
-
-    private void LateUpdate()
-    {
-        Quaternion currentAngle;
-
-        CamTransform.position = Vector3.Lerp(CamTransform.position, currentview.position, Time.deltaTime * transitionSpeed);
-
-
-        currentAngle = Quaternion.Lerp(CamTransform.rotation, currentview.rotation, Time.deltaTime * transitionSpeed);
-
-
-        CamTransform.rotation = currentAngle;
-
-
-    }
+    
 
     public void UpdateCurrentView(Component sender, object View)
     {
@@ -43,23 +16,37 @@ public class CamController : MonoBehaviour
         switch(newview)
         {
             case ViewStates.GeneralView:
-                currentviewNum = 0;
+                SetPriority(0);
                 break;
             case ViewStates.PinchofonoView:
-                currentviewNum = 1;
+                SetPriority(1);
                 break;
             case ViewStates.BoardView:
-                currentviewNum = 2;
+                SetPriority(2);
                 break;
             case ViewStates.PCView:
-                currentviewNum = 3;
+                SetPriority(3);
                 break;
             case ViewStates.ProgressorView:
-                currentviewNum = 4;
+                SetPriority(4);
                 break;
             case ViewStates.TVView:
-                currentviewNum = 5;
+                SetPriority(5);
                 break;
+        }
+    }
+
+    void SetPriority(int num)
+    {
+        posCamara[num].Priority = 100;
+        SetOthersPriorityZero(posCamara[num]);
+    }
+
+    void SetOthersPriorityZero(CinemachineVirtualCamera exception)
+    {
+        foreach(CinemachineVirtualCamera cam in posCamara)
+        {
+            if (cam != exception) cam.Priority = 0;
         }
     }
 
