@@ -6,6 +6,7 @@ using TMPro;
 public class TVManager : MonoBehaviour
 {
     [SerializeField] List<ChannelController> Channels = new List<ChannelController>();
+    [SerializeField] Animator anim;
     // Está suscripto al evento de chequeo de noticias
     // Tiene referenciado los canales por tipo
     // Tiene las listas de las noticias programadas y random
@@ -139,7 +140,8 @@ public class TVManager : MonoBehaviour
         GameObject aux = (GameObject)obj;
         aux.SetActive(true);
         ChannelController channel = aux.GetComponent<ChannelController>();
-        
+        anim.SetTrigger(channel.GetTriggerAnim());
+
         foreach(ChannelController ch in Channels)
         {
             if(ch != channel)
@@ -149,11 +151,5 @@ public class TVManager : MonoBehaviour
         }
     }
 
-    void OrderListDate(List<TVNewType> list)
-    {
-
-
-
-    }
 
 }

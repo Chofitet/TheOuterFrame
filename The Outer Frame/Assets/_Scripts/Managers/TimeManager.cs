@@ -62,6 +62,11 @@ public class TimeManager : MonoBehaviour
     int seconds = 1;
     private float AlternativeTime;
 
+    public float GetActuaTimeVariationSpeed()
+    {
+        return TimeVariation;
+    }
+
     void Start()
     {
         Day = 00;
