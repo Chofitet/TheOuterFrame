@@ -160,7 +160,7 @@ public struct TimeData
 
     public  int GetTimeInNum()
     {
-        string auxString = Day.ToString() + Hour.ToString() + Minute.ToString();
+        string auxString = Day.ToString() + Hour.ToString("D2") + Minute.ToString("D2");
         int auxInt;
         int.TryParse(auxString, out auxInt);
         return auxInt;

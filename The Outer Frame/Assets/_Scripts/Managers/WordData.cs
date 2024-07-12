@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,9 @@ public class WordData : ScriptableObject
 
     [Header("BD Data")]
     [SerializeField] DataBaseType DBTypes;
+
+    [Header("Calls")]
+    [SerializeField] List<CallType> CallTypes = new List<CallType>();
 
     [Header("Exceptions")]
     [SerializeField] List<Exceptions> exceptions = new List<Exceptions>();
@@ -52,6 +56,26 @@ public class WordData : ScriptableObject
     public DataBaseType GetDB()
     {
         return DBTypes;
+    }
+
+    public List<CallType> GetCall()
+    {
+        return CheckForPosibleCall();
+    }
+
+    private List<CallType> CheckForPosibleCall()
+    {
+        List<CallType> auxList = new List<CallType>();
+
+        foreach (CallType call in CallTypes)
+        {
+            if(call.CheckForTimeZone())
+            {
+                auxList.Add(call);
+            }
+        }
+
+        return auxList;
     }
 
     T  FindInputInList<T>(List<T> list, StateEnum state) where T : IStateComparable

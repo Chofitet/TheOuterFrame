@@ -35,7 +35,7 @@ public class TVManager : MonoBehaviour
         CheckForReactiveNews();
 
 
-        //Chequear Noticias Random
+        SetRandomNew();
     }
 
     public void AddNewToReactiveNewList(Component sender, object obj)

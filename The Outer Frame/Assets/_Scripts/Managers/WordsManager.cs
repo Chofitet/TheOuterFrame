@@ -56,6 +56,11 @@ public class WordsManager : MonoBehaviour
         return FindWordInList(_word).GetDB();
     }
 
+    public List<CallType> RequestCall(WordData _word)
+    {
+        return FindWordInList(_word).GetCall();
+    }
+
     public void RequestChangeState(WordData _word, StateEnum WordState)
     {
         FindWordInList(_word).ChangeState(WordState);
