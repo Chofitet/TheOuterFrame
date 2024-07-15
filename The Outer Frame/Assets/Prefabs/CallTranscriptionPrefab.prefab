@@ -85,6 +85,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3380111737916465006}
   - component: {fileID: 6815506102540783855}
+  - component: {fileID: 2078201477349972005}
+  - component: {fileID: 7122855680359787822}
   m_Layer: 0
   m_Name: CallTranscriptionPrefab
   m_TagString: Untagged
@@ -121,6 +123,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtCall: {fileID: 7703025785835858413}
+--- !u!65 &2078201477349972005
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052442833119381466}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.13834247, y: 0.0054350807, z: 0.21445286}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7122855680359787822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052442833119381466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39ca96c7384e93548a576d545b1ae452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EventsToTrigger:
+  - {fileID: 11400000, guid: 945e699245eef354fa099591b0aed1ba, type: 2}
+  DisabledInTouch: 1
+  SomethingToPass: {fileID: 0}
 --- !u!1 &4970858808264341153
 GameObject:
   m_ObjectHideFlags: 0
