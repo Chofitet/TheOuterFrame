@@ -38,8 +38,8 @@ public class ViewManager : MonoBehaviour
                 OnGeneralView?.Invoke(this, false);
                 break;
             case ViewStates.PinchofonoView:
-                OnPinchofonoView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
+                OnPinchofonoView?.Invoke(this, null);
                 break;
             case ViewStates.BoardView:
                 OnBoardView?.Invoke(this, null);

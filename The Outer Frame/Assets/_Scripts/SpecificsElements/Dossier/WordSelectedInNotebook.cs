@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class WordSelectedInNotebook : MonoBehaviour
 {
@@ -38,9 +39,35 @@ public class WordSelectedInNotebook : MonoBehaviour
     {
         WordData word = (WordData)obj;
         if (!word) return;
+
+        if(word.GetIsAPhoneNumber())
+        {
+            SetFindedNumber(word);
+            return;
+        }
+
         WordsFound.Add(word);
         word.SetIsFound();
     }
+
+    private void SetFindedNumber(WordData num)
+    {
+        bool isTheWordOfTheNumInList = false;
+        foreach (WordData word in WordsFound)
+        {
+            if(word.GetPhoneNumber() == num.GetName())
+            {
+                word.SetIsPhoneNumberFound();
+                isTheWordOfTheNumInList = true;
+            }
+        }
+
+        if(!isTheWordOfTheNumInList)
+        {
+            WordsFound.Add(num);
+        }
+    }
+
     public void UnselectWord() => SelectedWord = null;
 
 

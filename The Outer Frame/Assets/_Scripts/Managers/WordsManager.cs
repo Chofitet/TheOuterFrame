@@ -64,7 +64,8 @@ public class WordsManager : MonoBehaviour
     public void RequestChangeState(WordData _word, StateEnum WordState)
     {
         FindWordInList(_word).ChangeState(WordState);
-        OnChangeStateOfWord?.Invoke(this,_word);
+        FindWordInList(_word).SetReactionCall(WordState);
+        //OnChangeStateOfWord?.Invoke(this,_word);
     }
 
     public void RequestChangeStateSeen(WordData _word, StateEnum WordState)
