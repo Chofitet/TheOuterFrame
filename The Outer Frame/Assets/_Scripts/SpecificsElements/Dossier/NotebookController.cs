@@ -29,8 +29,8 @@ public class NotebookController : MonoBehaviour
         int i = 0;
 
         foreach(WordData word in Words)
-
         {
+            if (word.GetIsAPhoneNumber()) return;
             GameObject wordaux = Instantiate(WordPrefab, WordSpots[i].position, WordSpots[i].rotation, WordContainer);
             wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
             wordaux.GetComponent<NotebookWordInstance>().Initialization(word);

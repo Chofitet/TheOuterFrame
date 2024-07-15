@@ -6,8 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Word", menuName ="Word")]
 public class WordData : ScriptableObject
 {
-    [Header("Word Name")]
+    [Header("Word General Data")]
     [SerializeField] string wordName;
+    [SerializeField] string PhoneNumber;
+    [SerializeField] bool isAPhoneNumber;
 
     [Header("Action Plan Results")]
     [SerializeField] List<ReportType> reportTypes = new List<ReportType>();
@@ -20,6 +22,10 @@ public class WordData : ScriptableObject
 
     [Header("Calls")]
     [SerializeField] List<CallType> CallTypes = new List<CallType>();
+    
+    /*[Header("Availability call Window:")]
+    [SerializeField] TimeCheckConditional StartTime;
+    [SerializeField] TimeCheckConditional EndTime;*/
 
     [Header("Exceptions")]
     [SerializeField] List<Exceptions> exceptions = new List<Exceptions>();
@@ -31,7 +37,8 @@ public class WordData : ScriptableObject
     private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
     private Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
     StateEnum currentState;
-    bool isFound;
+    [NonSerialized] bool isFound;
+    [NonSerialized] bool isPhoneNumberFound;
 
     #region GetInputLogic
 
@@ -60,11 +67,19 @@ public class WordData : ScriptableObject
 
     public List<CallType> GetCall()
     {
-        return CheckForPosibleCall();
+        return CheckForCallInTimeZone();
     }
 
-    private List<CallType> CheckForPosibleCall()
+    public void SetReactionCall(StateEnum state)
     {
+        CallType call = FindInputInList(CallTypes, state);
+        if (call == default) return;
+        call.DefineTimeZone();
+    }
+
+    private List<CallType> CheckForCallInTimeZone()
+    {
+        //Call from Pinchofono every minute to find a call in timeZone
         List<CallType> auxList = new List<CallType>();
 
         foreach (CallType call in CallTypes)
@@ -80,7 +95,7 @@ public class WordData : ScriptableObject
 
     T  FindInputInList<T>(List<T> list, StateEnum state) where T : IStateComparable
     {
-        T aux = list[0];
+        T aux = default;
 
         foreach(T input in list)
         {
@@ -222,6 +237,11 @@ public class WordData : ScriptableObject
     #endregion
 
     public string GetName() { return wordName; }
+
+    public string GetPhoneNumber() { return PhoneNumber; }
+    public bool GetIsPhoneNumberFound() { return isPhoneNumberFound; }
+    public bool SetIsPhoneNumberFound() => isPhoneNumberFound = true;
+    public bool GetIsAPhoneNumber() { return isAPhoneNumber; }
     public List<StateEnum> GetHistorySeen() { return CheckedStateHistory; }
     public List<StateEnum> GetHistory() { return stateHistory; }
     

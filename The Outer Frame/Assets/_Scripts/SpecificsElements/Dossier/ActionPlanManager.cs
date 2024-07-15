@@ -20,14 +20,15 @@ public class ActionPlanManager : MonoBehaviour
         if (transform.childCount != 0) Destroy(transform.GetChild(0).gameObject);
         
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
-        transform.position = Vector3.zero;
 
+        /*transform.position = Vector3.zero;
+        
         float x = Mathf.Round(transform.position.x);
         float y = Mathf.Round(transform.position.y);
         float z = Mathf.Round(transform.position.z);
 
         transform.position = new Vector3(x, y, z);
-
+        */
     }
 
     public void ReparentToMoveActionPlan(Component sender, object obj)

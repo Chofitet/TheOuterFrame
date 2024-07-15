@@ -4,16 +4,22 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New Call", menuName ="Input/Calls")]
-public class CallType : ScriptableObject
+public class CallType : ScriptableObject, IStateComparable
 {
-    //Opcion más viable: Poder marcar la fecha de la llamada, entonces el recorrido se va a hacer comprobando si los condicionales se cumplen, de haber dos se colocará el que tenga la fecha más próxima a la actual.
-
-    [Header("Time Zone")]
+    
+    [Header("Pre-programmed Call")]
     [SerializeField] TimeCheckConditional StartTime;
     [SerializeField] TimeCheckConditional EndTime;
-    [SerializeField] string Dialogue;
 
-    [SerializeField] List<IConditionable> Conditionals = new List<IConditionable>();
+
+    [Header("Reaction Call")]
+    [SerializeField] StateEnum state;
+    [SerializeField] int DelayToSchowCallInMinutes = 30;
+    [SerializeField] int CatchWindowInMinutes = 30;
+
+    [Header("Common Properties")]
+    [SerializeField] [Multiline] string Dialogue;
+    [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     [SerializeField] bool isOrderMatters;
 
     [NonSerialized] private bool isCatch;
@@ -21,17 +27,64 @@ public class CallType : ScriptableObject
     public string GetDialogue() { return Dialogue; }
     public void SetCached() => isCatch = true;
     public bool GetIsCatch() { return isCatch; }
+    public StateEnum GetState() { return state; }
+
+    public void DefineTimeZone()
+    {
+        TimeData ActualTime = TimeManager.timeManager.GetTime();
+
+        TimeData FixedStartTime = AddMinutesToTime(ActualTime, DelayToSchowCallInMinutes);
+        StartTime = ScriptableObject.CreateInstance<TimeCheckConditional>();
+        StartTime.Initialize(true, FixedStartTime.Day, FixedStartTime.Hour, FixedStartTime.Minute);
+
+        TimeData FixedEndTime = AddMinutesToTime(ActualTime, DelayToSchowCallInMinutes + CatchWindowInMinutes);
+        EndTime = ScriptableObject.CreateInstance<TimeCheckConditional>();
+        EndTime.Initialize(false, FixedEndTime.Day, FixedEndTime.Hour, FixedEndTime.Minute);
+
+        Debug.Log("Defined Time Zone. Start: " + FixedStartTime.ToString() + " Ends: " + FixedEndTime.ToString());
+    }
+
+    private TimeData AddMinutesToTime(TimeData time, int minutesToAdd)
+    {
+        int totalMinutes = time.Minute + minutesToAdd;
+        int extraHours = totalMinutes / 60;
+        int finalMinutes = totalMinutes % 60;
+
+        int totalHours = time.Hour + extraHours;
+        int extraDays = totalHours / 24;
+        int finalHours = totalHours % 24;
+
+        int finalDays = time.Day + extraDays;
+
+        return new TimeData
+        {
+            Day = finalDays,
+            Hour = finalHours,
+            Minute = finalMinutes
+        };
+    }
+
     public bool CheckForTimeZone()
     {
+        if (!StartTime || !EndTime) return false;
         if (StartTime.GetStateCondition() && EndTime.GetStateCondition()) return true;
         else return false;
     }
 
     public bool CheckForConditionals()
     {
-        foreach (IConditionable conditional in Conditionals)
+
+        foreach (ScriptableObject conditional in Conditionals)
         {
-            if (!conditional.GetStateCondition())
+            if (conditional is not IConditionable)
+            {
+                Debug.LogWarning(conditional.name + " is not a valid conditional");
+                return false; 
+            }
+
+            IConditionable auxConditional = conditional as IConditionable;
+
+            if (!auxConditional.GetStateCondition())
             {
                 return false;
             }
@@ -45,11 +98,13 @@ public class CallType : ScriptableObject
     {
         List<int> nums = new List<int>();
 
-        foreach (IConditionable conditional in Conditionals)
+        foreach (ScriptableObject conditional in Conditionals)
         {
-            if (conditional.CheckIfHaveTime())
+            IConditionable auxConditional = conditional as IConditionable;
+
+            if (auxConditional.CheckIfHaveTime())
             {
-                nums.Add(conditional.GetTimeWhenWasComplete().GetTimeInNum());
+                nums.Add(auxConditional.GetTimeWhenWasComplete().GetTimeInNum());
             }
 
         }
