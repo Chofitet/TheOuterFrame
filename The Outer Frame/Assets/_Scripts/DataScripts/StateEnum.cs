@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "New State", menuName = "State")]
 public class StateEnum : ScriptableObject
@@ -8,7 +9,7 @@ public class StateEnum : ScriptableObject
     [SerializeField] string action;
     [SerializeField] int TimeToComplete;
     [SerializeField] int TimeToShowNew;
-    [SerializeField] bool isInactive;
+    [NonSerialized] bool isInactive;
 
     private void Awake()
     {

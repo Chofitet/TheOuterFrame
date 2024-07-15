@@ -9,6 +9,7 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameObject ActionRowPrefab;
     [SerializeField] Transform ActionsContainer;
     [SerializeField] GameEvent OnApprovedActionPlan;
+    [SerializeField] GameEvent OnSetGeneralView;
     List<ActionRowController> Actions = new List<ActionRowController>();
     StateEnum state;
 
@@ -50,8 +51,11 @@ public class ActionPlan : MonoBehaviour
     public void ApprovedActionPlan()
     {
         OnApprovedActionPlan.Invoke(this,state);
-        Destroy(gameObject);
+        OnSetGeneralView?.Invoke(this, null);
     }
 
-
+    public void DestroyActionPlan(Component sender, object obj)
+    {
+        Destroy(gameObject);
+    }
 }

@@ -20,8 +20,13 @@ public class ViewManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse1) && currentviewState != ViewStates.GeneralView)
         {
-            UpdateViewState(this, ViewStates.GeneralView);
+            BackToGeneralView(null, null);
         }
+    }
+
+    public void BackToGeneralView(Component sender, object _view)
+    {
+        UpdateViewState(this, ViewStates.GeneralView);
     }
 
     public void UpdateViewState(Component sender, object _view)

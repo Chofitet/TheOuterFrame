@@ -11,17 +11,28 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject AbortBTN;
     [SerializeField] GameObject YesBTN;
     [SerializeField] GameObject NoBTN;
+    private WordData word;
+    private StateEnum state;
+    private int time;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void StartAction(WordData word,StateEnum state,int time)
+    public void SetAction(WordData _word,StateEnum _state,int _time)
+    {
+        word = _word;
+        state = _state;
+        time = _time;
+
+        isFull = true;
+    }
+
+    public void StartAction(Component sender, object obj)
     {
         anim.SetTrigger("sendMessage");
         slot.initParameters(word, state, time);
-        isFull = true;
     }
 
     public void AbortLogic(Component sender, object obj)
