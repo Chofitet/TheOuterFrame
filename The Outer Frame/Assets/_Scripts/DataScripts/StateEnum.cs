@@ -6,15 +6,11 @@ using System;
 [CreateAssetMenu(fileName = "New State", menuName = "State")]
 public class StateEnum : ScriptableObject
 {
+    [Header("Action Fields")]
     [SerializeField] string action;
     [SerializeField] int TimeToComplete;
     [SerializeField] int TimeToShowNew;
-    [NonSerialized] bool isInactive;
-
-    private void Awake()
-    {
-        isInactive = false;
-    }
+    [SerializeField] Agent Agent;
 
     public int GetTime() { return TimeToComplete; }
 
@@ -22,12 +18,17 @@ public class StateEnum : ScriptableObject
 
     public string GetActionVerb() { return action; }
 
-    public void SetActiveOrDesactive(bool x) { 
-        isInactive = x; 
+    public void SetActiveOrDesactiveAgent(bool x) {
+        Agent.SetActiveDesactive(x); 
     }
 
     public bool GetIfIsActive() {
-        
-        
-        return isInactive == true ? false : true; }
+        if (!Agent)
+        {
+            Debug.LogWarning(action + " dont have Agent Assigned");
+            return false;
+        }
+            
+        return Agent.GetIsActive(); 
+    }
 }

@@ -87,7 +87,7 @@ public class SlotController : MonoBehaviour
     private void CompleteAction()
     {
         WordsManager.WM.RequestChangeState(_word, _state);
-        AgentManager.AM.SetActiveOrDesactive(_state, true);
+        _state.SetActiveOrDesactiveAgent(true);
         OnFinishActionProgress?.Invoke(this, this);
         SetLEDState(Color.yellow);
     }
@@ -96,7 +96,7 @@ public class SlotController : MonoBehaviour
     {
         inFillFast = false;
         OnFinishActionProgress?.Invoke(this, this);
-        AgentManager.AM.SetActiveOrDesactive(_state, true);
+        _state.SetActiveOrDesactiveAgent(true);
         SetLEDState(Color.red);
         TimeManager.OnMinuteChange -= UpdateProgress;
         ProgressBar.value = 0;
@@ -106,7 +106,7 @@ public class SlotController : MonoBehaviour
     {
         isAborted = true;
         OnFinishActionProgress?.Invoke(this, this);
-        AgentManager.AM.SetActiveOrDesactive(_state, true);
+        _state.SetActiveOrDesactiveAgent(true);
         SetLEDState(Color.yellow);
         TimeManager.OnMinuteChange -= UpdateProgress;
         ProgressBar.value = 0;

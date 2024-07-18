@@ -26,6 +26,7 @@ public class ViewManager : MonoBehaviour
 
     public void BackToGeneralView(Component sender, object _view)
     {
+        TimeManager.timeManager.NormalizeTime();
         UpdateViewState(this, ViewStates.GeneralView);
     }
 
@@ -42,6 +43,7 @@ public class ViewManager : MonoBehaviour
                 OnPinchofonoView?.Invoke(this, null);
                 break;
             case ViewStates.BoardView:
+                TimeManager.timeManager.PauseTime();
                 OnBoardView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 break;
