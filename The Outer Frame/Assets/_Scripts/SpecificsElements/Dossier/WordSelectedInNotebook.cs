@@ -8,6 +8,7 @@ using System;
 public class WordSelectedInNotebook : MonoBehaviour
 {
     public static WordSelectedInNotebook Notebook { get; private set; }
+    [SerializeField] GameEvent OnSelectedWordInNotebook;
     WordData SelectedWord;
 
     List<WordData> WordsFound = new List<WordData>();
@@ -71,8 +72,11 @@ public class WordSelectedInNotebook : MonoBehaviour
     public void UnselectWord() => SelectedWord = null;
 
 
-    public void SetSelectedWord(WordData word) => SelectedWord = word;
-    
+    public void SetSelectedWord(WordData word)
+    {
+        SelectedWord = word;
+        OnSelectedWordInNotebook?.Invoke(this, SelectedWord);
+    }
 
     public WordData GetSelectedWord(){return SelectedWord;}
 

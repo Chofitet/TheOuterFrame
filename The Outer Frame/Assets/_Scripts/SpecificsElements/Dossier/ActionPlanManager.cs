@@ -5,21 +5,18 @@ using UnityEngine.UI;
 
 public class ActionPlanManager : MonoBehaviour
 {
+    [SerializeField] List<StateEnum> Actions = new List<StateEnum>();
     [SerializeField] GameObject ActionPlanPrefab;
     [SerializeField] Transform OtherParent;
     [SerializeField] Transform OriginalParent;
-    Transform AwakeTransform;
 
-    private void Awake()
-    {
-        AwakeTransform = transform;
-    }
 
     public void SetActionPlan(Component sender, object obj)
     {
         if (transform.childCount != 0) Destroy(transform.GetChild(0).gameObject);
         
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
+        AP.GetComponent<ActionPlan>().Inicialization(Actions);
 
         /*transform.position = Vector3.zero;
         
@@ -29,6 +26,12 @@ public class ActionPlanManager : MonoBehaviour
 
         transform.position = new Vector3(x, y, z);
         */
+    }
+
+    public void AddAction(Component sender, object obj)
+    {
+        StateEnum NewAction = (StateEnum)obj;
+        Actions.Add(NewAction);
     }
 
     public void ReparentToMoveActionPlan(Component sender, object obj)

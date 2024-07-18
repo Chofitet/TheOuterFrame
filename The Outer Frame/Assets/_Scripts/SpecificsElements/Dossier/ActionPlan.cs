@@ -13,19 +13,19 @@ public class ActionPlan : MonoBehaviour
     List<ActionRowController> Actions = new List<ActionRowController>();
     StateEnum state;
 
-    private void OnEnable()
+    public void Inicialization(List<StateEnum> ActionList)
     {
-        InstantiateActionRows();
+        InstantiateActionRows(ActionList);
     }
 
-    void InstantiateActionRows()
+    void InstantiateActionRows(List<StateEnum> listActions)
     {
-        List<StateEnum> Agents = AgentManager.AM.GetAgentList();
+        List<Agent> Agents = AgentManager.AM.GetAgentList();
 
-        foreach(StateEnum actions in Agents)
+        foreach(StateEnum actions in listActions)
         {
-            GameObject AgentInstantiate = Instantiate(ActionRowPrefab, ActionsContainer, false);
-            ActionRowController script = AgentInstantiate.GetComponent<ActionRowController>();
+            GameObject ActionInstantiate = Instantiate(ActionRowPrefab, ActionsContainer, false);
+            ActionRowController script = ActionInstantiate.GetComponent<ActionRowController>();
             script.Initialization(actions);
             script.GetButton().onClick.AddListener(() => OnButtonRowPress(script));
             Actions.Add(script);
@@ -33,7 +33,7 @@ public class ActionPlan : MonoBehaviour
             
             if (!actions.GetIfIsActive())
             {
-                AgentInstantiate.GetComponent<ActionRowController>().DesactiveRow();
+                ActionInstantiate.GetComponent<ActionRowController>().DesactiveRow();
             }
         }
     }

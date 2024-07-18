@@ -15,7 +15,7 @@ public class ProgressorManager : MonoBehaviour
         if (!GetUnusedSlot()) return;
 
         GetUnusedSlot().SetAction(_word, state, state.GetTime());
-        AgentManager.AM.SetActiveOrDesactive(state, false);
+        state.SetActiveOrDesactiveAgent(false);
     }
 
 

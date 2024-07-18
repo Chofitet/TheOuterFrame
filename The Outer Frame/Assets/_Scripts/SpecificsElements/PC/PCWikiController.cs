@@ -21,5 +21,6 @@ public class PCWikiController : MonoBehaviour
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData);
         image.sprite = input.GetImage();
         PhoneNumber.text = input.GetPhoneNum();
+        FindableWordsManager.FWM.InstanciateFindableWord(WikiData);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AgentManager : MonoBehaviour
 {
-    [SerializeField] List<StateEnum> Agents = new List<StateEnum>();
+    [SerializeField] List<Agent> Agents = new List<Agent>();
     public static AgentManager AM { get; private set; }
     private void Awake()
     {
@@ -20,28 +20,28 @@ public class AgentManager : MonoBehaviour
 
     }
 
-    public void SetActiveOrDesactive(StateEnum state,bool x)
+    public void SetActiveOrDesactive(Agent agent,bool x)
     {
         x = x == true ? false : true;
 
-        if (state == null) return;
-        FindAgentInList(state).SetActiveOrDesactive(x);
+        if (agent == null) return;
+        FindAgentInList(agent).SetActiveDesactive(x);
     }
 
-    public bool GetIfIsActive(StateEnum state)
+    public bool GetIfIsActive(Agent state)
     {
-        return FindAgentInList(state).GetIfIsActive();
+        return FindAgentInList(state).GetIsActive();
     }
 
-    public List<StateEnum> GetAgentList() { return Agents; }
+    public List<Agent> GetAgentList() { return Agents; }
 
-    public List<StateEnum> GetInactiveAgents()
+    public List<Agent> GetInactiveAgents()
     {
-        List<StateEnum> AuxAgentList = new List<StateEnum>();
+        List<Agent> AuxAgentList = new List<Agent>();
 
-        foreach (StateEnum agent in Agents)
+        foreach (Agent agent in Agents)
         {
-            if (!agent.GetIfIsActive())
+            if (!agent.GetIsActive())
             {
                 AuxAgentList.Add(agent);
             }
@@ -50,14 +50,14 @@ public class AgentManager : MonoBehaviour
 
     }
 
-    StateEnum FindAgentInList(StateEnum state)
+    Agent FindAgentInList(Agent agent)
     {
-        StateEnum aux = state; 
-        foreach(StateEnum agent in Agents)
+        Agent aux = agent; 
+        foreach(Agent _agent in Agents)
         {
-            if(agent == state)
+            if(_agent == agent)
             {
-                aux = agent;
+                aux = _agent;
             }
         }
 
