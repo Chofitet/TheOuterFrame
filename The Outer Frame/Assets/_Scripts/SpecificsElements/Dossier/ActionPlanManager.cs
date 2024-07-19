@@ -17,15 +17,8 @@ public class ActionPlanManager : MonoBehaviour
         
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
         AP.GetComponent<ActionPlan>().Inicialization(Actions);
+        transform.Rotate(Vector3.zero);
 
-        /*transform.position = Vector3.zero;
-        
-        float x = Mathf.Round(transform.position.x);
-        float y = Mathf.Round(transform.position.y);
-        float z = Mathf.Round(transform.position.z);
-
-        transform.position = new Vector3(x, y, z);
-        */
     }
 
     public void AddAction(Component sender, object obj)
@@ -41,7 +34,8 @@ public class ActionPlanManager : MonoBehaviour
     public void ReparentToActionPlan(Component sender, object obj)
     {
         transform.SetParent(OriginalParent);
+        transform.Translate(Vector3.zero);
+        transform.Rotate(Vector3.zero);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
     }
-
-
 }

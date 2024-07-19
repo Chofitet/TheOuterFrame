@@ -8,6 +8,7 @@ public class ProgressorModuleController : MonoBehaviour
     bool isFull;
     bool isAbortOpen;
     Animator anim;
+    bool isReady;
     [SerializeField] GameObject AbortBTN;
     [SerializeField] GameObject YesBTN;
     [SerializeField] GameObject NoBTN;
@@ -26,13 +27,24 @@ public class ProgressorModuleController : MonoBehaviour
         state = _state;
         time = _time;
 
+        isReady = true;
         isFull = true;
     }
 
+    //OnAPProgressorEnter
     public void StartAction(Component sender, object obj)
     {
+        if (!isReady) return;
         anim.SetTrigger("sendMessage");
+       
+    }
+
+    //OnSendAPTrackEnds
+    public void InitSlot(Component sender, object obj)
+    {
+        if (!isReady) return;
         slot.initParameters(word, state, time);
+        isReady = false;
     }
 
     public void AbortLogic(Component sender, object obj)

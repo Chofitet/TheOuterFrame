@@ -6,7 +6,6 @@ using TMPro;
 public class ClockController : MonoBehaviour
 {
     [SerializeField] TMP_Text datetxt;
-    [SerializeField] string timetxt;
     
     [SerializeField] TMP_Text MinuteMovibleFlipFront;
     [SerializeField] TMP_Text MinuteInamovibleFlipFront;
@@ -106,4 +105,12 @@ public class ClockController : MonoBehaviour
         }
 
     }
+
+    public void SetClockSpeed(Component sender, object obj)
+    {
+        float TimeVariation = (float)obj;
+
+        anim.SetFloat("clockSpeed", TimeVariation);
+    }
+
 }
