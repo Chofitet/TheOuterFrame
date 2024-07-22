@@ -67,7 +67,6 @@ public class ViewManager : MonoBehaviour
 
         }
         OnViewStateChange?.Invoke(this,NewView);
-        Debug.Log(NewView);
         currentviewState = NewView;
     }
 

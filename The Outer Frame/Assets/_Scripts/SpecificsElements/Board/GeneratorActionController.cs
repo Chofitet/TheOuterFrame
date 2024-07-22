@@ -10,8 +10,6 @@ public class GeneratorActionController : MonoBehaviour
     [HideInInspector] [SerializeField] Transform BtnContainer;
     [HideInInspector] [SerializeField] GameObject BtnGeneratorIdeaPrefab;
     [HideInInspector] [SerializeField] GameObject Content;
-
-    // bool para evitar que se instancien infinitos botones de generadores de acciones.
     
 
     private void Start()
@@ -24,11 +22,18 @@ public class GeneratorActionController : MonoBehaviour
     {
         if (!CheckForConditionals()) return;
         Content.SetActive(true);
+
+        List<StateEnum> ElementsToRemove = new List<StateEnum>();
+
         foreach (StateEnum action in ActionsToAdd)
         {
             GameObject auxInstance = Instantiate(BtnGeneratorIdeaPrefab, BtnContainer);
             auxInstance.GetComponent<BtnGenerateIdeaController>().Inicialization(action);
+            ElementsToRemove.Add(action);
         }
+
+        foreach (StateEnum action in ElementsToRemove) ActionsToAdd.Remove(action);
+
         
     }
 

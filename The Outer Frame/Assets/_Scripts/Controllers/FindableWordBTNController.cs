@@ -52,15 +52,17 @@ public class FindableWordBTNController : MonoBehaviour
         string[] words = textField.text.Split(' ');
         string auxText = "";
         int i = 0;
+        int extraIndex = 0;
 
         foreach (string w in words)
         {
             int iaux = i;
             string combinedWord = words[i];
 
-            if (auxText.Contains(combinedWord))
+            if (extraIndex > 0)
             {
                 i++;
+                extraIndex--;
                 continue;
             }
 
@@ -68,6 +70,7 @@ public class FindableWordBTNController : MonoBehaviour
             {
                 iaux++;
                 combinedWord += " " + words[iaux];
+                extraIndex++;
             }
 
             if (combinedWord.Contains(word.GetName()))
@@ -78,7 +81,7 @@ public class FindableWordBTNController : MonoBehaviour
             }
             else
             {
-                auxText += w + " ";
+                auxText += combinedWord + " ";
             }
 
             i++;

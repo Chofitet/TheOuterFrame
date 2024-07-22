@@ -19,7 +19,8 @@ public class SlotController : MonoBehaviour
     StateEnum _state;
     bool isActionComplete;
     bool isAborted;
-    bool isNotPossible;
+    bool isAlreadyDone;
+    bool isAutomaticAction;
     bool inFillFast;
 
     public void initParameters(WordData word, StateEnum state, int ActionDuration) 
@@ -31,7 +32,7 @@ public class SlotController : MonoBehaviour
         Wordtxt.text = word.GetName();
         Actiontxt.text = state.GetActionVerb();
         isAborted = false;
-        isNotPossible = false;
+        isAlreadyDone = false;
 
         minuteProgress = 0;
         ProgressBar.maxValue = actionDuration;
@@ -42,7 +43,13 @@ public class SlotController : MonoBehaviour
         {
             inFillFast = true;
             ProgressBar.maxValue = 1.5f;
-            isNotPossible = true;
+            isAlreadyDone = true;
+        }
+        else if(WordsManager.WM.CheckIfStateAreAutomaticAction(word,state))
+        {
+            inFillFast = true;
+            ProgressBar.maxValue = 1.5f;
+            isAutomaticAction = true;
         }
         else
         {
@@ -58,7 +65,7 @@ public class SlotController : MonoBehaviour
 
         if (minuteProgress >= actionDuration)
         {
-            if(isNotPossible)
+            if(isAlreadyDone)
             {
                 ActionWasDone();
             }
@@ -72,13 +79,15 @@ public class SlotController : MonoBehaviour
         if (inFillFast && ProgressBar.value <= ProgressBar.maxValue)
         {
             ProgressBar.value += Time.deltaTime;
-            Debug.Log(ProgressBar.value);
-            Debug.Log(ProgressBar.maxValue);
         }
         
-        if (inFillFast && ProgressBar.value == ProgressBar.maxValue)
+        if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isAlreadyDone)
         {
-            Debug.Log("full");
+            ActionWasDone();
+        }
+        else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isAutomaticAction)
+        {
+            WordsManager.WM.RequestChangeState(_word, _state);
             ActionWasDone();
         }
 
@@ -86,11 +95,13 @@ public class SlotController : MonoBehaviour
 
     private void CompleteAction()
     {
+        inFillFast = false;
         WordsManager.WM.RequestChangeState(_word, _state);
         _state.SetActiveOrDesactiveAgent(true);
         OnFinishActionProgress?.Invoke(this, this);
         SetLEDState(Color.yellow);
     }
+
 
     void ActionWasDone()
     {
@@ -152,9 +163,14 @@ public class SlotController : MonoBehaviour
     {
         return isAborted;
     }
-    public bool GetIsNotPossible()
+    public bool GetIsAlreadyDone()
     {
-        return isNotPossible;
+        return isAlreadyDone;
+    }
+
+    public bool GetIsisAutomaticAction()
+    {
+        return isAutomaticAction;
     }
 
 }

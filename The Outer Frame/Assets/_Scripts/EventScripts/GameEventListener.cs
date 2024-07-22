@@ -15,7 +15,7 @@ public class GameEventListener : MonoBehaviour
 
     private void Awake() => TriggerEvent.registerListener(this);
 
-   // private void OnDisable() => TriggerEvent.UnregisterListener(this);
+    private void OnDisable() => TriggerEvent.UnregisterListener(this);
 
     public void Raise(Component sender, object data)
     {

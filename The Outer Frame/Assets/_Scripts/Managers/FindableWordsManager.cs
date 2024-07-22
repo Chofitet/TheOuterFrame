@@ -45,7 +45,7 @@ public class FindableWordsManager : MonoBehaviour
         }
     }
 
-    public List<FindableWordData> SearchForFindableWord(TMP_Text textField)
+    List<FindableWordData> SearchForFindableWord(TMP_Text textField)
     {
         List<FindableWordData> aux = new List<FindableWordData>();
 
@@ -56,6 +56,7 @@ public class FindableWordsManager : MonoBehaviour
 
         for (int i = 0; i < words.Length; i++)
         {
+            int amoutOfWordindex = 0;
             if (processedIndices.Contains(i)) continue;
 
             string combinedWord = words[i];
@@ -65,6 +66,7 @@ public class FindableWordsManager : MonoBehaviour
             {
                 i++;
                 combinedWord += " " + words[i];
+                amoutOfWordindex++;
             }
 
             if (combinedWord.Contains("</link>"))
@@ -72,7 +74,11 @@ public class FindableWordsManager : MonoBehaviour
                 combinedWord = Regex.Replace(combinedWord, @"<\/?link>", "");
                 processedIndices.AddRange(Enumerable.Range(startIndex, i - startIndex + 1));
 
+                float CombinedWordLength = 0;
+                float heigthInfo = 0;
+                var wordLocation = Vector3.zero;
                 int e = 0;
+                int o = 0;
                 foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
                 {
                     if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord()))
@@ -81,21 +87,37 @@ public class FindableWordsManager : MonoBehaviour
                     {
                         var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
                         var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
-                        var wordLocation = textField.transform.TransformPoint((firstCharInfo.topLeft + lastCharInfo.bottomRight) / 2f);
-                        float widthInfo = Math.Abs((float)(firstCharInfo.topLeft.x - lastCharInfo.topLeft.x));
-                        widthInfo = widthInfo + widthInfo / 4;
-                        float heigthInfo = Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y);
-                        heigthInfo = heigthInfo + heigthInfo / 4;
+                        if(o == 0) wordLocation = textField.transform.TransformPoint((firstCharInfo.topLeft));
+                        CombinedWordLength += Math.Abs((float)(firstCharInfo.topLeft.x - lastCharInfo.topRight.x));
+                        heigthInfo = Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y);
                         int numOfWord = wordInfo.characterCount;
-                        string WordName = wordInfo.GetWord();
-                        aux.Add(new FindableWordData(WordName, wordLocation, widthInfo, heigthInfo, e));
+                        o++;
                     }
                     e++;
                 }
+                heigthInfo = heigthInfo + heigthInfo / 4;
+                aux.Add(new FindableWordData(combinedWord, wordLocation, CombinedWordLength, heigthInfo, e));
             }
         }
 
-        return aux;
+
+
+        return CleanListOfRepeatedWords(aux);
+    }
+
+    public List<FindableWordData> CleanListOfRepeatedWords(List<FindableWordData> list)
+    {
+        Dictionary<string, FindableWordData> uniqueWords = new Dictionary<string, FindableWordData>();
+        foreach (var item in list)
+        {
+            if (item.GetName() == "") continue;
+            string name = item.GetName();
+            if (!uniqueWords.ContainsKey(name))
+            {
+                uniqueWords[name] = item;
+            }
+        }
+        return new List<FindableWordData>(uniqueWords.Values);
     }
 
     float BTNdistance = 1000;
@@ -127,6 +149,7 @@ public class FindableWordsManager : MonoBehaviour
 
     public void ChangeCusorIcon(Component sender, object index)
     {
+        if (ActualViewState == ViewStates.GeneralView) return;
         if (index is WordData) index = 0;
         int i = (int)index;
 
@@ -182,7 +205,10 @@ public struct FindableWordData
         wordIndex = _wordIndex;
     }
     public WordData GetWordData() { return name; }
-    public string GetName() { return name.GetName(); }
+    public string GetName() {
+        if (!name) return "";
+        return name.GetName(); 
+    }
     public Vector3 GetPosition() { return position; }
 
     public float GetWidth() { return width; }

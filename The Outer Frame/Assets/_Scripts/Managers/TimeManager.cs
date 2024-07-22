@@ -9,6 +9,7 @@ public class TimeManager : MonoBehaviour
     public static Action OnHourChange;
     public static Action OnDayChange;
     public static Action OnNewsChange;
+    [SerializeField] GameEvent OnTimeSpeedChange;
     [SerializeField] float NormalTimeValue;
     [SerializeField] float AcceleratedTimeValue;
     [SerializeField] int MinutesToChangeNews;
@@ -122,19 +123,22 @@ public class TimeManager : MonoBehaviour
         {
             TimeVariation = AcceleratedTimeValue *60;
             isTimeAccelerated = true;
+            OnTimeSpeedChange?.Invoke(this, AcceleratedTimeValue);
         }
-        else { NormalizeTime(); }
+        else { NormalizeTime();}
     }
 
     public void NormalizeTime()
     {
         TimeVariation = NormalTimeValue * 60;
         isTimeAccelerated = false;
+        OnTimeSpeedChange?.Invoke(this, 1f);
     }
 
     public void PauseTime()
     {
         TimeVariation = 0;
+        OnTimeSpeedChange?.Invoke(this, 0f);
     }
 
     

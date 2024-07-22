@@ -16,7 +16,6 @@ public class ActionRowController : MonoBehaviour
     public void Initialization(StateEnum _state)
     {
         state = _state;
-        Debug.Log(state.name);
         ActionText.text = _state.GetActionVerb();
         btn.onClick.AddListener(OnButtonClick);
     }
