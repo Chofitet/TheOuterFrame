@@ -58,6 +58,7 @@ public class TVManager : MonoBehaviour
 
         List<TVScheduledNewType> newsToRemove = new List<TVScheduledNewType>();
 
+        if (ScheduledNews.Count == 0) return;
         foreach (TVScheduledNewType _new in ScheduledNews)
         {
             TimeData timeNew = _new.GetTimeToShow();
@@ -94,6 +95,7 @@ public class TVManager : MonoBehaviour
 
     void SetRandomNew()
     {
+        if (RandomNews.Count == 0) return;
         TVRandomNewType randomTVNewRandom = RandomNews[Random.Range(0, RandomNews.Count - 1)];
         SetNewInChannel(randomTVNewRandom);
     }

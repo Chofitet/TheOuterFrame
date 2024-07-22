@@ -7,7 +7,7 @@ using System;
 public class StateEnum : ScriptableObject
 {
     [Header("Action Fields")]
-    [SerializeField] string action;
+    [SerializeField] string ActionVerb;
     [SerializeField] int TimeToComplete;
     [SerializeField] int TimeToShowNew;
     [SerializeField] Agent Agent;
@@ -16,7 +16,7 @@ public class StateEnum : ScriptableObject
 
     public int GetTimeToShowNew() { return TimeToShowNew; }
 
-    public string GetActionVerb() { return action; }
+    public string GetActionVerb() { return ActionVerb; }
 
     public void SetActiveOrDesactiveAgent(bool x) {
         Agent.SetActiveDesactive(x); 
@@ -25,7 +25,7 @@ public class StateEnum : ScriptableObject
     public bool GetIfIsActive() {
         if (!Agent)
         {
-            Debug.LogWarning(action + " dont have Agent Assigned");
+            Debug.LogWarning(ActionVerb + " dont have Agent Assigned");
             return false;
         }
             

@@ -13,7 +13,7 @@ public class TextConverterInFindableWords : MonoBehaviour
     {
         textfield = GetComponent<TMP_Text>();
 
-        FindableWordsManager.FWM.SearchForFindableWord(textfield);
+        FindableWordsManager.FWM.InstanciateFindableWord(textfield);
     }
 
 

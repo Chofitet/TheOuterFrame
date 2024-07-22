@@ -19,6 +19,8 @@ public class Exceptions : ScriptableObject
 
     [SerializeField] List<ScriptableObject> exceptionConditions = new List<ScriptableObject>();
 
+
+
     public StateEnum CheckExceptions()
     {
         StateEnum auxState = SpecialState;
@@ -36,7 +38,10 @@ public class Exceptions : ScriptableObject
         }
 
         if (isOrderMatters) return CheckIfConditionalAreInOrder();
-        else return SpecialState;
+        else
+        {
+            return SpecialState;
+        }
     }
 
      StateEnum CheckIfConditionalAreInOrder()
@@ -65,4 +70,6 @@ public class Exceptions : ScriptableObject
         return SpecialState;
     }
 
+
 }
+

@@ -11,7 +11,7 @@ public class WordData : ScriptableObject
     [SerializeField] string PhoneNumber;
     [SerializeField] bool isAPhoneNumber;
 
-    [Header("Action Plan Results")]
+    [Header("Reports")]
     [SerializeField] List<ReportType> reportTypes = new List<ReportType>();
 
     [Header("TV News")]
@@ -33,6 +33,9 @@ public class WordData : ScriptableObject
     [Header("Inactive Conditions")]
     [SerializeField] List<ScriptableObject> InactiveConditions = new List<ScriptableObject>();
 
+    [Header("Automatic Actions")]
+    [SerializeField] List<StateEnum> AutomaticActions = new List<StateEnum>();
+
     private List<StateEnum> stateHistory = new List<StateEnum>();
     private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
     private Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
@@ -51,7 +54,7 @@ public class WordData : ScriptableObject
     public ReportType GetReport(StateEnum state, bool isSetTime = false)
     {
         ReportType input = FindInputInList(reportTypes, state);
-        if(isSetTime) input.GetTimeWhenWasDone();
+        if(isSetTime && input != default) input.GetTimeWhenWasDone();
         return input;
     }
 
@@ -209,6 +212,14 @@ public class WordData : ScriptableObject
         CheckedStateHistory.Add(newState);
     }
 
+    public void CleanStateFromHistory(StateEnum state)
+    {
+        if(stateHistory.Contains(state))
+        {
+            stateHistory.Remove(state);
+        }
+    }
+
     #endregion
 
     #region InactiveLogic
@@ -237,6 +248,11 @@ public class WordData : ScriptableObject
     #endregion
 
     public string GetName() { return wordName; }
+
+    public bool CheckIfStateAreAutomaticAction(StateEnum state)
+    {
+        return AutomaticActions.Contains(state);
+    }
 
     public string GetPhoneNumber() { return PhoneNumber; }
     public bool GetIsPhoneNumberFound() { return isPhoneNumberFound; }

@@ -14,7 +14,7 @@ public class CallType : ScriptableObject, IStateComparable
 
     [Header("Reaction Call")]
     [SerializeField] StateEnum state;
-    [SerializeField] int DelayToSchowCallInMinutes = 30;
+    [SerializeField] int DelayToShowCallInMinutes = 30;
     [SerializeField] int CatchWindowInMinutes = 30;
 
     [Header("Common Properties")]
@@ -33,11 +33,11 @@ public class CallType : ScriptableObject, IStateComparable
     {
         TimeData ActualTime = TimeManager.timeManager.GetTime();
 
-        TimeData FixedStartTime = AddMinutesToTime(ActualTime, DelayToSchowCallInMinutes);
+        TimeData FixedStartTime = AddMinutesToTime(ActualTime, DelayToShowCallInMinutes);
         StartTime = ScriptableObject.CreateInstance<TimeCheckConditional>();
         StartTime.Initialize(true, FixedStartTime.Day, FixedStartTime.Hour, FixedStartTime.Minute);
 
-        TimeData FixedEndTime = AddMinutesToTime(ActualTime, DelayToSchowCallInMinutes + CatchWindowInMinutes);
+        TimeData FixedEndTime = AddMinutesToTime(ActualTime, DelayToShowCallInMinutes + CatchWindowInMinutes);
         EndTime = ScriptableObject.CreateInstance<TimeCheckConditional>();
         EndTime.Initialize(false, FixedEndTime.Day, FixedEndTime.Hour, FixedEndTime.Minute);
 

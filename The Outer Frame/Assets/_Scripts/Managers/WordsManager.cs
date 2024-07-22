@@ -29,6 +29,11 @@ public class WordsManager : MonoBehaviour
         }
 
         if (SaveProgress) return;
+        if(wordsDic.Count == 0)
+        {
+            Debug.LogWarning("No word assigned to " + this.name);
+            return;
+        }
         foreach(WordData word in wordsDic)
         {
             word.CleanHistory();
@@ -38,27 +43,37 @@ public class WordsManager : MonoBehaviour
 
     public ReportType RequestLastReport(WordData _word)
     {
-        return FindWordInList(_word).GetLastReport();
+        ReportType report = FindWordInList(_word).GetLastReport();
+        if (!report) { Debug.LogWarning(_word.GetName() + " last state report was not assigned");}
+        return report;
     }
 
     public ReportType RequestReport(WordData _word, StateEnum state)
     {
-        return FindWordInList(_word).GetReport(state);
+        ReportType report = FindWordInList(_word).GetReport(state);
+        if (!report) Debug.LogWarning(_word.GetName() + " " + state.name + " report was not assigned");
+        return report;
     }
 
     public TVNewType RequestNew(WordData _word, StateEnum state)
     {
-        return FindWordInList(_word).GetTVnew(state);
+        TVNewType _new = FindWordInList(_word).GetTVnew(state);
+        if (!_new) Debug.LogWarning(_word.GetName() + " " + state.name + " new was not assigned");
+        return _new;
     }
 
     public DataBaseType RequestBDWikiData(WordData _word)
     {
-        return FindWordInList(_word).GetDB();
+        DataBaseType DB = FindWordInList(_word).GetDB();
+        if (!DB) Debug.LogWarning(_word.GetName() + " Data Base was not assigned");
+        return DB;
     }
 
     public List<CallType> RequestCall(WordData _word)
     {
-        return FindWordInList(_word).GetCall();
+        List < CallType > calls = FindWordInList(_word).GetCall();
+        if (calls.Count == 0) Debug.LogWarning(_word.GetName() + " has no more calls");
+        return calls;
     }
 
     public void RequestChangeState(WordData _word, StateEnum WordState)
@@ -92,6 +107,16 @@ public class WordsManager : MonoBehaviour
         return FindWordInList(_word).GetHistorySeen();
     }
 
+    public void CleanStateOnHistory(WordData _word, StateEnum WordState)
+    {
+        FindWordInList(_word).CleanStateFromHistory(WordState);
+    }
+
+    public bool CheckIfStateAreAutomaticAction(WordData _word, StateEnum WordState)
+    {
+        return FindWordInList(_word).CheckIfStateAreAutomaticAction(WordState);
+    }
+
     WordData FindWordInList(WordData _word)
     {
         foreach(WordData w in wordsDic)
@@ -101,9 +126,10 @@ public class WordsManager : MonoBehaviour
                 return w;
             }
         }
-
-        return wordsDic[0];
+        Debug.LogWarning("The word " + _word.GetName() + " is not assigned in the Word Manager");
+        return null;
     }
+
 
     public bool GetInactiveState(WordData _word)
     {
@@ -119,6 +145,7 @@ public class WordsManager : MonoBehaviour
                 WD = w;
             }
         }
+        if(!WD) Debug.LogWarning("The word " + WordToCompare + " is not assigned in the Word Manager");
         return WD;
     }
 }

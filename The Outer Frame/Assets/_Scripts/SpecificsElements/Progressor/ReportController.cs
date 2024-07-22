@@ -8,11 +8,11 @@ public class ReportController : MonoBehaviour
     [SerializeField] TMP_Text reporttxt;
     [SerializeField] GameEvent OnPCReportActiualization;
     
-    public void initReport(WordData word, StateEnum state, bool isAborted, bool isNotPossible)
+    public void initReport(WordData word, StateEnum state, bool isAborted, bool isAlreadyDone)
     {
-        if(isNotPossible)
+        if(isAlreadyDone)
         {
-            reporttxt.text = "Acción " + state.GetActionVerb() + " " + word.GetName() + " no es posible de realizar";
+            reporttxt.text = "The action \"" + state.GetActionVerb() + " " + word.GetName() + "\" has already been done";
             GetComponent<Animator>().SetTrigger("print");
             return;
         }
