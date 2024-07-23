@@ -11,6 +11,7 @@ public class ProgressorManager : MonoBehaviour
     {
         WordData _word = WordSelectedInNotebook.Notebook.GetSelectedWord();
         StateEnum state = (StateEnum) _state;
+        if (state.GetSpecialActionWord()) _word = state.GetSpecialActionWord();
 
         if (!GetUnusedSlot()) return;
 

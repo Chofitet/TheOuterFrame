@@ -27,6 +27,16 @@ public class ActionPlanManager : MonoBehaviour
         Actions.Add(NewAction);
     }
 
+    public void RemoveAction(Component sender, object obj)
+    {
+        StateEnum removeAction = (StateEnum)obj;
+        if (removeAction.GetSpecialActionWord())
+        {
+            Actions.Remove(removeAction);
+        }
+        
+    }
+
     public void ReparentToMoveActionPlan(Component sender, object obj)
     {
         transform.SetParent(OtherParent);

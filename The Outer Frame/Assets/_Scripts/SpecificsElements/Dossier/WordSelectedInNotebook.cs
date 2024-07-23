@@ -47,8 +47,25 @@ public class WordSelectedInNotebook : MonoBehaviour
             return;
         }
 
+        if(word.GetWordThatReplaces())
+        {
+            ReplaceWordInList(word.GetWordThatReplaces(), word);
+            word.SetIsFound();
+            return;
+        }
+
         WordsFound.Add(word);
         word.SetIsFound();
+    }
+
+    void ReplaceWordInList(WordData oldWord, WordData newWord)
+    {
+        int index = WordsFound.IndexOf(oldWord);
+        if (index != -1)
+        {
+            WordsFound[index] = newWord;
+            newWord.SetIsFound();
+        }
     }
 
     private void SetFindedNumber(WordData num)

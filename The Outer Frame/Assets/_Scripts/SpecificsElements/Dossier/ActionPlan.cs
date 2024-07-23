@@ -10,12 +10,14 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] Transform ActionsContainer;
     [SerializeField] GameEvent OnApprovedActionPlan;
     [SerializeField] GameEvent OnSetGeneralView;
+    [SerializeField] Button ApproveBtn;
     List<ActionRowController> Actions = new List<ActionRowController>();
     StateEnum state;
 
     public void Inicialization(List<StateEnum> ActionList)
     {
         InstantiateActionRows(ActionList);
+        ApproveBtn.enabled = false;
     }
 
     void InstantiateActionRows(List<StateEnum> listActions)
@@ -41,15 +43,27 @@ public class ActionPlan : MonoBehaviour
 
     void OnButtonRowPress(ActionRowController script)
     {
-        foreach(ActionRowController actions in Actions)
+        
+        foreach (ActionRowController actions in Actions)
         {
             if (script != actions) actions.ResetRow();
             else state = script.GetState();
         }
+
+        if(state.GetSpecialActionWord()) ApproveBtn.enabled = true;
+        else if (!state.GetSpecialActionWord() && WordSelectedInNotebook.Notebook.GetSelectedWord()) ApproveBtn.enabled = true;
+        else ApproveBtn.enabled = false;
     }
+
+    public void SelectedWord(Component sender, object obj)
+    {
+        if(state) ApproveBtn.enabled = true;
+    }
+
 
     public void ApprovedActionPlan()
     {
+
         OnApprovedActionPlan.Invoke(this,state);
         OnSetGeneralView?.Invoke(this, null);
     }

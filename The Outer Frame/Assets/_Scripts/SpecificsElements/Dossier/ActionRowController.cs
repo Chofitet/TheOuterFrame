@@ -20,11 +20,22 @@ public class ActionRowController : MonoBehaviour
         btn.onClick.AddListener(OnButtonClick);
     }
 
+    public void OnSelectWordInNotebook(Component sender, object obj)
+    {
+        if (state.GetSpecialActionWord() || !toggle.isOn) return;
+        Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
+    }
+
     void OnButtonClick()
     {
-        if (!WordSelectedInNotebook.Notebook.GetSelectedWord()) return;
-        Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
-        toggle.isOn = true;
+        toggle.isOn = true; 
+
+        if(WordSelectedInNotebook.Notebook.GetSelectedWord())
+        {
+            Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
+        }
+
+        if (state.GetSpecialActionWord()) Wordtext.text = "";
     }
 
     public Button GetButton() { return btn; }
