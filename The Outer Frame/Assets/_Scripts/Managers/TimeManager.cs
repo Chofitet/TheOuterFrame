@@ -71,8 +71,9 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         Day = 00;
-        Minute = 00;
-        Hour = 00;
+        Hour = 04;
+        Minute = 25;
+        
     }
 
     void Update()

@@ -7,7 +7,7 @@ using UnityEngine;
 public class ReportType : ScriptableObject, IStateComparable
 {
     [SerializeField] StateEnum state;
-    [Multiline][SerializeField] string Text;
+    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string Text;
 
     public StateEnum GetState() { return state;}
 
