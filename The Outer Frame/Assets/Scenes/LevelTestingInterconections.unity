@@ -1197,7 +1197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1554927426606104600, guid: 4c361e8c2aeb7c246b7ad6d2d8c9f167, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1843651390448110656, guid: 4c361e8c2aeb7c246b7ad6d2d8c9f167, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5152,8 +5152,8 @@ MonoBehaviour:
   GoalRowPrefab: {fileID: 8214663532938137377, guid: 671ead3471392b8418688caf2b50ea95, type: 3}
   OnCheckGoalComplete: {fileID: 11400000, guid: e1e68c142a81ae64a8cebbf4a74fa225, type: 2}
   GoalList:
-  - {fileID: 11400000, guid: c0c7bbe1dc8e2fd4a922afbf210e1e38, type: 2}
-  - {fileID: 11400000, guid: 35707320383df7a45ae8666cb9f5a5aa, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &509597503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7568,13 +7568,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Resumen del caso\n\nAn <link>Agency's transport truck</link> has just
-    chashed with undisclosed wildlife on <link>Road 54 KM 331</link> \n\nLuck is
-    on our side as it happenned under cover of darkness and no authoroties nor media
-    has beed notified yet.\n\nBut action must be swift!\n\nProcceed to damage control:\n-Check
-    the <link>cargo</link> status\n-Deal with any witnesses\n-Cover the whole thing
-    up!\n\n4 agents are already on the field awaiting for your orders\n\nTime is
-    on our side on this one\n\nEvent location: \nKnown involved: \n<link>Driver</link>\n<link>Delivery
+  m_text: "\nAn <link>Agency's transport truck</link> has just chashed with undisclosed
+    wildlife on <link>Road 54 KM 331</link> \n\nLuck is on our side as it happenned
+    under cover of darkness and no authoroties nor media has beed notified yet.\n\nBut
+    action must be swift!\n\nProcceed to damage control:\n-Check the <link>cargo</link>
+    status\n-Deal with any witnesses\n-Cover the whole thing up!\n\n4 agents are
+    already on the field awaiting for your orders\n\nTime is on our side on this
+    one\n\nEvent location: \nKnown involved: \n<link>Driver</link>\n<link>Delivery
     15568</link>\n<link>Humongous cow</link>\n\n\n   \n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10259,7 +10259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1554927426606104600, guid: 4c361e8c2aeb7c246b7ad6d2d8c9f167, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1843651390448110656, guid: 4c361e8c2aeb7c246b7ad6d2d8c9f167, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11789,6 +11789,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f933b9242f2b9f24080cee8f5a7ac4b4, type: 2}
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   - {fileID: 11400000, guid: de52a9a4e59c9aa489ccbce522907d56, type: 2}
+  - {fileID: 11400000, guid: bbc7f6ab284df2c4ea4970a6529fb7e9, type: 2}
+  - {fileID: 11400000, guid: c05e8f36f49daa049b537f235320f720, type: 2}
   SaveProgress: 0
   OnChangeStateOfWord: {fileID: 11400000, guid: bd9c8fe691e7894429461eaa75a95b75, type: 2}
   OnChangeStateSeenOfWord: {fileID: 0}
