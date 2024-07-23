@@ -36,6 +36,8 @@ public class WordData : ScriptableObject
     [Header("Automatic Actions")]
     [SerializeField] List<StateEnum> AutomaticActions = new List<StateEnum>();
 
+    [SerializeField] WordData WordThatReplaces;
+
     private List<StateEnum> stateHistory = new List<StateEnum>();
     private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
     private Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
@@ -258,6 +260,8 @@ public class WordData : ScriptableObject
     public bool GetIsPhoneNumberFound() { return isPhoneNumberFound; }
     public bool SetIsPhoneNumberFound() => isPhoneNumberFound = true;
     public bool GetIsAPhoneNumber() { return isAPhoneNumber; }
+
+    public WordData GetWordThatReplaces() { return WordThatReplaces; }
     public List<StateEnum> GetHistorySeen() { return CheckedStateHistory; }
     public List<StateEnum> GetHistory() { return stateHistory; }
     

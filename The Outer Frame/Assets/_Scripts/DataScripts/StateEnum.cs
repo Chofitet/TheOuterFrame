@@ -11,12 +11,15 @@ public class StateEnum : ScriptableObject
     [SerializeField] int TimeToComplete;
     [SerializeField] int TimeToShowNew;
     [SerializeField] Agent Agent;
+    [SerializeField] WordData SpecialActionWord;
 
     public int GetTime() { return TimeToComplete; }
 
     public int GetTimeToShowNew() { return TimeToShowNew; }
 
     public string GetActionVerb() { return ActionVerb; }
+
+    public WordData GetSpecialActionWord() { return SpecialActionWord; }
 
     public void SetActiveOrDesactiveAgent(bool x) {
         Agent.SetActiveDesactive(x); 

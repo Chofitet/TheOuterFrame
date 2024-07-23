@@ -500,6 +500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7442492351624577786}
   - component: {fileID: 2075909277059069969}
+  - component: {fileID: 1121595303662360917}
   m_Layer: 0
   m_Name: ActionRowPrefab
   m_TagString: Untagged
@@ -546,6 +547,36 @@ MonoBehaviour:
   ActionText: {fileID: 7725190471170506710}
   toggle: {fileID: 3529636852897037072}
   btn: {fileID: 4838764756201511797}
+--- !u!114 &1121595303662360917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062246628295916328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 5c0b83c1d8c4e7c48b89eb46fa45aa2a, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2075909277059069969}
+        m_TargetAssemblyTypeName: ActionRowController, Assembly-CSharp
+        m_MethodName: OnSelectWordInNotebook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1 &6606883680521036748
 GameObject:
   m_ObjectHideFlags: 0
