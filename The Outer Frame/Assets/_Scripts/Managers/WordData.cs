@@ -104,7 +104,8 @@ public class WordData : ScriptableObject
 
         foreach(T input in list)
         {
-           if (state == input.GetState())
+            if (input == null) continue;
+            if (state == input.GetState())
            {
                 aux = input;
            }

@@ -32,6 +32,10 @@ public class TimeManager : MonoBehaviour
             timeManager = this;
         }
         TimeVariation = NormalTimeValue * 60;
+
+        Day = 00;
+        Hour = 04;
+        Minute = 25;
     }
 
     int Day;
@@ -66,14 +70,6 @@ public class TimeManager : MonoBehaviour
     public float GetActuaTimeVariationSpeed()
     {
         return TimeVariation;
-    }
-
-    void Start()
-    {
-        Day = 00;
-        Hour = 04;
-        Minute = 25;
-        
     }
 
     void Update()

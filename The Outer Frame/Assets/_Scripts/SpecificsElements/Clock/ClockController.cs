@@ -26,6 +26,20 @@ public class ClockController : MonoBehaviour
     {
         TM = TimeManager.timeManager;
         anim = GetComponent<Animator>();
+
+        Minute = $"{TM.GetActualMinute():00}";
+
+        MinuteMovibleFlipFront.text = Minute;
+        MinuteInamovibleFlipFront.text = Minute;
+        MinuteInamovibleFlipBack.text = Minute;
+        MinuteMovibleFlipBack.text = Minute;
+
+        Hour = $"{TM.GetActualHour():00}";
+
+        HourMovibleFlipFront.text = Hour;
+        HourInamovibleFlipFront.text = Hour;
+        HourInamovibleFlipBack.text = Hour;
+        HourMovibleFlipBack.text = Hour;
     }
 
     private void OnEnable()
