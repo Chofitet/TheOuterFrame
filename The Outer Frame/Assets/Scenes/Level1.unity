@@ -1568,7 +1568,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.0717, y: 0.0053}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 113.54062, y: 113.54068}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &160336194
 MonoBehaviour:
@@ -5664,6 +5664,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1177273521}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1177273525}
   m_SourcePrefab: {fileID: 100100000, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
 --- !u!1 &540080775
 GameObject:
@@ -7646,7 +7649,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0}
+  m_AnchoredPosition: {x: -0.8, y: 3.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &732541883
@@ -7672,11 +7675,10 @@ MonoBehaviour:
   m_text: "\n\nAn <link>Agency's transport truck</link> has just chashed with undisclosed
     wildlife on <link>Road 54 KM 331</link> \n\nLuck is on our side as it happenned
     under cover of darkness and no authoroties nor media has beed notified yet.\n\nBut
-    action must be swift! \n\n <link>Delivery 255 P8</link> \n\nProcceed to damage
-    control:\n-Check the <link>cargo</link> status\n-Deal with any witnesses\n-Cover
-    the whole thing up!\n\n4 agents are already on the field awaiting for your orders\n\nTime
-    is on our side on this one\n\nEvent location: \nKnown involved: \n <link>Driver</link>
-    \n\n\n\n   \n\n"
+    action must be swift! \n\nProcceed to damage control:\n-Check the <link>cargo</link>
+    status\n-Deal with any witnesses\n-Cover the whole thing up!\n\n4 agents are
+    already on the field awaiting for your orders\n\nTime is on our side on this
+    one\n\nEvent location: \nKnown involved: \n <link>Driver</link> \n\n\n\n   \n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11983,6 +11985,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1a7be26a9197f7b428cb671c7db1a60c, type: 2}
   - {fileID: 11400000, guid: b1d0832661d325347ae2841895fde4a5, type: 2}
   - {fileID: 11400000, guid: f31321c1e05ae574ab61608ce3a053fa, type: 2}
+  - {fileID: 11400000, guid: 3b052dc1e84dcd34fbff7482b380e5d8, type: 2}
   SaveProgress: 0
   OnChangeStateOfWord: {fileID: 11400000, guid: bd9c8fe691e7894429461eaa75a95b75, type: 2}
   OnChangeStateSeenOfWord: {fileID: 0}
@@ -13191,6 +13194,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &1177273525
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177273519}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.13070253, y: 0.005823016, z: 0.0843417}
+  m_Center: {x: -0.0016727857, y: 0.004010059, z: -0.000065776745}
 --- !u!1 &1179035215 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 723466899302892208, guid: 569fb8d9f90d4384ab3c29711a85937a, type: 3}
@@ -13467,6 +13491,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1226422908}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1226422910}
     - targetCorrespondingSourceObject: {fileID: 7487920207642766719, guid: a686856e26ff23846885437ea560ae55, type: 3}
       insertIndex: -1
       addedObject: {fileID: 762595167}
@@ -13646,6 +13673,27 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0
+--- !u!65 &1226422910
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226422903}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.22646292, y: 0.007828992, z: 0.16976286}
+  m_Center: {x: 0.00849539, y: -0.007172838, z: 0.0038305004}
 --- !u!1 &1227193349
 GameObject:
   m_ObjectHideFlags: 0
