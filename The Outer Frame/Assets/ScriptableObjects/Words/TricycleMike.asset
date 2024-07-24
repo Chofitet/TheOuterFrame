@@ -10,25 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
-  m_Name: Tricycle Tracks
+  m_Name: TricycleMike
   m_EditorClassIdentifier: 
-  wordName: tricycle tracks
-  PhoneNumber: 
+  wordName: Tricycle Mike
+  PhoneNumber: (864) 552-3268
   isAPhoneNumber: 0
   reportTypes:
+  - {fileID: 11400000, guid: 32e5d9b7ee142874998e35b66c582004, type: 2}
+  - {fileID: 11400000, guid: 4da72db10b9ba8a49a7af1ea5d3ce3ca, type: 2}
   - {fileID: 11400000, guid: 0df6d835fd043fd4c9b84ce003ef0000, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   TVNewTypes: []
-  DBTypes: {fileID: 0}
-  CallTypes: []
+  DBTypes: {fileID: 11400000, guid: cf7c7129d531fec4bb76823e9cc836f2, type: 2}
+  CallTypes:
+  - {fileID: 11400000, guid: 6c1b59e2f2b9c48408b9166f7ecd2a6a, type: 2}
   exceptions: []
   InactiveConditions: []
   AutomaticActions: []
+  WordThatReplaces: {fileID: 11400000, guid: c05e8f36f49daa049b537f235320f720, type: 2}
