@@ -71,6 +71,7 @@ public class FindableWordsManager : MonoBehaviour
 
             if (combinedWord.Contains("</link>"))
             {
+                combinedWord = CleanUnnecessaryCharacter(combinedWord);
                 combinedWord = Regex.Replace(combinedWord, @"<\/?link>", "");
                 processedIndices.AddRange(Enumerable.Range(startIndex, i - startIndex + 1));
 
@@ -83,8 +84,10 @@ public class FindableWordsManager : MonoBehaviour
                 {
                     if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord()))
                         continue;
-                    if (combinedWord.Contains(wordInfo.GetWord()))
+
+                    if (NormalizeWord(combinedWord) == NormalizeWord(wordInfo.GetWord()))
                     {
+                        
                         var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
                         var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
                         if(o == 0) wordLocation = textField.transform.TransformPoint((firstCharInfo.topLeft));
@@ -96,13 +99,37 @@ public class FindableWordsManager : MonoBehaviour
                     e++;
                 }
                 heigthInfo = heigthInfo + heigthInfo / 4;
-                aux.Add(new FindableWordData(combinedWord, wordLocation, CombinedWordLength, heigthInfo, e));
+                aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, e));
             }
         }
 
 
 
         return CleanListOfRepeatedWords(aux);
+    }
+
+    string CleanUnnecessaryCharacter(string word)
+    {
+        int endIndex = word.IndexOf("</link>", StringComparison.OrdinalIgnoreCase);
+        if (endIndex != -1)
+        {
+            endIndex += "</link>".Length;
+            word = word.Substring(0, endIndex);
+            Debug.Log(word);
+        }
+
+        return word;
+    }
+
+    string NormalizeWord(string word)
+    {
+        return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r]", "");
+    }
+
+    string WordWithoutPointLineBreak(string word)
+    {
+        Debug.Log(word);
+        return Regex.Replace(word, @"[.,\n\r]", "");
     }
 
     public List<FindableWordData> CleanListOfRepeatedWords(List<FindableWordData> list)

@@ -7,6 +7,7 @@ public class ReportController : MonoBehaviour
 {
     [SerializeField] TMP_Text reporttxt;
     [SerializeField] GameEvent OnPCReportActiualization;
+    [SerializeField] float DelayToPC;
     
     public void initReport(WordData word, StateEnum state, bool isAborted, bool isAlreadyDone)
     {
@@ -28,6 +29,11 @@ public class ReportController : MonoBehaviour
     }
 
     public void OnLeveReportInPC(Component sender, object obj)
+    {
+        Invoke("Delay", DelayToPC);
+    }
+
+    void Delay()
     {
         OnPCReportActiualization?.Invoke(this, gameObject);
     }

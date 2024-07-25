@@ -6,19 +6,41 @@ using TMPro;
 public class PCController : MonoBehaviour
 {
     [SerializeField] TMP_Text SearchBar;
-    [SerializeField] TMP_Text wikiData;
     [SerializeField] GameEvent OnPCSearchWord;
+    [SerializeField] GameObject DataBaseUpdatedWindow;
+    [SerializeField] GameEvent OnWikiWindow;
 
     WordData word;
+    bool isInPCView;
 
-    public void CompleteSeachBar()
+    //OnSelectedWordInNotebook
+    public void CompleteSeachBar(Component sender, object obj)
     {
-        word = WordSelectedInNotebook.Notebook.GetSelectedWord();
+        if (!isInPCView) return;
+        WordData _word = (WordData)obj;
+        word = _word;
         SearchBar.text = word.GetName();
+    }
+
+    //OnChangeView
+    public void GetActualView(Component sender, object obj)
+    {
+        ViewStates view = (ViewStates)obj;
+
+        if (view == ViewStates.PCView)
+        {
+            isInPCView = true;
+        }
+        else isInPCView = false;
     }
 
     public void SearchWordInWiki()
     {
+        if (!word)
+        {
+            SearchBar.text = "Enter word";
+            return;
+        }
         OnPCSearchWord?.Invoke(this, word);
     }
 
@@ -27,8 +49,16 @@ public class PCController : MonoBehaviour
         gameEvent?.Invoke(this, null);
     }
 
-    
+    public void UpdatePC(Component sender, object obj)
+    {
+        DataBaseUpdatedWindow.SetActive(true);
+        Invoke("DesactiveDataBaseUpdatedWindow", 2);
+    }
 
-
+    void DesactiveDataBaseUpdatedWindow()
+    {
+        DataBaseUpdatedWindow.SetActive(false);
+        ChangeWindow(OnWikiWindow);
+    }
 
 }

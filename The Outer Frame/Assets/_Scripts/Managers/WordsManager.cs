@@ -75,6 +75,11 @@ public class WordsManager : MonoBehaviour
         if (calls.Count == 0) Debug.LogWarning(_word.GetName() + " has no more calls");
         return calls;
     }
+    public List<CallType> GetAllCathedCalls(WordData word)
+    {
+        return FindWordInList(word).GetAllCathedCalls();
+    }
+
 
     public void RequestChangeState(WordData _word, StateEnum WordState)
     {

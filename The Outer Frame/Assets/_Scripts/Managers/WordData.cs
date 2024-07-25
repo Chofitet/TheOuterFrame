@@ -98,6 +98,21 @@ public class WordData : ScriptableObject
         return auxList;
     }
 
+    public List<CallType> GetAllCathedCalls()
+    {
+        List<CallType> auxList = new List<CallType>();
+
+        foreach(CallType call in CallTypes)
+        {
+            if (call.GetIsCatch())
+            {
+                auxList.Add(call);
+            }
+        }
+
+        return auxList;
+    }
+
     T  FindInputInList<T>(List<T> list, StateEnum state) where T : IStateComparable
     {
         T aux = default;

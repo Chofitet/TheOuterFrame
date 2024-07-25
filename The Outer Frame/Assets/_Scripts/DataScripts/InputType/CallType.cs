@@ -25,9 +25,21 @@ public class CallType : ScriptableObject, IStateComparable
     [NonSerialized] private bool isCatch;
 
     public string GetDialogue() { return Dialogue; }
-    public void SetCached() => isCatch = true;
+    public void SetCached()
+    {
+        isCatch = true;
+        SetTimeWhenWasDone();
+    }
     public bool GetIsCatch() { return isCatch; }
     public StateEnum GetState() { return state; }
+
+    private TimeData CompleteTime;
+    public void SetTimeWhenWasDone()
+    {
+        CompleteTime = TimeManager.timeManager.GetTime();
+    }
+
+    public TimeData GetTimeWhenWasDone() { return CompleteTime; }
 
     public void DefineTimeZone()
     {
