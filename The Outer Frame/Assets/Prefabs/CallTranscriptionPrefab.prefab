@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 6815506102540783855}
   - component: {fileID: 2078201477349972005}
   - component: {fileID: 7122855680359787822}
+  - component: {fileID: 399382879456511582}
   m_Layer: 0
   m_Name: CallTranscriptionPrefab
   m_TagString: Untagged
@@ -160,6 +161,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 945e699245eef354fa099591b0aed1ba, type: 2}
   DisabledInTouch: 1
   SomethingToPass: {fileID: 0}
+--- !u!114 &399382879456511582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052442833119381466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a330445cfe05f804796bf77a0dc5b7a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
+  view: 8
 --- !u!1 &4970858808264341153
 GameObject:
   m_ObjectHideFlags: 0

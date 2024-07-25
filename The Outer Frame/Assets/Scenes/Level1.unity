@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 8456003}
   - component: {fileID: 8456002}
   - component: {fileID: 8456004}
+  - component: {fileID: 8456005}
   m_Layer: 0
   m_Name: NotebookUp
   m_TagString: Untagged
@@ -270,6 +271,36 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0
+--- !u!114 &8456005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8455999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 9937c6c7e7cd82943a6f1615432a4220, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8456001}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveNotebook
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0.3
 --- !u!4 &15860040 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: acd5a5e0d33b3b74c8e5a9819de19252, type: 3}
@@ -5711,6 +5742,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1177273525}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1177273526}
   m_SourcePrefab: {fileID: 100100000, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
 --- !u!1 &540080775
 GameObject:
@@ -7398,6 +7432,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 664132116}
   m_CullTransparentMesh: 1
+--- !u!1 &688120588 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4052442833119381466, guid: bdfc7e681be065e4599afad35642a2b4, type: 3}
+  m_PrefabInstance: {fileID: 1803358745}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &693341616
 GameObject:
   m_ObjectHideFlags: 0
@@ -7454,6 +7493,8 @@ MonoBehaviour:
   OnPrinterView: {fileID: 11400000, guid: 2659cdb2377b79844a271bf2fcf36d68, type: 2}
   OnViewStateChange: {fileID: 11400000, guid: de4c2261a9464294dbcdf9529638137f, type: 2}
   OnNotebookTake: {fileID: 11400000, guid: ecdda82964096664484cadf56310dfec, type: 2}
+  OnNotebookLeave: {fileID: 11400000, guid: 9937c6c7e7cd82943a6f1615432a4220, type: 2}
+  OnCallTranscriptionView: {fileID: 11400000, guid: 24f0998dddd525a4cbdda55acc726f3a, type: 2}
 --- !u!114 &693341619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13347,6 +13388,36 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.13070253, y: 0.005823016, z: 0.0843417}
   m_Center: {x: -0.0016727857, y: 0.004010059, z: -0.000065776745}
+--- !u!114 &1177273526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177273519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 9937c6c7e7cd82943a6f1615432a4220, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1177273523}
+        m_TargetAssemblyTypeName: NotebookMoveController, Assembly-CSharp
+        m_MethodName: CloseNotebook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1 &1179035215 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 723466899302892208, guid: 569fb8d9f90d4384ab3c29711a85937a, type: 3}
@@ -15127,6 +15198,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1366334446}
   - component: {fileID: 1366334447}
+  - component: {fileID: 1366334450}
+  - component: {fileID: 1366334449}
+  - component: {fileID: 1366334451}
   m_Layer: 0
   m_Name: InstanciateCallSpot
   m_TagString: Untagged
@@ -15171,6 +15245,108 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1366334449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366334445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 24f0998dddd525a4cbdda55acc726f3a, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1366334447}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: take
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1366334451}
+        m_TargetAssemblyTypeName: GameEventListener, Assembly-CSharp
+        m_MethodName: ActiveListener
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: take
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1366334450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366334445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 65e385f424a093640b7f6a24b57e90f0, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1366334447}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: print
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1366334451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366334445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 1
+  TriggerEvent: {fileID: 11400000, guid: ba541de4869c40440bbb35baf0c98c81, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1366334447}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: store
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1 &1372352711
 GameObject:
   m_ObjectHideFlags: 0
@@ -18965,6 +19141,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3380111737916465006, guid: bdfc7e681be065e4599afad35642a2b4, type: 3}
   m_PrefabInstance: {fileID: 1803358745}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1684441507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688120588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a330445cfe05f804796bf77a0dc5b7a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
+  view: 8
 --- !u!1 &1687615439
 GameObject:
   m_ObjectHideFlags: 0
@@ -20089,7 +20279,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4052442833119381466, guid: bdfc7e681be065e4599afad35642a2b4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1684441507}
   m_SourcePrefab: {fileID: 100100000, guid: bdfc7e681be065e4599afad35642a2b4, type: 3}
 --- !u!1 &1804008731
 GameObject:

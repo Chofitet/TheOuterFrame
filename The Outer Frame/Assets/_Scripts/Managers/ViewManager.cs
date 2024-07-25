@@ -14,6 +14,8 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnPrinterView;
     [SerializeField] GameEvent OnViewStateChange;
     [SerializeField] GameEvent OnNotebookTake;
+    [SerializeField] GameEvent OnNotebookLeave;
+    [SerializeField] GameEvent OnCallTranscriptionView;
     ViewStates currentviewState;
 
     void Update()
@@ -27,6 +29,7 @@ public class ViewManager : MonoBehaviour
     public void BackToGeneralView(Component sender, object _view)
     {
         TimeManager.timeManager.NormalizeTime();
+        OnNotebookLeave?.Invoke(this, null);
         UpdateViewState(this, ViewStates.GeneralView);
     }
 
@@ -64,10 +67,17 @@ public class ViewManager : MonoBehaviour
             case ViewStates.PrinterView:
                 OnPrinterView?.Invoke(this, null);
                 break;
+            case ViewStates.OnCallTranscriptionView:
+                OnCallTranscriptionView?.Invoke(this, null);
+                OnNotebookLeave?.Invoke(this, null);
+                break;
+
 
         }
         OnViewStateChange?.Invoke(this,NewView);
+        
         currentviewState = NewView;
+        Debug.Log(currentviewState);
     }
 
     public ViewStates GiveCurrentViewState()
@@ -85,5 +95,6 @@ public enum ViewStates
     ProgressorView,
     TVView,
     DossierView,
-    PrinterView
+    PrinterView,
+    OnCallTranscriptionView,
 }

@@ -15,4 +15,12 @@ public class TriggerArrayOfEvents : MonoBehaviour
         }
 
     }
+
+    public void TriggerEventsWithEvent(Component sender, object obj)
+    {
+        foreach (GameEvent e in EventsToTrigger)
+        {
+            e?.Invoke(this, SomethingToPass);
+        }
+    }
 }
