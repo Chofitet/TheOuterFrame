@@ -18,4 +18,15 @@ public class TranscriptionCallController : MonoBehaviour
         txtCall.text = call.GetDialogue();
         FindableWordsManager.FWM.InstanciateFindableWord(txtCall);
     }
+
+    public void DestroyTranscription(Component sender, object obj)
+    {
+        Invoke("delay", 0.1f);
+    }
+
+    void delay()
+    {
+        Destroy(gameObject);
+    }
+
 }

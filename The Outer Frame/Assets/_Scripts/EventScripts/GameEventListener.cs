@@ -32,6 +32,11 @@ public class GameEventListener : MonoBehaviour
         IsDesactive = false;
     }
 
+    public void DesactiveListener(Component sender, object var)
+    {
+        IsDesactive = true;
+    }
+
     IEnumerator Delay(Component sender, object data)
     {
         yield return new WaitForSeconds(DelayCall);

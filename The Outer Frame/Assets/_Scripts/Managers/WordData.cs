@@ -36,6 +36,9 @@ public class WordData : ScriptableObject
     [Header("Automatic Actions")]
     [SerializeField] List<StateEnum> AutomaticActions = new List<StateEnum>();
 
+    [Header("Modify length actions")]
+    [SerializeField] List<ModifyDurationActions> ModifyLengthactions = new List<ModifyDurationActions>();
+
     [SerializeField] WordData WordThatReplaces;
 
     private List<StateEnum> stateHistory = new List<StateEnum>();
@@ -80,6 +83,17 @@ public class WordData : ScriptableObject
         CallType call = FindInputInList(CallTypes, state);
         if (call == default) return;
         call.DefineTimeZone();
+    }
+
+    public int GetModifyActionDuration(StateEnum _action)
+    {
+        foreach(ModifyDurationActions Action in ModifyLengthactions)
+        {
+            if (Action.action == _action) return _action.GetTime() + Action.TimeToAdd;
+
+        }
+
+        return _action.GetTime();
     }
 
     private List<CallType> CheckForCallInTimeZone()
@@ -302,5 +316,14 @@ public class WordData : ScriptableObject
     public void SetIsFound(bool x = true) => isFound = x;
 
     public bool GetIsFound() { return isFound; }
+
+    
+
+}
+[Serializable]
+public class ModifyDurationActions
+{
+    public StateEnum action;
+    public int TimeToAdd;
 
 }

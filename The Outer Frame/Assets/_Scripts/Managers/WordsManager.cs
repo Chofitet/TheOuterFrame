@@ -122,6 +122,10 @@ public class WordsManager : MonoBehaviour
         return FindWordInList(_word).CheckIfStateAreAutomaticAction(WordState);
     }
 
+    public int GetModifyActionDuration(WordData _word, StateEnum WordState)
+    {
+        return FindWordInList(_word).GetModifyActionDuration(WordState);
+    }
     WordData FindWordInList(WordData _word)
     {
         foreach(WordData w in wordsDic)

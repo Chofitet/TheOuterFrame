@@ -80,14 +80,18 @@ public class FindableWordsManager : MonoBehaviour
                 var wordLocation = Vector3.zero;
                 int e = 0;
                 int o = 0;
+                bool IsInWord = false;
                 foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
                 {
                     if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord()))
                         continue;
 
-                    if (NormalizeWord(combinedWord) == NormalizeWord(wordInfo.GetWord()))
+                    string NormalizedCombinedWord =  NormalizeWord(combinedWord);
+                    string NormalizedWordInfo = NormalizeWord(wordInfo.GetWord());
+
+                    if (NormalizedCombinedWord.StartsWith(NormalizedWordInfo) || IsInWord)
                     {
-                        
+                        IsInWord = true;
                         var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
                         var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
                         if(o == 0) wordLocation = textField.transform.TransformPoint((firstCharInfo.topLeft));
@@ -97,6 +101,8 @@ public class FindableWordsManager : MonoBehaviour
                         o++;
                     }
                     e++;
+
+                    if (NormalizedCombinedWord.EndsWith(NormalizedWordInfo)) IsInWord = false;
                 }
                 heigthInfo = heigthInfo + heigthInfo / 4;
                 aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, e));
@@ -123,7 +129,7 @@ public class FindableWordsManager : MonoBehaviour
 
     string NormalizeWord(string word)
     {
-        return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r]", "");
+        return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r\(\)\s]", "");
     }
 
     string WordWithoutPointLineBreak(string word)

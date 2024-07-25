@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 2078201477349972005}
   - component: {fileID: 7122855680359787822}
   - component: {fileID: 399382879456511582}
+  - component: {fileID: 5229616036150630109}
   m_Layer: 0
   m_Name: CallTranscriptionPrefab
   m_TagString: Untagged
@@ -175,6 +176,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   view: 8
+--- !u!114 &5229616036150630109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052442833119381466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 150fbf47e20f80b448e5a693ddeebc65, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6815506102540783855}
+        m_TargetAssemblyTypeName: TranscriptionCallController, Assembly-CSharp
+        m_MethodName: DestroyTranscription
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1 &4970858808264341153
 GameObject:
   m_ObjectHideFlags: 0

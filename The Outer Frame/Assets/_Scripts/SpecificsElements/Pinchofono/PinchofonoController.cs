@@ -78,4 +78,12 @@ public class PinchofonoController : MonoBehaviour
         isRecording = false;
     }
 
+    public void ResetAll(Component sender, object obj)
+    {
+        anim.SetBool("IsRecording", false);
+        isRecording = false;
+        RecordingScreen.text = "";
+        CallToPrint = null;
+    }
+
 }
