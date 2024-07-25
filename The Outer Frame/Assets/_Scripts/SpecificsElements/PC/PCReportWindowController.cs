@@ -9,10 +9,17 @@ public class PCReportWindowController : MonoBehaviour
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelReporte;
 
+    WordData word;
+
+    //OnSearchWord
+    public void GetWord(Component sender, object _word)
+    {
+        word = (WordData)_word;
+    }
+
+   //OnReportWindow
     public void InstanciateBtnReport(Component sender, object _word)
     {
-        WordData word = (WordData)_word;
-
         foreach (Transform child in Grid.GetComponentsInChildren<Transform>())
         {
             if (child != Grid.transform)
@@ -38,6 +45,7 @@ public class PCReportWindowController : MonoBehaviour
 
         TMP_Text panelText = panelReporte.transform.GetChild(0).GetComponent<TMP_Text>();
         panelText.text = report;
+        FindableWordsManager.FWM.InstanciateFindableWord(panelText);
     }
 
     public void QuitPanelReport()

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -73,11 +75,12 @@ public class FindableWordBTNController : MonoBehaviour
                 extraIndex++;
             }
 
-            if (combinedWord.Contains(word.GetName()))
+            if (NormalizeWord(CleanUnnecessaryCharacter(combinedWord)) == NormalizeWord(word.GetName()))
             {
+                string extraCharacters = GetExtraCharacters(combinedWord);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
-                strBuilder = strBuilder.Replace(combinedWord, "<material=\"LiberationSans Findable Word Effect\">" + combinedWord + "</material>");
-                auxText += strBuilder + " ";
+                strBuilder = strBuilder.Replace(combinedWord, "<material=\"LiberationSans Findable Word Effect\">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
+                auxText += strBuilder + extraCharacters + " ";
             }
             else
             {
@@ -88,6 +91,38 @@ public class FindableWordBTNController : MonoBehaviour
 
         }
         textField.text = auxText;
+    }
+
+    string GetExtraCharacters(string word)
+    {
+        int endIndex = word.IndexOf("</link>", StringComparison.OrdinalIgnoreCase);
+        if (endIndex != -1)
+        {
+            endIndex += "</link>".Length;
+            if (endIndex < word.Length)
+            {
+                return word.Substring(endIndex);
+            }
+        }
+        return "";
+    }
+
+    string NormalizeWord(string word)
+    {
+        return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r]", "");
+    }
+
+    string CleanUnnecessaryCharacter(string word)
+    {
+        int endIndex = word.IndexOf("</link>", StringComparison.OrdinalIgnoreCase);
+        if (endIndex != -1)
+        {
+            endIndex += "</link>".Length;
+            word = word.Substring(0, endIndex);
+            Debug.Log(word);
+        }
+
+        return word;
     }
 
     void UnBoldWord()

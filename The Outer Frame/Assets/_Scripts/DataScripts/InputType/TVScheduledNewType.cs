@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New ScheduledNew", menuName = "Input/News/ScheduledNew")]
 public class TVScheduledNewType : ScriptableObject, INewType
 {
-    [SerializeField] string headline;
+    [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headline;
     [SerializeField] Sprite image;
     [SerializeField] int channel;
     [SerializeField] int alertLevelIncrement;
