@@ -50,7 +50,6 @@ public class WordSelectedInNotebook : MonoBehaviour
         if(word.GetWordThatReplaces())
         {
             ReplaceWordInList(word.GetWordThatReplaces(), word);
-            word.SetIsFound();
             return;
         }
 
@@ -64,6 +63,11 @@ public class WordSelectedInNotebook : MonoBehaviour
         if (index != -1)
         {
             WordsFound[index] = newWord;
+            newWord.SetIsFound();
+        }
+        else
+        {
+            WordsFound.Add(newWord);
             newWord.SetIsFound();
         }
     }

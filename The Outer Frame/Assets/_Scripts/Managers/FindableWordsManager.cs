@@ -121,8 +121,15 @@ public class FindableWordsManager : MonoBehaviour
     }
 
     float BTNdistance = 1000;
+
+    int index;
     private void Update()
     {
+        FindableWordsBTNs.RemoveAll(s => s == null);
+
+        if (index != FindableWordsBTNs.Count) isHover = false;
+        index = FindableWordsBTNs.Count;
+
         if (isHover) return;
         if(ActualViewState == ViewStates.GeneralView)
         {
@@ -130,7 +137,7 @@ public class FindableWordsManager : MonoBehaviour
             return;
         }
         GetClosestButton();
-
+        Debug.Log("checking");
         if (BTNdistance < 70)
         {
             ChangeCusorIcon(null, 3);
