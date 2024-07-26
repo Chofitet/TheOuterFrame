@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8456000
 Transform:
   m_ObjectHideFlags: 0
@@ -155,8 +155,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1177273520}
+  m_Children: []
   m_Father: {fileID: 980827985}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8456001
@@ -2558,30 +2557,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1514689759}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 220867137}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   DelayCall: 0
 --- !u!114 &228472832
 MonoBehaviour:
@@ -2676,30 +2651,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: NotebookController, Assembly-CSharp
         m_MethodName: RefreshWords
         m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 220867137}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1514689759}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4095,6 +4046,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39bccc141280cd4459d84d5d04ca2b42, type: 3}
       insertIndex: -1
       addedObject: {fileID: 332550532}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39bccc141280cd4459d84d5d04ca2b42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 332550533}
   m_SourcePrefab: {fileID: 100100000, guid: 39bccc141280cd4459d84d5d04ca2b42, type: 3}
 --- !u!4 &332550527 stripped
 Transform:
@@ -4191,6 +4145,36 @@ MonoBehaviour:
       - m_Target: {fileID: 332550531}
         m_TargetAssemblyTypeName: ClockController, Assembly-CSharp
         m_MethodName: SetClockSpeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &332550533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 332550528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: de4c2261a9464294dbcdf9529638137f, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 332550531}
+        m_TargetAssemblyTypeName: ClockController, Assembly-CSharp
+        m_MethodName: CheckView
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5593,6 +5577,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477867449}
   m_CullTransparentMesh: 1
+--- !u!1 &490527543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 490527544}
+  m_Layer: 0
+  m_Name: NotebookDossierCamPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &490527544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490527543}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.47196284, y: -0.4730767, z: 0.52666605, w: 0.52542585}
+  m_LocalPosition: {x: 0.075300254, y: -0.06780022, z: 0.34290004}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2032041695}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &491276829
 GameObject:
   m_ObjectHideFlags: 0
@@ -6317,7 +6332,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8456000}
+    m_TransformParent: {fileID: 980827985}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6337,7 +6352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.000000007450579
+      value: -0.0000000074505797
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
       propertyPath: m_LocalRotation.y
@@ -6404,9 +6419,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1177273522}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1177273521}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1177273525}
@@ -10475,7 +10487,7 @@ GameObject:
   - component: {fileID: 823777615}
   - component: {fileID: 823777614}
   m_Layer: 0
-  m_Name: DossierBtn
+  m_Name: NotebookBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10489,12 +10501,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823777612}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.07457283, y: -0.78503263, z: 0.09638979, w: 0.6073482}
-  m_LocalPosition: {x: 0.29430786, y: -0.28369445, z: 0.8919189}
+  m_LocalRotation: {x: 0.000000029802312, y: 0.0035940097, z: -0.00000011920925, w: 0.99999356}
+  m_LocalPosition: {x: -0.01092424, y: -0.0048417794, z: 0.0026003998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2032041695}
+  m_Father: {fileID: 980827985}
   m_LocalEulerAnglesHint: {x: 3.483, y: -104.13, z: 13.568}
 --- !u!114 &823777614
 MonoBehaviour:
@@ -12801,13 +12813,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980827984}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.07422604, y: -0.78721035, z: 0.09665722, w: 0.6045228}
-  m_LocalPosition: {x: 0.29400077, y: -0.2762808, z: 0.90163964}
+  m_LocalRotation: {x: 0.0000000037252899, y: -0.99149436, z: -0.000000014901159, w: -0.13014965}
+  m_LocalPosition: {x: 0.5591174, y: 2.0455716, z: -7.486515}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1177273520}
   - {fileID: 8456000}
-  m_Father: {fileID: 2032041695}
+  - {fileID: 823777613}
+  m_Father: {fileID: 2026532456}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &985935265
 GameObject:
@@ -14501,48 +14515,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
   m_PrefabInstance: {fileID: 533316527}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1177273521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1177273519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: 9937c6c7e7cd82943a6f1615432a4220, type: 2}
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1177273523}
-        m_TargetAssemblyTypeName: NotebookMoveController, Assembly-CSharp
-        m_MethodName: CloseNotebook
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1177273524}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: close
-          m_BoolArgument: 0
-        m_CallState: 2
-  DelayCall: 0
 --- !u!114 &1177273522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14556,13 +14528,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: 2c1d6c3cda2f00f44954a6adfd4837b3, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: de4c2261a9464294dbcdf9529638137f, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1177273523}
         m_TargetAssemblyTypeName: NotebookMoveController, Assembly-CSharp
-        m_MethodName: OpenNotebook
+        m_MethodName: OnChangeView
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14585,6 +14557,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 230c34be7db384b409d5e0f5e30ec1f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Positions:
+  - {fileID: 980827985}
+  - {fileID: 490527544}
+  MoveDuration: 0.7
 --- !u!95 &1177273524
 Animator:
   serializedVersion: 5
@@ -14644,16 +14620,16 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1177273524}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
+      - m_Target: {fileID: 1177273523}
+        m_TargetAssemblyTypeName: NotebookMoveController, Assembly-CSharp
+        m_MethodName: SlidePhones
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: open
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0
@@ -19195,7 +19171,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1547799654}
   m_LocalRotation: {x: 0.00000030339834, y: 0.7071069, z: 0.00000021399133, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0465}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0428}
   m_LocalScale: {x: 0.00075, y: 0.0007500001, z: 0.0007500003}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -20229,6 +20205,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 4551e8ef31eb48947a9fbfc5105aeb99, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e87fa51df472ff44eb407704a1aa35f0, type: 2}
     - target: {fileID: 919132149155446097, guid: 4551e8ef31eb48947a9fbfc5105aeb99, type: 3}
       propertyPath: m_Name
       value: desk-model
@@ -24598,6 +24578,7 @@ Transform:
   - {fileID: 798726193}
   - {fileID: 877547234}
   - {fileID: 1939944803}
+  - {fileID: 980827985}
   - {fileID: 1678168714}
   - {fileID: 1841232404}
   - {fileID: 1383487656}
@@ -24683,8 +24664,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 980827985}
-  - {fileID: 823777613}
+  - {fileID: 490527544}
   m_Father: {fileID: 1804008732}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &2032041696

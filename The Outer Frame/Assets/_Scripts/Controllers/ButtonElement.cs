@@ -15,13 +15,13 @@ public class ButtonElement : MonoBehaviour
 
     public void DisableEnableButton(Component sender, object view)
     {
-        ViewStates newState = (ViewStates)view;
+      /*  ViewStates newState = (ViewStates)view;
 
         if(newState == ViewStates.GeneralView)
         {
             GetComponent<BoxCollider>().enabled = true;
         }
-        else GetComponent<BoxCollider>().enabled = false;
+        else GetComponent<BoxCollider>().enabled = false;*/
 
     }
 }
