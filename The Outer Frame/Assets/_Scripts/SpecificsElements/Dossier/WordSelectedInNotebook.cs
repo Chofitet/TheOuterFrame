@@ -44,6 +44,8 @@ public class WordSelectedInNotebook : MonoBehaviour
         if(word.GetIsAPhoneNumber())
         {
             SetFindedNumber(word);
+            WordsFound.Add(word);
+            word.SetIsFound();
             return;
         }
 

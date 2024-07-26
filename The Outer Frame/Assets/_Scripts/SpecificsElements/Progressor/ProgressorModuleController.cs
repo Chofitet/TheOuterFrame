@@ -5,10 +5,13 @@ using UnityEngine;
 public class ProgressorModuleController : MonoBehaviour
 {
     [SerializeField] SlotController slot;
+    [SerializeField] GameEvent OnPrintReport;
     bool isFull;
+    bool IsReadyToPrint;
     bool isAbortOpen;
     Animator anim;
     bool isReady;
+    [SerializeField] GameObject PrintBTN;
     [SerializeField] GameObject AbortBTN;
     [SerializeField] GameObject YesBTN;
     [SerializeField] GameObject NoBTN;
@@ -82,9 +85,12 @@ public class ProgressorModuleController : MonoBehaviour
         if(sender.gameObject == slot.gameObject)
         {
             anim.SetTrigger("receiveMessage");
-            isFull = false;
+            IsReadyToPrint = true;
 
-            if(isAbortOpen)
+            PrintBTN.GetComponent<Collider>().enabled = true;
+            PrintBTN.GetComponent<BlinkEffect>().ActiveBlink(this, null);
+
+            if (isAbortOpen)
             {
                 anim.SetTrigger("noPush");
                 isAbortOpen = false;
@@ -95,10 +101,12 @@ public class ProgressorModuleController : MonoBehaviour
     public void ReportTaked(Component sender, object obj)
     {
         GameObject report = (GameObject)obj;
-
-        if(report == slot.gameObject)
+        
+        if (report == slot.gameObject)
         {
             slot.CleanSlot();
+            isFull = false;
+            IsReadyToPrint = true;
         }
     }
 
@@ -109,4 +117,30 @@ public class ProgressorModuleController : MonoBehaviour
         slot.AbortAction();
         anim.SetTrigger("receiveMessage");
     }
+
+    //OnPressProgressorPrintBTN
+    public void PrintReport(Component sender, object obj)
+    {
+        if(sender.gameObject == PrintBTN)
+        {
+            PrintBTN.GetComponent<BlinkEffect>().TurnOffLigth(this, null);
+            PrintBTN.GetComponent<Collider>().enabled = false;
+            OnPrintReport?.Invoke(this, slot);
+        }
+    }
+
+    public void FullPrinter(Component sender, object obj)
+    {
+        SlotController _slot = (SlotController)obj;
+
+        if(IsReadyToPrint && slot != _slot)
+        {
+            PrintBTN.GetComponent<BlinkEffect>().ActiveBlink(this, null);
+            PrintBTN.GetComponent<Collider>().enabled = true;
+        }
+    }
+
+
+
+
 }

@@ -9,15 +9,19 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameObject ActionRowPrefab;
     [SerializeField] Transform ActionsContainer;
     [SerializeField] GameEvent OnApprovedActionPlan;
+    [SerializeField] GameEvent OnProgressorFull;
     [SerializeField] GameEvent OnSetGeneralView;
     [SerializeField] Button ApproveBtn;
     List<ActionRowController> Actions = new List<ActionRowController>();
     StateEnum state;
+    bool isProgressorFull;
 
-    public void Inicialization(List<StateEnum> ActionList)
+    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull)
     {
         InstantiateActionRows(ActionList);
         ApproveBtn.enabled = false;
+        isProgressorFull = _progressorfull;
+
     }
 
     void InstantiateActionRows(List<StateEnum> listActions)
@@ -60,10 +64,14 @@ public class ActionPlan : MonoBehaviour
         if(state) ApproveBtn.enabled = true;
     }
 
-
     public void ApprovedActionPlan()
     {
-
+        if (isProgressorFull)
+        {
+            OnProgressorFull?.Invoke(this, null);
+            return;
+        }    
+        
         OnApprovedActionPlan.Invoke(this,state);
         OnSetGeneralView?.Invoke(this, null);
     }

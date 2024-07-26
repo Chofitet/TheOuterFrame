@@ -121,7 +121,6 @@ public class FindableWordsManager : MonoBehaviour
         {
             endIndex += "</link>".Length;
             word = word.Substring(0, endIndex);
-            Debug.Log(word);
         }
 
         return word;
@@ -134,7 +133,6 @@ public class FindableWordsManager : MonoBehaviour
 
     string WordWithoutPointLineBreak(string word)
     {
-        Debug.Log(word);
         return Regex.Replace(word, @"[.,\n\r]", "");
     }
 

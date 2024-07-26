@@ -23,7 +23,7 @@ public class ReportController : MonoBehaviour
             GetComponent<Animator>().SetTrigger("print");
             return;
         }
-        reporttxt.text = WordsManager.WM.RequestLastReport(word).GetText();
+        reporttxt.text = WordsManager.WM.RequestReport(word,state).GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(reporttxt);
         GetComponent<Animator>().SetTrigger("print");
     }

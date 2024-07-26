@@ -119,7 +119,6 @@ public class FindableWordBTNController : MonoBehaviour
         {
             endIndex += "</link>".Length;
             word = word.Substring(0, endIndex);
-            Debug.Log(word);
         }
 
         return word;
