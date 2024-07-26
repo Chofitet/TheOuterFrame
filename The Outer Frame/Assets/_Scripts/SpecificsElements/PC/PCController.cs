@@ -20,6 +20,7 @@ public class PCController : MonoBehaviour
         WordData _word = (WordData)obj;
         word = _word;
         SearchBar.text = word.GetName();
+        SearchBar.GetComponent<TypingAnimText>().AnimateTyping();
     }
 
     //OnChangeView
