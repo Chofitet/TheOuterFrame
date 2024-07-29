@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class FindableWordBTNController : MonoBehaviour
@@ -119,7 +120,6 @@ public class FindableWordBTNController : MonoBehaviour
         {
             endIndex += "</link>".Length;
             word = word.Substring(0, endIndex);
-            Debug.Log(word);
         }
 
         return word;
@@ -155,4 +155,59 @@ public class FindableWordBTNController : MonoBehaviour
 
         textField.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
     }
+
+    public bool IsVisible()
+    {
+        Canvas canvas = GetComponentInParent<Canvas>();
+        if (canvas == null)
+        {
+            Debug.LogError("Canvas not found");
+            return false;
+        }
+
+        GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
+        if (raycaster == null)
+        {
+            Debug.LogError("GraphicRaycaster not found on the canvas");
+            return false;
+        }
+
+        
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Camera.main.WorldToScreenPoint(transform.position);
+
+        // Raycast and check if the object is among the results
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerEventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            Debug.Log(result.gameObject.name);
+            if (result.gameObject == gameObject.GetComponent<Image>())
+            {
+                Debug.Log("visible");
+                return true;
+            }
+        }
+
+        return false;
+    }
+    CanvasGroup canvasGroup;
+    public void UpdateVisibility()
+    {
+        if (IsVisible())
+        {
+            canvasGroup.alpha = 1;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+        else
+        {
+            canvasGroup.alpha = 0;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
+    }
+
+    public TMP_Text GetTextField() { return textField; }
 }

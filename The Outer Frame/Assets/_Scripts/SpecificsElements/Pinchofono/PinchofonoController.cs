@@ -40,6 +40,7 @@ public class PinchofonoController : MonoBehaviour
         WordData word = (WordData)obj;
         if (!IsInView) return;
         RecordingScreen.text = word.GetPhoneNumber();
+        RecordingScreen.GetComponent<TypingAnimText>().AnimateTyping();
         anim.SetTrigger("padDial");
         anim.SetTrigger("recordReady");
         anim.SetTrigger("recordReadyWobble");

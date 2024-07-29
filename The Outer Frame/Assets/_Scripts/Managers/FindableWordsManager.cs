@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FindableWordsManager : MonoBehaviour
 {
@@ -121,7 +122,6 @@ public class FindableWordsManager : MonoBehaviour
         {
             endIndex += "</link>".Length;
             word = word.Substring(0, endIndex);
-            Debug.Log(word);
         }
 
         return word;
@@ -134,7 +134,6 @@ public class FindableWordsManager : MonoBehaviour
 
     string WordWithoutPointLineBreak(string word)
     {
-        Debug.Log(word);
         return Regex.Replace(word, @"[.,\n\r]", "");
     }
 
@@ -169,8 +168,9 @@ public class FindableWordsManager : MonoBehaviour
             ChangeCusorIcon(null, 0);
             return;
         }
+
         GetClosestButton();
-        Debug.Log("checking");
+
         if (BTNdistance < 70)
         {
             ChangeCusorIcon(null, 3);
@@ -203,11 +203,13 @@ public class FindableWordsManager : MonoBehaviour
     {
         Vector3 mousePosition = Input.mousePosition;
         GameObject closestButton = null;
+
         float minDistance = float.MaxValue;
         FindableWordsBTNs.RemoveAll(s => s == null);
 
         foreach (GameObject btn in FindableWordsBTNs)
         {
+            //if (btn.GetComponent<FindableWordBTNController>().IsVisible()) continue;
             Vector3 btnScreenPosition = Camera.main.WorldToScreenPoint(btn.transform.position);
             float distance = Vector3.Distance(mousePosition, btnScreenPosition);
 

@@ -6,6 +6,9 @@ public class ProgressorManager : MonoBehaviour
 {
 
     [SerializeField] List<ProgressorModuleController> Slots = new List<ProgressorModuleController>();
+    [SerializeField] int numOfSlots;
+    [SerializeField] GameEvent OnProgressorSetSlot;
+    
 
     public void SetActionInCourse(Component c, object _state)
     {
@@ -13,10 +16,19 @@ public class ProgressorManager : MonoBehaviour
         StateEnum state = (StateEnum) _state;
         if (state.GetSpecialActionWord()) _word = state.GetSpecialActionWord();
 
-        if (!GetUnusedSlot()) return;
+        if (!GetUnusedSlot())
+        {
+            return;
+        }
 
         GetUnusedSlot().SetAction(_word, state, WordsManager.WM.GetModifyActionDuration(_word,state));
         state.SetActiveOrDesactiveAgent(false);
+        OnProgressorSetSlot?.Invoke(this, false);
+
+        if (!GetUnusedSlot())
+        {
+            OnProgressorSetSlot?.Invoke(this, true);
+        }
     }
 
 

@@ -11,17 +11,17 @@ public class ButtonElement : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         OnButtonElementClick?.Invoke(this, view);
+        GetComponent<BoxCollider>().enabled = false;
     }
 
-    public void DisableEnableButton(Component sender, object view)
+    public void DisableEnableButton(Component sender, object obj)
     {
-        ViewStates newState = (ViewStates)view;
+        ViewStates newState = (ViewStates)obj;
 
-        if(newState == ViewStates.GeneralView)
+        if(newState != view)
         {
             GetComponent<BoxCollider>().enabled = true;
         }
-        else GetComponent<BoxCollider>().enabled = false;
 
     }
 }

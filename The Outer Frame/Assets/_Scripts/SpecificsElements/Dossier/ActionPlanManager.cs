@@ -9,14 +9,14 @@ public class ActionPlanManager : MonoBehaviour
     [SerializeField] GameObject ActionPlanPrefab;
     [SerializeField] Transform OtherParent;
     [SerializeField] Transform OriginalParent;
-
+    bool IsProgressorFull;
 
     public void SetActionPlan(Component sender, object obj)
     {
         if (transform.childCount != 0) Destroy(transform.GetChild(0).gameObject);
         
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
-        AP.GetComponent<ActionPlan>().Inicialization(Actions);
+        AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull);
         transform.Rotate(Vector3.zero);
 
     }
@@ -34,7 +34,17 @@ public class ActionPlanManager : MonoBehaviour
         {
             Actions.Remove(removeAction);
         }
-        
+    }
+
+    public void ProgressorSet(Component sender, object obj)
+    {
+        bool x = (bool)obj;
+        IsProgressorFull = x;
+    }
+
+    public void TakeReport(Component sender, object obj)
+    {
+        IsProgressorFull = false;
     }
 
     public void ReparentToMoveActionPlan(Component sender, object obj)

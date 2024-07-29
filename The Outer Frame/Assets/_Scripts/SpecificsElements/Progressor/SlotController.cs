@@ -4,12 +4,14 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using TMPro.Examples;
 
 public class SlotController : MonoBehaviour
 {
     [SerializeField] TMP_Text Wordtxt;
     [SerializeField] TMP_Text Actiontxt;
     [SerializeField] Slider ProgressBar;
+    [SerializeField] GameObject Icon;
     [SerializeField] GameEvent OnFinishActionProgress;
  
     [SerializeField] Image[] LEDObjects;
@@ -30,7 +32,9 @@ public class SlotController : MonoBehaviour
         _word = word;
         _state = state;
         Wordtxt.text = word.GetName();
+        Wordtxt.GetComponent<WarpTextExample>().UpdateText();
         Actiontxt.text = state.GetActionVerb();
+        Actiontxt.GetComponent<WarpTextExample>().UpdateText();
         isAborted = false;
         isAlreadyDone = false;
 
@@ -99,7 +103,8 @@ public class SlotController : MonoBehaviour
         WordsManager.WM.RequestChangeState(_word, _state);
         _state.SetActiveOrDesactiveAgent(true);
         OnFinishActionProgress?.Invoke(this, this);
-        SetLEDState(Color.yellow);
+        Icon.SetActive(true);
+
     }
 
 
@@ -132,6 +137,7 @@ public class SlotController : MonoBehaviour
     void ResetSlot()
     {
         gameObject.SetActive(false);
+        Icon.SetActive(false);
         isActionComplete = false;
         TimeManager.OnMinuteChange -= UpdateProgress;
         SetLEDState(Color.green);

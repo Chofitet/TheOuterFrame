@@ -6,18 +6,21 @@ public class PrinterController : MonoBehaviour
 {
     [SerializeField] GameObject ReportPrefab;
     [SerializeField] Transform InstanciateSpot;
-    List<SlotController> SlotsInQueue = new List<SlotController>();
     [SerializeField] GameEvent OnTakeReport;
+    [SerializeField] GameEvent OnFullPrinter;
+    [SerializeField] BlinkEffect Led;
+    [SerializeField] float TimeLed;
+    SlotController slot;
 
-    public void AddToQueue(Component component, object sc)
+    public void PrintReport(Component component, object sc)
     {
-        SlotController slot = (SlotController)sc;
-
-        SlotsInQueue.Add(slot);
-        if (SlotsInQueue.Count == 1)
+        if (slot)
         {
-            InstanciateReport(slot.gameObject);
+            IsFull(slot);
+            return;
         }
+        slot = (SlotController) sc;
+        InstanciateReport(slot.gameObject);
     }
 
     public void InstanciateReport(GameObject slotReference)
@@ -30,16 +33,20 @@ public class PrinterController : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         GetComponent<BoxCollider>().enabled = false;
-        if (GetIsQueueFree()) return;
-        OnTakeReport?.Invoke(this, SlotsInQueue[0].gameObject);
-        SlotsInQueue.Remove(SlotsInQueue[0]);
-        if (GetIsQueueFree()) return;
-        InstanciateReport(SlotsInQueue[0].gameObject);
+        OnTakeReport?.Invoke(this, slot.gameObject);
+        slot = null;
     }
 
-    bool GetIsQueueFree()
+    void IsFull(SlotController slot)
     {
-        if (SlotsInQueue.Count == 0) return true;
-        else return false;
+        OnFullPrinter?.Invoke(this, slot);
+        Led.TurnOnLigth(null, null);
+        Invoke("TurnOffLed", TimeLed);
     }
+
+    void TurnOffLed()
+    {
+        Led.TurnOffLigth(null, null);
+    }
+
 }

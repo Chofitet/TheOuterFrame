@@ -103,8 +103,16 @@ public class ClockController : MonoBehaviour
         HourMovibleFlipBack.text = Hour;
     }
 
+    ViewStates currentView;
+    public void CheckView(Component sender, object obj)
+    {
+        currentView = (ViewStates)obj;
+    }
+
     private void OnMouseDown()
     {
+        if (currentView != ViewStates.GeneralView) return;
+
         TimeManager.timeManager.SpeedUpTime();
         
         if(!isSpeedUp)
