@@ -782,6 +782,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55714501}
   m_CullTransparentMesh: 1
+--- !u!4 &70122995 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1511102650477598213, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+  m_PrefabInstance: {fileID: 2145918390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &72331736 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4333397324702042529, guid: a686856e26ff23846885437ea560ae55, type: 3}
@@ -954,12 +959,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124955677}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7032414, y: -0.073834024, z: -0.073833995, w: 0.7032415}
-  m_LocalPosition: {x: -0.323, y: 0.014899969, z: -0.3829999}
+  m_LocalRotation: {x: -0.00000003041738, y: 0.0000000042979806, z: -0.000000007450581, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.014899939}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2145918391}
+  m_Father: {fileID: 819960027}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &124955679
 MonoBehaviour:
@@ -2501,7 +2506,6 @@ GameObject:
   - component: {fileID: 228472834}
   - component: {fileID: 228472833}
   - component: {fileID: 228472832}
-  - component: {fileID: 228472831}
   m_Layer: 0
   m_Name: Words
   m_TagString: Untagged
@@ -2528,36 +2532,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.09232259, y: 0.004341127}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &228472831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228472829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: 2c1d6c3cda2f00f44954a6adfd4837b3, type: 2}
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 228472835}
-        m_TargetAssemblyTypeName: NotebookPhonesController, Assembly-CSharp
-        m_MethodName: RefreshPhones
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  DelayCall: 0
 --- !u!114 &228472832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2571,13 +2545,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: ba541de4869c40440bbb35baf0c98c81, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: de4c2261a9464294dbcdf9529638137f, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 228472837}
         m_TargetAssemblyTypeName: WordSelectedInNotebook, Assembly-CSharp
         m_MethodName: UnselectWord
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 228472836}
+        m_TargetAssemblyTypeName: NotebookController, Assembly-CSharp
+        m_MethodName: ClearUnderLine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 228472835}
+        m_TargetAssemblyTypeName: NotebookPhonesController, Assembly-CSharp
+        m_MethodName: ClearUnderLine
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2629,7 +2627,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  DelayCall: 0
+      - m_Target: {fileID: 228472835}
+        m_TargetAssemblyTypeName: NotebookPhonesController, Assembly-CSharp
+        m_MethodName: RefreshPhones
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0.5
 --- !u!114 &228472834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4670,12 +4680,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372525887}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.70702547, y: 0.010749273, z: -0.010749289, w: 0.70702475}
-  m_LocalPosition: {x: 0.053028546, y: 0.29073548, z: -0.056303024}
+  m_LocalRotation: {x: -0.00000059604645, y: 0.015201822, z: -0.000000012572855, w: 0.9998845}
+  m_LocalPosition: {x: 0.026038393, y: -0.0076305196, z: 0.13529395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 2145918391}
+  m_Father: {fileID: 1931007582}
   m_LocalEulerAnglesHint: {x: -88.258, y: 90.002, z: -90.002}
 --- !u!114 &372525889
 MonoBehaviour:
@@ -6425,6 +6435,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1177273526}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1177273527}
   m_SourcePrefab: {fileID: 100100000, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
 --- !u!1 &540080775
 GameObject:
@@ -6855,12 +6868,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576950960}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.70702547, y: 0.010749273, z: -0.010749289, w: 0.70702475}
-  m_LocalPosition: {x: 0.0488, y: 0.1517, z: -0.06610012}
+  m_LocalRotation: {x: -0.00000059604645, y: 0.015201822, z: -0.000000012572855, w: 0.9998845}
+  m_LocalPosition: {x: 0.012900003, y: 0.004000202, z: 0.09109997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2145918391}
+  m_Father: {fileID: 70122995}
   m_LocalEulerAnglesHint: {x: -88.258, y: 90.002, z: -90.002}
 --- !u!114 &576950962
 MonoBehaviour:
@@ -6895,7 +6908,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0046407073, y: 0.005516079, z: 0.0013667659}
+  m_Size: {x: 0.4640707, y: 0.5516079, z: 0.1366766}
   m_Center: {x: 0.00027817598, y: 0.0000538507, z: 0.00080384}
 --- !u!23 &576950964
 MeshRenderer:
@@ -8283,6 +8296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a206086f705e4e54dbbebc703ba62cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DelayBetweenViews: 0.2
   OnGeneralView: {fileID: 11400000, guid: ba541de4869c40440bbb35baf0c98c81, type: 2}
   OnPinchofonoView: {fileID: 11400000, guid: 2c1d6c3cda2f00f44954a6adfd4837b3, type: 2}
   OnBoardView: {fileID: 11400000, guid: 8b856da03c9a6934baec817442c0d089, type: 2}
@@ -10474,6 +10488,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &819960027 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5236737283033569033, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+  m_PrefabInstance: {fileID: 2145918390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &823777612
 GameObject:
   m_ObjectHideFlags: 0
@@ -11287,6 +11306,11 @@ GameObject:
   - component: {fileID: 904152351}
   - component: {fileID: 904152352}
   - component: {fileID: 904152354}
+  - component: {fileID: 904152359}
+  - component: {fileID: 904152358}
+  - component: {fileID: 904152357}
+  - component: {fileID: 904152356}
+  - component: {fileID: 904152355}
   m_Layer: 0
   m_Name: DossierUp
   m_TagString: Untagged
@@ -11406,6 +11430,156 @@ MonoBehaviour:
   m_Events:
     m_Signals: []
     m_Events: []
+--- !u!114 &904152355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904152348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 2c1d6c3cda2f00f44954a6adfd4837b3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 904152350}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &904152356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904152348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 8b856da03c9a6934baec817442c0d089, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 904152350}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &904152357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904152348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 4d94882fab33f1443bbf2869d1d2f77e, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 904152350}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &904152358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904152348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: c9da8beed46479e43abf11c07351ac3d, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 904152350}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &904152359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904152348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 50a8af14101ee1b4fbca2038e65dd98b, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 904152350}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1001 &905700656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14560,6 +14734,7 @@ MonoBehaviour:
   Positions:
   - {fileID: 980827985}
   - {fileID: 490527544}
+  - {fileID: 1586242657}
   MoveDuration: 0.7
 --- !u!95 &1177273524
 Animator:
@@ -14623,6 +14798,36 @@ MonoBehaviour:
       - m_Target: {fileID: 1177273523}
         m_TargetAssemblyTypeName: NotebookMoveController, Assembly-CSharp
         m_MethodName: SlidePhones
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1177273527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177273519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 19b3d96066d6b17418f480bb95f3c8d7, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1177273523}
+        m_TargetAssemblyTypeName: NotebookMoveController, Assembly-CSharp
+        m_MethodName: WriteWord
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15191,6 +15396,21 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1226422910}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1226422915}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1226422914}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1226422913}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1226422912}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1226422911}
     - targetCorrespondingSourceObject: {fileID: 7487920207642766719, guid: a686856e26ff23846885437ea560ae55, type: 3}
       insertIndex: -1
       addedObject: {fileID: 762595167}
@@ -15389,8 +15609,158 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.22646292, y: 0.007828992, z: 0.16976286}
-  m_Center: {x: 0.00849539, y: -0.007172838, z: 0.0038305004}
+  m_Size: {x: 0.22646292, y: 0.007828991, z: 0.18130133}
+  m_Center: {x: 0.008495391, y: -0.007172855, z: -0.0019387238}
+--- !u!114 &1226422911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226422903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 2c1d6c3cda2f00f44954a6adfd4837b3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1226422907}
+        m_TargetAssemblyTypeName: DossierController, Assembly-CSharp
+        m_MethodName: CloseActionPlan
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1226422912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226422903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 8b856da03c9a6934baec817442c0d089, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1226422907}
+        m_TargetAssemblyTypeName: DossierController, Assembly-CSharp
+        m_MethodName: CloseActionPlan
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1226422913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226422903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 4d94882fab33f1443bbf2869d1d2f77e, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1226422907}
+        m_TargetAssemblyTypeName: DossierController, Assembly-CSharp
+        m_MethodName: CloseActionPlan
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1226422914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226422903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: c9da8beed46479e43abf11c07351ac3d, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1226422907}
+        m_TargetAssemblyTypeName: DossierController, Assembly-CSharp
+        m_MethodName: CloseActionPlan
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1226422915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226422903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 50a8af14101ee1b4fbca2038e65dd98b, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1226422907}
+        m_TargetAssemblyTypeName: DossierController, Assembly-CSharp
+        m_MethodName: CloseActionPlan
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LeaveDossier
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1 &1267009506
 GameObject:
   m_ObjectHideFlags: 0
@@ -16270,6 +16640,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3a37f65d28ce8e40a49ca08d74335df, type: 3}
+--- !u!4 &1357241548 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5243113064105294248, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+  m_PrefabInstance: {fileID: 2145918390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1359627460
 GameObject:
   m_ObjectHideFlags: 0
@@ -17377,12 +17752,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395449952}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.6877423, y: -0.16434932, z: -0.16434956, w: 0.68774205}
-  m_LocalPosition: {x: -0.435, y: 0.020739794, z: -0.04501295}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.0000000017317063, y: 0.000000007246541, z: 0.000000014901207, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.020399978}
+  m_LocalScale: {x: 1.0969604, y: 1.0969604, z: 1.0969604}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2145918391}
+  m_Father: {fileID: 1357241548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1395449954
 MonoBehaviour:
@@ -19338,6 +19713,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b57a199d70c584b886ab6d8ca99ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1586242656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1586242657}
+  m_Layer: 0
+  m_Name: NotebookWordFindedCamPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1586242657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586242656}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.22313075, y: -0.62989146, z: 0.25005904, w: 0.7006568}
+  m_LocalPosition: {x: 0.07557682, y: -0.19719785, z: 0.34292215}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2032041695}
+  m_LocalEulerAnglesHint: {x: 0.134, y: -83.863, z: 39.162}
 --- !u!1001 &1590156525
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23742,6 +24148,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.00008570596, y: 0.00015595704, z: 0.00015595702}
   m_Center: {x: -0.000042853586, y: 0.000000001549779, z: -5.820766e-11}
+--- !u!1 &1931007581 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8917868885985631245, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+  m_PrefabInstance: {fileID: 2145918390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1931007582 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2864640857489843499, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+  m_PrefabInstance: {fileID: 2145918390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1931007585
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931007581}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2917719, y: 0.42042336, z: 0.29998508}
+  m_Center: {x: 0.016602792, y: -0.007620162, z: 0.14999253}
 --- !u!1 &1939944802
 GameObject:
   m_ObjectHideFlags: 0
@@ -24665,6 +25102,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 490527544}
+  - {fileID: 1586242657}
   m_Father: {fileID: 1804008732}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &2032041696
@@ -26894,20 +27332,23 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1395449953}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 124955678}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+      addedObject: {fileID: 1602374342}
+    - targetCorrespondingSourceObject: {fileID: 1511102650477598213, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       insertIndex: -1
       addedObject: {fileID: 576950961}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+    - targetCorrespondingSourceObject: {fileID: -5243113064105294248, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1395449953}
+    - targetCorrespondingSourceObject: {fileID: -2864640857489843499, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       insertIndex: -1
       addedObject: {fileID: 372525888}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 5236737283033569033, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1602374342}
-    m_AddedComponents: []
+      addedObject: {fileID: 124955678}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8917868885985631245, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1931007585}
   m_SourcePrefab: {fileID: 100100000, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
 --- !u!4 &2145918391 stripped
 Transform:
