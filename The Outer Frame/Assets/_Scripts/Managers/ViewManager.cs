@@ -66,6 +66,7 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.TVView:
                 OnTVView?.Invoke(this, null);
+                OnNotebookTake.Invoke(this, true);
                 break;
             case ViewStates.DossierView:
                 OnDossierView?.Invoke(this, null);
@@ -73,10 +74,10 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.PrinterView:
                 OnPrinterView?.Invoke(this, null);
+                OnNotebookTake.Invoke(this, true);
                 break;
             case ViewStates.OnCallTranscriptionView:
                 OnCallTranscriptionView?.Invoke(this, null);
-                OnNotebookLeave?.Invoke(this, null);
                 break;
         }
         OnViewStateChange?.Invoke(this,NewView);
@@ -88,6 +89,13 @@ public class ViewManager : MonoBehaviour
     public ViewStates GiveCurrentViewState()
     {
         return currentviewState;
+    }
+
+    public void StartDelayEvent(Component sender, object obj)
+    {
+        float delay = (float)obj;
+
+        StartDelayCoroutine(delay);
     }
 
     void StartDelayCoroutine(float delay)

@@ -46,10 +46,13 @@ public class NotebookMoveController : MonoBehaviour
                 SetPos(0);
                 break;
             case ViewStates.OnCallTranscriptionView:
-                SetPos(0);
+                SetPos(1);
                 break;
             case ViewStates.TVView:
-                SetPos(0);
+                SetPos(1);
+                break;
+            case ViewStates.PrinterView:
+                SetPos(1);
                 break;
         }
         lastView = newview;
@@ -60,9 +63,6 @@ public class NotebookMoveController : MonoBehaviour
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
         Ease ease = lastView == ViewStates.DossierView && num != 0 ? Ease.Linear : Ease.InOutCirc;
-
-        Debug.Log(ease);
-
         currentTarget = Positions[num];
         isMoving = true;
         lerpTime = 0;
@@ -95,12 +95,16 @@ public class NotebookMoveController : MonoBehaviour
         }
     }
 
+    
     public void WriteWord(Component sender, object obj)
     {
         WordData word = (WordData)obj;
-        WriteWordAnim(word.GetIsAPhoneNumber());
+
+
+        //WriteWordAnim(word.GetIsAPhoneNumber());
     }
 
+    /* Animacion de bajar y subir la libreta
     void WriteWordAnim(bool isWordPhoneNum)
     {
         if (moveWiteWordSequence != null && moveWiteWordSequence.IsActive()) moveWiteWordSequence.Kill();
@@ -114,12 +118,26 @@ public class NotebookMoveController : MonoBehaviour
             })
             .AppendInterval(0.3f)
             .Append(transform.DOMove(Positions[1].position, 0.5f).SetEase(Ease.OutBack)).Join(transform.DORotate(Positions[1].rotation.eulerAngles, 0.5f).SetEase(Ease.OutSine));
-    }
+    }*/
 
     public void SlidePhones(Component sender, object obj)
     {
-        if(!IsPhonesOpen) OpenPhoneNums(); 
-        else CloseNotebook();
+
+        if (obj is bool)
+        {
+            bool toOpenPhones = (bool)obj;
+            if (!IsPhonesOpen && toOpenPhones) OpenPhoneNums();
+            else if(IsPhonesOpen && !toOpenPhones)
+            {
+                CloseNotebook();
+            }
+            return;
+        }
+        if (!IsPhonesOpen) OpenPhoneNums();
+        else
+        {
+            CloseNotebook();
+        }
     }
 
     void OpenPhoneNums()

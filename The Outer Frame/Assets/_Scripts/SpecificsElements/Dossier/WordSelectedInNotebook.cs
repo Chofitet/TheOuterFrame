@@ -9,6 +9,10 @@ public class WordSelectedInNotebook : MonoBehaviour
 {
     public static WordSelectedInNotebook Notebook { get; private set; }
     [SerializeField] GameEvent OnSelectedWordInNotebook;
+    [SerializeField] GameEvent OnSlidePhones;
+    [SerializeField] GameEvent OnShowWordsNotebook;
+    [SerializeField] GameEvent OnShowNumNotebook;
+    [SerializeField] GameEvent OnDelayNotChangeView;
     WordData SelectedWord;
 
     List<WordData> WordsFound = new List<WordData>();
@@ -41,22 +45,83 @@ public class WordSelectedInNotebook : MonoBehaviour
         WordData word = (WordData)obj;
         if (!word) return;
 
-        if(word.GetIsAPhoneNumber())
+        if (!word.GetIsAPhoneNumber()) AddWord(word);
+        else AddNumber(word);
+
+    }
+
+    void AddWord(WordData word)
+    {
+        OnDelayNotChangeView?.Invoke(this, 1f);
+        if (word.GetWordThatReplaces())
         {
-            SetFindedNumber(word);
+            ReplaceWordInList(word, word.GetWordThatReplaces());
+        }
+        else
+        {
             WordsFound.Add(word);
-            word.SetIsFound();
-            return;
         }
 
-        if(word.GetWordThatReplaces())
+        OnSlidePhones?.Invoke(this, false);
+        OnShowWordsNotebook?.Invoke(this, word);
+
+        if(word.GetPhoneNumber() != "" )
         {
-            ReplaceWordInList(word.GetWordThatReplaces(), word);
-            return;
+            StartCoroutine(SlideDelay(IsNumAlreadyInList(word), word));
+            OnDelayNotChangeView?.Invoke(this, 1f);
+        }
+    }
+    void AddNumber(WordData num)
+    {
+        if (!IsWordAlreadyExist(num))
+        {
+            WordsFound.Add(num);
+            OnDelayNotChangeView?.Invoke(this, 2f);
+        }
+        else
+        {
+            IsWordAlreadyExist(num).SetIsPhoneNumberFound();
         }
 
-        WordsFound.Add(word);
-        word.SetIsFound();
+        OnSlidePhones?.Invoke(this,true);
+        OnShowNumNotebook?.Invoke(this, IsWordAlreadyExist(num));
+    }
+
+    IEnumerator SlideDelay(WordData num, WordData word)
+    {
+        yield return new WaitForSeconds(1.3f);
+        OnSlidePhones?.Invoke(this, true);
+        if(!num) OnShowNumNotebook?.Invoke(this, word);
+        else OnShowNumNotebook?.Invoke(this, num);
+    }
+
+    WordData IsNumAlreadyInList(WordData word)
+    {
+        WordData aux = null;
+        foreach(WordData num in WordsFound)
+        {
+            if (!num.GetIsAPhoneNumber()) continue;
+            if(num.GetName() == word.GetPhoneNumber())
+            {
+                aux = num;
+                word.SetIsPhoneNumberFound();
+                
+            }
+        }
+        WordsFound.Remove(aux);
+        return aux;
+    }
+
+    WordData IsWordAlreadyExist(WordData Num)
+    {
+        foreach(WordData word in WordsFound)
+        {
+            if(word.GetPhoneNumber() == Num.GetName())
+            {
+                return word;
+            }
+        }
+        return null;
     }
 
     void ReplaceWordInList(WordData oldWord, WordData newWord)
@@ -65,32 +130,14 @@ public class WordSelectedInNotebook : MonoBehaviour
         if (index != -1)
         {
             WordsFound[index] = newWord;
-            newWord.SetIsFound();
         }
         else
         {
             WordsFound.Add(newWord);
-            newWord.SetIsFound();
         }
     }
 
-    private void SetFindedNumber(WordData num)
-    {
-        bool isTheWordOfTheNumInList = false;
-        foreach (WordData word in WordsFound)
-        {
-            if(word.GetPhoneNumber() == num.GetName())
-            {
-                word.SetIsPhoneNumberFound();
-                isTheWordOfTheNumInList = true;
-            }
-        }
 
-        if(!isTheWordOfTheNumInList)
-        {
-            WordsFound.Add(num);
-        }
-    }
 
     public void UnselectWord() => SelectedWord = null;
 
