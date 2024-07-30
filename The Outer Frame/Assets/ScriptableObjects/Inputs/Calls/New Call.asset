@@ -9,8 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: PetroStationMemoryStolen
+  m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
+  m_Name: New Call
   m_EditorClassIdentifier: 
-  state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
-  Text: 
+  StartTime: {fileID: 0}
+  EndTime: {fileID: 0}
+  state: {fileID: 0}
+  DelayToShowCallInMinutes: 30
+  CatchWindowInMinutes: 30
+  Dialogue: 
+  Conditionals: []
+  isOrderMatters: 0
