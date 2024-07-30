@@ -10,6 +10,7 @@ public class NotebookController : MonoBehaviour
     List<Transform> WordSpots = new List<Transform>();
     List<GameObject> WordsInstances = new List<GameObject>();
     [SerializeField] Transform WordAnchors;
+    int i = 0;
 
     private void Start()
     {
@@ -20,25 +21,18 @@ public class NotebookController : MonoBehaviour
         }
     }
 
+    // Refresh When is added a new Word
     public void RefreshWords(Component component, object obj)
     {
-        List<WordData> Words = WordSelectedInNotebook.Notebook.GetWordsList();
-        DeleteWords();
-        WordsInstances.Clear();
+        WordData LastWordAdded = (WordData)obj;
 
-        int i = 0;
+        if (LastWordAdded.GetIsAPhoneNumber()) return;
+        GameObject wordaux = Instantiate(WordPrefab, WordSpots[i].position, WordSpots[i].rotation, WordContainer);
+        wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
+        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded);
+        WordsInstances.Add(wordaux);
 
-        foreach(WordData word in Words)
-        {
-            if (word.GetIsAPhoneNumber()) return;
-            GameObject wordaux = Instantiate(WordPrefab, WordSpots[i].position, WordSpots[i].rotation, WordContainer);
-            wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
-            wordaux.GetComponent<NotebookWordInstance>().Initialization(word);
-            WordsInstances.Add(wordaux);
-           
-
-            i++;
-        }
+        i++;
     }
 
     public void ClearUnderLine()

@@ -8,25 +8,62 @@ public class NotebookPhonesController : MonoBehaviour
     [SerializeField] GameObject PhoneNumberPrefab;
     [SerializeField] Transform WordContainer;
     List<GameObject> WordsInstances = new List<GameObject>();
+    int i = 0;
 
+    // Refresh When is added a new Phone
     public void RefreshPhones(Component component, object obj)
     {
-        List<WordData> Words = WordSelectedInNotebook.Notebook.GetWordsList();
-        DeleteWords();
-        WordsInstances.Clear();
+       WordData LastPhoneAdded = (WordData)obj;
 
-        int i = 0;
-
-        foreach (WordData word in Words)
+        if (LastPhoneAdded.GetIsAPhoneNumber() && WordsInstances.Count !=0)
         {
-            if (word.GetPhoneNumber() == "") continue;
-            GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
-            wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
-            wordaux.GetComponent<PhoneRowNotebookController>().Initialization(word);
-            WordsInstances.Add(wordaux);
-
-            i++;
+            foreach (GameObject phone in WordsInstances)
+            {
+                PhoneRowNotebookController PhoneScript = phone.GetComponent<PhoneRowNotebookController>();
+                if (PhoneScript.GetWord().GetName() == LastPhoneAdded.GetName())
+                {
+                    if(FindWordToReplaceNum(LastPhoneAdded))
+                    {
+                        PhoneScript.ReplaceNumberWithWord(FindWordToReplaceNum(LastPhoneAdded));
+                        return;
+                    }
+                }
+            }
         }
+
+        if (LastPhoneAdded.GetIsPhoneNumberFound())
+        {
+            foreach(GameObject phone in WordsInstances)
+            {
+                PhoneRowNotebookController PhoneScript = phone.GetComponent<PhoneRowNotebookController>();
+               if ( PhoneScript.GetWord().GetPhoneNumber() == LastPhoneAdded.GetPhoneNumber())
+                {
+                    PhoneScript.UpdateNumber();
+                    return;
+                }
+            }
+        }
+
+       GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
+       wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
+       wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded);
+       WordsInstances.Add(wordaux);
+
+       i++;
+    }
+
+    WordData FindWordToReplaceNum(WordData Num)
+    {
+        List<WordData> words = WordSelectedInNotebook.Notebook.GetWordsList();
+        foreach (WordData word in words)
+        {
+            if(Num.GetName() == word.GetPhoneNumber())
+            {
+                return word;
+            }
+        }
+
+        return null;
     }
 
     public void ClearUnderLine()

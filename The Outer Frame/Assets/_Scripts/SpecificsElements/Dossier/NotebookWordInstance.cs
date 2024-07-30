@@ -21,6 +21,13 @@ public class NotebookWordInstance : MonoBehaviour
             GetComponent<Button>().enabled = false;
             strikethrough.SetActive(true);
         }
+
+        if (!word.GetIsFound())
+        {
+            word.SetIsFound();
+            text.gameObject.GetComponent<FadeWordsEffect>().StartEffect();
+        }
+        
     }
 
     void SetSelectedWord()
@@ -33,4 +40,6 @@ public class NotebookWordInstance : MonoBehaviour
     {
         text.text = wordReference.GetName();
     }
+
+    public WordData GetWord() { return wordReference; }
 }

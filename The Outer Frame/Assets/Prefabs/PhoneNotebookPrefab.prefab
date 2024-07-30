@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1480462122493447950}
   - component: {fileID: 4761776025520705953}
   - component: {fileID: 4333535389256641292}
+  - component: {fileID: 127662095046294305}
   m_Layer: 0
   m_Name: Num
   m_TagString: Untagged
@@ -67,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ?????
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 41639cd5ef745a440bebea7cc5bdc1d9, type: 2}
+  m_sharedMaterial: {fileID: -8241384082308351696, guid: 41639cd5ef745a440bebea7cc5bdc1d9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -134,6 +135,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &127662095046294305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3878347440031413184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70cd175a89a9d1943ad82fd426d0f69a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FadeSpeed: 17
+  RolloverCharacterSpread: 3
 --- !u!1 &7512470459200994368
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,6 +297,7 @@ GameObject:
   - component: {fileID: 1503646240711819191}
   - component: {fileID: 9118365941047648954}
   - component: {fileID: 4945757936077853831}
+  - component: {fileID: 6288651456310518005}
   m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
@@ -338,8 +354,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Ben Benji
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 41639cd5ef745a440bebea7cc5bdc1d9, type: 2}
+  m_sharedMaterial: {fileID: -8241384082308351696, guid: 41639cd5ef745a440bebea7cc5bdc1d9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -405,3 +421,17 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6288651456310518005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8656327876052398730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70cd175a89a9d1943ad82fd426d0f69a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FadeSpeed: 17
+  RolloverCharacterSpread: 3

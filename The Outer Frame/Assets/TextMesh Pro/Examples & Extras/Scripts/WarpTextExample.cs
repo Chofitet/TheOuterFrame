@@ -4,6 +4,7 @@ using System.Collections;
 
 namespace TMPro.Examples
 {
+    
     public class WarpTextExample : MonoBehaviour
     {
 
