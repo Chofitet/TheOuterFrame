@@ -13,6 +13,7 @@ public class FindableWordsManager : MonoBehaviour
     ViewStates ActualViewState;
     List<GameObject> FindableWordsBTNs = new List<GameObject>();
     bool isHover;
+    bool isOnFindableMode;
     [SerializeField] Texture2D[] CursorTextures;
     public static FindableWordsManager FWM { get; private set; }
 
@@ -162,13 +163,16 @@ public class FindableWordsManager : MonoBehaviour
         if (index != FindableWordsBTNs.Count) isHover = false;
         index = FindableWordsBTNs.Count;
 
-        if (isHover) return;
-        if(ActualViewState == ViewStates.GeneralView)
+        if(!isOnFindableMode && !isHover)
         {
             ChangeCusorIcon(null, 0);
-            return;
         }
 
+       if (isHover || !isOnFindableMode)
+        {
+            return;
+        }
+        
         GetClosestButton();
 
         if (BTNdistance < 70)
@@ -189,7 +193,7 @@ public class FindableWordsManager : MonoBehaviour
 
     public void ChangeCusorIcon(Component sender, object index)
     {
-        if (ActualViewState == ViewStates.GeneralView) return;
+        if (!isOnFindableMode) return;
         if (index is WordData) index = 0;
         int i = (int)index;
 
@@ -227,6 +231,23 @@ public class FindableWordsManager : MonoBehaviour
         }
         else BTNdistance = 1000;
 
+    }
+
+    public void SetFindableMode(Component sender, object obj)
+    {
+        if (isOnFindableMode)
+        {
+            StartCoroutine(delayFindableMode(0.1f, false));
+            
+        }
+        else StartCoroutine(delayFindableMode(0.3f, true));
+    }
+
+    IEnumerator delayFindableMode(float time, bool x)
+    {
+        yield return new WaitForSeconds(time);
+        isOnFindableMode = x;
+        if (!isOnFindableMode) ChangeCusorIcon(null, 0); 
     }
 
 }
