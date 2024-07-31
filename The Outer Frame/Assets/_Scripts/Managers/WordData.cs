@@ -28,7 +28,7 @@ public class WordData : ScriptableObject
     [SerializeField] TimeCheckConditional EndTime;*/
 
     [Header("Exceptions")]
-    [SerializeField] List<Exceptions> exceptions = new List<Exceptions>();
+    [SerializeField] List<exceptions> exceptions = new List<exceptions>();
 
     [Header("Inactive Conditions")]
     [SerializeField] List<ScriptableObject> InactiveConditions = new List<ScriptableObject>();
@@ -39,8 +39,8 @@ public class WordData : ScriptableObject
     [Header("Modify length actions")]
     [SerializeField] List<ModifyDurationActions> ModifyLengthactions = new List<ModifyDurationActions>();
 
-    [Header("Re-active an Action")]
-    [SerializeField] List<Re_activeActions> ReActiveActions = new List<Re_activeActions>();
+    [Header("Reactivate Action")]
+    [SerializeField] List<Re_activeActions> ReactivateAction = new List<Re_activeActions>();
 
     [SerializeField] WordData WordThatReplaces;
 
@@ -157,9 +157,9 @@ public class WordData : ScriptableObject
             return;
         }
 
-        Exceptions exception = GetExceptions(newState);
+        exceptions exception = GetExceptions(newState);
 
-        if (exception)
+        if (exception != null)
         {
             currentState = exception.GetState();
 
@@ -191,16 +191,16 @@ public class WordData : ScriptableObject
         Debug.Log(estados);
 
     }
-    public Exceptions GetExceptions(StateEnum state)
+    public exceptions GetExceptions(StateEnum state)
     {
         return FindException(state);
     }
 
-    Exceptions FindException(StateEnum state)
+    exceptions FindException(StateEnum state)
     {
-        Exceptions aux = null;
+        exceptions aux = null;
 
-        foreach (Exceptions ex in exceptions)
+        foreach (exceptions ex in exceptions)
         {
             if (state == ex.GetStateDefault())
             {
@@ -322,11 +322,11 @@ public class WordData : ScriptableObject
 
     void CheckForReActiveActions()
     {
-        foreach(Re_activeActions reAA in ReActiveActions)
+        foreach(Re_activeActions reAA in ReactivateAction)
         {
             if (reAA.CheckForConditionals())
             {
-                CleanStateFromHistory(reAA.ActionToReActive);
+                CleanStateFromHistory(reAA.ActionToReactivate);
             }
         }
     }
@@ -341,9 +341,77 @@ public class ModifyDurationActions
 }
 
 [Serializable]
+public class exceptions
+{
+    [SerializeField] StateEnum DefaultState;
+    [SerializeField] StateEnum SpecialState;
+
+    [SerializeField] bool AlsoSetDefaultState;
+    [SerializeField] bool isOrderMatters;
+
+    public StateEnum GetState() { return CheckExceptions(); }
+    public StateEnum GetStateDefault() { return DefaultState; }
+
+    public bool GetAlsoSetDefaultState() { return AlsoSetDefaultState; }
+
+    [SerializeField] List<ScriptableObject> exceptionConditions = new List<ScriptableObject>();
+
+
+
+    public StateEnum CheckExceptions()
+    {
+        StateEnum auxState = SpecialState;
+
+        if (exceptionConditions == null) return DefaultState;
+
+        foreach (ScriptableObject conditional in exceptionConditions)
+        {
+            IConditionable auxInterface = conditional as IConditionable;
+
+            if (!auxInterface.GetStateCondition())
+            {
+                return DefaultState;
+            }
+        }
+
+        if (isOrderMatters) return CheckIfConditionalAreInOrder();
+        else
+        {
+            return SpecialState;
+        }
+    }
+
+    StateEnum CheckIfConditionalAreInOrder()
+    {
+        List<int> nums = new List<int>();
+
+        foreach (ScriptableObject conditional in exceptionConditions)
+        {
+            IConditionable auxInterface = conditional as IConditionable;
+
+            if (auxInterface.CheckIfHaveTime())
+            {
+                nums.Add(auxInterface.GetTimeWhenWasComplete().GetTimeInNum());
+            }
+
+        }
+
+        for (int i = 0; i < nums.Count - 1; i++)
+        {
+            if (nums[i] > nums[i + 1])
+            {
+                return DefaultState;
+            }
+        }
+
+        return SpecialState;
+    }
+}
+
+[Serializable]
 public class Re_activeActions
 {
-    public StateEnum ActionToReActive;
+    public StateEnum ActionToReactivate;
     public List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     public bool isOrderMatters;
 
