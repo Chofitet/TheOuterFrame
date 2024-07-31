@@ -197,7 +197,7 @@ public class FindableWordsManager : MonoBehaviour
         if (index is WordData) index = 0;
         int i = (int)index;
 
-        Cursor.SetCursor(CursorTextures[i], new Vector2(32, 32), CursorMode.ForceSoftware);
+        Cursor.SetCursor(CursorTextures[i], new Vector2(16, 16), CursorMode.ForceSoftware);
 
         if (i == 3) isHover = false;
         else if (i == 4) isHover = true;

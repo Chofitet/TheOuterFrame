@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ViewManager : MonoBehaviour
 {
+    [SerializeField] ViewStates StartView;
     [SerializeField] float DelayBetweenViews;
     [SerializeField] GameEvent OnGeneralView;
     [SerializeField] GameEvent OnPinchofonoView;
@@ -21,6 +22,11 @@ public class ViewManager : MonoBehaviour
     Coroutine StartDelay;
     ViewStates currentviewState;
     bool isReady = true;
+
+    private void Start()
+    {
+        UpdateViewState(null, StartView);
+    }
 
     void Update()
     {
