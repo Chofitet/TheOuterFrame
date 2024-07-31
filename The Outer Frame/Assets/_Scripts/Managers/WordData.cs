@@ -39,6 +39,9 @@ public class WordData : ScriptableObject
     [Header("Modify length actions")]
     [SerializeField] List<ModifyDurationActions> ModifyLengthactions = new List<ModifyDurationActions>();
 
+    [Header("Re-active an Action")]
+    [SerializeField] List<Re_activeActions> ReActiveActions = new List<Re_activeActions>();
+
     [SerializeField] WordData WordThatReplaces;
 
     private List<StateEnum> stateHistory = new List<StateEnum>();
@@ -176,7 +179,7 @@ public class WordData : ScriptableObject
 
         stateHistory.Add(currentState);
         StateHistoryTime.Add(currentState, TimeManager.timeManager.GetTime());
-
+        CheckForReActiveActions();
 
         string estados = wordName + ": ";
         foreach (StateEnum s in stateHistory)
@@ -317,7 +320,16 @@ public class WordData : ScriptableObject
 
     public bool GetIsFound() { return isFound; }
 
-    
+    void CheckForReActiveActions()
+    {
+        foreach(Re_activeActions reAA in ReActiveActions)
+        {
+            if (reAA.CheckForConditionals())
+            {
+                CleanStateFromHistory(reAA.ActionToReActive);
+            }
+        }
+    }
 
 }
 [Serializable]
@@ -327,3 +339,61 @@ public class ModifyDurationActions
     public int TimeToAdd;
 
 }
+
+[Serializable]
+public class Re_activeActions
+{
+    public StateEnum ActionToReActive;
+    public List<ScriptableObject> Conditionals = new List<ScriptableObject>();
+    public bool isOrderMatters;
+
+    public bool CheckForConditionals()
+    {
+
+        foreach (ScriptableObject conditional in Conditionals)
+        {
+            if (conditional is not IConditionable)
+            {
+                Debug.LogWarning(conditional.name + " is not a valid conditional");
+                return false;
+            }
+
+            IConditionable auxConditional = conditional as IConditionable;
+
+            if (!auxConditional.GetStateCondition())
+            {
+                return false;
+            }
+        }
+
+        if (isOrderMatters) return CheckIfConditionalAreInOrder();
+        else return true;
+    }
+
+    bool CheckIfConditionalAreInOrder()
+    {
+        List<int> nums = new List<int>();
+
+        foreach (ScriptableObject conditional in Conditionals)
+        {
+            IConditionable auxConditional = conditional as IConditionable;
+
+            if (auxConditional.CheckIfHaveTime())
+            {
+                nums.Add(auxConditional.GetTimeWhenWasComplete().GetTimeInNum());
+            }
+
+        }
+
+        for (int i = 0; i < nums.Count - 1; i++)
+        {
+            if (nums[i] > nums[i + 1])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+

@@ -8318,6 +8318,7 @@ MonoBehaviour:
   OnNotebookTake: {fileID: 11400000, guid: ecdda82964096664484cadf56310dfec, type: 2}
   OnNotebookLeave: {fileID: 11400000, guid: 9937c6c7e7cd82943a6f1615432a4220, type: 2}
   OnCallTranscriptionView: {fileID: 11400000, guid: 24f0998dddd525a4cbdda55acc726f3a, type: 2}
+  OnFindableWordsActive: {fileID: 11400000, guid: 17d225f5ba910414b83a0e456d6e80a9, type: 2}
 --- !u!114 &693341619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16960,6 +16961,7 @@ GameObject:
   - component: {fileID: 1372352716}
   - component: {fileID: 1372352715}
   - component: {fileID: 1372352714}
+  - component: {fileID: 1372352718}
   m_Layer: 0
   m_Name: FindableWordManager
   m_TagString: Untagged
@@ -17111,6 +17113,36 @@ MonoBehaviour:
       - m_Target: {fileID: 1372352713}
         m_TargetAssemblyTypeName: FindableWordsManager, Assembly-CSharp
         m_MethodName: ChangeCusorIcon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1372352718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372352711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 17d225f5ba910414b83a0e456d6e80a9, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1372352713}
+        m_TargetAssemblyTypeName: FindableWordsManager, Assembly-CSharp
+        m_MethodName: SetFindableMode
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

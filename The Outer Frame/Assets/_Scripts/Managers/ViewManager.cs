@@ -17,6 +17,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnNotebookTake;
     [SerializeField] GameEvent OnNotebookLeave;
     [SerializeField] GameEvent OnCallTranscriptionView;
+    [SerializeField] GameEvent OnFindableWordsActive;
     Coroutine StartDelay;
     ViewStates currentviewState;
     bool isReady = true;
@@ -47,6 +48,7 @@ public class ViewManager : MonoBehaviour
         {
             case ViewStates.GeneralView:
                 OnGeneralView?.Invoke(this, false);
+                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.PinchofonoView:
                 OnNotebookTake.Invoke(this, true);
@@ -56,10 +58,12 @@ public class ViewManager : MonoBehaviour
                 TimeManager.timeManager.PauseTime();
                 OnBoardView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
+                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.PCView:
                 OnPCWiew?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
+                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.ProgressorView:
                 OnProgressorView?.Invoke(this, null);
@@ -67,17 +71,21 @@ public class ViewManager : MonoBehaviour
             case ViewStates.TVView:
                 OnTVView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
+                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.DossierView:
                 OnDossierView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
+                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.PrinterView:
                 OnPrinterView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
+                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.OnCallTranscriptionView:
                 OnCallTranscriptionView?.Invoke(this, null);
+                OnFindableWordsActive?.Invoke(this, null);
                 break;
         }
         OnViewStateChange?.Invoke(this,NewView);
