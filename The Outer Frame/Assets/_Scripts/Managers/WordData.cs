@@ -51,6 +51,11 @@ public class WordData : ScriptableObject
     [NonSerialized] bool isFound;
     [NonSerialized] bool isPhoneNumberFound;
 
+    private void OnEnable()
+    {
+        foreach (exceptions e in exceptions) e.SetUp();
+    }
+
     #region GetInputLogic
 
 
@@ -340,14 +345,30 @@ public class ModifyDurationActions
 
 }
 
+
+
 [Serializable]
 public class exceptions
 {
-    [SerializeField] StateEnum DefaultState;
-    [SerializeField] StateEnum SpecialState;
+    [HideInInspector]
+    public string name;
+    public StateEnum DefaultState;
+    public StateEnum SpecialState;
 
-    [SerializeField] bool AlsoSetDefaultState;
-    [SerializeField] bool isOrderMatters;
+    public bool AlsoSetDefaultState;
+    public bool isOrderMatters;
+
+    public exceptions()
+    {
+        name = "Name Update In Play";
+        DefaultState = null;
+        SpecialState = null;
+        AlsoSetDefaultState = false;
+        isOrderMatters = false;
+
+    }
+
+    public void SetUp() {if (SpecialState != null) name = SpecialState.name;}
 
     public StateEnum GetState() { return CheckExceptions(); }
     public StateEnum GetStateDefault() { return DefaultState; }

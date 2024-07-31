@@ -149,13 +149,18 @@ public class WordsManager : MonoBehaviour
         WordData WD = null;
         foreach (WordData w in wordsDic)
         {
-            if (w.GetName().Contains(WordToCompare))
+            if (NormalizeWord(w.GetName()).Contains(NormalizeWord(WordToCompare)))
             {
                 WD = w;
             }
         }
         if(!WD) Debug.LogWarning("The word " + WordToCompare + " is not assigned in the Word Manager");
         return WD;
+    }
+
+    string NormalizeWord(string word)
+    {
+        return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r\(\)\s]", "");
     }
 }
 
