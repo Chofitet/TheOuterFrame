@@ -10,14 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
-  m_Name: Cargo
+  m_Name: Crashed Truck
   m_EditorClassIdentifier: 
-  wordName: cargo?
+  wordName: Crashed Truck
   PhoneNumber: 
   isAPhoneNumber: 0
-  reportTypes: []
+  reportTypes:
+  - {fileID: 11400000, guid: ebbfe3e2d1102694b840277f93e9a700, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   TVNewTypes: []
-  DBTypes: {fileID: 11400000, guid: 914ca666b10f25b4c9ab88c8a03fd9ee, type: 2}
+  DBTypes: {fileID: 11400000, guid: 438ed4888c724a24abc2ae1859f782f5, type: 2}
   CallTypes: []
   exceptions: []
   InactiveConditions: []
