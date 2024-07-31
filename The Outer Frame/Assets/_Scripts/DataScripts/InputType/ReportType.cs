@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Report", menuName = "Input/Report")]
+[CreateAssetMenu(fileName = "New Report", menuName = "Report")]
 public class ReportType : ScriptableObject, IStateComparable
 {
     [SerializeField] StateEnum state;

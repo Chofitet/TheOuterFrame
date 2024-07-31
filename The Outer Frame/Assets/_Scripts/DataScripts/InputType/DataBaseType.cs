@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New BDEnter", menuName = "Input/BDEnter")]
+[CreateAssetMenu(fileName = "New BDEnter", menuName = "DB")]
 public class DataBaseType : ScriptableObject
 {
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;

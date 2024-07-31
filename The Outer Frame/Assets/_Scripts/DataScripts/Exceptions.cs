@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "New exception", menuName = "Input/Exception")]
+//[CreateAssetMenu(fileName = "New exception", menuName = "Input/Exception")]
 public class Exceptions : ScriptableObject
 {
     [SerializeField] StateEnum DefaultState;

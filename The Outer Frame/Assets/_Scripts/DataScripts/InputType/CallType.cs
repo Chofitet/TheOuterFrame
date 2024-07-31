@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "New Call", menuName ="Input/Calls")]
+[CreateAssetMenu(fileName = "New Call", menuName ="Calls")]
 public class CallType : ScriptableObject, IStateComparable
 {
     

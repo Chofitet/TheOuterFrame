@@ -2472,6 +2472,7 @@ GameObject:
   - component: {fileID: 196839148}
   - component: {fileID: 196839147}
   - component: {fileID: 196839146}
+  - component: {fileID: 196839153}
   m_Layer: 0
   m_Name: Words
   m_TagString: Untagged
@@ -2689,6 +2690,60 @@ MonoBehaviour:
   OnShowNumNotebook: {fileID: 11400000, guid: 64df7e1912f2c314286ff10e98e7aff0, type: 2}
   OnDelayNotChangeView: {fileID: 11400000, guid: ff64135e85937b644ab79b4b26637b83, type: 2}
   WordsfromBeginning: []
+--- !u!114 &196839153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196839144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: ff94ce3ef8272e24e919f7501659beac, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 196839152}
+        m_TargetAssemblyTypeName: WordSelectedInNotebook, Assembly-CSharp
+        m_MethodName: UnselectWord
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 196839151}
+        m_TargetAssemblyTypeName: NotebookController, Assembly-CSharp
+        m_MethodName: ClearUnderLine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 196839150}
+        m_TargetAssemblyTypeName: NotebookPhonesController, Assembly-CSharp
+        m_MethodName: ClearUnderLine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1 &197520310
 GameObject:
   m_ObjectHideFlags: 0
@@ -5232,6 +5287,7 @@ GameObject:
   - component: {fileID: 371898782}
   - component: {fileID: 371898784}
   - component: {fileID: 371898783}
+  - component: {fileID: 371898785}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -5355,6 +5411,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 371898781}
   m_CullTransparentMesh: 1
+--- !u!114 &371898785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371898781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e7fb203fcc6634193d237fac3eb56f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharactersPerSecond: 200
 --- !u!1 &372525887
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,7 +16,6 @@ public class PhoneRowNotebookController : MonoBehaviour
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(ButtonPress);
-        button.enabled = false;
         word = _word;
         txtName.text = word.GetName();
 

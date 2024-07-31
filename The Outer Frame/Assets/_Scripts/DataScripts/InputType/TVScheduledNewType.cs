@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New ScheduledNew", menuName = "Input/News/ScheduledNew")]
+[CreateAssetMenu(fileName = "New ScheduledNew", menuName = "News/ScheduledNew")]
 public class TVScheduledNewType : ScriptableObject, INewType
 {
     [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headline;

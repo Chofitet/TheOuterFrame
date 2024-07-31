@@ -12,6 +12,7 @@ public class PCReportController : MonoBehaviour
 
     public void Inicialization(StateEnum state, WordData _word)
     {
+        if (_word) return;
         ReportType input = WordsManager.WM.RequestReport(_word, state);
         txt.text = state.name + input.GetTimeWhenWasDone().ToString();
         _input = input.GetText();

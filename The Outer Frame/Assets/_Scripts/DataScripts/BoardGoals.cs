@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Goal",menuName ="Goal")]
+//[CreateAssetMenu(fileName = "New Goal",menuName ="Goal")]
 public class BoardGoals : ScriptableObject
 {
     [SerializeField] string Description;

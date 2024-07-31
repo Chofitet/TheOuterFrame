@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New TVNewRandom", menuName = "Input/News/TVNewRandom")]
+[CreateAssetMenu(fileName = "New TVNewRandom", menuName = "News/RandomNew")]
 public class TVRandomNewType : ScriptableObject, INewType
 {
     [SerializeField] string headline;

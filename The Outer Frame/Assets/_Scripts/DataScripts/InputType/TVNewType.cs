@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New TVNew", menuName = "Input/News/TVNew")]
+[CreateAssetMenu(fileName = "New TVNew", menuName = "News/ReactiveNew")]
 public class TVNewType : ScriptableObject, IStateComparable, INewType
 {
     [SerializeField] StateEnum state;

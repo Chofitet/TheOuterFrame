@@ -89,10 +89,12 @@ public class WordSelectedInNotebook : MonoBehaviour
 
     IEnumerator SlideDelay(WordData num, WordData word)
     {
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1.1f);
         OnSlidePhones?.Invoke(this, true);
         if(!num) OnShowNumNotebook?.Invoke(this, word);
         else OnShowNumNotebook?.Invoke(this, num);
+        yield return new WaitForSeconds(1.1f);
+        OnSlidePhones?.Invoke(this, false);
     }
 
     WordData IsNumAlreadyInList(WordData word)
