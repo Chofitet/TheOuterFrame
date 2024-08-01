@@ -11,28 +11,27 @@ public class ReportController : MonoBehaviour
     
     public void initReport(WordData word, StateEnum state, bool isAborted, bool isAlreadyDone)
     {
-        transform.GetChild(0).gameObject.SetActive(false);
         if (isAlreadyDone)
         {
             reporttxt.text = "The action \"" + state.GetActionVerb() + " " + word.GetName() + "\" has already been done";
-            Invoke("Print", 0.5f);
+            GetComponent<Animator>().SetTrigger("print");
             return;
         }
         if(isAborted)
         {
             reporttxt.text = "Acción " + state.GetActionVerb() + " " + word.GetName() + " Abortada con éxito";
-            Invoke("Print", 0.5f);
+            GetComponent<Animator>().SetTrigger("print");
             return;
         }
         reporttxt.text = WordsManager.WM.RequestReport(word,state).GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(reporttxt);
-        Invoke("Print", 0.5f);
+        GetComponent<Animator>().SetTrigger("print");
     }
 
     void Print()
     {
         transform.GetChild(0).gameObject.SetActive(true);
-        GetComponent<Animator>().SetTrigger("print");
+        
     }
 
     public void OnLeveReportInPC(Component sender, object obj)
