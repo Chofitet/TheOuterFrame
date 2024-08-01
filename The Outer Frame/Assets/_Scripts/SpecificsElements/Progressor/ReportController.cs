@@ -11,20 +11,27 @@ public class ReportController : MonoBehaviour
     
     public void initReport(WordData word, StateEnum state, bool isAborted, bool isAlreadyDone)
     {
-        if(isAlreadyDone)
+        transform.GetChild(0).gameObject.SetActive(false);
+        if (isAlreadyDone)
         {
             reporttxt.text = "The action \"" + state.GetActionVerb() + " " + word.GetName() + "\" has already been done";
-            GetComponent<Animator>().SetTrigger("print");
+            Invoke("Print", 0.5f);
             return;
         }
         if(isAborted)
         {
             reporttxt.text = "Acción " + state.GetActionVerb() + " " + word.GetName() + " Abortada con éxito";
-            GetComponent<Animator>().SetTrigger("print");
+            Invoke("Print", 0.5f);
             return;
         }
         reporttxt.text = WordsManager.WM.RequestReport(word,state).GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(reporttxt);
+        Invoke("Print", 0.5f);
+    }
+
+    void Print()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
         GetComponent<Animator>().SetTrigger("print");
     }
 
@@ -41,6 +48,11 @@ public class ReportController : MonoBehaviour
     public void DeleteReport(Component sender,object obj)
     {
         if (obj == gameObject) Destroy(gameObject);
+    }
+    
+    public void OnTakeReport(Component sender, object obj)
+    {
+        GetComponent<BoxCollider>().enabled = true;
     }
 
 }

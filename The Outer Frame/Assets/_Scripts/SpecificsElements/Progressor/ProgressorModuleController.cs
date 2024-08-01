@@ -12,9 +12,8 @@ public class ProgressorModuleController : MonoBehaviour
     Animator anim;
     bool isReady;
     [SerializeField] GameObject PrintBTN;
+    [SerializeField] GameObject SwitchAbortBTN;
     [SerializeField] GameObject AbortBTN;
-    [SerializeField] GameObject YesBTN;
-    [SerializeField] GameObject NoBTN;
     private WordData word;
     private StateEnum state;
     private int time;
@@ -55,27 +54,28 @@ public class ProgressorModuleController : MonoBehaviour
         if (!isFull) return;
         if (!isAbortOpen)
         {
-            if (sender.gameObject == AbortBTN)
+            if (sender.gameObject == SwitchAbortBTN)
             {
-                anim.SetTrigger("abortPush");
+                anim.SetTrigger("abortSwitchOn");
                 isAbortOpen = true;
             }
         }
         else
         {
-            if(sender.gameObject == YesBTN)
+            if(sender.gameObject == AbortBTN)
             {
-                anim.SetTrigger("yesPush");
+                anim.SetTrigger("abortPush");
                 Invoke("AbortAction", 0.3f);
                 isAbortOpen = false;
                 isFull = false;
             }
 
-            if (sender.gameObject == AbortBTN || sender.gameObject == NoBTN)
+            if (sender.gameObject == SwitchAbortBTN)
             {
-                anim.SetTrigger("noPush");
+                anim.SetTrigger("abortSwitchOff");
                 isAbortOpen = false;
             }
+
         }
 
     }
@@ -92,7 +92,7 @@ public class ProgressorModuleController : MonoBehaviour
 
             if (isAbortOpen)
             {
-                anim.SetTrigger("noPush");
+                anim.SetTrigger("abortSwitchOff");
                 isAbortOpen = false;
             }
         }
@@ -123,6 +123,8 @@ public class ProgressorModuleController : MonoBehaviour
     {
         if(sender.gameObject == PrintBTN)
         {
+            anim.SetTrigger("printMessage");
+            // anim no se pudo imprimir
             PrintBTN.GetComponent<BlinkEffect>().TurnOffLigth(this, null);
             PrintBTN.GetComponent<Collider>().enabled = false;
             OnPrintReport?.Invoke(this, slot);
