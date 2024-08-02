@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GeneratorActionController : MonoBehaviour
 {
@@ -10,11 +11,18 @@ public class GeneratorActionController : MonoBehaviour
     [HideInInspector] [SerializeField] Transform BtnContainer;
     [HideInInspector] [SerializeField] GameObject BtnGeneratorIdeaPrefab;
     [HideInInspector] [SerializeField] GameObject Content;
-    
+    [SerializeField] GameEvent OnMoveObjectToPapersPos;
+
+
 
     private void Start()
     {
         Content.SetActive(false);
+    }
+
+    private void OnMouseUpAsButton()
+    {
+        OnMoveObjectToPapersPos?.Invoke(this, gameObject);
     }
 
 

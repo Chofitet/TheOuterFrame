@@ -14,11 +14,13 @@ public class PrinterController : MonoBehaviour
 
     public void PrintReport(Component component, object sc)
     {
+        
         if (slot)
         {
             IsFull(slot);
             return;
         }
+        OnFullPrinter?.Invoke(this, true);
         slot = (SlotController) sc;
         InstanciateReport(slot.gameObject);
     }
@@ -34,12 +36,12 @@ public class PrinterController : MonoBehaviour
     {
         GetComponent<BoxCollider>().enabled = false;
         OnTakeReport?.Invoke(this, slot.gameObject);
+        OnFullPrinter?.Invoke(this, false);
         slot = null;
     }
 
     void IsFull(SlotController slot)
     {
-        OnFullPrinter?.Invoke(this, slot);
         Led.TurnOnLigth(null, null);
         Invoke("TurnOffLed", TimeLed);
     }

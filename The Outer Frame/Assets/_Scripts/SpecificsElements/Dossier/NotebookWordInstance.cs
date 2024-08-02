@@ -30,6 +30,21 @@ public class NotebookWordInstance : MonoBehaviour
         
     }
 
+    public void ReplaceWord(WordData word)
+    {
+        text.text = wordReference.GetName();
+        StartCoroutine(AnimFade(text,false,text,true,word.GetName()));
+        wordReference = word;
+    }
+
+    IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
+    {
+        first.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent1);
+        yield return new WaitForSeconds(0.5f);
+        if (first == second) first.text = txt;
+        second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
+    }
+
     void SetSelectedWord()
     {
         text.text = "<u>" + wordReference.GetName() + "</u>";

@@ -14,12 +14,18 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject PrintBTN;
     [SerializeField] GameObject SwitchAbortBTN;
     [SerializeField] GameObject AbortBTN;
+    bool isPrinterFull;
+
+    BlinkEffect sphere;
+    BlinkEffect plane;
     private WordData word;
     private StateEnum state;
     private int time;
 
     private void Start()
     {
+        sphere = PrintBTN.transform.GetChild(0).GetComponent<BlinkEffect>();
+        plane = PrintBTN.transform.GetChild(1).GetComponent<BlinkEffect>();
         anim = GetComponent<Animator>();
     }
 
@@ -87,8 +93,7 @@ public class ProgressorModuleController : MonoBehaviour
             anim.SetTrigger("receiveMessage");
             IsReadyToPrint = true;
 
-            PrintBTN.GetComponent<Collider>().enabled = true;
-            PrintBTN.GetComponent<BlinkEffect>().ActiveBlink(this, null);
+            Invoke("delayLigth", 0.3f);
 
             if (isAbortOpen)
             {
@@ -96,6 +101,13 @@ public class ProgressorModuleController : MonoBehaviour
                 isAbortOpen = false;
             }
         }
+    }
+
+    void delayLigth()
+    {
+        PrintBTN.GetComponent<Collider>().enabled = true;
+        sphere.ActiveBlink(this, null);
+        plane.ActiveBlink(this, null);
     }
     
     public void ReportTaked(Component sender, object obj)
@@ -123,23 +135,26 @@ public class ProgressorModuleController : MonoBehaviour
     {
         if(sender.gameObject == PrintBTN)
         {
-            anim.SetTrigger("printMessage");
-            // anim no se pudo imprimir
-            PrintBTN.GetComponent<BlinkEffect>().TurnOffLigth(this, null);
-            PrintBTN.GetComponent<Collider>().enabled = false;
-            OnPrintReport?.Invoke(this, slot);
+            if (!isPrinterFull)
+            {
+                anim.SetTrigger("printMessage");
+                sphere.TurnOffLigth(this, null);
+                plane.TurnOffLigth(this, null);
+                PrintBTN.GetComponent<Collider>().enabled = false;
+                OnPrintReport?.Invoke(this, slot);
+            }
+            else
+            {
+                anim.SetTrigger("failMessage");
+            }
+
         }
     }
 
-    public void FullPrinter(Component sender, object obj)
+    public void SetIsPrinterFull(Component sender, object obj)
     {
-        SlotController _slot = (SlotController)obj;
-
-        if(IsReadyToPrint && slot != _slot)
-        {
-            PrintBTN.GetComponent<BlinkEffect>().ActiveBlink(this, null);
-            PrintBTN.GetComponent<Collider>().enabled = true;
-        }
+        bool x = (bool) obj;
+        isPrinterFull = x;
     }
 
 

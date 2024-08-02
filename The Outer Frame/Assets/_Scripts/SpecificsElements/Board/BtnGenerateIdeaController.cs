@@ -19,6 +19,7 @@ public class BtnGenerateIdeaController : MonoBehaviour
 
      public void OnAddAction()
     {
+        txtfield.GetComponent<FadeWordsEffect>().StartEffect(false);
         GetComponent<Button>().enabled = false;
         OnAddActionInPlanAction?.Invoke(this, state);
     }
