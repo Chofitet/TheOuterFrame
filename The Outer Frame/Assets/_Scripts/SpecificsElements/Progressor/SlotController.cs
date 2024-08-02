@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using TMPro.Examples;
+using DG.Tweening;
 
 public class SlotController : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class SlotController : MonoBehaviour
     bool isAlreadyDone;
     bool isAutomaticAction;
     bool inFillFast;
+
+    bool isfillSmooth;
 
     public void initParameters(WordData word, StateEnum state, int ActionDuration) 
     {
@@ -58,25 +61,39 @@ public class SlotController : MonoBehaviour
         else
         {
             TimeManager.OnMinuteChange += UpdateProgress;
+            UpdateProgress();
         }
     }
+
+    private Tween progressTween;
 
     void UpdateProgress()
     {
         if (isActionComplete) return;
+
         minuteProgress += 1;
-        ProgressBar.value = minuteProgress;
+
+        if (progressTween != null && progressTween.IsActive())
+        {
+            progressTween.Kill();
+        }
+        float animationDuration = 60/TimeManager.timeManager.GetActuaTimeVariationSpeed();
+        progressTween = ProgressBar.DOValue(minuteProgress, animationDuration);
 
         if (minuteProgress >= actionDuration)
         {
-            if(isAlreadyDone)
+            if (isAlreadyDone)
             {
                 ActionWasDone();
             }
-            else CompleteAction();
+            else
+            {
+                CompleteAction();
+            }
             isActionComplete = true;
         }
     }
+
 
     private void Update()
     {

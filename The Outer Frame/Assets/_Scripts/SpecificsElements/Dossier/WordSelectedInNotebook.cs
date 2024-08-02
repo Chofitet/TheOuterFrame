@@ -55,7 +55,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         OnDelayNotChangeView?.Invoke(this, 1f);
         if (word.GetWordThatReplaces())
         {
-            ReplaceWordInList(word, word.GetWordThatReplaces());
+            ReplaceWordInList(word.GetWordThatReplaces(),word);
         }
         else
         {

@@ -26,6 +26,8 @@ public class NotebookController : MonoBehaviour
     {
         WordData LastWordAdded = (WordData)obj;
 
+        if (WordReplaceOther(LastWordAdded)) return;
+
         if (LastWordAdded.GetIsAPhoneNumber()) return;
         GameObject wordaux = Instantiate(WordPrefab, WordSpots[i].position, WordSpots[i].rotation, WordContainer);
         wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
@@ -33,6 +35,24 @@ public class NotebookController : MonoBehaviour
         WordsInstances.Add(wordaux);
 
         i++;
+    }
+
+    bool WordReplaceOther(WordData newword)
+    {
+        bool aux = false;
+        foreach(GameObject w in WordsInstances)
+        {
+            if (!newword.GetWordThatReplaces()) continue;
+            NotebookWordInstance script = w.GetComponent<NotebookWordInstance>();
+            if (script.GetWord() == newword.GetWordThatReplaces())
+            {
+                script.ReplaceWord(newword);
+                ClearUnderLine();
+                aux = true;
+            }
+            
+        }
+        return aux;
     }
 
     public void ClearUnderLine()

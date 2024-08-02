@@ -13,7 +13,7 @@ public class FadeWordsEffect : MonoBehaviour
     public void StartEffect(bool IsFadeTransparent = true)
     {
         m_TextComponent = GetComponent<TextMeshProUGUI>();
-        Debug.Log(FadeSpeed);
+        StopAllCoroutines();
         StartCoroutine(FadeInText(IsFadeTransparent));
     }
 

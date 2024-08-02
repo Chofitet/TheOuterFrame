@@ -14,6 +14,7 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] Button ApproveBtn;
     List<ActionRowController> Actions = new List<ActionRowController>();
     StateEnum state;
+    bool isOneToggleSelected;
     bool isProgressorFull;
 
     public void Inicialization(List<StateEnum> ActionList, bool _progressorfull)
@@ -47,7 +48,12 @@ public class ActionPlan : MonoBehaviour
 
     void OnButtonRowPress(ActionRowController script)
     {
-        
+        if(!isOneToggleSelected)
+        {
+            script.OnButtonClick();
+        }
+
+        isOneToggleSelected = true;
         foreach (ActionRowController actions in Actions)
         {
             if (script != actions) actions.ResetRow();
@@ -62,6 +68,11 @@ public class ActionPlan : MonoBehaviour
     public void SelectedWord(Component sender, object obj)
     {
         if(state) ApproveBtn.enabled = true;
+
+        if(!isOneToggleSelected)
+        {
+            OnButtonRowPress(Actions[0]);
+        }
     }
 
     public void ApprovedActionPlan()

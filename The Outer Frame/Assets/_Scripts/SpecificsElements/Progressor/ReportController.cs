@@ -11,6 +11,12 @@ public class ReportController : MonoBehaviour
     
     public void initReport(WordData word, StateEnum state, bool isAborted, bool isAlreadyDone)
     {
+        if(!WordsManager.WM.RequestReport(word, state))
+        {
+            reporttxt.text = "The report of " + state.GetActionVerb() + " not assigned in " + word.GetName();
+            GetComponent<Animator>().SetTrigger("print");
+            return;
+        }
         if (isAlreadyDone)
         {
             reporttxt.text = "The action \"" + state.GetActionVerb() + " " + word.GetName() + "\" has already been done";
@@ -19,7 +25,7 @@ public class ReportController : MonoBehaviour
         }
         if(isAborted)
         {
-            reporttxt.text = "Acción " + state.GetActionVerb() + " " + word.GetName() + " Abortada con éxito";
+            reporttxt.text = "The action \"" + state.GetActionVerb() + " " + word.GetName() + "\" was aborted succesfully";
             GetComponent<Animator>().SetTrigger("print");
             return;
         }

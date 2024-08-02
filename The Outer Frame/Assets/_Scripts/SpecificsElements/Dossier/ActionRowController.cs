@@ -11,6 +11,7 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] TMP_Text ActionText;
     [SerializeField] Toggle toggle;
     [SerializeField] Button btn;
+    [SerializeField] GameEvent OnShakeNotebook;
     StateEnum state;
 
     public void Initialization(StateEnum _state)
@@ -26,14 +27,15 @@ public class ActionRowController : MonoBehaviour
         Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
     }
 
-    void OnButtonClick()
+    public void OnButtonClick()
     {
-        toggle.isOn = true; 
+        toggle.isOn = true;
 
-        if(WordSelectedInNotebook.Notebook.GetSelectedWord())
+        if (WordSelectedInNotebook.Notebook.GetSelectedWord())
         {
             Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
         }
+        else if (!state.GetSpecialActionWord()) OnShakeNotebook?.Invoke(this, null);
 
         if (state.GetSpecialActionWord()) Wordtext.text = "";
     }

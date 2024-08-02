@@ -19,6 +19,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnNotebookLeave;
     [SerializeField] GameEvent OnCallTranscriptionView;
     [SerializeField] GameEvent OnFindableWordsActive;
+    [SerializeField] GameEvent OnTakeSomeInBoard;
     Coroutine StartDelay;
     ViewStates currentviewState;
     bool isReady = true;
@@ -33,6 +34,12 @@ public class ViewManager : MonoBehaviour
         if (!isReady) return;
         if (Input.GetKeyDown(KeyCode.Mouse1) && currentviewState != ViewStates.GeneralView)
         {
+            if(currentviewState == ViewStates.OnTakeSomeInBoard)
+            {
+                UpdateViewState(this, ViewStates.BoardView);
+                return;
+            }
+
             BackToGeneralView(null, null);
         }
     }
@@ -93,6 +100,9 @@ public class ViewManager : MonoBehaviour
                 OnCallTranscriptionView?.Invoke(this, null);
                 OnFindableWordsActive?.Invoke(this, null);
                 break;
+            case ViewStates.OnTakeSomeInBoard:
+                OnTakeSomeInBoard?.Invoke(this, null);
+                break;
         }
         OnViewStateChange?.Invoke(this,NewView);
         currentviewState = NewView;
@@ -140,4 +150,5 @@ public enum ViewStates
     DossierView,
     PrinterView,
     OnCallTranscriptionView,
+    OnTakeSomeInBoard,
 }
