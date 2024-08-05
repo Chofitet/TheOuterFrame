@@ -7,11 +7,13 @@ using UnityEngine;
 public class TimePanelController : MonoBehaviour
 {
     [SerializeField] TMP_Text textField;
+    bool once;
 
     private void OnEnable()
     {
         TimeManager.OnMinuteChange += UpdateTime;
         TimeManager.OnHourChange += UpdateTime;
+        if (once) UpdateTime();
     }
 
 
@@ -24,6 +26,7 @@ public class TimePanelController : MonoBehaviour
     private void Start()
     {
         UpdateTime();
+        once = true;
     }
 
     private void UpdateTime()
