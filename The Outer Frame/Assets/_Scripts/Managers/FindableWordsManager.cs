@@ -36,22 +36,60 @@ public class FindableWordsManager : MonoBehaviour
 
     public void InstanciateFindableWord(TMP_Text textField)
     {
-        List<FindableWordData> PositionsWord = SearchForFindableWord(textField);
-
-        foreach (FindableWordData w in PositionsWord)
+        if (textField == null)
         {
-            if (w.GetWordData().GetIsFound()) return;
-            GameObject auxObj = Instantiate(ButtonFindableWordPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
-            auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GetWordIndex());
-            FindableWordsBTNs.Add(auxObj);
+            Debug.LogError("TextField is null");
+            return;
         }
+
+        List<GameObject> deactivatedParents = new List<GameObject>();
+        Transform currentTransform = textField.transform;
+        while (currentTransform != null)
+        {
+            if (!currentTransform.gameObject.activeSelf)
+            {
+                currentTransform.gameObject.SetActive(true);
+                deactivatedParents.Add(currentTransform.gameObject);
+            }
+            currentTransform = currentTransform.parent;
+        }
+
+        try
+        {
+            foreach (Transform child in textField.transform)
+            {
+                if (child.GetComponent<FindableWordBTNController>() != null)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+
+            List<FindableWordData> PositionsWord = SearchForFindableWord(textField);
+
+            foreach (FindableWordData w in PositionsWord)
+            {
+                if (w.GetWordData().GetIsFound()) continue;
+                GameObject auxObj = Instantiate(ButtonFindableWordPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
+                auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GetWordIndex());
+                FindableWordsBTNs.Add(auxObj);
+            }
+        } catch (Exception ex)
+        {
+            Debug.LogError("Error instantiating findable words: " + ex.Message);
+        }
+
+        foreach (var obj in deactivatedParents)
+        {
+            obj.SetActive(false);
+        }
+
     }
 
     List<FindableWordData> SearchForFindableWord(TMP_Text textField)
     {
         List<FindableWordData> aux = new List<FindableWordData>();
 
-        textField.ForceMeshUpdate();
+        if(textField.IsActive()) textField.ForceMeshUpdate();
 
         string[] words = textField.text.Split(' ');
         List<int> processedIndices = new List<int>();
@@ -163,11 +201,6 @@ public class FindableWordsManager : MonoBehaviour
         if (index != FindableWordsBTNs.Count) isHover = false;
         index = FindableWordsBTNs.Count;
 
-        if(!isOnFindableMode && !isHover)
-        {
-            ChangeCusorIcon(null, 0);
-        }
-
        if (isHover || !isOnFindableMode)
         {
             return;
@@ -213,7 +246,7 @@ public class FindableWordsManager : MonoBehaviour
 
         foreach (GameObject btn in FindableWordsBTNs)
         {
-            //if (btn.GetComponent<FindableWordBTNController>().IsVisible()) continue;
+            if (!btn.GetComponent<FindableWordBTNController>().GetIsVisible()) continue;
             Vector3 btnScreenPosition = Camera.main.WorldToScreenPoint(btn.transform.position);
             float distance = Vector3.Distance(mousePosition, btnScreenPosition);
 
@@ -247,6 +280,7 @@ public class FindableWordsManager : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         isOnFindableMode = x;
+        yield return new WaitForSeconds(0.1f);
         if (!isOnFindableMode) ChangeCusorIcon(null, 0); 
     }
 
