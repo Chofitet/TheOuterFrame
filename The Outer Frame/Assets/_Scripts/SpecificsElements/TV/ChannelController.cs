@@ -14,6 +14,7 @@ public class ChannelController : MonoBehaviour
 
     public void SetNew(INewType _new)
     {
+        HeadlineText.gameObject.SetActive(true);
         HeadlineText.text = _new.GetHeadline();
         FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
     }

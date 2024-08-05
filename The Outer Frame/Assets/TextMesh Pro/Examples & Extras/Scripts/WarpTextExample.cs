@@ -85,8 +85,6 @@ namespace TMPro.Examples
                 float boundsMinX = m_TextComponent.bounds.min.x;  //textInfo.meshInfo[0].mesh.bounds.min.x;
                 float boundsMaxX = m_TextComponent.bounds.max.x;  //textInfo.meshInfo[0].mesh.bounds.max.x;
 
-                Debug.Log(boundsMinX);
-                Debug.Log(boundsMaxX);
 
 
 

@@ -142,7 +142,7 @@ public class NotebookMoveController : MonoBehaviour
 
     public void ShakeNotebook(Component sender, object obj)
     {
-        transform.DOShakeRotation(0.2f, new Vector3(0,5,0),5,90);
+        transform.DOShakeRotation(0.4f, new Vector3(0,5,0),8,90,true,ShakeRandomnessMode.Harmonic);
     }
 
     void OpenPhoneNums()

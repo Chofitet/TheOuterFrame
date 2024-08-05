@@ -15,12 +15,13 @@ public class FindableWordBTNController : MonoBehaviour
     [SerializeField] GameEvent OnFindableWordButtonPress;
     [SerializeField] GameEvent OnFindableWordButtonHover;
     [SerializeField] GameEvent OnFindableWordButtonUnHover;
+    [SerializeField] LayerMask visibleLayerMask;
+    [SerializeField] LayerMask ignoreLayerMask;
 
     TMP_Text textField;
     WordData word;
     string OriginalText;
     int wordIndex;
-
 
     private void OnEnable()
     {
@@ -40,14 +41,12 @@ public class FindableWordBTNController : MonoBehaviour
     {
         OnFindableWordButtonHover?.Invoke(this, 4);
         BoldWord();
-        //ChangeToColor(Color.red);
     }
 
     public void ChangeToColorToNormal()
     {
         OnFindableWordButtonUnHover?.Invoke(this, 3);
         UnBoldWord();
-        //ChangeToColor(NormalColor);
     }
 
     void BoldWord()
@@ -80,7 +79,8 @@ public class FindableWordBTNController : MonoBehaviour
             {
                 string extraCharacters = GetExtraCharacters(combinedWord);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
-                strBuilder = strBuilder.Replace(combinedWord, "<material=\"LiberationSans Findable Word Effect\">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
+                string materialName = "\"" + textField.font.name + " Effect\"";
+                strBuilder = strBuilder.Replace(combinedWord, "<material=" +materialName+ ">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
                 auxText += strBuilder + extraCharacters + " ";
             }
             else
@@ -137,77 +137,24 @@ public class FindableWordBTNController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void ChangeToColor(Color color)
+
+    private bool IsVisible()
     {
-        TMP_WordInfo info = textField.textInfo.wordInfo[wordIndex];
-        for (int i = 0; i < info.characterCount; ++i)
+        Ray ray = new Ray(Camera.main.transform.position, (transform.position - Camera.main.transform.position).normalized);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            int charIndex = info.firstCharacterIndex + i;
-            int meshIndex = textField.textInfo.characterInfo[charIndex].materialReferenceIndex;
-            int vertexIndex = textField.textInfo.characterInfo[charIndex].vertexIndex;
-
-            Color32[] vertexColors = textField.textInfo.meshInfo[meshIndex].colors32;
-            vertexColors[vertexIndex + 0] = color;
-            vertexColors[vertexIndex + 1] = color;
-            vertexColors[vertexIndex + 2] = color;
-            vertexColors[vertexIndex + 3] = color;
-        }
-
-        textField.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
-    }
-
-    public bool IsVisible()
-    {
-        Canvas canvas = GetComponentInParent<Canvas>();
-        if (canvas == null)
-        {
-            Debug.LogError("Canvas not found");
-            return false;
-        }
-
-        GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
-        if (raycaster == null)
-        {
-            Debug.LogError("GraphicRaycaster not found on the canvas");
-            return false;
-        }
-
-        
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        pointerEventData.position = Camera.main.WorldToScreenPoint(transform.position);
-
-        // Raycast and check if the object is among the results
-        List<RaycastResult> results = new List<RaycastResult>();
-        raycaster.Raycast(pointerEventData, results);
-
-        foreach (RaycastResult result in results)
-        {
-            Debug.Log(result.gameObject.name);
-            if (result.gameObject == gameObject.GetComponent<Image>())
+            if (hit.collider.gameObject == gameObject)
             {
-                Debug.Log("visible");
+                
                 return true;
             }
         }
 
         return false;
     }
-    CanvasGroup canvasGroup;
-    public void UpdateVisibility()
-    {
-        if (IsVisible())
-        {
-            canvasGroup.alpha = 1;
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
-        }
-        else
-        {
-            canvasGroup.alpha = 0;
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
-        }
-    }
 
+    public bool GetIsVisible() { return IsVisible(); }
     public TMP_Text GetTextField() { return textField; }
 }
