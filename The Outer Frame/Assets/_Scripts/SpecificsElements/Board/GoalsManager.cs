@@ -14,21 +14,14 @@ public class GoalsManager : MonoBehaviour
     {
         Invoke("InvokeOnCheckGoalComplete", 0.2f);
         if (GoalList.Count == 0) return;
-        List<Goals> AuxListToRemove = new List<Goals>();
         foreach(Goals goal in GoalList)
         {
-            if(goal.GetIsConditionalsToAdd())
+            if(goal.GetIsConditionalsToAdd() && !goal.GetAdded())
             {
                GameObject aux = Instantiate(GoalRowPrefab, transform,false);
                 aux.GetComponent<GoalRowController>().Inicialization(goal);
-                AuxListToRemove.Add(goal);
+                goal.SetAdded();
             }
-        }
-
-        if (AuxListToRemove.Count == 0) return;
-        foreach(Goals goals in AuxListToRemove)
-        {
-            GoalList.Remove(goals);
         }
 
     }
@@ -45,6 +38,12 @@ public class Goals
     [SerializeField] bool isOrderMatters1;
     [SerializeField] List<ScriptableObject> ConditionalsToComplete = new List<ScriptableObject>();
     [SerializeField] bool isOrderMatters2;
+
+    bool Added;
+
+    public bool GetAdded() { return Added; }
+
+    public void SetAdded() => Added = true;
 
     public void SetUp() { if (Description != "") name = Description; }
 

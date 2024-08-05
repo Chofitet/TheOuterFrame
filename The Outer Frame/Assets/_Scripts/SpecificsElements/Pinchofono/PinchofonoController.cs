@@ -17,6 +17,7 @@ public class PinchofonoController : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        anim.SetFloat("tapeSpinSpeed", 0);
     }
 
     //OnCallEndRecording
@@ -32,6 +33,7 @@ public class PinchofonoController : MonoBehaviour
     {
         GameObject aux = Instantiate(CallTranscriptionPrefab, InstanciateSpot);
         aux.GetComponent<TranscriptionCallController>().Inicialization(CallToPrint);
+        anim.SetFloat("tapeSpinSpeed", 0);
     }
 
     //OnSelectedWordInNotebook
@@ -70,6 +72,7 @@ public class PinchofonoController : MonoBehaviour
     public void SetIsRecordingTrue(Component sender, object obj)
     {
         anim.SetBool("IsRecording", true);
+        anim.SetFloat("tapeSpinSpeed", 1);
         isRecording = true;
     }
 
@@ -77,12 +80,14 @@ public class PinchofonoController : MonoBehaviour
     public void SetIsRecordingFalse(Component sender, object obj)
     {
         anim.SetBool("IsRecording", false);
+        anim.SetFloat("tapeSpinSpeed", 0);
         isRecording = false;
     }
 
     public void ResetAll(Component sender, object obj)
     {
         anim.SetBool("IsRecording", false);
+        anim.SetFloat("tapeSpinSpeed", 0);
         isRecording = false;
         RecordingScreen.text = "";
         CallToPrint = null;

@@ -8,6 +8,7 @@ public class WordData : ScriptableObject
 {
     [Header("Word General Data")]
     [SerializeField] string wordName;
+    [SerializeField] string FindableAs;
     [SerializeField] string PhoneNumber;
     [SerializeField] bool isAPhoneNumber;
 
@@ -54,6 +55,7 @@ public class WordData : ScriptableObject
     private void OnEnable()
     {
         foreach (exceptions e in exceptions) e.SetUp();
+        if (FindableAs == "") FindableAs = GetName();
     }
 
     #region GetInputLogic
@@ -288,6 +290,8 @@ public class WordData : ScriptableObject
     #endregion
 
     public string GetName() { return wordName; }
+
+    public string GetFindableName() { return FindableAs; }
 
     public bool CheckIfStateAreAutomaticAction(StateEnum state)
     {

@@ -47,7 +47,6 @@ public class ViewManager : MonoBehaviour
     public void BackToGeneralView(Component sender, object _view)
     {
         if (!isReady) return;
-        TimeManager.timeManager.NormalizeTime();
         OnNotebookLeave?.Invoke(this, null);
         UpdateViewState(this, ViewStates.GeneralView);
     }

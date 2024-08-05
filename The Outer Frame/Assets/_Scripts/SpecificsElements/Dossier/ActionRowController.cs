@@ -13,18 +13,25 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] Button btn;
     [SerializeField] GameEvent OnShakeNotebook;
     StateEnum state;
+    FadeWordsEffect fade;
+    bool once;
 
     public void Initialization(StateEnum _state)
     {
         state = _state;
         ActionText.text = _state.GetActionVerb();
         btn.onClick.AddListener(OnButtonClick);
+        fade = Wordtext.GetComponent<FadeWordsEffect>();
     }
 
     public void OnSelectWordInNotebook(Component sender, object obj)
     {
-        if (state.GetSpecialActionWord() || !toggle.isOn) return;
-        Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
+        if (state.GetSpecialActionWord() || !toggle.isOn || !once)
+        {
+            once = true;
+            return;
+        }
+        StartCoroutine(AnimFade(Wordtext,false, Wordtext,true, WordSelectedInNotebook.Notebook.GetSelectedWord().GetName()));
     }
 
     public void OnButtonClick()
@@ -34,6 +41,7 @@ public class ActionRowController : MonoBehaviour
         if (WordSelectedInNotebook.Notebook.GetSelectedWord())
         {
             Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
+            fade.StartEffect();
         }
         else if (!state.GetSpecialActionWord()) OnShakeNotebook?.Invoke(this, null);
 
@@ -46,16 +54,23 @@ public class ActionRowController : MonoBehaviour
 
     public void ResetRow()
     {
+        if (!toggle.isOn) return;
         toggle.isOn = false;
-        Wordtext.text = "";
+        fade.StopAllCoroutines();
+        fade.StartEffect(false);
     }
 
     public void DesactiveRow()
     {
         btn.enabled = false;
         strikethrough.SetActive(true);
-
     }
 
-    
+    IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
+    {
+        first.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent1);
+        yield return new WaitForSeconds(0.2f);
+        if (first == second) first.text = txt;
+        second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
+    }
 }

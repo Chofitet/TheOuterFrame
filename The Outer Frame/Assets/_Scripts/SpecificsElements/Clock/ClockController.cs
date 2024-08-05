@@ -6,7 +6,7 @@ using TMPro;
 public class ClockController : MonoBehaviour
 {
     [SerializeField] TMP_Text datetxt;
-    
+
     [SerializeField] TMP_Text MinuteMovibleFlipFront;
     [SerializeField] TMP_Text MinuteInamovibleFlipFront;
     [SerializeField] TMP_Text MinuteMovibleFlipBack;
@@ -59,7 +59,7 @@ public class ClockController : MonoBehaviour
     {
         Minute = $"{TM.GetActualMinute():00}";
 
-        
+
         string PreviousMinute = $"{TM.GetActualMinute() - 1:00}";
 
         MinuteMovibleFlipFront.text = Minute;
@@ -83,7 +83,7 @@ public class ClockController : MonoBehaviour
     private void UpdateHourClock()
     {
         Hour = $"{TM.GetActualHour():00}";
-        
+
         string PreviousHour = $"{TM.GetActualHour() - 1:00}";
 
         HourMovibleFlipFront.text = Hour;
@@ -107,15 +107,24 @@ public class ClockController : MonoBehaviour
     public void CheckView(Component sender, object obj)
     {
         currentView = (ViewStates)obj;
+
+        if (!isSpeedUp) return;
+        SetAnimSpeed();
+        TimeManager.timeManager.NormalizeTime();
+        
     }
 
     private void OnMouseDown()
     {
-        if (currentView != ViewStates.GeneralView) return;
-
         TimeManager.timeManager.SpeedUpTime();
-        
-        if(!isSpeedUp)
+
+        SetAnimSpeed();
+
+    }
+
+    void SetAnimSpeed()
+    {
+        if (!isSpeedUp)
         {
             anim.SetTrigger("speedUp");
             isSpeedUp = true;
@@ -125,8 +134,8 @@ public class ClockController : MonoBehaviour
             anim.SetTrigger("speedDown");
             isSpeedUp = false;
         }
-
     }
+
 
     public void SetClockSpeed(Component sender, object obj)
     {
