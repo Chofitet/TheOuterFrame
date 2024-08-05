@@ -17,4 +17,6 @@ public class TVScheduledNewType : ScriptableObject, INewType
 
     public TimeData GetTimeToShow(){ return new TimeData(Day, Hour, Minute); }
     public string GetHeadline() { return headline; }
+
+    Sprite INewType.GetNewImag(){ return image;}
 }

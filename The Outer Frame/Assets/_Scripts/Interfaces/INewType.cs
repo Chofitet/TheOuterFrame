@@ -5,4 +5,6 @@ using UnityEngine;
 public interface INewType 
 {
     string GetHeadline();
+
+    Sprite GetNewImag();
 }

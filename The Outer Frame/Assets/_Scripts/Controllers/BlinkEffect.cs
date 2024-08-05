@@ -41,6 +41,12 @@ public class BlinkEffect : MonoBehaviour
 
     public void TurnOnLigth(Component sender, object obj)
     {
+        if(obj != null)
+        {
+            Color newColor = (Color)obj;
+            endColor = newColor;
+        }
+        
         isblinking = false;
         Color auxColor;
         auxColor = Color.Lerp(rend.material.GetColor("_EmissionColor"), endColor, speed * Time.time);

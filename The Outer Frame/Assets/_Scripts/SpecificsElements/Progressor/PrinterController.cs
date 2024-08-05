@@ -17,7 +17,7 @@ public class PrinterController : MonoBehaviour
         
         if (slot)
         {
-            IsFull(slot);
+            IsFull();
             return;
         }
         OnFullPrinter?.Invoke(this, true);
@@ -31,6 +31,7 @@ public class PrinterController : MonoBehaviour
         GameObject report = Instantiate(ReportPrefab, InstanciateSpot.position,InstanciateSpot.rotation, InstanciateSpot);
         SlotController slotController = slotReference.GetComponent<SlotController>();
         report.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetState(), slotController.GetIsAborted(), slotController.GetIsAlreadyDone());
+        IsPrinting();
     }
     private void OnMouseUpAsButton()
     {
@@ -40,9 +41,15 @@ public class PrinterController : MonoBehaviour
         slot = null;
     }
 
-    void IsFull(SlotController slot)
+    void IsFull()
     {
-        Led.TurnOnLigth(null, null);
+        Led.TurnOnLigth(null, Color.red);
+        Invoke("TurnOffLed", TimeLed);
+    }
+
+    void IsPrinting()
+    {
+        Led.TurnOnLigth(null, Color.green);
         Invoke("TurnOffLed", TimeLed);
     }
 

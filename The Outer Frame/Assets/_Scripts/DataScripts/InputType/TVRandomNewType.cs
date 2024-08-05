@@ -9,8 +9,6 @@ public class TVRandomNewType : ScriptableObject, INewType
     [SerializeField] Sprite image;
     [SerializeField] int channel;
 
-    public string GetHeadline()
-    {
-        return headline;
-    }
+    public string GetHeadline(){return headline;}
+    public Sprite GetNewImag() { return image; }
 }

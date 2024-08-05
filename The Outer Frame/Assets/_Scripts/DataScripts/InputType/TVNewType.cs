@@ -27,4 +27,5 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType
     public string GetHeadline() { return headline; }
     public TimeData GetTimeWhenWasDone() { return CompleteTime;}
 
+    public Sprite GetNewImag(){return image;}
 }

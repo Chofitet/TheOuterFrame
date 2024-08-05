@@ -8,9 +8,9 @@ public class GoalRowController : MonoBehaviour
 {
     [SerializeField] TMP_Text textField;
     [SerializeField] Toggle toggle;
-    BoardGoals goal;
+    Goals goal;
 
-    public void Inicialization(BoardGoals _goal)
+    public void Inicialization(Goals _goal)
     {
         textField.text = _goal.GetDescription();
         goal = _goal;

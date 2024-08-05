@@ -7,6 +7,7 @@ public class PCController : MonoBehaviour
 {
     [SerializeField] TMP_Text SearchBar;
     [SerializeField] GameEvent OnPCSearchWord;
+    [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] GameObject DataBaseUpdatedWindow;
     [SerializeField] GameEvent OnWikiWindow;
 
@@ -39,7 +40,8 @@ public class PCController : MonoBehaviour
     {
         if (!word)
         {
-            SearchBar.text = "Enter word";
+            SearchBar.text = ".......";
+            OnShakeNotebook?.Invoke(this, null);
             return;
         }
         OnPCSearchWord?.Invoke(this, word);

@@ -16,8 +16,18 @@ public class PCWikiController : MonoBehaviour
 
         DataBaseType input = WordsManager.WM.RequestBDWikiData(wordData);
 
+        WikiData.text = "";
+        image.sprite = null;
+        PhoneNumber.text = "";
 
-        if(input.GetText() != null) WikiData.text = input.GetText();
+        StartCoroutine(Delay(input));
+       
+    }
+
+    IEnumerator Delay(DataBaseType input)
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (input.GetText() != null) WikiData.text = input.GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData);
         WikiData.GetComponent<TypingAnimText>().AnimateTyping();
         image.sprite = input.GetImage();
