@@ -18,7 +18,7 @@ public class TypingAnimText : MonoBehaviour
     private void Awake()
     {
         TextField = GetComponent<TMP_Text>();
-        delay = new WaitForSeconds(1 / CharactersPerSecond);
+        SetCharacterPerSecond(CharactersPerSecond);
     }
 
     public void AnimateTyping()
@@ -43,6 +43,11 @@ public class TypingAnimText : MonoBehaviour
         }
     }
 
+    public void SetCharacterPerSecond(float x = 0)
+    {
+        delay = new WaitForSeconds(1 / x);
 
-    
+        if(x == 0) delay = new WaitForSeconds(1 / CharactersPerSecond);
+    }
+
 }

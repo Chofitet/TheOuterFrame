@@ -10,9 +10,19 @@ public class PCController : MonoBehaviour
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] GameObject DataBaseUpdatedWindow;
     [SerializeField] GameEvent OnWikiWindow;
+    bool isWaitingAWord;
 
     WordData word;
     bool isInPCView;
+    TypingAnimText textAnim;
+
+    private void Start()
+    {
+        isWaitingAWord = true;
+        textAnim = SearchBar.GetComponent<TypingAnimText>();
+        textAnim.SetCharacterPerSecond(2);
+        StartCoroutine(IdleSearchBarAnim());
+    }
 
     //OnSelectedWordInNotebook
     public void CompleteSeachBar(Component sender, object obj)
@@ -21,7 +31,11 @@ public class PCController : MonoBehaviour
         WordData _word = (WordData)obj;
         word = _word;
         SearchBar.text = word.GetName();
+        StopCoroutine(IdleSearchBarAnim());
+        textAnim.SetCharacterPerSecond();
+        isWaitingAWord = false;
         SearchBar.GetComponent<TypingAnimText>().AnimateTyping();
+        
     }
 
     //OnChangeView
@@ -40,10 +54,15 @@ public class PCController : MonoBehaviour
     {
         if (!word)
         {
-            SearchBar.text = ".......";
+            SearchBar.text = "Insert a word";
             OnShakeNotebook?.Invoke(this, null);
             return;
         }
+
+        isWaitingAWord = true;
+        StopAllCoroutines();
+        StartCoroutine(IdleSearchBarAnim());
+        
         OnPCSearchWord?.Invoke(this, word);
     }
 
@@ -63,5 +82,19 @@ public class PCController : MonoBehaviour
         DataBaseUpdatedWindow.SetActive(false);
         ChangeWindow(OnWikiWindow);
     }
+
+    IEnumerator IdleSearchBarAnim()
+    {
+        SearchBar.text = " |";
+        textAnim.SetCharacterPerSecond(2);
+
+        while (isWaitingAWord)
+        {
+            textAnim.AnimateTyping();
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    
 
 }

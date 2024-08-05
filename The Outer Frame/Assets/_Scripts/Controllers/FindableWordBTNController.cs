@@ -75,7 +75,7 @@ public class FindableWordBTNController : MonoBehaviour
                 extraIndex++;
             }
 
-            if (NormalizeWord(CleanUnnecessaryCharacter(combinedWord)) == NormalizeWord(word.GetName()))
+            if (NormalizeWord(CleanUnnecessaryCharacter(combinedWord)) == NormalizeWord(word.GetFindableName()))
             {
                 string extraCharacters = GetExtraCharacters(combinedWord);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);

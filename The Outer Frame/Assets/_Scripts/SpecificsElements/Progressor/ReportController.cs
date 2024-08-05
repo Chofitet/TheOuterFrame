@@ -34,12 +34,6 @@ public class ReportController : MonoBehaviour
         GetComponent<Animator>().SetTrigger("print");
     }
 
-    void Print()
-    {
-        transform.GetChild(0).gameObject.SetActive(true);
-        
-    }
-
     public void OnLeveReportInPC(Component sender, object obj)
     {
         Invoke("Delay", DelayToPC);
