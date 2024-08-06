@@ -24,6 +24,7 @@ public class SlotController : MonoBehaviour
     bool isAborted;
     bool isAlreadyDone;
     bool isAutomaticAction;
+    TimeData timeComplete;
     bool inFillFast;
 
     bool isfillSmooth;
@@ -121,6 +122,7 @@ public class SlotController : MonoBehaviour
         _state.SetActiveOrDesactiveAgent(true);
         OnFinishActionProgress?.Invoke(this, this);
         Icon.SetActive(true);
+        timeComplete = TimeManager.timeManager.GetTime();
 
     }
 
@@ -133,6 +135,8 @@ public class SlotController : MonoBehaviour
         SetLEDState(Color.red);
         TimeManager.OnMinuteChange -= UpdateProgress;
         ProgressBar.value = 0;
+        timeComplete = TimeManager.timeManager.GetTime();
+        Icon.SetActive(true);
     }
 
     public void AbortAction()
@@ -143,6 +147,8 @@ public class SlotController : MonoBehaviour
         SetLEDState(Color.yellow);
         TimeManager.OnMinuteChange -= UpdateProgress;
         ProgressBar.value = 0;
+        timeComplete = TimeManager.timeManager.GetTime();
+        Icon.SetActive(true);
     }
 
     public void CleanSlot()
@@ -196,4 +202,8 @@ public class SlotController : MonoBehaviour
         return isAutomaticAction;
     }
 
+    public TimeData GetTimeComplete()
+    {
+        return timeComplete;
+    }
 }

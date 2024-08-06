@@ -16,6 +16,8 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject AbortBTN;
     bool isPrinterFull;
     Renderer mat;
+    Color OriginalColor;
+    [SerializeField] float intensity;
 
     BlinkEffect sphere;
     BlinkEffect plane;
@@ -28,7 +30,14 @@ public class ProgressorModuleController : MonoBehaviour
         sphere = PrintBTN.transform.GetChild(0).GetComponent<BlinkEffect>();
         plane = PrintBTN.transform.GetChild(1).GetComponent<BlinkEffect>();
         anim = GetComponent<Animator>();
-        mat = AbortBTN.transform.parent.GetComponent<Renderer>();
+        mat = SwitchAbortBTN.transform.parent.GetComponent<Renderer>();
+        Debug.Log(mat.gameObject.name);
+        OriginalColor = mat.material.GetColor("_EmissionColor");
+    }
+
+    private void Update()
+    {
+        //mat.material.SetColor("_EmissionColor", Color.white * intensity);
     }
 
     public void SetAction(WordData _word,StateEnum _state,int _time)
@@ -55,7 +64,7 @@ public class ProgressorModuleController : MonoBehaviour
         if (!isReady) return;
         slot.initParameters(word, state, time);
         isReady = false;
-        mat.material.SetColor("_EmissiveColor", Color.black * 1);
+        mat.material.SetColor("_EmissionColor", Color.white * 0.5f );
     }
 
     public void AbortLogic(Component sender, object obj)
@@ -103,6 +112,7 @@ public class ProgressorModuleController : MonoBehaviour
                 anim.SetTrigger("abortSwitchOff");
                 isAbortOpen = false;
             }
+            mat.material.SetColor("_EmissionColor", Color.white * 0f);
         }
     }
 
@@ -131,7 +141,8 @@ public class ProgressorModuleController : MonoBehaviour
     {
         slot.AbortAction();
         anim.SetTrigger("receiveMessage");
-        mat.material.SetColor("_EmissiveColor", Color.black * -10);
+
+        mat.material.SetColor("_EmissionColor", Color.white * 0f);
     }
 
     //OnPressProgressorPrintBTN

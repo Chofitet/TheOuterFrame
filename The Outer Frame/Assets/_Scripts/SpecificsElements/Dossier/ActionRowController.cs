@@ -12,6 +12,7 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] Toggle toggle;
     [SerializeField] Button btn;
     [SerializeField] GameEvent OnShakeNotebook;
+    [SerializeField] TMP_Text observationTxt;
     StateEnum state;
     FadeWordsEffect fade;
     bool once;
@@ -22,6 +23,7 @@ public class ActionRowController : MonoBehaviour
         ActionText.text = _state.GetActionVerb();
         btn.onClick.AddListener(OnButtonClick);
         fade = Wordtext.GetComponent<FadeWordsEffect>();
+        observationTxt.text = state.GetObservationTxt();
     }
 
     public void OnSelectWordInNotebook(Component sender, object obj)
