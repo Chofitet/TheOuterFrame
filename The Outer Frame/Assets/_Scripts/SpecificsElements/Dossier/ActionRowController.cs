@@ -26,12 +26,22 @@ public class ActionRowController : MonoBehaviour
 
     public void OnSelectWordInNotebook(Component sender, object obj)
     {
+        if (toggle.isOn && once)
+        {
+            StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, WordSelectedInNotebook.Notebook.GetSelectedWord().GetName()));
+        }
+        if(toggle.isOn && !once)
+        {
+            Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
+            fade.StartEffect();
+        }
+
         if (state.GetSpecialActionWord() || !toggle.isOn || !once)
         {
             once = true;
-            return;
         }
-        StartCoroutine(AnimFade(Wordtext,false, Wordtext,true, WordSelectedInNotebook.Notebook.GetSelectedWord().GetName()));
+        
+       
     }
 
     public void OnButtonClick()

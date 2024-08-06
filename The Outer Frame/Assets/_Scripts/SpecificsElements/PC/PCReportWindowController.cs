@@ -20,6 +20,7 @@ public class PCReportWindowController : MonoBehaviour
    //OnReportWindow
     public void InstanciateBtnReport(Component sender, object _word)
     {
+        if (!word) return;
         foreach (Transform child in Grid.GetComponentsInChildren<Transform>())
         {
             if (child != Grid.transform)

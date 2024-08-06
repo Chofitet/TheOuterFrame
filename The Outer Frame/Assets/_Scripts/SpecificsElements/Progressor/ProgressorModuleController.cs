@@ -15,6 +15,7 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject SwitchAbortBTN;
     [SerializeField] GameObject AbortBTN;
     bool isPrinterFull;
+    Renderer mat;
 
     BlinkEffect sphere;
     BlinkEffect plane;
@@ -27,6 +28,7 @@ public class ProgressorModuleController : MonoBehaviour
         sphere = PrintBTN.transform.GetChild(0).GetComponent<BlinkEffect>();
         plane = PrintBTN.transform.GetChild(1).GetComponent<BlinkEffect>();
         anim = GetComponent<Animator>();
+        mat = AbortBTN.transform.parent.GetComponent<Renderer>();
     }
 
     public void SetAction(WordData _word,StateEnum _state,int _time)
@@ -53,6 +55,7 @@ public class ProgressorModuleController : MonoBehaviour
         if (!isReady) return;
         slot.initParameters(word, state, time);
         isReady = false;
+        mat.material.SetColor("_EmissiveColor", Color.black * 1);
     }
 
     public void AbortLogic(Component sender, object obj)
@@ -128,6 +131,7 @@ public class ProgressorModuleController : MonoBehaviour
     {
         slot.AbortAction();
         anim.SetTrigger("receiveMessage");
+        mat.material.SetColor("_EmissiveColor", Color.black * -10);
     }
 
     //OnPressProgressorPrintBTN

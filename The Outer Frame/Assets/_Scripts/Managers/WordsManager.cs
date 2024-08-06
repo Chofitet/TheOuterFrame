@@ -109,6 +109,7 @@ public class WordsManager : MonoBehaviour
     }
     public List<StateEnum> GetHistorySeen(WordData _word)
     {
+        List<StateEnum> aux = FindWordInList(_word).GetHistorySeen();
         return FindWordInList(_word).GetHistorySeen();
     }
 
@@ -128,6 +129,11 @@ public class WordsManager : MonoBehaviour
     }
     WordData FindWordInList(WordData _word)
     {
+        if(!_word)
+        {
+            Debug.Log("The entered word are null");
+            return null;
+        }
         foreach(WordData w in wordsDic)
         {
             if(w==_word)
@@ -135,7 +141,7 @@ public class WordsManager : MonoBehaviour
                 return w;
             }
         }
-        Debug.LogWarning("The word " + _word.GetName() + " is not assigned in the Word Manager");
+        if(_word != null)Debug.LogWarning("The word " + _word.GetName() + " is not assigned in the Word Manager");
         return null;
     }
 
