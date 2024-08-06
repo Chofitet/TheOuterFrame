@@ -12,6 +12,7 @@ public class StateEnum : ScriptableObject
     [SerializeField] int TimeToShowNew;
     [SerializeField] Agent Agent;
     [SerializeField] WordData SpecialActionWord;
+    [SerializeField] string observationtxt = "";
 
     public int GetTime() { return TimeToComplete; }
 
@@ -20,6 +21,8 @@ public class StateEnum : ScriptableObject
     public string GetActionVerb() { return ActionVerb; }
 
     public WordData GetSpecialActionWord() { return SpecialActionWord; }
+
+    public string GetObservationTxt() { return observationtxt; }
 
     public void SetActiveOrDesactiveAgent(bool x) {
         Agent.SetActiveDesactive(x); 
