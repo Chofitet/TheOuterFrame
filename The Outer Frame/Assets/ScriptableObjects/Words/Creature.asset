@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: Creature
   m_EditorClassIdentifier: 
-  wordName: creature
+  wordName: creature?
+  FindableAs: creature
   PhoneNumber: 
   isAPhoneNumber: 0
   reportTypes: []
@@ -22,4 +23,6 @@ MonoBehaviour:
   exceptions: []
   InactiveConditions: []
   AutomaticActions: []
+  ModifyLengthactions: []
+  ReactivateAction: []
   WordThatReplaces: {fileID: 0}
