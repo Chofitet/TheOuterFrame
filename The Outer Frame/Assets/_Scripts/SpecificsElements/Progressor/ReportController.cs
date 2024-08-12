@@ -9,6 +9,7 @@ public class ReportController : MonoBehaviour
     [SerializeField] TMP_Text ActionCalltxt;
     [SerializeField] TMP_Text Statustxt;
     [SerializeField] GameEvent OnPCReportActiualization;
+    [SerializeField] GameEvent OnMovePaperToTakenPos;
     [SerializeField] float DelayToPC;
     
     
@@ -21,38 +22,40 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "The report of " + state.GetActionVerb() + " not assigned in " + word.GetName();
             status = "a";
-            GetComponent<Animator>().SetTrigger("print");
+            //GetComponent<Animator>().SetTrigger("print");
             isNotCompleted = true;
         }
         if (isAlreadyDone)
         {
             Resulttxt.text = "The action \"" + state.GetActionVerb() + " " + word.GetName() + "\" has already been done";
             status = "Rejected";
-            GetComponent<Animator>().SetTrigger("print");
+            //GetComponent<Animator>().SetTrigger("print");
             isNotCompleted = true;
         }
         if(isAborted)
         {
             Resulttxt.text = "The action \"" + state.GetActionVerb() + " " + word.GetName() + "\" was aborted succesfully";
             status = "Aborted";
-            GetComponent<Animator>().SetTrigger("print");
+            //GetComponent<Animator>().SetTrigger("print");
             isNotCompleted = true;
         }
 
         if(WordsManager.WM.CheckIfStateAreAutomaticAction(word,state)) status = "Rejected";
 
         ActionCalltxt.text = state.GetActionVerb() + " " + word.GetName();
-        Statustxt.text = status + " at OCT 30th " + $"{time.Hour:00}:{time.Minute:00}"; 
+        Statustxt.text = status + " at OCT 30th " + $"{time.Hour:00}:{time.Minute:00}";
+
+        GetComponent<IndividualReportController>().SetType(false);
 
         if (isNotCompleted) return;
         Resulttxt.text = WordsManager.WM.RequestReport(word,state).GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt);
+        GetComponent<IndividualReportController>().SetType(true);
 
-
-        GetComponent<Animator>().SetTrigger("print");
+        //GetComponent<Animator>().SetTrigger("print");
     }
 
-
+    /*
     public void OnLeveReportInPC(Component sender, object obj)
     {
         Invoke("Delay", DelayToPC);
@@ -67,10 +70,12 @@ public class ReportController : MonoBehaviour
     {
         if (obj == gameObject) Destroy(gameObject);
     }
-    
+    */
     public void OnTakeReport(Component sender, object obj)
     {
         GetComponent<BoxCollider>().enabled = true;
+        OnMovePaperToTakenPos?.Invoke(this, gameObject);
+        Destroy(this);
     }
 
 }

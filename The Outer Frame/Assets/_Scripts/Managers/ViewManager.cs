@@ -13,14 +13,14 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnProgressorView;
     [SerializeField] GameEvent OnTVView;
     [SerializeField] GameEvent OnDossierView;
-    [SerializeField] GameEvent OnPrinterView;
     [SerializeField] GameEvent OnViewStateChange;
     [SerializeField] GameEvent OnNotebookTake;
     [SerializeField] GameEvent OnNotebookLeave;
-    [SerializeField] GameEvent OnCallTranscriptionView;
     [SerializeField] GameEvent OnFindableWordsActive;
     [SerializeField] GameEvent OnTakeSomeInBoard;
+    [SerializeField] GameEvent OnTakenPaperView;
     Coroutine StartDelay;
+    bool isAPaperHolding;
     ViewStates currentviewState;
     bool isReady = true;
 
@@ -37,6 +37,11 @@ public class ViewManager : MonoBehaviour
             if(currentviewState == ViewStates.OnTakeSomeInBoard)
             {
                 UpdateViewState(this, ViewStates.BoardView);
+                return;
+            }
+            if(isAPaperHolding)
+            {
+                UpdateViewState(this, ViewStates.OnTakenPaperView);
                 return;
             }
 
@@ -90,13 +95,9 @@ public class ViewManager : MonoBehaviour
                 OnNotebookTake.Invoke(this, true);
                 OnFindableWordsActive?.Invoke(this, null);
                 break;
-            case ViewStates.PrinterView:
-                OnPrinterView?.Invoke(this, null);
+            case ViewStates.OnTakenPaperView:
+                OnTakenPaperView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
-                OnFindableWordsActive?.Invoke(this, null);
-                break;
-            case ViewStates.OnCallTranscriptionView:
-                OnCallTranscriptionView?.Invoke(this, null);
                 OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.OnTakeSomeInBoard:
@@ -136,6 +137,13 @@ public class ViewManager : MonoBehaviour
         isReady = true;
         StartDelay = null;
     }
+
+    public void OnSetPaperState(Component sender, object obj)
+    {
+        bool x = (bool)obj;
+
+        isAPaperHolding = x;
+    }
 }
 
 public enum ViewStates
@@ -147,7 +155,6 @@ public enum ViewStates
     ProgressorView,
     TVView,
     DossierView,
-    PrinterView,
-    OnCallTranscriptionView,
+    OnTakenPaperView,
     OnTakeSomeInBoard,
 }
