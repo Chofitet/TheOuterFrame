@@ -8,7 +8,7 @@ public class WordData : ScriptableObject
 {
     [Header("Word General Data")]
     [SerializeField] string wordName;
-    [SerializeField] string FindableAs;
+    [SerializeField] List<string> FindableAs = new List<string>();
     [SerializeField] string PhoneNumber;
     [SerializeField] bool isAPhoneNumber;
 
@@ -44,6 +44,7 @@ public class WordData : ScriptableObject
     [SerializeField] List<Re_activeActions> ReactivateAction = new List<Re_activeActions>();
 
     [SerializeField] WordData WordThatReplaces;
+    [SerializeField] bool CopyHistory;
 
     private List<StateEnum> stateHistory = new List<StateEnum>();
     private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
@@ -55,7 +56,6 @@ public class WordData : ScriptableObject
     private void OnEnable()
     {
         foreach (exceptions e in exceptions) e.SetUp();
-        if (FindableAs == "") FindableAs = GetName();
     }
 
     #region GetInputLogic
@@ -291,7 +291,16 @@ public class WordData : ScriptableObject
 
     public string GetName() { return wordName; }
 
-    public string GetFindableName() { return FindableAs; }
+    public string FindFindableName(string wordCompere){ 
+        foreach(string s in FindableAs)
+        {
+            if(s == wordCompere)
+            {
+                return s;
+            }
+        }
+        return wordName; 
+    }
 
     public bool CheckIfStateAreAutomaticAction(StateEnum state)
     {
@@ -304,6 +313,7 @@ public class WordData : ScriptableObject
     public bool GetIsAPhoneNumber() { return isAPhoneNumber; }
 
     public WordData GetWordThatReplaces() { return WordThatReplaces; }
+    public bool GetCopyHistory() { return CopyHistory; }
     public List<StateEnum> GetHistorySeen() { return CheckedStateHistory; }
     public List<StateEnum> GetHistory() { return stateHistory; }
     
@@ -311,6 +321,21 @@ public class WordData : ScriptableObject
     {
         stateHistory.Clear();
         CheckedStateHistory.Clear();
+    }
+
+    public void ReplaceHistory(WordData oldword)
+    {
+        stateHistory.Clear();
+        CheckedStateHistory.Clear();
+
+        foreach( StateEnum state in oldword.GetHistory())
+        {
+            stateHistory.Add(state);
+        }
+        foreach (StateEnum state in oldword.GetHistorySeen())
+        {
+            CheckedStateHistory.Add(state);
+        }
     }
 
     public TimeData GetTimeOfState(StateEnum state)

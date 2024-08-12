@@ -72,6 +72,8 @@ public class FindableWordsManager : MonoBehaviour
                 GameObject auxObj = Instantiate(ButtonFindableWordPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
                 auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GetWordIndex());
                 FindableWordsBTNs.Add(auxObj);
+
+                auxObj.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(auxObj));
             }
         } catch (Exception ex)
         {
@@ -82,6 +84,8 @@ public class FindableWordsManager : MonoBehaviour
         {
             obj.SetActive(false);
         }
+
+        
 
     }
 
@@ -189,6 +193,22 @@ public class FindableWordsManager : MonoBehaviour
             }
         }
         return new List<FindableWordData>(uniqueWords.Values);
+    }
+
+    void OnButtonClick(GameObject obj)
+    {
+        DeleteBtnAlreadyFound(obj.GetComponent<FindableWordBTNController>().Getword());
+    }
+
+    void DeleteBtnAlreadyFound(WordData newWord)
+    {
+        foreach(GameObject btn in FindableWordsBTNs)
+        {
+            if (btn.GetComponent<FindableWordBTNController>().Getword() == newWord)
+            {
+                Destroy(btn);
+            }
+        }
     }
 
     float BTNdistance = 1000;
