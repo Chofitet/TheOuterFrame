@@ -31,28 +31,25 @@ public class NotebookMoveController : MonoBehaviour
                 SetPos(0);
                 break;
             case ViewStates.DossierView:
-                SetPos(1);
+                SetPos(6);
                 break;
             case ViewStates.PinchofonoView:
                 SetPos(1, true);
                 break;
             case ViewStates.BoardView:
-                SetPos(1);
+                SetPos(2);
                 break;
             case ViewStates.PCView:
-                SetPos(1);
+                SetPos(3);
                 break;
             case ViewStates.ProgressorView:
-                SetPos(0);
+                SetPos(4);
                 break;
-            case ViewStates.OnCallTranscriptionView:
-                SetPos(1);
+            case ViewStates.OnTakenPaperView:
+                SetPos(6);
                 break;
             case ViewStates.TVView:
-                SetPos(1);
-                break;
-            case ViewStates.PrinterView:
-                SetPos(1);
+                SetPos(5);
                 break;
         }
         lastView = newview;
@@ -143,6 +140,7 @@ public class NotebookMoveController : MonoBehaviour
     public void ShakeNotebook(Component sender, object obj)
     {
         transform.DOShakeRotation(0.4f, new Vector3(0,5,0),8,90,true,ShakeRandomnessMode.Harmonic);
+        transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic);
     }
 
     void OpenPhoneNums()

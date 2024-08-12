@@ -44,6 +44,7 @@ public class WordData : ScriptableObject
     [SerializeField] List<Re_activeActions> ReactivateAction = new List<Re_activeActions>();
 
     [SerializeField] WordData WordThatReplaces;
+    [SerializeField] bool CopyHistory;
 
     private List<StateEnum> stateHistory = new List<StateEnum>();
     private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
@@ -304,6 +305,7 @@ public class WordData : ScriptableObject
     public bool GetIsAPhoneNumber() { return isAPhoneNumber; }
 
     public WordData GetWordThatReplaces() { return WordThatReplaces; }
+    public bool GetCopyHistory() { return CopyHistory; }
     public List<StateEnum> GetHistorySeen() { return CheckedStateHistory; }
     public List<StateEnum> GetHistory() { return stateHistory; }
     
@@ -311,6 +313,21 @@ public class WordData : ScriptableObject
     {
         stateHistory.Clear();
         CheckedStateHistory.Clear();
+    }
+
+    public void ReplaceHistory(WordData oldword)
+    {
+        stateHistory.Clear();
+        CheckedStateHistory.Clear();
+
+        foreach( StateEnum state in oldword.GetHistory())
+        {
+            stateHistory.Add(state);
+        }
+        foreach (StateEnum state in oldword.GetHistorySeen())
+        {
+            CheckedStateHistory.Add(state);
+        }
     }
 
     public TimeData GetTimeOfState(StateEnum state)

@@ -33,7 +33,7 @@ public class CamController : MonoBehaviour
             case ViewStates.TVView:
                 SetPriority(5);
                 break;
-            case ViewStates.OnCallTranscriptionView:
+            case ViewStates.OnTakenPaperView:
                 SetPriority(0);
                 break;
         }

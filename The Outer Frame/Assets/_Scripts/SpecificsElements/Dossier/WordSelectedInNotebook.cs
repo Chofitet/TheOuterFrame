@@ -132,6 +132,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         if (index != -1)
         {
             WordsFound[index] = newWord;
+            if(newWord.GetCopyHistory()) newWord.ReplaceHistory(oldWord);
         }
         else
         {
