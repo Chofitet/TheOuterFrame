@@ -75,7 +75,7 @@ public class FindableWordBTNController : MonoBehaviour
                 extraIndex++;
             }
 
-            if (NormalizeWord(CleanUnnecessaryCharacter(combinedWord)) == NormalizeWord(word.GetFindableName()))
+            if (NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower() == NormalizeWord(word.FindFindableName(CleanUnnecessaryCharacter(NormalizeWord(combinedWord)))).ToLower())
             {
                 string extraCharacters = GetExtraCharacters(combinedWord);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
@@ -110,7 +110,7 @@ public class FindableWordBTNController : MonoBehaviour
 
     string NormalizeWord(string word)
     {
-        return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r]", "");
+        return Regex.Replace(word, @"<\/?link>|[\?\.,\n\r]", "");
     }
 
     string CleanUnnecessaryCharacter(string word)
@@ -157,4 +157,6 @@ public class FindableWordBTNController : MonoBehaviour
 
     public bool GetIsVisible() { return IsVisible(); }
     public TMP_Text GetTextField() { return textField; }
+
+    public WordData Getword() { return word; }
 }
