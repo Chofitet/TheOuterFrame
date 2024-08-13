@@ -18,6 +18,7 @@ public class ChannelController : MonoBehaviour
 
     public void SetNew(INewType _new)
     {
+        if (_new == null) return;
         HeadlineText.gameObject.SetActive(true);
         HeadlineText.text = _new.GetHeadline();
         NewImg.sprite = _new.GetNewImag();

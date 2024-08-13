@@ -30,7 +30,11 @@ public class TVScheduledNewType : ScriptableObject, INewType
 
     public TVScheduledNewType GetNew()
     {
-        if (CheckForConditionals()) return NewToReplace;
+        if (CheckForConditionals())
+        {
+            if (!NewToReplace) return this;
+            return NewToReplace;
+        }
         else return this;
     }
 
