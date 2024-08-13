@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class ChannelController : MonoBehaviour
 {
     bool isFull;
+    [SerializeField] TMP_Text EmergencyTextField;
+    [SerializeField] GameObject EmergencyScreen;
     [SerializeField] TMP_Text HeadlineText;
     [SerializeField] Image NewImg;
     [SerializeField] string TriggerAnim;
@@ -21,8 +23,24 @@ public class ChannelController : MonoBehaviour
         NewImg.sprite = _new.GetNewImag();
         if (!_new.GetNewImag()) NewImg.color = new Color(1, 1, 1, 0);
         else NewImg.color = new Color(1, 1, 1, 1);
-        FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
+        EmergencyTextField.text = _new.GetHeadline();
+        if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout();
+        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
     }
+
+    void ChangeToEmergencyLayout()
+    {
+        EmergencyScreen.SetActive(true);
+        FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField);
+    }
+
+    public void resetChannel()
+    {
+        EmergencyScreen.SetActive(false);
+        HeadlineText.text = "We runout of news, stay tuned for more";
+        NewImg.color = new Color(1, 1, 1, 0);
+    }
+
 
     public string GetTriggerAnim() { return TriggerAnim; }
 

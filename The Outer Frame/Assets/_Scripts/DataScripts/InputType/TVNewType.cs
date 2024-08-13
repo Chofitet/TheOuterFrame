@@ -11,6 +11,7 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType
     [SerializeField] int channel;
     [SerializeField] int priority;
     [SerializeField] int alertLevelIncrement;
+    [SerializeField] bool Emergency;
 
 
     public StateEnum GetState()
@@ -28,4 +29,6 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType
     public TimeData GetTimeWhenWasDone() { return CompleteTime;}
 
     public Sprite GetNewImag(){return image;}
+
+    public bool GetIfIsAEmergency(){ return Emergency;}
 }

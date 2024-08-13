@@ -10,5 +10,8 @@ public class TVRandomNewType : ScriptableObject, INewType
     [SerializeField] int channel;
 
     public string GetHeadline(){return headline;}
+
+    public bool GetIfIsAEmergency() { return false; }
+
     public Sprite GetNewImag() { return image; }
 }
