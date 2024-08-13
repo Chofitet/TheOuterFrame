@@ -29,6 +29,7 @@ public class PCWikiController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         if (input.GetText() != null) WikiData.text = input.GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData);
+        HyperlinksManager.HLM.InstanciateHyperLink(WikiData);
         WikiData.GetComponent<TypingAnimText>().AnimateTyping();
         image.sprite = input.GetImage();
         PhoneNumber.text = input.GetPhoneNum();

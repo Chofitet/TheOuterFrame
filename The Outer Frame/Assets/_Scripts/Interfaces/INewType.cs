@@ -7,4 +7,6 @@ public interface INewType
     string GetHeadline();
 
     Sprite GetNewImag();
+
+    bool GetIfIsAEmergency();
 }

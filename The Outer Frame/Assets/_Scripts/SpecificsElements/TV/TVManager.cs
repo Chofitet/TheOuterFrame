@@ -66,7 +66,8 @@ public class TVManager : MonoBehaviour
 
             if (timeNew.Day == ActualTime.Day && timeNew.Hour == ActualTime.Hour && timeNew.Minute == ActualTime.Minute)
             {
-                SetNewInChannel(_new);
+                TVScheduledNewType auxNew = _new.GetNew();
+                SetNewInChannel(auxNew);
                 newsToRemove.Add(_new);
             }
         }
@@ -98,6 +99,7 @@ public class TVManager : MonoBehaviour
         if (RandomNews.Count == 0) return;
         TVRandomNewType randomTVNewRandom = RandomNews[Random.Range(0, RandomNews.Count - 1)];
         SetNewInChannel(randomTVNewRandom);
+        RandomNews.Remove(randomTVNewRandom);
     }
 
 
@@ -134,6 +136,7 @@ public class TVManager : MonoBehaviour
         foreach(ChannelController ch in Channels)
         {
             ch.SetIsFull(false);
+            ch.resetChannel();
         }
     }
 

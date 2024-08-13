@@ -291,15 +291,16 @@ public class WordData : ScriptableObject
 
     public string GetName() { return wordName; }
 
-    public string FindFindableName(string wordCompere){ 
+    public string FindFindableName(string wordCompere){
+        string aux = "";
         foreach(string s in FindableAs)
         {
             if(s == wordCompere)
             {
-                return s;
+                aux = s;
             }
         }
-        return wordName; 
+        return aux;
     }
 
     public bool CheckIfStateAreAutomaticAction(StateEnum state)

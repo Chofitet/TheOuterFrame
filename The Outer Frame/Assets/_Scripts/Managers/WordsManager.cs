@@ -155,7 +155,7 @@ public class WordsManager : MonoBehaviour
         WordData WD = null;
         foreach (WordData w in wordsDic)
         {
-            if (NormalizeWord(w.FindFindableName(WordToCompare)).Contains(NormalizeWord(WordToCompare)))
+            if (NormalizeWord(w.FindFindableName(WordToCompare)) == (NormalizeWord(WordToCompare)))
             {
                 WD = w;
             }

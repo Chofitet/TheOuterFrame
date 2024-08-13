@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Text.RegularExpressions;
 
 public class PCController : MonoBehaviour
 {
@@ -30,12 +31,17 @@ public class PCController : MonoBehaviour
         if (!isInPCView) return;
         WordData _word = (WordData)obj;
         word = _word;
-        SearchBar.text = word.GetName();
+        SearchBar.text = DeleteSpetialCharacter(word.GetName());
         StopCoroutine(IdleSearchBarAnim());
         textAnim.SetCharacterPerSecond();
         isWaitingAWord = false;
         SearchBar.GetComponent<TypingAnimText>().AnimateTyping();
         
+    }
+
+    string DeleteSpetialCharacter(string txt)
+    {
+        return Regex.Replace(txt, @"[\?\.,\n\r]", "");
     }
 
     //OnChangeView
@@ -48,6 +54,14 @@ public class PCController : MonoBehaviour
             isInPCView = true;
         }
         else isInPCView = false;
+    }
+
+    public void SearchHyperLink(Component sender, object obj)
+    {
+        if (!isInPCView) return;
+        WordData _word = (WordData)obj;
+        word = _word;
+        SearchWordInWiki();
     }
 
     public void SearchWordInWiki()

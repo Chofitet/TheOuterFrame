@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Text.RegularExpressions;
 
 public class ReportController : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class ReportController : MonoBehaviour
 
         if(WordsManager.WM.CheckIfStateAreAutomaticAction(word,state)) status = "Rejected";
 
-        ActionCalltxt.text = state.GetActionVerb() + " " + word.GetName();
+        ActionCalltxt.text = state.GetActionVerb() + " " + DeleteSpetialCharacter(word.GetName());
         Statustxt.text = status + " at OCT 30th " + $"{time.Hour:00}:{time.Minute:00}";
 
         GetComponent<IndividualReportController>().SetType(false);
@@ -53,6 +54,11 @@ public class ReportController : MonoBehaviour
         GetComponent<IndividualReportController>().SetType(true);
 
         //GetComponent<Animator>().SetTrigger("print");
+    }
+
+    string DeleteSpetialCharacter(string txt)
+    {
+        return Regex.Replace(txt, @"[\?\.,\n\r]", "");
     }
 
     /*
