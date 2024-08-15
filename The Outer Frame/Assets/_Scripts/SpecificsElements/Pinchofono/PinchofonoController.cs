@@ -7,9 +7,16 @@ public class PinchofonoController : MonoBehaviour
 {
     [SerializeField] GameObject CallTranscriptionPrefab;
     [SerializeField] Transform InstanciateSpot;
-    [SerializeField] TMP_Text RecordingScreen;
+    [SerializeField] TMP_Text txtNumber;
+    [SerializeField] TMP_Text txtMessage;
+    [SerializeField] TMP_Text txtCountDown;
+    [SerializeField] GameObject AbortConfirmationPanel;
+    [SerializeField] GameEvent OnStartRecording;
+    [SerializeField] GameEvent OnPrintCall;
+    [SerializeField] GameEvent OnAbortCallRecording;
     bool isRecording;
     bool IsInView;
+    bool hasNumberEnter;
 
     CallType CallToPrint;
     private Animator anim;
@@ -20,6 +27,74 @@ public class PinchofonoController : MonoBehaviour
         anim.SetFloat("tapeSpinSpeed", 0);
     }
 
+    public void RecBTNPressed(Component sender, object obj)
+    {
+        txtMessage.text = "";
+
+        if(CallToPrint)
+        {
+            txtMessage.text = "You have a pending call";
+            return;
+        }
+
+        if (!hasNumberEnter)
+        {
+            SetIsRecordingFalse();
+            txtMessage.text = "Enter a number";
+        }
+        else
+        {
+            OnStartRecording?.Invoke(this, null);
+            SetIsRecordingTrue();
+        }
+    }
+
+    public void PrintBTNPressed(Component sender, object obj)
+    {
+        txtMessage.text = "";
+        if (!CallToPrint)
+        {
+            txtMessage.text = "No calls to print yet";
+        }
+        else
+        {
+            OnPrintCall?.Invoke(this, null);
+        }
+    }
+
+    public void AbortBTNPressed(Component sender, object obj)
+    {
+        txtMessage.text = "";
+
+        if (CallToPrint)
+        {
+            txtMessage.text = "You have a pending call";
+            return;
+        }
+
+        if (!isRecording)
+        {
+            txtMessage.text = "No recording to abort";
+        }
+        else
+        {
+            txtMessage.text = "Are you sure you want abort the recording?";
+            AbortConfirmationPanel.SetActive(true);
+        }
+
+    }
+
+    public void ConfirmAbort()
+    {
+        OnAbortCallRecording?.Invoke(this, null);
+    }
+
+    public void CancelAbort()
+    {
+        AbortConfirmationPanel.SetActive(false);
+        txtMessage.text = "";
+    }
+
     //OnCallEndRecording
     public void SetCallToPrint(Component sender, object obj)
     {
@@ -28,12 +103,12 @@ public class PinchofonoController : MonoBehaviour
         CallToPrint = call;
     }
 
-    //OnPressBTNPrint
+    //CallToPrint
     public void PrintCall(Component sender, object obj)
     {
         GameObject aux = Instantiate(CallTranscriptionPrefab, InstanciateSpot);
         aux.GetComponent<TranscriptionCallController>().Inicialization(CallToPrint);
-        anim.SetFloat("tapeSpinSpeed", 0);
+        SetIsRecordingFalse();
     }
 
     //OnSelectedWordInNotebook
@@ -42,8 +117,9 @@ public class PinchofonoController : MonoBehaviour
         WordData word = (WordData)obj;
         if (!IsInView) return;
         if (!word.GetIsPhoneNumberFound()) return;
-        RecordingScreen.text = word.GetPhoneNumber();
-        RecordingScreen.GetComponent<TypingAnimText>().AnimateTyping();
+        txtNumber.text = word.GetPhoneNumber();
+        hasNumberEnter = true;
+        txtNumber.GetComponent<TypingAnimText>().AnimateTyping();
         anim.SetTrigger("padDial");
         anim.SetTrigger("recordReady");
         anim.SetTrigger("recordReadyWobble");
@@ -52,12 +128,15 @@ public class PinchofonoController : MonoBehaviour
     //OnViewStateChange
     public void CheckPinchofonoView(Component sender, object obj)
     {
-        if(!isRecording)RecordingScreen.text = "";
+        if(!isRecording) txtNumber.text = "";
         ViewStates view = (ViewStates)obj;
 
         if(view != ViewStates.PinchofonoView && IsInView)
         {
             anim.SetTrigger("padClose");
+            txtMessage.text = "";
+            AbortConfirmationPanel.SetActive(false);
+            hasNumberEnter = false;
         }
 
         IsInView = (view == ViewStates.PinchofonoView) ? true : false;
@@ -69,7 +148,7 @@ public class PinchofonoController : MonoBehaviour
     }
 
     //OnStartRecordingCall
-    public void SetIsRecordingTrue(Component sender, object obj)
+    public void SetIsRecordingTrue()
     {
         anim.SetBool("IsRecording", true);
         anim.SetFloat("tapeSpinSpeed", 1);
@@ -77,7 +156,7 @@ public class PinchofonoController : MonoBehaviour
     }
 
     //OnStartRecordingCall
-    public void SetIsRecordingFalse(Component sender, object obj)
+    public void SetIsRecordingFalse()
     {
         anim.SetBool("IsRecording", false);
         anim.SetFloat("tapeSpinSpeed", 0);
@@ -89,8 +168,10 @@ public class PinchofonoController : MonoBehaviour
         anim.SetBool("IsRecording", false);
         anim.SetFloat("tapeSpinSpeed", 0);
         isRecording = false;
-        RecordingScreen.text = "";
+        txtNumber.text = "";
         CallToPrint = null;
+        txtMessage.text = "";
+        AbortConfirmationPanel.SetActive(false);
     }
 
 }

@@ -56,8 +56,14 @@ public class FindableWordBTNController : MonoBehaviour
         int i = 0;
         int extraIndex = 0;
 
+        
         foreach (string w in words)
         {
+            if (w == "")
+            {
+                i++;
+                continue;
+            }
             int iaux = i;
             string combinedWord = words[i];
 
@@ -79,8 +85,20 @@ public class FindableWordBTNController : MonoBehaviour
             {
                 string extraCharacters = GetExtraCharacters(combinedWord);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
-                string materialName = "\"" + textField.font.name + " Effect\"";
-                strBuilder = strBuilder.Replace(combinedWord, "<material=" +materialName+ ">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
+
+                string materialName = string.Empty;
+                try
+                {
+                    materialName = "\"" + textField.font.name + " Effect\"";
+                    strBuilder = strBuilder.Replace(combinedWord, "<material=" + materialName + ">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogWarning("Error al obtener el path del material: " + ex.Message);
+                    strBuilder = strBuilder.Replace(combinedWord,  CleanUnnecessaryCharacter(combinedWord));
+                }
+
+                
                 auxText += strBuilder + extraCharacters + " ";
             }
             else
