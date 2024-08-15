@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PinchofonoManager : MonoBehaviour
 {
     [SerializeField] int minutesToRecording;
+    [SerializeField] TMP_Text CountDown;
     int minutePassCounter;
     WordData word;
     CallType CallToShow;
@@ -13,14 +15,18 @@ public class PinchofonoManager : MonoBehaviour
 
     public void SetRecording(Component sender, object obj)
     {
+        if (!WordSelectedInNotebook.Notebook.GetSelectedWord()) return;
         Debug.Log("recording");
         TimeManager.OnMinuteChange += CounterPassTime;
+        CountDown.text = "00:" + minutesToRecording;
         word = WordSelectedInNotebook.Notebook.GetSelectedWord();
     }
 
     void CounterPassTime()
     {
         minutePassCounter++;
+
+        CountDown.text = $"00:{minutesToRecording - minutePassCounter:00}";
 
         List<CallType> CallsInTimeZone = WordsManager.WM.RequestCall(word);
 
@@ -41,6 +47,7 @@ public class PinchofonoManager : MonoBehaviour
         {
             TimeManager.OnMinuteChange -= CounterPassTime;
             minutePassCounter = 0;
+            CountDown.text = "00:00";
             Debug.Log("CallRecordingFinish");
             OnCallEndRecording?.Invoke(this, CallToShow);
         }
@@ -50,6 +57,7 @@ public class PinchofonoManager : MonoBehaviour
     {
         TimeManager.OnMinuteChange -= CounterPassTime;
         minutePassCounter = 0;
+        CountDown.text = "00:00";
     }
 
 
