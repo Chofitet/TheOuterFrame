@@ -13,5 +13,10 @@ public class TVRandomNewType : ScriptableObject, INewType
 
     public bool GetIfIsAEmergency() { return false; }
 
+    public int GetIncreaseAlertLevel()
+    {
+        return 0;
+    }
+
     public Sprite GetNewImag() { return image; }
 }

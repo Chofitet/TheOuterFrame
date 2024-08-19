@@ -12,6 +12,7 @@ public class ChannelController : MonoBehaviour
     [SerializeField] TMP_Text HeadlineText;
     [SerializeField] Image NewImg;
     [SerializeField] string TriggerAnim;
+    [SerializeField] GameEvent OnIncreaseAlertLevel;
     public bool GetIsFull() { return isFull; }
 
     public void SetIsFull(bool x) => isFull = x;
@@ -27,6 +28,7 @@ public class ChannelController : MonoBehaviour
         EmergencyTextField.text = _new.GetHeadline();
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout();
         else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
+        OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
     }
 
     void ChangeToEmergencyLayout()

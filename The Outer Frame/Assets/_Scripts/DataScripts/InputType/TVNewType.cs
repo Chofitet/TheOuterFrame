@@ -31,4 +31,9 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType
     public Sprite GetNewImag(){return image;}
 
     public bool GetIfIsAEmergency(){ return Emergency;}
+
+    public int GetIncreaseAlertLevel()
+    {
+        return alertLevelIncrement;
+    }
 }
