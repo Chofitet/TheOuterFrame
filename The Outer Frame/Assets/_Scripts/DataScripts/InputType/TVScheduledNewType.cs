@@ -86,4 +86,9 @@ public class TVScheduledNewType : ScriptableObject, INewType
 
         return true;
     }
+
+    public int GetIncreaseAlertLevel()
+    {
+        return alertLevelIncrement;
+    }
 }

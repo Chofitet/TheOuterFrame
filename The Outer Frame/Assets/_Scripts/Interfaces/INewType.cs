@@ -9,4 +9,6 @@ public interface INewType
     Sprite GetNewImag();
 
     bool GetIfIsAEmergency();
+
+    int GetIncreaseAlertLevel();
 }
