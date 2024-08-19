@@ -20,7 +20,7 @@ MonoBehaviour:
   isAPhoneNumber: 0
   reportTypes:
   - {fileID: 11400000, guid: 0a00644713c73be4bb70da763ab3e1d1, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: d869c38887b20c749b21239313ed1c08, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -33,10 +33,21 @@ MonoBehaviour:
   DBTypes: {fileID: 11400000, guid: 711bddd8492e99141931942281ee0d9e, type: 2}
   CallTypes:
   - {fileID: 11400000, guid: 9e8221a835ca18740b7991be4f47deff, type: 2}
-  exceptions: []
+  exceptions:
+  - name: CargoInspectedState
+    DefaultState: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
+    SpecialState: {fileID: 11400000, guid: 25c32352a2ae81e4183cd4e67e9da611, type: 2}
+    AlsoSetDefaultState: 0
+    isOrderMatters: 0
+    exceptionConditions:
+    - {fileID: 11400000, guid: 9c21b2ec550347540bac6af00fe8f515, type: 2}
   InactiveConditions: []
   AutomaticActions: []
   ModifyLengthactions: []
-  ReactivateAction: []
+  ReactivateAction:
+  - ActionToReactivate: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+    Conditionals:
+    - {fileID: 11400000, guid: 9c21b2ec550347540bac6af00fe8f515, type: 2}
+    isOrderMatters: 0
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0
