@@ -25,7 +25,7 @@ public class StateEnum : ScriptableObject
     public string GetObservationTxt() { return observationtxt; }
 
     public void SetActiveOrDesactiveAgent(bool x) {
-        Agent.SetActiveDesactive(x); 
+       // Agent.SetActiveDesactive(x); 
     }
 
     public bool GetIfIsActive() {

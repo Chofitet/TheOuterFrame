@@ -85,6 +85,7 @@ public class WordsManager : MonoBehaviour
     {
         FindWordInList(_word).ChangeState(WordState);
         FindWordInList(_word).SetReactionCall(WordState);
+        ReactiveActionsOfWords();
         //OnChangeStateOfWord?.Invoke(this,_word);
     }
 
@@ -167,6 +168,14 @@ public class WordsManager : MonoBehaviour
     string NormalizeWord(string word)
     {
         return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r\(\)\s]", "");
+    }
+
+    public void ReactiveActionsOfWords()
+    {
+        foreach(WordData w in wordsDic)
+        {
+            w.CheckForReActiveActions();
+        }
     }
 }
 

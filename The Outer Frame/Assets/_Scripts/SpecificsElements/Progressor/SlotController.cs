@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 using TMPro.Examples;
 using DG.Tweening;
+using System.Linq;
 
 public class SlotController : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class SlotController : MonoBehaviour
     bool isAutomaticAction;
     TimeData timeComplete;
     bool inFillFast;
+    StateEnum SpecialState;
 
     bool isfillSmooth;
 
@@ -110,6 +112,7 @@ public class SlotController : MonoBehaviour
         else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isAutomaticAction)
         {
             WordsManager.WM.RequestChangeState(_word, _state);
+            _state = WordsManager.WM.GetHistory(_word).Last();
             ActionWasDone();
         }
 
@@ -119,6 +122,7 @@ public class SlotController : MonoBehaviour
     {
         inFillFast = false;
         WordsManager.WM.RequestChangeState(_word, _state);
+        _state = WordsManager.WM.GetHistory(_word).Last();
         _state.SetActiveOrDesactiveAgent(true);
         OnFinishActionProgress?.Invoke(this, this);
         Icon.SetActive(true);

@@ -49,7 +49,7 @@ public class ReportController : MonoBehaviour
         GetComponent<IndividualReportController>().SetType(false);
 
         if (isNotCompleted) return;
-        Resulttxt.text = WordsManager.WM.RequestReport(word,state).GetText();
+        Resulttxt.text = WordsManager.WM.RequestLastReport(word).GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt);
         GetComponent<IndividualReportController>().SetType(true);
 

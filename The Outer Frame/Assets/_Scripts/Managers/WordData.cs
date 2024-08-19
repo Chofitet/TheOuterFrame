@@ -157,7 +157,6 @@ public class WordData : ScriptableObject
     #region ChangeStateLogic
     public void ChangeState(StateEnum newState)
     {
-
         if (CheckIfStateWasDone(newState))
         {
             Debug.LogWarning("The state " + newState.name + " was done");
@@ -186,7 +185,6 @@ public class WordData : ScriptableObject
 
         stateHistory.Add(currentState);
         StateHistoryTime.Add(currentState, TimeManager.timeManager.GetTime());
-        CheckForReActiveActions();
 
         string estados = wordName + ": ";
         foreach (StateEnum s in stateHistory)
@@ -246,11 +244,6 @@ public class WordData : ScriptableObject
     }
     public void CheckStateSeen(StateEnum newState)
     {
-        if (CheckIfStateSeenWasDone(newState))
-        {
-            Debug.LogWarning("The state " + newState.name + " was seen");
-            return;
-        }
         CheckedStateHistory.Add(newState);
     }
 
@@ -355,13 +348,15 @@ public class WordData : ScriptableObject
 
     public bool GetIsFound() { return isFound; }
 
-    void CheckForReActiveActions()
+    public void CheckForReActiveActions()
     {
         foreach(Re_activeActions reAA in ReactivateAction)
         {
             if (reAA.CheckForConditionals())
             {
+                if (reAA.GetWasDone()) return;
                 CleanStateFromHistory(reAA.ActionToReactivate);
+                reAA.SetWasDone();
             }
         }
     }
@@ -465,6 +460,11 @@ public class Re_activeActions
     public StateEnum ActionToReactivate;
     public List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     public bool isOrderMatters;
+    [NonSerialized] bool wasDone;
+
+    public bool GetWasDone() { return wasDone; }
+
+    public void SetWasDone() { wasDone = true; }
 
     public bool CheckForConditionals()
     {
