@@ -11,7 +11,9 @@ public class PCController : MonoBehaviour
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] GameObject DataBaseUpdatedWindow;
     [SerializeField] GameEvent OnWikiWindow;
+    [SerializeField] GameEvent OnWordAccessScreen;
     bool isWaitingAWord;
+    bool inWordAccessWindow;
 
     WordData word;
     bool isInPCView;
@@ -29,6 +31,7 @@ public class PCController : MonoBehaviour
     public void CompleteSeachBar(Component sender, object obj)
     {
         if (!isInPCView) return;
+        if (inWordAccessWindow) return;
         WordData _word = (WordData)obj;
         word = _word;
         SearchBar.text = DeleteSpetialCharacter(word.GetName());
@@ -73,11 +76,24 @@ public class PCController : MonoBehaviour
             return;
         }
 
+
+        if(WordsManager.WM.RequestBDWikiData(word).GetAccessWord())
+        {
+            OnWordAccessScreen?.Invoke(this, word);
+            inWordAccessWindow = true;
+            return;
+        }
+
         isWaitingAWord = true;
         StopAllCoroutines();
         StartCoroutine(IdleSearchBarAnim());
         
         OnPCSearchWord?.Invoke(this, word);
+    }
+
+    public void CloseWordAccessWindow(Component sender, object obj)
+    {
+        inWordAccessWindow = false;
     }
 
     public void ChangeWindow(GameEvent gameEvent)
@@ -109,6 +125,5 @@ public class PCController : MonoBehaviour
         }
     }
 
-    
 
 }

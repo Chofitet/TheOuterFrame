@@ -7,6 +7,7 @@ public class DataBaseType : ScriptableObject
 {
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] Sprite image;
+    [SerializeField] WordData AccessWord;
     [SerializeField] string phoneNum;
     [SerializeField] string age;
     [SerializeField] string location;
@@ -22,7 +23,7 @@ public class DataBaseType : ScriptableObject
     [SerializeField] string classification;
     [SerializeField] string serial;
 
-
+    public WordData GetAccessWord() { return AccessWord; }
     public string GetText() { return text; }
 
     public Sprite GetImage() { return image; }
