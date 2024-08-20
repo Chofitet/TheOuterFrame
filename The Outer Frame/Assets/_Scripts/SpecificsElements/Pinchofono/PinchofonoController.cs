@@ -86,6 +86,7 @@ public class PinchofonoController : MonoBehaviour
 
     public void ConfirmAbort()
     {
+        ResetAll(null,null);
         OnAbortCallRecording?.Invoke(this, null);
     }
 
