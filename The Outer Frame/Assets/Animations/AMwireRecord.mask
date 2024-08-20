@@ -6,7 +6,7 @@ AvatarMask:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AMwireButtons
+  m_Name: AMwireRecord
   m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   m_Elements:
   - m_Path: 
@@ -40,8 +40,10 @@ AvatarMask:
   - m_Path: wire 9 button
     m_Weight: 0
   - m_Path: wire abort button
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: wire asterisk button
+    m_Weight: 0
+  - m_Path: wire dial base
     m_Weight: 0
   - m_Path: wire hash button
     m_Weight: 0
@@ -52,12 +54,16 @@ AvatarMask:
   - m_Path: wire numpad cover B
     m_Weight: 0
   - m_Path: wire print button
-    m_Weight: 1
+    m_Weight: 0
+  - m_Path: wire rack
+    m_Weight: 0
   - m_Path: wire record button
     m_Weight: 1
   - m_Path: wire roto right
     m_Weight: 0
   - m_Path: wire rotor left
+    m_Weight: 0
+  - m_Path: wire tray
     m_Weight: 0
   - m_Path: wireophone
     m_Weight: 0
@@ -66,8 +72,6 @@ AvatarMask:
   - m_Path: wireophone armature/BASE
     m_Weight: 0
   - m_Path: wireophone armature/BASE/abort
-    m_Weight: 1
-  - m_Path: wireophone armature/BASE/asterisk
     m_Weight: 0
   - m_Path: wireophone armature/BASE/cassette
     m_Weight: 0
@@ -75,39 +79,41 @@ AvatarMask:
     m_Weight: 0
   - m_Path: wireophone armature/BASE/cassette/reelRight
     m_Weight: 0
-  - m_Path: wireophone armature/BASE/cassettecover
+  - m_Path: wireophone armature/BASE/dial base
     m_Weight: 0
-  - m_Path: wireophone armature/BASE/eight
+  - m_Path: wireophone armature/BASE/dial base/asterisk
     m_Weight: 0
-  - m_Path: wireophone armature/BASE/five
+  - m_Path: wireophone armature/BASE/dial base/eight
     m_Weight: 0
-  - m_Path: wireophone armature/BASE/four
+  - m_Path: wireophone armature/BASE/dial base/five
     m_Weight: 0
-  - m_Path: wireophone armature/BASE/hash
+  - m_Path: wireophone armature/BASE/dial base/four
     m_Weight: 0
-  - m_Path: wireophone armature/BASE/nine
+  - m_Path: wireophone armature/BASE/dial base/hash
+    m_Weight: 0
+  - m_Path: wireophone armature/BASE/dial base/nine
+    m_Weight: 0
+  - m_Path: wireophone armature/BASE/dial base/one
+    m_Weight: 0
+  - m_Path: wireophone armature/BASE/dial base/seven
+    m_Weight: 0
+  - m_Path: wireophone armature/BASE/dial base/six
+    m_Weight: 0
+  - m_Path: wireophone armature/BASE/dial base/three
+    m_Weight: 0
+  - m_Path: wireophone armature/BASE/dial base/two
+    m_Weight: 0
+  - m_Path: wireophone armature/BASE/dial base/zero
     m_Weight: 0
   - m_Path: wireophone armature/BASE/numcoverA
     m_Weight: 0
   - m_Path: wireophone armature/BASE/numcoverA/numcoverB
     m_Weight: 0
-  - m_Path: wireophone armature/BASE/one
-    m_Weight: 0
   - m_Path: wireophone armature/BASE/print
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: wireophone armature/BASE/record
     m_Weight: 1
   - m_Path: wireophone armature/BASE/rotorLeft
     m_Weight: 0
   - m_Path: wireophone armature/BASE/rotorRight
-    m_Weight: 0
-  - m_Path: wireophone armature/BASE/seven
-    m_Weight: 0
-  - m_Path: wireophone armature/BASE/six
-    m_Weight: 0
-  - m_Path: wireophone armature/BASE/three
-    m_Weight: 0
-  - m_Path: wireophone armature/BASE/two
-    m_Weight: 0
-  - m_Path: wireophone armature/BASE/zero
     m_Weight: 0

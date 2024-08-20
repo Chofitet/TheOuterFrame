@@ -6,13 +6,13 @@ AvatarMask:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AMwireBase
+  m_Name: AMwireAbort
   m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   m_Elements:
   - m_Path: 
     m_Weight: 1
   - m_Path: cassette
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: cassette cover
     m_Weight: 0
   - m_Path: reel left
@@ -40,7 +40,7 @@ AvatarMask:
   - m_Path: wire 9 button
     m_Weight: 0
   - m_Path: wire abort button
-    m_Weight: 0
+    m_Weight: 1
   - m_Path: wire asterisk button
     m_Weight: 0
   - m_Path: wire dial base
@@ -48,7 +48,7 @@ AvatarMask:
   - m_Path: wire hash button
     m_Weight: 0
   - m_Path: wire notif light
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: wire numpad cover A
     m_Weight: 0
   - m_Path: wire numpad cover B
@@ -56,7 +56,7 @@ AvatarMask:
   - m_Path: wire print button
     m_Weight: 0
   - m_Path: wire rack
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: wire record button
     m_Weight: 0
   - m_Path: wire roto right
@@ -64,17 +64,17 @@ AvatarMask:
   - m_Path: wire rotor left
     m_Weight: 0
   - m_Path: wire tray
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: wireophone
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: wireophone armature
     m_Weight: 0
   - m_Path: wireophone armature/BASE
-    m_Weight: 1
-  - m_Path: wireophone armature/BASE/abort
     m_Weight: 0
-  - m_Path: wireophone armature/BASE/cassette
+  - m_Path: wireophone armature/BASE/abort
     m_Weight: 1
+  - m_Path: wireophone armature/BASE/cassette
+    m_Weight: 0
   - m_Path: wireophone armature/BASE/cassette/reelLeft
     m_Weight: 0
   - m_Path: wireophone armature/BASE/cassette/reelRight
