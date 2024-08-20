@@ -8,6 +8,7 @@ public class ReportType : ScriptableObject, IStateComparable
 {
     [SerializeField] StateEnum state;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string Text;
+   
 
     public StateEnum GetState() { return state;}
 

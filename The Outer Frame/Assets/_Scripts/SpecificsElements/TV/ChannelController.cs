@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ChannelController : MonoBehaviour
 {
+
     bool isFull;
     [SerializeField] TMP_Text EmergencyTextField;
     [SerializeField] GameObject EmergencyScreen;
@@ -13,9 +14,14 @@ public class ChannelController : MonoBehaviour
     [SerializeField] Image NewImg;
     [SerializeField] string TriggerAnim;
     [SerializeField] GameEvent OnIncreaseAlertLevel;
+
     public bool GetIsFull() { return isFull; }
 
     public void SetIsFull(bool x) => isFull = x;
+
+    //voy a hacer que el canal sea el que inicie contadores de cuanto tiempo dejará una noticia.
+    //deberá gestionar una cola de noticias que le entran y partir los bloques que ya creo.
+    //
 
     public void SetNew(INewType _new)
     {
