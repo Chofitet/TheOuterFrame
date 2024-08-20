@@ -12,16 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: CellPhone
   m_EditorClassIdentifier: 
-  wordName: Cell Phone
+  wordName: Cellphone
   FindableAs:
-  - Cell Phone
+  - cellphone
   PhoneNumber: 
   isAPhoneNumber: 0
   reportTypes:
   - {fileID: 11400000, guid: 603fa34e31817d54780ddcfa882dea10, type: 2}
   - {fileID: 11400000, guid: 95080ac2d9060dc4f875af900091dbaf, type: 2}
   - {fileID: 11400000, guid: 757fa24c06d4c5148b349b1b039654c2, type: 2}
-  - {fileID: 11400000, guid: 603fa34e31817d54780ddcfa882dea10, type: 2}
   - {fileID: 11400000, guid: 928bc2a81a7dbdb4d8c623b1b8483cec, type: 2}
   - {fileID: 11400000, guid: 8f38cbbc0436c6d4e9312b1f778c358f, type: 2}
   - {fileID: 11400000, guid: c2e95ae9246d59d449e7828258ec98f2, type: 2}
@@ -32,8 +31,13 @@ MonoBehaviour:
   CallTypes: []
   exceptions: []
   InactiveConditions: []
-  AutomaticActions: []
-  ModifyLengthactions: []
+  AutomaticActions:
+  - {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
+  ModifyLengthactions:
+  - action: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
+    TimeToAdd: -13
+  - action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+    TimeToAdd: -13
   ReactivateAction: []
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0
