@@ -400,7 +400,7 @@ public class exceptions
 
     public bool GetAlsoSetDefaultState() { return AlsoSetDefaultState; }
 
-    [SerializeField] List<ScriptableObject> Conditions = new List<ScriptableObject>();
+    [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
 
 
 
@@ -410,11 +410,18 @@ public class exceptions
 
         if (Conditions == null) return Action;
 
-        foreach (ScriptableObject conditional in Conditions)
+        foreach (ConditionalClass conditional in Conditions)
         {
-            IConditionable auxInterface = conditional as IConditionable;
+            IConditionable auxInterface = conditional.condition as IConditionable;
 
-            if (!auxInterface.GetStateCondition())
+            bool conditionState = auxInterface.GetStateCondition();
+
+            if (!conditional.ifNot)
+            {
+                conditionState = !conditionState;
+            }
+
+            if (conditionState)
             {
                 return Action;
             }
@@ -431,9 +438,9 @@ public class exceptions
     {
         List<int> nums = new List<int>();
 
-        foreach (ScriptableObject conditional in Conditions)
+        foreach (ConditionalClass conditional in Conditions)
         {
-            IConditionable auxInterface = conditional as IConditionable;
+            IConditionable auxInterface = conditional.condition as IConditionable;
 
             if (auxInterface.CheckIfHaveTime())
             {
@@ -452,6 +459,13 @@ public class exceptions
 
         return State;
     }
+}
+
+[Serializable]
+public class ConditionalClass
+{
+    public ScriptableObject condition;
+    public bool ifNot;
 }
 
 [Serializable]

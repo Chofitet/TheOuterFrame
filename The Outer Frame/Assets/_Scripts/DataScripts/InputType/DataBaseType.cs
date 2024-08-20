@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,7 @@ public class DataBaseType : ScriptableObject
     [SerializeField] string areacode;
     [SerializeField] string classification;
     [SerializeField] string serial;
+    [NonSerialized] bool isWordAccessFound;
 
     public WordData GetAccessWord() { return AccessWord; }
     public string GetText() { return text; }
@@ -29,6 +31,10 @@ public class DataBaseType : ScriptableObject
     public Sprite GetImage() { return image; }
 
     public string GetPhoneNum() { return phoneNum; }
+
+    public void SetisWordAccessFound() => isWordAccessFound = true;
+
+    public bool GetisWordAccessFound() { return isWordAccessFound; }
 
     private TimeData CompleteTime;
     public void SetTimeWhenWasDone()

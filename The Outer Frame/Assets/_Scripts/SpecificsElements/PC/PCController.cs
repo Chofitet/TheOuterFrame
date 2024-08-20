@@ -76,8 +76,9 @@ public class PCController : MonoBehaviour
             return;
         }
 
+        DataBaseType db = WordsManager.WM.RequestBDWikiData(word);
 
-        if(WordsManager.WM.RequestBDWikiData(word).GetAccessWord())
+        if (db.GetAccessWord() && !db.GetisWordAccessFound())
         {
             OnWordAccessScreen?.Invoke(this, word);
             inWordAccessWindow = true;

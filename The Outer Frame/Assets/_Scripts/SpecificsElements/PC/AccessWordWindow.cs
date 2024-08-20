@@ -28,6 +28,7 @@ public class AccessWordWindow : MonoBehaviour
 
         SearchedWord = S_word;
         Conteiner.SetActive(true);
+        startVerticalBarAnim();
         //AccessWord = WordsManager.WM.RequestBDWikiData(S_word).GetAccessWord();
     }
 
@@ -69,6 +70,7 @@ public class AccessWordWindow : MonoBehaviour
         {
             Invoke("UnlockPage", 2f);
             SearchBar.text = "ACCESS GRANTED";
+            WordsManager.WM.RequestBDWikiData(SearchedWord).SetisWordAccessFound();
         }
         else
         {
@@ -84,10 +86,19 @@ public class AccessWordWindow : MonoBehaviour
 
     public void ClosePanel()
     {
+        StopCoroutine(IdleSearchBarAnim());
         Conteiner.SetActive(false);
         SearchedWord = null;
         TryAccessWord = null;
         OnCloseWoredAccessWindow?.Invoke(this, null);
+    }
+
+    void startVerticalBarAnim()
+    {
+        if (!Conteiner.active) return;
+        isWaitingAWord = true;
+        textAnim.SetCharacterPerSecond(2);
+        StartCoroutine(IdleSearchBarAnim());
     }
 
     IEnumerator IdleSearchBarAnim()
