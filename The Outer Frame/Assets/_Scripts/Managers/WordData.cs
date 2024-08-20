@@ -28,8 +28,8 @@ public class WordData : ScriptableObject
     [SerializeField] TimeCheckConditional StartTime;
     [SerializeField] TimeCheckConditional EndTime;*/
 
-    [Header("Exceptions")]
-    [SerializeField] List<exceptions> exceptions = new List<exceptions>();
+    [Header("Ramifications")]
+    [SerializeField] List<exceptions> Ramifications = new List<exceptions>();
 
     [Header("Inactive Conditions")]
     [SerializeField] List<ScriptableObject> InactiveConditions = new List<ScriptableObject>();
@@ -55,7 +55,7 @@ public class WordData : ScriptableObject
 
     private void OnEnable()
     {
-        foreach (exceptions e in exceptions) e.SetUp();
+        foreach (exceptions e in Ramifications) e.SetUp();
     }
 
     #region GetInputLogic
@@ -205,7 +205,7 @@ public class WordData : ScriptableObject
     {
         exceptions aux = null;
 
-        foreach (exceptions ex in exceptions)
+        foreach (exceptions ex in Ramifications)
         {
             if (state == ex.GetStateDefault())
             {
@@ -377,8 +377,8 @@ public class exceptions
 {
     [HideInInspector]
     public string name;
-    public StateEnum DefaultState;
-    public StateEnum SpecialState;
+    public StateEnum Action;
+    public StateEnum State;
 
     public bool AlsoSetDefaultState;
     public bool isOrderMatters;
@@ -386,44 +386,44 @@ public class exceptions
     public exceptions()
     {
         name = "Name Update In Play";
-        DefaultState = null;
-        SpecialState = null;
+        Action = null;
+        State = null;
         AlsoSetDefaultState = false;
         isOrderMatters = false;
 
     }
 
-    public void SetUp() {if (SpecialState != null) name = SpecialState.name;}
+    public void SetUp() {if (State != null) name = State.name;}
 
     public StateEnum GetState() { return CheckExceptions(); }
-    public StateEnum GetStateDefault() { return DefaultState; }
+    public StateEnum GetStateDefault() { return Action; }
 
     public bool GetAlsoSetDefaultState() { return AlsoSetDefaultState; }
 
-    [SerializeField] List<ScriptableObject> exceptionConditions = new List<ScriptableObject>();
+    [SerializeField] List<ScriptableObject> Conditions = new List<ScriptableObject>();
 
 
 
     public StateEnum CheckExceptions()
     {
-        StateEnum auxState = SpecialState;
+        StateEnum auxState = State;
 
-        if (exceptionConditions == null) return DefaultState;
+        if (Conditions == null) return Action;
 
-        foreach (ScriptableObject conditional in exceptionConditions)
+        foreach (ScriptableObject conditional in Conditions)
         {
             IConditionable auxInterface = conditional as IConditionable;
 
             if (!auxInterface.GetStateCondition())
             {
-                return DefaultState;
+                return Action;
             }
         }
 
         if (isOrderMatters) return CheckIfConditionalAreInOrder();
         else
         {
-            return SpecialState;
+            return State;
         }
     }
 
@@ -431,7 +431,7 @@ public class exceptions
     {
         List<int> nums = new List<int>();
 
-        foreach (ScriptableObject conditional in exceptionConditions)
+        foreach (ScriptableObject conditional in Conditions)
         {
             IConditionable auxInterface = conditional as IConditionable;
 
@@ -446,11 +446,11 @@ public class exceptions
         {
             if (nums[i] > nums[i + 1])
             {
-                return DefaultState;
+                return Action;
             }
         }
 
-        return SpecialState;
+        return State;
     }
 }
 
