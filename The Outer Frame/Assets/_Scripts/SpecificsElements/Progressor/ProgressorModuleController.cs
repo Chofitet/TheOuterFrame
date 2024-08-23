@@ -31,7 +31,6 @@ public class ProgressorModuleController : MonoBehaviour
         plane = PrintBTN.transform.GetChild(1).GetComponent<BlinkEffect>();
         anim = GetComponent<Animator>();
         mat = SwitchAbortBTN.transform.parent.GetComponent<Renderer>();
-        Debug.Log(mat.gameObject.name);
         OriginalColor = mat.material.GetColor("_EmissionColor");
     }
 

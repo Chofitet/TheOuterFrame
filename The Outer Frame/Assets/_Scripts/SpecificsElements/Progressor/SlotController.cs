@@ -144,11 +144,10 @@ public class SlotController : MonoBehaviour
     {
         inFillFast = false;
         OnFinishActionProgress?.Invoke(this, this);
-        SetLEDState(Color.red);
         TimeManager.OnMinuteChange -= UpdateProgress;
-        ProgressBar.value = 0;
         timeComplete = TimeManager.timeManager.GetTime();
         Icon.SetActive(true);
+        SetLEDState(Color.green);
     }
 
     public void AbortAction()
@@ -157,7 +156,6 @@ public class SlotController : MonoBehaviour
         OnFinishActionProgress?.Invoke(this, this);
         SetLEDState(Color.yellow);
         TimeManager.OnMinuteChange -= UpdateProgress;
-        ProgressBar.value = 0;
         timeComplete = TimeManager.timeManager.GetTime();
         Icon.SetActive(true);
     }
@@ -173,6 +171,7 @@ public class SlotController : MonoBehaviour
         Icon.SetActive(false);
         Report = null;
         isActionComplete = false;
+        ProgressBar.value = 0;
         TimeManager.OnMinuteChange -= UpdateProgress;
         SetLEDState(Color.green);
     }

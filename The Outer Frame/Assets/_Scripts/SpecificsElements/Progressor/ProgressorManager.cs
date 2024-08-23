@@ -24,7 +24,7 @@ public class ProgressorManager : MonoBehaviour
 
         if(!WordsManager.WM.RequestReport(_word, state))
         {
-            Debug.Log("No " + state.GetInfinitiveVerb() + " reports to show in " + _word.GetName());
+            Debug.LogWarning("No " + state.GetInfinitiveVerb() + " reports to show in " + _word.GetName());
             return;
         }
         int timeAction = Mathf.Abs(state.GetTime() + WordsManager.WM.RequestReport(_word, state).GetChangeTimeOfAction());

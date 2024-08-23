@@ -54,7 +54,6 @@ public class FindableWordBTNController : MonoBehaviour
         string auxText = "";
         int i = 0;
         int extraIndex = 0;
-        Debug.Log(textField.text);
 
         foreach (string w in words)
         {
