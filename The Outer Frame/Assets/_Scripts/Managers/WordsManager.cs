@@ -10,6 +10,7 @@ public class WordsManager : MonoBehaviour
 {
     //Sistema encargado de solicitar requests a Words específicas para que devuelvan un input
     [SerializeField] List<WordData> wordsDic = new List<WordData>();
+    [SerializeField] List<StateEnum> Actions = new List<StateEnum>();
     [SerializeField] bool SaveProgress;
     [SerializeField] GameEvent OnChangeStateOfWord;
     [SerializeField] GameEvent OnChangeStateSeenOfWord;
@@ -38,19 +39,27 @@ public class WordsManager : MonoBehaviour
         {
             word.CleanHistory();
             word.SetIsFound(false);
+            
         }
     }
 
-    public ReportType RequestLastReport(WordData _word)
+    private void Start()
     {
-        ReportType report = FindWordInList(_word).GetLastReport();
-        if (!report) { Debug.LogWarning(_word.GetName() + " last state report was not assigned");}
-        return report;
+        foreach (WordData word in wordsDic)
+        {
+            word.SetListOfActions(Actions);
+        }
     }
-
     public ReportType RequestReport(WordData _word, StateEnum state)
     {
         ReportType report = FindWordInList(_word).GetReport(state);
+        if (!report) Debug.LogWarning(_word.GetName() + " " + state.name + " report was not assigned");
+        return report;
+    }
+
+    public ReportType RequestSpecificReport(WordData _word, StateEnum state)
+    {
+        ReportType report = FindWordInList(_word).GetReportFromState(state);
         if (!report) Debug.LogWarning(_word.GetName() + " " + state.name + " report was not assigned");
         return report;
     }
@@ -81,11 +90,10 @@ public class WordsManager : MonoBehaviour
     }
 
 
-    public void RequestChangeState(WordData _word, StateEnum WordState)
+    public void RequestChangeState(WordData _word, ReportType report)
     {
-        FindWordInList(_word).ChangeState(WordState);
-        FindWordInList(_word).SetReactionCall(WordState);
-        ReactiveActionsOfWords();
+        FindWordInList(_word).ChangeState(report);
+        FindWordInList(_word).SetReactionCall(report.GetState());
         //OnChangeStateOfWord?.Invoke(this,_word);
     }
 
@@ -119,15 +127,6 @@ public class WordsManager : MonoBehaviour
         FindWordInList(_word).CleanStateFromHistory(WordState);
     }
 
-    public bool CheckIfStateAreAutomaticAction(WordData _word, StateEnum WordState)
-    {
-        return FindWordInList(_word).CheckIfStateAreAutomaticAction(WordState);
-    }
-
-    public int GetModifyActionDuration(WordData _word, StateEnum WordState)
-    {
-        return FindWordInList(_word).GetModifyActionDuration(WordState);
-    }
     WordData FindWordInList(WordData _word)
     {
         if(!_word)
@@ -170,12 +169,5 @@ public class WordsManager : MonoBehaviour
         return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r\(\)\s]", "");
     }
 
-    public void ReactiveActionsOfWords()
-    {
-        foreach(WordData w in wordsDic)
-        {
-            w.CheckForReActiveActions();
-        }
-    }
 }
 

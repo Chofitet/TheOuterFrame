@@ -9,6 +9,8 @@ public class WordData : ScriptableObject
     [Header("Word General Data")]
     [SerializeField] string wordName;
     [SerializeField] List<string> FindableAs = new List<string>();
+    [SerializeField] string Form_DatabaseNameVersion;
+    [SerializeField] string ProgressorNameVersion;
     [SerializeField] string PhoneNumber;
     [SerializeField] bool isAPhoneNumber;
 
@@ -28,35 +30,19 @@ public class WordData : ScriptableObject
     [SerializeField] TimeCheckConditional StartTime;
     [SerializeField] TimeCheckConditional EndTime;*/
 
-    [Header("Ramifications")]
-    [SerializeField] List<exceptions> Ramifications = new List<exceptions>();
-
     [Header("Inactive Conditions")]
     [SerializeField] List<ScriptableObject> InactiveConditions = new List<ScriptableObject>();
-
-    [Header("Automatic Actions")]
-    [SerializeField] List<StateEnum> AutomaticActions = new List<StateEnum>();
-
-    [Header("Modify length actions")]
-    [SerializeField] List<ModifyDurationActions> ModifyLengthactions = new List<ModifyDurationActions>();
-
-    [Header("Reactivate Action")]
-    [SerializeField] List<Re_activeActions> ReactivateAction = new List<Re_activeActions>();
 
     [SerializeField] WordData WordThatReplaces;
     [SerializeField] bool CopyHistory;
 
-    private List<StateEnum> stateHistory = new List<StateEnum>();
-    private List<StateEnum> CheckedStateHistory = new List<StateEnum>();
-    private Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
+    [NonSerialized] List<StateEnum> stateHistory = new List<StateEnum>();
+    [NonSerialized] List<StateEnum> CheckedStateHistory = new List<StateEnum>();
+    [NonSerialized] Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
     StateEnum currentState;
+    private List<ActionState> ActionsStates = new List<ActionState>();
     [NonSerialized] bool isFound;
     [NonSerialized] bool isPhoneNumberFound;
-
-    private void OnEnable()
-    {
-        foreach (exceptions e in Ramifications) e.SetUp();
-    }
 
     #region GetInputLogic
 
@@ -66,17 +52,59 @@ public class WordData : ScriptableObject
         return FindInputInList(TVNewTypes, state);
     }
 
-    public ReportType GetReport(StateEnum state, bool isSetTime = false)
+    public ReportType GetReport(StateEnum state)
     {
-        ReportType input = FindInputInList(reportTypes, state);
-        if(isSetTime && input != default) input.GetTimeWhenWasDone();
-        return input;
+        if (!state) return null;
+        //filtrado por acción
+        List<ReportType> ListFilteredByState = new List<ReportType>();
+
+        foreach (ReportType report in reportTypes)
+        {
+            if (!report) continue;
+            if (report.GetAction() == null) continue;
+            if(report.GetAction() == state)
+            {
+                ListFilteredByState.Add(report);
+            }
+        }
+
+        //Filtrado por cumplimiento de condicional
+        foreach (ReportType report in ListFilteredByState)
+        {
+            if(report.CheckConditionals())
+            {
+                if(report.CheckIfIsDefault() && GetLastReportOfAnAction(state) != null) continue;
+
+                return report;
+            }
+        }
+
+        //Devuelve el reporte guardado por último para esa acción para que luego se muestre como acción repetida
+        return GetLastReportOfAnAction(state);
+
     }
 
-    public ReportType GetLastReport()
+    public ReportType GetReportFromState(StateEnum state)
     {
-        return GetReport(currentState, true);
+        foreach (ReportType report in reportTypes)
+        {
+            if (!report) continue;
+            if (report.GetState() == state) return report;
+        }
+        return null;
     }
+    ReportType GetLastReportOfAnAction(StateEnum state)
+    {
+
+        ReportType aux = null;
+        foreach(ActionState AS in ActionsStates)
+        {
+            if (AS.GetState() == state) aux = AS.GetLastReport();
+        }
+
+        return aux;
+    }
+
 
     public DataBaseType GetDB()
     {
@@ -93,17 +121,6 @@ public class WordData : ScriptableObject
         CallType call = FindInputInList(CallTypes, state);
         if (call == default) return;
         call.DefineTimeZone();
-    }
-
-    public int GetModifyActionDuration(StateEnum _action)
-    {
-        foreach(ModifyDurationActions Action in ModifyLengthactions)
-        {
-            if (Action.action == _action) return _action.GetTime() + Action.TimeToAdd;
-
-        }
-
-        return _action.GetTime();
     }
 
     private List<CallType> CheckForCallInTimeZone()
@@ -155,70 +172,28 @@ public class WordData : ScriptableObject
     #endregion
 
     #region ChangeStateLogic
-    public void ChangeState(StateEnum newState)
+    public void ChangeState(ReportType report)
     {
-        if (CheckIfStateWasDone(newState))
-        {
-            Debug.LogWarning("The state " + newState.name + " was done");
-            return;
-        }
-
-        exceptions exception = GetExceptions(newState);
-
-        if (exception != null)
-        {
-            currentState = exception.GetState();
-
-            if (currentState != newState)
-            {
-                if (exception.GetAlsoSetDefaultState())
-                {
-                    stateHistory.Add(newState);
-                    StateHistoryTime.Add(newState, TimeManager.timeManager.GetTime());
-                }
-            }
-        }
-        else
-        {
-            currentState = newState;
-        }
-
-        stateHistory.Add(currentState);
-        StateHistoryTime.Add(currentState, TimeManager.timeManager.GetTime());
+        stateHistory.Add(report.GetState());
+        StateHistoryTime.Add(report.GetState(), TimeManager.timeManager.GetTime());
 
         string estados = wordName + ": ";
         foreach (StateEnum s in stateHistory)
         {
-
             estados += s.name + ", ";
         }
 
         Debug.Log(estados);
 
-    }
-    public exceptions GetExceptions(StateEnum state)
-    {
-        return FindException(state);
-    }
-
-    exceptions FindException(StateEnum state)
-    {
-        exceptions aux = null;
-
-        foreach (exceptions ex in Ramifications)
+        foreach(ActionState AS in ActionsStates)
         {
-            if (state == ex.GetStateDefault())
+            if(AS.GetState() == report.GetAction())
             {
-                if (state != ex.GetState())
-                {
-                    aux = ex;
-                }
+                AS.SetReport(report);
             }
         }
 
-        return aux;
     }
-
     public bool CheckIfStateWasDone(StateEnum state)
     {
         for (int i = 0; i < stateHistory.Count; i++)
@@ -296,11 +271,16 @@ public class WordData : ScriptableObject
         return aux;
     }
 
-    public bool CheckIfStateAreAutomaticAction(StateEnum state)
+    public string GetForm_DatabaseNameVersion() 
     {
-        return AutomaticActions.Contains(state);
+        if (Form_DatabaseNameVersion == "") return wordName;
+        else return Form_DatabaseNameVersion; 
     }
-
+    public string GetProgressorNameVersion() 
+    {
+        if (ProgressorNameVersion == "") return GetForm_DatabaseNameVersion();
+        else return ProgressorNameVersion; 
+    }
     public string GetPhoneNumber() { return PhoneNumber; }
     public bool GetIsPhoneNumberFound() { return isPhoneNumberFound; }
     public bool SetIsPhoneNumberFound() => isPhoneNumberFound = true;
@@ -310,7 +290,17 @@ public class WordData : ScriptableObject
     public bool GetCopyHistory() { return CopyHistory; }
     public List<StateEnum> GetHistorySeen() { return CheckedStateHistory; }
     public List<StateEnum> GetHistory() { return stateHistory; }
-    
+    public List<ActionState> GetActionStatesList() { return ActionsStates; }
+    public void SetListOfActions(List<StateEnum> actions)
+    {
+        ActionsStates.Clear();
+        foreach (StateEnum state in actions)
+        {
+            
+            ActionsStates.Add(new ActionState(state));
+        }
+    }
+
     public void CleanHistory()
     {
         stateHistory.Clear();
@@ -321,8 +311,9 @@ public class WordData : ScriptableObject
     {
         stateHistory.Clear();
         CheckedStateHistory.Clear();
+        ActionsStates.Clear();
 
-        foreach( StateEnum state in oldword.GetHistory())
+        foreach ( StateEnum state in oldword.GetHistory())
         {
             stateHistory.Add(state);
         }
@@ -330,6 +321,8 @@ public class WordData : ScriptableObject
         {
             CheckedStateHistory.Add(state);
         }
+
+        ActionsStates = oldword.GetActionStatesList();
     }
 
     public TimeData GetTimeOfState(StateEnum state)
@@ -348,185 +341,19 @@ public class WordData : ScriptableObject
 
     public bool GetIsFound() { return isFound; }
 
-    public void CheckForReActiveActions()
-    {
-        foreach(Re_activeActions reAA in ReactivateAction)
-        {
-            if (reAA.CheckForConditionals())
-            {
-                if (reAA.GetWasDone()) return;
-                CleanStateFromHistory(reAA.ActionToReactivate);
-                reAA.SetWasDone();
-            }
-        }
-    }
-
 }
 [Serializable]
-public class ModifyDurationActions
+public class ActionState
 {
-    public StateEnum action;
-    public int TimeToAdd;
+    StateEnum state;
+    ReportType LastReport = null;
 
+    public ActionState(StateEnum _state)
+    {
+        state = _state;
+    }
+
+    public StateEnum GetState() { return state; }
+    public ReportType GetLastReport() { return LastReport; }
+    public void SetReport(ReportType report){ LastReport = report; }
 }
-
-
-
-[Serializable]
-public class exceptions
-{
-    [HideInInspector]
-    public string name;
-    public StateEnum Action;
-    public StateEnum State;
-
-    public bool AlsoSetDefaultState;
-    public bool isOrderMatters;
-
-    public exceptions()
-    {
-        name = "Name Update In Play";
-        Action = null;
-        State = null;
-        AlsoSetDefaultState = false;
-        isOrderMatters = false;
-
-    }
-
-    public void SetUp() {if (State != null) name = State.name;}
-
-    public StateEnum GetState() { return CheckExceptions(); }
-    public StateEnum GetStateDefault() { return Action; }
-
-    public bool GetAlsoSetDefaultState() { return AlsoSetDefaultState; }
-
-    [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
-
-
-
-    public StateEnum CheckExceptions()
-    {
-        StateEnum auxState = State;
-
-        if (Conditions == null) return Action;
-
-        foreach (ConditionalClass conditional in Conditions)
-        {
-            IConditionable auxInterface = conditional.condition as IConditionable;
-
-            bool conditionState = auxInterface.GetStateCondition();
-
-            if (!conditional.ifNot)
-            {
-                conditionState = !conditionState;
-            }
-
-            if (conditionState)
-            {
-                return Action;
-            }
-        }
-
-        if (isOrderMatters) return CheckIfConditionalAreInOrder();
-        else
-        {
-            return State;
-        }
-    }
-
-    StateEnum CheckIfConditionalAreInOrder()
-    {
-        List<int> nums = new List<int>();
-
-        foreach (ConditionalClass conditional in Conditions)
-        {
-            IConditionable auxInterface = conditional.condition as IConditionable;
-
-            if (auxInterface.CheckIfHaveTime())
-            {
-                nums.Add(auxInterface.GetTimeWhenWasComplete().GetTimeInNum());
-            }
-
-        }
-
-        for (int i = 0; i < nums.Count - 1; i++)
-        {
-            if (nums[i] > nums[i + 1])
-            {
-                return Action;
-            }
-        }
-
-        return State;
-    }
-}
-
-[Serializable]
-public class ConditionalClass
-{
-    public ScriptableObject condition;
-    public bool ifNot;
-}
-
-[Serializable]
-public class Re_activeActions
-{
-    public StateEnum ActionToReactivate;
-    public List<ScriptableObject> Conditionals = new List<ScriptableObject>();
-    public bool isOrderMatters;
-    [NonSerialized] bool wasDone;
-
-    public bool GetWasDone() { return wasDone; }
-
-    public void SetWasDone() { wasDone = true; }
-
-    public bool CheckForConditionals()
-    {
-
-        foreach (ScriptableObject conditional in Conditionals)
-        {
-            if (conditional is not IConditionable)
-            {
-                Debug.LogWarning(conditional.name + " is not a valid conditional");
-                return false;
-            }
-
-            IConditionable auxConditional = conditional as IConditionable;
-
-            if (!auxConditional.GetStateCondition())
-            {
-                return false;
-            }
-        }
-
-        if (isOrderMatters) return CheckIfConditionalAreInOrder();
-        else return true;
-    }
-
-    bool CheckIfConditionalAreInOrder()
-    {
-        List<int> nums = new List<int>();
-
-        foreach (ScriptableObject conditional in Conditionals)
-        {
-            IConditionable auxConditional = conditional as IConditionable;
-
-            if (auxConditional.CheckIfHaveTime())
-            {
-                nums.Add(auxConditional.GetTimeWhenWasComplete().GetTimeInNum());
-            }
-
-        }
-
-        for (int i = 0; i < nums.Count - 1; i++)
-        {
-            if (nums[i] > nums[i + 1])
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-}
-

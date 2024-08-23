@@ -20,7 +20,7 @@ public class ActionRowController : MonoBehaviour
     public void Initialization(StateEnum _state)
     {
         state = _state;
-        ActionText.text = _state.GetActionVerb();
+        ActionText.text = _state.GetInfinitiveVerb();
         btn.onClick.AddListener(OnButtonClick);
         fade = Wordtext.GetComponent<FadeWordsEffect>();
         observationTxt.text = state.GetObservationTxt();

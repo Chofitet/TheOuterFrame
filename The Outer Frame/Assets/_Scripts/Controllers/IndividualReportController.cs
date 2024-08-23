@@ -5,10 +5,15 @@ using UnityEngine;
 public class IndividualReportController : MonoBehaviour
 {
     bool isComplete;
+    WordData word;
+    ReportType report;
     [SerializeField] GameEvent UpdatePCDatabase;
-    public void SetType(bool x)
+    public void SetType(bool x, WordData _word ,ReportType _report)
     {
-        if (x)
+        report = _report;
+        word = _word;
+        
+        if (x && !report.GetIsAutomatic())
         {
             isComplete = x;
         }
@@ -16,7 +21,11 @@ public class IndividualReportController : MonoBehaviour
 
     public void FinishReport()
     {
-        if (isComplete) UpdatePCDatabase?.Invoke(this, gameObject);
+        if (isComplete)
+        {
+            UpdatePCDatabase?.Invoke(this, gameObject);
+            WordsManager.WM.RequestChangeStateSeen(word, report.GetState());
+        }
         Destroy(gameObject);
     }
 }

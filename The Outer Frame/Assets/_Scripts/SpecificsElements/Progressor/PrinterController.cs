@@ -30,7 +30,7 @@ public class PrinterController : MonoBehaviour
         GetComponent<BoxCollider>().enabled = true;
         GameObject report = Instantiate(ReportPrefab, InstanciateSpot.position,InstanciateSpot.rotation, InstanciateSpot);
         SlotController slotController = slotReference.GetComponent<SlotController>();
-        report.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetState(), slotController.GetIsAborted(), slotController.GetIsAlreadyDone(), slotController.GetTimeComplete());
+        report.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetReport(), slotController.GetIsAborted(), slotController.getisAlreadyDone(), slotController.GetTimeComplete());
         IsPrinting();
     }
     private void OnMouseUpAsButton()

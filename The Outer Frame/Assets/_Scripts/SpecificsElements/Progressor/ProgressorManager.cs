@@ -14,6 +14,7 @@ public class ProgressorManager : MonoBehaviour
     {
         WordData _word = WordSelectedInNotebook.Notebook.GetSelectedWord();
         StateEnum state = (StateEnum) _state;
+        if (state == null) return;
         if (state.GetSpecialActionWord()) _word = state.GetSpecialActionWord();
 
         if (!GetUnusedSlot())
@@ -21,8 +22,13 @@ public class ProgressorManager : MonoBehaviour
             return;
         }
 
-        GetUnusedSlot().SetAction(_word, state, WordsManager.WM.GetModifyActionDuration(_word,state));
-        state.SetActiveOrDesactiveAgent(false);
+        if(!WordsManager.WM.RequestReport(_word, state))
+        {
+            Debug.Log("No " + state.GetInfinitiveVerb() + " reports to show in " + _word.GetName());
+            return;
+        }
+        int timeAction = Mathf.Abs(state.GetTime() + WordsManager.WM.RequestReport(_word, state).GetChangeTimeOfAction());
+        GetUnusedSlot().SetAction(_word, state, timeAction);
         OnProgressorSetSlot?.Invoke(this, false);
 
         if (!GetUnusedSlot())

@@ -28,18 +28,21 @@ public class SlotController : MonoBehaviour
     TimeData timeComplete;
     bool inFillFast;
     StateEnum SpecialState;
+    ReportType Report;
 
     bool isfillSmooth;
 
-    public void initParameters(WordData word, StateEnum state, int ActionDuration) 
+    public void initParameters(WordData word, StateEnum state) 
     {
         gameObject.SetActive(true);
-        actionDuration = ActionDuration;
         _word = word;
+        Report = WordsManager.WM.RequestReport(word, state);
         _state = state;
-        Wordtxt.text = word.GetName();
+        actionDuration = state.GetTime() + Report.GetChangeTimeOfAction();
+
+        Wordtxt.text = word.GetProgressorNameVersion();
         Wordtxt.GetComponent<WarpTextExample>().UpdateText();
-        Actiontxt.text = state.GetActionVerb();
+        Actiontxt.text = state.GetActioningVerb();
         Actiontxt.GetComponent<WarpTextExample>().UpdateText();
         isAborted = false;
         isAlreadyDone = false;
@@ -49,13 +52,13 @@ public class SlotController : MonoBehaviour
         ProgressBar.value = 0;
         
 
-        if (WordsManager.WM.CheckIfStateWasDone(word, state))
+        if (Report.GetWasSet())
         {
             inFillFast = true;
             ProgressBar.maxValue = 1.5f;
             isAlreadyDone = true;
         }
-        else if(WordsManager.WM.CheckIfStateAreAutomaticAction(word,state))
+        else if(Report.GetIsAutomatic())
         {
             inFillFast = true;
             ProgressBar.maxValue = 1.5f;
@@ -83,11 +86,11 @@ public class SlotController : MonoBehaviour
         float animationDuration = 60/TimeManager.timeManager.GetActuaTimeVariationSpeed();
         progressTween = ProgressBar.DOValue(minuteProgress, animationDuration);
 
-        if (minuteProgress >= actionDuration)
+        if (minuteProgress > actionDuration)
         {
             if (isAlreadyDone)
             {
-                ActionWasDone();
+                AutomaticAction();
             }
             else
             {
@@ -97,8 +100,7 @@ public class SlotController : MonoBehaviour
         }
     }
 
-
-    private void Update()
+        private void Update()
     {
         if (inFillFast && ProgressBar.value <= ProgressBar.maxValue)
         {
@@ -107,13 +109,13 @@ public class SlotController : MonoBehaviour
         
         if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isAlreadyDone)
         {
-            ActionWasDone();
+            AutomaticAction();
         }
         else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isAutomaticAction)
         {
-            WordsManager.WM.RequestChangeState(_word, _state);
-            _state = WordsManager.WM.GetHistory(_word).Last();
-            ActionWasDone();
+            //WordsManager.WM.RequestChangeState(_word, _state);
+            // _state = WordsManager.WM.GetHistory(_word).Last();
+            AutomaticAction();
         }
 
     }
@@ -121,21 +123,27 @@ public class SlotController : MonoBehaviour
     private void CompleteAction()
     {
         inFillFast = false;
-        WordsManager.WM.RequestChangeState(_word, _state);
+        Report = WordsManager.WM.RequestReport(_word, _state);
+        if (!Report.GetWasSet())
+        {
+            isAlreadyDone = false;
+            WordsManager.WM.RequestChangeState(_word, Report);
+            Report.SetWasSet();
+        }
+        else isAlreadyDone = true;
         _state = WordsManager.WM.GetHistory(_word).Last();
-        _state.SetActiveOrDesactiveAgent(true);
+        Report.SetTimeWhenWasDone();
+        timeComplete = TimeManager.timeManager.GetTime();
         OnFinishActionProgress?.Invoke(this, this);
         Icon.SetActive(true);
-        timeComplete = TimeManager.timeManager.GetTime();
 
     }
 
 
-    void ActionWasDone()
+    void AutomaticAction()
     {
         inFillFast = false;
         OnFinishActionProgress?.Invoke(this, this);
-        _state.SetActiveOrDesactiveAgent(true);
         SetLEDState(Color.red);
         TimeManager.OnMinuteChange -= UpdateProgress;
         ProgressBar.value = 0;
@@ -147,7 +155,6 @@ public class SlotController : MonoBehaviour
     {
         isAborted = true;
         OnFinishActionProgress?.Invoke(this, this);
-        _state.SetActiveOrDesactiveAgent(true);
         SetLEDState(Color.yellow);
         TimeManager.OnMinuteChange -= UpdateProgress;
         ProgressBar.value = 0;
@@ -158,13 +165,13 @@ public class SlotController : MonoBehaviour
     public void CleanSlot()
     {
         ResetSlot();
-        WordsManager.WM.RequestChangeStateSeen(_word,_state);
     }
 
     void ResetSlot()
     {
         gameObject.SetActive(false);
         Icon.SetActive(false);
+        Report = null;
         isActionComplete = false;
         TimeManager.OnMinuteChange -= UpdateProgress;
         SetLEDState(Color.green);
@@ -188,22 +195,19 @@ public class SlotController : MonoBehaviour
         return _state;
     }
 
-    public bool IsActionComplete()
+    public ReportType GetReport()
     {
-        return isActionComplete;
+        return Report;
     }
+
     public bool GetIsAborted()
     {
         return isAborted;
     }
-    public bool GetIsAlreadyDone()
+
+    public bool getisAlreadyDone()
     {
         return isAlreadyDone;
-    }
-
-    public bool GetIsisAutomaticAction()
-    {
-        return isAutomaticAction;
     }
 
     public TimeData GetTimeComplete()

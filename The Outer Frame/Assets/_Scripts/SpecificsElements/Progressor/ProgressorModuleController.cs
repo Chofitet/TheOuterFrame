@@ -62,7 +62,7 @@ public class ProgressorModuleController : MonoBehaviour
     public void InitSlot(Component sender, object obj)
     {
         if (!isReady) return;
-        slot.initParameters(word, state, time);
+        slot.initParameters(word, state);
         isReady = false;
         mat.material.SetColor("_EmissionColor", Color.white * 0.5f );
     }
