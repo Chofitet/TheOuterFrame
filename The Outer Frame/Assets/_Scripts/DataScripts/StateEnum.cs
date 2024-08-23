@@ -7,7 +7,9 @@ using System;
 public class StateEnum : ScriptableObject
 {
     [Header("Action Fields")]
-    [SerializeField] string ActionVerb;
+    [SerializeField] string InfinitiveVerb;
+    [SerializeField] string Actioning;
+    [SerializeField] string Actioned;
     [SerializeField] int TimeToComplete;
     [SerializeField] int TimeToShowNew;
     [SerializeField] Agent Agent;
@@ -15,10 +17,10 @@ public class StateEnum : ScriptableObject
     [SerializeField] string observationtxt = "";
 
     public int GetTime() { return TimeToComplete; }
-
     public int GetTimeToShowNew() { return TimeToShowNew; }
-
-    public string GetActionVerb() { return ActionVerb; }
+    public string GetInfinitiveVerb() { return InfinitiveVerb; }
+    public string GetActioningVerb() { return Actioning; }
+    public string GetActionedVerb() { return Actioned; }
 
     public WordData GetSpecialActionWord() { return SpecialActionWord; }
 
@@ -31,7 +33,7 @@ public class StateEnum : ScriptableObject
     public bool GetIfIsActive() {
         if (!Agent)
         {
-            Debug.LogWarning(ActionVerb + " dont have Agent Assigned");
+            Debug.LogWarning(Actioning + " dont have Agent Assigned");
             return false;
         }
             

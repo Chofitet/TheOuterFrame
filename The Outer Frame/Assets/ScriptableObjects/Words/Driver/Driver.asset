@@ -19,7 +19,6 @@ MonoBehaviour:
   PhoneNumber: (505) 723-8001
   isAPhoneNumber: 0
   reportTypes:
-  - {fileID: 11400000, guid: 0a00644713c73be4bb70da763ab3e1d1, type: 2}
   - {fileID: 11400000, guid: d869c38887b20c749b21239313ed1c08, type: 2}
   - {fileID: 11400000, guid: b1463cf6757b1f34ab88b74e431b53d3, type: 2}
   - {fileID: 0}
@@ -29,36 +28,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 11400000, guid: 0a00644713c73be4bb70da763ab3e1d1, type: 2}
   TVNewTypes: []
   DBTypes: {fileID: 11400000, guid: 711bddd8492e99141931942281ee0d9e, type: 2}
   CallTypes:
   - {fileID: 11400000, guid: 9e8221a835ca18740b7991be4f47deff, type: 2}
-  Ramifications:
-  - name: CargoInspectedState
-    Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-    State: {fileID: 11400000, guid: 25c32352a2ae81e4183cd4e67e9da611, type: 2}
-    AlsoSetDefaultState: 0
-    isOrderMatters: 0
-    Conditions:
-    - condition: {fileID: 11400000, guid: 9c21b2ec550347540bac6af00fe8f515, type: 2}
-      ifNot: 0
-  - name: DriverInterrogatedState
-    Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-    State: {fileID: 11400000, guid: e5d5abcd8d73e5842ba332e0d701908a, type: 2}
-    AlsoSetDefaultState: 0
-    isOrderMatters: 0
-    Conditions:
-    - condition: {fileID: 11400000, guid: 9c21b2ec550347540bac6af00fe8f515, type: 2}
-      ifNot: 0
-    - condition: {fileID: 11400000, guid: 943f7c831f97a514aa18834ef5319415, type: 2}
-      ifNot: 1
   InactiveConditions: []
-  AutomaticActions: []
-  ModifyLengthactions: []
-  ReactivateAction:
-  - ActionToReactivate: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-    Conditionals:
-    - {fileID: 11400000, guid: 9c21b2ec550347540bac6af00fe8f515, type: 2}
-    isOrderMatters: 0
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0

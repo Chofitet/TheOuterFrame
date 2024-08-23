@@ -29,12 +29,15 @@ public class PCReportWindowController : MonoBehaviour
             }
         }
 
+        //recorrer todos los reportes de la palabra, chequear que su state esté en el historial de visto, y pasar el reporte a 
+
         List<StateEnum> stateHistory = WordsManager.WM.GetHistorySeen(word);
+
 
         foreach (var state in stateHistory)
         {
             GameObject btn = Instantiate(PrefabBtneport, Grid.transform, false);
-            btn.GetComponent<PCReportController>().Inicialization(state, word);
+            btn.GetComponent<PCReportController>().Inicialization(word, WordsManager.WM.RequestSpecificReport(word,state));
         }
     }
 

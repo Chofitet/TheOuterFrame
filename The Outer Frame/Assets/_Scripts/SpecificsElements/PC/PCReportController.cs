@@ -10,12 +10,11 @@ public class PCReportController : MonoBehaviour
 
     string _input;
 
-    public void Inicialization(StateEnum state, WordData _word)
+    public void Inicialization(WordData _word, ReportType report)
     {
         if (!_word) return;
-        ReportType input = WordsManager.WM.RequestReport(_word, state);
-        txt.text = state.name + input.GetTimeWhenWasDone().ToString();
-        _input = input.GetText();
+        txt.text = report.GetAction().GetActionedVerb() + " " + report.GetTimeWhenWasDone().ToString();
+        _input = report.GetText();
     }
 
     public void ShowPanelWithInput()

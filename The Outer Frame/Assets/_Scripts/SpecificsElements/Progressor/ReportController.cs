@@ -9,51 +9,51 @@ public class ReportController : MonoBehaviour
     [SerializeField] TMP_Text Resulttxt;
     [SerializeField] TMP_Text ActionCalltxt;
     [SerializeField] TMP_Text Statustxt;
-    [SerializeField] GameEvent OnPCReportActiualization;
     [SerializeField] GameEvent OnMovePaperToTakenPos;
     [SerializeField] float DelayToPC;
     
     
-    public void initReport(WordData word, StateEnum state, bool isAborted, bool isAlreadyDone, TimeData time)
+    public void initReport(WordData word, ReportType report, bool isAborted, bool isAlreadyDone, TimeData timeComplete)
     {
+
         bool isNotCompleted = false;
         string status = "Completed";
-        
-        if (!WordsManager.WM.RequestReport(word, state))
+        StateEnum state = report.GetAction();
+        string Name = word.GetForm_DatabaseNameVersion();
+        string actionVerb = state.GetInfinitiveVerb();
+
+        if (!report)
         {
-            Resulttxt.text = "The report of " + state.GetActionVerb() + " not assigned in " + word.GetName();
+            Resulttxt.text = "No report not assigned in " + Name;
             status = "a";
-            //GetComponent<Animator>().SetTrigger("print");
             isNotCompleted = true;
         }
         if (isAlreadyDone)
         {
-            Resulttxt.text = "The action \"" + state.GetActionVerb() + " " + word.GetName() + "\" has already been done";
+            Resulttxt.text = report.GetTextForRepetition();
+            if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
             status = "Rejected";
-            //GetComponent<Animator>().SetTrigger("print");
             isNotCompleted = true;
         }
         if(isAborted)
         {
-            Resulttxt.text = "The action \"" + state.GetActionVerb() + " " + word.GetName() + "\" was aborted succesfully";
+            Resulttxt.text = "The action \"" + actionVerb + " " + Name + "\" was aborted succesfully";
             status = "Aborted";
-            //GetComponent<Animator>().SetTrigger("print");
             isNotCompleted = true;
         }
 
-        if(WordsManager.WM.CheckIfStateAreAutomaticAction(word,state)) status = "Rejected";
+        if(report.GetIsAutomatic()) status = "Rejected";
 
-        ActionCalltxt.text = state.GetActionVerb() + " " + DeleteSpetialCharacter(word.GetName());
-        Statustxt.text = status + " at OCT 30th " + $"{time.Hour:00}:{time.Minute:00}";
+        ActionCalltxt.text = actionVerb + " " + DeleteSpetialCharacter(Name);
+        Statustxt.text = status + " at OCT 30th " + $"{timeComplete.Hour:00}:{timeComplete.Minute:00}";
 
-        GetComponent<IndividualReportController>().SetType(false);
+        GetComponent<IndividualReportController>().SetType(false, word, report);
 
         if (isNotCompleted) return;
-        Resulttxt.text = WordsManager.WM.RequestLastReport(word).GetText();
+        Resulttxt.text = report.GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt);
-        GetComponent<IndividualReportController>().SetType(true);
+        GetComponent<IndividualReportController>().SetType(true, word, report);
 
-        //GetComponent<Animator>().SetTrigger("print");
     }
 
     string DeleteSpetialCharacter(string txt)
@@ -61,22 +61,6 @@ public class ReportController : MonoBehaviour
         return Regex.Replace(txt, @"[\?\.,\n\r]", "");
     }
 
-    /*
-    public void OnLeveReportInPC(Component sender, object obj)
-    {
-        Invoke("Delay", DelayToPC);
-    }
-
-    void Delay()
-    {
-        OnPCReportActiualization?.Invoke(this, gameObject);
-    }
-
-    public void DeleteReport(Component sender,object obj)
-    {
-        if (obj == gameObject) Destroy(gameObject);
-    }
-    */
     public void OnTakeReport(Component sender, object obj)
     {
         GetComponent<BoxCollider>().enabled = true;

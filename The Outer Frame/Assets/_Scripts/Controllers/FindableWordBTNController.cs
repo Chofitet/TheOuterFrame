@@ -20,7 +20,6 @@ public class FindableWordBTNController : MonoBehaviour
 
     TMP_Text textField;
     WordData word;
-    string OriginalText;
     int wordIndex;
 
     private void OnEnable()
@@ -33,14 +32,14 @@ public class FindableWordBTNController : MonoBehaviour
         rectTransform.sizeDelta = new Vector2(Width, Heigth);
         textField = TextField;
         word = Word;
-        OriginalText = textField.text;
         wordIndex = WordIndex;
+        ApplyShader("Bold");
     }
 
     public void ChangeToColorToHighligth()
     {
         OnFindableWordButtonHover?.Invoke(this, 4);
-        BoldWord();
+        ApplyShader("Red");
     }
 
     public void ChangeToColorToNormal()
@@ -49,14 +48,14 @@ public class FindableWordBTNController : MonoBehaviour
         UnBoldWord();
     }
 
-    void BoldWord()
+    void ApplyShader(string MaterialName)
     {
         string[] words = textField.text.Split(' ');
         string auxText = "";
         int i = 0;
         int extraIndex = 0;
+        Debug.Log(textField.text);
 
-        
         foreach (string w in words)
         {
             if (w == "")
@@ -83,13 +82,15 @@ public class FindableWordBTNController : MonoBehaviour
 
             if (NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower() == NormalizeWord(word.FindFindableName(CleanUnnecessaryCharacter(NormalizeWord(combinedWord)))).ToLower())
             {
+                if (combinedWord.StartsWith("<material")) combinedWord = RemoveMaterialTags(combinedWord);
+
                 string extraCharacters = GetExtraCharacters(combinedWord);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
 
                 string materialName = string.Empty;
                 try
                 {
-                    materialName = "\"" + textField.font.name + " Effect\"";
+                    materialName = "\"" + textField.font.name + "" + MaterialName;
                     strBuilder = strBuilder.Replace(combinedWord, "<material=" + materialName + ">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
                 }
                 catch (Exception ex)
@@ -97,21 +98,20 @@ public class FindableWordBTNController : MonoBehaviour
                     Debug.LogWarning("Error al obtener el path del material: " + ex.Message);
                     strBuilder = strBuilder.Replace(combinedWord,  CleanUnnecessaryCharacter(combinedWord));
                 }
-
-                
                 auxText += strBuilder + extraCharacters + " ";
             }
             else
             {
                 auxText += combinedWord + " ";
             }
-
             i++;
-
         }
         textField.text = auxText;
     }
-
+    string RemoveMaterialTags(string word)
+    {
+        return Regex.Replace(word, @"<\/?material.*?>", "");
+    }
     string GetExtraCharacters(string word)
     {
         int endIndex = word.IndexOf("</link>", StringComparison.OrdinalIgnoreCase);
@@ -125,12 +125,12 @@ public class FindableWordBTNController : MonoBehaviour
         }
         return "";
     }
-
     string NormalizeWord(string word)
     {
-        return Regex.Replace(word, @"<\/?link>|[\?\.,\n\r]", "");
+        string _word;
+        _word = Regex.Replace(word, @"<\/?link>|[\?\.,\n\r]", "");
+        return RemoveMaterialTags(_word);
     }
-
     string CleanUnnecessaryCharacter(string word)
     {
         int endIndex = word.IndexOf("</link>", StringComparison.OrdinalIgnoreCase);
@@ -139,22 +139,19 @@ public class FindableWordBTNController : MonoBehaviour
             endIndex += "</link>".Length;
             word = word.Substring(0, endIndex);
         }
-
         return word;
     }
-
     void UnBoldWord()
     {
-        textField.text = OriginalText;
+        ApplyShader("Bold");
     }
 
     public void RegisterWord()
     {
         OnFindableWordButtonPress?.Invoke(this, word);
-        UnBoldWord();
+        ApplyShader("Grey");
         Destroy(gameObject);
     }
-
 
     private bool IsVisible()
     {
@@ -175,6 +172,5 @@ public class FindableWordBTNController : MonoBehaviour
 
     public bool GetIsVisible() { return IsVisible(); }
     public TMP_Text GetTextField() { return textField; }
-
     public WordData Getword() { return word; }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -27,6 +28,11 @@ public class FindableWordsManager : MonoBehaviour
         {
             FWM = this;
         }
+    }
+
+    private void Start()
+    {
+        Cursor.SetCursor(CursorTextures[0], new Vector2(16, 16), CursorMode.ForceSoftware);
     }
 
     public void SetActualViewState(Component sender, object viewState)
@@ -125,6 +131,7 @@ public class FindableWordsManager : MonoBehaviour
                 int e = 0;
                 int o = 0;
                 bool IsInWord = false;
+                string auxWordToCompare = "";
                 foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
                 {
                     if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord()))
@@ -142,7 +149,9 @@ public class FindableWordsManager : MonoBehaviour
                         CombinedWordLength += Math.Abs((float)(firstCharInfo.topLeft.x - lastCharInfo.topRight.x));
                         heigthInfo = Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y);
                         int numOfWord = wordInfo.characterCount;
-                        o++;
+                        auxWordToCompare += wordInfo.GetWord();
+                         o++;
+                        
                     }
                     e++;
 
@@ -246,14 +255,14 @@ public class FindableWordsManager : MonoBehaviour
 
     public void ChangeCusorIcon(Component sender, object index)
     {
-        if (!isOnFindableMode) return;
+       /* if (!isOnFindableMode) return;
         if (index is WordData) index = 0;
         int i = (int)index;
 
         Cursor.SetCursor(CursorTextures[i], new Vector2(16, 16), CursorMode.ForceSoftware);
 
         if (i == 3) isHover = false;
-        else if (i == 4) isHover = true;
+        else if (i == 4) isHover = true;*/
 
     }
     void GetClosestButton()
@@ -288,12 +297,12 @@ public class FindableWordsManager : MonoBehaviour
 
     public void SetFindableMode(Component sender, object obj)
     {
-        if (isOnFindableMode)
+        /*if (isOnFindableMode)
         {
             StartCoroutine(delayFindableMode(0.1f, false));
             
         }
-        else StartCoroutine(delayFindableMode(0.3f, true));
+        else StartCoroutine(delayFindableMode(0.3f, true));*/
     }
 
     IEnumerator delayFindableMode(float time, bool x)
@@ -331,4 +340,5 @@ public struct FindableWordData
     public float GetWidth() { return width; }
     public float GetHeigth() { return heigth; }
     public int GetWordIndex() { return wordIndex; }
+
 }
