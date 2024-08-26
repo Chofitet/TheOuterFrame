@@ -10,18 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: DriverInterrogated 2
+  m_Name: CargoUnlockedInspected
   m_EditorClassIdentifier: 
-  Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  state: {fileID: 11400000, guid: 25c32352a2ae81e4183cd4e67e9da611, type: 2}
+  Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  state: {fileID: 0}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: <link>Delivery 285-P9</link>
-  TextForRepetition: "Ya nos di\xF3 el codigo, era  Delivery 285-P9"
+  Text: Hay vessels y mas vessels
+  TextForRepetition: 
   image: {fileID: 0}
   Conditionals:
-  - condition: {fileID: 11400000, guid: 9c21b2ec550347540bac6af00fe8f515, type: 2}
-    ifNot: 0
-  - condition: {fileID: 11400000, guid: 943f7c831f97a514aa18834ef5319415, type: 2}
+  - condition: {fileID: 11400000, guid: bee3a3f0236098241af2f156e6b6669f, type: 2}
     ifNot: 0
   isOrderMatters: 0

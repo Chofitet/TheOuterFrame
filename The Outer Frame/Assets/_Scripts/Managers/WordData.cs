@@ -222,6 +222,12 @@ public class WordData : ScriptableObject
         CheckedStateHistory.Add(newState);
     }
 
+    public void AddStateInHistory(StateEnum newState)
+    {
+        stateHistory.Add(newState);
+    
+    }
+
     public void CleanStateFromHistory(StateEnum state)
     {
         if(stateHistory.Contains(state))

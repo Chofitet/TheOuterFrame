@@ -7,8 +7,13 @@ using UnityEngine;
 public class DataBaseType : ScriptableObject
 {
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
-    [SerializeField] Sprite image;
     [SerializeField] WordData AccessWord;
+    [Header("Unlock Button")]
+    [SerializeField] bool hasLockedBTN;
+    [SerializeField] WordData wordToUnlock;
+    [SerializeField] StateEnum UnlockState;
+    [Header("Extra data")]
+    [SerializeField] Sprite image;
     [SerializeField] string phoneNum;
     [SerializeField] string age;
     [SerializeField] string location;
@@ -36,6 +41,12 @@ public class DataBaseType : ScriptableObject
 
     public bool GetisWordAccessFound() { return isWordAccessFound; }
 
+    public bool GetIsLocked() { return hasLockedBTN; }
+
+    public WordData GetwordToUnlock() { return wordToUnlock; }
+
+    public StateEnum GetUnlockState() { return UnlockState; }
+
     private TimeData CompleteTime;
     public void SetTimeWhenWasDone()
     {
@@ -43,7 +54,5 @@ public class DataBaseType : ScriptableObject
     }
 
     public TimeData GetTimeWhenWasDone() { return CompleteTime; }
-
-
 
 }

@@ -30,6 +30,16 @@ public class ReportType : ScriptableObject, IStateComparable
         CompleteTime = TimeManager.timeManager.GetTime();
     }
 
+    private void OnEnable()
+    {
+        if (!state)
+        {
+            state = ScriptableObject.CreateInstance<StateEnum>();
+
+            state.name = this.name + "_State";
+        }
+    }
+
     public TimeData GetTimeWhenWasDone() { return CompleteTime; }
 
     public bool GetWasSet() { return wasSet; }
@@ -39,6 +49,7 @@ public class ReportType : ScriptableObject, IStateComparable
 
     public bool CheckIfIsDefault()
     {
+        if (!state) return false;
         if (Action == state)
         {
             return true;
