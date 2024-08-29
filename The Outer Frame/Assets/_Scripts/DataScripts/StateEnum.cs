@@ -18,7 +18,7 @@ public class StateEnum : ScriptableObject
     [SerializeField] WordData IdeaWordData;
     [SerializeField] string IdeaVerb;
     [SerializeField] string IdeaWord;
-    
+    [NonSerialized] bool isDone;
 
     public int GetTime() { return TimeToComplete; }
     public int GetTimeToShowNew() { return TimeToShowNew; }
@@ -37,6 +37,10 @@ public class StateEnum : ScriptableObject
     public string GetObservationTxt() { return observationtxt; }
 
     public string GetIdeaVerb() { return IdeaVerb; }
+
+    public void SetIsDone(bool x) => isDone = x;
+
+    public bool GetIsDone() { return isDone; }
 
     public void SetActiveOrDesactiveAgent(bool x) {
        // Agent.SetActiveDesactive(x); 

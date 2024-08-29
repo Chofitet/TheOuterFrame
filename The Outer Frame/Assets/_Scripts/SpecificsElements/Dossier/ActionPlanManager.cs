@@ -25,6 +25,7 @@ public class ActionPlanManager : MonoBehaviour
     public void AddAction(Component sender, object obj)
     {
         StateEnum NewAction = (StateEnum)obj;
+        if (NewAction.GetIsDone()) return;
         Actions.Remove(SpecialAction);
         SpecialAction = NewAction;
         Actions.Add(NewAction);

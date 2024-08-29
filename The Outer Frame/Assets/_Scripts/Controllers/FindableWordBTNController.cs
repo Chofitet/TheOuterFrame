@@ -79,6 +79,15 @@ public class FindableWordBTNController : MonoBehaviour
                 extraIndex++;
             }
 
+            if (combinedWord.Contains("CODE"))
+            {
+                Debug.Log("ENTER");
+
+                string A = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
+                string b = NormalizeWord(word.FindFindableName(CleanUnnecessaryCharacter(NormalizeWord(combinedWord)))).ToLower();
+            }
+
+
             if (NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower() == NormalizeWord(word.FindFindableName(CleanUnnecessaryCharacter(NormalizeWord(combinedWord)))).ToLower())
             {
                 if (combinedWord.StartsWith("<material")) combinedWord = RemoveMaterialTags(combinedWord);
