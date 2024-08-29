@@ -12884,10 +12884,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\t\t\n\t\t\t\t<b>EVENT (REDACTED)</b>\nAt aproximately 03.55 we recieved
+  m_text: "\t\t\n\t\t\t\t<b>EVENT (REDACTED)</b>\nAt approximately 03.55 we received
     a distress beacon signal coming from one of our <link>Vessel Transport Trucks</link>.
-    It seem's to have chashed with undisclosed wildlife while on route and has stopped
-    all movement we are yet to stablish contact with the <link>driver</link>. \n\nLuck
+    It seem's to have collided with undisclosed wildlife while on route and has stopped
+    movement.\nWe are yet to stablish contact with the <link>driver</link>. \n\nLuck
     is on our side as this happenned under cover of darkness and no authorities nor
     media have been notified yet.\n\nBUT ACTION MUST BE SWIFT! \n\nProcceed to damage
     control:\n\t-Check the <link>CARGO</link> status\n\t-Deal with any witnesses\n\t-Cover
@@ -15893,7 +15893,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 0.96836174, b: 0.8820755, a: 1}
-  m_Intensity: 3
+  m_Intensity: 2.5
   m_Range: 7.201586
   m_SpotAngle: 34
   m_InnerSpotAngle: 1
@@ -19663,6 +19663,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1ee9eadeed41ec141aa947ea4795ddaa, type: 2}
   - {fileID: 11400000, guid: d7e0ff8badff61546818ab28ba2ce877, type: 2}
   - {fileID: 11400000, guid: 018e05312fb468c4bbe0cd5478c38f6a, type: 2}
+  - {fileID: 11400000, guid: 2303252c42efe8a4f87ff85527dc203e, type: 2}
+  - {fileID: 11400000, guid: 6e1ecd0b73106d847ae85952d0d168a5, type: 2}
+  - {fileID: 11400000, guid: 6c8d83f53ba650e4b914c1a546741c7f, type: 2}
+  - {fileID: 11400000, guid: 3bac146708fd034408d538ea123908ee, type: 2}
   Actions:
   - {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   - {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
@@ -26163,7 +26167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5884522407394898757, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.022
+      value: -0.016
       objectReference: {fileID: 0}
     - target: {fileID: -5884522407394898757, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26811,39 +26815,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.428
+      value: -0.4259
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0005
+      value: 0.0118
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.061
+      value: -0.0599
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.68819696
+      value: 0.6770094
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.68819696
+      value: -0.6968224
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.16243446
+      value: -0.20410378
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.16243446
+      value: -0.12016042
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: -96.993
+      objectReference: {fileID: 0}
+    - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 63.439003
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -26.561
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 3101955822697646450, guid: 47b2a8a8c37e8a44eacade41d680d686, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -29800,8 +29808,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5088471, y: 2.759961, z: 0.28}
-  m_Center: {x: 4.553911, y: 0.5523046, z: -0.087642536}
+  m_Size: {x: 1.3963279, y: 2.8036482, z: 0.27999997}
+  m_Center: {x: 4.4976563, y: 0.5304613, z: -0.087641805}
 --- !u!114 &1615297695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38232,8 +38240,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.026216393, y: 0.06303188, z: 0.18292351}
-  m_Center: {x: -0.038596142, y: 0.034392975, z: -0.0046025813}
+  m_Size: {x: 0.026216391, y: 0.06829882, z: 0.062193267}
+  m_Center: {x: -0.03859597, y: 0.037026428, z: -0.06702226}
 --- !u!114 &2122491407
 MonoBehaviour:
   m_ObjectHideFlags: 0
