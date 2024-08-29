@@ -13,6 +13,8 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] Button btn;
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] TMP_Text observationTxt;
+    [SerializeField] GameObject DotsLine;
+    bool isSpecialAction;
     StateEnum state;
     FadeWordsEffect fade;
     bool once;
@@ -24,10 +26,18 @@ public class ActionRowController : MonoBehaviour
         btn.onClick.AddListener(OnButtonClick);
         fade = Wordtext.GetComponent<FadeWordsEffect>();
         observationTxt.text = state.GetObservationTxt();
+
+        if (_state.GetSpecialActionWord())
+        {
+            isSpecialAction = true;
+            DotsLine.SetActive(false);
+        }
     }
 
     public void OnSelectWordInNotebook(Component sender, object obj)
     {
+        if (isSpecialAction) return;
+
         if (toggle.isOn && once)
         {
             StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, WordSelectedInNotebook.Notebook.GetSelectedWord().GetName()));
@@ -38,26 +48,26 @@ public class ActionRowController : MonoBehaviour
             fade.StartEffect();
         }
 
-        if (state.GetSpecialActionWord() || !toggle.isOn || !once)
+        if (isSpecialAction || !toggle.isOn || !once)
         {
             once = true;
         }
         
-       
     }
 
     public void OnButtonClick()
     {
         toggle.isOn = true;
 
+        if (isSpecialAction) return;
         if (WordSelectedInNotebook.Notebook.GetSelectedWord())
         {
             Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
             fade.StartEffect();
         }
-        else if (!state.GetSpecialActionWord()) OnShakeNotebook?.Invoke(this, null);
+        else if (!isSpecialAction) OnShakeNotebook?.Invoke(this, null);
 
-        if (state.GetSpecialActionWord()) Wordtext.text = "";
+        if (isSpecialAction) Wordtext.text = "";
     }
 
     public Button GetButton() { return btn; }

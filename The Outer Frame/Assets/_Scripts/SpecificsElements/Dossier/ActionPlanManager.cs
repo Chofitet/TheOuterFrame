@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ActionPlanManager : MonoBehaviour
 {
     [SerializeField] List<StateEnum> Actions = new List<StateEnum>();
+    StateEnum SpecialAction;
     [SerializeField] GameObject ActionPlanPrefab;
     [SerializeField] Transform OtherParent;
     [SerializeField] Transform OriginalParent;
@@ -24,12 +25,15 @@ public class ActionPlanManager : MonoBehaviour
     public void AddAction(Component sender, object obj)
     {
         StateEnum NewAction = (StateEnum)obj;
+        Actions.Remove(SpecialAction);
+        SpecialAction = NewAction;
         Actions.Add(NewAction);
     }
 
     public void RemoveAction(Component sender, object obj)
     {
         StateEnum removeAction = (StateEnum)obj;
+
         if (removeAction.GetSpecialActionWord())
         {
             Actions.Remove(removeAction);

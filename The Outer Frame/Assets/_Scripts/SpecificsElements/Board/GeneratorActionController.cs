@@ -3,30 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class GeneratorActionController : MonoBehaviour
+public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 {
     [SerializeField] List<StateEnum> ActionsToAdd = new List<StateEnum>();
-    [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
+    [SerializeField] List<ConditionalClass> Conditionals = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
-    [HideInInspector] [SerializeField] Transform BtnContainer;
-    [HideInInspector] [SerializeField] GameObject BtnGeneratorIdeaPrefab;
-    [HideInInspector] [SerializeField] GameObject Content;
+    [SerializeField] Transform BtnContainer;
+    [SerializeField] GameObject BtnGeneratorIdeaPrefab;
+    [SerializeField] GameObject Content;
     [SerializeField] GameEvent OnMoveObjectToPapersPos;
-
-
+    private bool istaken;
 
     private void Start()
     {
         Content.SetActive(false);
     }
 
-    private void OnMouseUpAsButton()
+    public bool GetConditionalState()
     {
-        OnMoveObjectToPapersPos?.Invoke(this, gameObject);
+        if (CheckForConditionals())
+        {
+            OnAppearActionIdea();
+            return true;
+        }
+
+        return false;
     }
 
+    private void OnMouseUpAsButton()
+    {
+        GetComponent<BoxCollider>().enabled = false;
+        istaken = true;
+    }
 
-    public void OnAppearActionIdea(Component sender, object obj)
+    public void Reset(Component sender, object obj)
+    {
+        istaken = false;
+        GetComponent<BoxCollider>().enabled = true;
+    }
+
+    public void OnAppearActionIdea()
     {
         if (!CheckForConditionals()) return;
         Content.SetActive(true);
@@ -42,23 +58,23 @@ public class GeneratorActionController : MonoBehaviour
 
         foreach (StateEnum action in ElementsToRemove) ActionsToAdd.Remove(action);
 
-        
     }
 
     public bool CheckForConditionals()
     {
         if (Conditionals.Count == 0) return true;
-        foreach (ScriptableObject conditional in Conditionals)
+        foreach (ConditionalClass conditional in Conditionals)
         {
-            if (conditional is not IConditionable)
+            IConditionable auxInterface = conditional.condition as IConditionable;
+
+            bool conditionState = auxInterface.GetStateCondition();
+
+            if (!conditional.ifNot)
             {
-                Debug.LogWarning(conditional.name + " is not a valid conditional");
-                return false;
+                conditionState = !conditionState;
             }
 
-            IConditionable auxConditional = conditional as IConditionable;
-
-            if (!auxConditional.GetStateCondition())
+            if (conditionState)
             {
                 return false;
             }
@@ -72,13 +88,13 @@ public class GeneratorActionController : MonoBehaviour
     {
         List<int> nums = new List<int>();
 
-        foreach (ScriptableObject conditional in Conditionals)
+        foreach (ConditionalClass conditional in Conditionals)
         {
-            IConditionable auxConditional = conditional as IConditionable;
+            IConditionable auxInterface = conditional.condition as IConditionable;
 
-            if (auxConditional.CheckIfHaveTime())
+            if (auxInterface.CheckIfHaveTime())
             {
-                nums.Add(auxConditional.GetTimeWhenWasComplete().GetTimeInNum());
+                nums.Add(auxInterface.GetTimeWhenWasComplete().GetTimeInNum());
             }
 
         }
@@ -94,4 +110,15 @@ public class GeneratorActionController : MonoBehaviour
         return true;
     }
 
+    
+
+    public bool ActiveInBegining()
+    {
+        return false;
+    }
+
+    public bool GetIsTaken()
+    {
+        return istaken;
+    }
 }

@@ -108,6 +108,11 @@ public class WordsManager : MonoBehaviour
         return FindWordInList(_word).CheckIfStateWasDone(WordState);
     }
 
+    public bool CheckIfStateSeenWasDone(WordData _word, StateEnum WordState)
+    {
+        return FindWordInList(_word).CheckIfStateSeenWasDone(WordState);
+    }
+
     public TimeData RequestTimeDataOfState(WordData _word, StateEnum WordState)
     {
         return FindWordInList(_word).GetTimeOfState(WordState);

@@ -41,8 +41,10 @@ public class SlotController : MonoBehaviour
         actionDuration = state.GetTime() + Report.GetChangeTimeOfAction();
 
         Wordtxt.text = word.GetProgressorNameVersion();
+        if (state.GetSpecialActionWord()) Wordtxt.text = state.GetSpeticialActionWordName();
         Wordtxt.GetComponent<WarpTextExample>().UpdateText();
         Actiontxt.text = state.GetActioningVerb();
+        if(state.GetSpecialActionWord()) Actiontxt.text = state.GetIdeaVerb();
         Actiontxt.GetComponent<WarpTextExample>().UpdateText();
         isAborted = false;
         isAlreadyDone = false;

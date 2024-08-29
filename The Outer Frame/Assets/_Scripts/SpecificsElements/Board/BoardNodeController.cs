@@ -4,70 +4,58 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
-public class BoardNodeController : MonoBehaviour
+public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
 {
     [SerializeField] WordData word;
-    [SerializeField] Sprite Photo;
-    bool isFound;
-    ViewStates actualView;
 
-    [HideInInspector][SerializeField] GameObject PosItObject;
-    [HideInInspector][SerializeField] GameObject PhotoObject;
-    [HideInInspector][SerializeField] GameObject Content;
-    [HideInInspector][SerializeField] TMP_Text textPhotoField;
-    [HideInInspector][SerializeField] TMP_Text textPosItField;
-    [HideInInspector][SerializeField] Image PhotoImg;
-    [HideInInspector][SerializeField] GameEvent OnBoardRefreshData;
-
-    public bool GetIsFound() { return isFound; }
+    [SerializeField] GameObject PostItConteiner;
+    MoveBoardElementsToPos[] PostIts;
 
     private void Start()
     {
-        if (!Application.isPlaying) return;
-        Content.SetActive(false);
+        if (!word) Debug.LogWarning("Board Node " + name + " dont have any word assigned");
+
+        PostIts = PostItConteiner.GetComponentsInChildren<MoveBoardElementsToPos>();
     }
 
-    private void OnValidate()
+    public bool GetConditionalState()
     {
-        if(!word)
+        if (word.GetIsFound() && WordSelectedInNotebook.Notebook.GetSelectedWord() == word)
         {
-            Content.SetActive(false);
-            return;
+            transform.position = new Vector3(0, 0, 0);
+            transform.GetChild(0).gameObject.SetActive(true);
+            ActiveChildPosits();
+            //ActiveOtherPhotoReplaced();
+            return true;
         }
-        Content.SetActive(true);
-        textPosItField.text = word.GetName();
-        textPhotoField.text = word.GetName();
-        PosItObject.SetActive(true);
-        PhotoObject.SetActive(false);
-
-        if (Photo)
-        {
-            PhotoObject.SetActive(true);
-            PhotoImg.sprite = Photo;
-        }
+        else return false;
     }
 
-    public void CheckToAppear(Component sender, object obj)
+    void ActiveChildPosits()
     {
-        WordData NotebookWord = (WordData)obj;
-
-        if (actualView != ViewStates.BoardView) return;
-
-        if (NotebookWord == word)
+        foreach(MoveBoardElementsToPos posit in PostIts)
         {
-            Content.SetActive(true);
-            isFound = true;
-            OnBoardRefreshData?.Invoke(this, null);
+            if (posit.GetComponent<IPlacedOnBoard>().GetIsTaken()) return;
+            posit.MoveToPlacedPos(null, transform.position);
+            
         }
     }
 
-    public void GetActualState(Component aender, object obj)
+   /* void ActiveOtherPhotoReplaced()
     {
-        ViewStates view = (ViewStates)obj;
+        if (!WordReplace) return;
+        if (WordReplace.GetIsPlaced()) return;
+        WordReplace.SetToReplace();
+        WordReplace.MoveToPlacedPos(null, transform.position);
+    }*/
 
-        actualView = view;
+    public bool ActiveInBegining()
+    {
+       return false;
     }
 
-
+    public bool GetIsTaken()
+    {
+        return false;
+    }
 }
