@@ -343,7 +343,10 @@ public class WordData : ScriptableObject
         return TimeManager.timeManager.GetTime();
     }
 
-    public void SetIsFound(bool x = true) => isFound = x;
+    public void SetIsFound(bool x = true)
+    {
+        isFound = x;
+    }
 
     public bool GetIsFound() { return isFound; }
 

@@ -35,6 +35,7 @@ public class NotebookWordInstance : MonoBehaviour
         text.text = wordReference.GetName();
         StartCoroutine(AnimFade(text,false,text,true,word.GetName()));
         wordReference = word;
+        word.SetIsFound();
     }
 
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")

@@ -1,46 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 
-public class StringConnectionController : MonoBehaviour
+public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
 {
-    [SerializeField] MoveBoardElementsToPos Node1;
-    [SerializeField] MoveBoardElementsToPos Node2;
-
-    [SerializeField] GameObject AnimPin1;
-    Vector3 startPosPin1;
-    [SerializeField] GameObject AnimPin2;
-    Vector3 startPosPin2;
     [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     [SerializeField] bool isOrderMatters;
-    GameObject content;
+
+    bool isActiveInBegining;
 
     private void Start()
     {
-        content = transform.GetChild(0).gameObject;
-        content.SetActive(false);
-
-        if (!Node1 || !Node2)
+        if(Conditionals.Count == 0)
         {
-            Debug.LogWarning("Board connection " + name + " dont have a conection node assigned");
-            return;
+            isActiveInBegining = true;
         }
-
-        startPosPin1 = AnimPin1.transform.position;
-        startPosPin2 = AnimPin2.transform.position;
-
-        AnimPin2.transform.position = startPosPin1;
     }
 
-    public void CheckConnection(Component sender, object obj)
+    public bool GetConditionalState()
     {
-       if (Node1.GetIsPlaced() && Node2.GetIsPlaced() && CheckForConditionals())
-        {
-            content.SetActive(true);
-            AnimPin2.transform.DOMove(startPosPin2, 0.5f).SetEase(Ease.InOutQuad);
-        }
+        return CheckForConditionals();
     }
 
     public bool CheckForConditionals()
@@ -56,7 +36,7 @@ public class StringConnectionController : MonoBehaviour
 
             IConditionable auxConditional = conditional as IConditionable;
 
-            if (!auxConditional.GetStateCondition())
+            if (!auxConditional.GetAlternativeConditional())
             {
                 return false;
             }
@@ -91,4 +71,15 @@ public class StringConnectionController : MonoBehaviour
 
         return true;
     }
+
+    public bool ActiveInBegining()
+    {
+        return isActiveInBegining;
+    }
+
+    public bool GetIsTaken()
+    {
+        return false;
+    }
 }
+

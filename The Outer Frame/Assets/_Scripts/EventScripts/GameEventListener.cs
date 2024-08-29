@@ -13,7 +13,7 @@ public class GameEventListener : MonoBehaviour
     [SerializeField] CustomGameEvent Event;
     [SerializeField] float DelayCall = 0;
 
-    private void Awake() => TriggerEvent.registerListener(this);
+    private void OnEnable() => TriggerEvent.registerListener(this);
 
     private void OnDisable() => TriggerEvent.UnregisterListener(this);
 

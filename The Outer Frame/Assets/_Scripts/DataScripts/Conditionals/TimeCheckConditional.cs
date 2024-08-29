@@ -56,4 +56,8 @@ public class TimeCheckConditional : ScriptableObject, IConditionable
         throw new System.NotImplementedException();
     }
 
+    public bool GetAlternativeConditional()
+    {
+        return GetStateCondition();
+    }
 }

@@ -12,6 +12,11 @@ public class WordFoundConditional : ScriptableObject, IConditionable
         return false;
     }
 
+    public bool GetAlternativeConditional()
+    {
+        return word.GetIsFound();
+    }
+
     public bool GetStateCondition()
     {
         return word.GetIsFound();
