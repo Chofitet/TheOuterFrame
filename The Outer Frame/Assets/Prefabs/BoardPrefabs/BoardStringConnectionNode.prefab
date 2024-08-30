@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4896362456286868464}
   - component: {fileID: 7089081955231847964}
   m_Layer: 0
-  m_Name: StringConnectionNode
+  m_Name: BoardStringConnectionNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0138, y: 0.0847, z: 0.0017}
-  m_LocalScale: {x: 0.030438801, y: 0.013674214, z: 0.013674214}
+  m_LocalScale: {x: 0.013264925, y: 0.0049823364, z: 0.0051031476}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3651322066552402797}
@@ -216,7 +216,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.0138, y: 0, z: 0}
-  m_LocalScale: {x: 0.030438801, y: 0.013674214, z: 0.013674214}
+  m_LocalScale: {x: 0.011167996, y: 0.002962108, z: 0.0035978225}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3651322066552402797}
@@ -353,7 +353,7 @@ Transform:
   m_GameObject: {fileID: 8185245692430185736}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0034, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -402,11 +402,11 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: -0.013799831, y: -0.00000008940697, z: -0.00000011920929}
-  - {x: -0.013799995, y: 0.08469999, z: 0.0017001331}
+  - {x: -0.0104, y: 0, z: 0}
+  - {x: -0.0104, y: 0.08469999, z: 0.0017000139}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
