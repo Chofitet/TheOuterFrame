@@ -15,7 +15,9 @@ public class FindableWordsManager : MonoBehaviour
     List<GameObject> FindableWordsBTNs = new List<GameObject>();
     bool isHover;
     bool isOnFindableMode;
+    [SerializeField] GameEvent OnFindableWordInstance;
     [SerializeField] Texture2D[] CursorTextures;
+    
     public static FindableWordsManager FWM { get; private set; }
 
     private void Awake()
@@ -78,7 +80,7 @@ public class FindableWordsManager : MonoBehaviour
                 GameObject auxObj = Instantiate(ButtonFindableWordPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
                 auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GetWordIndex());
                 FindableWordsBTNs.Add(auxObj);
-
+                OnFindableWordInstance?.Invoke(this, auxObj);
                 auxObj.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(auxObj));
             }
         } catch (Exception ex)

@@ -9,6 +9,7 @@ public class PhoneRowNotebookController : MonoBehaviour
 {
     [SerializeField] TMP_Text txtName;
     [SerializeField] TMP_Text Num;
+    [SerializeField] GameEvent OnWritingShakeNotebook;
     WordData word;
     Button button;
 
@@ -19,8 +20,11 @@ public class PhoneRowNotebookController : MonoBehaviour
         word = _word;
         txtName.text = word.GetName();
 
+        float writingTime = 0;
+
         if (word.GetIsAPhoneNumber())
         {
+            writingTime = 0.5f;
             txtName.text = "?????";
             Num.text = word.GetPhoneNumber();
             button.enabled = true;
@@ -28,9 +32,12 @@ public class PhoneRowNotebookController : MonoBehaviour
         }
 
         if (!word.GetIsPhoneNumberFound())
-        { 
+        {
+            writingTime = 0.5f + 0.5f;
             StartCoroutine(AnimFade(txtName, true, Num, true));
         }
+
+        OnWritingShakeNotebook?.Invoke(this, writingTime);
     }
 
     public void UpdateNumber()
@@ -45,6 +52,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         word = _word;
         txtName.text = "?????";
         StartCoroutine(AnimFade(txtName, false, txtName, true,word.GetName()));
+        OnWritingShakeNotebook?.Invoke(this, 0.5f);
     }
 
     private void ButtonPress()

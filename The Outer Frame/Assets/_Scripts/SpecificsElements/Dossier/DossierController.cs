@@ -6,6 +6,8 @@ public class DossierController : MonoBehaviour
 {
     Animator anim;
     bool isOpen;
+    [SerializeField] GameObject BrifingBtn;
+    [SerializeField] GameObject ActionPlanBtn;
 
     private void Start()
     {
@@ -15,12 +17,18 @@ public class DossierController : MonoBehaviour
     public void ChangeToActionPlan(Component sender, object obj)
     {
             anim.SetTrigger("showBriefing");
-            anim.SetBool("isBriefingHidden", false);
+            BrifingBtn.GetComponent<BoxCollider>().enabled = false;
+            ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
+
+        anim.SetBool("isBriefingHidden", false);
     }
 
     public void ChangeToBrifing(Component sender, object obj)
     {
         anim.SetTrigger("hideBriefing");
+        ActionPlanBtn.GetComponent<BoxCollider>().enabled = false;
+        BrifingBtn.GetComponent<BoxCollider>().enabled = true;
+
         anim.SetBool("isBriefingHidden", true);
     }
 

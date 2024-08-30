@@ -10,9 +10,11 @@ public class TimeManager : MonoBehaviour
     public static Action OnDayChange;
     public static Action OnNewsChange;
     [SerializeField] GameEvent OnTimeSpeedChange;
+    [SerializeField] GameEvent OnAcceleratedTime;
     [SerializeField] float NormalTimeValue;
     [SerializeField] float AcceleratedTimeValue;
     [SerializeField] int MinutesToChangeNews;
+    
 
     float TimeVariation;
 
@@ -121,6 +123,7 @@ public class TimeManager : MonoBehaviour
             TimeVariation = AcceleratedTimeValue *60;
             isTimeAccelerated = true;
             OnTimeSpeedChange?.Invoke(this, AcceleratedTimeValue);
+            OnAcceleratedTime?.Invoke(this, true);
         }
         else { NormalizeTime();}
     }
@@ -130,15 +133,16 @@ public class TimeManager : MonoBehaviour
         TimeVariation = NormalTimeValue * 60;
         isTimeAccelerated = false;
         OnTimeSpeedChange?.Invoke(this, 1f);
+        OnAcceleratedTime?.Invoke(this, false);
     }
 
     public void PauseTime()
     {
         TimeVariation = 0;
         OnTimeSpeedChange?.Invoke(this, 0f);
+        OnAcceleratedTime?.Invoke(this, false);
     }
 
-    
 }
 
 public struct TimeData

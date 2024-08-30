@@ -6,7 +6,7 @@ using TMPro;
 public class ClockController : MonoBehaviour
 {
     [SerializeField] TMP_Text datetxt;
-
+    [SerializeField] GameEvent OnViewChange;
     [SerializeField] TMP_Text MinuteMovibleFlipFront;
     [SerializeField] TMP_Text MinuteInamovibleFlipFront;
     [SerializeField] TMP_Text MinuteMovibleFlipBack;
@@ -18,6 +18,7 @@ public class ClockController : MonoBehaviour
     [SerializeField] TMP_Text HourMovibleFlipBack;
     [SerializeField] TMP_Text HourInamovibleFlipBack;
     [SerializeField] AnimationClip HourAnim;
+   
 
     TimeManager TM;
     Animator anim;
@@ -109,6 +110,7 @@ public class ClockController : MonoBehaviour
         currentView = (ViewStates)obj;
 
         if (!isSpeedUp) return;
+        if (currentView == ViewStates.GeneralView) return;
         SetAnimSpeed();
         TimeManager.timeManager.NormalizeTime();
         
@@ -120,6 +122,7 @@ public class ClockController : MonoBehaviour
 
         SetAnimSpeed();
 
+        if(isSpeedUp) OnViewChange?.Invoke(this, null);
     }
 
     void SetAnimSpeed()
