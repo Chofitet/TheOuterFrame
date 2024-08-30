@@ -7,15 +7,18 @@ using Cinemachine;
 public class CamController : MonoBehaviour
 {
     [SerializeField] CinemachineVirtualCamera[] posCamara;
-
-    
+    ViewStates actualView;
 
     public void UpdateCurrentView(Component sender, object View)
     {
         ViewStates newview = (ViewStates)View;
-        switch(newview)
+        actualView = newview;
+        switch (newview)
         {
             case ViewStates.GeneralView:
+                SetPriority(0);
+                break;
+            case ViewStates.DossierView:
                 SetPriority(0);
                 break;
             case ViewStates.PinchofonoView:
@@ -37,6 +40,15 @@ public class CamController : MonoBehaviour
                 SetPriority(0);
                 break;
         }
+    }
+
+    public void AccelerateTime(Component sender, object obj)
+    {
+        bool isInspeedTime = (bool) obj;
+
+        if (isInspeedTime) SetPriority(6);
+        else if (actualView == ViewStates.GeneralView) SetPriority(0);
+
     }
 
     void SetPriority(int num)

@@ -12,6 +12,7 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameEvent OnProgressorFull;
     [SerializeField] GameEvent OnSetGeneralView;
     [SerializeField] Button ApproveBtn;
+    [SerializeField] GameEvent OnWriteShakeDossier;
     List<ActionRowController> Actions = new List<ActionRowController>();
     StateEnum state;
     bool isOneToggleSelected;
@@ -60,8 +61,12 @@ public class ActionPlan : MonoBehaviour
             else state = script.GetState();
         }
 
-        if(state.GetSpecialActionWord()) ApproveBtn.enabled = true;
-        else if (!state.GetSpecialActionWord() && WordSelectedInNotebook.Notebook.GetSelectedWord()) ApproveBtn.enabled = true;
+        if (state.GetSpecialActionWord()) ApproveBtn.enabled = true;
+        else if (!state.GetSpecialActionWord() && WordSelectedInNotebook.Notebook.GetSelectedWord())
+        {
+            ApproveBtn.enabled = true;
+            OnWriteShakeDossier?.Invoke(this, 0.5f);
+        }
         else ApproveBtn.enabled = false;
     }
 
@@ -73,6 +78,8 @@ public class ActionPlan : MonoBehaviour
         {
             OnButtonRowPress(Actions[0]);
         }
+
+        OnWriteShakeDossier?.Invoke(this, 0.5f);
     }
 
     public void ApprovedActionPlan()

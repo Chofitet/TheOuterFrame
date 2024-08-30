@@ -223,7 +223,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8811778082310879973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +259,7 @@ MonoBehaviour:
   OnProgressorFull: {fileID: 11400000, guid: f2cecceaf0880894a9f521c5c06ca5a3, type: 2}
   OnSetGeneralView: {fileID: 11400000, guid: 2174b205fb10b4440b02c579faad015a, type: 2}
   ApproveBtn: {fileID: 3903721326796803651}
+  OnWriteShakeDossier: {fileID: 11400000, guid: 6739f944f3b99c94d9cf6032cf2a055a, type: 2}
 --- !u!114 &7890689546900030479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,7 +289,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  DelayCall: 0
+  DelayCall: 0.3
 --- !u!1 &4099223590196117057
 GameObject:
   m_ObjectHideFlags: 0
