@@ -17,7 +17,7 @@ public class TVScheduledNewType : ScriptableObject, INewType
     [SerializeField] List<ScriptableObject> ReplacedIf = new List<ScriptableObject>();
     [SerializeField] bool isOrderMatters;
 
-    [SerializeField] TVScheduledNewType NewToReplace;
+    [SerializeField] TVScheduledNewType ReplacedBy;
 
     //Lista de condicionantes y chequeo de si son true todas para desactivar o reprogramar noticia
 
@@ -32,8 +32,8 @@ public class TVScheduledNewType : ScriptableObject, INewType
     {
         if (CheckForConditionals())
         {
-            if (!NewToReplace) return this;
-            return NewToReplace;
+            if (!ReplacedBy) return this;
+            return ReplacedBy;
         }
         else return this;
     }

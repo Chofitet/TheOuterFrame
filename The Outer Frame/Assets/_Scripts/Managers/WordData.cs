@@ -174,8 +174,13 @@ public class WordData : ScriptableObject
     #region ChangeStateLogic
     public void ChangeState(ReportType report)
     {
-        stateHistory.Add(report.GetState());
-        StateHistoryTime.Add(report.GetState(), TimeManager.timeManager.GetTime());
+        StateEnum state = report.GetState();
+
+        if (!stateHistory.Contains(state))
+        {
+            stateHistory.Add(report.GetState());
+            StateHistoryTime.Add(report.GetState(), TimeManager.timeManager.GetTime());
+        }
 
         string estados = wordName + ": ";
         foreach (StateEnum s in stateHistory)
@@ -224,6 +229,7 @@ public class WordData : ScriptableObject
 
     public void AddStateInHistory(StateEnum newState)
     {
+        if (stateHistory.Contains(newState)) return;
         stateHistory.Add(newState);
     
     }
