@@ -9,6 +9,7 @@ public class IndividualReportController : MonoBehaviour
     ReportType report;
     [SerializeField] GameEvent UpdatePCDatabase;
     [SerializeField] GameEvent OnDescartReport;
+    [SerializeField] GameEvent OnBackToGeneralView;
     public void SetType(bool x, WordData _word ,ReportType _report)
     {
         report = _report;
@@ -32,6 +33,7 @@ public class IndividualReportController : MonoBehaviour
             OnDescartReport?.Invoke(this, null);
         }
         StartCoroutine(delay());
+        OnBackToGeneralView?.Invoke(this, null);
     }
 
     IEnumerator delay()

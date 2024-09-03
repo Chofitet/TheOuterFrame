@@ -13,7 +13,7 @@ public class ReportType : ScriptableObject, IStateComparable
     [SerializeField] int ChangeTimeOfAction;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string Text;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string TextForRepetition;
-    [SerializeField] Image image;
+    [SerializeField] List<PhotoInfo> Photos = new List<PhotoInfo>();
     [SerializeField] List<ConditionalClass> Conditionals;
     [SerializeField] bool isOrderMatters;
     [NonSerialized] bool wasSet;
@@ -23,6 +23,8 @@ public class ReportType : ScriptableObject, IStateComparable
     public string GetText() {  return Text;}
     public string GetTextForRepetition() { return TextForRepetition; }
     public int GetChangeTimeOfAction() { return ChangeTimeOfAction; }
+
+    public List<PhotoInfo> GetReportImage() { return Photos; }
 
     private TimeData CompleteTime;
     public void SetTimeWhenWasDone()
@@ -122,3 +124,9 @@ public class ConditionalClass
     public bool ifNot;
 }
 
+[Serializable]
+public class PhotoInfo
+{
+    public Sprite photo;
+    public string text;
+}

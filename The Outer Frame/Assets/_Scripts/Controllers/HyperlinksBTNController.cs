@@ -63,6 +63,7 @@ public class HyperlinksBTNController : MonoBehaviour
             {
                 string extraCharacters = GetExtraCharacters(combinedWord);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
+                if (combinedWord == "") return;
                 strBuilder = strBuilder.Replace(combinedWord, "<color=" + "\"blue\"" + ">" + CleanUnnecessaryCharacter(combinedWord) + "</color>");
                 auxText += strBuilder + extraCharacters + " ";
             }

@@ -10,6 +10,7 @@ public class ActionPlanManager : MonoBehaviour
     [SerializeField] GameObject ActionPlanPrefab;
     [SerializeField] Transform OtherParent;
     [SerializeField] Transform OriginalParent;
+    [SerializeField] GameEvent OnCloneActionPlan;
     bool IsProgressorFull;
 
     public void SetActionPlan(Component sender, object obj)
@@ -52,15 +53,23 @@ public class ActionPlanManager : MonoBehaviour
         IsProgressorFull = false;
     }
 
+    public void OnStampedPlanAction(Component sender, object obj)
+    {
+        
+    }
+
     public void ReparentToMoveActionPlan(Component sender, object obj)
     {
-        transform.SetParent(OtherParent);
+        GameObject actionPLan = transform.GetChild(0).gameObject;
+        OnCloneActionPlan?.Invoke(this, actionPLan);
+       // actionPLan.SetActive(false);
+        /*transform.SetParent(OtherParent);*/
     }
     public void ReparentToActionPlan(Component sender, object obj)
     {
-        transform.SetParent(OriginalParent);
+       /* transform.SetParent(OriginalParent);
         transform.Translate(Vector3.zero);
         transform.Rotate(Vector3.zero);
-        transform.rotation = new Quaternion(0, 0, 0, 0);
+        transform.rotation = new Quaternion(0, 0, 0, 0);*/
     }
 }

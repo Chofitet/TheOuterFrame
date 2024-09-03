@@ -14,11 +14,13 @@ public class WordFoundConditional : ScriptableObject, IConditionable
 
     public bool GetAlternativeConditional()
     {
+        if (!word) Debug.LogWarning("the Word Found conditional " + name + " not have a word assigned");
         return word.GetIsFound();
     }
 
     public bool GetStateCondition()
     {
+        if (!word) Debug.LogWarning("the Word Found conditional " + name + " not have a word assigned");
         return word.GetIsFound();
     }
 

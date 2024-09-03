@@ -81,4 +81,17 @@ public class NotebookPhonesController : MonoBehaviour
             Destroy(WordContainer.GetChild(i).gameObject);
         }
     }
+
+    public void DisablePhoneBTN(Component sender, object obj)
+    {
+        /*if (obj is not bool) return;
+
+        if (WordContainer.childCount == 0) return;
+        GameObject[] btns = WordContainer.gameObject.GetComponentsInChildren<GameObject>();
+        
+        foreach (GameObject btn in btns)
+        {
+            btn.SetActive(!(bool)obj);
+        }*/
+    }
 }
