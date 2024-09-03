@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 4652184808668606540}
   - component: {fileID: 9049983138666501404}
   - component: {fileID: 6592215315726425342}
+  - component: {fileID: 1800291645160190155}
   m_Layer: 0
   m_Name: NotebookWordPrefab
   m_TagString: Untagged
@@ -425,3 +426,33 @@ MonoBehaviour:
   text: {fileID: 976639871496013436}
   strikethrough: {fileID: 4746003229699241807}
   OnWritingShakeNotebook: {fileID: 11400000, guid: 91b91b8ed370dec49bc053924dd787de, type: 2}
+--- !u!114 &1800291645160190155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8693245384509004982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: ecdda82964096664484cadf56310dfec, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6592215315726425342}
+        m_TargetAssemblyTypeName: NotebookWordInstance, Assembly-CSharp
+        m_MethodName: RefreshWord
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0

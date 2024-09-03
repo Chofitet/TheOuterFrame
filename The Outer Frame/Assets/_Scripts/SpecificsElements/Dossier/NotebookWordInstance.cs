@@ -19,12 +19,6 @@ public class NotebookWordInstance : MonoBehaviour
 
         float writingTime = 0;
 
-        if (wordReference.GetInactiveState())
-        {
-            GetComponent<Button>().enabled = false;
-            strikethrough.SetActive(true);
-        }
-
         if (!word.GetIsFound())
         {
             writingTime = 0.5f;
@@ -36,6 +30,14 @@ public class NotebookWordInstance : MonoBehaviour
 
     }
 
+    public void RefreshWord(Component sender, object obj)
+    {
+        if (wordReference.GetInactiveState())
+        {
+            GetComponent<Button>().enabled = false;
+            strikethrough.SetActive(true);
+        }
+    }
     public void ReplaceWord(WordData word)
     {
         text.text = wordReference.GetName();

@@ -8,6 +8,7 @@ public class DossierController : MonoBehaviour
     bool isOpen;
     [SerializeField] GameObject BrifingBtn;
     [SerializeField] GameObject ActionPlanBtn;
+    bool isInBrifing = true;
 
     private void Start()
     {
@@ -16,20 +17,27 @@ public class DossierController : MonoBehaviour
 
     public void ChangeToActionPlan(Component sender, object obj)
     {
-            anim.SetTrigger("showBriefing");
-            BrifingBtn.GetComponent<BoxCollider>().enabled = false;
-            ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
+        //changetobrifing
+        if (isInBrifing) return;
+        anim.SetTrigger("showBriefing");
+        BrifingBtn.GetComponent<BoxCollider>().enabled = false;
+        ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
 
         anim.SetBool("isBriefingHidden", false);
+        isInBrifing = true;
+
     }
 
     public void ChangeToBrifing(Component sender, object obj)
     {
+        //changetoActionPlan
+        if (!isInBrifing) return;
         anim.SetTrigger("hideBriefing");
         ActionPlanBtn.GetComponent<BoxCollider>().enabled = false;
         BrifingBtn.GetComponent<BoxCollider>().enabled = true;
 
         anim.SetBool("isBriefingHidden", true);
+        isInBrifing = false;
     }
 
     public void OpenActionPlan(Component sender, object obj)
