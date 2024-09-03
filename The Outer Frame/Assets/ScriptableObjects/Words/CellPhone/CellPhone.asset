@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: CellPhone
   m_EditorClassIdentifier: 
-  wordName: Cellphone
+  wordName: Dropped Cellphone
   FindableAs:
   - cellphone
+  Form_DatabaseNameVersion: Dropped Cellphone
+  ProgressorNameVersion: Dropped Cellphone
   PhoneNumber: 
   isAPhoneNumber: 0
   reportTypes:
@@ -29,15 +31,6 @@ MonoBehaviour:
   TVNewTypes: []
   DBTypes: {fileID: 11400000, guid: c999ac86b1b82ba41ba8ad0f185e0b3d, type: 2}
   CallTypes: []
-  exceptions: []
   InactiveConditions: []
-  AutomaticActions:
-  - {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
-  ModifyLengthactions:
-  - action: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
-    TimeToAdd: -13
-  - action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
-    TimeToAdd: -13
-  ReactivateAction: []
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0
