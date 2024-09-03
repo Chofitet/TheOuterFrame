@@ -32,8 +32,8 @@ public class TVScheduledNewType : ScriptableObject, INewType
     {
         if (CheckForConditionals())
         {
-            if (!NewToReplace) return this;
-            return NewToReplace;
+            if (!ReplacedBy) return this;
+            return ReplacedBy;
         }
         else return this;
     }

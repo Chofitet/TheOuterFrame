@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
   m_Name: CrashVanAlert
   m_EditorClassIdentifier: 
-  headline: NEWS VAN ON THE WAY TO ROAD 54
+  headline: 'NEWS VAN FLAT TIRED ON THE WAY TO ROAD 54
+
+    UPDATE COMING SOON'
   image: {fileID: 0}
   channel: 1
-  alertLevelIncrement: 0
+  alertLevelIncrement: 5
+  Emergency: 1
   Day: 0
   Hour: 6
-  Minute: 0
+  Minute: 15
+  ReplacedIf: []
+  isOrderMatters: 0
+  ReplacedBy: {fileID: 0}
