@@ -44,6 +44,7 @@ public class ViewManager : MonoBehaviour
                 UpdateViewState(this, ViewStates.OnTakenPaperView);
                 return;
             }
+            if(currentviewState == ViewStates.BoardView) TimeManager.timeManager.NormalizeTime();
 
             BackToGeneralView(null, null);
         }
@@ -106,7 +107,7 @@ public class ViewManager : MonoBehaviour
         }
         OnViewStateChange?.Invoke(this,NewView);
         currentviewState = NewView;
-        //Debug.Log(currentviewState);
+        Debug.Log(currentviewState);
         if(isReady) StartDelayCoroutine(DelayBetweenViews);
     }
 

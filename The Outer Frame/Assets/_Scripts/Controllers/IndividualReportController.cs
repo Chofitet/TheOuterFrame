@@ -8,6 +8,7 @@ public class IndividualReportController : MonoBehaviour
     WordData word;
     ReportType report;
     [SerializeField] GameEvent UpdatePCDatabase;
+    [SerializeField] GameEvent OnDescartReport;
     public void SetType(bool x, WordData _word ,ReportType _report)
     {
         report = _report;
@@ -26,6 +27,16 @@ public class IndividualReportController : MonoBehaviour
             UpdatePCDatabase?.Invoke(this, gameObject);
             WordsManager.WM.RequestChangeStateSeen(word, report.GetState());
         }
+        else
+        {
+            OnDescartReport?.Invoke(this, null);
+        }
+        StartCoroutine(delay());
+    }
+
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
 }
