@@ -40,11 +40,11 @@ public class ActionRowController : MonoBehaviour
 
         if (toggle.isOn && once)
         {
-            StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, WordSelectedInNotebook.Notebook.GetSelectedWord().GetName()));
+            StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, WordSelectedInNotebook.Notebook.GetSelectedWord().GetForm_DatabaseNameVersion()));
         }
         if(toggle.isOn && !once)
         {
-            Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
+            Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetForm_DatabaseNameVersion();
             fade.StartEffect();
         }
 
@@ -62,7 +62,7 @@ public class ActionRowController : MonoBehaviour
         if (isSpecialAction) return;
         if (WordSelectedInNotebook.Notebook.GetSelectedWord())
         {
-            Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetName();
+            Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetForm_DatabaseNameVersion();
             fade.StartEffect();
         }
         else if (!isSpecialAction) OnShakeNotebook?.Invoke(this, null);
