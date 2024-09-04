@@ -6,12 +6,14 @@ using DG.Tweening;
 public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 {
     [SerializeField] List<StateEnum> ActionsToAdd = new List<StateEnum>();
+    [SerializeField] List<StringConnectionController> StringConnections = new List<StringConnectionController>();
     [SerializeField] List<ConditionalClass> Conditionals = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
     [SerializeField] Transform BtnContainer;
     [SerializeField] GameObject BtnGeneratorIdeaPrefab;
     [SerializeField] GameObject Content;
     [SerializeField] GameEvent OnMoveObjectToPapersPos;
+    
     private bool istaken;
 
     private void Start()
@@ -21,6 +23,14 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
     public bool GetConditionalState()
     {
+        if (StringConnections.Count != 0)
+        {
+            foreach (StringConnectionController connection in StringConnections)
+            {
+                if (!connection.GetIsConnected()) return false;
+            }
+        }
+
         if (CheckForConditionals())
         {
             OnAppearActionIdea();
@@ -45,6 +55,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public void OnAppearActionIdea()
     {
         if (!CheckForConditionals()) return;
+       
         Content.SetActive(true);
 
         List<StateEnum> ElementsToRemove = new List<StateEnum>();

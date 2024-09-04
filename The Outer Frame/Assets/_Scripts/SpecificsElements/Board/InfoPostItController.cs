@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
 {
+    [SerializeField] List<StringConnectionController> StringConnections;
     [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     [SerializeField] bool isOrderMatters;
-
+    
     bool isActiveInBegining;
 
     private void Start()
     {
-        if(Conditionals.Count == 0)
+        if(Conditionals.Count == 0 && StringConnections.Count == 0)
         {
             isActiveInBegining = true;
         }
@@ -20,6 +21,14 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
 
     public bool GetConditionalState()
     {
+        if (StringConnections.Count != 0)
+        {
+            foreach (StringConnectionController connection in StringConnections)
+            {
+                if(!connection.GetIsConnected()) return false;
+            }
+        }
+
         return CheckForConditionals();
     }
 
