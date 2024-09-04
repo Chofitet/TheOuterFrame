@@ -29,11 +29,20 @@ public class BoardManager : MonoBehaviour
     {
         if (!IsInView) return;
         OnBoardPlacedPhotos?.Invoke(null, StartPos.position);
-        Invoke("Conections", 0.5f);
+        Invoke("Conections", 0.6f);
     }
 
     void Conections()
     {
         OnBoardPlacedConections?.Invoke(this, null);
+        StartCoroutine(RefreshInfo());
+    }
+
+
+    IEnumerator RefreshInfo()
+    {
+        yield return new WaitForSeconds(1f);
+        OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
+        OnRefreshInfoInBoard?.Invoke(this, null);
     }
 }

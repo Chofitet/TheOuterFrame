@@ -16,6 +16,7 @@ public class StringConnectionController : MonoBehaviour
     [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     [SerializeField] bool isOrderMatters;
     GameObject content;
+    bool isConnected;
 
     private void Start()
     {
@@ -32,6 +33,8 @@ public class StringConnectionController : MonoBehaviour
         startPosPin2 = AnimPin2.transform.position;
 
         AnimPin2.transform.position = startPosPin1;
+
+        
     }
 
     public void CheckConnection(Component sender, object obj)
@@ -40,8 +43,11 @@ public class StringConnectionController : MonoBehaviour
         {
             content.SetActive(true);
             AnimPin2.transform.DOMove(startPosPin2, 0.5f).SetEase(Ease.InOutQuad);
+            isConnected = true;
         }
     }
+
+    public bool GetIsConnected() { return isConnected; }
 
     public bool CheckForConditionals()
     {
