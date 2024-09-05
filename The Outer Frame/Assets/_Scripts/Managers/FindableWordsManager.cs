@@ -101,10 +101,15 @@ public class FindableWordsManager : MonoBehaviour
     {
         List<FindableWordData> aux = new List<FindableWordData>();
 
-        if(textField.IsActive()) textField.ForceMeshUpdate();
+        string OriginalText = textField.text;
+        string auxiliaryText = AddCustomTagsToLinks(textField.text);
+        textField.text = auxiliaryText;
 
-        string[] words = textField.text.Split(' ');
+        if (textField.IsActive()) textField.ForceMeshUpdate();
+
+        string[] words = auxiliaryText.Split(' ');
         List<int> processedIndices = new List<int>();
+        List<Vector3> SavedPositions = new List<Vector3>();
 
         for (int i = 0; i < words.Length; i++)
         {
@@ -113,19 +118,22 @@ public class FindableWordsManager : MonoBehaviour
 
             string combinedWord = words[i];
             int startIndex = i;
+            
 
-            while (combinedWord.Contains("<link>") && !combinedWord.Contains("</link>") && i < words.Length - 1)
+            while (combinedWord.Contains("II") && !combinedWord.Contains("IJ") && i < words.Length - 1)
             {
                 i++;
                 combinedWord += " " + words[i];
                 amoutOfWordindex++;
             }
 
-            if (combinedWord.Contains("</link>"))
+            if (combinedWord.Contains("II"))
             {
                 combinedWord = CleanUnnecessaryCharacter(combinedWord);
-                combinedWord = Regex.Replace(combinedWord, @"<\/?link>", "");
+                combinedWord = Regex.Replace(combinedWord, @"\/?IJ", "");
                 processedIndices.AddRange(Enumerable.Range(startIndex, i - startIndex + 1));
+
+                //Debug.Log("combined word: "+ combinedWord);
 
                 float CombinedWordLength = 0;
                 float heigthInfo = 0;
@@ -134,48 +142,100 @@ public class FindableWordsManager : MonoBehaviour
                 int o = 0;
                 bool IsInWord = false;
                 string auxWordToCompare = "";
+
+
+                
                 foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
                 {
                     if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord()))
                         continue;
+                    
+                    string NormalizedWordInfo = wordInfo.GetWord();
 
-                    string NormalizedCombinedWord =  NormalizeWord(combinedWord);
-                    string NormalizedWordInfo = NormalizeWord(wordInfo.GetWord());
+                    if(NormalizedWordInfo.Contains("fluorescent"))
+                    {
+                        Debug.Log("enter");
+                    }
 
-                    if (NormalizedCombinedWord.StartsWith(NormalizedWordInfo) || IsInWord)
+                   /* if (!combinedWord.Contains(CleanUnnecessaryCharacter(NormalizedWordInfo)))
+                    {
+                        Debug.Log("skiped: " + combinedWord + " with word info: " + CleanUnnecessaryCharacter(NormalizedWordInfo));
+                        continue;
+                    }*/
+                    
+                    if (NormalizedWordInfo.StartsWith("II") || IsInWord)
                     {
                         IsInWord = true;
+
+
                         var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
                         var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
-                        if(o == 0) wordLocation = textField.transform.TransformPoint((firstCharInfo.topLeft));
-                        CombinedWordLength += Math.Abs((float)(firstCharInfo.topLeft.x - lastCharInfo.topRight.x));
-                        heigthInfo = Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y);
-                        int numOfWord = wordInfo.characterCount;
-                        auxWordToCompare += wordInfo.GetWord();
-                         o++;
-                        
-                    }
-                    e++;
 
-                    if (NormalizedCombinedWord.EndsWith(NormalizedWordInfo)) IsInWord = false;
+
+                        if (o == 0)
+                        {
+                            wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
+                            if (SavedPositions.Any(p => Vector3.Distance(p, wordLocation) < 0.01f)) // Ajusta el umbral según sea necesario
+                            {
+                               // Debug.Log("Skipping duplicate word at position: " + wordLocation);
+                                IsInWord = false;
+                                continue;
+                            }
+                            SavedPositions.Add(wordLocation);
+                        }
+
+
+                        CombinedWordLength += Math.Abs(firstCharInfo.topLeft.x - lastCharInfo.topRight.x);
+                        heigthInfo = Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y);
+                        auxWordToCompare += wordInfo.GetWord();
+                        o++;
+
+                        if (firstCharInfo.lineNumber != lastCharInfo.lineNumber)
+                        {
+
+                        }
+
+                            if (NormalizedWordInfo.EndsWith("IJ"))
+                        {
+                            IsInWord = false;
+                            break;
+                        }
+
+                    }
+
+                    e++;
                 }
+
                 heigthInfo = heigthInfo + heigthInfo / 4;
+                CombinedWordLength = CombinedWordLength - 5 + o;
                 aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, e));
             }
         }
-
-
-
+        textField.text = OriginalText;
         return CleanListOfRepeatedWords(aux);
     }
 
+    string AddCustomTagsToLinks(string originalText)
+    {
+        return Regex.Replace(originalText, @"<link>(.*?)<\/link>", "II$1IJ");
+    }
+
+
+
     string CleanUnnecessaryCharacter(string word)
     {
-        int endIndex = word.IndexOf("</link>", StringComparison.OrdinalIgnoreCase);
+        // Eliminar el prefijo "II" del inicio
+        if (word.StartsWith("II", StringComparison.OrdinalIgnoreCase))
+        {
+            word = word.Substring("II".Length);
+        }
+
+        // Encontrar el índice de "IJ" al final
+        int endIndex = word.IndexOf("IJ", StringComparison.OrdinalIgnoreCase);
         if (endIndex != -1)
         {
-            endIndex += "</link>".Length;
-            word = word.Substring(0, endIndex);
+            // Mantener solo el contenido antes de "IJ"
+            word = word.Substring(0, endIndex).Trim();
         }
 
         return word;
