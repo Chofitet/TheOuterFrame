@@ -7,6 +7,7 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
 {
     [SerializeField] List<StringConnectionController> StringConnections;
     [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
+    [SerializeField] List<bool> ifNot = new List<bool>();
     [SerializeField] bool isOrderMatters;
     
     bool isActiveInBegining;
@@ -34,9 +35,12 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
 
     public bool CheckForConditionals()
     {
-
+        int index = 0;
         foreach (ScriptableObject conditional in Conditionals)
         {
+            bool ifnot = false;
+            if(ifNot.Count != 0) ifnot = ifNot[index];
+            index++;
             if (conditional is not IConditionable)
             {
                 Debug.LogWarning(conditional.name + " is not a valid conditional");
@@ -45,7 +49,14 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
 
             IConditionable auxConditional = conditional as IConditionable;
 
-            if (!auxConditional.GetAlternativeConditional())
+            bool conditionState = auxConditional.GetAlternativeConditional();
+
+            if (!ifnot)
+            {
+                conditionState = !conditionState;
+            }
+
+            if (conditionState)
             {
                 return false;
             }
