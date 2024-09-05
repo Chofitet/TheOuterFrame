@@ -13,6 +13,7 @@ public class AccessWordWindow : MonoBehaviour
     WordData SearchedWord;
     WordData TryAccessWord;
     private bool isInPCView;
+    bool isUnlockingPage;
 
     TypingAnimText textAnim;
     bool isWaitingAWord;
@@ -69,6 +70,7 @@ public class AccessWordWindow : MonoBehaviour
         if(TryAccessWord == WordsManager.WM.RequestBDWikiData(SearchedWord).GetAccessWord())
         {
             Invoke("UnlockPage", 2f);
+            isUnlockingPage = true;
             SearchBar.text = "ACCESS GRANTED";
             WordsManager.WM.RequestBDWikiData(SearchedWord).SetisWordAccessFound();
         }
@@ -80,12 +82,14 @@ public class AccessWordWindow : MonoBehaviour
 
     void UnlockPage()
     {
+        isUnlockingPage = false;
         OnPCSearchWord?.Invoke(this, SearchedWord);
         ClosePanel();
     }
 
     public void ClosePanel()
     {
+        if (isUnlockingPage) return;
         StopCoroutine(IdleSearchBarAnim());
         Conteiner.SetActive(false);
         SearchedWord = null;

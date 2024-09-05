@@ -14,7 +14,7 @@ public class TVScheduledNewType : ScriptableObject, INewType
     [SerializeField] int Hour;
     [SerializeField] int Minute;
 
-    [SerializeField] List<ScriptableObject> ReplacedIf = new List<ScriptableObject>();
+    [SerializeField] List<ConditionalClass> ReplacedIf = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
 
     [SerializeField] TVScheduledNewType ReplacedBy;
@@ -41,17 +41,23 @@ public class TVScheduledNewType : ScriptableObject, INewType
     public bool CheckForConditionals()
     {
 
-        foreach (ScriptableObject conditional in ReplacedIf)
+        foreach (ConditionalClass conditional in ReplacedIf)
         {
-            if (conditional is not IConditionable)
+            if (conditional.condition is not IConditionable)
             {
-                Debug.LogWarning(conditional.name + " is not a valid conditional");
+                Debug.LogWarning(conditional.condition + " is not a valid conditional");
                 return false;
             }
+            IConditionable auxInterface = conditional.condition as IConditionable;
 
-            IConditionable auxConditional = conditional as IConditionable;
+            bool conditionState = auxInterface.GetStateCondition();
 
-            if (!auxConditional.GetStateCondition())
+            if (!conditional.ifNot)
+            {
+                conditionState = !conditionState;
+            }
+
+            if (conditionState)
             {
                 return false;
             }
@@ -65,9 +71,9 @@ public class TVScheduledNewType : ScriptableObject, INewType
     {
         List<int> nums = new List<int>();
 
-        foreach (ScriptableObject conditional in ReplacedIf)
+        foreach (ConditionalClass conditional in ReplacedIf)
         {
-            IConditionable auxConditional = conditional as IConditionable;
+            IConditionable auxConditional = conditional.condition as IConditionable;
 
             if (auxConditional.CheckIfHaveTime())
             {
@@ -91,4 +97,6 @@ public class TVScheduledNewType : ScriptableObject, INewType
     {
         return alertLevelIncrement;
     }
+
+
 }

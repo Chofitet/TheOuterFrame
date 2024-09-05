@@ -136,6 +136,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         }
         else
         {
+            oldWord.SetIsFound();
             WordsFound.Add(newWord);
         }
     }

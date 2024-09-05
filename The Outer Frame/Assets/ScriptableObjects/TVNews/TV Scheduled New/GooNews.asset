@@ -21,6 +21,7 @@ MonoBehaviour:
   Hour: 7
   Minute: 0
   ReplacedIf:
-  - {fileID: 11400000, guid: 18af5eccc49c54a45bfc5306f8d5c660, type: 2}
+  - condition: {fileID: 11400000, guid: 18af5eccc49c54a45bfc5306f8d5c660, type: 2}
+    ifNot: 1
   isOrderMatters: 0
   ReplacedBy: {fileID: 11400000, guid: 84c176b6f42b4c7488b12be78e953165, type: 2}
