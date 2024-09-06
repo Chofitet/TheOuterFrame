@@ -16,43 +16,48 @@ public class ReporterAnimController : MonoBehaviour
 
     public void SetTriggerAnim(Component sender, object obj)
     {
-        // string triggerName = (string)obj;
-
-        StopCoroutine(RandomizeAnimation());
-        isAnimating = false;
-
         anim.SetTrigger("newPaper");
-        if (!isAnimating)
-        {
-            StartCoroutine(RandomizeAnimation());
-        }
+
+        StartTalkLoop();
+    }
+
+    void StartTalkLoop()
+    {
+        StopAllCoroutines();
+        anim.SetBool("isTalk", true);
+        StartCoroutine(RandomizeAnimation());
+        StartCoroutine(SetTalkTime(Random.Range(7, 15)));
     }
 
     IEnumerator RandomizeAnimation()
     {
-        isAnimating = true;
-        anim.SetBool("isB", true);
-        yield return new WaitForSeconds(6f);
-
-        while (true) 
+        while(anim.GetBool("isTalk"))
         {
-            float waitTime = Random.Range(8, 10);
-            yield return new WaitForSeconds(waitTime);
-
-            anim.SetTrigger("random");
-
-            anim.SetBool("isB", false);
-            anim.SetBool("isC", false);
-            anim.SetBool("isTalk", false);
-
-            switch(Random.Range(1,3))
-            {
-                case 1: anim.SetBool("isB", true); break;
-                case 2: anim.SetBool("isC", true); break;
-                case 3: anim.SetBool("isTalk", true); break;
-            }
+            yield return new WaitForSeconds(1.03f);
+            anim.SetInteger("talkChoice", Random.Range(1, 12));
         }
     }
+
+    IEnumerator SetTalkTime(float Time)
+    {
+        yield return new WaitForSeconds(Time);
+        anim.SetBool("isTalk", false);
+
+        anim.SetBool("isB", false);
+        anim.SetBool("isC", false);
+        anim.SetBool("isTalk", false);
+
+        switch (Random.Range(1, 3))
+        {
+            case 1: anim.SetBool("isB", true); break;
+            case 2: anim.SetBool("isC", true); break;
+            case 3: anim.SetBool("isTalk", true); break;
+        }
+
+        Invoke("StartTalkLoop", 2);
+    }
+
+
 
     public void AccelerateAnimator(Component sender, object obj)
     {
