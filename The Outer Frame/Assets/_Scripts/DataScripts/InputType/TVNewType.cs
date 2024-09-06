@@ -6,7 +6,8 @@ using UnityEngine;
 public class TVNewType : ScriptableObject, IStateComparable, INewType
 {
     [SerializeField] StateEnum state;
-    [SerializeField] string headline;
+    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string headline;
+    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] Sprite image;
     [SerializeField] int channel;
     [SerializeField] int priority;
@@ -35,5 +36,10 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType
     public int GetIncreaseAlertLevel()
     {
         return alertLevelIncrement;
+    }
+
+    public string GetNewText()
+    {
+        return text;
     }
 }

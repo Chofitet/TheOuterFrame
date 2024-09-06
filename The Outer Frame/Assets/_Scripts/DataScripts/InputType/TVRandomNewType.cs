@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New TVNewRandom", menuName = "News/RandomNew")]
 public class TVRandomNewType : ScriptableObject, INewType
 {
-    [SerializeField] string headline;
+    [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
+    [SerializeField][TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] Sprite image;
     [SerializeField] int channel;
 
@@ -19,4 +20,9 @@ public class TVRandomNewType : ScriptableObject, INewType
     }
 
     public Sprite GetNewImag() { return image; }
+
+    public string GetNewText()
+    {
+        return text;
+    }
 }

@@ -8,12 +8,15 @@ public class ChannelController : MonoBehaviour
 {
 
     bool isFull;
+    [SerializeField] OverlayAnimation OverlayAnims;
     [SerializeField] TMP_Text EmergencyTextField;
     [SerializeField] GameObject EmergencyScreen;
     [SerializeField] TMP_Text HeadlineText;
+    [SerializeField] TMP_Text NewTextContent;
     [SerializeField] Image NewImg;
     [SerializeField] string TriggerAnim;
     [SerializeField] GameEvent OnIncreaseAlertLevel;
+    [SerializeField] GameEvent OnChangeReporterAnim;
 
     public bool GetIsFull() { return isFull; }
 
@@ -26,28 +29,49 @@ public class ChannelController : MonoBehaviour
     public void SetNew(INewType _new)
     {
         if (_new == null) return;
-        HeadlineText.gameObject.SetActive(true);
-        HeadlineText.text = _new.GetHeadline();
-        NewImg.sprite = _new.GetNewImag();
-        if (!_new.GetNewImag()) NewImg.color = new Color(1, 1, 1, 0);
-        else NewImg.color = new Color(1, 1, 1, 1);
-        EmergencyTextField.text = _new.GetHeadline();
-        if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout();
-        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
-        OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
+        EmergencyScreen.SetActive(false);
+       
+        OverlayAnims.NewsOut();
+        OverlayAnims.PicsOut();
+        OverlayAnims.QuipOut();
+        OnChangeReporterAnim?.Invoke(this, "newPaper");
+
+        StartCoroutine(BackUI(OverlayAnims.GetAnimTime(), _new));
+       
     }
 
-    void ChangeToEmergencyLayout()
+    IEnumerator BackUI(float time, INewType _new)
+    {
+        yield return new WaitForSeconds(time);
+
+        Debug.Log("time to change new: " + time);
+
+        OverlayAnims.NewsIn();
+        OverlayAnims.PicsIn();
+        OverlayAnims.QuipIn();
+
+        HeadlineText.text = _new.GetHeadline();
+        NewTextContent.text = _new.GetNewText();
+        if(_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
+        NewImg.sprite = _new.GetNewImag();
+        if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
+        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
+        OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
+
+    }
+
+    void ChangeToEmergencyLayout(INewType _new)
     {
         EmergencyScreen.SetActive(true);
+        EmergencyTextField.text = _new.GetHeadline();
         FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField);
     }
 
     public void resetChannel()
     {
-        EmergencyScreen.SetActive(false);
+       /* EmergencyScreen.SetActive(false);
         HeadlineText.text = "We runout of news, stay tuned for more";
-        NewImg.color = new Color(1, 1, 1, 0);
+        NewImg.color = new Color(1, 1, 1, 0);*/
     }
 
 

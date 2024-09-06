@@ -4,30 +4,38 @@ using UnityEngine;
 using DG.Tweening;
 using Cinemachine.Utility;
 using System.Runtime.InteropServices;
+using TMPro;
 
 public class OverlayAnimation : MonoBehaviour
 {
-    [SerializeField] GameObject newsTextUI;
+    [HideInInspector] [SerializeField] GameObject newsTextUI;
     Vector3 textStartingPosition;
     [SerializeField] Transform textOffscreenPositionLeft;
-    [SerializeField] Transform textOffscreenPositionRight;
-    [SerializeField] GameObject newsTitleUI;
+    [HideInInspector] [SerializeField] Transform textOffscreenPositionRight;
+    [HideInInspector] [SerializeField] GameObject newsTitleUI;
     Vector3 titleStartingPosition;
-    [SerializeField] Transform titleOffscreenPositionLeft;
-    [SerializeField] Transform titleOffscreenPositionRight;
-    [SerializeField] GameObject newsQuipUI;
+    [HideInInspector] [SerializeField] Transform titleOffscreenPositionLeft;
+    [HideInInspector] [SerializeField] Transform titleOffscreenPositionRight;
+    [HideInInspector] [SerializeField] GameObject newsQuipUI;
     Vector3 quipStartingPosition;
-    [SerializeField] Transform quipOffscreenPosition;
-    [SerializeField] GameObject picsUI;
+    [HideInInspector] [SerializeField] Transform quipOffscreenPosition;
+    [HideInInspector] [SerializeField] GameObject picsUI;
     Vector3 picsStartingPosition;
-    [SerializeField] Transform picsOffscreenPosition;
+   [HideInInspector] [SerializeField] Transform picsOffscreenPosition;
 
+    TMP_Text NewContentTMPtxt;
+    TMP_Text HeadlineTMPtxt;
+    TMP_Text QuipTMPtxt;
+    
     [SerializeField] float moveTimes = 1;
+    float acceleratedFactor = 1;
     [SerializeField] float pauseTimes = 1;
+    [SerializeField] float newsChangeTime = 1;
     Sequence newsInAnim;
     Sequence newsOutAnim;
     Sequence pictureInAnim;
     Sequence pictureOutAnim;
+    Sequence quipAnim;
 
     private void Start()
     {
@@ -43,6 +51,10 @@ public class OverlayAnimation : MonoBehaviour
         picsStartingPosition = picsUI.transform.position;
         picsUI.transform.position = picsOffscreenPosition.position;
 
+        NewContentTMPtxt = newsTextUI.transform.GetChild(0).GetComponent<TMP_Text>();
+        HeadlineTMPtxt = newsTitleUI.transform.GetChild(0).GetComponent<TMP_Text>();
+        QuipTMPtxt = newsQuipUI.transform.GetChild(0).GetComponent<TMP_Text>();
+
     }
 
     ////////////////////
@@ -52,11 +64,16 @@ public class OverlayAnimation : MonoBehaviour
         if (newsInAnim != null && newsInAnim.IsActive()) newsInAnim.Kill();
         newsTitleUI.transform.position = titleOffscreenPositionLeft.transform.position;
         newsTextUI.transform.position = textOffscreenPositionRight.transform.position;
+        NewContentTMPtxt.color = new Color(NewContentTMPtxt.color.r, NewContentTMPtxt.color.g, NewContentTMPtxt.color.b, 0);
+        HeadlineTMPtxt.color = new Color(HeadlineTMPtxt.color.r, HeadlineTMPtxt.color.g, HeadlineTMPtxt.color.b, 0);
 
-        newsInAnim= DOTween.Sequence();
-        newsInAnim.Append(newsTitleUI.transform.DOMove(titleStartingPosition, moveTimes).SetEase(Ease.InOutBack))
-            .PrependInterval(pauseTimes)
-            .Append(newsTextUI.transform.DOMove(textStartingPosition, moveTimes).SetEase(Ease.InOutBack));
+        newsInAnim = DOTween.Sequence();
+        newsInAnim.PrependInterval(pauseTimes)
+            .Append(newsTitleUI.transform.DOMove(titleStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
+            .Join(newsTextUI.transform.DOMove(textStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
+            .AppendCallback(() => fadeUI(NewContentTMPtxt,1))
+            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 1))
+            .JoinCallback(() => fadeUI(QuipTMPtxt, 1));
     }
     [ContextMenu("News In")]
     private void NewsInTest()
@@ -70,10 +87,15 @@ public class OverlayAnimation : MonoBehaviour
         newsTitleUI.transform.position = titleStartingPosition;
         newsTextUI.transform.position = textStartingPosition;
 
+
         newsOutAnim = DOTween.Sequence();
-        newsOutAnim.Append(newsTitleUI.transform.DOMove(titleOffscreenPositionRight.position, moveTimes).SetEase(Ease.InOutBack))
+        newsOutAnim.PrependInterval(pauseTimes)
+            .AppendCallback(() => fadeUI(NewContentTMPtxt,0))
+            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 0))
+            .JoinCallback(() => fadeUI(QuipTMPtxt, 0))
             .PrependInterval(pauseTimes)
-            .Append(newsTextUI.transform.DOMove(textOffscreenPositionLeft.position, moveTimes).SetEase(Ease.InOutBack));
+            .Append(newsTitleUI.transform.DOMove(titleOffscreenPositionRight.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
+            .Join(newsTextUI.transform.DOMove(textOffscreenPositionLeft.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack));
 
     }
     [ContextMenu("News Out")]
@@ -90,7 +112,8 @@ public class OverlayAnimation : MonoBehaviour
         picsUI.transform.position = picsOffscreenPosition.transform.position;
 
         pictureInAnim = DOTween.Sequence();
-        pictureInAnim.Append(picsUI.transform.DOMove(picsStartingPosition, moveTimes).SetEase(Ease.InOutBack));
+        pictureInAnim.PrependInterval(pauseTimes)
+                       .Append(picsUI.transform.DOMove(picsStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack));
     }
     [ContextMenu("Pics In")]
     private void PicsInTest()
@@ -104,7 +127,8 @@ public class OverlayAnimation : MonoBehaviour
         picsUI.transform.position = picsStartingPosition;
 
         pictureOutAnim = DOTween.Sequence();
-        pictureOutAnim.Append(picsUI.transform.DOMove(picsOffscreenPosition.position, moveTimes).SetEase(Ease.InOutBack));
+        pictureOutAnim.PrependInterval(pauseTimes)
+            .Append(picsUI.transform.DOMove(picsOffscreenPosition.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack));
     }
     [ContextMenu("Pics Out")]
     private void PicsOutTest()
@@ -116,9 +140,13 @@ public class OverlayAnimation : MonoBehaviour
 
     public void QuipIn()
     {
+        if (quipAnim != null && quipAnim.IsActive()) quipAnim.Kill();
         newsQuipUI.transform.position = quipOffscreenPosition.transform.position;
+        QuipTMPtxt.color = new Color(QuipTMPtxt.color.r, QuipTMPtxt.color.g, QuipTMPtxt.color.b, 0);
 
-        newsQuipUI.transform.DOMove(quipStartingPosition, moveTimes).SetEase(Ease.InOutBack);
+        quipAnim = DOTween.Sequence();
+        quipAnim.PrependInterval(pauseTimes)
+            .Append(newsQuipUI.transform.DOMove(quipStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack));
     }
     [ContextMenu("Quip In")]
     private void QuipInTest()
@@ -128,13 +156,31 @@ public class OverlayAnimation : MonoBehaviour
 
     public void QuipOut()
     {
+        if (quipAnim != null && quipAnim.IsActive()) quipAnim.Kill();
         newsQuipUI.transform.position = quipStartingPosition;
+        
 
-        newsQuipUI.transform.DOMove(quipOffscreenPosition.position, moveTimes).SetEase(Ease.InOutBack);
+        quipAnim = DOTween.Sequence();
+        quipAnim.PrependInterval(pauseTimes)
+            .Append(newsQuipUI.transform.DOMove(quipOffscreenPosition.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack));
     }
     [ContextMenu("Quip Out")]
     private void QuipOutTest()
     {
         QuipOut();
     }
+
+    public void AcceleratedTime(Component sender, object obj)
+    {
+        float _speed = (float)obj;
+
+        acceleratedFactor = 1/_speed;
+    }
+
+    void fadeUI( TMP_Text textToFade,float valueToFade)
+    {
+        textToFade.DOFade(valueToFade, moveTimes * acceleratedFactor);
+    }
+
+    public float GetAnimTime() { return newsChangeTime * acceleratedFactor; }
 }
