@@ -34,7 +34,7 @@ public class ChannelController : MonoBehaviour
         OverlayAnims.NewsOut();
         OverlayAnims.PicsOut();
         OverlayAnims.QuipOut();
-        OnChangeReporterAnim?.Invoke(this, "newPaper");
+        OnChangeReporterAnim?.Invoke(this, null);
 
         StartCoroutine(BackUI(OverlayAnims.GetAnimTime(), _new));
        

@@ -10,7 +10,7 @@ public class OverlayAnimation : MonoBehaviour
 {
     [HideInInspector] [SerializeField] GameObject newsTextUI;
     Vector3 textStartingPosition;
-    [SerializeField] Transform textOffscreenPositionLeft;
+    [HideInInspector] [SerializeField] Transform textOffscreenPositionLeft;
     [HideInInspector] [SerializeField] Transform textOffscreenPositionRight;
     [HideInInspector] [SerializeField] GameObject newsTitleUI;
     Vector3 titleStartingPosition;
