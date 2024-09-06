@@ -6,6 +6,7 @@ using UnityEngine;
 public class TVScheduledNewType : ScriptableObject, INewType
 {
     [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headline;
+    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] Sprite image;
     [SerializeField] int channel;
     [SerializeField] int alertLevelIncrement;
@@ -98,5 +99,8 @@ public class TVScheduledNewType : ScriptableObject, INewType
         return alertLevelIncrement;
     }
 
-
+    public string GetNewText()
+    {
+        return text;
+    }
 }

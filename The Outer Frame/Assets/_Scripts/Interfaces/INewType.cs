@@ -6,6 +6,8 @@ public interface INewType
 {
     string GetHeadline();
 
+    string GetNewText();
+
     Sprite GetNewImag();
 
     bool GetIfIsAEmergency();

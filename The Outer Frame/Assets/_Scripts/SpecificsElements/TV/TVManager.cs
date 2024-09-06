@@ -12,6 +12,11 @@ public class TVManager : MonoBehaviour
     // Tiene las listas de las noticias programadas y random
     // Manejará el embudo de noticias. Sacará como conclusión en qué canal y por cuanto tiempo irá una noticia
     // Manejo de cronograma de programación.
+
+    private void Start()
+    {
+        NewsDirector();
+    }
     private void OnEnable()
     {
         TimeManager.OnNewsChange += NewsDirector;
