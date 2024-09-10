@@ -11,10 +11,7 @@ using UnityEngine.UI;
 public class FindableWordsManager : MonoBehaviour
 {
     [SerializeField] GameObject ButtonFindableWordPrefab;
-    ViewStates ActualViewState;
     List<GameObject> FindableWordsBTNs = new List<GameObject>();
-    bool isHover;
-    bool isOnFindableMode;
     [SerializeField] GameEvent OnFindableWordInstance;
     [SerializeField] Texture2D[] CursorTextures;
     
@@ -35,11 +32,6 @@ public class FindableWordsManager : MonoBehaviour
     private void Start()
     {
         Cursor.SetCursor(CursorTextures[0], new Vector2(16, 16), CursorMode.ForceSoftware);
-    }
-
-    public void SetActualViewState(Component sender, object viewState)
-    {
-        ActualViewState = (ViewStates)viewState;
     }
 
     public void InstanciateFindableWord(TMP_Text textField)
@@ -105,11 +97,13 @@ public class FindableWordsManager : MonoBehaviour
         string auxiliaryText = AddCustomTagsToLinks(textField.text);
         textField.text = auxiliaryText;
 
+
         if (textField.IsActive()) textField.ForceMeshUpdate();
 
         string[] words = auxiliaryText.Split(' ');
         List<int> processedIndices = new List<int>();
         List<Vector3> SavedPositions = new List<Vector3>();
+
 
         for (int i = 0; i < words.Length; i++)
         {
@@ -118,19 +112,19 @@ public class FindableWordsManager : MonoBehaviour
 
             string combinedWord = words[i];
             int startIndex = i;
-            
 
-            while (combinedWord.Contains("II") && !combinedWord.Contains("IJ") && i < words.Length - 1)
+
+            while (combinedWord.Contains("ii") && !combinedWord.Contains("ij") && i < words.Length - 1)
             {
                 i++;
                 combinedWord += " " + words[i];
                 amoutOfWordindex++;
             }
 
-            if (combinedWord.Contains("II"))
+            if (combinedWord.Contains("ii"))
             {
                 combinedWord = CleanUnnecessaryCharacter(combinedWord);
-                combinedWord = Regex.Replace(combinedWord, @"\/?IJ", "");
+                combinedWord = Regex.Replace(combinedWord, @"\/?ij", "");
                 processedIndices.AddRange(Enumerable.Range(startIndex, i - startIndex + 1));
 
                 //Debug.Log("combined word: "+ combinedWord);
@@ -139,45 +133,35 @@ public class FindableWordsManager : MonoBehaviour
                 float heigthInfo = 0;
                 var wordLocation = Vector3.zero;
                 int e = 0;
+                int WordInfoCount = 0;
                 int o = 0;
                 bool IsInWord = false;
                 string auxWordToCompare = "";
 
+                bool BreakLineInstanciate = false;
 
-                
+
                 foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
                 {
+                    WordInfoCount++;
                     if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord()))
                         continue;
-                    
+
                     string NormalizedWordInfo = wordInfo.GetWord();
 
-                    if(NormalizedWordInfo.Contains("fluorescent"))
-                    {
-                        Debug.Log("enter");
-                    }
-
-                   /* if (!combinedWord.Contains(CleanUnnecessaryCharacter(NormalizedWordInfo)))
-                    {
-                        Debug.Log("skiped: " + combinedWord + " with word info: " + CleanUnnecessaryCharacter(NormalizedWordInfo));
-                        continue;
-                    }*/
-                    
-                    if (NormalizedWordInfo.StartsWith("II") || IsInWord)
+                    if (NormalizedWordInfo.StartsWith("ii") || IsInWord || BreakLineInstanciate)
                     {
                         IsInWord = true;
-
 
                         var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
                         var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
 
-
                         if (o == 0)
                         {
                             wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
-                            if (SavedPositions.Any(p => Vector3.Distance(p, wordLocation) < 0.01f)) // Ajusta el umbral según sea necesario
+                            if (SavedPositions.Any(p => Vector3.Distance(p, wordLocation) < 0.001f))
                             {
-                               // Debug.Log("Skipping duplicate word at position: " + wordLocation);
+                                Debug.Log("Skipping duplicate word at position: " + wordLocation);
                                 IsInWord = false;
                                 continue;
                             }
@@ -189,16 +173,31 @@ public class FindableWordsManager : MonoBehaviour
                         heigthInfo = Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y);
                         auxWordToCompare += wordInfo.GetWord();
                         o++;
+                        textField.text = auxiliaryText;
 
-                        if (firstCharInfo.lineNumber != lastCharInfo.lineNumber)
-                        {
-
-                        }
-
-                            if (NormalizedWordInfo.EndsWith("IJ"))
+                        if (NormalizedWordInfo.EndsWith("ij"))
                         {
                             IsInWord = false;
+                            BreakLineInstanciate = false;
                             break;
+                        }
+                        else if (firstCharInfo.lineNumber != textField.textInfo.characterInfo[textField.textInfo.wordInfo[WordInfoCount].firstCharacterIndex].lineNumber)
+                        {
+                            if (NormalizedWordInfo.EndsWith("ij"))
+                            {
+                                IsInWord = false;
+                                BreakLineInstanciate = false;
+                                break;
+                            }
+
+                            IsInWord = false;
+                            heigthInfo = heigthInfo + heigthInfo / 4;
+                            CombinedWordLength = CombinedWordLength - 5 + o;
+                            aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, e));
+                            o = 0;
+                            CombinedWordLength = 0;
+                            BreakLineInstanciate = true;
+                            continue;
                         }
 
                     }
@@ -212,38 +211,31 @@ public class FindableWordsManager : MonoBehaviour
             }
         }
         textField.text = OriginalText;
-        return CleanListOfRepeatedWords(aux);
+        return aux;
     }
 
     string AddCustomTagsToLinks(string originalText)
     {
-        return Regex.Replace(originalText, @"<link>(.*?)<\/link>", "II$1IJ");
+        return Regex.Replace(originalText, @"<link>(.*?)<\/link>", "ii$1ij");
     }
-
-
 
     string CleanUnnecessaryCharacter(string word)
     {
         // Eliminar el prefijo "II" del inicio
-        if (word.StartsWith("II", StringComparison.OrdinalIgnoreCase))
+        if (word.StartsWith("ii", StringComparison.OrdinalIgnoreCase))
         {
-            word = word.Substring("II".Length);
+            word = word.Substring("ii".Length);
         }
 
-        // Encontrar el índice de "IJ" al final
-        int endIndex = word.IndexOf("IJ", StringComparison.OrdinalIgnoreCase);
+        // Encontrar el índice de "ij" al final
+        int endIndex = word.IndexOf("ij", StringComparison.OrdinalIgnoreCase);
         if (endIndex != -1)
         {
-            // Mantener solo el contenido antes de "IJ"
+            // Mantener solo el contenido antes de "ij"
             word = word.Substring(0, endIndex).Trim();
         }
 
         return word;
-    }
-
-    string NormalizeWord(string word)
-    {
-        return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r\(\)\s]", "");
     }
 
     string WordWithoutPointLineBreak(string word)
@@ -282,98 +274,14 @@ public class FindableWordsManager : MonoBehaviour
         }
     }
 
-    float BTNdistance = 1000;
 
     int index;
     private void Update()
     {
         FindableWordsBTNs.RemoveAll(s => s == null);
 
-        if (index != FindableWordsBTNs.Count) isHover = false;
-        index = FindableWordsBTNs.Count;
-
-       if (isHover || !isOnFindableMode)
-        {
-            return;
-        }
-        
-        GetClosestButton();
-
-        if (BTNdistance < 70)
-        {
-            ChangeCusorIcon(null, 3);
-        }
-        else if (BTNdistance < 120)
-        {
-            ChangeCusorIcon(null, 2);
-        }
-        else if (BTNdistance < 200)
-        {
-            ChangeCusorIcon(null, 1);
-        }
-        else ChangeCusorIcon(null, 0);
-
-    }
-
-    public void ChangeCusorIcon(Component sender, object index)
-    {
-       /* if (!isOnFindableMode) return;
-        if (index is WordData) index = 0;
-        int i = (int)index;
-
-        Cursor.SetCursor(CursorTextures[i], new Vector2(16, 16), CursorMode.ForceSoftware);
-
-        if (i == 3) isHover = false;
-        else if (i == 4) isHover = true;*/
-
-    }
-    void GetClosestButton()
-    {
-        Vector3 mousePosition = Input.mousePosition;
-        GameObject closestButton = null;
-
-        float minDistance = float.MaxValue;
-        FindableWordsBTNs.RemoveAll(s => s == null);
-
-        foreach (GameObject btn in FindableWordsBTNs)
-        {
-            if (!btn.GetComponent<FindableWordBTNController>().GetIsVisible()) continue;
-            Vector3 btnScreenPosition = Camera.main.WorldToScreenPoint(btn.transform.position);
-            float distance = Vector3.Distance(mousePosition, btnScreenPosition);
-
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                closestButton = btn;
-            }
-        }
-
-        if (closestButton != null)
-        {
-            Vector3 btnScreenPosition = Camera.main.WorldToScreenPoint(closestButton.transform.position);
-            BTNdistance = Vector3.Distance(mousePosition, btnScreenPosition);
-        }
-        else BTNdistance = 1000;
-
-    }
-
-    public void SetFindableMode(Component sender, object obj)
-    {
-        /*if (isOnFindableMode)
-        {
-            StartCoroutine(delayFindableMode(0.1f, false));
-            
-        }
-        else StartCoroutine(delayFindableMode(0.3f, true));*/
-    }
-
-    IEnumerator delayFindableMode(float time, bool x)
-    {
-        yield return new WaitForSeconds(time);
-        isOnFindableMode = x;
-        yield return new WaitForSeconds(0.1f);
-        if (!isOnFindableMode) ChangeCusorIcon(null, 0); 
-    }
+   }
+   
 
 }
 public struct FindableWordData
