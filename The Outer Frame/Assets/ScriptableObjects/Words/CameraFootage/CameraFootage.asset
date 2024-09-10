@@ -17,23 +17,19 @@ MonoBehaviour:
   - footage
   - security footage
   - camera's footage
+  - camera footage
   Form_DatabaseNameVersion: Camera footage
   ProgressorNameVersion: Camera footage
   PhoneNumber: 
   isAPhoneNumber: 0
   reportTypes:
   - {fileID: 11400000, guid: 614d728d2962189459ecb3ddb56217fd, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 60f360a1aa513584eb88a4434f0db9a9, type: 2}
+  - {fileID: 11400000, guid: 599b4b7884186c64398ba56cb12eae25, type: 2}
   TVNewTypes: []
   DBTypes: {fileID: 11400000, guid: fc13913663b64954f90e7a0910838a7e, type: 2}
   CallTypes: []
-  InactiveConditions: []
+  InactiveConditions:
+  - {fileID: 11400000, guid: a2d85e9445ca5d0468a4a9341febe5c5, type: 2}
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0
