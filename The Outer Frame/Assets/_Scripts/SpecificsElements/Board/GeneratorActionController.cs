@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 {
@@ -9,12 +10,15 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] List<StringConnectionController> StringConnections = new List<StringConnectionController>();
     [SerializeField] List<ConditionalClass> Conditionals = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
+    [SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
     [SerializeField] Transform BtnContainer;
     [SerializeField] GameObject BtnGeneratorIdeaPrefab;
     [SerializeField] GameObject Content;
     [SerializeField] GameEvent OnMoveObjectToPapersPos;
-    
+    [SerializeField] GameObject CheckImage;
+    bool isDone;
     private bool istaken;
+    GameObject IdeaButtom;
 
     private void Start()
     {
@@ -31,7 +35,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             }
         }
 
-        if (CheckForConditionals())
+        if (CheckForConditionals(Conditionals))
         {
             OnAppearActionIdea();
             return true;
@@ -54,7 +58,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
     public void OnAppearActionIdea()
     {
-        if (!CheckForConditionals()) return;
+        if (!CheckForConditionals(Conditionals)) return;
        
         Content.SetActive(true);
 
@@ -65,16 +69,39 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             GameObject auxInstance = Instantiate(BtnGeneratorIdeaPrefab, BtnContainer);
             auxInstance.GetComponent<BtnGenerateIdeaController>().Inicialization(action);
             ElementsToRemove.Add(action);
+            IdeaButtom = auxInstance;
         }
 
         foreach (StateEnum action in ElementsToRemove) ActionsToAdd.Remove(action);
-
     }
 
-    public bool CheckForConditionals()
+    public bool IsOutOfBoard()
     {
-        if (Conditionals.Count == 0) return true;
-        foreach (ConditionalClass conditional in Conditionals)
+        CheckIfDone();
+        if (isDone) return false;
+        if (InactiveConditionals.Count == 0) return false;
+        if (!CheckForConditionals(InactiveConditionals)) return false;
+
+        return true;
+    }
+
+    void CheckIfDone()
+    {
+        if (!IdeaButtom) return;
+
+        BtnGenerateIdeaController btn = IdeaButtom.GetComponent<BtnGenerateIdeaController>();
+
+        if (btn.GetState().GetIsDone())
+       {
+            CheckImage.SetActive(true);
+            btn.InactiveIdea();
+            isDone = true;
+       }
+    }
+    public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
+    {
+        if (ListOfConditionals.Count == 0) return true;
+        foreach (ConditionalClass conditional in ListOfConditionals)
         {
             IConditionable auxInterface = conditional.condition as IConditionable;
 
@@ -91,15 +118,15 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             }
         }
 
-        if (isOrderMatters) return CheckIfConditionalAreInOrder();
+        if (isOrderMatters) return CheckIfConditionalAreInOrder(ListOfConditionals);
         else return true;
     }
 
-    bool CheckIfConditionalAreInOrder()
+    bool CheckIfConditionalAreInOrder(List<ConditionalClass> ListOfConditionals)
     {
         List<int> nums = new List<int>();
 
-        foreach (ConditionalClass conditional in Conditionals)
+        foreach (ConditionalClass conditional in ListOfConditionals)
         {
             IConditionable auxInterface = conditional.condition as IConditionable;
 
@@ -107,9 +134,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             {
                 nums.Add(auxInterface.GetTimeWhenWasComplete().GetTimeInNum());
             }
-
         }
-
         for (int i = 0; i < nums.Count - 1; i++)
         {
             if (nums[i] > nums[i + 1])

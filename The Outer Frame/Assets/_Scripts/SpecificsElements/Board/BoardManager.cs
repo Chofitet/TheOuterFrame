@@ -8,7 +8,9 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnBoardPlacedPhotos;
     [SerializeField] GameEvent OnBoardPlacedConections;
     [SerializeField] GameEvent OnRefreshInfoInBoard;
+    [SerializeField] GameEvent OnTakeOutInfoInBoard;
     [SerializeField] Transform StartPos;
+    [SerializeField] Transform TakeOutPos;
     bool IsInView;
 
 
@@ -21,6 +23,7 @@ public class BoardManager : MonoBehaviour
             IsInView = true;
             OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
             OnRefreshInfoInBoard?.Invoke(this, null);
+            OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
         }
         else IsInView = false;
     }

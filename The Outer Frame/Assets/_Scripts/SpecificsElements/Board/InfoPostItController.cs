@@ -101,5 +101,10 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
     {
         return false;
     }
+
+    public bool IsOutOfBoard()
+    {
+        return false;
+    }
 }
 

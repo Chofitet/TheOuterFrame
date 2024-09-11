@@ -13,6 +13,7 @@ public class WordData : ScriptableObject
     [SerializeField] string ProgressorNameVersion;
     [SerializeField] string PhoneNumber;
     [SerializeField] bool isAPhoneNumber;
+    [SerializeField] ActionGoupType Type;
 
     [Header("Reports")]
     [SerializeField] List<ReportType> reportTypes = new List<ReportType>();
@@ -44,6 +45,7 @@ public class WordData : ScriptableObject
     [NonSerialized] bool isFound;
     [NonSerialized] bool isPhoneNumberFound;
 
+    [NonSerialized] List<StateEnum> CurrentDoingActions = new List<StateEnum>();
     #region GetInputLogic
 
 
@@ -101,10 +103,36 @@ public class WordData : ScriptableObject
         {
             if (AS.GetState() == state) aux = AS.GetLastReport();
         }
-
         return aux;
     }
 
+    public void SetDoingAction(StateEnum action, bool isDoing)
+    {
+        if(isDoing)
+        {
+            if (CurrentDoingActions.Contains(action)) return;
+            CurrentDoingActions.Add(action);
+        }
+        else
+        {
+            if (!CurrentDoingActions.Contains(action)) return;
+            CurrentDoingActions.Remove(action);
+        }
+    }
+
+    public bool CheckIfActionIsDoing(StateEnum action)
+    {
+        foreach(StateEnum currentaction in CurrentDoingActions)
+        {
+            if (action == currentaction) return true;
+        }
+        return false;
+    }
+
+    public StateEnum GetDoingAction(int i)
+    {
+        return CurrentDoingActions[i];
+    }
 
     public DataBaseType GetDB()
     {
@@ -297,6 +325,8 @@ public class WordData : ScriptableObject
     public bool GetIsPhoneNumberFound() { return isPhoneNumberFound; }
     public bool SetIsPhoneNumberFound() => isPhoneNumberFound = true;
     public bool GetIsAPhoneNumber() { return isAPhoneNumber; }
+
+    public ActionGoupType GetActionGroupType() { return Type; }
 
     public WordData GetWordThatReplaces() { return WordThatReplaces; }
     public bool GetCopyHistory() { return CopyHistory; }
