@@ -127,35 +127,27 @@ public class FindableWordsManager : MonoBehaviour
                 combinedWord = Regex.Replace(combinedWord, @"\/?ij", "");
                 processedIndices.AddRange(Enumerable.Range(startIndex, i - startIndex + 1));
 
-                //Debug.Log("combined word: "+ combinedWord);
-
                 float CombinedWordLength = 0;
                 float heigthInfo = 0;
                 var wordLocation = Vector3.zero;
                 int e = 0;
                 int WordInfoCount = 0;
                 int o = 0;
+                int v = 0;
                 bool IsInWord = false;
                 string auxWordToCompare = "";
-
                 bool BreakLineInstanciate = false;
-
-
                 foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
                 {
                     WordInfoCount++;
                     if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord()))
                         continue;
-
                     string NormalizedWordInfo = wordInfo.GetWord();
-
                     if (NormalizedWordInfo.StartsWith("ii") || IsInWord || BreakLineInstanciate)
                     {
                         IsInWord = true;
-
                         var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
                         var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
-
                         if (o == 0)
                         {
                             wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
@@ -167,14 +159,12 @@ public class FindableWordsManager : MonoBehaviour
                             }
                             SavedPositions.Add(wordLocation);
                         }
-
-
                         CombinedWordLength += Math.Abs(firstCharInfo.topLeft.x - lastCharInfo.topRight.x);
                         heigthInfo = Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y);
                         auxWordToCompare += wordInfo.GetWord();
                         o++;
+                        v++;
                         textField.text = auxiliaryText;
-
                         if (NormalizedWordInfo.EndsWith("ij"))
                         {
                             IsInWord = false;
@@ -189,24 +179,20 @@ public class FindableWordsManager : MonoBehaviour
                                 BreakLineInstanciate = false;
                                 break;
                             }
-
                             IsInWord = false;
                             heigthInfo = heigthInfo + heigthInfo / 4;
-                            CombinedWordLength = CombinedWordLength - 5 + o;
+                            CombinedWordLength = CombinedWordLength - 3 + v;
                             aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, e));
                             o = 0;
                             CombinedWordLength = 0;
                             BreakLineInstanciate = true;
                             continue;
                         }
-
                     }
-
                     e++;
                 }
-
                 heigthInfo = heigthInfo + heigthInfo / 4;
-                CombinedWordLength = CombinedWordLength - 5 + o;
+                CombinedWordLength = CombinedWordLength - 5 + v;
                 aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, e));
             }
         }
@@ -221,17 +207,15 @@ public class FindableWordsManager : MonoBehaviour
 
     string CleanUnnecessaryCharacter(string word)
     {
-        // Eliminar el prefijo "II" del inicio
-        if (word.StartsWith("ii", StringComparison.OrdinalIgnoreCase))
+        int startIndex = word.IndexOf("ii", StringComparison.OrdinalIgnoreCase);
+        if (startIndex != -1)
         {
-            word = word.Substring("ii".Length);
+            word = word.Substring(startIndex + "ii".Length);
         }
 
-        // Encontrar el índice de "ij" al final
         int endIndex = word.IndexOf("ij", StringComparison.OrdinalIgnoreCase);
         if (endIndex != -1)
         {
-            // Mantener solo el contenido antes de "ij"
             word = word.Substring(0, endIndex).Trim();
         }
 
