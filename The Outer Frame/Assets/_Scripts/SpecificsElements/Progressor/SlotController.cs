@@ -44,7 +44,6 @@ public class SlotController : MonoBehaviour
         if (state.GetSpecialActionWord())
         {
             Wordtxt.text = state.GetSpeticialActionWordName();
-            state.SetIsDone(true);
         }
         Wordtxt.GetComponent<WarpTextExample>().UpdateText();
         Actiontxt.text = state.GetActioningVerb();
@@ -173,7 +172,7 @@ public class SlotController : MonoBehaviour
         timeComplete = TimeManager.timeManager.GetTime();
         OnFinishActionProgress?.Invoke(this, this);
         Icon.SetActive(true);
-
+        if (_state.GetSpecialActionWord()) _state.SetIsDone(true);
     }
 
 
@@ -195,7 +194,6 @@ public class SlotController : MonoBehaviour
         TimeManager.OnMinuteChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();
         Icon.SetActive(true);
-        if (_state.GetSpecialActionWord()) _state.SetIsDone(false);
     }
 
     public void CleanSlot()
