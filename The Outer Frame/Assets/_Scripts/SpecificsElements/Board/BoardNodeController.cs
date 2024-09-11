@@ -58,4 +58,9 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
     {
         return false;
     }
+
+    public bool IsOutOfBoard()
+    {
+        return false;
+    }
 }

@@ -17,6 +17,7 @@ public class ReportType : ScriptableObject, IStateComparable
     [SerializeField] List<ConditionalClass> Conditionals;
     [SerializeField] bool isOrderMatters;
     [NonSerialized] bool wasSet;
+    [NonSerialized] bool doing;
 
     public StateEnum GetState() { return state;}
     public StateEnum GetAction() { return Action; }
@@ -48,6 +49,10 @@ public class ReportType : ScriptableObject, IStateComparable
 
     public bool SetWasSet() => wasSet = true;
     public bool GetIsAutomatic() { return isAutomatic;}
+
+    public void SetDoing(bool x) { doing = x; }
+
+    public bool getDoing() { return doing; }
 
     public bool CheckIfIsDefault()
     {

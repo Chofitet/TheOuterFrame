@@ -9,4 +9,6 @@ public interface IPlacedOnBoard
     public bool ActiveInBegining();
 
     public bool GetIsTaken();
+
+    public bool IsOutOfBoard();
 }

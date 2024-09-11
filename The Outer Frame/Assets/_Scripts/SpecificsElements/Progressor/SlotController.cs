@@ -15,7 +15,7 @@ public class SlotController : MonoBehaviour
     [SerializeField] Slider ProgressBar;
     [SerializeField] GameObject Icon;
     [SerializeField] GameEvent OnFinishActionProgress;
- 
+
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
     int minuteProgress;
@@ -25,14 +25,14 @@ public class SlotController : MonoBehaviour
     bool isAborted;
     bool isAlreadyDone;
     bool isAutomaticAction;
+    bool isTheSameAction;
+    bool isOtherGroupActionDoing;
     TimeData timeComplete;
     bool inFillFast;
-    StateEnum SpecialState;
     ReportType Report;
 
-    bool isfillSmooth;
 
-    public void initParameters(WordData word, StateEnum state) 
+    public void initParameters(WordData word, StateEnum state)
     {
         gameObject.SetActive(true);
         _word = word;
@@ -48,7 +48,7 @@ public class SlotController : MonoBehaviour
         }
         Wordtxt.GetComponent<WarpTextExample>().UpdateText();
         Actiontxt.text = state.GetActioningVerb();
-        if(state.GetSpecialActionWord()) Actiontxt.text = state.GetIdeaVerb();
+        if (state.GetSpecialActionWord()) Actiontxt.text = state.GetIdeaVerb();
         Actiontxt.GetComponent<WarpTextExample>().UpdateText();
         isAborted = false;
         isAlreadyDone = false;
@@ -56,25 +56,47 @@ public class SlotController : MonoBehaviour
         minuteProgress = 0;
         ProgressBar.maxValue = actionDuration;
         ProgressBar.value = 0;
-        
 
+
+        //ya fue hecho
         if (Report.GetWasSet())
         {
-            inFillFast = true;
-            ProgressBar.maxValue = 1.5f;
+            FillFast();
             isAlreadyDone = true;
         }
-        else if(Report.GetIsAutomatic())
+        //Se está haciendo el mismo en este momento
+        else if (word.CheckIfActionIsDoing(state))
         {
-            inFillFast = true;
-            ProgressBar.maxValue = 1.5f;
+            FillFast();
+            isTheSameAction = true;
+            Debug.Log("misma palabra + acción");
+        }
+        // Se está haciendo uno del mismo ActionGroup
+        else if (ActionGroupManager.AGM.ChekAreInTheSameGroup(word, state))
+        {
+            FillFast();
+            isOtherGroupActionDoing = true;
+            Debug.Log("Otra acción del grupo en proceso");
+        }
+        // Es una acción automática
+        else if (Report.GetIsAutomatic())
+        {
+            FillFast();
             isAutomaticAction = true;
         }
+        // Es una acción válida
         else
         {
+            word.SetDoingAction(state, true);
             TimeManager.OnMinuteChange += UpdateProgress;
             UpdateProgress();
         }
+    }
+
+    void FillFast()
+    {
+        inFillFast = true;
+        ProgressBar.maxValue = 1.5f;
     }
 
     private Tween progressTween;
@@ -89,7 +111,7 @@ public class SlotController : MonoBehaviour
         {
             progressTween.Kill();
         }
-        float animationDuration = 60/TimeManager.timeManager.GetActuaTimeVariationSpeed();
+        float animationDuration = 60 / TimeManager.timeManager.GetActuaTimeVariationSpeed();
         progressTween = ProgressBar.DOValue(minuteProgress, animationDuration);
 
         if (minuteProgress > actionDuration)
@@ -106,13 +128,13 @@ public class SlotController : MonoBehaviour
         }
     }
 
-        private void Update()
+    private void Update()
     {
         if (inFillFast && ProgressBar.value <= ProgressBar.maxValue)
         {
             ProgressBar.value += Time.deltaTime;
         }
-        
+
         if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isAlreadyDone)
         {
             AutomaticAction();
@@ -123,11 +145,20 @@ public class SlotController : MonoBehaviour
             // _state = WordsManager.WM.GetHistory(_word).Last();
             AutomaticAction();
         }
+        else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isTheSameAction)
+        {
+            AutomaticAction();
+        }
+        else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isOtherGroupActionDoing)
+        {
+            AutomaticAction();
+        }
 
     }
 
     private void CompleteAction()
     {
+        _word.SetDoingAction(_state, false);
         inFillFast = false;
         Report = WordsManager.WM.RequestReport(_word, _state);
         if (!Report.GetWasSet())
@@ -191,33 +222,20 @@ public class SlotController : MonoBehaviour
         }
     }
 
-    public WordData GetWord()
-    {
-        return _word;
-    }
+    public WordData GetWord() { return _word; }
 
-    public StateEnum GetState()
-    {
-        return _state;
-    }
+    public StateEnum GetState() { return _state; }
 
-    public ReportType GetReport()
-    {
-        return Report;
-    }
+    public ReportType GetReport() { return Report; }
 
-    public bool GetIsAborted()
-    {
-        return isAborted;
-    }
+    public bool GetIsAborted() { return isAborted; }
 
-    public bool getisAlreadyDone()
-    {
-        return isAlreadyDone;
-    }
+    public bool getisAlreadyDone() { return isAlreadyDone; }
 
-    public TimeData GetTimeComplete()
-    {
-        return timeComplete;
-    }
+    public bool GetIsTheSameAction() { return isTheSameAction; }
+
+    public bool GetIsOtherGroupActionDoing() {return isOtherGroupActionDoing;}
+
+    public TimeData GetTimeComplete() { return timeComplete;}
+
 }

@@ -19,7 +19,7 @@ public class ReportController : MonoBehaviour
     [SerializeField] Sprite ThumbDown;
 
 
-    public void initReport(WordData word, ReportType report, bool isAborted, bool isAlreadyDone, TimeData timeComplete)
+    public void initReport(WordData word, ReportType report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, bool isOtherActionInGroupDoing, TimeData timeComplete)
     {
 
         bool isNotCompleted = false;
@@ -36,7 +36,7 @@ public class ReportController : MonoBehaviour
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
-        if (isAlreadyDone)
+        else if (isAlreadyDone)
         {
             Resulttxt.text = report.GetTextForRepetition();
             //Imagen generica
@@ -45,7 +45,21 @@ public class ReportController : MonoBehaviour
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
-        if(isAborted)
+        else if (isTheSameAction)
+        {
+            Resulttxt.text = "We are already doing that exact same thing.";
+            status = "Rejected";
+            isNotCompleted = true;
+            btnText.text = "DISPOSE";
+        }
+        else if(isOtherActionInGroupDoing)
+        {
+            Resulttxt.text = "We are currently " + word.GetDoingAction(0).GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
+            status = "Rejected";
+            isNotCompleted = true;
+            btnText.text = "DISPOSE";
+        }
+        else if(isAborted)
         {
             Resulttxt.text = "The action \"" + actionVerb + " " + Name + "\" was aborted succesfully";
             status = "Aborted";
@@ -53,8 +67,7 @@ public class ReportController : MonoBehaviour
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
-
-        if (report.GetIsAutomatic())
+        else if (report.GetIsAutomatic())
         {
             status = "Rejected";
             btnText.text = "DISPOSE";
