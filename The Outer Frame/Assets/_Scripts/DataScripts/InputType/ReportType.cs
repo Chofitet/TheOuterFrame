@@ -18,6 +18,7 @@ public class ReportType : ScriptableObject, IStateComparable
     [SerializeField] bool isOrderMatters;
     [NonSerialized] bool wasSet;
     [NonSerialized] bool doing;
+    [NonSerialized] bool wasRegisteredInDB;
 
     public StateEnum GetState() { return state;}
     public StateEnum GetAction() { return Action; }
@@ -53,6 +54,10 @@ public class ReportType : ScriptableObject, IStateComparable
     public void SetDoing(bool x) { doing = x; }
 
     public bool getDoing() { return doing; }
+
+    public void setwasRegisteredInDB() => wasRegisteredInDB = true;
+
+    public bool GetwasRegisteredInDB() { return wasRegisteredInDB; }
 
     public bool CheckIfIsDefault()
     {

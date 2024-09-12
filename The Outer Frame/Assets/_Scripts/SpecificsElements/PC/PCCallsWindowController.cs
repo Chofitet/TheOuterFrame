@@ -8,6 +8,7 @@ public class PCCallsWindowController : MonoBehaviour
     [SerializeField] GameObject PrefabBtCall;
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelCall;
+    [SerializeField] TranscriptionCallController CallToFild;
 
     WordData word;
 
@@ -42,11 +43,9 @@ public class PCCallsWindowController : MonoBehaviour
     {
         panelCall.SetActive(true);
 
-        string call = (string)obj;
+        CallType call = (CallType)obj;
 
-        TMP_Text panelText = panelCall.transform.GetChild(0).GetComponent<TMP_Text>();
-        panelText.text = call;
-        FindableWordsManager.FWM.InstanciateFindableWord(panelText);
+        CallToFild.Inicialization(call);
     }
 
     public void QuitPanelReport()

@@ -17,12 +17,15 @@ public class ReportController : MonoBehaviour
     [SerializeField] PhotoReportSetter photo3;
     [SerializeField] Sprite ThumbUp;
     [SerializeField] Sprite ThumbDown;
+    bool isNotCompleted;
+    WordData word;
+    ReportType report;
 
-
-    public void initReport(WordData word, ReportType report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, bool isOtherActionInGroupDoing, TimeData timeComplete)
+    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, bool isOtherActionInGroupDoing, TimeData timeComplete)
     {
-
-        bool isNotCompleted = false;
+        word = _word;
+        report = _report;
+        isNotCompleted = false;
         string status = "Completed";
         btnText.text = "UPLOAD TO DB";
         StateEnum state = report.GetAction();
@@ -110,6 +113,7 @@ public class ReportController : MonoBehaviour
     {
         GetComponent<BoxCollider>().enabled = true;
         OnMovePaperToTakenPos?.Invoke(this, gameObject);
+        if(!isNotCompleted) WordsManager.WM.RequestChangeStateSeen(word, report.GetState());
         Destroy(this);
     }
 

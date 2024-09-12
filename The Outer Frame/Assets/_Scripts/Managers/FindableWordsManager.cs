@@ -153,7 +153,7 @@ public class FindableWordsManager : MonoBehaviour
                             wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
                             if (SavedPositions.Any(p => Vector3.Distance(p, wordLocation) < 0.001f))
                             {
-                                Debug.Log("Skipping duplicate word at position: " + wordLocation);
+                               // Debug.Log("Skipping duplicate word at position: " + wordLocation);
                                 IsInWord = false;
                                 continue;
                             }

@@ -2,23 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IndividualReportController : MonoBehaviour
+public class IndividualCallController : MonoBehaviour
 {
     bool isComplete;
-    WordData word;
-    ReportType report;
+    CallType call;
     [SerializeField] GameEvent UpdatePCDatabase;
     [SerializeField] GameEvent OnDescartReport;
     [SerializeField] GameEvent OnBackToGeneralView;
-    public void SetType(bool x, WordData _word ,ReportType _report)
+    public void SetType(bool x, CallType _call)
     {
-        report = _report;
-        word = _word;
-        
-        if (x && !report.GetIsAutomatic())
-        {
-            isComplete = x;
-        }
+        call = _call;
+        isComplete = x;
     }
 
     public void FinishReport()
@@ -26,7 +20,6 @@ public class IndividualReportController : MonoBehaviour
         if (isComplete)
         {
             UpdatePCDatabase?.Invoke(this, gameObject);
-            report.setwasRegisteredInDB();
         }
         else
         {

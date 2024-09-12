@@ -41,7 +41,7 @@ public class ORConditional : ScriptableObject, IConditionable
 
             bool conditionState = auxInterface.GetAlternativeConditional();
 
-            if (!conditional.ifNot)
+            if (conditional.ifNot)
             {
                 conditionState = !conditionState;
             }

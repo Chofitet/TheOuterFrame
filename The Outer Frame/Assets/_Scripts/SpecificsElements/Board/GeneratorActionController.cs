@@ -107,12 +107,12 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
             bool conditionState = auxInterface.GetAlternativeConditional();
 
-            if (!conditional.ifNot)
+            if (conditional.ifNot)
             {
                 conditionState = !conditionState;
             }
 
-            if (conditionState)
+            if (!conditionState)
             {
                 return false;
             }
