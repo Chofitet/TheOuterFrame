@@ -8,13 +8,13 @@ public class PCReportController : MonoBehaviour
     [SerializeField] TMP_Text txt;
     [SerializeField] GameEvent OnPressPCReportBTN;
 
-    string _input;
+    ReportType _input;
 
     public void Inicialization(WordData _word, ReportType report)
     {
         if (!_word) return;
         txt.text = report.GetAction().GetActionedVerb() + " " + report.GetTimeWhenWasDone().ToString();
-        _input = report.GetText();
+        _input = report;
     }
 
     public void ShowPanelWithInput()

@@ -8,12 +8,12 @@ public class PCCallController : MonoBehaviour
     [SerializeField] TMP_Text txt;
     [SerializeField] GameEvent OnPressPCCallBTN;
 
-    string _input;
+    CallType _input;
 
     public void Inicialization(CallType call)
     {
-        txt.text = call.GetTimeWhenWasDone().ToString(); 
-        _input = call.GetDialogue();
+        txt.text = call.GetTimeWhenWasDone().ToString();
+        _input = call;
     }
 
     public void ShowPanelWithInput()

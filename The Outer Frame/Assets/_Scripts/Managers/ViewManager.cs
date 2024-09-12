@@ -107,7 +107,7 @@ public class ViewManager : MonoBehaviour
         }
         OnViewStateChange?.Invoke(this,NewView);
         currentviewState = NewView;
-        Debug.Log(currentviewState);
+        //Debug.Log(currentviewState);
         if(isReady) StartDelayCoroutine(DelayBetweenViews);
     }
 

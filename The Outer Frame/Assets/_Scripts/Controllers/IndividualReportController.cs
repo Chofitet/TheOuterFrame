@@ -26,7 +26,7 @@ public class IndividualReportController : MonoBehaviour
         if (isComplete)
         {
             UpdatePCDatabase?.Invoke(this, gameObject);
-            WordsManager.WM.RequestChangeStateSeen(word, report.GetState());
+            report.setwasRegisteredInDB();
         }
         else
         {

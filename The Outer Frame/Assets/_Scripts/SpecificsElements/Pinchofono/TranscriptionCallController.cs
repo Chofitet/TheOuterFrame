@@ -16,6 +16,7 @@ public class TranscriptionCallController : MonoBehaviour
         }
 
         txtCall.text = call.GetDialogue();
+        GetComponent<IndividualCallController>().SetType(true, call);
         FindableWordsManager.FWM.InstanciateFindableWord(txtCall);
     }
 

@@ -8,6 +8,7 @@ public class PCReportWindowController : MonoBehaviour
     [SerializeField] GameObject PrefabBtneport;
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelReporte;
+    [SerializeField] ReportController ReportToFill;
 
     WordData word;
 
@@ -36,20 +37,21 @@ public class PCReportWindowController : MonoBehaviour
 
         foreach (var state in stateHistory)
         {
+            ReportType report = WordsManager.WM.RequestSpecificReport(word, state);
+            if (!report.GetwasRegisteredInDB()) return;
             GameObject btn = Instantiate(PrefabBtneport, Grid.transform, false);
-            btn.GetComponent<PCReportController>().Inicialization(word, WordsManager.WM.RequestSpecificReport(word,state));
+            btn.GetComponent<PCReportController>().Inicialization(word, report);
         }
     }
 
+    //OnPressReportBTN
     public void SetPanelText(Component sender, object obj)
     {
         panelReporte.SetActive(true);
 
-        string report = (string) obj;
+        ReportType report = (ReportType) obj;
 
-        TMP_Text panelText = panelReporte.transform.GetChild(0).GetComponent<TMP_Text>();
-        panelText.text = report;
-        FindableWordsManager.FWM.InstanciateFindableWord(panelText);
+        ReportToFill.initReport(word, report, false, false, false, false, report.GetTimeWhenWasDone());
     }
 
     public void QuitPanelReport()
