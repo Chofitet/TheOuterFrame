@@ -8,6 +8,13 @@ public class ReporterAnimController : MonoBehaviour
     Animator anim;
     bool isAnimating;
 
+    [SerializeField] int _minClips = 2;
+    [SerializeField] int _maxClips = 11;
+    
+    /// <summary>
+    /// organizar para que no repitan emociones
+    /// </summary>
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -25,36 +32,58 @@ public class ReporterAnimController : MonoBehaviour
     {
         StopAllCoroutines();
         anim.SetBool("isTalk", true);
+
+        anim.SetBool("isNormal", false);
+        anim.SetBool("isSerious", false);
+        anim.SetBool("isQuestion", false);
+        anim.SetBool("isSurprise", false);
+
+        switch (Random.Range(1, 5))
+        {
+            case 1: anim.SetBool("isNormal", true); break;
+            case 2: anim.SetBool("isSerious", true); break;
+            case 3: anim.SetBool("isQuestion", true); break;
+            case 4: anim.SetBool("isSurprise", true); break;
+        }
+
         StartCoroutine(RandomizeAnimation());
-        StartCoroutine(SetTalkTime(Random.Range(7, 15)));
+        StartCoroutine(SetTalkTime(Random.Range(_minClips, _maxClips+1)));
     }
 
     IEnumerator RandomizeAnimation()
-    {
+    {        
         while(anim.GetBool("isTalk"))
         {
-            yield return new WaitForSeconds(1.03f);
-            anim.SetInteger("talkChoice", Random.Range(1, 12));
+            yield return new WaitForSeconds(5.05f);
+            anim.SetInteger("talkChoice", Random.Range(1, 11));
         }
     }
 
-    IEnumerator SetTalkTime(float Time)
+    IEnumerator SetTalkTime(int Repetitions)
     {
-        yield return new WaitForSeconds(Time);
-        anim.SetBool("isTalk", false);
-
-        anim.SetBool("isB", false);
-        anim.SetBool("isC", false);
-        anim.SetBool("isTalk", false);
-
-        switch (Random.Range(1, 3))
+        while(Repetitions > 0)
         {
-            case 1: anim.SetBool("isB", true); break;
-            case 2: anim.SetBool("isC", true); break;
-            case 3: anim.SetBool("isTalk", true); break;
+            //Debug.Log("Repetitions: " + Repetitions);
+            yield return new WaitForSeconds(5.05f);
+            Repetitions--;
         }
 
-        Invoke("StartTalkLoop", 2);
+        anim.SetBool("isTalk", false);
+
+        anim.SetBool("isA", false);
+        anim.SetBool("isB", false);
+        anim.SetBool("isC", false);
+        anim.SetBool("isD", false);
+
+        switch (Random.Range(1, 5))
+        {
+            case 1: anim.SetBool("isA", true); break;
+            case 2: anim.SetBool("isB", true); break;
+            case 3: anim.SetBool("isC", true); break;
+            case 4: anim.SetBool("isD", true); break;
+        }
+
+        Invoke("StartTalkLoop", 2.1f);
     }
 
 
