@@ -7,16 +7,19 @@ public class ReporterAnimController : MonoBehaviour
 {
     Animator anim;
     bool isAnimating;
+    float speed;
 
     [SerializeField] int _minClips = 2;
     [SerializeField] int _maxClips = 11;
-    
-    /// <summary>
-    /// organizar para que no repitan emociones
-    /// </summary>
+    List<string> EmotionsClips = new List<string>() { "isNormal", "isSerious", "isQuestion", "isSurprise" };
+    List<string> availableEmotions;
+    string LastEmotion;
+
 
     private void Start()
     {
+        availableEmotions = new List<string> (EmotionsClips);
+        LastEmotion = "isSurprise";
         anim = GetComponent<Animator>();
         SetTriggerAnim(null, null);
     }
@@ -33,18 +36,7 @@ public class ReporterAnimController : MonoBehaviour
         StopAllCoroutines();
         anim.SetBool("isTalk", true);
 
-        anim.SetBool("isNormal", false);
-        anim.SetBool("isSerious", false);
-        anim.SetBool("isQuestion", false);
-        anim.SetBool("isSurprise", false);
-
-        switch (Random.Range(1, 5))
-        {
-            case 1: anim.SetBool("isNormal", true); break;
-            case 2: anim.SetBool("isSerious", true); break;
-            case 3: anim.SetBool("isQuestion", true); break;
-            case 4: anim.SetBool("isSurprise", true); break;
-        }
+        ChooseRandomEmotion();
 
         StartCoroutine(RandomizeAnimation());
         StartCoroutine(SetTalkTime(Random.Range(_minClips, _maxClips+1)));
@@ -54,7 +46,7 @@ public class ReporterAnimController : MonoBehaviour
     {        
         while(anim.GetBool("isTalk"))
         {
-            yield return new WaitForSeconds(5.05f);
+            yield return new WaitForSeconds(5.05f );
             anim.SetInteger("talkChoice", Random.Range(1, 11));
         }
     }
@@ -86,14 +78,39 @@ public class ReporterAnimController : MonoBehaviour
         Invoke("StartTalkLoop", 2.1f);
     }
 
+    void ChooseRandomEmotion()
+    {
+        foreach (string emotion in EmotionsClips)
+        {
+            anim.SetBool(emotion, false);
+        }
 
+        if (availableEmotions.Count == 0)
+        {
+            availableEmotions = new List<string>(EmotionsClips);
+        }
+
+        int randomIndex = Random.Range(0, availableEmotions.Count);
+        string selectedEmotion = availableEmotions[randomIndex];
+
+        while(selectedEmotion == LastEmotion)
+        {
+            randomIndex = Random.Range(0, availableEmotions.Count);
+            selectedEmotion = availableEmotions[randomIndex];
+        }
+
+        anim.SetBool(selectedEmotion, true);
+
+        LastEmotion = selectedEmotion;
+        availableEmotions.RemoveAt(randomIndex);
+    }
 
     public void AccelerateAnimator(Component sender, object obj)
     {
         float _speed = (float)obj;
 
-        Debug.Log("speed: " + _speed);
-
         anim.speed = _speed;
+        speed = 1/_speed;
+        Debug.Log("speed: " + _speed);
     }
 }
