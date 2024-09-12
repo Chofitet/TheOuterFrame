@@ -22,6 +22,7 @@ MonoBehaviour:
   ProgressorNameVersion: 
   PhoneNumber: 
   isAPhoneNumber: 0
+  Type: 0
   reportTypes:
   - {fileID: 11400000, guid: 682b7a28f9c7a07459e6760d2a3c6a78, type: 2}
   - {fileID: 11400000, guid: 8bcf5cafed515274fba465c8aac92b25, type: 2}
@@ -39,6 +40,7 @@ MonoBehaviour:
   TVNewTypes: []
   DBTypes: {fileID: 11400000, guid: e3531d45393fb9f4dbf92dbe2e8fc206, type: 2}
   CallTypes: []
-  InactiveConditions: []
+  InactiveConditions:
+  - {fileID: 11400000, guid: f67d885663566f54c95f03b4559724e6, type: 2}
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0

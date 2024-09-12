@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: P.S. BathroomInspected
+  m_Name: VTTInspectSecondTimeButFirstTimeAfterMopUp
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
-  state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  state: {fileID: 11400000, guid: 7afa4cca76514b148a6b9902d66d8f90, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: -4
-  Text: 'The bathroom door is closed, looks like it opens by key.
-
-'
-  TextForRepetition: The door is closed, looks like it opens by key.
-  Photos:
-  - photo: {fileID: 0}
-    text: 
-  Conditionals: []
+  ChangeTimeOfAction: -3
+  Text: We left it pretty clean
+  TextForRepetition: now is clean(repeat)
+  Photos: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 18af5eccc49c54a45bfc5306f8d5c660, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: cc40ffb6f1e971d4fac048aecf9ee05d, type: 2}
+    ifNot: 0
   isOrderMatters: 0
