@@ -18,14 +18,14 @@ public class ReporterAnimController : MonoBehaviour
 
     private void Start()
     {
-        availableEmotions = new List<string> (EmotionsClips);
-        LastEmotion = "isSurprise";
-        anim = GetComponent<Animator>();
-        SetTriggerAnim(null, null);
+        
     }
 
     public void SetTriggerAnim(Component sender, object obj)
     {
+        anim = GetComponent<Animator>();
+        availableEmotions = new List<string>(EmotionsClips);
+        LastEmotion = "isSurprise";
         anim.SetTrigger("newPaper");
 
         StartTalkLoop();
