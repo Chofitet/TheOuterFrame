@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 3576706320070369019}
   - component: {fileID: 1738614395457785976}
   - component: {fileID: 7725190471170506710}
+  - component: {fileID: 3149116972274186002}
   m_Layer: 0
   m_Name: ActionText
   m_TagString: Untagged
@@ -268,6 +269,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3149116972274186002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276512878152354089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70cd175a89a9d1943ad82fd426d0f69a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FadeSpeed: 18
+  RolloverCharacterSpread: 3
 --- !u!1 &642657854230671159
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,6 +877,7 @@ GameObject:
   - component: {fileID: 7442492351624577786}
   - component: {fileID: 2075909277059069969}
   - component: {fileID: 1121595303662360917}
+  - component: {fileID: 3612240375461985165}
   m_Layer: 0
   m_Name: ActionRowPrefab
   m_TagString: Untagged
@@ -931,6 +947,36 @@ MonoBehaviour:
       - m_Target: {fileID: 2075909277059069969}
         m_TargetAssemblyTypeName: ActionRowController, Assembly-CSharp
         m_MethodName: OnSelectWordInNotebook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &3612240375461985165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062246628295916328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: de4c2261a9464294dbcdf9529638137f, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2075909277059069969}
+        m_TargetAssemblyTypeName: ActionRowController, Assembly-CSharp
+        m_MethodName: GetView
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

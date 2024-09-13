@@ -20,7 +20,14 @@ public class BtnGenerateIdeaController : MonoBehaviour
      public void OnAddAction()
      {
         OnAddActionInPlanAction?.Invoke(this, state);
-     }
+        GetComponent<Button>().enabled = false;
+        Invoke("ActiveBTN", 3f);
+    }
+
+    void ActiveBTN()
+    {
+        GetComponent<Button>().enabled = true;
+    }
 
     public void InactiveIdea()
     {

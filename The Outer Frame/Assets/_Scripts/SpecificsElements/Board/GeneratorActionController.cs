@@ -11,11 +11,11 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] List<ConditionalClass> Conditionals = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
     [SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
-    [SerializeField] Transform BtnContainer;
-    [SerializeField] GameObject BtnGeneratorIdeaPrefab;
+    [SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
     [SerializeField] GameObject Content;
     [SerializeField] GameEvent OnMoveObjectToPapersPos;
     [SerializeField] GameObject CheckImage;
+    [SerializeField] GameEvent OnMoveToCornerIdea;
     bool isDone;
     private bool istaken;
     GameObject IdeaButtom;
@@ -62,17 +62,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
        
         Content.SetActive(true);
 
-        List<StateEnum> ElementsToRemove = new List<StateEnum>();
-
-        foreach (StateEnum action in ActionsToAdd)
-        {
-            GameObject auxInstance = Instantiate(BtnGeneratorIdeaPrefab, BtnContainer);
-            auxInstance.GetComponent<BtnGenerateIdeaController>().Inicialization(action);
-            ElementsToRemove.Add(action);
-            IdeaButtom = auxInstance;
-        }
-
-        foreach (StateEnum action in ElementsToRemove) ActionsToAdd.Remove(action);
+        BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
+        IdeaButtom = BtnGeneratorIdeaPrefab.gameObject;
     }
 
     public bool IsOutOfBoard()
@@ -146,7 +137,10 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         return true;
     }
 
-    
+    public void MoveToCorner()
+    {
+        OnMoveToCornerIdea?.Invoke(null, gameObject);
+    }
 
     public bool ActiveInBegining()
     {
