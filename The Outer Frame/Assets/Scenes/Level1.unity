@@ -3281,7 +3281,7 @@ Transform:
   m_GameObject: {fileID: 136876195}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.106, z: -0.047}
+  m_LocalPosition: {x: 0, y: 0.0847, z: -0.047}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6295,6 +6295,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272741250}
   m_CullTransparentMesh: 1
+--- !u!1 &273809474 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7737376416089238324, guid: a686856e26ff23846885437ea560ae55, type: 3}
+  m_PrefabInstance: {fileID: 1654277278}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &279421961 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -758358727783963833, guid: 39bccc141280cd4459d84d5d04ca2b42, type: 3}
@@ -11079,7 +11084,7 @@ MonoBehaviour:
   OnNotebookLeave: {fileID: 11400000, guid: 9937c6c7e7cd82943a6f1615432a4220, type: 2}
   OnFindableWordsActive: {fileID: 11400000, guid: 17d225f5ba910414b83a0e456d6e80a9, type: 2}
   OnTakeSomeInBoard: {fileID: 11400000, guid: 46b82e4dbf558b04183490426c0f7347, type: 2}
-  OnTakenPaperView: {fileID: 0}
+  OnTakenPaperView: {fileID: 11400000, guid: 641ff3e4639df3447bd2e36f2a47362c, type: 2}
 --- !u!4 &486627077 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8511210232959987837, guid: bd39a9c6108f0fc4bab9a279bad2bfc7, type: 3}
@@ -26904,6 +26909,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1056389986}
+        m_TargetAssemblyTypeName: WordSelectedInNotebook, Assembly-CSharp
+        m_MethodName: ActualView
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   DelayCall: 0
 --- !u!114 &1056389983
 MonoBehaviour:
@@ -26981,6 +26998,7 @@ MonoBehaviour:
   OnShowWordsNotebook: {fileID: 11400000, guid: bece988fb2262db48a7d053d1ad6fd25, type: 2}
   OnShowNumNotebook: {fileID: 11400000, guid: 64df7e1912f2c314286ff10e98e7aff0, type: 2}
   OnDelayNotChangeView: {fileID: 11400000, guid: ff64135e85937b644ab79b4b26637b83, type: 2}
+  OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   WordsfromBeginning: []
 --- !u!1 &1057976717
 GameObject:
@@ -28221,7 +28239,7 @@ Transform:
   m_GameObject: {fileID: 1082088606}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5013544, y: 0.49864247, z: -0.5013539, w: -0.49864194}
-  m_LocalPosition: {x: 0.0136, y: -0.3718, z: 0.2842999}
+  m_LocalPosition: {x: 0, y: -0.35395798, z: 0.27039045}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31208,7 +31226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: de60064a747752a4d8029701492a231c, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 170491ff10741f443a745db17d9eee36, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -34721,8 +34739,11 @@ GameObject:
   - component: {fileID: 1365978742}
   - component: {fileID: 1365978741}
   - component: {fileID: 1365978740}
+  - component: {fileID: 1365978755}
   - component: {fileID: 1365978749}
   - component: {fileID: 1365978751}
+  - component: {fileID: 1365978753}
+  - component: {fileID: 1365978754}
   m_Layer: 0
   m_Name: DossierUp
   m_TagString: Untagged
@@ -35149,6 +35170,96 @@ MonoBehaviour:
       - m_Target: {fileID: 1365978750}
         m_TargetAssemblyTypeName: DossierMoveController, Assembly-CSharp
         m_MethodName: CancelAddIdeaAnim
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1365978753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365978738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: f13f3686b9ea66f41a97b2fa9578b596, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1365978748}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1365978754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365978738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: f13f3686b9ea66f41a97b2fa9578b596, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1365978748}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 2
+--- !u!114 &1365978755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365978738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 641ff3e4639df3447bd2e36f2a47362c, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1365978750}
+        m_TargetAssemblyTypeName: DossierMoveController, Assembly-CSharp
+        m_MethodName: LeaveDossier
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -39889,7 +40000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: de60064a747752a4d8029701492a231c, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 170491ff10741f443a745db17d9eee36, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -43148,6 +43259,7 @@ GameObject:
   - component: {fileID: 1680351622}
   - component: {fileID: 1680351624}
   - component: {fileID: 1680351623}
+  - component: {fileID: 1680351625}
   m_Layer: 0
   m_Name: PaperMoveController
   m_TagString: Untagged
@@ -43430,6 +43542,36 @@ MonoBehaviour:
       - m_Target: {fileID: 1680351621}
         m_TargetAssemblyTypeName: PaperMoveController, Assembly-CSharp
         m_MethodName: PositionOnPC
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1680351625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680351614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 6501ba893dbd2d94188bbaba0eab43f9, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1680351621}
+        m_TargetAssemblyTypeName: PaperMoveController, Assembly-CSharp
+        m_MethodName: OnLevePaperToPile
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -44707,7 +44849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: de60064a747752a4d8029701492a231c, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 170491ff10741f443a745db17d9eee36, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -50478,7 +50620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1941995319
 Transform:
   m_ObjectHideFlags: 0
@@ -50769,7 +50911,7 @@ PlayableDirector:
   - key: {fileID: 936746429960698907, guid: fb0cb7fc674b8f54c8873f71efc8c9cd, type: 2}
     value: {fileID: 1654277279}
   - key: {fileID: -3842474698469179561, guid: fb0cb7fc674b8f54c8873f71efc8c9cd, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 273809474}
   - key: {fileID: -819067656746373711, guid: fb0cb7fc674b8f54c8873f71efc8c9cd, type: 2}
     value: {fileID: 1654277281}
   - key: {fileID: 7159158253786088893, guid: fb0cb7fc674b8f54c8873f71efc8c9cd, type: 2}
@@ -50780,8 +50922,6 @@ PlayableDirector:
     value: {fileID: 1941995320}
   - key: {fileID: -128451707604994081, guid: fb0cb7fc674b8f54c8873f71efc8c9cd, type: 2}
     value: {fileID: 873657063}
-  - key: {fileID: 1902355706554920254, guid: fb0cb7fc674b8f54c8873f71efc8c9cd, type: 2}
-    value: {fileID: 0}
   - key: {fileID: -7750812368002788690, guid: fb0cb7fc674b8f54c8873f71efc8c9cd, type: 2}
     value: {fileID: 1756836803}
   - key: {fileID: -462507507982717588, guid: ab5dee905dbeef14f982e2cc02da0e8a, type: 2}
@@ -50814,6 +50954,7 @@ Transform:
   - {fileID: 1581621163}
   - {fileID: 599818005}
   - {fileID: 2128490989}
+  - {fileID: 2079960632}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1957709482
@@ -50864,6 +51005,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: c0ef8ad71cc110f41a3271fffd525675, type: 2}
     - {fileID: 11400000, guid: 2e9eda61d3e830746b4a4eac7b396217, type: 2}
     - {fileID: 11400000, guid: 0430da04ffaee4a40bfe2f687375f064, type: 2}
+    - {fileID: 11400000, guid: 62de676eed845b94b87f7bbefb3af51e, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -50896,6 +51038,20 @@ MonoBehaviour:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2128490988}
+          m_TargetAssemblyTypeName: TriggerArrayOfEvents, Assembly-CSharp
+          m_MethodName: TriggerEvents
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2079960631}
           m_TargetAssemblyTypeName: TriggerArrayOfEvents, Assembly-CSharp
           m_MethodName: TriggerEvents
           m_Mode: 1
@@ -53145,7 +53301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: de60064a747752a4d8029701492a231c, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 170491ff10741f443a745db17d9eee36, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -53676,8 +53832,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073290972}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.50135434, y: -0.49864247, z: 0.5013539, w: 0.49864194}
-  m_LocalPosition: {x: 0.013999938, y: -0.029842488, z: 0.24190888}
+  m_LocalRotation: {x: -0.46660614, y: -0.5312997, z: 0.46660575, w: 0.53129894}
+  m_LocalPosition: {x: 0, y: -0.012, z: 0.228}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -53869,6 +54025,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078887667}
   m_CullTransparentMesh: 1
+--- !u!1001 &2079960630
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1957709481}
+    m_Modifications:
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949671276282738784, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: m_Name
+      value: OnSendMessageProgressor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5176087531330668237, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: EventsToTrigger.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5176087531330668237, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+      propertyPath: EventsToTrigger.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 170491ff10741f443a745db17d9eee36, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+--- !u!114 &2079960631 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5176087531330668237, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+  m_PrefabInstance: {fileID: 2079960630}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b57a199d70c584b886ab6d8ca99ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2079960632 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 292521502283776395, guid: 7884e2c79d5fada4aae69b84b04a43ba, type: 3}
+  m_PrefabInstance: {fileID: 2079960630}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2082876311
 PrefabInstance:
   m_ObjectHideFlags: 0

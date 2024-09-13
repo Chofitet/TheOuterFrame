@@ -49,8 +49,9 @@ public class DossierMoveController : MonoBehaviour
         isFollowingTarget = false; // Inicialmente no sigue al target
         DossierAnim.SetTrigger("instantActionplan");
         
-        AddIdeaSequence.AppendInterval(0.6f)
+        AddIdeaSequence
             .Append(transform.DOMove(FinalShowInBoardPosition.position, 0.8f).SetEase(Ease.OutSine))
+            .AppendInterval(0.4f)
             .AppendCallback(() =>
             {
                 OnWriteDossier?.Invoke(this, 1.5f);
@@ -114,7 +115,7 @@ public class DossierMoveController : MonoBehaviour
 
         MoveDossierSequence = DOTween.Sequence();
 
-        MoveDossierSequence.Append(transform.DOMove(TakenPosition.position, 0.5f)).SetEase(Ease.InOutSine)
+        MoveDossierSequence.Append(transform.DOMove(TakenPosition.position, 0.5f)).SetEase(Ease.InOutCubic)
                             .Join(transform.DORotate(TakenPosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo);
     }
     public void LeaveDossier(Component sender, object obj)
@@ -124,7 +125,10 @@ public class DossierMoveController : MonoBehaviour
 
         MoveDossierSequence = DOTween.Sequence();
 
-        MoveDossierSequence.Append(transform.DOMove(LeavePosition.position, 0.5f)).SetEase(Ease.InOutSine)
-                            .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo);
+        MoveDossierSequence
+            .AppendInterval(0.05f)
+            .Append(transform.DOMove(LeavePosition.position, 0.7f)).SetEase(Ease.InOutCubic)
+            .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo);
     }
+
 }
