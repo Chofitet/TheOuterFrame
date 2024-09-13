@@ -3623,6 +3623,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 738407980}
     m_Modifications:
+    - target: {fileID: 280737557139183, guid: bd39a9c6108f0fc4bab9a279bad2bfc7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1bc74decbcd298d40b0ffc940cc0540c, type: 3}
     - target: {fileID: 1009317246403769621, guid: bd39a9c6108f0fc4bab9a279bad2bfc7, type: 3}
       propertyPath: word
       value: 
@@ -9906,6 +9910,7 @@ MonoBehaviour:
   - {fileID: 1203729844}
   - {fileID: 929962145}
   MoveDuration: 0.7
+  VanimPos: {fileID: 1821682748}
 --- !u!95 &430144219
 Animator:
   serializedVersion: 5
@@ -9927,6 +9932,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &430144220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430144210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: f2cecceaf0880894a9f521c5c06ca5a3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 430144218}
+        m_TargetAssemblyTypeName: NotebookMoveController, Assembly-CSharp
+        m_MethodName: CompleteSlotsProgressorAnim
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1001 &433087622
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29923,6 +29958,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 430144212}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 430144220}
   m_SourcePrefab: {fileID: 100100000, guid: 972875bfdc5d0f743b2ee32b7e547ad3, type: 3}
 --- !u!1 &1146724423 stripped
 GameObject:
@@ -34755,6 +34793,7 @@ GameObject:
   - component: {fileID: 1365978751}
   - component: {fileID: 1365978753}
   - component: {fileID: 1365978754}
+  - component: {fileID: 1365978756}
   m_Layer: 0
   m_Name: DossierUp
   m_TagString: Untagged
@@ -35271,6 +35310,36 @@ MonoBehaviour:
       - m_Target: {fileID: 1365978750}
         m_TargetAssemblyTypeName: DossierMoveController, Assembly-CSharp
         m_MethodName: LeaveDossier
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1365978756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365978738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: f2cecceaf0880894a9f521c5c06ca5a3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1365978750}
+        m_TargetAssemblyTypeName: DossierMoveController, Assembly-CSharp
+        m_MethodName: CompleteSlotsProgressorAnim
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -46513,6 +46582,7 @@ Transform:
   - {fileID: 496908283}
   - {fileID: 1203729844}
   - {fileID: 929962145}
+  - {fileID: 1821682748}
   m_Father: {fileID: 1251670993}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1770500055
@@ -47537,6 +47607,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4420317440398412215, guid: d5bbe00a71c484a40946dcf8989c1dfc, type: 3}
   m_PrefabInstance: {fileID: 1819675595}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1821682747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1821682748}
+  m_Layer: 0
+  m_Name: NotebookVAnimPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1821682748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821682747}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.35765296, y: -0.5744472, z: -0.21193302, w: 0.7051094}
+  m_LocalPosition: {x: 0.102300644, y: -0.08450519, z: 0.3447531}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1769411405}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1821812295
 GameObject:
   m_ObjectHideFlags: 0

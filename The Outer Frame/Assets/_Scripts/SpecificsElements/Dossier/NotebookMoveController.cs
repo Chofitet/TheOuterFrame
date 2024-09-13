@@ -7,6 +7,7 @@ public class NotebookMoveController : MonoBehaviour
 {
     [SerializeField] Transform[] Positions;
     [SerializeField] float MoveDuration;
+    [SerializeField] Transform VanimPos;
     Animator anim;
     private Sequence moveSequence;
     private Sequence moveWiteWordSequence;
@@ -153,6 +154,19 @@ public class NotebookMoveController : MonoBehaviour
     {
         anim.SetTrigger("close");
         IsPhonesOpen = false;
+    }
+
+    public void CompleteSlotsProgressorAnim(Component sender, object obj)
+    {
+        if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
+        moveSequence = DOTween.Sequence();
+
+        moveSequence.Append(transform.DOMove(VanimPos.position, 0.2f))
+            .Join(transform.DORotate(VanimPos.rotation.eulerAngles,0.2f))
+            .AppendInterval(0.4f)
+            .Append(transform.DOMove(Positions[6].position, 0.2f))
+            .Join(transform.DORotate(Positions[6].rotation.eulerAngles, 0.2f));
+
     }
 
 }

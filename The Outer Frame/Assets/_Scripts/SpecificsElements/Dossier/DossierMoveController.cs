@@ -131,4 +131,15 @@ public class DossierMoveController : MonoBehaviour
             .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo);
     }
 
+    public void CompleteSlotsProgressorAnim(Component sender, object obj)
+    {
+        if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
+        MoveDossierSequence = DOTween.Sequence();
+
+        MoveDossierSequence.Append(transform.DORotate(new Vector3(6, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), 0.2f))
+            .AppendInterval(0.4f)
+            .Append(transform.DORotate(new Vector3(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), 0.2f));
+
+    }
+
 }

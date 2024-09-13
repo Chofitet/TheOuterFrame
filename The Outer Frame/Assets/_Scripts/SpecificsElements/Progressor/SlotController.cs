@@ -188,6 +188,7 @@ public class SlotController : MonoBehaviour
 
     public void AbortAction()
     {
+        _word.SetDoingAction(_state, false);
         isAborted = true;
         OnFinishActionProgress?.Invoke(this, this);
         SetLEDState(Color.yellow);
