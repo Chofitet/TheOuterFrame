@@ -29,4 +29,9 @@ public class MoveObjectToThisPos : MonoBehaviour
         tweenRot = LastObj.transform.DORotate(initRot, 0.3f).SetEase(Ease.InOutCirc).OnComplete(() => { LastObj = null; });
         
     }
+
+    public void DeleteLastObject(Component sender, object obj)
+    {
+        LastObj = null;
+    }
 }

@@ -17,13 +17,15 @@ public class ActionPlan : MonoBehaviour
     StateEnum state;
     bool isOneToggleSelected;
     bool isProgressorFull;
+    bool isFirstTimeIdeaAdded;
 
-    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull)
+    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded)
     {
+        isFirstTimeIdeaAdded = _isFirstTimeIdeaAdded;
         InstantiateActionRows(ActionList);
         ApproveBtn.enabled = false;
         isProgressorFull = _progressorfull;
-
+        
     }
 
     void InstantiateActionRows(List<StateEnum> listActions)
@@ -34,11 +36,11 @@ public class ActionPlan : MonoBehaviour
         {
             GameObject ActionInstantiate = Instantiate(ActionRowPrefab, ActionsContainer, false);
             ActionRowController script = ActionInstantiate.GetComponent<ActionRowController>();
-            script.Initialization(actions);
+            script.Initialization(actions, isFirstTimeIdeaAdded);
             script.GetButton().onClick.AddListener(() => OnButtonRowPress(script));
             Actions.Add(script);
 
-            
+
             if (!actions.GetIfIsActive())
             {
                 ActionInstantiate.GetComponent<ActionRowController>().DesactiveRow();

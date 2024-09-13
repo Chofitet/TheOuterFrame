@@ -17,20 +17,25 @@ public class ActionRowController : MonoBehaviour
     bool isSpecialAction;
     StateEnum state;
     FadeWordsEffect fade;
+    FadeWordsEffect fadeAction;
     bool once;
 
-    public void Initialization(StateEnum _state)
+    public void Initialization(StateEnum _state, bool _isFirstTimeIdeaAdded)
     {
         state = _state;
         ActionText.text = _state.GetInfinitiveVerb();
         btn.onClick.AddListener(OnButtonClick);
         fade = Wordtext.GetComponent<FadeWordsEffect>();
+        fadeAction = ActionText.GetComponent<FadeWordsEffect>();
         observationTxt.text = state.GetObservationTxt();
 
         if (_state.GetSpecialActionWord())
         {
             isSpecialAction = true;
             DotsLine.SetActive(false);
+
+            if (!_isFirstTimeIdeaAdded) return;
+            fadeAction.StartEffect();
         }
     }
 

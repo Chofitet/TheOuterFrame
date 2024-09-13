@@ -12,22 +12,24 @@ public class ActionPlanManager : MonoBehaviour
     [SerializeField] Transform OriginalParent;
     [SerializeField] GameEvent OnCloneActionPlan;
     bool IsProgressorFull;
+    bool isFirstTimeIdeaAdded;
 
     public void SetActionPlan(Component sender, object obj)
     {
         if (transform.childCount != 0) Destroy(transform.GetChild(0).gameObject);
         
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
-        AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull);
+        AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull, isFirstTimeIdeaAdded);
         transform.Rotate(Vector3.zero);
-
-    }
-
+        isFirstTimeIdeaAdded = false;
+      }
     public void AddAction(Component sender, object obj)
     {
-        StateEnum NewAction = (StateEnum)obj;
-        if (NewAction.GetIsDone()) return;
         Actions.Remove(SpecialAction);
+         SetActionPlan(null, null);
+         isFirstTimeIdeaAdded = true;
+         StateEnum NewAction = (StateEnum)obj;
+         if (NewAction.GetIsDone()) return;
         SpecialAction = NewAction;
         Actions.Add(NewAction);
     }

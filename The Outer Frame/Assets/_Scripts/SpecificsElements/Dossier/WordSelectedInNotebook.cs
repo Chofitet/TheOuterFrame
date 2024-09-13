@@ -13,6 +13,7 @@ public class WordSelectedInNotebook : MonoBehaviour
     [SerializeField] GameEvent OnShowWordsNotebook;
     [SerializeField] GameEvent OnShowNumNotebook;
     [SerializeField] GameEvent OnDelayNotChangeView;
+    [SerializeField] GameEvent OnButtonElementClick;
     WordData SelectedWord;
 
     List<WordData> WordsFound = new List<WordData>();
@@ -150,6 +151,13 @@ public class WordSelectedInNotebook : MonoBehaviour
     {
         SelectedWord = word;
         OnSelectedWordInNotebook?.Invoke(this, SelectedWord);
+        if(actualView == ViewStates.OnTakenPaperView) OnButtonElementClick?.Invoke(this, ViewStates.DossierView);
+    }
+
+    ViewStates actualView;
+    public void ActualView(Component sender, object obj)
+    {
+        actualView = (ViewStates)obj;
     }
 
     public WordData GetSelectedWord(){return SelectedWord;}
