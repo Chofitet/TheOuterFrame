@@ -11523,10 +11523,7 @@ PrefabInstance:
       addedObject: {fileID: 1833991698}
     - targetCorrespondingSourceObject: {fileID: 404434217303583250, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1833991697}
-    - targetCorrespondingSourceObject: {fileID: 404434217303583250, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1833991696}
+      addedObject: {fileID: 1833991702}
   m_SourcePrefab: {fileID: 100100000, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
 --- !u!1001 &504661163
 PrefabInstance:
@@ -31256,7 +31253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 40f7b598d5ee14b4e81997982699bad4, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -34290,6 +34287,7 @@ GameObject:
   - component: {fileID: 1348339164}
   - component: {fileID: 1348339163}
   - component: {fileID: 1348339162}
+  - component: {fileID: 1348339167}
   m_Layer: 0
   m_Name: PCButtonMonitor
   m_TagString: Untagged
@@ -34309,7 +34307,8 @@ Transform:
   m_LocalPosition: {x: 0.027999997, y: 0.30299997, z: -0.06699991}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 1533583741}
   m_Father: {fileID: 2057745318}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1348339162
@@ -34427,6 +34426,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!225 &1348339167
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348339160}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1350175140
 GameObject:
   m_ObjectHideFlags: 0
@@ -39576,6 +39587,111 @@ RectTransform:
   m_AnchoredPosition: {x: 0.05000019, y: -0.44000244}
   m_SizeDelta: {x: -0.11, y: -0.29}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1533583740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1533583741}
+  - component: {fileID: 1533583744}
+  - component: {fileID: 1533583743}
+  - component: {fileID: 1533583742}
+  m_Layer: 0
+  m_Name: ew
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1533583741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533583740}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.171, y: 0, z: 0}
+  m_LocalScale: {x: 0.011925283, y: 0.41693076, z: 0.27522}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1348339161}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1533583742
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533583740}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1533583743
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533583740}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1533583744
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533583740}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1534744324
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40030,7 +40146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 40f7b598d5ee14b4e81997982699bad4, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -44879,7 +44995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 40f7b598d5ee14b4e81997982699bad4, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -47912,41 +48028,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1379132359538269657, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
   m_PrefabInstance: {fileID: 502874119}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &1833991696
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1833991694}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.21599767, y: 0.28381315, z: 0.07126707}
-  m_Center: {x: 0.06775103, y: 0.04421484, z: -0.0052830987}
---- !u!114 &1833991697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1833991694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a330445cfe05f804796bf77a0dc5b7a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
-  view: 7
 --- !u!114 &1833991698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47992,9 +48073,40 @@ MonoBehaviour:
   ReportPrefab: {fileID: 8818181090750843214, guid: 211055aa34e86844796ef912127f3406, type: 3}
   InstanciateSpot: {fileID: 1838900274}
   OnTakeReport: {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
+  OnResetProgressorSlot: {fileID: 11400000, guid: 40f7b598d5ee14b4e81997982699bad4, type: 2}
   OnFullPrinter: {fileID: 11400000, guid: 96c6779880561b141afc258f340b3bff, type: 2}
   Led: {fileID: 1151655357}
   TimeLed: 3
+--- !u!114 &1833991702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833991694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 14b4f5d941939264aa0924e69fe30969, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1833991699}
+        m_TargetAssemblyTypeName: PrinterController, Assembly-CSharp
+        m_MethodName: TakeReport
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1 &1834851192 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8419088564216448201, guid: 53ccd2db4c9ebb64b8f7d8e9d36248ff, type: 3}
@@ -53331,7 +53443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 40f7b598d5ee14b4e81997982699bad4, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
