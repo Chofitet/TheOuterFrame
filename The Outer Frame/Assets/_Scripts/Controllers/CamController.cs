@@ -39,6 +39,9 @@ public class CamController : MonoBehaviour
             case ViewStates.OnTakenPaperView:
                 SetPriority(0);
                 break;
+            case ViewStates.GameOverView:
+                SetPriority(7);
+                break;
         }
     }
 

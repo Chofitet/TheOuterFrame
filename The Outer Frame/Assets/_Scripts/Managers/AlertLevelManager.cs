@@ -7,7 +7,10 @@ public class AlertLevelManager : MonoBehaviour
 {
     [SerializeField] TMP_Text NumLevel;
     [SerializeField] BlinkEffect Led;
+    [SerializeField] GameEvent ButtonElement;
     int level;
+
+    
 
     public void UpdateNum(Component sender, object obj)
     {
@@ -26,10 +29,24 @@ public class AlertLevelManager : MonoBehaviour
             Led.ActiveBlink(null, null);
             Invoke("TurnOffLigth", 1.5f);
         }
-    }
 
+        if(level >= 100)
+        {
+            end();
+        }
+    }
+    private void end()
+    {
+        ButtonElement?.Invoke(this, ViewStates.GameOverView);
+    }
     void TurnOffLigth()
     {
         Led.TurnOffLigth(null, null);
+    }
+
+    [ContextMenu("TestGameOver")]
+    private void TestgameOver()
+    {
+        Invoke("end", 5);
     }
 }

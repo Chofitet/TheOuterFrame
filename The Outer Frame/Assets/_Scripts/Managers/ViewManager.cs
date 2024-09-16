@@ -19,19 +19,25 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnFindableWordsActive;
     [SerializeField] GameEvent OnTakeSomeInBoard;
     [SerializeField] GameEvent OnTakenPaperView;
+    [SerializeField] GameEvent OnGameOverView;
     Coroutine StartDelay;
     bool isAPaperHolding;
     ViewStates currentviewState;
-    bool isReady = true;
+    bool isInputDisable;
 
     private void Start()
+    {
+        Invoke("SetStartView", 0.6f);
+    }
+
+    void SetStartView()
     {
         UpdateViewState(null, StartView);
     }
 
     void Update()
     {
-        if (!isReady) return;
+        if (isInputDisable) return;
         if (Input.GetKeyDown(KeyCode.Mouse1) && currentviewState != ViewStates.GeneralView)
         {
             if(currentviewState == ViewStates.OnTakeSomeInBoard)
@@ -52,14 +58,14 @@ public class ViewManager : MonoBehaviour
 
     public void BackToGeneralView(Component sender, object _view)
     {
-        if (!isReady) return;
+        if (isInputDisable) return;
         OnNotebookLeave?.Invoke(this, null);
         UpdateViewState(this, ViewStates.GeneralView);
     }
 
     public void UpdateViewState(Component sender, object _view)
     {
-        if (!isReady) return;
+        if (isInputDisable) return;
         ViewStates NewView = (ViewStates)_view;
         if (NewView == currentviewState) return;
         switch (NewView)
@@ -104,39 +110,20 @@ public class ViewManager : MonoBehaviour
             case ViewStates.OnTakeSomeInBoard:
                 OnTakeSomeInBoard?.Invoke(this, null);
                 break;
+            case ViewStates.GameOverView:
+                OnGameOverView.Invoke(this, "RetryMenu");
+                OnNotebookTake.Invoke(this, false);
+                isInputDisable = true;
+                break;
         }
         OnViewStateChange?.Invoke(this,NewView);
         currentviewState = NewView;
         Debug.Log(currentviewState);
-        if(isReady) StartDelayCoroutine(DelayBetweenViews);
     }
 
     public ViewStates GiveCurrentViewState()
     {
         return currentviewState;
-    }
-
-    public void StartDelayEvent(Component sender, object obj)
-    {
-        float delay = (float)obj;
-
-        StartDelayCoroutine(delay);
-    }
-
-    void StartDelayCoroutine(float delay)
-    {
-        if (StartDelay == null)
-        {
-            StartDelay = StartCoroutine(Delay(delay));
-        }
-    }
-
-    IEnumerator Delay(float delay)
-    {
-        isReady = false;
-        yield return new WaitForSeconds(delay);
-        isReady = true;
-        StartDelay = null;
     }
 
     public void OnSetPaperState(Component sender, object obj)
@@ -158,4 +145,5 @@ public enum ViewStates
     DossierView,
     OnTakenPaperView,
     OnTakeSomeInBoard,
+    GameOverView,
 }
