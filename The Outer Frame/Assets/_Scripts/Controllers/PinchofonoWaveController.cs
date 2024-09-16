@@ -56,5 +56,11 @@ public class PinchofonoWaveController : MonoBehaviour
     {
         EndRecording(null, null);
     }
+
+    [ContextMenu("Catch Recording")]
+    private void CathRecordingTest()
+    {
+        CatchCall(null, null);
+    }
 }
 

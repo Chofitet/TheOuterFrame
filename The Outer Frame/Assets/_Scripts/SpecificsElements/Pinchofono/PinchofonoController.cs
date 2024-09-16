@@ -14,9 +14,13 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnStartRecording;
     [SerializeField] GameEvent OnPrintCall;
     [SerializeField] GameEvent OnAbortCallRecording;
+    [SerializeField] GameObject ScreenContent;
+    [SerializeField] GameObject ErrorMessageContent;
     bool isRecording;
     bool IsInView;
     bool hasNumberEnter;
+    bool printOnce;
+    bool haveCallToPrint;
 
     CallType CallToPrint;
     private Animator anim;
@@ -29,21 +33,24 @@ public class PinchofonoController : MonoBehaviour
 
     public void RecBTNPressed(Component sender, object obj)
     {
-        txtMessage.text = "";
+        anim.SetTrigger("recordPush");
+        StopAllCoroutines();
 
-        if(CallToPrint)
+        if (CallToPrint)
         {
-            txtMessage.text = "You have a pending call";
+            StartCoroutine(ShowErrorMessagePanel("You have a pending call"));
             return;
         }
 
         if (!hasNumberEnter)
         {
             SetIsRecordingFalse();
-            txtMessage.text = "Enter a number";
+            StartCoroutine(ShowErrorMessagePanel("Enter a number"));
         }
         else
         {
+            ShowPanel(ScreenContent);
+            anim.SetBool("isCallPossible", true);
             OnStartRecording?.Invoke(this, null);
             SetIsRecordingTrue();
         }
@@ -51,34 +58,45 @@ public class PinchofonoController : MonoBehaviour
 
     public void PrintBTNPressed(Component sender, object obj)
     {
-        txtMessage.text = "";
-        if (!CallToPrint)
+        anim.SetTrigger("printPush");
+        StopAllCoroutines();
+
+        if (!haveCallToPrint)
         {
-            txtMessage.text = "No calls to print yet";
+            StartCoroutine(ShowErrorMessagePanel("No calls to print yet"));
+        }
+        else if(printOnce)
+        {
+            StartCoroutine(ShowErrorMessagePanel("Take printed call first"));
         }
         else
         {
+            ShowPanel(ScreenContent);
             OnPrintCall?.Invoke(this, null);
+            
         }
+        
     }
 
     public void AbortBTNPressed(Component sender, object obj)
     {
-        txtMessage.text = "";
+        anim.SetTrigger("abortPush");
+        StopAllCoroutines();
 
         if (CallToPrint)
         {
-            txtMessage.text = "You have a pending call";
+            StartCoroutine(ShowErrorMessagePanel("You have a pending call"));
             return;
         }
 
         if (!isRecording)
         {
-            txtMessage.text = "No recording to abort";
+            StartCoroutine(ShowErrorMessagePanel("No recording to abort"));
         }
         else
         {
-            txtMessage.text = "Are you sure you want abort the recording?";
+            
+            StartCoroutine(ShowErrorMessagePanel("Are you sure you want abort the recording?", 7f));
             AbortConfirmationPanel.SetActive(true);
         }
 
@@ -92,8 +110,32 @@ public class PinchofonoController : MonoBehaviour
 
     public void CancelAbort()
     {
+        StopAllCoroutines();
+        ShowPanel(ScreenContent);
         AbortConfirmationPanel.SetActive(false);
+    }
+
+    IEnumerator ShowErrorMessagePanel(string message, float timeToAwait = 3)
+    {
+        ShowPanel(ErrorMessageContent);
+        txtMessage.text = message;
+        yield return new WaitForSeconds(timeToAwait);
         txtMessage.text = "";
+        ShowPanel(ScreenContent);
+    }
+
+    void ShowPanel(GameObject panel)
+    {
+        if(panel == ScreenContent)
+        {
+            ScreenContent.SetActive(true);
+            ErrorMessageContent.SetActive(false);
+        }
+        else
+        {
+            ScreenContent.SetActive(false);
+            ErrorMessageContent.SetActive(true);
+        }
     }
 
     //OnCallEndRecording
@@ -102,19 +144,29 @@ public class PinchofonoController : MonoBehaviour
         CallType call = (CallType)obj;
    
         CallToPrint = call;
+
+        haveCallToPrint = true;
+        SetIsRecordingFalse();
     }
 
     //CallToPrint
     public void PrintCall(Component sender, object obj)
     {
+        if (printOnce) return;
         GameObject aux = Instantiate(CallTranscriptionPrefab, InstanciateSpot);
         aux.GetComponent<TranscriptionCallController>().Inicialization(CallToPrint);
-        SetIsRecordingFalse();
+        
+        printOnce = true;
+
+        anim.SetBool("isCallPossible", false);
+        anim.SetTrigger("recordReady");
     }
 
     //OnSelectedWordInNotebook
     public void EnterName(Component sender, object obj)
     {
+        StopAllCoroutines();
+        ScreenContent.SetActive(true);
         WordData word = (WordData)obj;
         if (!IsInView) return;
         if (!word.GetIsPhoneNumberFound()) return;
@@ -135,7 +187,6 @@ public class PinchofonoController : MonoBehaviour
         if(view != ViewStates.PinchofonoView && IsInView)
         {
             anim.SetTrigger("padClose");
-            txtMessage.text = "";
             AbortConfirmationPanel.SetActive(false);
             hasNumberEnter = false;
         }
@@ -166,13 +217,19 @@ public class PinchofonoController : MonoBehaviour
 
     public void ResetAll(Component sender, object obj)
     {
+        StopAllCoroutines();
+        ShowPanel(ScreenContent);
         anim.SetBool("IsRecording", false);
         anim.SetFloat("tapeSpinSpeed", 0);
+        anim.SetBool("isCallPossible", false);
+        anim.SetTrigger("recordReady");
         isRecording = false;
         txtNumber.text = "";
         CallToPrint = null;
         txtMessage.text = "";
         AbortConfirmationPanel.SetActive(false);
+        printOnce = false;
+        haveCallToPrint = false;
     }
 
 }

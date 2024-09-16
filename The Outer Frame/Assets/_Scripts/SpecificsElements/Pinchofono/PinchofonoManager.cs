@@ -16,7 +16,7 @@ public class PinchofonoManager : MonoBehaviour
     public void SetRecording(Component sender, object obj)
     {
         if (!WordSelectedInNotebook.Notebook.GetSelectedWord()) return;
-        Debug.Log("recording");
+        CallToShow = null;
         TimeManager.OnMinuteChange += CounterPassTime;
         CountDown.text = "00:" + minutesToRecording;
         word = WordSelectedInNotebook.Notebook.GetSelectedWord();
