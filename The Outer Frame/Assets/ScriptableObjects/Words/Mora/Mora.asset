@@ -19,6 +19,7 @@ MonoBehaviour:
   ProgressorNameVersion: Mora
   PhoneNumber: 
   isAPhoneNumber: 0
+  Type: 0
   reportTypes:
   - {fileID: 11400000, guid: d97fb86f4a10bf644b84b60e302f73b9, type: 2}
   - {fileID: 11400000, guid: cc1a458bad5543b4e913f8dd0bd95857, type: 2}
@@ -29,9 +30,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fdc7f1fa9a0c84f4199e225d1f697e19, type: 2}
   - {fileID: 11400000, guid: 5cb231cd850db4c4ab6bbba57fe5defa, type: 2}
   - {fileID: 11400000, guid: 0399b3c4b9b550f47960884fdfe2d0f8, type: 2}
+  - {fileID: 11400000, guid: cf742206e14d71b41abf02b499f28a21, type: 2}
   TVNewTypes: []
   DBTypes: {fileID: 11400000, guid: 9c38c5253487cda4d9c55c21f1c00611, type: 2}
   CallTypes: []
-  InactiveConditions: []
+  InactiveConditions:
+  - {fileID: 11400000, guid: 65dfa7d7769ba0d48814e54ce0436eb9, type: 2}
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0

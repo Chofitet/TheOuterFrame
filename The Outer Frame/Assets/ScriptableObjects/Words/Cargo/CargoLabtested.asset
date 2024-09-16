@@ -14,10 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
-  isAutomatic: 0
+  isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: 
-  TextForRepetition: 
+  Text: "It\u2019s part truck, part container and locked.\r\nThat\u2019s all the
+    analysis we can provide until we open it.\r\n"
+  TextForRepetition: "It\u2019s part truck, part container and locked.\r\nThat\u2019s
+    all the analysis we can provide until we open it.\r\n"
   Photos: []
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: bee3a3f0236098241af2f156e6b6669f, type: 2}
+    ifNot: 1
   isOrderMatters: 0
