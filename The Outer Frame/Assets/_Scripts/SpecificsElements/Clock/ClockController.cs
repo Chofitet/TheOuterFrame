@@ -58,10 +58,15 @@ public class ClockController : MonoBehaviour
 
     private void UpdateMinuteClock()
     {
+        Debug.Log(TM.GetActualMinute());
         Minute = $"{TM.GetActualMinute():00}";
 
-
         string PreviousMinute = $"{TM.GetActualMinute() - 1:00}";
+
+        if (TM.GetActualMinute() == 60)
+        {
+            Minute = "00";
+        }
 
         MinuteMovibleFlipFront.text = Minute;
         MinuteInamovibleFlipFront.text = Minute;
