@@ -34,7 +34,7 @@ public class PCController : MonoBehaviour
         if (inWordAccessWindow) return;
         WordData _word = (WordData)obj;
         word = _word;
-        SearchBar.text = DeleteSpetialCharacter(word.GetName());
+        SearchBar.text = word.GetForm_DatabaseNameVersion();
         StopCoroutine(IdleSearchBarAnim());
         textAnim.SetCharacterPerSecond();
         isWaitingAWord = false;

@@ -14,21 +14,18 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject PrintBTN;
     [SerializeField] GameObject SwitchAbortBTN;
     [SerializeField] GameObject AbortBTN;
+    [SerializeField] BlinkMaterialEffect ReadyToPrintLED;
     bool isPrinterFull;
     Renderer mat;
     Color OriginalColor;
     [SerializeField] float intensity;
 
-    BlinkEffect sphere;
-    BlinkEffect plane;
     private WordData word;
     private StateEnum state;
     private int time;
 
     private void Start()
     {
-        sphere = PrintBTN.transform.GetChild(0).GetComponent<BlinkEffect>();
-        plane = PrintBTN.transform.GetChild(1).GetComponent<BlinkEffect>();
         anim = GetComponent<Animator>();
         mat = SwitchAbortBTN.transform.parent.GetComponent<Renderer>();
         OriginalColor = mat.material.GetColor("_EmissionColor");
@@ -118,8 +115,7 @@ public class ProgressorModuleController : MonoBehaviour
     void delayLigth()
     {
         PrintBTN.GetComponent<Collider>().enabled = true;
-        sphere.ActiveBlink(this, null);
-        plane.ActiveBlink(this, null);
+        ReadyToPrintLED.ActiveBlink(this, null);
     }
     
     public void ReportTaked(Component sender, object obj)
@@ -152,8 +148,7 @@ public class ProgressorModuleController : MonoBehaviour
             if (!isPrinterFull)
             {
                 anim.SetTrigger("printMessage");
-                sphere.TurnOffLigth(this, null);
-                plane.TurnOffLigth(this, null);
+                ReadyToPrintLED.TurnOffLight(this, null);
                 PrintBTN.GetComponent<Collider>().enabled = false;
                 OnPrintReport?.Invoke(this, slot);
             }

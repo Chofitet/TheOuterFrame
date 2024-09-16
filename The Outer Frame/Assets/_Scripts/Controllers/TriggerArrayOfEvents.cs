@@ -6,12 +6,14 @@ public class TriggerArrayOfEvents : MonoBehaviour
 {
     [SerializeField] GameEvent[] EventsToTrigger;
     [SerializeField] GameObject SomethingToPass;
+    [SerializeField] string SomeStringToPass;
 
     public void TriggerEvents()
     {
+
         foreach (GameEvent e in EventsToTrigger)
         {
-            e?.Invoke(this, SomethingToPass);
+            e?.Invoke(this, PassRigthValue());
         }
 
     }
@@ -20,7 +22,16 @@ public class TriggerArrayOfEvents : MonoBehaviour
     {
         foreach (GameEvent e in EventsToTrigger)
         {
-            e?.Invoke(this, SomethingToPass);
+            e?.Invoke(this, PassRigthValue());
         }
+    }
+
+    object PassRigthValue()
+    {
+        if (SomethingToPass) return SomeStringToPass;
+        else if (SomeStringToPass != "") return SomeStringToPass;
+
+        return null;
+
     }
 }
