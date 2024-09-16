@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
+    public static Action OnSecondsChange;
     public static Action OnMinuteChange;
     public static Action OnHourChange;
     public static Action OnDayChange;
@@ -40,11 +41,18 @@ public class TimeManager : MonoBehaviour
         Minute = 25;
     }
 
+    int Seconds;
+
     int Day;
 
     int Hour;
 
     int Minute;
+
+    public int GetActualSeconds()
+    {
+        return Seconds;
+    }
 
     public int GetActualMinute()
     {
@@ -65,34 +73,42 @@ public class TimeManager : MonoBehaviour
     {
         return new TimeData(Day, Hour, Minute);
     }
-
-    int seconds = 1;
-    private float AlternativeTime;
-
     public float GetActuaTimeVariationSpeed()
     {
         return TimeVariation;
     }
 
+
+    private float secondCounter;
+
     void Update()
     {
-        AlternativeTime += Time.deltaTime * TimeVariation;
-        if (AlternativeTime >= 60 * seconds)
+        secondCounter += Time.deltaTime * TimeVariation;
+
+        while (secondCounter >= 1f)
         {
-            Minute++;
-            OnMinuteChange?.Invoke();
-            
-            if (Minute >= 60)
+            Seconds++;
+            OnSecondsChange?.Invoke();
+            secondCounter -= 1f;
+
+            if (Seconds >= 60)
             {
-                Hour++;
-                Minute = 0;
-                OnHourChange?.Invoke();
+                Minute++;
+                Seconds = 0;
+                OnMinuteChange?.Invoke();
+
+                if (Minute >= 60)
+                {
+                    Hour++;
+                    Minute = 0;
+                    OnHourChange?.Invoke();
+                }
+
+                if (Minute % MinutesToChangeNews == 0)
+                {
+                    OnNewsChange?.Invoke();
+                }
             }
-            if (Minute % MinutesToChangeNews == 0)
-            {
-                OnNewsChange?.Invoke();
-            }
-            seconds++;
         }
     }
 

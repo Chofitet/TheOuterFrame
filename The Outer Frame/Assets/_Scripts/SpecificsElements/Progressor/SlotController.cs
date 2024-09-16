@@ -18,7 +18,7 @@ public class SlotController : MonoBehaviour
 
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
-    int minuteProgress;
+    int secondProgress;
     WordData _word;
     StateEnum _state;
     bool isActionComplete;
@@ -38,7 +38,7 @@ public class SlotController : MonoBehaviour
         _word = word;
         Report = WordsManager.WM.RequestReport(word, state);
         _state = state;
-        actionDuration = state.GetTime() + Report.GetChangeTimeOfAction();
+        actionDuration = (state.GetTime() + Report.GetChangeTimeOfAction())*60;
 
         Wordtxt.text = word.GetProgressorNameVersion();
         if (state.GetSpecialActionWord())
@@ -52,7 +52,7 @@ public class SlotController : MonoBehaviour
         isAborted = false;
         isAlreadyDone = false;
 
-        minuteProgress = 0;
+        secondProgress = 0;
         ProgressBar.maxValue = actionDuration;
         ProgressBar.value = 0;
 
@@ -87,7 +87,7 @@ public class SlotController : MonoBehaviour
         else
         {
             word.SetDoingAction(state, true);
-            TimeManager.OnMinuteChange += UpdateProgress;
+            TimeManager.OnSecondsChange += UpdateProgress;
             UpdateProgress();
         }
     }
@@ -104,16 +104,11 @@ public class SlotController : MonoBehaviour
     {
         if (isActionComplete) return;
 
-        minuteProgress += 1;
+        secondProgress += 1;
 
-        if (progressTween != null && progressTween.IsActive())
-        {
-            progressTween.Kill();
-        }
-        float animationDuration = 60 / TimeManager.timeManager.GetActuaTimeVariationSpeed();
-        progressTween = ProgressBar.DOValue(minuteProgress, animationDuration);
+        ProgressBar.value = secondProgress;
 
-        if (minuteProgress > actionDuration)
+        if (secondProgress > actionDuration)
         {
             if (isAlreadyDone)
             {
@@ -192,7 +187,7 @@ public class SlotController : MonoBehaviour
         isAborted = true;
         OnFinishActionProgress?.Invoke(this, this);
         SetLEDState(Color.yellow);
-        TimeManager.OnMinuteChange -= UpdateProgress;
+        TimeManager.OnSecondsChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();
         Icon.SetActive(true);
     }
@@ -209,7 +204,7 @@ public class SlotController : MonoBehaviour
         Report = null;
         isActionComplete = false;
         ProgressBar.value = 0;
-        TimeManager.OnMinuteChange -= UpdateProgress;
+        TimeManager.OnSecondsChange -= UpdateProgress;
         SetLEDState(Color.green);
     }
 
