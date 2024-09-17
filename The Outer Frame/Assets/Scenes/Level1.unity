@@ -7248,11 +7248,11 @@ Transform:
   m_GameObject: {fileID: 283180104}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -51.83007, y: 5.117794, z: 26.819359}
+  m_LocalPosition: {x: -54.258137, y: 1.4664471, z: 35.503944}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 972525406}
+  m_Father: {fileID: 1959487289}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &283180106
 MonoBehaviour:
@@ -12781,9 +12781,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1379132359538269657, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1838900274}
-    - targetCorrespondingSourceObject: {fileID: 1379132359538269657, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1151655356}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
       insertIndex: -1
@@ -12797,6 +12794,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 404434217303583250, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1833991702}
+    - targetCorrespondingSourceObject: {fileID: 5360399351094405995, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1257414635}
+    - targetCorrespondingSourceObject: {fileID: 5360399351094405995, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1257414634}
+    - targetCorrespondingSourceObject: {fileID: 5360399351094405995, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1257414633}
   m_SourcePrefab: {fileID: 100100000, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
 --- !u!1001 &504661163
 PrefabInstance:
@@ -16288,7 +16294,7 @@ PrefabInstance:
     - target: {fileID: -9189204559423410323, guid: 53ccd2db4c9ebb64b8f7d8e9d36248ff, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ce25814a07bd4484980bc669152fd4db, type: 2}
+      objectReference: {fileID: 2100000, guid: 323655cb2bb020840a802c2df67384ae, type: 2}
     - target: {fileID: -8855540366558921396, guid: 53ccd2db4c9ebb64b8f7d8e9d36248ff, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -16976,6 +16982,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8169401096844876324, guid: 53ccd2db4c9ebb64b8f7d8e9d36248ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1728359272}
+    - targetCorrespondingSourceObject: {fileID: 28433527325070886, guid: 53ccd2db4c9ebb64b8f7d8e9d36248ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1128019803}
+    - targetCorrespondingSourceObject: {fileID: 28433527325070886, guid: 53ccd2db4c9ebb64b8f7d8e9d36248ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1128019802}
+    - targetCorrespondingSourceObject: {fileID: 28433527325070886, guid: 53ccd2db4c9ebb64b8f7d8e9d36248ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1128019801}
     - targetCorrespondingSourceObject: {fileID: 5510661050926106291, guid: 53ccd2db4c9ebb64b8f7d8e9d36248ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2139810838}
@@ -17860,7 +17875,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2037e492508696b40a2f50a1dbe6dd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  duration: 0.5
+  maxIntensity: 1
+  BlinkInStart: 0
+  TurnLightDuration: 0
+  otherColorTochange: {r: 0, g: 0, b: 0, a: 0}
 --- !u!224 &668703899 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 974318050705609211, guid: d3a37f65d28ce8e40a49ca08d74335df, type: 3}
@@ -18985,7 +19004,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2037e492508696b40a2f50a1dbe6dd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  duration: 0.5
+  maxIntensity: 1
+  BlinkInStart: 0
+  TurnLightDuration: 0
+  otherColorTochange: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &730725954
 GameObject:
   m_ObjectHideFlags: 0
@@ -23405,7 +23428,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873657060}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.49476492, y: 0.50518084, z: -0.4947658, w: 0.50517994}
+  m_LocalRotation: {x: 0.4947643, y: 0.50518143, z: -0.4947664, w: 0.50517935}
   m_LocalPosition: {x: 0.0500002, y: 0.48000002, z: -0.030000392}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24481,7 +24504,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2037e492508696b40a2f50a1dbe6dd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.49
+  duration: 0.5
+  maxIntensity: 1
+  BlinkInStart: 0
+  TurnLightDuration: 0
+  otherColorTochange: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &911767786
 GameObject:
   m_ObjectHideFlags: 0
@@ -26491,7 +26518,6 @@ Transform:
   - {fileID: 1675762877}
   - {fileID: 239584264}
   - {fileID: 312357057}
-  - {fileID: 283180105}
   m_Father: {fileID: 1804008732}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &973172416
@@ -29026,6 +29052,7 @@ GameObject:
   - component: {fileID: 1056389981}
   - component: {fileID: 1056389980}
   - component: {fileID: 1056389979}
+  - component: {fileID: 1056389987}
   m_Layer: 0
   m_Name: Words
   m_TagString: Untagged
@@ -29321,7 +29348,39 @@ MonoBehaviour:
   OnShowNumNotebook: {fileID: 11400000, guid: 64df7e1912f2c314286ff10e98e7aff0, type: 2}
   OnDelayNotChangeView: {fileID: 11400000, guid: ff64135e85937b644ab79b4b26637b83, type: 2}
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
+  OnRefreshNotebook: {fileID: 11400000, guid: a00e77eb01ae5f5479e7c6ca44efba18, type: 2}
+  OnRemoveEraceInstance: {fileID: 11400000, guid: dfc23633c0e9a704781fd25ffd005f7c, type: 2}
   WordsfromBeginning: []
+--- !u!114 &1056389987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056389977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: dfc23633c0e9a704781fd25ffd005f7c, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1056389985}
+        m_TargetAssemblyTypeName: NotebookController, Assembly-CSharp
+        m_MethodName: RemoveEraceInstance
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1 &1057976717
 GameObject:
   m_ObjectHideFlags: 0
@@ -31819,6 +31878,88 @@ PrefabInstance:
       addedObject: {fileID: 842580595}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd39a9c6108f0fc4bab9a279bad2bfc7, type: 3}
+--- !u!1 &1128019798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 28433527325070886, guid: 53ccd2db4c9ebb64b8f7d8e9d36248ff, type: 3}
+  m_PrefabInstance: {fileID: 622849636}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1128019801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128019798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 65e385f424a093640b7f6a24b57e90f0, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1128019803}
+        m_TargetAssemblyTypeName: BlinkMaterialEffect, Assembly-CSharp
+        m_MethodName: TurnOffLight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1128019802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128019798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 6f9a162f614c14941b7c008709ebf360, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1128019803}
+        m_TargetAssemblyTypeName: BlinkMaterialEffect, Assembly-CSharp
+        m_MethodName: ActiveBlink
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1128019803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128019798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2037e492508696b40a2f50a1dbe6dd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  maxIntensity: 1
+  BlinkInStart: 0
+  TurnLightDuration: 0
+  otherColorTochange: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1131078955
 GameObject:
   m_ObjectHideFlags: 0
@@ -32390,127 +32531,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2037e492508696b40a2f50a1dbe6dd4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
---- !u!1 &1151655355
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1151655356}
-  - component: {fileID: 1151655360}
-  - component: {fileID: 1151655359}
-  - component: {fileID: 1151655358}
-  - component: {fileID: 1151655357}
-  m_Layer: 0
-  m_Name: ReaderLed
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1151655356
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151655355}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.025, y: -0.0832, z: 0.0155}
-  m_LocalScale: {x: 0.0038264967, y: 0.009719964, z: 0.010116118}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1833991695}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1151655357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151655355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c257ed166337f694493d3d5887f698a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endColor: {r: 1, g: 0, b: 0, a: 0}
-  speed: 3
---- !u!65 &1151655358
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151655355}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1151655359
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151655355}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 73852096c4d48f2469b1651ed7c8f7bb, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1151655360
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151655355}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  duration: 0.5
+  maxIntensity: 1
+  BlinkInStart: 0
+  TurnLightDuration: 0
+  otherColorTochange: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1152179915
 GameObject:
   m_ObjectHideFlags: 0
@@ -33742,6 +33767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 559635874}
   OnPrintReport: {fileID: 11400000, guid: 72c604d4c98391e4e9410ddb7074a251, type: 2}
+  OnTryPrintFullPrinter: {fileID: 11400000, guid: ddd6f06c598faf94f828a3c2cd513f32, type: 2}
   PrintBTN: {fileID: 598399347}
   SwitchAbortBTN: {fileID: 1093767620}
   AbortBTN: {fileID: 2085758515}
@@ -35298,6 +35324,112 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b3b0ce182078146aea81eefbabfc83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1257414629 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5360399351094405995, guid: 8c74d0c6d3aa3894c85d0ba346897347, type: 3}
+  m_PrefabInstance: {fileID: 502874119}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1257414633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257414629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: ddd6f06c598faf94f828a3c2cd513f32, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1257414635}
+        m_TargetAssemblyTypeName: BlinkMaterialEffect, Assembly-CSharp
+        m_MethodName: SetOtherColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1257414635}
+        m_TargetAssemblyTypeName: BlinkMaterialEffect, Assembly-CSharp
+        m_MethodName: TurnForXSeconds
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1257414634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257414629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 72c604d4c98391e4e9410ddb7074a251, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1257414635}
+        m_TargetAssemblyTypeName: BlinkMaterialEffect, Assembly-CSharp
+        m_MethodName: SetOriginalColor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1257414635}
+        m_TargetAssemblyTypeName: BlinkMaterialEffect, Assembly-CSharp
+        m_MethodName: TurnForXSeconds
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1257414635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257414629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2037e492508696b40a2f50a1dbe6dd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.5
+  maxIntensity: 1
+  BlinkInStart: 0
+  TurnLightDuration: 2
+  otherColorTochange: {r: 8, g: 0, b: 0, a: 0}
 --- !u!1001 &1257935756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43358,6 +43490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 82967450}
   OnPrintReport: {fileID: 11400000, guid: 72c604d4c98391e4e9410ddb7074a251, type: 2}
+  OnTryPrintFullPrinter: {fileID: 11400000, guid: ddd6f06c598faf94f828a3c2cd513f32, type: 2}
   PrintBTN: {fileID: 720584828}
   SwitchAbortBTN: {fileID: 1403678904}
   AbortBTN: {fileID: 2017010306}
@@ -48419,6 +48552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 1306651096}
   OnPrintReport: {fileID: 11400000, guid: 72c604d4c98391e4e9410ddb7074a251, type: 2}
+  OnTryPrintFullPrinter: {fileID: 11400000, guid: ddd6f06c598faf94f828a3c2cd513f32, type: 2}
   PrintBTN: {fileID: 218477190}
   SwitchAbortBTN: {fileID: 578200183}
   AbortBTN: {fileID: 1459516626}
@@ -51585,7 +51719,6 @@ MonoBehaviour:
   OnTakeReport: {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
   OnResetProgressorSlot: {fileID: 11400000, guid: 40f7b598d5ee14b4e81997982699bad4, type: 2}
   OnFullPrinter: {fileID: 11400000, guid: 96c6779880561b141afc258f340b3bff, type: 2}
-  Led: {fileID: 1151655357}
   TimeLed: 3
 --- !u!114 &1833991702
 MonoBehaviour:
@@ -55174,6 +55307,7 @@ Transform:
   - {fileID: 409749809}
   - {fileID: 383623041}
   - {fileID: 1324834919}
+  - {fileID: 283180105}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1962889208 stripped
@@ -57749,6 +57883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 184405089}
   OnPrintReport: {fileID: 11400000, guid: 72c604d4c98391e4e9410ddb7074a251, type: 2}
+  OnTryPrintFullPrinter: {fileID: 11400000, guid: ddd6f06c598faf94f828a3c2cd513f32, type: 2}
   PrintBTN: {fileID: 193963415}
   SwitchAbortBTN: {fileID: 788241412}
   AbortBTN: {fileID: 1800673787}

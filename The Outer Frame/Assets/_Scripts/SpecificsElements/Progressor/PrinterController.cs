@@ -9,7 +9,6 @@ public class PrinterController : MonoBehaviour
     [SerializeField] GameEvent OnTakeReport;
     [SerializeField] GameEvent OnResetProgressorSlot;
     [SerializeField] GameEvent OnFullPrinter;
-    [SerializeField] BlinkEffect Led;
     [SerializeField] float TimeLed;
     SlotController slot;
 
@@ -18,7 +17,6 @@ public class PrinterController : MonoBehaviour
         
         if (slot)
         {
-            IsFull();
             return;
         }
         OnFullPrinter?.Invoke(this, true);
@@ -31,7 +29,7 @@ public class PrinterController : MonoBehaviour
         GameObject report = Instantiate(ReportPrefab, InstanciateSpot.position,InstanciateSpot.rotation, InstanciateSpot);
         SlotController slotController = slotReference.GetComponent<SlotController>();
         report.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetReport(), slotController.GetIsAborted(), slotController.getisAlreadyDone(), slotController.GetIsTheSameAction(), slotController.GetIsOtherGroupActionDoing(), slotController.GetTimeComplete());
-        IsPrinting();
+       
     }
     
 
@@ -42,21 +40,5 @@ public class PrinterController : MonoBehaviour
         slot = null;
     }
 
-    void IsFull()
-    {
-        Led.TurnOnLigth(null, Color.red);
-        Invoke("TurnOffLed", TimeLed);
-    }
-
-    void IsPrinting()
-    {
-        Led.TurnOnLigth(null, Color.green);
-        Invoke("TurnOffLed", TimeLed);
-    }
-
-    void TurnOffLed()
-    {
-        Led.TurnOffLigth(null, null);
-    }
 
 }

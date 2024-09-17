@@ -6,6 +6,7 @@ public class ProgressorModuleController : MonoBehaviour
 {
     [SerializeField] SlotController slot;
     [SerializeField] GameEvent OnPrintReport;
+    [SerializeField] GameEvent OnTryPrintFullPrinter;
     bool isFull;
     bool IsReadyToPrint;
     bool isAbortOpen;
@@ -16,9 +17,8 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject AbortBTN;
     [SerializeField] BlinkMaterialEffect ReadyToPrintLED;
     bool isPrinterFull;
-    Renderer mat;
+    BlinkMaterialEffect blinkmaterialAbort;
     Color OriginalColor;
-    [SerializeField] float intensity;
 
     private WordData word;
     private StateEnum state;
@@ -27,13 +27,8 @@ public class ProgressorModuleController : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        mat = SwitchAbortBTN.transform.parent.GetComponent<Renderer>();
-        OriginalColor = mat.material.GetColor("_EmissionColor");
-    }
-
-    private void Update()
-    {
-        //mat.material.SetColor("_EmissionColor", Color.white * intensity);
+        blinkmaterialAbort = SwitchAbortBTN.transform.parent.GetComponent<BlinkMaterialEffect>();
+        
     }
 
     public void SetAction(WordData _word,StateEnum _state,int _time)
@@ -60,7 +55,7 @@ public class ProgressorModuleController : MonoBehaviour
         if (!isReady) return;
         slot.initParameters(word, state);
         isReady = false;
-        mat.material.SetColor("_EmissionColor", Color.white * 0.5f );
+        blinkmaterialAbort.TurnOnLigth(null, null);
     }
 
     public void AbortLogic(Component sender, object obj)
@@ -108,13 +103,14 @@ public class ProgressorModuleController : MonoBehaviour
                 anim.SetTrigger("abortSwitchOff");
                 isAbortOpen = false;
             }
-            mat.material.SetColor("_EmissionColor", Color.white * 0f);
+            
         }
     }
 
     void delayLigth()
     {
         PrintBTN.GetComponent<Collider>().enabled = true;
+        blinkmaterialAbort.TurnOffLight(null, null);
         ReadyToPrintLED.ActiveBlink(this, null);
     }
     
@@ -137,7 +133,7 @@ public class ProgressorModuleController : MonoBehaviour
         slot.AbortAction();
         anim.SetTrigger("receiveMessage");
 
-        mat.material.SetColor("_EmissionColor", Color.white * 0f);
+        blinkmaterialAbort.TurnOffLight(null, null);
     }
 
     //OnPressProgressorPrintBTN
@@ -155,6 +151,7 @@ public class ProgressorModuleController : MonoBehaviour
             else
             {
                 anim.SetTrigger("failMessage");
+                OnTryPrintFullPrinter?.Invoke(this, null);
             }
 
         }
