@@ -16,13 +16,16 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: b413be9dee6ead745950900e9cd18389, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: we found <link>the driver</link>
-  TextForRepetition: we found <link>the driver</link>
+  Text: " \nAnd guess who we found hiding inside a stall? <link>The driver</link>.  "
+  TextForRepetition: '
+
+    And guess who we found hiding inside a stall? <link>The
+    driver</link>.  '
   Photos:
   - photo: {fileID: 0}
     text: 
   Conditionals:
-  - condition: {fileID: 11400000, guid: 764a4b27ae076294da85216fdd9cfeca, type: 2}
+  - condition: {fileID: 11400000, guid: aaa3f3a1f358c9e4ba70c0a94ad2f605, type: 2}
     ifNot: 0
   - condition: {fileID: 11400000, guid: ed61fb827c41bf24f9af0a6f755151d3, type: 2}
     ifNot: 1
