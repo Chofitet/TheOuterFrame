@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using System;
 
 public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 {
@@ -27,6 +28,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
     public bool GetConditionalState()
     {
+
         if (StringConnections.Count != 0)
         {
             foreach (StringConnectionController connection in StringConnections)
@@ -91,26 +93,46 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     }
     public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
     {
-        if (ListOfConditionals.Count == 0) return true;
-        foreach (ConditionalClass conditional in ListOfConditionals)
+        try
         {
-            IConditionable auxInterface = conditional.condition as IConditionable;
+            if (ListOfConditionals.Count == 0) return true;
 
-            bool conditionState = auxInterface.GetAlternativeConditional();
-
-            if (conditional.ifNot)
+            foreach (ConditionalClass conditional in ListOfConditionals)
             {
-                conditionState = !conditionState;
+                try
+                {
+                    IConditionable auxInterface = conditional.condition as IConditionable;
+
+                    if (auxInterface == null)
+                        throw new Exception("La condición no implementa IConditionable.");
+
+                    bool conditionState = auxInterface.GetAlternativeConditional();
+
+                    if (conditional.ifNot)
+                    {
+                        conditionState = !conditionState;
+                    }
+
+                    if (!conditionState)
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error en el condicional: {conditional.condition.name}. Detalles: {ex.Message}", ex);
+                }
             }
 
-            if (!conditionState)
-            {
-                return false;
-            }
+            if (isOrderMatters) return CheckIfConditionalAreInOrder(ListOfConditionals);
+            else return true;
         }
-
-        if (isOrderMatters) return CheckIfConditionalAreInOrder(ListOfConditionals);
-        else return true;
+        catch (Exception ex)
+        {
+            // Mensaje de error general con la excepción específica
+            Debug.LogError($"Error al evaluar los condicionales. Detalles: {ex.Message}");
+            return false;
+        }
     }
 
     bool CheckIfConditionalAreInOrder(List<ConditionalClass> ListOfConditionals)

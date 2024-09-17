@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class NotebookWordInstance : MonoBehaviour
 {
@@ -30,12 +31,18 @@ public class NotebookWordInstance : MonoBehaviour
 
     }
 
+    public void EraseAnim()
+    {
+        text.gameObject.GetComponent<FadeWordsEffect>().StartEffect(false);
+    }
+
     public void RefreshWord(Component sender, object obj)
     {
         if (wordReference.GetInactiveState())
         {
             GetComponent<Button>().enabled = false;
             strikethrough.SetActive(true);
+            CrossOutWord();
         }
     }
     public void ReplaceWord(WordData word)
@@ -45,6 +52,12 @@ public class NotebookWordInstance : MonoBehaviour
         wordReference = word;
         word.SetIsFound();
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
+    }
+
+    public void CrossOutWord()
+    {
+        RectTransform line = strikethrough.GetComponent<RectTransform>();
+        line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y),0.3f);
     }
 
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
