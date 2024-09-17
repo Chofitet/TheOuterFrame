@@ -10,6 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21787a5276d74c24e9e60eb8d3299788, type: 3}
-  m_Name: CrossRoad
+  m_Name: End.Idea.BuySomething
   m_EditorClassIdentifier: 
-  Conditions: []
+  Conditions:
+  - condition: {fileID: 11400000, guid: 52d30fed534b83349aa787e1231849e0, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 29bf70def454fdc4d83c2e52a0de4c41, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 8442399ab29eaa54781d654223100094, type: 2}
+    ifNot: 0

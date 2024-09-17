@@ -10,6 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21787a5276d74c24e9e60eb8d3299788, type: 3}
-  m_Name: CrossRoad
+  m_Name: End.IDEA.TakeKeys
   m_EditorClassIdentifier: 
-  Conditions: []
+  Conditions:
+  - condition: {fileID: 11400000, guid: ed61fb827c41bf24f9af0a6f755151d3, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 6e2aeae3037130546a0885174caf1fed, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 52d30fed534b83349aa787e1231849e0, type: 2}
+    ifNot: 0
