@@ -14,6 +14,8 @@ public class WordSelectedInNotebook : MonoBehaviour
     [SerializeField] GameEvent OnShowNumNotebook;
     [SerializeField] GameEvent OnDelayNotChangeView;
     [SerializeField] GameEvent OnButtonElementClick;
+    [SerializeField] GameEvent OnRefreshNotebook;
+    [SerializeField] GameEvent OnRemoveEraceInstance;
     WordData SelectedWord;
 
     List<WordData> WordsFound = new List<WordData>();
@@ -48,7 +50,7 @@ public class WordSelectedInNotebook : MonoBehaviour
 
         if (!word.GetIsAPhoneNumber()) AddWord(word);
         else AddNumber(word);
-
+        OnRefreshNotebook?.Invoke(this, null);
     }
 
     void AddWord(WordData word)
@@ -64,6 +66,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         }
 
         OnSlidePhones?.Invoke(this, false);
+        DeleteOtherWords(word);
         OnShowWordsNotebook?.Invoke(this, word);
 
         if(word.GetPhoneNumber() != "" )
@@ -71,6 +74,8 @@ public class WordSelectedInNotebook : MonoBehaviour
             StartCoroutine(SlideDelay(IsNumAlreadyInList(word), word));
             OnDelayNotChangeView?.Invoke(this, 1f);
         }
+
+        
     }
     void AddNumber(WordData num)
     {
@@ -142,7 +147,19 @@ public class WordSelectedInNotebook : MonoBehaviour
         }
     }
 
-
+    void DeleteOtherWords(WordData word)
+    {
+        foreach(WordData _word in WordsFound)
+        {
+            DeleteCrossoutWorsd DeleteInfo = word.CheckOtherWordDelete(_word);
+            if (DeleteInfo == null) continue;
+            else
+            {
+                if (DeleteInfo.isErase()) OnRemoveEraceInstance?.Invoke(this, _word);
+                else _word.SetInactive();
+            }
+        }
+    }
 
     public void UnselectWord() => SelectedWord = null;
 

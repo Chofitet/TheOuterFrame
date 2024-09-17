@@ -36,6 +36,7 @@ public class WordData : ScriptableObject
 
     [SerializeField] WordData WordThatReplaces;
     [SerializeField] bool CopyHistory;
+    [SerializeField] List<DeleteCrossoutWorsd> WordsThatDeletes = new List<DeleteCrossoutWorsd>();
 
     [NonSerialized] List<StateEnum> stateHistory = new List<StateEnum>();
     [NonSerialized] List<StateEnum> CheckedStateHistory = new List<StateEnum>();
@@ -44,7 +45,7 @@ public class WordData : ScriptableObject
     private List<ActionState> ActionsStates = new List<ActionState>();
     [NonSerialized] bool isFound;
     [NonSerialized] bool isPhoneNumberFound;
-
+    [NonSerialized] bool isInactive;
     [NonSerialized] List<StateEnum> CurrentDoingActions = new List<StateEnum>();
     #region GetInputLogic
 
@@ -281,6 +282,7 @@ public class WordData : ScriptableObject
 
      bool CheckInactiveConditions()
     {
+        if (isInactive) return true;
         if (InactiveConditions.Count == 0) return false;
 
         foreach (ScriptableObject conditional in InactiveConditions)
@@ -293,6 +295,24 @@ public class WordData : ScriptableObject
             }
         }
         return true;
+    }
+
+    public void SetInactive()
+    {
+        isInactive = true;
+    }
+
+    public DeleteCrossoutWorsd CheckOtherWordDelete(WordData word)
+    {
+        if (WordsThatDeletes.Count == 0) return null;
+
+        foreach(DeleteCrossoutWorsd dw in WordsThatDeletes)
+        {
+            dw.SetFound();
+            if (dw.GetWord() == word) return dw;
+        }
+
+        return null;
     }
 
     #endregion
@@ -401,4 +421,29 @@ public class ActionState
     public StateEnum GetState() { return state; }
     public ReportType GetLastReport() { return LastReport; }
     public void SetReport(ReportType report){ LastReport = report; }
+}
+
+[Serializable]
+public class DeleteCrossoutWorsd
+{
+    [SerializeField] WordData word;
+    [SerializeField] deleteType DeleteType;
+
+    public enum deleteType
+    {
+        Erase,
+        CrossOut,
+    }
+
+    public void SetFound()
+    {
+        word.SetIsFound();
+    }
+
+    public WordData GetWord() { return word; }
+    public bool isErase()
+    {
+        if (DeleteType == deleteType.Erase) return true;
+        else return false;
+    }
 }
