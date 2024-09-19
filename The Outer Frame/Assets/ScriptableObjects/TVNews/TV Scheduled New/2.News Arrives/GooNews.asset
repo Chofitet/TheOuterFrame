@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
   m_Name: GooNews
   m_EditorClassIdentifier: 
-  headline: GLOWING STUFF EVERYWHERE AT CRASH SITE
+  headline: GREEN GLOWING STUFF EVERYWHERE AT ROAD 54
   text: 
   image: {fileID: 0}
-  channel: 0
+  channel: 1
   alertLevelIncrement: 20
   Emergency: 1
   Day: 0
@@ -23,6 +23,6 @@ MonoBehaviour:
   Minute: 0
   ReplacedIf:
   - condition: {fileID: 11400000, guid: 18af5eccc49c54a45bfc5306f8d5c660, type: 2}
-    ifNot: 1
+    ifNot: 0
   isOrderMatters: 0
   ReplacedBy: {fileID: 11400000, guid: 84c176b6f42b4c7488b12be78e953165, type: 2}

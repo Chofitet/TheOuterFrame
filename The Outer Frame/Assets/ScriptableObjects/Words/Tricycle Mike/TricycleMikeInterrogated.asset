@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  isAutomatic: 0
+  isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: He refuses to speak to us unless we promise that he and his tricycle will
-    be OK.
-  TextForRepetition: 
-  image: {fileID: 0}
+  Text: He refuses to speak to us unless we promise that he and <link>Mora</link>
+    will be OK.
+  TextForRepetition: He refuses to speak to us unless we promise that he and <link>Mora</link>
+    will be OK.
+  Photos: []
   Conditionals: []
   isOrderMatters: 0
