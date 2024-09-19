@@ -83,7 +83,7 @@ public class ReportController : MonoBehaviour
 
         if (isNotCompleted) return;
         Resulttxt.text = report.GetText();
-        FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt);
+        FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt, report.GetTryCorrectXPos());
         GetComponent<IndividualReportController>().SetType(true, word, report);
 
         SetPhotos(report);
