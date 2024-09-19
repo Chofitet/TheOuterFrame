@@ -14,6 +14,7 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] TMP_Text observationTxt;
     [SerializeField] GameObject DotsLine;
+    [SerializeField] TMP_FontAsset writingFont;
     bool isSpecialAction;
     StateEnum state;
     FadeWordsEffect fade;
@@ -33,6 +34,8 @@ public class ActionRowController : MonoBehaviour
         {
             isSpecialAction = true;
             DotsLine.SetActive(false);
+            ActionText.font = writingFont;
+            Invoke("ClickButton", 0.5f);
 
             if (!_isFirstTimeIdeaAdded) return;
             fadeAction.StartEffect();
@@ -58,6 +61,11 @@ public class ActionRowController : MonoBehaviour
             once = true;
         }
         
+    }
+
+    void ClickButton()
+    {
+        btn.onClick.Invoke();
     }
 
     public void OnButtonClick()
