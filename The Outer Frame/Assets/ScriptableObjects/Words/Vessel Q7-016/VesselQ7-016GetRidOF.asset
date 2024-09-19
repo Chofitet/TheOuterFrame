@@ -16,8 +16,10 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 
-  TextForRepetition: 
+  Text: We should focus on finding whatever it was holding.
+  TextForRepetition: We should focus on finding whatever it was holding.
   Photos: []
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 039e116a61c669e498d57d9226eb564f, type: 2}
+    ifNot: 1
   isOrderMatters: 0
