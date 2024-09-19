@@ -42,6 +42,9 @@ public class CamController : MonoBehaviour
             case ViewStates.GameOverView:
                 SetPriority(7);
                 break;
+            case ViewStates.PauseView:
+                SetPriority(8);
+                break;
         }
     }
 

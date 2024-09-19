@@ -52,6 +52,9 @@ public class NotebookMoveController : MonoBehaviour
             case ViewStates.TVView:
                 SetPos(5);
                 break;
+            case ViewStates.PauseView:
+                SetPos(0);
+                break;
         }
         lastView = newview;
     }

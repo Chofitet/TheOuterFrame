@@ -34,7 +34,7 @@ public class FindableWordsManager : MonoBehaviour
         Cursor.SetCursor(CursorTextures[0], new Vector2(16, 16), CursorMode.ForceSoftware);
     }
 
-    public void InstanciateFindableWord(TMP_Text textField)
+    public void InstanciateFindableWord(TMP_Text textField, bool applyXCorrection = false)
     {
         if (textField == null)
         {
@@ -64,7 +64,7 @@ public class FindableWordsManager : MonoBehaviour
                 }
             }
 
-            List<FindableWordData> PositionsWord = SearchForFindableWord(textField);
+            List<FindableWordData> PositionsWord = SearchForFindableWord(textField, applyXCorrection);
 
             foreach (FindableWordData w in PositionsWord)
             {
@@ -89,7 +89,7 @@ public class FindableWordsManager : MonoBehaviour
 
     }
 
-    List<FindableWordData> SearchForFindableWord(TMP_Text textField)
+    List<FindableWordData> SearchForFindableWord(TMP_Text textField, bool applyXCorrection)
     {
         List<FindableWordData> aux = new List<FindableWordData>();
 
@@ -103,7 +103,7 @@ public class FindableWordsManager : MonoBehaviour
         string[] words = auxiliaryText.Split(' ');
         List<int> processedIndices = new List<int>();
         List<Vector3> SavedPositions = new List<Vector3>();
-
+        List<TMP_WordInfo> listOfWords = new List<TMP_WordInfo>();
 
         for (int i = 0; i < words.Length; i++)
         {
@@ -137,6 +137,7 @@ public class FindableWordsManager : MonoBehaviour
                 bool IsInWord = false;
                 string auxWordToCompare = "";
                 bool BreakLineInstanciate = false;
+                
                 foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
                 {
                     WordInfoCount++;
@@ -148,6 +149,7 @@ public class FindableWordsManager : MonoBehaviour
                         IsInWord = true;
                         var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
                         var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
+
                         if (o == 0)
                         {
                             wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
@@ -165,10 +167,12 @@ public class FindableWordsManager : MonoBehaviour
                         o++;
                         v++;
                         textField.text = auxiliaryText;
+                        
                         if (NormalizedWordInfo.EndsWith("ij"))
                         {
                             IsInWord = false;
                             BreakLineInstanciate = false;
+                            listOfWords.Add(wordInfo);
                             break;
                         }
                         else if (firstCharInfo.lineNumber != textField.textInfo.characterInfo[textField.textInfo.wordInfo[WordInfoCount].firstCharacterIndex].lineNumber)
@@ -193,7 +197,7 @@ public class FindableWordsManager : MonoBehaviour
                 }
                 heigthInfo = heigthInfo + heigthInfo / 4;
                 CombinedWordLength = CombinedWordLength - 5 + v;
-                aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, e));
+                aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, XCorrectionPosition(textField, listOfWords, listOfWords.Last(), applyXCorrection)));
             }
         }
         textField.text = OriginalText;
@@ -220,6 +224,50 @@ public class FindableWordsManager : MonoBehaviour
         }
 
         return word;
+    }
+
+    int XCorrectionPosition(TMP_Text textField, List<TMP_WordInfo> otherwords, TMP_WordInfo actualWord, bool applyXCorrection)
+    {
+        if (!applyXCorrection) return 1;
+        int aux = 1;
+        foreach(TMP_WordInfo otherW in otherwords)
+        {
+            string a = otherW.GetWord();
+            string b = actualWord.GetWord();
+            Debug.Log(otherW.GetWord());
+            if (otherW.GetWord() == actualWord.GetWord()) return aux;
+            if(AreInTheSameParagraph(textField, otherW,actualWord))
+            {
+
+                aux++;
+            }
+        }
+
+        return aux;
+    }
+
+    bool AreInTheSameParagraph( TMP_Text textField, TMP_WordInfo firstCharInfo, TMP_WordInfo lastCharInfo)
+    {
+        int firstCharLine = textField.textInfo.characterInfo[firstCharInfo.firstCharacterIndex].lineNumber;
+        int lastCharLine = textField.textInfo.characterInfo[lastCharInfo.firstCharacterIndex].lineNumber;
+
+        if (firstCharLine != lastCharLine)
+        {
+            for (int i = firstCharInfo.lastCharacterIndex; i < lastCharInfo.firstCharacterIndex; i++)
+            {
+                char currentChar = textField.textInfo.characterInfo[i].character;
+                if (currentChar == '\n')
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     string WordWithoutPointLineBreak(string word)

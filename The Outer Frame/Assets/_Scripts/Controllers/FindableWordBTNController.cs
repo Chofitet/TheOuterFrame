@@ -33,7 +33,22 @@ public class FindableWordBTNController : MonoBehaviour
         textField = TextField;
         word = Word;
         wordIndex = WordIndex;
+        
+        transform.localPosition = transform.localPosition - new Vector3(IndexFilter(), 0, 0);
         ApplyShader("Bold");
+    }
+
+    float IndexFilter()
+    {
+        switch(wordIndex)
+        {
+            case 1: return 0; break;
+            case 2: return 4; break;
+            case 3: return 9; break;
+            case 4: return 18; break;
+        }
+
+        return 0;
     }
 
     public void ChangeToColorToHighligth()

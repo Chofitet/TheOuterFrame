@@ -20,10 +20,12 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnTakeSomeInBoard;
     [SerializeField] GameEvent OnTakenPaperView;
     [SerializeField] GameEvent OnGameOverView;
+    [SerializeField] GameEvent OnPauseView;
     Coroutine StartDelay;
     bool isAPaperHolding;
     ViewStates currentviewState;
     bool isInputDisable;
+    bool isInPause;
 
     private void Start()
     {
@@ -52,7 +54,29 @@ public class ViewManager : MonoBehaviour
             }
             if(currentviewState == ViewStates.BoardView) TimeManager.timeManager.NormalizeTime();
 
+            if(isInPause)
+            {
+                TimeManager.timeManager.NormalizeTime();
+                isInPause = false;
+            }
+
             BackToGeneralView(null, null);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(!isInPause)
+            {
+                TimeManager.timeManager.PauseTime();
+                UpdateViewState(null, ViewStates.PauseView);
+                isInPause = true;
+            }
+            else
+            {
+                TimeManager.timeManager.NormalizeTime();
+                BackToGeneralView(null, null);
+                isInPause = false;
+            }
         }
     }
 
@@ -115,6 +139,9 @@ public class ViewManager : MonoBehaviour
                 OnNotebookTake.Invoke(this, false);
                 isInputDisable = true;
                 break;
+            case ViewStates.PauseView:
+                OnPauseView?.Invoke(this, null);
+                break;
         }
         OnViewStateChange?.Invoke(this,NewView);
         currentviewState = NewView;
@@ -146,4 +173,5 @@ public enum ViewStates
     OnTakenPaperView,
     OnTakeSomeInBoard,
     GameOverView,
+    PauseView,
 }
