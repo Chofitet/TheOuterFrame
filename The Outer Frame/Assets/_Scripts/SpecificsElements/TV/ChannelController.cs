@@ -8,6 +8,7 @@ public class ChannelController : MonoBehaviour
 {
 
     bool isFull;
+    [SerializeField] bool isStaticChannel;
     [SerializeField] OverlayAnimation OverlayAnims;
     [SerializeField] TMP_Text EmergencyTextField;
     [SerializeField] GameObject EmergencyScreen;
@@ -74,6 +75,7 @@ public class ChannelController : MonoBehaviour
         NewImg.color = new Color(1, 1, 1, 0);*/
     }
 
+    public bool GetisStaticChannel() { return isStaticChannel; }
 
     public string GetTriggerAnim() { return TriggerAnim; }
 

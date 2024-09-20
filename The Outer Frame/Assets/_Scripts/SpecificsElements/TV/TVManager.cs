@@ -122,7 +122,7 @@ public class TVManager : MonoBehaviour
         foreach(ChannelController channel in Channels)
         {
             //esto es un parche temporal, las noticias se deben setear incluso con el canal apagado
-            if (!channel.isActiveAndEnabled) continue;
+            if (channel.GetisStaticChannel()) continue;
             if(!channel.GetIsFull())
             {
                 return channel;
