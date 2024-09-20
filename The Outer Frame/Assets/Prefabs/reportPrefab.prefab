@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 7848262431494240537}
   - component: {fileID: 5299863864692923996}
   - component: {fileID: 6748865808750049839}
+  - component: {fileID: 7626277578188598818}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -580,6 +581,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7626277578188598818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2514902220508852194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2f7dd61910b4745811980029fff845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &2572780531324957357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1899,7 +1915,7 @@ GameObject:
   - component: {fileID: 6852101110572274652}
   - component: {fileID: 1864194726200304998}
   - component: {fileID: 8793448533858370425}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FirsTakeReport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2309,7 +2325,7 @@ GameObject:
   - component: {fileID: 1164539977058065183}
   - component: {fileID: 3390742088070976928}
   - component: {fileID: 3486983384381167194}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: reportPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2353,8 +2369,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1.471514, z: 1}
+  m_Center: {x: 0, y: 0.23575671, z: 0}
 --- !u!114 &4596450347146456161
 MonoBehaviour:
   m_ObjectHideFlags: 0

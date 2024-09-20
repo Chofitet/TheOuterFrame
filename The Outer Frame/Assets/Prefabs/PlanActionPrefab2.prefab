@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 8811778082310879973}
   - component: {fileID: 7199042322043686895}
   - component: {fileID: 7890689546900030479}
+  - component: {fileID: 463616968848741621}
   m_Layer: 0
   m_Name: PlanActionPrefab2
   m_TagString: Untagged
@@ -290,6 +291,21 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0.3
+--- !u!114 &463616968848741621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968318278359937755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2f7dd61910b4745811980029fff845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &4099223590196117057
 GameObject:
   m_ObjectHideFlags: 0

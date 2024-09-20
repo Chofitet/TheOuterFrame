@@ -193,7 +193,7 @@ public class PinchofonoController : MonoBehaviour
 
         IsInView = (view == ViewStates.PinchofonoView) ? true : false;
 
-        if (IsInView)
+        if (IsInView && !isRecording && !haveCallToPrint)
         {
             anim.SetTrigger("padOpen");
         }

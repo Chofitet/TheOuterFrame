@@ -16,6 +16,7 @@ public class TVManager : MonoBehaviour
     private void Start()
     {
         NewsDirector();
+        ChangeChannel(null, Channels[1].gameObject);
     }
     private void OnEnable()
     {
@@ -120,6 +121,8 @@ public class TVManager : MonoBehaviour
     {
         foreach(ChannelController channel in Channels)
         {
+            //esto es un parche temporal, las noticias se deben setear incluso con el canal apagado
+            if (!channel.isActiveAndEnabled) continue;
             if(!channel.GetIsFull())
             {
                 return channel;
@@ -148,7 +151,9 @@ public class TVManager : MonoBehaviour
     public void ChangeChannel(Component sender, object obj)
     {
         GameObject aux = (GameObject)obj;
-        aux.SetActive(true);
+        CanvasGroup canvasGroup = aux.GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 1;
+        canvasGroup.interactable = true;
         ChannelController channel = aux.GetComponent<ChannelController>();
         anim.SetTrigger(channel.GetTriggerAnim());
 
@@ -156,7 +161,9 @@ public class TVManager : MonoBehaviour
         {
             if(ch != channel)
             {
-                ch.gameObject.SetActive(false);
+                CanvasGroup _canvasGroup = ch.GetComponent<CanvasGroup>();
+                _canvasGroup.alpha = 0;
+                _canvasGroup.interactable = false;
             }
         }
     }

@@ -203,7 +203,7 @@ public class PaperMoveController : MonoBehaviour
         GameObject paperMove = currentPaper;
         currentPaper = null;
 
-        moveDescart.Append(paperMove.transform.DOMove(DescartPos.transform.position, 0.3f).SetEase(Ease.InBack));
+        moveDescart.Append(paperMove.transform.DOMove(DescartPos.transform.position, 0.5f).SetEase(Ease.InBack));
     }
 
     public void changePaperInPile(GameObject newReport)
