@@ -55,6 +55,18 @@ public class PhoneRowNotebookController : MonoBehaviour
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
     }
 
+    public void ReplaceNumber(WordData _word)
+    {
+        txtName.text = word.GetName();
+        word = _word;
+        StartCoroutine(AnimFade(txtName, false, txtName, true, _word.GetName()));
+        string auxNum = "?????";
+        if (_word.GetIsPhoneNumberFound()) auxNum = _word.GetPhoneNumber();
+
+        StartCoroutine(AnimFade(Num, false, Num, true, auxNum));
+        OnWritingShakeNotebook?.Invoke(this, 0.5f);
+    }
+
     private void ButtonPress()
     {
         if(word.GetIsAPhoneNumber())

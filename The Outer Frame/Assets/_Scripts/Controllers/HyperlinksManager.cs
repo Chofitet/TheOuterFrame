@@ -48,13 +48,13 @@ public class HyperlinksManager : MonoBehaviour
         {
             foreach (Transform child in textField.transform)
             {
-                if (child.GetComponent<HyperlinksManager>() != null)
+                if (child.GetComponent<HyperlinksBTNController>() != null)
                 {
                     Destroy(child.gameObject);
                 }
             }
 
-            List<FindableWordData> PositionsWord = SearchForHyperLinkWord(textField);
+            List<FindableWordData> PositionsWord = SearchForHyperLinkWord(textField,false);
 
             foreach (FindableWordData w in PositionsWord)
             {
@@ -77,14 +77,21 @@ public class HyperlinksManager : MonoBehaviour
     }
 
 
-    List<FindableWordData> SearchForHyperLinkWord(TMP_Text textField)
+    List<FindableWordData> SearchForHyperLinkWord(TMP_Text textField, bool applyXCorrection)
     {
         List<FindableWordData> aux = new List<FindableWordData>();
 
+        string OriginalText = textField.text;
+        string auxiliaryText = AddCustomTagsToLinks(textField.text);
+        textField.text = auxiliaryText;
+
+
         if (textField.IsActive()) textField.ForceMeshUpdate();
 
-        string[] words = textField.text.Split(' ');
+        string[] words = auxiliaryText.Split(' ');
         List<int> processedIndices = new List<int>();
+        List<Vector3> SavedPositions = new List<Vector3>();
+        List<TMP_WordInfo> listOfWords = new List<TMP_WordInfo>();
 
         for (int i = 0; i < words.Length; i++)
         {
@@ -94,63 +101,115 @@ public class HyperlinksManager : MonoBehaviour
             string combinedWord = words[i];
             int startIndex = i;
 
-            while (combinedWord.Contains("<u>") && !combinedWord.Contains("</u>") && i < words.Length - 1)
+
+            while (combinedWord.Contains("ii") && !combinedWord.Contains("ij") && i < words.Length - 1)
             {
                 i++;
                 combinedWord += " " + words[i];
                 amoutOfWordindex++;
             }
 
-            if (combinedWord.Contains("</u>"))
+            if (combinedWord.Contains("ii"))
             {
                 combinedWord = CleanUnnecessaryCharacter(combinedWord);
-                combinedWord = Regex.Replace(combinedWord, @"<\/?u>", "");
+                combinedWord = Regex.Replace(combinedWord, @"\/?ij", "");
                 processedIndices.AddRange(Enumerable.Range(startIndex, i - startIndex + 1));
 
                 float CombinedWordLength = 0;
                 float heigthInfo = 0;
                 var wordLocation = Vector3.zero;
                 int e = 0;
+                int WordInfoCount = 0;
                 int o = 0;
+                int v = 0;
                 bool IsInWord = false;
+                string auxWordToCompare = "";
+                bool BreakLineInstanciate = false;
+
                 foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
                 {
+                    WordInfoCount++;
                     if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord()))
                         continue;
-
-                    string NormalizedCombinedWord = NormalizeWord(combinedWord);
-                    string NormalizedWordInfo = NormalizeWord(wordInfo.GetWord());
-
-                    if (NormalizedCombinedWord.StartsWith(NormalizedWordInfo) || IsInWord)
+                    string NormalizedWordInfo = wordInfo.GetWord();
+                    if (NormalizedWordInfo.StartsWith("ii") || IsInWord || BreakLineInstanciate)
                     {
                         IsInWord = true;
+                        NormalizedWordInfo = NormalizeWord(NormalizedWordInfo);
                         var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
                         var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
-                        if (o == 0) wordLocation = textField.transform.TransformPoint((firstCharInfo.topLeft));
-                        CombinedWordLength += Math.Abs((float)(firstCharInfo.topLeft.x - lastCharInfo.topRight.x));
+
+                        if (o == 0)
+                        {
+                            wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
+                            if (SavedPositions.Any(p => Vector3.Distance(p, wordLocation) < 0.001f))
+                            {
+                                // Debug.Log("Skipping duplicate word at position: " + wordLocation);
+                                IsInWord = false;
+                                continue;
+                            }
+                            SavedPositions.Add(wordLocation);
+                        }
+                        CombinedWordLength += Math.Abs(firstCharInfo.topLeft.x - lastCharInfo.topRight.x);
                         heigthInfo = Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y);
-                        int numOfWord = wordInfo.characterCount;
+                        auxWordToCompare += wordInfo.GetWord();
                         o++;
+                        v++;
+                        textField.text = auxiliaryText;
+
+                        if (NormalizedWordInfo.EndsWith("ij"))
+                        {
+                            IsInWord = false;
+                            BreakLineInstanciate = false;
+                            listOfWords.Add(wordInfo);
+                            break;
+                        }
+                        else if (firstCharInfo.lineNumber != textField.textInfo.characterInfo[textField.textInfo.wordInfo[WordInfoCount].firstCharacterIndex].lineNumber)
+                        {
+                            if (NormalizedWordInfo.EndsWith("ij"))
+                            {
+                                IsInWord = false;
+                                BreakLineInstanciate = false;
+                                break;
+                            }
+                            IsInWord = false;
+                            heigthInfo = heigthInfo + heigthInfo / 4;
+                            CombinedWordLength = CombinedWordLength - 3 + v;
+                            aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, e));
+                            o = 0;
+                            CombinedWordLength = 0;
+                            BreakLineInstanciate = true;
+                            continue;
+                        }
                     }
                     e++;
-
-                    if (NormalizedCombinedWord.EndsWith(NormalizedWordInfo)) IsInWord = false;
                 }
                 heigthInfo = heigthInfo + heigthInfo / 4;
+                CombinedWordLength = CombinedWordLength - 5 + v;
                 aux.Add(new FindableWordData(WordWithoutPointLineBreak(combinedWord), wordLocation, CombinedWordLength, heigthInfo, e));
             }
         }
-
+        textField.text = OriginalText;
         return aux;
+    }
+
+    string AddCustomTagsToLinks(string originalText)
+    {
+        return Regex.Replace(originalText, @"<u>(.*?)<\/u>", "ii$1ij");
     }
 
     string CleanUnnecessaryCharacter(string word)
     {
-        int endIndex = word.IndexOf("</u>", StringComparison.OrdinalIgnoreCase);
+        int startIndex = word.IndexOf("ii", StringComparison.OrdinalIgnoreCase);
+        if (startIndex != -1)
+        {
+            word = word.Substring(startIndex + "ii".Length);
+        }
+
+        int endIndex = word.IndexOf("ij", StringComparison.OrdinalIgnoreCase);
         if (endIndex != -1)
         {
-            endIndex += "</u>".Length;
-            word = word.Substring(0, endIndex);
+            word = word.Substring(0, endIndex).Trim();
         }
 
         return word;

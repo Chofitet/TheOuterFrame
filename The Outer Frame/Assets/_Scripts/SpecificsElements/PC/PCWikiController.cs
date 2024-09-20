@@ -27,11 +27,13 @@ public class PCWikiController : MonoBehaviour
         CheckForUnlockCondition(input);
 
         StartCoroutine(Delay(input));
-       
+
+
     }
 
     IEnumerator Delay(DataBaseType input)
     {
+
         yield return new WaitForSeconds(0.2f);
         if (input.GetText() != null) WikiData.text = input.GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData);
