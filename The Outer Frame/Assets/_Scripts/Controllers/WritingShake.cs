@@ -12,18 +12,19 @@ public class WritingShake : MonoBehaviour
 
     public void writingShake(Component sender, object obj)
     {
+
         float time = (float)obj;
 
-        DoShakeSequence = DOTween.Sequence();
+        if (DoShakeSequence != null && DoShakeSequence.IsActive()) DoShakeSequence.Kill(true);
 
-        if (DoShakeSequence != null && DoShakeSequence.IsActive()) DoShakeSequence.Kill();
-        DoShakeSequence.Append(transform.DOShakeRotation(time, strength,vibrato,randomness,true,ShakeRandomnessMode.Harmonic))
-                        .Join(transform.DOShakeRotation(time, strength, vibrato, randomness, true, ShakeRandomnessMode.Harmonic));
+        DoShakeSequence = DOTween.Sequence();
+        DoShakeSequence.Append(transform.DOShakeRotation(time, strength, vibrato, randomness, true, ShakeRandomnessMode.Harmonic))
+                       .Join(transform.DOShakeRotation(time, strength, vibrato, randomness, true, ShakeRandomnessMode.Harmonic));
 
     }
 
     public void KillWriting(Component sender, object obj)
     {
-
+        if (DoShakeSequence != null && DoShakeSequence.IsActive()) DoShakeSequence.Kill(true);
     }
 }

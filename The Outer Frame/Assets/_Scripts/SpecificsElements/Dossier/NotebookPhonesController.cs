@@ -15,6 +15,8 @@ public class NotebookPhonesController : MonoBehaviour
     {
        WordData LastPhoneAdded = (WordData)obj;
 
+        if (WordReplaceOther(LastPhoneAdded)) return;
+
         if (LastPhoneAdded.GetIsAPhoneNumber() && WordsInstances.Count !=0)
         {
             foreach (GameObject phone in WordsInstances)
@@ -50,6 +52,24 @@ public class NotebookPhonesController : MonoBehaviour
        WordsInstances.Add(wordaux);
 
        i++;
+    }
+
+    bool WordReplaceOther(WordData newword)
+    {
+        bool aux = false;
+        foreach (GameObject w in WordsInstances)
+        {
+            if (!newword.GetWordThatReplaces()) continue;
+            PhoneRowNotebookController script = w.GetComponent<PhoneRowNotebookController>();
+            if (script.GetWord() == newword.GetWordThatReplaces())
+            {
+                script.ReplaceNumber(newword);
+                ClearUnderLine();
+                aux = true;
+            }
+
+        }
+        return aux;
     }
 
     WordData FindWordToReplaceNum(WordData Num)
