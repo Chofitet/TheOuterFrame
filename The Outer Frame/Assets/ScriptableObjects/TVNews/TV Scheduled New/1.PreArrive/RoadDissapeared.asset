@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
+  m_Name: RoadDissapeared
+  m_EditorClassIdentifier: 
+  headline: WHERE DO OUR TAXES GO?
+  text: '"NOT TO PAVE OUR ROADS, THAT''S FOR SURE."
+
+    ROAD 54 IS JUST DIRT FROM
+    KM 330 ONWARDS!'
+  image: {fileID: 0}
+  channel: 1
+  alertLevelIncrement: -15
+  Emergency: 0
+  Day: 0
+  Hour: 6
+  Minute: 30
+  ReplacedIf:
+  - condition: {fileID: 11400000, guid: 27e961aaca111ce40a9e763b26d8188e, type: 2}
+    ifNot: 1
+  isOrderMatters: 0
+  ReplacedBy: {fileID: 0}

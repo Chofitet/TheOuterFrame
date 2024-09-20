@@ -27,18 +27,18 @@ public class NotebookController : MonoBehaviour
         WordData LastWordAdded = (WordData)obj;
 
         int auxIndex = i;
-
+        bool replaceBool = WordReplaceOther(LastWordAdded);
         if (removedIndex.Count != 0 && !once)
         {
             auxIndex = removedIndex[0];
             removedIndex.Remove(removedIndex[0]);
         }
-        else if (removedIndex.Count == 0 && !WordReplaceOther(LastWordAdded))
+        else if (removedIndex.Count == 0 && !replaceBool)
         {
             i++;
         }
 
-        if (WordReplaceOther(LastWordAdded)) return;
+        if (replaceBool) return;
 
         if (LastWordAdded.GetIsAPhoneNumber()) return;
         GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
