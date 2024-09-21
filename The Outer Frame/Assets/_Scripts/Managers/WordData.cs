@@ -396,7 +396,7 @@ public class WordData : ScriptableObject
                 return StateHistoryTime[s];
             }
         }
-        return TimeManager.timeManager.GetTime();
+        return new TimeData(0,0,0);
     }
 
     public void SetIsFound(bool x = true)

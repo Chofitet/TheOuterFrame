@@ -9,6 +9,7 @@ public class ChannelController : MonoBehaviour
 
     bool isFull;
     [SerializeField] bool isStaticChannel;
+    [SerializeField] int DefaultMinutesToPassNews;
     [SerializeField] OverlayAnimation OverlayAnims;
     [SerializeField] TMP_Text EmergencyTextField;
     [SerializeField] GameObject EmergencyScreen;
@@ -18,10 +19,31 @@ public class ChannelController : MonoBehaviour
     [SerializeField] string TriggerAnim;
     [SerializeField] GameEvent OnIncreaseAlertLevel;
     [SerializeField] GameEvent OnChangeReporterAnim;
+    TimeCheckConditional MinTimeToShowNew;
+    TimeCheckConditional TimeToRestartRandoms;
+
+
+    private void Start()
+    {
+        if (isStaticChannel) isFull = true;
+        
+    }
 
     public bool GetIsFull() { return isFull; }
 
     public void SetIsFull(bool x) => isFull = x;
+
+    public bool GetIsMinTimePass() 
+    {
+        if (!MinTimeToShowNew) return true;
+        return MinTimeToShowNew.GetStateCondition();
+    }
+
+    public bool GetTimeToRestartRandoms() 
+    {
+        if (!TimeToRestartRandoms) return true; 
+        return TimeToRestartRandoms.GetStateCondition(); 
+    }
 
     //voy a hacer que el canal sea el que inicie contadores de cuanto tiempo dejará una noticia.
     //deberá gestionar una cola de noticias que le entran y partir los bloques que ya creo.
@@ -31,21 +53,30 @@ public class ChannelController : MonoBehaviour
     {
         if (_new == null) return;
         EmergencyScreen.SetActive(false);
-       
+
+        MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
+        TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
+
+
         OverlayAnims.NewsOut();
         OverlayAnims.PicsOut();
         OverlayAnims.QuipOut();
         OnChangeReporterAnim?.Invoke(this, null);
 
         StartCoroutine(BackUI(OverlayAnims.GetAnimTime(), _new));
-       
+
+        _new.SetWasStreamed();
+
+        Debug.Log("The new " + _new.GetHeadline() + " was setted in channel " + name + " At " + TimeManager.timeManager.GetTime().ToString() +
+            "\n" + "MINIMUM hour to show: " + MinTimeToShowNew.GetTimeSetted().ToString() +
+            "\n" + "MAXUMUM hour to show: " + TimeToRestartRandoms.GetTimeSetted().ToString());
     }
 
     IEnumerator BackUI(float time, INewType _new)
     {
         yield return new WaitForSeconds(time);
 
-        Debug.Log("time to change new: " + time);
+        
 
         OverlayAnims.NewsIn();
         OverlayAnims.PicsIn();
@@ -60,6 +91,7 @@ public class ChannelController : MonoBehaviour
         OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
 
     }
+
 
     void ChangeToEmergencyLayout(INewType _new)
     {
@@ -79,4 +111,34 @@ public class ChannelController : MonoBehaviour
 
     public string GetTriggerAnim() { return TriggerAnim; }
 
+    TimeCheckConditional DefineTime(TimeCheckConditional timeConditional, int minutes)
+    {
+        TimeData ActualTime = TimeManager.timeManager.GetTime();
+
+        TimeData FixedEndTime = AddMinutesToTime(ActualTime, minutes);
+        timeConditional = ScriptableObject.CreateInstance<TimeCheckConditional>();
+        timeConditional.Initialize(true, FixedEndTime.Day, FixedEndTime.Hour, FixedEndTime.Minute);
+
+        return timeConditional;
+    }
+
+    private TimeData AddMinutesToTime(TimeData time, int minutesToAdd)
+    {
+        int totalMinutes = time.Minute + minutesToAdd;
+        int extraHours = totalMinutes / 60;
+        int finalMinutes = totalMinutes % 60;
+
+        int totalHours = time.Hour + extraHours;
+        int extraDays = totalHours / 24;
+        int finalHours = totalHours % 24;
+
+        int finalDays = time.Day + extraDays;
+
+        return new TimeData
+        {
+            Day = finalDays,
+            Hour = finalHours,
+            Minute = finalMinutes
+        };
+    }
 }

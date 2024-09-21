@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "New TVNewRandom", menuName = "News/RandomNew")]
 public class TVRandomNewType : ScriptableObject, INewType
@@ -9,6 +10,12 @@ public class TVRandomNewType : ScriptableObject, INewType
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] Sprite image;
     [SerializeField] int channel;
+    [NonSerialized] bool wasStremed;
+
+    public int GetChannelNum()
+    {
+        return channel;
+    }
 
     public string GetHeadline(){return headline;}
 
@@ -19,10 +26,39 @@ public class TVRandomNewType : ScriptableObject, INewType
         return 0;
     }
 
+    public int GetMinTransmitionTime()
+    {
+        return 0;
+    }
+
     public Sprite GetNewImag() { return image; }
 
     public string GetNewText()
     {
         return text;
+    }
+
+    public bool GetStateConditionalToAppear()
+    {
+        return true;
+    }
+
+    public int GetTimeToAppear()
+    {
+        return 0;
+    }
+
+    public int GetPriority()
+    {
+        return 100;
+    }
+    public void SetWasStreamed()
+    {
+        wasStremed = true;
+    }
+
+    public bool GetWasStreamed()
+    {
+        return wasStremed;
     }
 }

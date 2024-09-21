@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Connection Made Conditional", menuName = "Conditionals/ConnectionMadeConditional")]
-public class ConectionInBoardMadeConditional : IConditionable
+[CreateAssetMenu(fileName = "New Streaming Conditional", menuName = "Conditionals/New Streaming Conditional")]
+public class NewStreamingConditional : ScriptableObject, IConditionable
 {
+    [SerializeField] ScriptableObject New;
 
     public bool CheckIfHaveTime()
     {
@@ -13,7 +14,7 @@ public class ConectionInBoardMadeConditional : IConditionable
 
     public bool GetAlternativeConditional()
     {
-        return true;
+        throw new System.NotImplementedException();
     }
 
     public IConditionable GetLastCompletedConditional()
@@ -23,7 +24,10 @@ public class ConectionInBoardMadeConditional : IConditionable
 
     public bool GetStateCondition()
     {
-        throw new System.NotImplementedException();
+        if (New is not INewType) Debug.LogWarning("The conditional " + name + " have a wrong type of Scriptable Object assigned in a field");
+        INewType _new = New as INewType;
+        
+        return _new.GetWasStreamed();
     }
 
     public int GetTimeToShowNews()

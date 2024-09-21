@@ -18,10 +18,20 @@ public class WordFoundConditional : ScriptableObject, IConditionable
         return word.GetIsFound();
     }
 
+    public IConditionable GetLastCompletedConditional()
+    {
+        return this as IConditionable;
+    }
+
     public bool GetStateCondition()
     {
         if (!word) Debug.LogWarning("the Word Found conditional " + name + " not have a word assigned");
         return word.GetIsFound();
+    }
+
+    public int GetTimeToShowNews()
+    {
+        throw new System.NotImplementedException();
     }
 
     public TimeData GetTimeWhenWasComplete()

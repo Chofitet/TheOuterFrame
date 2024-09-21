@@ -12,6 +12,8 @@ public class ORConditional : ScriptableObject, IConditionable
     public bool GetStateCondition() { return CheckForAllConditionals(); }
     public TimeData GetTimeWhenWasComplete(){ throw new System.NotImplementedException();}
 
+    public IConditionable GetLastCompletedConditional() { return GetLastCompleteConditional(); }
+
     bool CheckForAllConditionals()
     {
         foreach (ConditionalClass conditional in Conditions)
@@ -54,4 +56,42 @@ public class ORConditional : ScriptableObject, IConditionable
         return false;
     }
 
+    IConditionable GetLastCompleteConditional()
+    {
+        IConditionable lastCompleteConditional = null;
+        int latestTime = 0; 
+
+        foreach (ConditionalClass conditional in Conditions)
+        {
+            IConditionable auxConditional = conditional.condition as IConditionable;
+
+            if (auxConditional.CheckIfHaveTime())
+            {
+                int completionTime = auxConditional.GetTimeWhenWasComplete().GetTimeInNum();
+
+                foreach (ConditionalClass otherConditional in Conditions)
+                {
+                    IConditionable otherAuxConditional = otherConditional.condition as IConditionable;
+
+                    if (otherAuxConditional.CheckIfHaveTime())
+                    {
+                        int otherCompletionTime = otherAuxConditional.GetTimeWhenWasComplete().GetTimeInNum();
+
+                        if (completionTime > otherCompletionTime && completionTime > latestTime)
+                        {
+                            latestTime = completionTime;
+                            lastCompleteConditional = auxConditional;
+                        }
+                    }
+                }
+            }
+        }
+        Debug.Log("LastCompleted conditional = " + lastCompleteConditional);
+        return lastCompleteConditional;  
+    }
+
+    public int GetTimeToShowNews()
+    {
+        throw new System.NotImplementedException();
+    }
 }
