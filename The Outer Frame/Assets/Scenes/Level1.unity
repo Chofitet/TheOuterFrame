@@ -27275,6 +27275,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9068181064678660897, guid: 49abb106efd2213439ea723b683ca8eb, type: 3}
+      propertyPath: Conditionals.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068181064678660897, guid: 49abb106efd2213439ea723b683ca8eb, type: 3}
       propertyPath: ActionsToAdd.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: bc45c07abadc6c64a864d1739614e337, type: 2}
@@ -27282,6 +27286,14 @@ PrefabInstance:
       propertyPath: InactiveConditionals.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9068181064678660897, guid: 49abb106efd2213439ea723b683ca8eb, type: 3}
+      propertyPath: Conditionals.Array.data[0].ifNot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9068181064678660897, guid: 49abb106efd2213439ea723b683ca8eb, type: 3}
+      propertyPath: Conditionals.Array.data[0].condition
+      value: 
+      objectReference: {fileID: 11400000, guid: dc03d4c3736cf334ab7dae5d80935ad0, type: 2}
     - target: {fileID: 9068181064678660897, guid: 49abb106efd2213439ea723b683ca8eb, type: 3}
       propertyPath: InactiveConditionals.Array.data[0].condition
       value: 
@@ -27333,7 +27345,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873657060}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.49476555, y: 0.50518024, z: -0.49476528, w: 0.5051805}
+  m_LocalRotation: {x: 0.49476492, y: 0.50518084, z: -0.4947658, w: 0.50517994}
   m_LocalPosition: {x: 0.0500002, y: 0.48000002, z: -0.030000392}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35328,6 +35340,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4de09b8d58e7ee443b494bba0fd3c348, type: 2}
   - {fileID: 11400000, guid: 196a5ea7dbb145d499abe43d59d24dc1, type: 2}
   - {fileID: 11400000, guid: 7aca535a8c26c9248accbda3e37997e6, type: 2}
+  - {fileID: 11400000, guid: 9ec5a15b25d3ebb41bda4f051db574ba, type: 2}
   Actions:
   - {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   - {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
@@ -60172,8 +60185,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 2.5
+  m_fontSizeBase: 2.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
