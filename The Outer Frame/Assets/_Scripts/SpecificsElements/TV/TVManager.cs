@@ -9,6 +9,7 @@ public class TVManager : MonoBehaviour
     public static Action OnNewGenericEmptySlotTV;
     [SerializeField] int InitChannel = 1;
     [SerializeField] List<ChannelController> Channels = new List<ChannelController>();
+    [HideInInspector][SerializeField] TMP_Text ChannelNumTxt;
     [SerializeField] List<TVScheduledNewType> ScheduledNews = new List<TVScheduledNewType>();
     List<INewType> QueueOfNews = new List<INewType>();
     [SerializeField] List<TVNewType> ReactiveNews = new List<TVNewType>();
@@ -238,8 +239,9 @@ public class TVManager : MonoBehaviour
         canvasGroup.interactable = true;
         ChannelController channel = aux.GetComponent<ChannelController>();
         anim.SetTrigger(channel.GetTriggerAnim());
+        ChannelNumTxt.text = (Channels.IndexOf(channel) + 1).ToString();
 
-        foreach(ChannelController ch in Channels)
+        foreach (ChannelController ch in Channels)
         {
             if(ch != channel)
             {
