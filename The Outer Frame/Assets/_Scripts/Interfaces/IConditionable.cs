@@ -4,4 +4,6 @@ public interface IConditionable
     bool GetAlternativeConditional();
     bool CheckIfHaveTime();
     TimeData GetTimeWhenWasComplete();
+    IConditionable GetLastCompletedConditional();
+    int GetTimeToShowNews();
 }

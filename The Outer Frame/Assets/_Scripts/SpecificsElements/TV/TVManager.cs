@@ -2,60 +2,69 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class TVManager : MonoBehaviour
 {
+    public static Action OnNewGenericEmptySlotTV;
+    [SerializeField] int InitChannel = 1;
     [SerializeField] List<ChannelController> Channels = new List<ChannelController>();
+    [SerializeField] List<TVScheduledNewType> ScheduledNews = new List<TVScheduledNewType>();
+    List<INewType> QueueOfNews = new List<INewType>();
+    [SerializeField] List<TVNewType> ReactiveNews = new List<TVNewType>();
+    [SerializeField] List<TVRandomNewType> RandomNews = new List<TVRandomNewType>();
     [SerializeField] Animator anim;
-    // Está suscripto al evento de chequeo de noticias
-    // Tiene referenciado los canales por tipo
-    // Tiene las listas de las noticias programadas y random
-    // Manejará el embudo de noticias. Sacará como conclusión en qué canal y por cuanto tiempo irá una noticia
-    // Manejo de cronograma de programación.
-
     private void Start()
     {
-        NewsDirector();
-        ChangeChannel(null, Channels[1].gameObject);
+        FillEmptiesChannels();
+        ChangeChannel(null, Channels[InitChannel].gameObject);
     }
+
     private void OnEnable()
     {
-        TimeManager.OnNewsChange += NewsDirector;
+        TimeManager.OnMinuteChange += NewsDirector;
+       // TimeManager.OnMinuteChange += CountTimeToNewGenericEmptySlot;
     }
     private void OnDisable()
     {
-        TimeManager.OnNewsChange -= NewsDirector;
+        TimeManager.OnMinuteChange -= NewsDirector;
+       // TimeManager.OnMinuteChange -= CountTimeToNewGenericEmptySlot;
+    }
+    
+
+    #region RandomNewLogic
+    /*void Subscribe_UnsuscribeCountTimeToNewGenericEmptySlot(bool x)
+    {
+        if (x)
+        {
+            minuteCounter = 0;
+            TimeManager.OnNewsChange += CountTimeToNewGenericEmptySlot;
+        }
+        else TimeManager.OnNewsChange -= CountTimeToNewGenericEmptySlot;
     }
 
-    [SerializeField] List<TVScheduledNewType> ScheduledNews = new List<TVScheduledNewType>();
+    int minuteCounter = 0;
+    void CountTimeToNewGenericEmptySlot()
+    {
+        minuteCounter++;
 
-    List<TVNewType> ReactiveNews = new List<TVNewType>();
+        if(minuteCounter >= DefaultMinuteToChangeNews)
+        {
+            SetRandomNew();
+            minuteCounter = 0;
+        }
+    }*/
 
-    [SerializeField] List<TVRandomNewType> RandomNews = new List<TVRandomNewType>();
+    
+    #endregion
+
     void NewsDirector()
-    {
-        ResetChannels();
-        Debug.Log("checkingNew");
+    { 
+        //checkean si una noticia nueva entró y la coloca en la cola.
         CheckForScheduledNews();
-
         CheckForReactiveNews();
+        CheckForQueue();
 
-
-        SetRandomNew();
-    }
-
-    public void AddNewToReactiveNewList(Component sender, object obj)
-    {
-        //agregar un delay con corrutina para agregarlo a la pull (que el dalay dependa de qué acción es la realizada)
-
-        WordData word = (WordData)obj;
-
-        List<StateEnum> history = WordsManager.WM.GetHistory(word);
-        StateEnum LastState = history[history.Count - 1];
-        TVNewType _new = WordsManager.WM.RequestNew(word, LastState);
-
-        StartCoroutine("DelayToAddReactiveNew", _new);
-        
     }
 
     void CheckForScheduledNews()
@@ -64,16 +73,12 @@ public class TVManager : MonoBehaviour
 
         List<TVScheduledNewType> newsToRemove = new List<TVScheduledNewType>();
 
-        if (ScheduledNews.Count == 0) return;
         foreach (TVScheduledNewType _new in ScheduledNews)
         {
-            TimeData timeNew = _new.GetTimeToShow();
-            TimeData ActualTime = TimeManager.timeManager.GetTime();
-
-            if (timeNew.Day == ActualTime.Day && timeNew.Hour == ActualTime.Hour && timeNew.Minute == ActualTime.Minute)
+            if (_new.GetStateConditionalToAppear())
             {
                 TVScheduledNewType auxNew = _new.GetNew();
-                SetNewInChannel(auxNew);
+                QueueOfNews.Add(auxNew);
                 newsToRemove.Add(_new);
             }
         }
@@ -86,44 +91,87 @@ public class TVManager : MonoBehaviour
 
     void CheckForReactiveNews()
     {
-        List<TVNewType> newsToRemove = new List<TVNewType>();
         if (ReactiveNews.Count == 0) return;
-        foreach(TVNewType _new in ReactiveNews)
+
+        List<TVNewType> newsToRemove = new List<TVNewType>();
+
+        foreach (TVNewType _new in ReactiveNews)
         {
-            SetNewInChannel(_new);
-            newsToRemove.Add(_new);
+            if (_new.GetStateConditionalToAppear())
+            {
+                QueueOfNews.Add(_new);
+                newsToRemove.Add(_new);
+            }
         }
 
-        foreach(TVNewType n in newsToRemove)
+        foreach (TVNewType _new in newsToRemove)
         {
-            ReactiveNews.Remove(n);
+            ReactiveNews.Remove(_new);
         }
     }
 
-    void SetRandomNew()
+    void CheckForQueue()
     {
-        if (RandomNews.Count == 0) return;
-        TVRandomNewType randomTVNewRandom = RandomNews[Random.Range(0, RandomNews.Count - 1)];
-        SetNewInChannel(randomTVNewRandom);
-        RandomNews.Remove(randomTVNewRandom);
+        //chequeos de prioridad (siempre salen las programadas primero, despues las reaccionarias en orden de aparicion)
+        if (QueueOfNews.Count == 0)
+        {
+            Debug.Log("newsQueueFree");
+            FillEmptiesChannels();
+            return;
+        }
+
+        List<INewType> NewsToRemove = new List<INewType>();
+
+        foreach(INewType _new in QueueOfNews)
+        {
+            if(_new.GetPriority() == 1)
+            {
+                if (SetNewInChannel(_new) != null) NewsToRemove.Add(_new);
+            }
+        }
+
+        if (NewsToRemove.Count != 0) QueueOfNews.RemoveAll(_new => NewsToRemove.Contains(_new));
+
+        foreach (INewType _new in QueueOfNews)
+        {
+            if (SetNewInChannel(_new) != null) NewsToRemove.Add(_new);
+        }
+
+        if (NewsToRemove.Count != 0) QueueOfNews.RemoveAll(_new => NewsToRemove.Contains(_new));
     }
 
-
-    void SetNewInChannel(INewType _new)
+    INewType SetNewInChannel(INewType _new)
     {
-        if (!GetEmpyChannel()) return;
-        ChannelController channelToSet = GetEmpyChannel();
+        int ChannelNum = _new.GetChannelNum();
+        ChannelController channelToSet = null;
+
+        // todos los canales ocupados
+        if (!GetEmpyChannel())
+        {
+            return null;
+        }
+
+       // está lleno su canal correspondiente
+        if(Channels[ChannelNum].GetIsMinTimePass())
+        {
+            channelToSet = GetEmpyChannel();
+        }
+        else
+        {
+            channelToSet = Channels[ChannelNum];
+        }
+
         channelToSet.SetNew(_new);
-        channelToSet.SetIsFull(true);
+
+        return _new;
     }
 
     ChannelController GetEmpyChannel()
     {
         foreach(ChannelController channel in Channels)
         {
-            //esto es un parche temporal, las noticias se deben setear incluso con el canal apagado
             if (channel.GetisStaticChannel()) continue;
-            if(!channel.GetIsFull())
+            if(channel.GetIsMinTimePass())
             {
                 return channel;
             }
@@ -132,11 +180,45 @@ public class TVManager : MonoBehaviour
         return null;
     }
 
-    IEnumerator DelayToAddReactiveNew(TVNewType _new)
+    void FillEmptiesChannels()
     {
-        // A esto le falta depender del Time Manager
-        yield return new WaitForSeconds(0);
-        ReactiveNews.Add(_new);
+        foreach (ChannelController channel in Channels)
+        {
+            if (channel.GetisStaticChannel()) continue;
+            if (channel.GetTimeToRestartRandoms())
+            {
+                channel.SetNew(SetRandomNew(Channels.IndexOf(channel)));
+                channel.SetIsFull(true);
+            }
+        }
+    }
+    INewType SetRandomNew(int channel)
+    {
+        if (RandomNews.Count == 0) return null;
+
+        List<TVRandomNewType> AuxRandomNewList = new List<TVRandomNewType>();
+
+        foreach(TVRandomNewType auxRandomNew in RandomNews)
+        {
+            if(auxRandomNew.GetChannelNum() == channel)
+            {
+                AuxRandomNewList.Add(auxRandomNew);
+            }
+        }
+
+        if (AuxRandomNewList.Count != 0)
+        {
+            TVRandomNewType randomTVNewRandom = AuxRandomNewList[UnityEngine.Random.Range(0, RandomNews.Count - 1)];
+            RandomNews.Remove(randomTVNewRandom);
+            return randomTVNewRandom;
+        }
+        else
+        {
+            TVRandomNewType randomTVNewRandom = RandomNews[UnityEngine.Random.Range(0, RandomNews.Count - 1)];
+            RandomNews.Remove(randomTVNewRandom);
+            return randomTVNewRandom;
+        }
+        
     }
 
     void ResetChannels()

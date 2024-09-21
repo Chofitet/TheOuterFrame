@@ -12,5 +12,18 @@ public interface INewType
 
     bool GetIfIsAEmergency();
 
+    int GetPriority();
+
     int GetIncreaseAlertLevel();
+
+    int GetChannelNum();
+
+    bool GetStateConditionalToAppear();
+    int GetTimeToAppear();
+
+    int GetMinTransmitionTime();
+
+    void SetWasStreamed();
+
+    bool GetWasStreamed();
 }

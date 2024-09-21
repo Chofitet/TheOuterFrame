@@ -60,4 +60,19 @@ public class TimeCheckConditional : ScriptableObject, IConditionable
     {
         return GetStateCondition();
     }
+
+    public IConditionable GetLastCompletedConditional()
+    {
+        return this as IConditionable;
+    }
+
+    public int GetTimeToShowNews()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public TimeData GetTimeSetted()
+    {
+        return new TimeData(Day, Hour, Minute);
+    }
 }

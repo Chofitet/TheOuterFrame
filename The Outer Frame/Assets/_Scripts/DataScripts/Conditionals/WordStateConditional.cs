@@ -7,6 +7,7 @@ public class WordStateConditional : ScriptableObject, IConditionable
 {
     [SerializeField] WordData word;
     [SerializeField] StateEnum state;
+    [SerializeField] int TimeToAppearOnTV;
 
 
     public bool CheckIfHaveTime()
@@ -26,5 +27,15 @@ public class WordStateConditional : ScriptableObject, IConditionable
     public TimeData GetTimeWhenWasComplete()
     {
         return WordsManager.WM.RequestTimeDataOfState(word, state);
+    }
+
+    public IConditionable GetLastCompletedConditional()
+    {
+        return this as IConditionable;
+    }
+
+    public int GetTimeToShowNews()
+    {
+        return TimeToAppearOnTV;
     }
 }

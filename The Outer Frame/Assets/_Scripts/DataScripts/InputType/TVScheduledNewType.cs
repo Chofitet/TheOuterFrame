@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(fileName = "New ScheduledNew", menuName = "News/ScheduledNew")]
 public class TVScheduledNewType : ScriptableObject, INewType
@@ -9,16 +10,20 @@ public class TVScheduledNewType : ScriptableObject, INewType
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] Sprite image;
     [SerializeField] int channel;
+    [SerializeField] int Priority = 1;
     [SerializeField] int alertLevelIncrement;
     [SerializeField] bool Emergency;
     [SerializeField] int Day;
     [SerializeField] int Hour;
     [SerializeField] int Minute;
+    [SerializeField] int MinTransmitionTime = 10;
+    [SerializeField] List<ConditionalClass> Conditions= new List<ConditionalClass>();
 
     [SerializeField] List<ConditionalClass> ReplacedIf = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
 
     [SerializeField] TVScheduledNewType ReplacedBy;
+    [NonSerialized] bool wasStremed;
 
     //Lista de condicionantes y chequeo de si son true todas para desactivar o reprogramar noticia
 
@@ -27,11 +32,13 @@ public class TVScheduledNewType : ScriptableObject, INewType
 
     public bool GetIfIsAEmergency() { return Emergency; }
 
+    public int GetMinTransmitionTime() { return MinTransmitionTime; }
+
     Sprite INewType.GetNewImag(){ return image;}
 
     public TVScheduledNewType GetNew()
     {
-        if (CheckForConditionals())
+        if (CheckForConditionals(ReplacedIf))
         {
             if (!ReplacedBy) return this;
             return ReplacedBy;
@@ -39,10 +46,10 @@ public class TVScheduledNewType : ScriptableObject, INewType
         else return this;
     }
 
-    public bool CheckForConditionals()
+    public bool CheckForConditionals(List<ConditionalClass> list)
     {
-
-        foreach (ConditionalClass conditional in ReplacedIf)
+        if (list.Count == 0) return true;
+        foreach (ConditionalClass conditional in list)
         {
             if (conditional.condition is not IConditionable)
             {
@@ -64,15 +71,15 @@ public class TVScheduledNewType : ScriptableObject, INewType
             }
         }
 
-        if (isOrderMatters) return CheckIfConditionalAreInOrder();
+        if (isOrderMatters) return CheckIfConditionalAreInOrder(list);
         else return true;
     }
 
-    bool CheckIfConditionalAreInOrder()
+    bool CheckIfConditionalAreInOrder(List<ConditionalClass> list)
     {
         List<int> nums = new List<int>();
 
-        foreach (ConditionalClass conditional in ReplacedIf)
+        foreach (ConditionalClass conditional in list)
         {
             IConditionable auxConditional = conditional.condition as IConditionable;
 
@@ -102,5 +109,45 @@ public class TVScheduledNewType : ScriptableObject, INewType
     public string GetNewText()
     {
         return text;
+    }
+
+    public bool GetStateConditionalToAppear()
+    {
+        TimeData timeNew = GetTimeToShow();
+        TimeData ActualTime = TimeManager.timeManager.GetTime();
+
+        if (timeNew.Day == ActualTime.Day && timeNew.Hour == ActualTime.Hour && timeNew.Minute == ActualTime.Minute)
+        {
+            if(CheckForConditionals(Conditions))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int GetTimeToAppear()
+    {
+        return 0;
+    }
+
+    public int GetChannelNum()
+    {
+        return channel;
+    }
+
+    public int GetPriority()
+    {
+        return Priority;
+    }
+
+    public void SetWasStreamed()
+    {
+        wasStremed = true;
+    }
+
+    public bool GetWasStreamed()
+    {
+        return wasStremed;
     }
 }
