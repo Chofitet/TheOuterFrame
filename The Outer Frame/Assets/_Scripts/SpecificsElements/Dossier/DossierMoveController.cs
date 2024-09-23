@@ -115,7 +115,7 @@ public class DossierMoveController : MonoBehaviour
 
         MoveDossierSequence = DOTween.Sequence();
 
-        MoveDossierSequence.Append(transform.DOMove(TakenPosition.position, 0.5f)).SetEase(Ease.InOutCubic)
+        MoveDossierSequence.Append(transform.DOMove(TakenPosition.position, 0.4f)).SetEase(Ease.InOutSine)
                             .Join(transform.DORotate(TakenPosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo);
     }
     public void LeaveDossier(Component sender, object obj)
@@ -126,8 +126,7 @@ public class DossierMoveController : MonoBehaviour
         MoveDossierSequence = DOTween.Sequence();
 
         MoveDossierSequence
-            .AppendInterval(0.05f)
-            .Append(transform.DOMove(LeavePosition.position, 0.7f)).SetEase(Ease.InOutCubic)
+            .Append(transform.DOMove(LeavePosition.position, 0.5f)).SetEase(Ease.InOutSine)
             .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo);
     }
 

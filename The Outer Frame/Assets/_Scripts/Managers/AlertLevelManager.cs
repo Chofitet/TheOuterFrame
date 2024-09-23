@@ -6,7 +6,7 @@ using UnityEngine;
 public class AlertLevelManager : MonoBehaviour
 {
     [SerializeField] TMP_Text NumLevel;
-    [SerializeField] BlinkEffect Led;
+    [SerializeField] BlinkMaterialEffect Led;
     [SerializeField] GameEvent ButtonElement;
     int level;
 
@@ -41,7 +41,7 @@ public class AlertLevelManager : MonoBehaviour
     }
     void TurnOffLigth()
     {
-        Led.TurnOffLigth(null, null);
+        Led.TurnOffLight(null, null);
     }
 
     [ContextMenu("TestGameOver")]
