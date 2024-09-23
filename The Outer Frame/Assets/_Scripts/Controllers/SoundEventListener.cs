@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+
 public class SoundEventListener : MonoBehaviour
 {
     [HideInInspector][SerializeField] GameEvent OnPlaySound;
@@ -15,7 +16,7 @@ public class SoundEventListener : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        if(SoundDuration == 0)
+        if(SoundDuration == 0 && audioSource.clip)
         {
             SoundDuration = audioSource.clip.length;
         }
@@ -24,7 +25,14 @@ public class SoundEventListener : MonoBehaviour
 
     public void PlaySound(Component sender, object obj)
     {
+        if (!audioSource.clip) return;
         OnPlaySound?.Invoke(this, new SoundInfo(audioSource, SoundDuration, PitchVariation, Clips));
+    }
+
+    [ContextMenu("PlaySound")]
+    void TestPlaySound()
+    {
+        PlaySound(null,null);
     }
 
 
