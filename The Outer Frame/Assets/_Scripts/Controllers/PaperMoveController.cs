@@ -8,7 +8,6 @@ using DG.Tweening;
 public class PaperMoveController : MonoBehaviour
 {
     [SerializeField] Transform TakenPos;
-    [SerializeField] GameObject ReportInstances;
     [SerializeField] Transform ReportPilePos;
     [SerializeField] Transform HoldRigthPos;
     [SerializeField] float takeDuration;
@@ -86,6 +85,7 @@ public class PaperMoveController : MonoBehaviour
         SetPosition(TakenPos);
         SetPaperState(PaperState.Taken);
         reportObject.GetComponent<BoxCollider>().enabled = false;
+        EnableLastBoxCollider();
     }
 
 
@@ -191,6 +191,7 @@ public class PaperMoveController : MonoBehaviour
                         {
                             moveToPcSequence.PrependInterval(0.5f)
                             .Append(paperMove.transform.DOMove(PCSpot2.transform.position, 0.3f).SetEase(Ease.InOutQuad));
+                            EnableLastBoxCollider();
                         }));
     }
 
@@ -204,6 +205,7 @@ public class PaperMoveController : MonoBehaviour
         currentPaper = null;
 
         moveDescart.Append(paperMove.transform.DOMove(DescartPos.transform.position, 0.5f).SetEase(Ease.InBack));
+        EnableLastBoxCollider();
     }
 
     public void changePaperInPile(GameObject newReport)
@@ -224,4 +226,27 @@ public class PaperMoveController : MonoBehaviour
             }); 
     }
 
+    void EnableLastBoxCollider()
+    {
+        if (ReportPilePos.transform.childCount > 0)
+        {
+            Transform lastChild = ReportPilePos.transform.GetChild(ReportPilePos.transform.childCount - 1);
+
+            BoxCollider boxCollider = lastChild.GetComponent<BoxCollider>();
+
+            if (boxCollider != null)
+            {
+                boxCollider.enabled = true;
+                Debug.Log("BoxCollider habilitado en: " + lastChild.name);
+            }
+            else
+            {
+                Debug.LogWarning("El último hijo no tiene un BoxCollider.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("El GameObject no tiene hijos.");
+        }
+    }
 }
