@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 public class BlinkMaterialEffect : MonoBehaviour
 {
     Material material; 
-    [SerializeField] float duration = 0.5f; 
+    [SerializeField] float duration = 0.5f;
+    [SerializeField] float TurnOffDuration;
     [SerializeField] float maxIntensity = 1f;
     [SerializeField] bool BlinkInStart;
     [SerializeField] float TurnLightDuration;
@@ -14,11 +16,18 @@ public class BlinkMaterialEffect : MonoBehaviour
     [ColorUsage(true, true)]
     [SerializeField] Color otherColorTochange;
     Sequence BlinkSequence;
+    private float currentIntensity = 0f;
 
     void Start()
     {
-        material = GetComponent<Renderer>().material;
-        originalEmissionColor = material.GetColor("_EmissionColor");
+        if (TurnOffDuration == 0) TurnOffDuration = duration;
+        if (GetComponent<Renderer>())
+        {
+            material = GetComponent<Renderer>().material;
+            originalEmissionColor = material.GetColor("_EmissionColor");
+        }
+        else return;
+        
         _color = originalEmissionColor;
         if (BlinkInStart) ActiveBlink(null, null);
         else
@@ -29,6 +38,7 @@ public class BlinkMaterialEffect : MonoBehaviour
 
     void SetEmissionIntensity(float intensity)
     {
+        currentIntensity = intensity;
         Color emissionColor = _color * intensity;
         material.SetColor("_EmissionColor", emissionColor);
     }
@@ -59,8 +69,9 @@ public class BlinkMaterialEffect : MonoBehaviour
             BlinkSequence.Kill();
         }
 
-        DOTween.To(() => maxIntensity, x => SetEmissionIntensity(x), 0f, duration)
-                .SetEase(Ease.InOutSine);
+        BlinkSequence = DOTween.Sequence();
+        BlinkSequence.Append(DOTween.To(() => currentIntensity, x => SetEmissionIntensity(x), 0f, TurnOffDuration)
+                .SetEase(Ease.InOutSine));
 
         
     }
@@ -71,9 +82,9 @@ public class BlinkMaterialEffect : MonoBehaviour
         {
             BlinkSequence.Kill();
         }
-
-        DOTween.To(() => 0f, x => SetEmissionIntensity(x), maxIntensity, duration)
-            .SetEase(Ease.InOutSine);
+        BlinkSequence = DOTween.Sequence();
+        BlinkSequence.Append(DOTween.To(() => currentIntensity, x => SetEmissionIntensity(x), maxIntensity, duration)
+            .SetEase(Ease.InOutSine));
     }
 
     public void SetOtherColor(Component sender, object obj)

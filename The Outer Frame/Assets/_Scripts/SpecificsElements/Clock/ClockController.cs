@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 public class ClockController : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class ClockController : MonoBehaviour
     [SerializeField] TMP_Text HourMovibleFlipBack;
     [SerializeField] TMP_Text HourInamovibleFlipBack;
     [SerializeField] AnimationClip HourAnim;
+
+    [SerializeField] Transform SpeedClockPos;
+    [SerializeField] Transform NormalClockPoas;
    
 
     TimeManager TM;
@@ -120,13 +124,23 @@ public class ClockController : MonoBehaviour
         
     }
 
-    private void OnMouseDown()
+    public void OnPressClockBTN(Component sender, object obj)
     {
+        GameObject ClockBTN = (GameObject)obj;
+        
         TimeManager.timeManager.SpeedUpTime();
 
         SetAnimSpeed();
 
-        if(isSpeedUp) OnViewChange?.Invoke(this, null);
+        if (isSpeedUp)
+        {
+            OnViewChange?.Invoke(this, null);
+            ClockBTN.transform.DOMove(SpeedClockPos.position, 0.3f);
+        }
+        else
+        {
+            ClockBTN.transform.DOMove(NormalClockPoas.position, 0.3f);
+        }
     }
 
     void SetAnimSpeed()
