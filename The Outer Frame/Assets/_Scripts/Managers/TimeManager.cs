@@ -12,6 +12,7 @@ public class TimeManager : MonoBehaviour
     public static Action OnNewsChange;
     [SerializeField] GameEvent OnTimeSpeedChange;
     [SerializeField] GameEvent OnAcceleratedTime;
+    [SerializeField] GameEvent OnNormalTime;
     [SerializeField] float NormalTimeValue;
     [SerializeField] float AcceleratedTimeValue;
     [SerializeField] int MinutesToChangeNews;
@@ -150,6 +151,7 @@ public class TimeManager : MonoBehaviour
         isTimeAccelerated = false;
         OnTimeSpeedChange?.Invoke(this, 1f);
         OnAcceleratedTime?.Invoke(this, false);
+        OnNormalTime?.Invoke(this, null);
     }
 
     public void PauseTime()

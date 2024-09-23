@@ -8,6 +8,7 @@ public class DossierController : MonoBehaviour
     bool isOpen;
     [SerializeField] GameObject BrifingBtn;
     [SerializeField] GameObject ActionPlanBtn;
+    [SerializeField] GameObject Brifing2BTN;
     bool isInBrifing = true;
     private bool isInDossierView;
 
@@ -18,27 +19,39 @@ public class DossierController : MonoBehaviour
 
     public void ChangeToActionPlan(Component sender, object obj)
     {
-        //changetobrifing
-        if (isInBrifing || !isInDossierView) return;
-        anim.SetTrigger("showBriefing");
-        BrifingBtn.GetComponent<BoxCollider>().enabled = false;
-        ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
-
-        anim.SetBool("isBriefingHidden", false);
-        isInBrifing = true;
+        //changetoActionPlan
+        if (!isInDossierView) return;
+        anim.SetTrigger("toAP");
+        ActionPlanBtn.GetComponent<BoxCollider>().enabled = false;
+        BrifingBtn.GetComponent<BoxCollider>().enabled = true;
+        Brifing2BTN.GetComponent<BoxCollider>().enabled = true;
 
     }
 
     public void ChangeToBrifing(Component sender, object obj)
     {
-        //changetoActionPlan
-        if (!isInBrifing || !isInDossierView) return;
-        anim.SetTrigger("hideBriefing");
-        ActionPlanBtn.GetComponent<BoxCollider>().enabled = false;
-        BrifingBtn.GetComponent<BoxCollider>().enabled = true;
+       
 
-        anim.SetBool("isBriefingHidden", true);
-        isInBrifing = false;
+        //changetobrifing
+        if (!isInDossierView) return;
+        anim.SetTrigger("toBA");
+        BrifingBtn.GetComponent<BoxCollider>().enabled = false;
+        ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
+        Brifing2BTN.GetComponent<BoxCollider>().enabled = true;
+
+
+    }
+
+    public void ChangeBrifing2(Component sender, object obj)
+    {
+        //changetobrifing
+        if (!isInDossierView) return;
+        anim.SetTrigger("toBB");
+        BrifingBtn.GetComponent<BoxCollider>().enabled = true;
+        ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
+        Brifing2BTN.GetComponent<BoxCollider>().enabled = false;
+
+
     }
 
     public void OpenActionPlan(Component sender, object obj)

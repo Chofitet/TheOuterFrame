@@ -116,7 +116,7 @@ public class TVScheduledNewType : ScriptableObject, INewType
         TimeData timeNew = GetTimeToShow();
         TimeData ActualTime = TimeManager.timeManager.GetTime();
 
-        if (timeNew.Day == ActualTime.Day && timeNew.Hour == ActualTime.Hour && timeNew.Minute == ActualTime.Minute)
+        if (timeNew.Day == ActualTime.Day && timeNew.Hour == ActualTime.Hour && timeNew.Minute == (ActualTime.Minute - 1))
         {
             if(CheckForConditionals(Conditions))
             {

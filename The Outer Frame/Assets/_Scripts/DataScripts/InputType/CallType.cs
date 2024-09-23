@@ -19,7 +19,7 @@ public class CallType : ScriptableObject, IStateComparable
 
     [Header("Common Properties")]
     [SerializeField] [Multiline] string Dialogue;
-    [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
+    [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
 
     [NonSerialized] private bool isCatch;
@@ -86,37 +86,43 @@ public class CallType : ScriptableObject, IStateComparable
     public bool CheckForConditionals()
     {
 
-        foreach (ScriptableObject conditional in Conditionals)
+        if (Conditions == null) return true;
+
+        foreach (ConditionalClass conditional in Conditions)
         {
-            if (conditional is not IConditionable)
+            IConditionable auxInterface = conditional.condition as IConditionable;
+
+            bool conditionState = auxInterface.GetStateCondition();
+
+            if (!conditional.ifNot)
             {
-                Debug.LogWarning(conditional.name + " is not a valid conditional");
-                return false; 
+                conditionState = !conditionState;
             }
 
-            IConditionable auxConditional = conditional as IConditionable;
-
-            if (!auxConditional.GetStateCondition())
+            if (conditionState)
             {
                 return false;
             }
         }
 
         if (isOrderMatters) return CheckIfConditionalAreInOrder();
-        else return true;
+        else
+        {
+            return true;
+        }
     }
 
     bool CheckIfConditionalAreInOrder()
     {
         List<int> nums = new List<int>();
 
-        foreach (ScriptableObject conditional in Conditionals)
+        foreach (ConditionalClass conditional in Conditions)
         {
-            IConditionable auxConditional = conditional as IConditionable;
+            IConditionable auxInterface = conditional.condition as IConditionable;
 
-            if (auxConditional.CheckIfHaveTime())
+            if (auxInterface.CheckIfHaveTime())
             {
-                nums.Add(auxConditional.GetTimeWhenWasComplete().GetTimeInNum());
+                nums.Add(auxInterface.GetTimeWhenWasComplete().GetTimeInNum());
             }
 
         }
