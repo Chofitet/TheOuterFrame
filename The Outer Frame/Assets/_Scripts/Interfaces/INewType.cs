@@ -6,6 +6,8 @@ public interface INewType
 {
     string GetHeadline();
 
+    string GetHeadline2();
+
     string GetNewText();
 
     Sprite GetNewImag();

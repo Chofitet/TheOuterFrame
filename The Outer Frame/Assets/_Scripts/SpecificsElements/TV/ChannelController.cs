@@ -14,6 +14,7 @@ public class ChannelController : MonoBehaviour
     [SerializeField] TMP_Text EmergencyTextField;
     [SerializeField] GameObject EmergencyScreen;
     [SerializeField] TMP_Text HeadlineText;
+    [SerializeField] TMP_Text HeadlineText2;
     [SerializeField] TMP_Text NewTextContent;
     [SerializeField] Image NewImg;
     [SerializeField] string TriggerAnim;
@@ -82,7 +83,19 @@ public class ChannelController : MonoBehaviour
         OverlayAnims.PicsIn();
         OverlayAnims.QuipIn();
 
-        HeadlineText.text = _new.GetHeadline();
+        if (_new.GetHeadline2() != "")
+        {
+            HeadlineText2.gameObject.SetActive(true);
+            HeadlineText.gameObject.SetActive(false);
+            HeadlineText2.text = _new.GetHeadline2();
+
+        }
+        else
+        {
+            HeadlineText2.gameObject.SetActive(false);
+            HeadlineText.gameObject.SetActive(true);
+            HeadlineText.text = _new.GetHeadline();
+        }
         NewTextContent.text = _new.GetNewText();
         if(_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
         NewImg.sprite = _new.GetNewImag();
