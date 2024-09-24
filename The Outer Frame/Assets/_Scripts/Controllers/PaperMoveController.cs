@@ -11,12 +11,15 @@ public class PaperMoveController : MonoBehaviour
     [SerializeField] Transform ReportPilePos;
     [SerializeField] Transform HoldRigthPos;
     [SerializeField] float takeDuration;
-    [SerializeField] Transform PCSpot1;
-    [SerializeField] Transform PCSpot2;
+    [SerializeField] Transform PCSpotReport1;
+    [SerializeField] Transform PCSpotReport2;
+    [SerializeField] Transform PCSpotTranscription1;
+    [SerializeField] Transform PCSpotTranscription2;
     [SerializeField] Transform DescartPos;
     [SerializeField] GameEvent OnPressButtomElement;
     [SerializeField] GameEvent OnSetPaperState;
-    [SerializeField] GameEvent OnSetPaperTaken;
+    [SerializeField] GameEvent OnReportEnterDatabase;
+    [SerializeField] GameEvent OnTranscriptionEnterDatabase;
     private bool isMoving;
     GameObject currentPaper;
     bool isHolding;
@@ -59,14 +62,6 @@ public class PaperMoveController : MonoBehaviour
         actualPaperState = newstate;
         
     }
-
-    //Declarar los distintos spots a los que puede ir
-
-    //Una referencia que identifique qué papel está siendo agarrado
-
-    //Un state machene que separe en que estado se está? hold,  
-
-    //un instanciaSpot de cada tipo donde se holdeará los papeles de cada tipo y se podrá administrar la cola (script aparte)
 
 
     public void TakeReport(Component sender, object obj)
@@ -185,14 +180,28 @@ public class PaperMoveController : MonoBehaviour
         GameObject paperMove = currentPaper;
         currentPaper = null;
 
-        moveToPcSequence.Append(paperMove.transform.DOMove(PCSpot1.transform.position, 0.7f).SetEase(Ease.InOutQuad))
-                        .Join(paperMove.transform.DORotate(PCSpot1.transform.rotation.eulerAngles, 0.5f)
-                        .OnComplete(() =>
-                        {
-                            moveToPcSequence.PrependInterval(0.5f)
-                            .Append(paperMove.transform.DOMove(PCSpot2.transform.position, 0.3f).SetEase(Ease.InOutQuad));
-                            EnableLastBoxCollider();
-                        }));
+        if(paperMove.GetComponent<IndividualReportController>())
+        {
+            MoToRigthSlotOnPC(paperMove, PCSpotReport1, PCSpotReport2, OnReportEnterDatabase);
+        }
+        else if(paperMove.GetComponent<IndividualCallController>())
+        {
+            MoToRigthSlotOnPC(paperMove, PCSpotTranscription1, PCSpotTranscription2, OnTranscriptionEnterDatabase);
+        }
+    }
+
+    void MoToRigthSlotOnPC(GameObject paperMove, Transform PCSpot1, Transform PCSpot2, GameEvent OnEvent)
+    {
+        moveToPcSequence.Append(paperMove.transform.DOMove(PCSpot1.position, 0.7f).SetEase(Ease.InOutQuad))
+                       .Join(paperMove.transform.DORotate(PCSpot1.rotation.eulerAngles, 0.5f)
+                       .OnComplete(() =>
+                       {
+                           paperMove.transform.SetParent(ReportPilePos);
+                           OnEvent?.Invoke(this, null);
+                           moveToPcSequence.PrependInterval(0.5f)
+                           .Append(paperMove.transform.DOMove(PCSpot2.position, 0.3f).SetEase(Ease.InOutQuad));
+                           EnableLastBoxCollider();
+                       }));
     }
 
     public void DescartPosition(Component sender, object obj)

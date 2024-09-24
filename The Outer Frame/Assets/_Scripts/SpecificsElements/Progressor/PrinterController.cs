@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PrinterController : MonoBehaviour
 {
     [SerializeField] GameObject ReportPrefab;
     [SerializeField] Transform InstanciateSpot;
+    [SerializeField] Transform OutSpot;
     [SerializeField] GameEvent OnTakeReport;
     [SerializeField] GameEvent OnResetProgressorSlot;
     [SerializeField] GameEvent OnFullPrinter;
@@ -29,7 +31,7 @@ public class PrinterController : MonoBehaviour
         GameObject report = Instantiate(ReportPrefab, InstanciateSpot.position,InstanciateSpot.rotation, InstanciateSpot);
         SlotController slotController = slotReference.GetComponent<SlotController>();
         report.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetReport(), slotController.GetIsAborted(), slotController.getisAlreadyDone(), slotController.GetIsTheSameAction(), slotController.GetIsOtherGroupActionDoing(), slotController.GetTimeComplete());
-       
+        report.transform.DOMove(OutSpot.position, 0.2f).SetEase(Ease.OutSine);
     }
     
 
