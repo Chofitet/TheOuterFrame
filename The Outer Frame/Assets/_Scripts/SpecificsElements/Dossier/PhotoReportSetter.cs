@@ -16,6 +16,7 @@ public class PhotoReportSetter : MonoBehaviour
         gameObject.SetActive(true);
         _name.text = n;
         _image.sprite = i;
+        if (!PhotoTexture) return;
         PhotoTexture.AssignMaterial(i);
     }
 
