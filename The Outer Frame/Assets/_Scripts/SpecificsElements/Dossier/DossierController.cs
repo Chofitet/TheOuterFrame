@@ -11,6 +11,8 @@ public class DossierController : MonoBehaviour
     [SerializeField] GameObject Brifing2BTN;
     bool isInBrifing = true;
     private bool isInDossierView;
+    bool isInBrifing2;
+    bool isInActionPlan;
 
     private void Start()
     {
@@ -19,18 +21,22 @@ public class DossierController : MonoBehaviour
 
     public void ChangeToActionPlan(Component sender, object obj)
     {
+        if (isInActionPlan) return;
+
         //changetoActionPlan
         if (!isInDossierView) return;
         anim.SetTrigger("toAP");
         ActionPlanBtn.GetComponent<BoxCollider>().enabled = false;
         BrifingBtn.GetComponent<BoxCollider>().enabled = true;
         Brifing2BTN.GetComponent<BoxCollider>().enabled = true;
-
+        isInActionPlan = true;
+        isInBrifing = false;
+        isInBrifing2 = false;
     }
 
     public void ChangeToBrifing(Component sender, object obj)
     {
-       
+        if (isInBrifing) return;
 
         //changetobrifing
         if (!isInDossierView) return;
@@ -39,11 +45,16 @@ public class DossierController : MonoBehaviour
         ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
         Brifing2BTN.GetComponent<BoxCollider>().enabled = true;
 
+        isInBrifing = true;
+        isInActionPlan = false;
+        isInBrifing2 = false;
 
     }
 
     public void ChangeBrifing2(Component sender, object obj)
     {
+        if (isInBrifing2) return;
+
         //changetobrifing
         if (!isInDossierView) return;
         anim.SetTrigger("toBB");
@@ -51,7 +62,9 @@ public class DossierController : MonoBehaviour
         ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
         Brifing2BTN.GetComponent<BoxCollider>().enabled = false;
 
-
+        isInBrifing2 = true;
+        isInActionPlan = false;
+        isInBrifing = false;
     }
 
     public void OpenActionPlan(Component sender, object obj)

@@ -34,7 +34,9 @@ public class MaterialAssignerEditor : Editor
         // Obtener el MeshRenderer del objeto
         MeshRenderer meshRenderer = materialAssigner.GetComponent<MeshRenderer>();
 
-        if (meshRenderer != null)
+        if (meshRenderer.materials.Length < 2) return;
+
+            if (meshRenderer != null)
         {
             // Crea un nuevo material
             Material newMaterial = new Material(Shader.Find("Sprites/Default")); // Usa el shader adecuado para sprites
@@ -42,9 +44,12 @@ public class MaterialAssignerEditor : Editor
             // Asigna la textura del sprite al material
             newMaterial.mainTexture = materialAssigner.photo.texture;
 
-            // Asigna el material al MeshRenderer
-            meshRenderer.materials[1] = newMaterial;
-
+            
+            Material[] materials = new Material[2];
+            materials[0] = meshRenderer.material;  // Conserva el primer material actual
+            materials[1] = newMaterial;  // Asigna el nuevo material en el segundo slot
+            meshRenderer.materials = materials;
+           
             // Guarda el nuevo material como un asset
             string materialPath = "Assets/Materials/" + materialAssigner.photo.name + "_Material.mat";
             AssetDatabase.CreateAsset(newMaterial, materialPath);

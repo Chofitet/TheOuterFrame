@@ -16,7 +16,7 @@ public class ReportController : MonoBehaviour
     [SerializeField] PhotoReportSetter photo2;
     [SerializeField] PhotoReportSetter photo3;
     [SerializeField] Sprite ThumbUp;
-    [SerializeField] Sprite ThumbDown;
+    [SerializeField] List<Sprite> WrongResultImg = new List<Sprite>();
     bool isNotCompleted;
     WordData word;
     ReportType report;
@@ -96,7 +96,7 @@ public class ReportController : MonoBehaviour
 
         if(report.GetIsAutomatic())
         {
-            photo1.Set("",ThumbDown);
+            photo1.Set("", WrongResultImg[Random.Range(0, WrongResultImg.Count - 1)]);
             return;
         }
         if(photoInfo.Count >= 1) photo1.Set(photoInfo[0]?.text, photoInfo[0]?.photo);

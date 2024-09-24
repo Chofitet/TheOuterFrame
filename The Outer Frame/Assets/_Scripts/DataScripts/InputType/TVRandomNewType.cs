@@ -7,6 +7,7 @@ using System;
 public class TVRandomNewType : ScriptableObject, INewType
 {
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
+    [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headlineTwoLines;
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] Sprite image;
     [SerializeField] int channel;
@@ -60,5 +61,10 @@ public class TVRandomNewType : ScriptableObject, INewType
     public bool GetWasStreamed()
     {
         return wasStremed;
+    }
+
+    public string GetHeadline2()
+    {
+        return headlineTwoLines;
     }
 }

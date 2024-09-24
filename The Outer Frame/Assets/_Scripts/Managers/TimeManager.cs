@@ -11,6 +11,7 @@ public class TimeManager : MonoBehaviour
     public static Action OnDayChange;
     public static Action OnNewsChange;
     [SerializeField] GameEvent OnTimeSpeedChange;
+    [SerializeField] GameEvent OnSpeedUpTime;
     [SerializeField] GameEvent OnAcceleratedTime;
     [SerializeField] GameEvent OnNormalTime;
     [SerializeField] float NormalTimeValue;
@@ -141,6 +142,7 @@ public class TimeManager : MonoBehaviour
             isTimeAccelerated = true;
             OnTimeSpeedChange?.Invoke(this, AcceleratedTimeValue);
             OnAcceleratedTime?.Invoke(this, true);
+            OnSpeedUpTime?.Invoke(this, null);
         }
         else { NormalizeTime();}
     }
