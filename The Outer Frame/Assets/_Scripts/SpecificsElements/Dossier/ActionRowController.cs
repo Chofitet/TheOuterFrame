@@ -43,7 +43,7 @@ public class ActionRowController : MonoBehaviour
 
     public void OnSelectWordInNotebook(Component sender, object obj)
     {
-        if (isSpecialAction) return;
+        if (isSpecialAction || !isInView) return;
 
         if (toggle.isOn && once)
         {
@@ -106,5 +106,15 @@ public class ActionRowController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         if (first == second) first.text = txt;
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
+    }
+
+    bool isInView;
+
+    public void CheckView(Component sender, object obj)
+    {
+        ViewStates actualView = (ViewStates)obj;
+
+        if (actualView == ViewStates.DossierView) isInView = true;
+        else isInView = false;
     }
 }

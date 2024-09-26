@@ -21,6 +21,8 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnTakenPaperView;
     [SerializeField] GameEvent OnGameOverView;
     [SerializeField] GameEvent OnPauseView;
+    [SerializeField] GameEvent OnBackToPause;
+    [SerializeField] GameEvent OnSitDownSound;
     Coroutine StartDelay;
     bool isAPaperHolding;
     ViewStates currentviewState;
@@ -57,6 +59,7 @@ public class ViewManager : MonoBehaviour
             if(isInPause)
             {
                 TimeManager.timeManager.NormalizeTime();
+                OnBackToPause?.Invoke(this, null);
                 isInPause = false;
             }
 
@@ -69,6 +72,7 @@ public class ViewManager : MonoBehaviour
             {
                 TimeManager.timeManager.PauseTime();
                 UpdateViewState(null, ViewStates.PauseView);
+                
                 isInPause = true;
             }
             else
@@ -76,6 +80,7 @@ public class ViewManager : MonoBehaviour
                 TimeManager.timeManager.NormalizeTime();
                 BackToGeneralView(null, null);
                 isInPause = false;
+                OnBackToPause?.Invoke(this, null);
             }
         }
     }
@@ -97,6 +102,7 @@ public class ViewManager : MonoBehaviour
             case ViewStates.GeneralView:
                 OnGeneralView?.Invoke(this, false);
                 OnFindableWordsActive?.Invoke(this, null);
+                BackToGeneralViewWhitMoving();
                 break;
             case ViewStates.PinchofonoView:
                 OnNotebookTake.Invoke(this, true);
@@ -158,6 +164,14 @@ public class ViewManager : MonoBehaviour
         bool x = (bool)obj;
 
         isAPaperHolding = x;
+    }
+
+    void BackToGeneralViewWhitMoving()
+    {
+        if(currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView)
+        {
+            OnSitDownSound?.Invoke(this, null);
+        }
     }
 }
 

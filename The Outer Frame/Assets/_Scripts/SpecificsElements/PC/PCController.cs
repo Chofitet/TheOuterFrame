@@ -12,6 +12,7 @@ public class PCController : MonoBehaviour
     [SerializeField] GameObject DataBaseUpdatedWindow;
     [SerializeField] GameEvent OnWikiWindow;
     [SerializeField] GameEvent OnWordAccessScreen;
+    [SerializeField] GameEvent OnKeyBoardSound;
     bool isWaitingAWord;
     bool inWordAccessWindow;
 
@@ -39,7 +40,9 @@ public class PCController : MonoBehaviour
         textAnim.SetCharacterPerSecond();
         isWaitingAWord = false;
         SearchBar.GetComponent<TypingAnimText>().AnimateTyping();
-        
+        OnKeyBoardSound?.Invoke(this, null);
+
+
     }
 
     string DeleteSpetialCharacter(string txt)
