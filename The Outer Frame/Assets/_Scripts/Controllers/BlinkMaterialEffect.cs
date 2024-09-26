@@ -10,6 +10,7 @@ public class BlinkMaterialEffect : MonoBehaviour
     [SerializeField] float TurnOffDuration;
     [SerializeField] float maxIntensity = 1f;
     [SerializeField] bool BlinkInStart;
+    [SerializeField] bool isTurnInStart;
     [SerializeField] float TurnLightDuration;
     private Color originalEmissionColor;
     private Color _color;
@@ -33,6 +34,11 @@ public class BlinkMaterialEffect : MonoBehaviour
         else
         {
             SetEmissionIntensity(0);
+        }
+
+        if(isTurnInStart)
+        {
+            SetEmissionIntensity(1);
         }
     }
 

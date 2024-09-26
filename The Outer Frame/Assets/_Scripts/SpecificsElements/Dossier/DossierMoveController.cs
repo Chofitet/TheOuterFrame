@@ -24,6 +24,7 @@ public class DossierMoveController : MonoBehaviour
     private float lerpTime;
     [SerializeField] private float moveDuration = 0.7f;
 
+    
 
     void Update()
     {
@@ -127,7 +128,11 @@ public class DossierMoveController : MonoBehaviour
 
         MoveDossierSequence
             .Append(transform.DOMove(LeavePosition.position, 0.5f)).SetEase(Ease.InOutSine)
-            .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo);
+            .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo)
+        .OnComplete(() =>
+         {
+             transform.GetChild(0).transform.DOLocalRotate(Vector3.zero, 0.2f);
+         });
     }
 
     public void CompleteSlotsProgressorAnim(Component sender, object obj)
@@ -135,7 +140,7 @@ public class DossierMoveController : MonoBehaviour
         if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
         MoveDossierSequence = DOTween.Sequence();
 
-        MoveDossierSequence.Append(transform.DORotate(new Vector3(6, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), 0.2f))
+        MoveDossierSequence.Append(transform.DORotate(new Vector3(1, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), 0.2f))
             .AppendInterval(0.4f)
             .Append(transform.DORotate(new Vector3(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), 0.2f));
 

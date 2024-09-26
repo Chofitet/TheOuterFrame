@@ -10,6 +10,8 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] TMP_Text text;
     [SerializeField] GameObject strikethrough;
     [SerializeField] GameEvent OnWritingShakeNotebook;
+    [SerializeField] GameEvent OnCrossWordSound;
+    [SerializeField] GameEvent OnWritingNotebookSound;
     WordData wordReference;
 
     public void Initialization(WordData word)
@@ -28,6 +30,7 @@ public class NotebookWordInstance : MonoBehaviour
         }
 
         OnWritingShakeNotebook?.Invoke(this, writingTime);
+        OnWritingNotebookSound?.Invoke(this, null);
 
     }
 
@@ -58,6 +61,7 @@ public class NotebookWordInstance : MonoBehaviour
     {
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y),0.3f);
+        OnCrossWordSound?.Invoke(this, null);
     }
 
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")

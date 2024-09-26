@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class BlockingRaycasterForCanvas : MonoBehaviour
 {
-    Canvas canvas; 
+    Canvas canvas;
+    [SerializeField] GameEvent gameEvent;
     [SerializeField] LayerMask blockingLayer; 
     private GraphicRaycaster raycaster;
 
     void Start()
     {
         canvas = GetComponent<Canvas>();
-        raycaster = canvas.GetComponent<GraphicRaycaster>();
+        raycaster = GetComponent<GraphicRaycaster>();
     }
 
     void Update()
@@ -34,6 +35,10 @@ public class BlockingRaycasterForCanvas : MonoBehaviour
         {
             // Si no hay nada, permitir la interacción con el Canvas
             raycaster.enabled = true;
+            
         }
+
     }
+    
+
 }

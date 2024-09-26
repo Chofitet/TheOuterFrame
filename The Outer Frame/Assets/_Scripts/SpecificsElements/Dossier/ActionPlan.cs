@@ -90,8 +90,9 @@ public class ActionPlan : MonoBehaviour
         {
             OnProgressorFull?.Invoke(this, null);
             return;
-        }    
-        
+        }
+
+        ApproveBtn.enabled = false;
         OnApprovedActionPlan.Invoke(this,state);
         OnSetGeneralView?.Invoke(this, null);
     }

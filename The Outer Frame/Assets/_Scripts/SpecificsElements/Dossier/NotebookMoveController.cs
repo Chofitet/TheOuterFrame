@@ -8,6 +8,10 @@ public class NotebookMoveController : MonoBehaviour
     [SerializeField] Transform[] Positions;
     [SerializeField] float MoveDuration;
     [SerializeField] Transform VanimPos;
+    [SerializeField] GameEvent OnSlidePhoneUpSound;
+    [SerializeField] GameEvent OnSlidePhoneDownSound;
+    [SerializeField] GameEvent OnTakeNotebookSound;
+    [SerializeField] GameEvent OnLeaveNotebookSound;
     Animator anim;
     private Sequence moveSequence;
     private Sequence moveWiteWordSequence;
@@ -15,27 +19,32 @@ public class NotebookMoveController : MonoBehaviour
     private bool isMoving = false;
     private float lerpTime = 0;
     bool IsPhonesOpen;
+    bool isUp;
+    GameObject child;
 
     ViewStates lastView;
 
     private void Start()
     {
-        anim = GetComponent<Animator>();
+        child = transform.GetChild(0).gameObject;
+        anim = child.GetComponent<Animator>();
     }
 
     public void OnChangeView(Component sender, object obj)
     {
+        //anim.Play("notebook armature|idle");
         ViewStates newview = (ViewStates)obj;
         switch (newview)
         {
             case ViewStates.GeneralView:
-                SetPos(0);
+                if(IsPhonesOpen) anim.SetTrigger("close");
+                SetPos(0, false);
                 break;
             case ViewStates.DossierView:
                 SetPos(6);
                 break;
             case ViewStates.PinchofonoView:
-                SetPos(1, true);
+                SetPos(1, true ,true);
                 break;
             case ViewStates.BoardView:
                 SetPos(2);
@@ -53,13 +62,13 @@ public class NotebookMoveController : MonoBehaviour
                 SetPos(5);
                 break;
             case ViewStates.PauseView:
-                SetPos(0);
+                SetPos(0, false);
                 break;
         }
         lastView = newview;
     }
 
-    void SetPos(int num, bool isPinchofono= false)
+    void SetPos(int num, bool _isUp = true , bool isPinchofono= false)
     {
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
@@ -84,7 +93,13 @@ public class NotebookMoveController : MonoBehaviour
                         {
                             OpenPhoneNums();
                         }
+                        child.transform.DOLocalRotate(Vector3.zero, 0.2f);
                     });
+        
+        isUp = _isUp;
+
+        if (isUp) OnTakeNotebookSound?.Invoke(this, null);
+        else OnLeaveNotebookSound?.Invoke(this, null);
     }
 
     private void Update()
@@ -151,12 +166,14 @@ public class NotebookMoveController : MonoBehaviour
     {
         anim.SetTrigger("open");
         IsPhonesOpen = true;
+        OnSlidePhoneUpSound?.Invoke(this, null);
     }
 
     void CloseNotebook()
     {
         anim.SetTrigger("close");
         IsPhonesOpen = false;
+        OnSlidePhoneDownSound?.Invoke(this, null);
     }
 
     public void CompleteSlotsProgressorAnim(Component sender, object obj)

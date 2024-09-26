@@ -10,7 +10,7 @@ public class FadeWordsEffect : MonoBehaviour
     [SerializeField] private float FadeSpeed = 20.0f;
     private float auxfadespeed;
     [SerializeField] private int RolloverCharacterSpread = 10;
-
+    [SerializeField] GameEvent OnEraseSound;
     public void StartEffect(bool IsFadeTransparent = true)
     {
         m_TextComponent = GetComponent<TextMeshProUGUI>();
@@ -22,6 +22,11 @@ public class FadeWordsEffect : MonoBehaviour
     {
         float StartAlpha = IsFadeTransparent ? 0 : 255;
         float EndAlpha = IsFadeTransparent ? 255 : 0;
+
+        if (!IsFadeTransparent)
+        { 
+            OnEraseSound?.Invoke(this, null);
+        }
 
         Color originalColor = m_TextComponent.color;
         m_TextComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, StartAlpha / 255f);

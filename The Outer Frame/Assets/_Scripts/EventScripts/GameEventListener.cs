@@ -43,4 +43,9 @@ public class GameEventListener : MonoBehaviour
         Event.Invoke(sender, data);
     }
 
+    public GameEventListener(GameEvent triggerEvent, CustomGameEvent _event)
+    {
+        TriggerEvent = triggerEvent;
+        Event = _event;
+    }
 }
