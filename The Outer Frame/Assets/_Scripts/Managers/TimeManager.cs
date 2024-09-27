@@ -180,7 +180,7 @@ public struct TimeData
 
     public override string ToString()
     {
-        return $"Day: {Day}, Hour: {Hour}, Minute: {Minute}";
+        return $"{Hour} : {Minute}";
     }
 
     public  int GetTimeInNum()

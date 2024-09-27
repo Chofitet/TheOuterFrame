@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PCReportController : MonoBehaviour
 {
-    [SerializeField] TMP_Text txt;
+    [SerializeField] TMP_Text Actiontxt;
+    [SerializeField] TMP_Text Timetxt;
     [SerializeField] GameEvent OnPressPCReportBTN;
 
     ReportType _input;
@@ -13,7 +14,8 @@ public class PCReportController : MonoBehaviour
     public void Inicialization(WordData _word, ReportType report)
     {
         if (!_word) return;
-        txt.text = report.GetAction().GetActionedVerb() + " " + report.GetTimeWhenWasDone().ToString();
+        Actiontxt.text = report.GetAction().GetActionedVerb();
+        Timetxt.text = report.GetTimeWhenWasDone().ToString();
         _input = report;
     }
 
