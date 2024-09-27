@@ -29,6 +29,7 @@ public class DataBaseType : ScriptableObject
     [SerializeField] string classification;
     [SerializeField] string serial;
     [NonSerialized] bool isWordAccessFound;
+    
 
     public WordData GetAccessWord() { return AccessWord; }
     public string GetText() { return text; }
@@ -54,5 +55,29 @@ public class DataBaseType : ScriptableObject
     }
 
     public TimeData GetTimeWhenWasDone() { return CompleteTime; }
+
+    public Dictionary<int,string> GetDataFieldsInfo()
+    {
+        Dictionary<int,string> aux = new Dictionary<int,string>();
+
+        aux.Add(0,phoneNum);
+        aux.Add(1,age);
+        aux.Add(2,location);
+         aux.Add(3,born);
+         aux.Add(4,occupation);
+         aux.Add(5,found);
+         aux.Add(6,status);
+        aux.Add(7,government);
+         aux.Add(8,populatoin); // Typo corregido
+         aux.Add(9,area);
+         aux.Add(10,zipcode);
+         aux.Add(11,areacode);
+         aux.Add(12,classification);
+         aux.Add(13,serial);
+
+        Debug.Log(aux);
+
+        return aux;
+    }
 
 }

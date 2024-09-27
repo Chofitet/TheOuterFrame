@@ -159,6 +159,7 @@ public class WordData : ScriptableObject
 
         foreach (CallType call in CallTypes)
         {
+            call.SetWord(this);
             if(call.CheckForTimeZone())
             {
                 auxList.Add(call);

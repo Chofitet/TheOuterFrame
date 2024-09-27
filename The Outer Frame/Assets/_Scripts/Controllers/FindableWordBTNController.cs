@@ -54,6 +54,7 @@ public class FindableWordBTNController : MonoBehaviour
     public void ChangeToColorToHighligth()
     {
         OnFindableWordButtonHover?.Invoke(this, 4);
+        Debug.Log("hover");
         ApplyShader("Red");
     }
 
@@ -109,6 +110,7 @@ public class FindableWordBTNController : MonoBehaviour
                 {
                     materialName = "\"" + textField.font.name + "" + MaterialName;
                     strBuilder = strBuilder.Replace(combinedWord, "<material=" + materialName + ">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
+                    Debug.Log(materialName);
                 }
                 catch (Exception ex)
                 {

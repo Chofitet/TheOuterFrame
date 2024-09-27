@@ -8,9 +8,9 @@ public class PCWikiController : MonoBehaviour
 {
     [SerializeField] TMP_Text WikiData;
     [SerializeField] Image image;
-    [SerializeField] TMP_Text PhoneNumber;
     [SerializeField] GameObject LockBTN;
     [SerializeField] TMP_Text LockField;
+    [SerializeField] List<GameObject> DataBaseFields = new List<GameObject>();
 
     DataBaseType input;
 
@@ -22,7 +22,7 @@ public class PCWikiController : MonoBehaviour
 
         WikiData.text = "";
         image.sprite = null;
-        PhoneNumber.text = "";
+        //PhoneNumber.text = "";
 
         CheckForUnlockCondition(input);
 
@@ -39,8 +39,9 @@ public class PCWikiController : MonoBehaviour
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData);
         HyperlinksManager.HLM.InstanciateHyperLink(WikiData);
         image.sprite = input.GetImage();
-        PhoneNumber.text = input.GetPhoneNum();
-        FindableWordsManager.FWM.InstanciateFindableWord(PhoneNumber);
+        CompleteFields();
+        //PhoneNumber.text = input.GetPhoneNum();
+        //FindableWordsManager.FWM.InstanciateFindableWord(PhoneNumber);
     }
 
     bool CheckForUnlockCondition(DataBaseType DB)
@@ -88,5 +89,22 @@ public class PCWikiController : MonoBehaviour
         }
 
         return true;
+    }
+
+    void CompleteFields()
+    {
+        Dictionary<int,string> auxDictionary = input.GetDataFieldsInfo();
+        if (auxDictionary.Count == 0) return;
+        for(int i = 0; i < DataBaseFields.Count; i++)
+        {
+            if(auxDictionary[i] == "")
+            {
+                DataBaseFields[i].SetActive(false);
+                return;
+            }
+            DataBaseFields[i].SetActive(true);
+            DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>().text = auxDictionary[i];
+            FindableWordsManager.FWM.InstanciateFindableWord(DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>());
+        }
     }
 }

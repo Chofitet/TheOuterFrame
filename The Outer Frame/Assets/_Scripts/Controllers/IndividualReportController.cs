@@ -25,7 +25,7 @@ public class IndividualReportController : MonoBehaviour
     {
         if (isComplete)
         {
-            UpdatePCDatabase?.Invoke(this, gameObject);
+            UpdatePCDatabase?.Invoke(this, word);
             report.setwasRegisteredInDB();
         }
         else
@@ -41,4 +41,5 @@ public class IndividualReportController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
+
 }

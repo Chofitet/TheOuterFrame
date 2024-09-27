@@ -23,6 +23,7 @@ public class CallType : ScriptableObject, IStateComparable
     [SerializeField] bool isOrderMatters;
 
     [NonSerialized] private bool isCatch;
+    [NonSerialized] WordData word;
 
     public string GetDialogue() { return Dialogue; }
     public void SetCached()
@@ -32,6 +33,13 @@ public class CallType : ScriptableObject, IStateComparable
     }
     public bool GetIsCatch() { return isCatch; }
     public StateEnum GetState() { return state; }
+
+    public void SetWord(WordData _word)
+    {
+        word = _word;
+    }
+
+    public WordData GetWord() { return word; }
 
     private TimeData CompleteTime;
     public void SetTimeWhenWasDone()

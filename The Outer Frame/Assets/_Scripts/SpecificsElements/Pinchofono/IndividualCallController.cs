@@ -6,12 +6,14 @@ public class IndividualCallController : MonoBehaviour
 {
     bool isComplete;
     CallType call;
+    WordData word;
     [SerializeField] GameEvent UpdatePCDatabase;
     [SerializeField] GameEvent OnDescartReport;
     [SerializeField] GameEvent OnBackToGeneralView;
     public void SetType(bool x, CallType _call)
     {
         call = _call;
+        word = call.GetWord();
         isComplete = x;
     }
 
@@ -19,7 +21,7 @@ public class IndividualCallController : MonoBehaviour
     {
         if (isComplete)
         {
-            UpdatePCDatabase?.Invoke(this, gameObject);
+            UpdatePCDatabase?.Invoke(this, word);
         }
         else
         {
@@ -34,4 +36,5 @@ public class IndividualCallController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
+
 }

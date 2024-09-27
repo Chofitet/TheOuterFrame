@@ -9,7 +9,7 @@ public class PCController : MonoBehaviour
     [SerializeField] TMP_Text SearchBar;
     [SerializeField] GameEvent OnPCSearchWord;
     [SerializeField] GameEvent OnShakeNotebook;
-    [SerializeField] GameObject DataBaseUpdatedWindow;
+    [SerializeField] TMP_Text WikiTitleSearchedWord;
     [SerializeField] GameEvent OnWikiWindow;
     [SerializeField] GameEvent OnWordAccessScreen;
     [SerializeField] GameEvent OnKeyBoardSound;
@@ -88,6 +88,8 @@ public class PCController : MonoBehaviour
             return;
         }
 
+        WikiTitleSearchedWord.text = word.GetForm_DatabaseNameVersion();
+
         isWaitingAWord = true;
         StopAllCoroutines();
         StartCoroutine(IdleSearchBarAnim());
@@ -105,18 +107,7 @@ public class PCController : MonoBehaviour
         gameEvent?.Invoke(this, null);
     }
 
-    public void UpdatePC(Component sender, object obj)
-    {
-        DataBaseUpdatedWindow.SetActive(true);
-        Invoke("DesactiveDataBaseUpdatedWindow", 2);
-    }
-
-    void DesactiveDataBaseUpdatedWindow()
-    {
-        DataBaseUpdatedWindow.SetActive(false);
-        ChangeWindow(OnWikiWindow);
-    }
-
+    
     IEnumerator IdleSearchBarAnim()
     {
         SearchBar.text = " |";
