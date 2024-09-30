@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AlertLevelManager : MonoBehaviour
 {
+    [SerializeField] int InitAlertLevel;
     [SerializeField] TMP_Text NumLevel;
     [SerializeField] BlinkMaterialEffect Led;
     [SerializeField] GameEvent ButtonElement;
@@ -12,7 +13,11 @@ public class AlertLevelManager : MonoBehaviour
     [SerializeField] GameEvent OnDownAlertLevel;
     int level;
 
-    
+    private void Start()
+    {
+        level = InitAlertLevel;
+    }
+
 
     public void UpdateNum(Component sender, object obj)
     {

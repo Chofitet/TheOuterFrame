@@ -53,7 +53,7 @@ public class NotebookMoveController : MonoBehaviour
                 SetPos(3);
                 break;
             case ViewStates.ProgressorView:
-                SetPos(4);
+                SetPos(0,false);
                 break;
             case ViewStates.OnTakenPaperView:
                 SetPos(6);

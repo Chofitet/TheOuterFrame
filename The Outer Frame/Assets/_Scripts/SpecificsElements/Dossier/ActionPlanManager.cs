@@ -57,13 +57,13 @@ public class ActionPlanManager : MonoBehaviour
 
     public void OnStampedPlanAction(Component sender, object obj)
     {
-        
+        GameObject actionPLan = transform.GetChild(0).gameObject;
+        OnCloneActionPlan?.Invoke(this, actionPLan);
     }
 
     public void ReparentToMoveActionPlan(Component sender, object obj)
     {
-        GameObject actionPLan = transform.GetChild(0).gameObject;
-        OnCloneActionPlan?.Invoke(this, actionPLan);
+        
        // actionPLan.SetActive(false);
         /*transform.SetParent(OtherParent);*/
     }

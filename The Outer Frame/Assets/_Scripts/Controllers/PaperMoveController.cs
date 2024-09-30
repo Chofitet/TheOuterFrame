@@ -63,6 +63,12 @@ public class PaperMoveController : MonoBehaviour
         
     }
 
+    public void TakeHoldingReport(Component sender, object obj)
+    {
+        if (PaperState.HoldingRight != actualPaperState) return;
+        TakeReport(null, currentPaper);
+    }
+
 
     public void TakeReport(Component sender, object obj)
     {
@@ -70,10 +76,16 @@ public class PaperMoveController : MonoBehaviour
         {
             return;
         }
+
         GameObject reportObject = (GameObject)obj;
         reportObject.transform.SetParent(TakenPos.transform);
 
         changePaperInPile(reportObject);
+
+        if (PaperState.HoldingRight == actualPaperState && currentPaper != reportObject)
+        {
+            LeavePaperPile();
+        }
 
         currentPaper = reportObject;
 
@@ -95,6 +107,11 @@ public class PaperMoveController : MonoBehaviour
             OnPressButtomElement?.Invoke(this, ViewStates.OnTakenPaperView);
             return;
         }
+        LeavePaperPile();
+    }
+
+    void LeavePaperPile()
+    {
         RefreshPaperQueue(true);
         currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration);
         currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration);

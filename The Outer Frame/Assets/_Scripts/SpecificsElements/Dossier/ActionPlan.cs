@@ -101,4 +101,15 @@ public class ActionPlan : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void Stamp(Component sender, object obj)
+    {
+        ApproveBtn.transform.GetChild(0).gameObject.SetActive(true);
+        Invoke("OnStampAP", 0.4f);
+    }
+
+    void OnStampAP()
+    {
+        ApproveBtn.transform.GetChild(0).gameObject.SetActive(false);
+    }
 }
