@@ -43,7 +43,8 @@ public class SoundManager : MonoBehaviour
     public void StopSoundEvent(Component sender, object obj)
     {
         SoundInfo soundInfo = (SoundInfo)obj;
-        foreach(GameObject sound in LoopingSounds)
+        LoopingSounds.RemoveAll(s => s == null);
+        foreach (GameObject sound in LoopingSounds)
         {
             if(soundInfo.Name == sound.name)
             {

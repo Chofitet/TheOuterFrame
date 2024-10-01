@@ -15,7 +15,8 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] TMP_Text observationTxt;
     [SerializeField] GameObject DotsLine;
     [SerializeField] TMP_FontAsset writingFont;
-    bool isSpecialAction;
+    [SerializeField] GameEvent OnWrittingFormSound;
+     bool isSpecialAction;
     StateEnum state;
     FadeWordsEffect fade;
     FadeWordsEffect fadeAction;
@@ -48,11 +49,13 @@ public class ActionRowController : MonoBehaviour
         if (toggle.isOn && once)
         {
             StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, WordSelectedInNotebook.Notebook.GetSelectedWord().GetForm_DatabaseNameVersion()));
+            
         }
         if(toggle.isOn && !once)
         {
             Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetForm_DatabaseNameVersion();
             fade.StartEffect();
+            OnWrittingFormSound?.Invoke(this, null);
         }
 
         if (isSpecialAction || !toggle.isOn || !once)
@@ -69,6 +72,7 @@ public class ActionRowController : MonoBehaviour
 
     public void OnButtonClick()
     {
+        if(!isInView) return;
         toggle.isOn = true;
 
         if (isSpecialAction) return;
@@ -76,6 +80,7 @@ public class ActionRowController : MonoBehaviour
         {
             Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetForm_DatabaseNameVersion();
             fade.StartEffect();
+            OnWrittingFormSound?.Invoke(this, null);
         }
         else if (!isSpecialAction) OnShakeNotebook?.Invoke(this, null);
 
@@ -106,6 +111,7 @@ public class ActionRowController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         if (first == second) first.text = txt;
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
+        OnWrittingFormSound?.Invoke(this, null);
     }
 
     bool isInView;

@@ -10,6 +10,7 @@ public class PhoneRowNotebookController : MonoBehaviour
     [SerializeField] TMP_Text txtName;
     [SerializeField] TMP_Text Num;
     [SerializeField] GameEvent OnWritingShakeNotebook;
+    [SerializeField] GameEvent OnWritingNotebookSound;
     WordData word;
     Button button;
 
@@ -38,6 +39,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         }
 
         OnWritingShakeNotebook?.Invoke(this, writingTime);
+        OnWritingNotebookSound?.Invoke(this, null);
     }
 
     public void UpdateNumber()
@@ -97,6 +99,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if(first == second) first.text = txt;
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
+        OnWritingNotebookSound?.Invoke(this, null);
     }
 
     public WordData GetWord() { return word; }

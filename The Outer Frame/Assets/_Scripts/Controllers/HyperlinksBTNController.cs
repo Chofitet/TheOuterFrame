@@ -25,6 +25,7 @@ public class HyperlinksBTNController : MonoBehaviour
         textField = TextField;
         word = Word;
         OriginalText = textField.text;
+        ApplyEffectOnHover("#00F3FF");
     }
 
     public void PressButton()
@@ -33,7 +34,13 @@ public class HyperlinksBTNController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void ApplyEffectOnHover()
+    public void ApplyHover()
+    {
+        ApplyEffectOnHover("#1F9168");
+    }
+
+
+    public void ApplyEffectOnHover(string color)
     {
         string[] words = textField.text.Split(' ');
         string auxText = "";
@@ -61,10 +68,12 @@ public class HyperlinksBTNController : MonoBehaviour
 
             if (NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower() == NormalizeWord(word.FindFindableName(CleanUnnecessaryCharacter(NormalizeWord(combinedWord)))).ToLower())
             {
+                if (combinedWord.StartsWith("<color")) combinedWord = RemoveMaterialTags(combinedWord);
+
                 string extraCharacters = GetExtraCharacters(combinedWord);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
                 if (combinedWord == "") return;
-                strBuilder = strBuilder.Replace(combinedWord, "<color=" + "#00F3FF" + ">" + CleanUnnecessaryCharacter(combinedWord) + "</color>");
+                strBuilder = strBuilder.Replace(combinedWord, "<color=" + color + ">" + CleanUnnecessaryCharacter(combinedWord) + "</color>");
                 auxText += strBuilder + extraCharacters + " ";
             }
             else
@@ -76,6 +85,12 @@ public class HyperlinksBTNController : MonoBehaviour
 
         }
         textField.text = auxText;
+        textField.ForceMeshUpdate();
+    }
+
+    string RemoveMaterialTags(string word)
+    {
+        return Regex.Replace(word, @"<\/?color.*?>", "");
     }
 
     string GetExtraCharacters(string word)
@@ -111,6 +126,6 @@ public class HyperlinksBTNController : MonoBehaviour
 
     public void UnapplyEffect()
     {
-        textField.text = OriginalText;
+        ApplyEffectOnHover("#00F3FF");
     }
 }
