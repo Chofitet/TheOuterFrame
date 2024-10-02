@@ -16,6 +16,9 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnAbortCallRecording;
     [SerializeField] GameObject ScreenContent;
     [SerializeField] GameObject ErrorMessageContent;
+    [SerializeField] GameEvent OnDialingSound;
+    [SerializeField] GameEvent OnOpenPhonePadSound;
+    [SerializeField] GameEvent OnClosePhonePadSound;
     bool isRecording;
     bool IsInView;
     bool hasNumberEnter;
@@ -52,6 +55,7 @@ public class PinchofonoController : MonoBehaviour
             ShowPanel(ScreenContent);
             anim.SetBool("isCallPossible", true);
             OnStartRecording?.Invoke(this, null);
+            OnClosePhonePadSound?.Invoke(this, null);
             SetIsRecordingTrue();
         }
     }
@@ -106,6 +110,7 @@ public class PinchofonoController : MonoBehaviour
     {
         ResetAll(null,null);
         OnAbortCallRecording?.Invoke(this, null);
+        OnOpenPhonePadSound?.Invoke(this, null);
     }
 
     public void CancelAbort()
@@ -174,6 +179,7 @@ public class PinchofonoController : MonoBehaviour
         hasNumberEnter = true;
         txtNumber.GetComponent<TypingAnimText>().AnimateTyping();
         anim.SetTrigger("padDial");
+        OnDialingSound?.Invoke(this, null);
         anim.SetTrigger("recordReady");
         anim.SetTrigger("recordReadyWobble");
     }
@@ -184,9 +190,10 @@ public class PinchofonoController : MonoBehaviour
         if(!isRecording) txtNumber.text = "";
         ViewStates view = (ViewStates)obj;
 
-        if(view != ViewStates.PinchofonoView && IsInView)
+        if(view != ViewStates.PinchofonoView && IsInView )
         {
             anim.SetTrigger("padClose");
+            if(!isRecording && view != ViewStates.OnTakenPaperView) OnClosePhonePadSound?.Invoke(this, null);
             AbortConfirmationPanel.SetActive(false);
             hasNumberEnter = false;
         }
@@ -196,6 +203,7 @@ public class PinchofonoController : MonoBehaviour
         if (IsInView && !isRecording && !haveCallToPrint)
         {
             anim.SetTrigger("padOpen");
+            OnOpenPhonePadSound?.Invoke(this, null);
         }
     }
 

@@ -27,7 +27,8 @@ public class PCWikiController : MonoBehaviour
 
 
         WikiData.text = "";
-        
+
+
         image.sprite = null;
         //PhoneNumber.text = "";
 
@@ -44,7 +45,9 @@ public class PCWikiController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         if (input.GetText() != null) WikiData.text = input.GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData);
+
         HyperlinksManager.HLM.InstanciateHyperLink(WikiData);
+
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
         image.sprite = input.GetImage();
         CompleteFields();

@@ -53,6 +53,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
                     Destroy(child.gameObject);
                 }
             }
+            RedactedBlockList.Clear();
 
             List<Vector3> PositionsWord = SearchForRedactedBlocks(textField, false);
 
@@ -82,6 +83,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
         textField.textInfo.Clear();
 
+
         if (textField.IsActive())
         {
             textField.ForceMeshUpdate();
@@ -100,6 +102,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
                     var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
                     wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
                     aux.Add(wordLocation);
+                    
                 e++;
                 
             }

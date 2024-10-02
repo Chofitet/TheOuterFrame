@@ -8,11 +8,13 @@ public class StringConnectionController : MonoBehaviour
 {
     [SerializeField] MoveBoardElementsToPos Node1;
     [SerializeField] MoveBoardElementsToPos Node2;
+    
 
     [SerializeField] GameObject AnimPin1;
     Vector3 startPosPin1;
     [SerializeField] GameObject AnimPin2;
     Vector3 startPosPin2;
+    [SerializeField] GameEvent OnPuttingStringSound;
     [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     [SerializeField] bool isOrderMatters;
     GameObject content;
@@ -43,6 +45,7 @@ public class StringConnectionController : MonoBehaviour
         {
             content.SetActive(true);
             AnimPin2.transform.DOMove(startPosPin2, 0.5f).SetEase(Ease.InOutQuad);
+            if(!isConnected) OnPuttingStringSound?.Invoke(this, null);
             isConnected = true;
         }
     }

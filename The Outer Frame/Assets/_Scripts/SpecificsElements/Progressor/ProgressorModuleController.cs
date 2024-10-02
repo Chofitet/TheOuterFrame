@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ProgressorModuleController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject SwitchAbortBTN;
     [SerializeField] GameObject AbortBTN;
     [SerializeField] BlinkMaterialEffect ReadyToPrintLED;
+    [SerializeField] Light light;
+    float InitLigthIntensity;
     bool isPrinterFull;
     BlinkMaterialEffect blinkmaterialAbort;
     Color OriginalColor;
@@ -28,7 +31,10 @@ public class ProgressorModuleController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         blinkmaterialAbort = SwitchAbortBTN.transform.parent.GetComponent<BlinkMaterialEffect>();
-        
+        InitLigthIntensity = light.intensity;
+        light.enabled = true;
+        light.intensity = 0;
+
     }
 
     public void SetAction(WordData _word,StateEnum _state,int _time)
@@ -46,8 +52,21 @@ public class ProgressorModuleController : MonoBehaviour
     {
         if (!isReady) return;
         anim.SetTrigger("sendMessage");
-       
+        TurnOnLight(0.8f);
     }
+
+    void TurnOnLight(float waitDuration)
+    {
+        Sequence sequenceLigth = DOTween.Sequence();
+        sequenceLigth.Append(light.DOIntensity(InitLigthIntensity, 0.3f))
+                     .AppendInterval(waitDuration)
+                    .Append(light.DOIntensity(0, 0.3f))
+                    .OnComplete(() =>
+                    {
+                        light.intensity = 0;
+                    }); ;
+    }
+
 
     //OnSendAPTrackEnds
     public void InitSlot(Component sender, object obj)
@@ -95,6 +114,7 @@ public class ProgressorModuleController : MonoBehaviour
         {
             anim.SetTrigger("receiveMessage");
             IsReadyToPrint = true;
+            
 
             Invoke("delayLigth", 0.3f);
 

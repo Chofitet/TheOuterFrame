@@ -9,6 +9,7 @@ public class PaperMoveController : MonoBehaviour
 {
     [SerializeField] Transform TakenPos;
     [SerializeField] Transform ReportPilePos;
+    [SerializeField] Transform ReportPilePos2;
     [SerializeField] Transform HoldRigthPos;
     [SerializeField] float takeDuration;
     [SerializeField] Transform PCSpotReport1;
@@ -16,6 +17,7 @@ public class PaperMoveController : MonoBehaviour
     [SerializeField] Transform PCSpotTranscription1;
     [SerializeField] Transform PCSpotTranscription2;
     [SerializeField] Transform DescartPos;
+    [SerializeField] Transform PaperBoardPos;
     [SerializeField] GameEvent OnPressButtomElement;
     [SerializeField] GameEvent OnSetPaperState;
     [SerializeField] GameEvent OnReportEnterDatabase;
@@ -80,7 +82,7 @@ public class PaperMoveController : MonoBehaviour
         GameObject reportObject = (GameObject)obj;
         reportObject.transform.SetParent(TakenPos.transform);
 
-        changePaperInPile(reportObject);
+        if(currentPaper != reportObject) changePaperInPile(reportObject);
 
         if (PaperState.HoldingRight == actualPaperState && currentPaper != reportObject)
         {
@@ -119,17 +121,20 @@ public class PaperMoveController : MonoBehaviour
         currentPaper.transform.SetParent(ReportPilePos);
         currentPaper = null;
         SetPaperState(PaperState.Staked);
+
     }
 
     public void OnHoldPaperToButtomRigth(Component sender, object obj)
     {
         if (!currentPaper) return;
         ViewStates view = (ViewStates)obj;
+        Transform auxTrans = HoldRigthPos;
+        if (view == ViewStates.BoardView) auxTrans = PaperBoardPos;
 
-        if(view != ViewStates.GeneralView && view!= ViewStates.OnTakenPaperView)
+        if (view != ViewStates.GeneralView && view!= ViewStates.OnTakenPaperView)
         {
-            currentPaper.transform.SetParent(HoldRigthPos);
-            SetPosition(HoldRigthPos);
+            currentPaper.transform.SetParent(auxTrans);
+            SetPosition(auxTrans);
             SetPaperState(PaperState.HoldingRight);
             currentPaper.GetComponent<BoxCollider>().enabled = true;
         }
@@ -169,7 +174,7 @@ public class PaperMoveController : MonoBehaviour
             if (PapersQueue.Contains(currentPaper)) return;
             if (PapersQueue.Count != 0) TransformOffset = PapersQueue.Count * new Vector3(0, 0.002f, 0);
             RotationOffset = new Vector3(0, UnityEngine.Random.Range(-10, 10), 0);
-            DisableOtherPapers();
+            //DisableOtherPapers();
             PapersQueue.Add(currentPaper);
         }
         else
@@ -242,7 +247,7 @@ public class PaperMoveController : MonoBehaviour
         GameObject oldPaper = currentPaper;
 
         swapPapersSequence = DOTween.Sequence();
-        swapPapersSequence.Append(oldPaper.transform.DOMove(DescartPos.transform.position, 0.3f))
+        swapPapersSequence.Append(oldPaper.transform.DOMove(ReportPilePos2.transform.position, 0.3f))
             .Append(oldPaper.transform.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration))
             .Join(oldPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration))
             .OnComplete(() =>

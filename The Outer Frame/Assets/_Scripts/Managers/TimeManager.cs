@@ -17,6 +17,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] float NormalTimeValue;
     [SerializeField] float AcceleratedTimeValue;
     [SerializeField] int MinutesToChangeNews;
+    [SerializeField] GameEvent OnStopSpeedTimeSound;
     
 
     float TimeVariation;
@@ -149,6 +150,10 @@ public class TimeManager : MonoBehaviour
 
     public void NormalizeTime()
     {
+        if(isTimeAccelerated)
+        {
+            OnStopSpeedTimeSound?.Invoke(this, null);
+        }
         TimeVariation = NormalTimeValue * 60;
         isTimeAccelerated = false;
         OnTimeSpeedChange?.Invoke(this, 1f);

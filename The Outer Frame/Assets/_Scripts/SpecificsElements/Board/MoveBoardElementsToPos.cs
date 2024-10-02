@@ -6,6 +6,7 @@ using DG.Tweening;
 public class MoveBoardElementsToPos : MonoBehaviour
 {
     IPlacedOnBoard conditions;
+    [SerializeField] GameEvent OnPlaceInBoardSound;
     Vector3 FinalPosition;
     Vector3 FinalRotation;
     GameObject Content;
@@ -67,6 +68,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
         transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad);
         transform.DORotate(FinalRotation, 0.3f).SetEase(Ease.InOutCirc);
+        OnPlaceInBoardSound?.Invoke(this, null);
     }
 
     public bool  GetIsPlaced()
