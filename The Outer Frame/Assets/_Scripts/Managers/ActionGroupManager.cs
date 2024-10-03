@@ -21,6 +21,8 @@ public class ActionGroupManager : MonoBehaviour
 
     [SerializeField] List<ActionGroup> ListOfActionGroups = new List<ActionGroup>();
 
+    [SerializeField] List<StateEnum> ListOfAcionsInterruptCalls = new List<StateEnum>();
+
     public bool ChekAreInTheSameGroup(WordData word, StateEnum newAction)
     {
         List<ActionGroup> AuxListOfActionGroups = new List<ActionGroup>();
@@ -45,6 +47,17 @@ public class ActionGroupManager : MonoBehaviour
 
         return false;
     }
+
+    public bool CheckForPhoneActionInterrupted(WordData word)
+    {
+        foreach(StateEnum state in ListOfAcionsInterruptCalls)
+        {
+            if (word.CheckIfActionIsDoing(state)) return true;
+        }
+
+        return false;
+    }
+
 
 }
 

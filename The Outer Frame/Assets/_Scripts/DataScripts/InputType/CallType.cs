@@ -18,20 +18,33 @@ public class CallType : ScriptableObject, IStateComparable
     [SerializeField] int CatchWindowInMinutes = 30;
 
     [Header("Common Properties")]
-    [SerializeField] [Multiline] string Dialogue;
+    [SerializeField] string From;
+    [SerializeField] string To;
+    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string Dialogue;
+    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string IterruptedDialogue;
+    
     [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
 
     [NonSerialized] private bool isCatch;
+    [NonSerialized] private bool isInterrupted;
     [NonSerialized] WordData word;
 
-    public string GetDialogue() { return Dialogue; }
+    public string GetDialogue() {
+        if (!isInterrupted) return Dialogue;
+        else return IterruptedDialogue;
+    }
     public void SetCached()
     {
         isCatch = true;
         SetTimeWhenWasDone();
     }
     public bool GetIsCatch() { return isCatch; }
+
+    public string GetFrom() { return From; }
+    public string GetTo() { return To; }
+
+    public void SetIsinterrrupted() { isInterrupted = true; }
     public StateEnum GetState() { return state; }
 
     public void SetWord(WordData _word)

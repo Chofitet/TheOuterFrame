@@ -19,6 +19,7 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnDialingSound;
     [SerializeField] GameEvent OnOpenPhonePadSound;
     [SerializeField] GameEvent OnClosePhonePadSound;
+    WordData ActualWord;
     bool isRecording;
     bool IsInView;
     bool hasNumberEnter;
@@ -159,9 +160,10 @@ public class PinchofonoController : MonoBehaviour
     {
         if (printOnce) return;
         GameObject aux = Instantiate(CallTranscriptionPrefab, InstanciateSpot);
-        aux.GetComponent<TranscriptionCallController>().Inicialization(CallToPrint);
+        aux.GetComponent<TranscriptionCallController>().Inicialization(CallToPrint, ActualWord);
         
         printOnce = true;
+        ActualWord = null;
 
         anim.SetBool("isCallPossible", false);
         anim.SetTrigger("recordReady");
@@ -177,6 +179,7 @@ public class PinchofonoController : MonoBehaviour
         if (!word.GetIsPhoneNumberFound()) return;
         txtNumber.text = word.GetPhoneNumber();
         hasNumberEnter = true;
+        ActualWord = word;
         txtNumber.GetComponent<TypingAnimText>().AnimateTyping();
         anim.SetTrigger("padDial");
         OnDialingSound?.Invoke(this, null);

@@ -6,43 +6,99 @@ using UnityEditor;
 
 public class PinchofonoWaveController : MonoBehaviour
 {
-    [SerializeField] SineWave WaveLine;
+    [SerializeField] GameObject WaveLine;
+    SineWave[] sineWaves;
     Sequence StartRecordingSequence;
-    float amplitud;
+    float amplitud1;
+    float amplitud2;
     [SerializeField] float MaxAmplitud;
-    float frequency;
+    float frequency1;
+    float frequency2;
     [SerializeField] float MaxFrequency;
 
     [SerializeField] float FrequencyIdle;
     [SerializeField] float AmplitudIdle;
+
+    private void Start()
+    {
+        sineWaves = WaveLine.GetComponents<SineWave>();
+    }
+
     public void StartRecording(Component sender, object obj)
     {
         StartRecordingSequence = DOTween.Sequence();
+        CatchCallSequence1.Kill();
+        CatchCallSequence2.Kill();
 
-        StartRecordingSequence.Append(DOTween.To(() => amplitud, x => amplitud = x, AmplitudIdle, 1f))
-                              .Join(DOTween.To(() => frequency, x => frequency = x, FrequencyIdle, 1f));
+        StartRecordingSequence.Append(DOTween.To(() => amplitud1, x => amplitud1 = x, AmplitudIdle, 1f))
+                              .Join(DOTween.To(() => frequency1, x => frequency1 = x, FrequencyIdle, 1f))
+                              .Join(DOTween.To(() => amplitud2, x => amplitud2 = x, AmplitudIdle, 1f))
+                              .Join(DOTween.To(() => frequency2, x => frequency2 = x, FrequencyIdle, 1f));
     }
+
+    Sequence CatchCallSequence1;
+    Sequence CatchCallSequence2;
 
     public void CatchCall(Component sender, object obj)
     {
-        Sequence CathRecordingSequence = DOTween.Sequence();
+        
+        StartCoroutine(StopCatchAnim());
+        // Secuencia para amplitud1 y frecuencia1
+        if (CatchCallSequence1 != null && CatchCallSequence1.IsPlaying())
+        {
+            CatchCallSequence1.Kill();
+        }
 
-        CathRecordingSequence.Append(DOTween.To(() => amplitud, x => amplitud = x, MaxAmplitud, 1f))
-                              .Join(DOTween.To(() => frequency, x => frequency = x, MaxFrequency, 1f));
+        CatchCallSequence1 = DOTween.Sequence();
+
+        CatchCallSequence1.AppendCallback(() =>
+        {
+            float randomAmplitud1 = Random.Range(0, MaxAmplitud);
+            float randomFrequency1 = Random.Range(0, MaxFrequency);
+
+            CatchCallSequence1.Append(DOTween.To(() => amplitud1, x => amplitud1 = x, randomAmplitud1, 1f))
+                               .Join(DOTween.To(() => frequency1, x => frequency1 = x, randomFrequency1, 1f));
+        })
+        .SetLoops(-1, LoopType.Yoyo);
+
+        // Secuencia para amplitud2 y frecuencia2
+        if (CatchCallSequence2 != null && CatchCallSequence2.IsPlaying())
+        {
+            CatchCallSequence2.Kill();
+        }
+
+        CatchCallSequence2 = DOTween.Sequence();
+
+        CatchCallSequence2.AppendCallback(() =>
+        {
+            float randomAmplitud2 = Random.Range(0, MaxAmplitud);
+            float randomFrequency2 = Random.Range(0, MaxFrequency);
+
+            CatchCallSequence2.Append(DOTween.To(() => amplitud2, x => amplitud2 = x, randomAmplitud2, 1f))
+                               .Join(DOTween.To(() => frequency2, x => frequency2 = x, randomFrequency2, 1f));
+        })
+        .SetLoops(-1, LoopType.Yoyo);
     }
 
     public void EndRecording(Component sender, object obj)
     {
         Sequence EndRecordingSequence = DOTween.Sequence();
+        CatchCallSequence1.Kill();
+        CatchCallSequence2.Kill();
+        StopAllCoroutines();
 
-        EndRecordingSequence.Append(DOTween.To(() => amplitud, x => amplitud = x, 0, 1f))
-                            .Join(DOTween.To(() => frequency, x => frequency = x, 0, 1f));
+        EndRecordingSequence.Append(DOTween.To(() => amplitud1, x => amplitud1 = x, 0, 1f))
+                            .Join(DOTween.To(() => frequency1, x => frequency1 = x, 0, 1f))
+                            .Join(DOTween.To(() => amplitud2, x => amplitud2 = x, 0, 1f))
+                            .Join(DOTween.To(() => frequency2, x => frequency2 = x, 0, 1f));
     }
 
     private void Update()
     {
-        WaveLine.Amplitude = amplitud;
-        WaveLine.Frequency = frequency;
+        sineWaves[0].Amplitude = amplitud1;
+        sineWaves[0].Frequency = frequency1;
+        sineWaves[1].Amplitude = amplitud2;
+        sineWaves[1].Frequency = frequency2;
     }
 
     [ContextMenu("Start Recording")]
@@ -61,6 +117,12 @@ public class PinchofonoWaveController : MonoBehaviour
     private void CathRecordingTest()
     {
         CatchCall(null, null);
+    }
+
+    IEnumerator StopCatchAnim()
+    {
+        yield return new WaitForSeconds(15f);
+        StartRecording(null, null);
     }
 }
 

@@ -10,6 +10,7 @@ public class PinchofonoManager : MonoBehaviour
     int minutePassCounter;
     WordData word;
     CallType CallToShow;
+    bool isInterrupted;
     [SerializeField] GameEvent OnCallEndRecording;
     [SerializeField] GameEvent OnCallCatch;
 
@@ -32,24 +33,40 @@ public class PinchofonoManager : MonoBehaviour
 
         if (CallsInTimeZone.Count == 0) Debug.Log("No Calls To show");
 
-        foreach (CallType call in CallsInTimeZone)
+
+        // Chequeo de llamadas en ventana horaria y condicionales
+        if (!CallToShow)
         {
-            if (call.GetIsCatch()) continue;
-            if(call.CheckForConditionals())
+            foreach (CallType call in CallsInTimeZone)
             {
-                CallToShow = call;
-                call.SetCached();
-                OnCallCatch?.Invoke(this, null);
+                if (call.GetIsCatch()) continue;
+                if (call.CheckForConditionals())
+                {
+                    CallToShow = call;
+                    call.SetCached();
+                    OnCallCatch?.Invoke(this, null);
+                }
             }
         }
+        
+        if(CallToShow)
+        {
+            //Chequeo de Acciones que interrumpen
 
+            if(ActionGroupManager.AGM.CheckForPhoneActionInterrupted(word)) isInterrupted = true;
+        }
+
+        //Paso de info de la llamada cacheada
         if (minutePassCounter == minutesToRecording)
         {
             TimeManager.OnMinuteChange -= CounterPassTime;
             minutePassCounter = 0;
             CountDown.text = "00:00";
             Debug.Log("CallRecordingFinish");
+            if (isInterrupted) CallToShow.SetIsinterrrupted() ;
             OnCallEndRecording?.Invoke(this, CallToShow);
+            CallToShow = null;
+            isInterrupted = false;
         }
     }
 
@@ -58,6 +75,8 @@ public class PinchofonoManager : MonoBehaviour
         TimeManager.OnMinuteChange -= CounterPassTime;
         minutePassCounter = 0;
         CountDown.text = "00:00";
+        CallToShow = null;
+        isInterrupted = false;
     }
 
 
