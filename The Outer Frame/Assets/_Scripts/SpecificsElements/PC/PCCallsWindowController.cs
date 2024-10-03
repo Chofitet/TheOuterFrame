@@ -45,7 +45,7 @@ public class PCCallsWindowController : MonoBehaviour
 
         CallType call = (CallType)obj;
 
-        CallToFild.Inicialization(call);
+        CallToFild.Inicialization(call,word);
     }
 
     public void QuitPanelReport()
