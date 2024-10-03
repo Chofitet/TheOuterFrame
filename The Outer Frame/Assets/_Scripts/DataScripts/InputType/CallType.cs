@@ -7,9 +7,15 @@ using System;
 public class CallType : ScriptableObject, IStateComparable
 {
     
-    [Header("Pre-programmed Call")]
-    [SerializeField] TimeCheckConditional StartTime;
-    [SerializeField] TimeCheckConditional EndTime;
+    [Header("StartTime")]
+    [SerializeField] int StartHour;
+    [SerializeField] int StartMinute;
+    [Header("EndTime")]
+    [SerializeField] int EndHour;
+    [SerializeField] int EndMinute;
+
+    TimeCheckConditional StartTime;
+    TimeCheckConditional EndTime;
 
 
     [Header("Reaction Call")]
@@ -22,6 +28,8 @@ public class CallType : ScriptableObject, IStateComparable
     [SerializeField] string To;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string Dialogue;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string IterruptedDialogue;
+
+    [SerializeField] List<WordData> Involved = new List<WordData>(); 
     
     [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
@@ -29,6 +37,7 @@ public class CallType : ScriptableObject, IStateComparable
     [NonSerialized] private bool isCatch;
     [NonSerialized] private bool isInterrupted;
     [NonSerialized] WordData word;
+
 
     public string GetDialogue() {
         if (!isInterrupted) return Dialogue;
@@ -44,12 +53,16 @@ public class CallType : ScriptableObject, IStateComparable
     public string GetFrom() { return From; }
     public string GetTo() { return To; }
 
+    public List<WordData> GetInvolved() { return Involved; }
+
     public void SetIsinterrrupted() { isInterrupted = true; }
     public StateEnum GetState() { return state; }
 
     public void SetWord(WordData _word)
     {
         word = _word;
+        StartTime.Initialize(true, 0, StartHour, StartMinute);
+        EndTime.Initialize(false, 0, EndHour, EndMinute);
     }
 
     public WordData GetWord() { return word; }
