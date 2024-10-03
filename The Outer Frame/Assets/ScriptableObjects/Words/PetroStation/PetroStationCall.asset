@@ -17,12 +17,22 @@ MonoBehaviour:
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
+  From: 
+  To: 
   Dialogue: 'I already told the last guy: I can''t leave my post, my boss would totally
     kill me. You''ll have to come here and check it out for yourselves.
 
 
     Have
     a Petro good day!'
+  IterruptedDialogue: 'I already told the last guy: I can''t leave my post, my boss
+    would totally...
+
+    What? I''m on the phone. Yeah, but...
+
+    Sorry I have
+    to go there''s a--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------(END
+    OF CALL)'
   Conditions:
   - condition: {fileID: 11400000, guid: 6fcb877fbb275b44f848b7767f72020a, type: 2}
     ifNot: 1
