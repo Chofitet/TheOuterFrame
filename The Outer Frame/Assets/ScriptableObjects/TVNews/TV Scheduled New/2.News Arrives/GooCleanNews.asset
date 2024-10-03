@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: GooCleanNews
   m_EditorClassIdentifier: 
   headline: CLEANEST ROAD EVER
+  headlineTwoLines: 
   text: OUR NATION SHOULD BE PROUD
   image: {fileID: 0}
   channel: 1
+  Priority: 1
   alertLevelIncrement: 0
   Emergency: 0
   Day: 0
   Hour: 7
   Minute: 0
+  MinTransmitionTime: 10
+  Conditions:
+  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
+    ifNot: 0
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}
