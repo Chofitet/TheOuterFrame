@@ -10,20 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
-  m_Name: PetroStationCall
+  m_Name: PetroStationCallPBBrainwashed
   m_EditorClassIdentifier: 
   StartTime: {fileID: 11400000, guid: 01f290b79b6e4764ba235c400a3d44f5, type: 2}
-  EndTime: {fileID: 11400000, guid: 62a989b13ad7f244c8ffbfa4b065ce25, type: 2}
+  EndTime: {fileID: 11400000, guid: d1fcce0d1f3429843adab6a06f7f5bab, type: 2}
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
-  Dialogue: 'I already told the last guy: I can''t leave my post, my boss would totally
-    kill me. You''ll have to come here and check it out for yourselves.
-
-
-    Have
-    a Petro good day!'
+  Dialogue: "I did't hear nothing! what are you talking about? \nNo, I can't go outside
+    to check it. My boss would totally kill me. I'm not making it up, I think he's
+    connected!\n\nWell, yeah..sorry\n\nHave a Petro good day!"
   Conditions:
-  - condition: {fileID: 11400000, guid: 6fcb877fbb275b44f848b7767f72020a, type: 2}
-    ifNot: 1
+  - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
+    ifNot: 0
   isOrderMatters: 0

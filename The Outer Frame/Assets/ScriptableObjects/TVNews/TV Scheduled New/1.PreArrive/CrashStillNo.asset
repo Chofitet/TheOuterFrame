@@ -12,17 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
   m_Name: CrashStillNo
   m_EditorClassIdentifier: 
-  headline: 'NO FURTHER NEWS ABOUT ROAD 54 CRASH
+  headline: 
+  headlineTwoLines: 'NO FURTHER NEWS ABOUT ROAD 54 CRASH
 
-    I5 NEWS VAN ON THE WAY!'
+    I5 NEWS VAN ON THE
+    WAY!'
   text: 
   image: {fileID: 0}
   channel: 1
+  Priority: 1
   alertLevelIncrement: 15
   Emergency: 0
   Day: 0
   Hour: 5
   Minute: 30
+  MinTransmitionTime: 10
+  Conditions: []
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}

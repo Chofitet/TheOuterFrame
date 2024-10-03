@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: BathroomDoorKickedDown
   m_EditorClassIdentifier: 
   headline: 
+  headlineTwoLines: 
   text: 
   image: {fileID: 0}
   channel: 1
+  Priority: 1
   alertLevelIncrement: 0
   Emergency: 0
   Day: 0
   Hour: 7
   Minute: 30
+  MinTransmitionTime: 10
+  Conditions:
+  - condition: {fileID: 11400000, guid: ed61fb827c41bf24f9af0a6f755151d3, type: 2}
+    ifNot: 0
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}
