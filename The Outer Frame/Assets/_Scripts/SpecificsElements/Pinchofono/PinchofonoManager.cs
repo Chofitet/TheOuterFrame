@@ -54,6 +54,16 @@ public class PinchofonoManager : MonoBehaviour
             //Chequeo de Acciones que interrumpen
 
             if(ActionGroupManager.AGM.CheckForPhoneActionInterrupted(word)) isInterrupted = true;
+
+            List<WordData> involvedWords = CallToShow.GetInvolved();
+
+            foreach(WordData w in involvedWords)
+            {
+                if (ActionGroupManager.AGM.CheckForPhoneActionInterrupted(w))
+                {
+                    isInterrupted = true;
+                }
+            }
         }
 
         //Paso de info de la llamada cacheada
