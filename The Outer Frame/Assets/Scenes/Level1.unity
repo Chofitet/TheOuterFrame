@@ -18309,7 +18309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4541efd9e7810f469a9e7db70301253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WaveLine: {fileID: 904055095}
+  WaveLine: {fileID: 904055093}
   MaxAmplitud: 0.3
   MaxFrequency: 10
   FrequencyIdle: 2
@@ -19088,6 +19088,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtCall: {fileID: 680795198}
+  InfoPanel: {fileID: 0}
+  txtFrom: {fileID: 0}
+  txtTo: {fileID: 0}
+  txtAt: {fileID: 0}
+  txtBTN: {fileID: 0}
+  InterseptedInfoPanel: {fileID: 0}
+  txtFromNoIntercepted: {fileID: 0}
 --- !u!224 &424751578
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22623,6 +22630,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 5ecdccf9ffe0fba4b94cdd8fe1d923fe, type: 2}
     - {fileID: 11400000, guid: 8188049cde094484597b0ff4d29a4629, type: 2}
     - {fileID: 11400000, guid: 7db26028fed738e4bbcfc08caf9ad561, type: 2}
+  ListOfAcionsInterruptCalls: []
 --- !u!1 &492956580
 GameObject:
   m_ObjectHideFlags: 0
@@ -42255,6 +42263,7 @@ GameObject:
   - component: {fileID: 904055098}
   - component: {fileID: 904055097}
   - component: {fileID: 904055095}
+  - component: {fileID: 904055099}
   m_Layer: 0
   m_Name: PinchofonoWaveCam
   m_TagString: Untagged
@@ -42350,6 +42359,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &904055099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904055093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be76b3099f48542adb03c21f7919208b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SineWaveShader: {fileID: 4800000, guid: 16ca3aa75b0734d6fb078f7348a8c774, type: 3}
 --- !u!1 &908251280
 GameObject:
   m_ObjectHideFlags: 0
