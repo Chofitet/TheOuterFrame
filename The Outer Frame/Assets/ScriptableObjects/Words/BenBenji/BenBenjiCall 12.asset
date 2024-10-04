@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
-  m_Name: PetroBoyCall
+  m_Name: BenBenjiCall 12
   m_EditorClassIdentifier: 
-  StartHour: 0
+  StartHour: 16
   StartMinute: 0
-  EndHour: 0
-  EndMinute: 0
+  EndHour: 16
+  EndMinute: 30
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: 
   To: 
-  Dialogue: 
+  Dialogue: <link>Tootsie</link>
   IterruptedDialogue: 
-  Involved: []
+  Involved:
+  - {fileID: 11400000, guid: 754487f661e18d9449ce2c8061cb18e5, type: 2}
+  - {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
   Conditions: []
   isOrderMatters: 0

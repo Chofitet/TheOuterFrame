@@ -12,11 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: BenBenjiCall
   m_EditorClassIdentifier: 
-  StartTime: {fileID: 11400000, guid: 01f290b79b6e4764ba235c400a3d44f5, type: 2}
-  EndTime: {fileID: 0}
+  StartHour: 10
+  StartMinute: 0
+  EndHour: 10
+  EndMinute: 30
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
+  From: 
+  To: 
   Dialogue: <link>Tootsie</link>
+  IterruptedDialogue: 
+  Involved:
+  - {fileID: 11400000, guid: 754487f661e18d9449ce2c8061cb18e5, type: 2}
+  - {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
   Conditions: []
   isOrderMatters: 0
