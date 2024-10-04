@@ -10,13 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
-  m_Name: TricycleMikeCall
+  m_Name: PetroStationCall 4
   m_EditorClassIdentifier: 
-  StartTime: {fileID: 0}
-  EndTime: {fileID: 0}
+  StartHour: 6
+  StartMinute: 20
+  EndHour: 6
+  EndMinute: 50
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
-  Dialogue: 
-  Conditionals: []
+  From: 
+  To: 
+  Dialogue: Listen, this number is for costumers only. No, we don't sell by the phone.
+  IterruptedDialogue: 
+  Involved:
+  - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
+  Conditions:
+  - condition: {fileID: 11400000, guid: 6fcb877fbb275b44f848b7767f72020a, type: 2}
+    ifNot: 1
   isOrderMatters: 0
