@@ -26,7 +26,7 @@ public class ReportController : MonoBehaviour
         word = _word;
         report = _report;
         isNotCompleted = false;
-        string status = "Completed";
+        string status = "<color=#006A0D>Completed</color>";
         btnText.text = "UPLOAD TO DB";
         StateEnum state = report.GetAction();
         string Name = word.GetForm_DatabaseNameVersion();
@@ -44,35 +44,35 @@ public class ReportController : MonoBehaviour
             Resulttxt.text = report.GetTextForRepetition();
             //Imagen generica
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
-            status = "Rejected";
+            status = "<color=#AE0000>Rejected</color>";
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if (isTheSameAction)
         {
             Resulttxt.text = "We are already doing that exact same thing.";
-            status = "Rejected";
+            status = "<color=#AE0000>Rejected</color>";
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if(isOtherActionInGroupDoing)
         {
             Resulttxt.text = "We are currently " + word.GetDoingAction(0).GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
-            status = "Rejected";
+            status = "<color=#AE0000>Rejected</color>";
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if(isAborted)
         {
             Resulttxt.text = "The action \"" + actionVerb + " " + Name + "\" was aborted succesfully";
-            status = "Aborted";
+            status = "<color=#006A0D>Aborted</color>";
             photo1.Set("", ThumbUp);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if (report.GetIsAutomatic())
         {
-            status = "Rejected";
+            status = "<color=#AE0000>Rejected</color>";
             btnText.text = "DISPOSE";
         }
 

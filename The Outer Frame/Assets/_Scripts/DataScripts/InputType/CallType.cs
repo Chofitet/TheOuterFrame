@@ -61,6 +61,8 @@ public class CallType : ScriptableObject, IStateComparable
     public void SetWord(WordData _word)
     {
         word = _word;
+        StartTime = new TimeCheckConditional();
+        EndTime = new TimeCheckConditional();
         StartTime.Initialize(true, 0, StartHour, StartMinute);
         EndTime.Initialize(false, 0, EndHour, EndMinute);
     }

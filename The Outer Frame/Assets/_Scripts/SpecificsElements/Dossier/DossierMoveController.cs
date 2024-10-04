@@ -43,7 +43,7 @@ public class DossierMoveController : MonoBehaviour
         GetComponent<Animator>().enabled = false;
         transform.position = InitShowInBoardPosition.position;
         transform.rotation = InitShowInBoardPosition.rotation;
-        OnActionPlanDossier?.Invoke(this, null);
+        OnActionPlanDossier?.Invoke(this, true);
         isAddingIdea = true;
         // Reseteamos el tiempo de Lerp y activamos el seguimiento del target
         lerpTime = 0;
@@ -61,7 +61,8 @@ public class DossierMoveController : MonoBehaviour
             .AppendCallback(() =>
             {
                 OnChangeView?.Invoke(this, ViewStates.DossierView);
-                OnSetTimeSpeed?.Invoke(this, 1);
+                TimeManager.timeManager.SpeedUpTime();
+                
             })
             .AppendCallback(() =>
             {

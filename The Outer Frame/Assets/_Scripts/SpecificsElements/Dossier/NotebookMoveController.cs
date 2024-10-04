@@ -38,7 +38,7 @@ public class NotebookMoveController : MonoBehaviour
         {
             case ViewStates.GeneralView:
                 if(IsPhonesOpen) anim.SetTrigger("close");
-                SetPos(0, false);
+                if (isUp) SetPos(0, false);
                 break;
             case ViewStates.DossierView:
                 SetPos(6);
@@ -53,7 +53,7 @@ public class NotebookMoveController : MonoBehaviour
                 SetPos(3);
                 break;
             case ViewStates.ProgressorView:
-                SetPos(0,false);
+                if(isUp) SetPos(0,false);
                 break;
             case ViewStates.OnTakenPaperView:
                 SetPos(6);
