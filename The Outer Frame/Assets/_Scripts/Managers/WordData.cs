@@ -49,6 +49,10 @@ public class WordData : ScriptableObject
     [NonSerialized] List<StateEnum> CurrentDoingActions = new List<StateEnum>();
     #region GetInputLogic
 
+    public void InitSet()
+    {
+        SetCallsInfo();
+    }
 
     public TVNewType GetTVnew(StateEnum state)
     {
@@ -159,7 +163,6 @@ public class WordData : ScriptableObject
 
         foreach (CallType call in CallTypes)
         {
-            call.SetWord(this);
             if(call.CheckForTimeZone())
             {
                 auxList.Add(call);
@@ -167,6 +170,14 @@ public class WordData : ScriptableObject
         }
 
         return auxList;
+    }
+
+    void SetCallsInfo()
+    {
+        foreach (CallType call in CallTypes)
+        {
+            call.SetWord(this);
+        }
     }
 
     public List<CallType> GetAllCathedCalls()

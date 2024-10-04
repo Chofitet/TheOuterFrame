@@ -18,7 +18,8 @@ public class TimeManager : MonoBehaviour
     [SerializeField] float AcceleratedTimeValue;
     [SerializeField] int MinutesToChangeNews;
     [SerializeField] GameEvent OnStopSpeedTimeSound;
-    
+
+    bool isTimePaused;
 
     float TimeVariation;
 
@@ -137,7 +138,7 @@ public class TimeManager : MonoBehaviour
 
     public void SpeedUpTime()
     {
-        if (!isTimeAccelerated)
+        if (!isTimeAccelerated && !isTimePaused)
         {
             TimeVariation = AcceleratedTimeValue *60;
             isTimeAccelerated = true;
@@ -146,6 +147,7 @@ public class TimeManager : MonoBehaviour
             OnSpeedUpTime?.Invoke(this, null);
         }
         else { NormalizeTime();}
+        isTimePaused = false;
     }
 
     public void NormalizeTime()
@@ -166,6 +168,7 @@ public class TimeManager : MonoBehaviour
         TimeVariation = 0;
         OnTimeSpeedChange?.Invoke(this, 0f);
         OnAcceleratedTime?.Invoke(this, false);
+        isTimePaused = true;
     }
 
 }

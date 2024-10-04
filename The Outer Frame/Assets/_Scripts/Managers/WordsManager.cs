@@ -47,6 +47,7 @@ public class WordsManager : MonoBehaviour
     {
         foreach (WordData word in wordsDic)
         {
+            word.InitSet();
             word.SetListOfActions(Actions);
         }
     }

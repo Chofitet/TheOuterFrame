@@ -8,6 +8,7 @@ public class PinchofonoManager : MonoBehaviour
     [SerializeField] int minutesToRecording;
     [SerializeField] TMP_Text CountDown;
     int minutePassCounter;
+    int SecondPassCounter = 0;
     WordData word;
     CallType CallToShow;
     bool isInterrupted;
@@ -19,15 +20,16 @@ public class PinchofonoManager : MonoBehaviour
         if (!WordSelectedInNotebook.Notebook.GetSelectedWord()) return;
         CallToShow = null;
         TimeManager.OnMinuteChange += CounterPassTime;
-        CountDown.text = "00:" + minutesToRecording;
+        TimeManager.OnSecondsChange += SecondPass;
+        CountDown.text = minutesToRecording + "00";
         word = WordSelectedInNotebook.Notebook.GetSelectedWord();
     }
 
     void CounterPassTime()
     {
         minutePassCounter++;
-
-        CountDown.text = $"00:{minutesToRecording - minutePassCounter:00}";
+        SecondPassCounter = 0;
+        //CountDown.text = $"{minutesToRecording - minutePassCounter:00}";
 
         List<CallType> CallsInTimeZone = WordsManager.WM.RequestCall(word);
 
@@ -67,10 +69,12 @@ public class PinchofonoManager : MonoBehaviour
         }
 
         //Paso de info de la llamada cacheada
-        if (minutePassCounter == minutesToRecording)
+        if (minutePassCounter - 1 == minutesToRecording)
         {
             TimeManager.OnMinuteChange -= CounterPassTime;
+            TimeManager.OnSecondsChange -= SecondPass;
             minutePassCounter = 0;
+            SecondPassCounter = 0;
             CountDown.text = "00:00";
             Debug.Log("CallRecordingFinish");
             if (isInterrupted) CallToShow.SetIsinterrrupted() ;
@@ -78,6 +82,13 @@ public class PinchofonoManager : MonoBehaviour
             CallToShow = null;
             isInterrupted = false;
         }
+    }
+
+    void SecondPass()
+    {
+        SecondPassCounter++;
+
+        CountDown.text = $"{minutesToRecording - minutePassCounter:00}:{Mathf.Abs(59 - SecondPassCounter):00}";
     }
 
     public void AbortCall(Component sender, object obj)
