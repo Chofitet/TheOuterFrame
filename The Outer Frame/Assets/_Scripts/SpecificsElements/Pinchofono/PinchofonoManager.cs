@@ -75,7 +75,7 @@ public class PinchofonoManager : MonoBehaviour
             TimeManager.OnSecondsChange -= SecondPass;
             minutePassCounter = 0;
             SecondPassCounter = 0;
-            CountDown.text = "00:00";
+            CountDown.text = "00:00:00";
             Debug.Log("CallRecordingFinish");
             if (isInterrupted) CallToShow.SetIsinterrrupted() ;
             OnCallEndRecording?.Invoke(this, CallToShow);
@@ -88,14 +88,14 @@ public class PinchofonoManager : MonoBehaviour
     {
         SecondPassCounter++;
 
-        CountDown.text = $"{minutesToRecording - minutePassCounter:00}:{Mathf.Abs(59 - SecondPassCounter):00}";
+        CountDown.text = "00:" + $"{minutesToRecording - minutePassCounter:00}:{Mathf.Abs(59 - SecondPassCounter):00}";
     }
 
     public void AbortCall(Component sender, object obj)
     {
         TimeManager.OnMinuteChange -= CounterPassTime;
         minutePassCounter = 0;
-        CountDown.text = "00:00";
+        CountDown.text = "00:00:00";
         CallToShow = null;
         isInterrupted = false;
     }

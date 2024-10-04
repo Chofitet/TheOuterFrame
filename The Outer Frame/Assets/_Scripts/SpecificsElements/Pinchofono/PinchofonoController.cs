@@ -16,6 +16,8 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnAbortCallRecording;
     [SerializeField] GameObject ScreenContent;
     [SerializeField] GameObject ErrorMessageContent;
+    [SerializeField] GameObject EnterValidPanel;
+    [SerializeField] GameObject RecordingNumberPanel;
     [SerializeField] GameEvent OnDialingSound;
     [SerializeField] GameEvent OnOpenPhonePadSound;
     [SerializeField] GameEvent OnClosePhonePadSound;
@@ -101,7 +103,7 @@ public class PinchofonoController : MonoBehaviour
         else
         {
             
-            StartCoroutine(ShowErrorMessagePanel("Are you sure you want abort the recording?", 7f));
+            StartCoroutine(ShowErrorMessagePanel("", 7f));
             AbortConfirmationPanel.SetActive(true);
         }
 
@@ -174,9 +176,16 @@ public class PinchofonoController : MonoBehaviour
     {
         StopAllCoroutines();
         ScreenContent.SetActive(true);
+        RecordingNumberPanel.SetActive(true);
+        EnterValidPanel.SetActive(false);
         WordData word = (WordData)obj;
         if (!IsInView) return;
-        if (!word.GetIsPhoneNumberFound()) return;
+        if (!word.GetIsPhoneNumberFound())
+        {
+            RecordingNumberPanel.SetActive(false);
+            EnterValidPanel.SetActive(true);
+            return;
+        }
         txtNumber.text = word.GetPhoneNumber();
         hasNumberEnter = true;
         ActualWord = word;
@@ -190,7 +199,12 @@ public class PinchofonoController : MonoBehaviour
     //OnViewStateChange
     public void CheckPinchofonoView(Component sender, object obj)
     {
-        if(!isRecording) txtNumber.text = "";
+        if (!isRecording)
+        {
+            EnterValidPanel.SetActive(true);
+            txtNumber.text = "";
+            RecordingNumberPanel.SetActive(false);
+        }
         ViewStates view = (ViewStates)obj;
 
         if(view != ViewStates.PinchofonoView && IsInView )
@@ -230,6 +244,8 @@ public class PinchofonoController : MonoBehaviour
     {
         StopAllCoroutines();
         ShowPanel(ScreenContent);
+        RecordingNumberPanel.SetActive(false);
+        EnterValidPanel.SetActive(true);
         anim.SetBool("IsRecording", false);
         anim.SetFloat("tapeSpinSpeed", 0);
         anim.SetBool("isCallPossible", false);

@@ -18,7 +18,7 @@ public class ReporterAnimController : MonoBehaviour
 
     private void Start()
     {
-        
+        SetTriggerAnim(null,null);
     }
 
     public void SetTriggerAnim(Component sender, object obj)

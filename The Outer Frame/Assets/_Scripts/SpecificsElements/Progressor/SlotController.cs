@@ -62,6 +62,7 @@ public class SlotController : MonoBehaviour
         {
             FillFast();
             isAlreadyDone = true;
+            SetLEDState(Color.red);
         }
         //Se está haciendo el mismo en este momento
         else if (word.CheckIfActionIsDoing(state))
@@ -69,6 +70,7 @@ public class SlotController : MonoBehaviour
             FillFast();
             isTheSameAction = true;
             Debug.Log("misma palabra + acción");
+            SetLEDState(Color.red);
         }
         // Se está haciendo uno del mismo ActionGroup
         else if (ActionGroupManager.AGM.ChekAreInTheSameGroup(word, state))
@@ -76,12 +78,14 @@ public class SlotController : MonoBehaviour
             FillFast();
             isOtherGroupActionDoing = true;
             Debug.Log("Otra acción del grupo en proceso");
+            SetLEDState(Color.red);
         }
         // Es una acción automática
         else if (Report.GetIsAutomatic())
         {
             FillFast();
             isAutomaticAction = true;
+            SetLEDState(Color.red);
         }
         // Es una acción válida
         else
@@ -89,6 +93,7 @@ public class SlotController : MonoBehaviour
             word.SetDoingAction(state, true);
             TimeManager.OnSecondsChange += UpdateProgress;
             UpdateProgress();
+            SetLEDState(Color.green);
         }
     }
 
@@ -166,7 +171,6 @@ public class SlotController : MonoBehaviour
         Report.SetTimeWhenWasDone();
         timeComplete = TimeManager.timeManager.GetTime();
         OnFinishActionProgress?.Invoke(this, this);
-        Icon.SetActive(true);
         if (_state.GetSpecialActionWord()) _state.SetIsDone(true);
     }
 
@@ -177,8 +181,6 @@ public class SlotController : MonoBehaviour
         OnFinishActionProgress?.Invoke(this, this);
         TimeManager.OnMinuteChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();
-        Icon.SetActive(true);
-        SetLEDState(Color.green);
     }
 
     public void AbortAction()
@@ -186,9 +188,9 @@ public class SlotController : MonoBehaviour
         _word.SetDoingAction(_state, false);
         isAborted = true;
         OnFinishActionProgress?.Invoke(this, this);
-        SetLEDState(Color.yellow);
         TimeManager.OnSecondsChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();
+
         Icon.SetActive(true);
     }
 

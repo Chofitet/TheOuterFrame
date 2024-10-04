@@ -163,8 +163,7 @@ public class WordsManager : MonoBehaviour
     }
     public WordData FindWordDataWithString(string WordToCompare)
     {
-        WordData WD = wordsDic[0];
-        //WordData WD = null;
+        WordData WD = null;
         foreach (WordData w in wordsDic)
         {
             if (NormalizeWord(w.FindFindableName(WordToCompare)) == (NormalizeWord(WordToCompare)))
