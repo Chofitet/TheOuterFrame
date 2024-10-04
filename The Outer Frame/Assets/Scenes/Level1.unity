@@ -88506,7 +88506,9 @@ MonoBehaviour:
   ToAppear:
   - {fileID: 1395281194}
   - {fileID: 841152160}
-  Conditions: []
+  Conditions:
+  - condition: {fileID: 11400000, guid: 3aad2ba1c8c9269439f0c34b2422e558, type: 2}
+    ifNot: 0
 --- !u!1 &1855110486
 GameObject:
   m_ObjectHideFlags: 0

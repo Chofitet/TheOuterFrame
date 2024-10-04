@@ -12,13 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: PetroStationCallPBIntimidated
   m_EditorClassIdentifier: 
-  StartTime: {fileID: 11400000, guid: 01f290b79b6e4764ba235c400a3d44f5, type: 2}
-  EndTime: {fileID: 11400000, guid: d1fcce0d1f3429843adab6a06f7f5bab, type: 2}
+  StartHour: 4
+  StartMinute: 25
+  EndHour: 8
+  EndMinute: 0
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
+  From: 
+  To: 
   Dialogue: "Like I said, I didn't heard nothing. \nWish I could help, but I can't.\n\nHave
     a Petro good day!"
+  IterruptedDialogue: 
+  Involved:
+  - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:
   - condition: {fileID: 11400000, guid: a99a5e489c38a5142aa6a0b743b5cb9f, type: 2}
     ifNot: 0
