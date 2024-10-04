@@ -26,10 +26,11 @@ public class ReportController : MonoBehaviour
         word = _word;
         report = _report;
         isNotCompleted = false;
-        string status = "<color=#006A0D>Completed</color>";
+        string status = "<color=#006A0D>COMPLETED</color>";
         btnText.text = "UPLOAD TO DB";
         StateEnum state = report.GetAction();
         string Name = word.GetForm_DatabaseNameVersion();
+        if (state.GetSpecialActionWord()) Name = "";
         string actionVerb = state.GetInfinitiveVerb();
 
         if (!report)
@@ -44,35 +45,35 @@ public class ReportController : MonoBehaviour
             Resulttxt.text = report.GetTextForRepetition();
             //Imagen generica
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
-            status = "<color=#AE0000>Rejected</color>";
+            status = "<color=#AE0000>REJECTED</color>";
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if (isTheSameAction)
         {
             Resulttxt.text = "We are already doing that exact same thing.";
-            status = "<color=#AE0000>Rejected</color>";
+            status = "<color=#AE0000>REJECTED</color>";
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if(isOtherActionInGroupDoing)
         {
             Resulttxt.text = "We are currently " + word.GetDoingAction(0).GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
-            status = "<color=#AE0000>Rejected</color>";
+            status = "<color=#AE0000>REJECTED</color>";
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if(isAborted)
         {
             Resulttxt.text = "The action \"" + actionVerb + " " + Name + "\" was aborted succesfully";
-            status = "<color=#006A0D>Aborted</color>";
+            status = "<color=#AE0000>ABORTED</color>";
             photo1.Set("", ThumbUp);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if (report.GetIsAutomatic())
         {
-            status = "<color=#AE0000>Rejected</color>";
+            status = "<color=#AE0000>REJECTED</color>";
             btnText.text = "DISPOSE";
         }
 

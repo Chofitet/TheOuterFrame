@@ -34,10 +34,51 @@ public class PinchofonoWaveController : MonoBehaviour
                               .Join(DOTween.To(() => frequency1, x => frequency1 = x, FrequencyIdle, 1f))
                               .Join(DOTween.To(() => amplitud2, x => amplitud2 = x, AmplitudIdle, 1f))
                               .Join(DOTween.To(() => frequency2, x => frequency2 = x, FrequencyIdle, 1f));
+                              //.OnComplete(() => StaticLoop());
     }
 
     Sequence CatchCallSequence1;
     Sequence CatchCallSequence2;
+
+    public void StaticLoop()
+    {
+        // Secuencia para amplitud1 y frecuencia1 en estado idle
+        if (CatchCallSequence1 != null && CatchCallSequence1.IsPlaying())
+        {
+            CatchCallSequence1.Kill();
+        }
+
+        CatchCallSequence1 = DOTween.Sequence();
+
+        CatchCallSequence1.AppendCallback(() =>
+        {
+            float idleAmplitud1 = 0;  // Asume que este es el valor idle
+            float idleFrequency1 = 0; // Asume que este es el valor idle
+
+            CatchCallSequence1.Append(DOTween.To(() => amplitud1, x => amplitud1 = x, idleAmplitud1, 1f))
+                               .Join(DOTween.To(() => frequency1, x => frequency1 = x, idleFrequency1, 1f));
+        })
+        .SetLoops(-1, LoopType.Yoyo);
+
+        // Secuencia para amplitud2 y frecuencia2 en estado idle
+        if (CatchCallSequence2 != null && CatchCallSequence2.IsPlaying())
+        {
+            CatchCallSequence2.Kill();
+        }
+
+        CatchCallSequence2 = DOTween.Sequence();
+
+        CatchCallSequence2.AppendCallback(() =>
+        {
+            float idleAmplitud2 = 0;  // Asume que este es el valor idle
+            float idleFrequency2 = 0; // Asume que este es el valor idle
+
+            CatchCallSequence2.Append(DOTween.To(() => amplitud2, x => amplitud2 = x, idleAmplitud2, 1f))
+                               .Join(DOTween.To(() => frequency2, x => frequency2 = x, idleFrequency2, 1f));
+        })
+        .SetLoops(-1, LoopType.Yoyo);
+    }
+
 
     public void CatchCall(Component sender, object obj)
     {

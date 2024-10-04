@@ -40,16 +40,16 @@ public class OverlayAnimation : MonoBehaviour
     private void Start()
     {
         textStartingPosition = newsTextUI.transform.position;
-        newsTextUI.transform.position = textOffscreenPositionRight.position;
+        //newsTextUI.transform.position = textOffscreenPositionRight.position;
 
         titleStartingPosition = newsTitleUI.transform.position;
-        newsTitleUI.transform.position = titleOffscreenPositionLeft.position;
+        //newsTitleUI.transform.position = titleOffscreenPositionLeft.position;
 
         quipStartingPosition = newsQuipUI.transform.position;
-        newsQuipUI.transform.position = quipOffscreenPosition.position;
+        //newsQuipUI.transform.position = quipOffscreenPosition.position;
 
         picsStartingPosition = picsUI.transform.position;
-        picsUI.transform.position = picsOffscreenPosition.position;
+        //picsUI.transform.position = picsOffscreenPosition.position;
 
         NewContentTMPtxt = newsTextUI.transform.GetChild(0).GetComponent<TMP_Text>();
         HeadlineTMPtxt = newsTitleUI.transform.GetChild(0).GetComponent<TMP_Text>();

@@ -17,7 +17,7 @@ public class TVManager : MonoBehaviour
     [SerializeField] Animator anim;
     private void Start()
     {
-        FillEmptiesChannels();
+        //FillEmptiesChannels();
         ChangeChannel(null, Channels[InitChannel].gameObject);
     }
 
