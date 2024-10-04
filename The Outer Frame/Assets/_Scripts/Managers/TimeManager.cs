@@ -147,7 +147,6 @@ public class TimeManager : MonoBehaviour
             OnSpeedUpTime?.Invoke(this, null);
         }
         else { NormalizeTime();}
-        isTimePaused = false;
     }
 
     public void NormalizeTime()
@@ -170,7 +169,11 @@ public class TimeManager : MonoBehaviour
         OnAcceleratedTime?.Invoke(this, false);
         isTimePaused = true;
     }
-
+    
+    public void BackPause()
+    {
+        isTimePaused = false;
+    }
 }
 
 public struct TimeData

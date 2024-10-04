@@ -26607,7 +26607,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 60.04, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 31.27, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &572232947
@@ -78894,6 +78894,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1849136084}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a686856e26ff23846885437ea560ae55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1849136085}
     - targetCorrespondingSourceObject: {fileID: 7487920207642766719, guid: a686856e26ff23846885437ea560ae55, type: 3}
       insertIndex: -1
       addedObject: {fileID: 535121263}
@@ -88376,6 +88379,36 @@ MonoBehaviour:
   - {fileID: 841152160}
   Conditions: []
 --- !u!114 &1849136084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849136063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: fb7f1f68630a869449735faa10e937f6, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1849136073}
+        m_TargetAssemblyTypeName: DossierController, Assembly-CSharp
+        m_MethodName: OnTakeIdea
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1849136085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
