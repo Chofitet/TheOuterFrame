@@ -12,15 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
   m_Name: FootageFound
   m_EditorClassIdentifier: 
-  headline: 
+  headline: FOOTAGE OF MISTERY MAN SMEARING LIQUIDS FOUND ON  ROUTE 54 CRASH SITE
+  headlineTwoLines: 
   text: 
   image: {fileID: 0}
   channel: 1
-  alertLevelIncrement: 0
-  Emergency: 0
+  Priority: 1
+  alertLevelIncrement: 16
+  Emergency: 1
   Day: 0
   Hour: 0
   Minute: 0
+  MinTransmitionTime: 10
+  Conditions:
+  - condition: {fileID: 11400000, guid: cb9eab3faab9cc54da2982f9b433b9d4, type: 2}
+    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}
