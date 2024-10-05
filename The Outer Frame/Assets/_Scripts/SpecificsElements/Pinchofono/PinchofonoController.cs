@@ -41,6 +41,7 @@ public class PinchofonoController : MonoBehaviour
     {
         anim.SetTrigger("recordPush");
         StopAllCoroutines();
+        AbortConfirmationPanel.SetActive(false);
 
         if (CallToPrint)
         {
@@ -67,10 +68,12 @@ public class PinchofonoController : MonoBehaviour
     {
         anim.SetTrigger("printPush");
         StopAllCoroutines();
+        AbortConfirmationPanel.SetActive(false);
 
         if (!haveCallToPrint)
         {
             StartCoroutine(ShowErrorMessagePanel("No calls to print yet"));
+
         }
         else if(printOnce)
         {
@@ -93,12 +96,14 @@ public class PinchofonoController : MonoBehaviour
         if (CallToPrint)
         {
             StartCoroutine(ShowErrorMessagePanel("You have a pending call"));
+           
             return;
         }
 
         if (!isRecording)
         {
             StartCoroutine(ShowErrorMessagePanel("No recording to abort"));
+            
         }
         else
         {
@@ -212,6 +217,7 @@ public class PinchofonoController : MonoBehaviour
             anim.SetTrigger("padClose");
             if(!isRecording && view != ViewStates.OnTakenPaperView) OnClosePhonePadSound?.Invoke(this, null);
             AbortConfirmationPanel.SetActive(false);
+            ShowPanel(ScreenContent);
             hasNumberEnter = false;
         }
 
