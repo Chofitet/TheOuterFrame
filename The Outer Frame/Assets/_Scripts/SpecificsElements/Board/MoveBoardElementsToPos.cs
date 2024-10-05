@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class MoveBoardElementsToPos : MonoBehaviour
 {
-    IPlacedOnBoard conditions;
+    IPlacedOnBoard conditions = null;
     [SerializeField] GameEvent OnPlaceInBoardSound;
     Vector3 FinalPosition;
     Vector3 FinalRotation;
@@ -18,32 +19,65 @@ public class MoveBoardElementsToPos : MonoBehaviour
         FinalPosition = transform.position;
         FinalRotation = transform.rotation.eulerAngles;
         conditions = GetComponent<IPlacedOnBoard>();
+
+        if (conditions == null)
+        {
+            Debug.Log(transform.parent.parent.parent.gameObject.name);
+        }
+
+        if(name == "QuiteClean")
+        {
+            Debug.Log(transform.parent.parent.parent.gameObject.name);
+
+        }
         Content = transform.GetChild(0).gameObject;
         if (!conditions.ActiveInBegining())
         {
-            Content.SetActive(false);
+            Invoke("sarasa", 0.1f);
         }
+    }
+
+    void sarasa()
+    {
+        Content.SetActive(false);
     }
 
     public void SetToReplace() => toReplece = true;
 
     public void MoveToPlacedPos(Component sender, object obj)
     {
-        if (isPlaced) return;
-        if (!conditions.GetConditionalState() && !toReplece) return;
-
-        Vector3 InitPos = (Vector3)obj;
-        
-        
-        if (isTaken)
+        if (conditions == null)
         {
-            StartCoroutine(Delay(InitPos));
-            isTaken = false;
+            Debug.Log(transform.parent.parent.parent.gameObject.name);
             return;
         }
-        isPlaced = true;
-        toReplece = false;
-        StartCoroutine(Delay(InitPos));
+        
+        try
+        {
+            if (isPlaced) return;
+            if (!conditions.GetConditionalState() && !toReplece) return;
+
+            Vector3 InitPos = (Vector3)obj;
+
+
+            if (isTaken)
+            {
+                StartCoroutine(Delay(InitPos));
+                isTaken = false;
+                return;
+            }
+            isPlaced = true;
+            toReplece = false;
+            StartCoroutine(Delay(InitPos));
+        }
+        catch (NullReferenceException e)
+        {
+            Debug.LogError($"Error: Una referencia es nula. Verifica si {transform.parent.parent.parent.gameObject.name} o algún otro objeto es nulo. Detalles: {e.Message}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Error: Ocurrió una excepción inesperada. Detalles: {e.Message}");
+        }
     } 
 
     public void MoveToTakeOutPos(Component sender, object obj)
