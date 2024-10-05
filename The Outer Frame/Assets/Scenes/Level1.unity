@@ -2550,6 +2550,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39bccc141280cd4459d84d5d04ca2b42, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1284747806}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39bccc141280cd4459d84d5d04ca2b42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1284747808}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 39bccc141280cd4459d84d5d04ca2b42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1284747807}
     - targetCorrespondingSourceObject: {fileID: 1980595251299706172, guid: 39bccc141280cd4459d84d5d04ca2b42, type: 3}
       insertIndex: -1
       addedObject: {fileID: 796519140}
@@ -40967,7 +40973,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873657060}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.49476492, y: 0.50518084, z: -0.4947658, w: 0.50517994}
+  m_LocalRotation: {x: 0.49476555, y: 0.50518024, z: -0.49476528, w: 0.5051805}
   m_LocalPosition: {x: 0.0500002, y: 0.48492813, z: -0.030000392}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -62095,6 +62101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   datetxt: {fileID: 591386035}
+  ClockBTN: {fileID: 1944601683}
   OnViewChange: {fileID: 11400000, guid: 2174b205fb10b4440b02c579faad015a, type: 2}
   MinuteMovibleFlipFront: {fileID: 1585240545}
   MinuteInamovibleFlipFront: {fileID: 333161195}
@@ -62149,6 +62156,66 @@ MonoBehaviour:
       - m_Target: {fileID: 1284747804}
         m_TargetAssemblyTypeName: ClockController, Assembly-CSharp
         m_MethodName: OnPressClockBTN
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1284747807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284747799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 730a6b88e375cdd449e4a5c6f8df14a5, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1284747804}
+        m_TargetAssemblyTypeName: ClockController, Assembly-CSharp
+        m_MethodName: OnSpeedUpTime
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1284747808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284747799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: fa290d8dc07e376459081d8d9c3750a9, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1284747804}
+        m_TargetAssemblyTypeName: ClockController, Assembly-CSharp
+        m_MethodName: OnNormalizeTime
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -65819,6 +65886,7 @@ GameObject:
   - component: {fileID: 1365978753}
   - component: {fileID: 1365978754}
   - component: {fileID: 1365978756}
+  - component: {fileID: 1365978758}
   m_Layer: 10
   m_Name: DossierUp
   m_TagString: Untagged
@@ -66389,6 +66457,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDesactive: 0
   TriggerEvent: {fileID: 11400000, guid: 0b5f64824d7096145b26d798041b792b, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1365978750}
+        m_TargetAssemblyTypeName: DossierMoveController, Assembly-CSharp
+        m_MethodName: LeaveDossier
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1365978758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365978738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 89a0034a67f6a244d859d967d30595a3, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -92580,6 +92678,7 @@ GameObject:
   - component: {fileID: 1944601686}
   - component: {fileID: 1944601685}
   - component: {fileID: 1944601687}
+  - component: {fileID: 1944601688}
   m_Layer: 0
   m_Name: ClockBTN
   m_TagString: Untagged
@@ -92647,6 +92746,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944601683}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1944601688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944601683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 89a0034a67f6a244d859d967d30595a3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1944601686}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!114 &1948135998 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2259455543894736860, guid: bd39a9c6108f0fc4bab9a279bad2bfc7, type: 3}

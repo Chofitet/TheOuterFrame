@@ -64,6 +64,9 @@ public class NotebookMoveController : MonoBehaviour
             case ViewStates.PauseView:
                 SetPos(0, false);
                 break;
+            case ViewStates.GameOverView:
+                SetPos(0, false);
+                break;
         }
         lastView = newview;
     }

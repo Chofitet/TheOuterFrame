@@ -61,7 +61,7 @@ public class DossierMoveController : MonoBehaviour
             .AppendCallback(() =>
             {
                 OnChangeView?.Invoke(this, ViewStates.DossierView);
-                TimeManager.timeManager.SpeedUpTime();
+                TimeManager.timeManager.NormalizeTime();
                 
             })
             .AppendCallback(() =>
