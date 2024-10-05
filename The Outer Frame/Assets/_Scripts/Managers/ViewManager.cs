@@ -103,7 +103,6 @@ public class ViewManager : MonoBehaviour
                 OnGeneralView?.Invoke(this, false);
                 OnFindableWordsActive?.Invoke(this, null);
                 BackToGeneralViewWhitMoving();
-                TimeManager.timeManager.BackPause();
                 break;
             case ViewStates.PinchofonoView:
                 OnNotebookTake.Invoke(this, true);
@@ -142,6 +141,7 @@ public class ViewManager : MonoBehaviour
                 OnTakeSomeInBoard?.Invoke(this, null);
                 break;
             case ViewStates.GameOverView:
+                TimeManager.timeManager.NormalizeTime();
                 OnGameOverView.Invoke(this, "RetryMenu");
                 OnNotebookTake.Invoke(this, false);
                 isInputDisable = true;

@@ -159,6 +159,7 @@ public class ProgressorModuleController : MonoBehaviour
     //OnPressProgressorPrintBTN
     public void PrintReport(Component sender, object obj)
     {
+        TimeManager.timeManager.NormalizeTime();
         if(sender.gameObject == PrintBTN)
         {
             if (!isPrinterFull)

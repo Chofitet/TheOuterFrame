@@ -138,20 +138,20 @@ public class TimeManager : MonoBehaviour
 
     public void SpeedUpTime()
     {
-        if (!isTimeAccelerated && !isTimePaused)
+        if (!isTimeAccelerated)
         {
-            TimeVariation = AcceleratedTimeValue *60;
+            TimeVariation = AcceleratedTimeValue * 60;
             isTimeAccelerated = true;
             OnTimeSpeedChange?.Invoke(this, AcceleratedTimeValue);
             OnAcceleratedTime?.Invoke(this, true);
             OnSpeedUpTime?.Invoke(this, null);
         }
-        else { NormalizeTime();}
+        else { NormalizeTime(); }
     }
 
     public void NormalizeTime()
     {
-        if(isTimeAccelerated)
+        if (isTimeAccelerated)
         {
             OnStopSpeedTimeSound?.Invoke(this, null);
         }
@@ -167,12 +167,7 @@ public class TimeManager : MonoBehaviour
         TimeVariation = 0;
         OnTimeSpeedChange?.Invoke(this, 0f);
         OnAcceleratedTime?.Invoke(this, false);
-        isTimePaused = true;
-    }
-    
-    public void BackPause()
-    {
-        isTimePaused = false;
+
     }
 }
 
