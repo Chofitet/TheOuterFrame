@@ -14,7 +14,7 @@ public class TVScheduledNewType : ScriptableObject, INewType
     [SerializeField] int Priority = 1;
     [SerializeField] int alertLevelIncrement;
     [SerializeField] bool Emergency;
-    [SerializeField] int Day;
+    [HideInInspector][SerializeField] int Day;
     [SerializeField] int Hour;
     [SerializeField] int Minute;
     [SerializeField] int MinTransmitionTime = 10;

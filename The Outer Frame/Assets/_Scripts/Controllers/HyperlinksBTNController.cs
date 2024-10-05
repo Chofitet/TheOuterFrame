@@ -66,7 +66,10 @@ public class HyperlinksBTNController : MonoBehaviour
                 extraIndex++;
             }
 
-            if (NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower() == NormalizeWord(word.FindFindableName(CleanUnnecessaryCharacter(NormalizeWord(combinedWord)))).ToLower())
+            string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
+            string FoundAs = NormalizeWord(word.FindFindableName(CleanUnnecessaryCharacter(NormalizeWord(combinedWord)))).ToLower();
+
+            if ((combinedWordClean == FoundAs) && combinedWord.Contains("<u>"))
             {
                 if (combinedWord.StartsWith("<color")) combinedWord = RemoveMaterialTags(combinedWord);
 

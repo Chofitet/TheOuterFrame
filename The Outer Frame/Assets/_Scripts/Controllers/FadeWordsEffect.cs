@@ -18,6 +18,14 @@ public class FadeWordsEffect : MonoBehaviour
         StartCoroutine(FadeInText(IsFadeTransparent));
     }
 
+    public void OnStartEffect(Component sender, object obj)
+    {
+        if ((GameObject)obj != gameObject) return;
+        m_TextComponent = GetComponent<TextMeshProUGUI>();
+        StopAllCoroutines();
+        StartCoroutine(FadeInText(true));
+    }
+
     IEnumerator FadeInText(bool IsFadeTransparent)
     {
         float StartAlpha = IsFadeTransparent ? 0 : 255;
