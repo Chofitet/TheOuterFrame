@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2026840213866759353}
   - component: {fileID: 7592711892175250257}
   - component: {fileID: 8359997375648762852}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoardPostInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b3b0ce182078146aea81eefbabfc83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaceInBoardSound: {fileID: 0}
 --- !u!114 &7592711892175250257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +106,7 @@ GameObject:
   - component: {fileID: 2941269966352735535}
   - component: {fileID: 1021429892143627896}
   - component: {fileID: 2249097676444390151}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +207,7 @@ GameObject:
   - component: {fileID: 2317088292228242286}
   - component: {fileID: 3254205554525457051}
   - component: {fileID: 5202686903273421359}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +342,7 @@ GameObject:
   - component: {fileID: 6929031603656575791}
   - component: {fileID: 5446090656330847935}
   - component: {fileID: 5750765289526740714}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,6 +504,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6ce722ff91673b640910d4eba6471076, type: 3}
       propertyPath: m_Name
       value: postit-model
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6ce722ff91673b640910d4eba6471076, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
