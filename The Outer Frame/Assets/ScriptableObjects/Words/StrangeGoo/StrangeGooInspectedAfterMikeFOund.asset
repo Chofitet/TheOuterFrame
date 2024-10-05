@@ -10,24 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: StrangeGooInspected
+  m_Name: StrangeGooInspectedAfterMikeFOund
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "It's green, it glows, it's gooey, it's coming out of the <link>trucks behind</link>.
-    \r\nIt\u2019s quite the paranormal clich\xE9! \r\nIt's EVIDENCE. \r\nAnd someone
-    rode all over it with a small vehicle leaving glowing <link>tricycle tracks</link>
-    that go south <link>the road</link>. \nWe might want to check that out. \r"
+  Text: "It's green, it glows, it's gooey, it\u2019s coming out of a <link>truck\u2019s
+    behind</link>. It\u2019s quite the paranormal clich\xE9!\r\nBut above all of
+    that: it's evidence.\r\nAnd Mike rode all over it with his tricycle leaving glowing
+    <link>tricycle tracks</link> that go south <link>the road</link>.\r"
   TextForRepetition: We already did that. Read the Reports.
   Photos:
   - photo: {fileID: 0}
-    text: GREEN
-  - photo: {fileID: 0}
-    text: WHERE DO THEY LEAD?
+    text: SO 90's
   Conditionals:
   - condition: {fileID: 11400000, guid: 43994936b8273bc459ee021cd42e7d4e, type: 2}
-    ifNot: 1
+    ifNot: 0
   isOrderMatters: 0
   XPosFix: 0
