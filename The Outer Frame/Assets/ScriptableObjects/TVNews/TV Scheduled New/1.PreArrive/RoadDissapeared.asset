@@ -13,19 +13,23 @@ MonoBehaviour:
   m_Name: RoadDissapeared
   m_EditorClassIdentifier: 
   headline: WHERE DO OUR TAXES GO?
+  headlineTwoLines: 
   text: '"NOT TO PAVE OUR ROADS, THAT''S FOR SURE."
 
     ROAD 54 IS JUST DIRT FROM
     KM 330 ONWARDS!'
   image: {fileID: 0}
   channel: 1
+  Priority: 1
   alertLevelIncrement: -15
   Emergency: 0
   Day: 0
   Hour: 6
   Minute: 30
-  ReplacedIf:
+  MinTransmitionTime: 10
+  Conditions:
   - condition: {fileID: 11400000, guid: 27e961aaca111ce40a9e763b26d8188e, type: 2}
-    ifNot: 1
+    ifNot: 0
+  ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}
