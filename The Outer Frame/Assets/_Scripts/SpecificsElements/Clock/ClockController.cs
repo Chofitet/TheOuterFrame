@@ -7,6 +7,7 @@ using DG.Tweening;
 public class ClockController : MonoBehaviour
 {
     [SerializeField] TMP_Text datetxt;
+    [SerializeField] GameObject ClockBTN;
     [SerializeField] GameEvent OnViewChange;
     [SerializeField] TMP_Text MinuteMovibleFlipFront;
     [SerializeField] TMP_Text MinuteInamovibleFlipFront;
@@ -119,42 +120,30 @@ public class ClockController : MonoBehaviour
 
         if (!isSpeedUp) return;
         if (currentView == ViewStates.GeneralView) return;
-        SetAnimSpeed();
         TimeManager.timeManager.NormalizeTime();
         
     }
 
     public void OnPressClockBTN(Component sender, object obj)
     {
-        GameObject ClockBTN = (GameObject)obj;
-        
         TimeManager.timeManager.SpeedUpTime();
 
-        SetAnimSpeed();
-
-        if (isSpeedUp)
-        {
-            OnViewChange?.Invoke(this, null);
-            ClockBTN.transform.DOMove(SpeedClockPos.position, 0.3f);
-        }
-        else
-        {
-            ClockBTN.transform.DOMove(NormalClockPoas.position, 0.3f);
-        }
     }
 
-    void SetAnimSpeed()
+    public void OnNormalizeTime(Component sender, object obj)
     {
-        if (!isSpeedUp)
-        {
-            anim.SetTrigger("speedUp");
-            isSpeedUp = true;
-        }
-        else
-        {
-            anim.SetTrigger("speedDown");
-            isSpeedUp = false;
-        }
+        if (isSpeedUp) anim.SetTrigger("speedDown");
+        isSpeedUp = false;
+        ClockBTN.transform.DOMove(NormalClockPoas.position, 0.3f);
+    }
+
+    public void OnSpeedUpTime(Component sender, object obj)
+    {
+        if(!isSpeedUp)anim.SetTrigger("speedUp");
+        isSpeedUp = true;
+         OnViewChange?.Invoke(this, null);
+         ClockBTN.transform.DOMove(SpeedClockPos.position, 0.3f);
+       
     }
 
 

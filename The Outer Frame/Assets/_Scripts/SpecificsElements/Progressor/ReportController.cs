@@ -43,7 +43,7 @@ public class ReportController : MonoBehaviour
         else if (isAlreadyDone)
         {
             Resulttxt.text = report.GetTextForRepetition();
-            //Imagen generica
+            //Imagen generica 
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
             status = "<color=#AE0000>REJECTED</color>";
             isNotCompleted = true;
@@ -53,6 +53,7 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "We are already doing that exact same thing.";
             status = "<color=#AE0000>REJECTED</color>";
+            //Imagen generica
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
@@ -60,6 +61,7 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "We are currently " + word.GetDoingAction(0).GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
             status = "<color=#AE0000>REJECTED</color>";
+            //Imagen generica la misma que is the same action
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
@@ -67,7 +69,8 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "The action \"" + actionVerb + " " + Name + "\" was aborted succesfully";
             status = "<color=#AE0000>ABORTED</color>";
-            photo1.Set("", ThumbUp);
+            //photo1.Set("", ThumbUp);
+            
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
@@ -95,11 +98,6 @@ public class ReportController : MonoBehaviour
     {
         List<PhotoInfo> photoInfo = report.GetReportImage();
 
-        if(report.GetIsAutomatic())
-        {
-            photo1.Set("", WrongResultImg[Random.Range(0, WrongResultImg.Count - 1)]);
-            return;
-        }
         if(photoInfo.Count >= 1) photo1.Set(photoInfo[0]?.text, photoInfo[0]?.photo);
         if (photoInfo.Count >= 2) photo2.Set(photoInfo[1]?.text, photoInfo[1]?.photo);
         if (photoInfo.Count >= 3) photo3.Set(photoInfo[2]?.text, photoInfo[2]?.photo);
