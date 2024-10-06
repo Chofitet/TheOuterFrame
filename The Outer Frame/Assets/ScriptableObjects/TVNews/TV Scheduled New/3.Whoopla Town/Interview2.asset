@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: Interview2
   m_EditorClassIdentifier: 
   headline: <link>WHOOPLA PARK</link> MONSTER
+  headlineTwoLines: 
   text: LOCAL BOY, BEN BENJI SWEARS HAVING EVIDENCE OF MYSTERIOUS CREATURE
   image: {fileID: 0}
   channel: 1
-  alertLevelIncrement: 15
+  Priority: 1
+  alertLevelIncrement: 10
   Emergency: 0
   Day: 0
-  Hour: 8
-  Minute: 30
+  Hour: 10
+  Minute: 59
+  MinTransmitionTime: 10
+  Conditions:
+  - condition: {fileID: 11400000, guid: f99d34e23986a5040bca1decfc381a31, type: 2}
+    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}

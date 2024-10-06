@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
-  m_Name: Explosion
+  m_Name: 3.DriverFound
   m_EditorClassIdentifier: 
-  headline: exploded
-  headlineTwoLines: 
-  text: 
+  headline: 
+  headlineTwoLines: SCARED DRIVER FOUND
+  text: <link>THE DRIVER</link> SUSPECTED OF THE REPORTED CRASH AT ROAD 54 WAS FOUND
+    HIDING INSIDE A BATHROOM STALL AND IS DEFLECTING QUESTIONS
   image: {fileID: 0}
-  channel: 0
+  channel: 1
   Priority: 1
-  alertLevelIncrement: 100
-  Emergency: 1
+  alertLevelIncrement: 15
+  Emergency: 0
   Day: 0
-  Hour: 0
-  Minute: 0
-  MinTransmitionTime: 10
+  Hour: 8
+  Minute: 38
+  MinTransmitionTime: 6
   Conditions:
-  - condition: {fileID: 11400000, guid: 866bcb8604ef6cf45b5db14e5734929f, type: 2}
-    ifNot: 0
+  - condition: {fileID: 11400000, guid: 4db02c4d0e13c29419c319ccd8a753ec, type: 2}
+    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}

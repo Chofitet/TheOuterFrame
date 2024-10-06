@@ -10,22 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
-  m_Name: GooNews
+  m_Name: 3.FootageFound
   m_EditorClassIdentifier: 
-  headline: GREEN GLOWING STUFF EVERYWHERE AT ROAD 54
+  headline: FOOTAGE OF G-MEN AND MISTERYOUS INDIVIDUAL SMEARING LIQUIDS FOUND ON 
+    ROAD 54 CRASH SITE
+  headlineTwoLines: 
   text: 
   image: {fileID: 0}
   channel: 1
   Priority: 1
-  alertLevelIncrement: 20
+  alertLevelIncrement: 25
   Emergency: 1
   Day: 0
-  Hour: 7
-  Minute: 0
-  MinTransmitionTime: 10
-  Conditions: []
-  ReplacedIf:
-  - condition: {fileID: 11400000, guid: 18af5eccc49c54a45bfc5306f8d5c660, type: 2}
-    ifNot: 0
+  Hour: 8
+  Minute: 50
+  MinTransmitionTime: 5
+  Conditions:
+  - condition: {fileID: 11400000, guid: cb9eab3faab9cc54da2982f9b433b9d4, type: 2}
+    ifNot: 1
+  ReplacedIf: []
   isOrderMatters: 0
-  ReplacedBy: {fileID: 11400000, guid: 84c176b6f42b4c7488b12be78e953165, type: 2}
+  ReplacedBy: {fileID: 0}
