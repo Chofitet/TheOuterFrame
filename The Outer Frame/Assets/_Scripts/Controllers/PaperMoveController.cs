@@ -86,7 +86,7 @@ public class PaperMoveController : MonoBehaviour
 
         if (PaperState.HoldingRight == actualPaperState && currentPaper != reportObject)
         {
-            LeavePaperPile();
+            LeavePaperPile(null,null);
         }
 
         currentPaper = reportObject;
@@ -109,11 +109,12 @@ public class PaperMoveController : MonoBehaviour
             OnPressButtomElement?.Invoke(this, ViewStates.OnTakenPaperView);
             return;
         }
-        LeavePaperPile();
+        LeavePaperPile(null,null);
     }
 
-    void LeavePaperPile()
+    public void LeavePaperPile(Component sender, object obj)
     {
+        
         RefreshPaperQueue(true);
         currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration);
         currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration);
@@ -129,7 +130,7 @@ public class PaperMoveController : MonoBehaviour
         if (!currentPaper) return;
         ViewStates view = (ViewStates)obj;
         Transform auxTrans = HoldRigthPos;
-        if (view == ViewStates.BoardView) auxTrans = PaperBoardPos;
+        if (view == ViewStates.BoardView || view == ViewStates.OnTakeSomeInBoard) auxTrans = PaperBoardPos;
 
         if (view != ViewStates.GeneralView && view!= ViewStates.OnTakenPaperView)
         {

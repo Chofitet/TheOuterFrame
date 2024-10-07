@@ -48,9 +48,18 @@ public class Briefing2AppearAnimController : MonoBehaviour
             .Join(transform.DORotate(OnTvPos.rotation.eulerAngles, 1f)).SetEase(Ease.OutQuad);
     }
 
+    float StartAnimTime = 0;
     public void TakeBriefing(Component sender, object obj)
     {
-        float StartAnimTime = 0;
+        StartAnimTime = 0;
+
+        if (actualView == ViewStates.TVView)
+        {
+            StartAnimTime = 0.5f;
+            OnButtonElement?.Invoke(this, ViewStates.GeneralView);
+            Invoke("TvViewSituation", 0.5f);
+            return;
+        }
 
        if(actualView != ViewStates.DossierView)
         {
@@ -62,6 +71,13 @@ public class Briefing2AppearAnimController : MonoBehaviour
 
         
     }
+
+    void TvViewSituation()
+    {
+        OnButtonElement?.Invoke(this, ViewStates.DossierView);
+        Invoke("TakeBriefingAnim", StartAnimTime);
+    }
+
 
     void TakeBriefingAnim()
     {

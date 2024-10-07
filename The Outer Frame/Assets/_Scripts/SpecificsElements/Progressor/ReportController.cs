@@ -43,7 +43,7 @@ public class ReportController : MonoBehaviour
         else if (isAlreadyDone)
         {
             Resulttxt.text = report.GetTextForRepetition();
-            //Imagen generica 
+            photo1.Set("", WrongResultImg[5]);
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
             status = "<color=#AE0000>REJECTED</color>";
             isNotCompleted = true;
@@ -53,7 +53,7 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "We are already doing that exact same thing.";
             status = "<color=#AE0000>REJECTED</color>";
-            //Imagen generica
+            photo1.Set("", WrongResultImg[6]);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
@@ -61,7 +61,7 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "We are currently " + word.GetDoingAction(0).GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
             status = "<color=#AE0000>REJECTED</color>";
-            //Imagen generica la misma que is the same action
+            photo1.Set("", WrongResultImg[6]);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
@@ -69,14 +69,14 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "The action \"" + actionVerb + " " + Name + "\" was aborted succesfully";
             status = "<color=#AE0000>ABORTED</color>";
-            photo1.Set("", ThumbUp);
-            
+            photo1.Set("", WrongResultImg[7]);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if (report.GetIsAutomatic())
         {
             status = "<color=#AE0000>REJECTED</color>";
+            
             btnText.text = "DISPOSE";
         }
 

@@ -101,7 +101,7 @@ public class ChannelController : MonoBehaviour
         }
         NewTextContent.text = _new.GetNewText();
         if (_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
-        NewImg.sprite = _new.GetNewImag();
+        NewImg.transform.GetChild(0).GetComponent<Image>().sprite = _new.GetNewImag();
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
         else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
         OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
