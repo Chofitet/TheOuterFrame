@@ -69,7 +69,7 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "The action \"" + actionVerb + " " + Name + "\" was aborted succesfully";
             status = "<color=#AE0000>ABORTED</color>";
-            //photo1.Set("", ThumbUp);
+            photo1.Set("", ThumbUp);
             
             isNotCompleted = true;
             btnText.text = "DISPOSE";

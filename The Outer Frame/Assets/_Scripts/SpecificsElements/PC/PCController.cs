@@ -74,7 +74,7 @@ public class PCController : MonoBehaviour
     {
         if (!word)
         {
-            SearchBar.text = "Insert a word";
+            SearchBar.text = " |";
             OnShakeNotebook?.Invoke(this, null);
             return;
         }

@@ -44,19 +44,19 @@ public class ViewManager : MonoBehaviour
         if (isInputDisable) return;
         if (Input.GetKeyDown(KeyCode.Mouse1) && currentviewState != ViewStates.GeneralView)
         {
-            if(currentviewState == ViewStates.OnTakeSomeInBoard)
+            if (currentviewState == ViewStates.OnTakeSomeInBoard)
             {
                 UpdateViewState(this, ViewStates.BoardView);
                 return;
             }
-            if(isAPaperHolding)
+            if (isAPaperHolding)
             {
                 UpdateViewState(this, ViewStates.OnTakenPaperView);
                 return;
             }
-            if(currentviewState == ViewStates.BoardView) TimeManager.timeManager.NormalizeTime();
+            if (currentviewState == ViewStates.BoardView) TimeManager.timeManager.NormalizeTime();
 
-            if(isInPause)
+            if (isInPause)
             {
                 TimeManager.timeManager.NormalizeTime();
                 OnBackToPause?.Invoke(this, null);
@@ -66,13 +66,13 @@ public class ViewManager : MonoBehaviour
             BackToGeneralView(null, null);
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!isInPause)
+            if (!isInPause)
             {
                 TimeManager.timeManager.PauseTime();
                 UpdateViewState(null, ViewStates.PauseView);
-                
+
                 isInPause = true;
             }
             else
@@ -87,14 +87,14 @@ public class ViewManager : MonoBehaviour
 
     public void BackToGeneralView(Component sender, object _view)
     {
-        if (isInputDisable) return;
+       
         OnNotebookLeave?.Invoke(this, null);
         UpdateViewState(this, ViewStates.GeneralView);
     }
 
     public void UpdateViewState(Component sender, object _view)
     {
-        if (isInputDisable) return;
+        
         ViewStates NewView = (ViewStates)_view;
         if (NewView == currentviewState) return;
         switch (NewView)
@@ -144,13 +144,12 @@ public class ViewManager : MonoBehaviour
                 TimeManager.timeManager.NormalizeTime();
                 OnGameOverView.Invoke(this, "RetryMenu");
                 OnNotebookTake.Invoke(this, false);
-                isInputDisable = true;
                 break;
             case ViewStates.PauseView:
                 OnPauseView?.Invoke(this, null);
                 break;
         }
-        OnViewStateChange?.Invoke(this,NewView);
+        OnViewStateChange?.Invoke(this, NewView);
         currentviewState = NewView;
 
         //Debug.Log(currentviewState);
@@ -170,9 +169,25 @@ public class ViewManager : MonoBehaviour
 
     void BackToGeneralViewWhitMoving()
     {
-        if(currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView)
+        if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView)
         {
             OnSitDownSound?.Invoke(this, null);
+        }
+    }
+
+    public void EnableInput(Component sender, object _view)
+    {
+        if(isInputDisable)
+        {
+            isInputDisable = false;
+        }
+    }
+
+    public void DisableInput(Component sender,object obj)
+    {
+        if (!isInputDisable)
+        {
+            isInputDisable = true;
         }
     }
 }

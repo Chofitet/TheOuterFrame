@@ -15,6 +15,8 @@ public class DossierMoveController : MonoBehaviour
     [SerializeField] GameEvent OnWriteDossier;
     [SerializeField] GameEvent OnSetTimeSpeed;
     [SerializeField] GameEvent OnNotebookTake;
+    [SerializeField] GameEvent OnEnableInput;
+    [SerializeField] GameEvent OnDisableInput;
     Animator DossierAnim;
     Sequence AddIdeaSequence;
     Sequence MoveDossierSequence;
@@ -49,7 +51,9 @@ public class DossierMoveController : MonoBehaviour
         lerpTime = 0;
         isFollowingTarget = false; // Inicialmente no sigue al target
         DossierAnim.SetTrigger("instantActionplan");
-        
+
+        OnDisableInput?.Invoke(this, null);
+
         AddIdeaSequence
             .Append(transform.DOMove(FinalShowInBoardPosition.position, 0.8f).SetEase(Ease.OutSine))
             .AppendInterval(0.4f)
@@ -76,6 +80,7 @@ public class DossierMoveController : MonoBehaviour
                 isAddingIdea = false;
                 AddIdeaSequence.Kill();
                 DossierAnim.ResetTrigger("open");
+                OnEnableInput?.Invoke(this, null);
             });
     }
 
