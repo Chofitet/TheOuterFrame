@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
+  m_Name: 5.TrycicleMikeDeclares
+  m_EditorClassIdentifier: 
+  headline: TRICYCLE MAN DECLARES
+  headlineTwoLines: 
+  text: 'SOMETHING WEIRD CAME OUT OF A THAT TRUCK ON ROAD 54
+
+    SOMETHING THAT
+    WAS MORE THAN MAN AND TRICYCLE'
+  image: {fileID: 0}
+  channel: 1
+  Priority: 1
+  alertLevelIncrement: 15
+  Emergency: 1
+  Day: 0
+  Hour: 11
+  Minute: 0
+  MinTransmitionTime: 10
+  Conditions:
+  - condition: {fileID: 11400000, guid: a1542eec57c348942a147727dda41b01, type: 2}
+    ifNot: 0
+  ReplacedIf: []
+  isOrderMatters: 0
+  ReplacedBy: {fileID: 0}

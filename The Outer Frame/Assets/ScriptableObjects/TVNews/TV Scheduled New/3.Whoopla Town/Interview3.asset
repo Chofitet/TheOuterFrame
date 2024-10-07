@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: Interview3
   m_EditorClassIdentifier: 
   headline: WTF
+  headlineTwoLines: 
   text: KID THAT SAW. EXCLUSIVE INTERVIEW TODAY AT XX:XX
   image: {fileID: 0}
   channel: 1
+  Priority: 1
   alertLevelIncrement: 5
   Emergency: 0
   Day: 0
-  Hour: 10
-  Minute: 0
+  Hour: 11
+  Minute: 20
+  MinTransmitionTime: 10
+  Conditions:
+  - condition: {fileID: 11400000, guid: f99d34e23986a5040bca1decfc381a31, type: 2}
+    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}

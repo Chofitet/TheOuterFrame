@@ -13,15 +13,21 @@ MonoBehaviour:
   m_Name: Interview1
   m_EditorClassIdentifier: 
   headline: BOY SEES TOO MUCHO
+  headlineTwoLines: 
   text: AN UNIDENTIFIABLE CREATURE WAS SPOTTER BY A YOUNG RESIDENT OF <link>WHOOPLA
     TOWN</link>
   image: {fileID: 0}
   channel: 1
-  alertLevelIncrement: 15
+  Priority: 1
+  alertLevelIncrement: 9
   Emergency: 0
   Day: 0
-  Hour: 8
-  Minute: 0
+  Hour: 10
+  Minute: 35
+  MinTransmitionTime: 10
+  Conditions:
+  - condition: {fileID: 11400000, guid: f99d34e23986a5040bca1decfc381a31, type: 2}
+    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}

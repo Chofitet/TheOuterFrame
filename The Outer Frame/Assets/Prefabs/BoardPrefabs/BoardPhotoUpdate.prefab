@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1885141540774284685}
   - component: {fileID: 4708855999653311233}
   - component: {fileID: 1568674513823938936}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 2026840213866759353}
   - component: {fileID: 7592711892175250257}
   - component: {fileID: 8359997375648762852}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoardPhotoUpdate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b3b0ce182078146aea81eefbabfc83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlaceInBoardSound: {fileID: 0}
 --- !u!114 &7592711892175250257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StringConnections: []
   Conditionals: []
+  ifNot: 
   isOrderMatters: 0
 --- !u!114 &8359997375648762852
 MonoBehaviour:
@@ -206,7 +208,7 @@ GameObject:
   - component: {fileID: 2821679129408636755}
   - component: {fileID: 4956935457347864513}
   - component: {fileID: 8536848421961717867}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Photo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +283,7 @@ GameObject:
   - component: {fileID: 8704513700867639525}
   - component: {fileID: 2024483349705099208}
   - component: {fileID: 9017458631101195832}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +418,7 @@ GameObject:
   - component: {fileID: 6929031603656575791}
   - component: {fileID: 5446090656330847935}
   - component: {fileID: 5750765289526740714}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}

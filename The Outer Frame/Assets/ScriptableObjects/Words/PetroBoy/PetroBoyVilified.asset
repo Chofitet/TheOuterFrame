@@ -14,9 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 0}
   headline: 
+  headlineTwoLines: 
   text: 
   image: {fileID: 0}
-  channel: 0
+  channel: 1
   priority: 0
-  alertLevelIncrement: 0
+  alertLevelIncrement: -7
   Emergency: 0
+  TimeToAppear: 0
+  MinTransmitionTime: 8
+  Conditions:
+  - condition: {fileID: 11400000, guid: eaf3a911e2f3b6544ada103612f109bf, type: 2}
+    ifNot: 0

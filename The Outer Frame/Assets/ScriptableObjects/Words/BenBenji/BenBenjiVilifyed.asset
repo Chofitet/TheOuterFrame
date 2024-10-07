@@ -14,9 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 0}
   headline: 
-  text: 
+  headlineTwoLines: 'PEEPING BEN
+
+    A BONAFIDE PATHOLOGICAL LIAR'
+  text: ANONYMOUS CONFIDED TO THIS STATION
   image: {fileID: 0}
   channel: 0
   priority: 0
-  alertLevelIncrement: 0
+  alertLevelIncrement: -7
   Emergency: 0
+  TimeToAppear: 0
+  MinTransmitionTime: 8
+  Conditions:
+  - condition: {fileID: 11400000, guid: 8264025cbe08bcf4b9e6ebbe03ea86a9, type: 2}
+    ifNot: 0

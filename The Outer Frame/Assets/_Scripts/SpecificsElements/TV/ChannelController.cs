@@ -8,6 +8,7 @@ public class ChannelController : MonoBehaviour
 {
 
     bool isFull;
+    bool isFirstNew;
     [SerializeField] bool isStaticChannel;
     [SerializeField] int DefaultMinutesToPassNews;
     [SerializeField] OverlayAnimation OverlayAnims;
@@ -53,6 +54,14 @@ public class ChannelController : MonoBehaviour
     public void SetNew(INewType _new)
     {
         if (_new == null) return;
+
+        if (!isFirstNew)
+        {
+            SetUpFirstNew(_new);
+            isFirstNew = true;
+            return;
+        }
+
         EmergencyScreen.SetActive(false);
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
@@ -71,6 +80,30 @@ public class ChannelController : MonoBehaviour
         Debug.Log("The new " + _new.GetHeadline() + " was setted in channel " + name + " At " + TimeManager.timeManager.GetTime().ToString() +
             "\n" + "MINIMUM hour to show: " + MinTimeToShowNew.GetTimeSetted().ToString() +
             "\n" + "MAXUMUM hour to show: " + TimeToRestartRandoms.GetTimeSetted().ToString());
+    }
+
+    void SetUpFirstNew(INewType _new)
+    {
+        if (_new.GetHeadline2() != "")
+        {
+            HeadlineText2.gameObject.SetActive(true);
+            HeadlineText.gameObject.SetActive(false);
+            HeadlineText2.text = _new.GetHeadline2();
+
+        }
+        else
+        {
+            HeadlineText2.gameObject.SetActive(false);
+            HeadlineText.gameObject.SetActive(true);
+            HeadlineText.text = _new.GetHeadline();
+        }
+        NewTextContent.text = _new.GetNewText();
+        if (_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
+        NewImg.sprite = _new.GetNewImag();
+        if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
+        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
+        OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
+
     }
 
     IEnumerator BackUI(float time, INewType _new)
