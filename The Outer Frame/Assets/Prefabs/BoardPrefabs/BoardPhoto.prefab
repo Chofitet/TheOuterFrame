@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3918936676914117859}
   - component: {fileID: 7909246368901538426}
   - component: {fileID: 4886337218052533617}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 4727450602297573371}
   - component: {fileID: 1545059170617418122}
   - component: {fileID: 280737557139183}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Photo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 3710538217716716236}
   - component: {fileID: 31146743970793476}
   - component: {fileID: 3648509600243153612}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 7032466387551804423}
   - component: {fileID: 410522935614986708}
   - component: {fileID: 8572446441752956451}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 2259455543894736860}
   - component: {fileID: 1009317246403769621}
   - component: {fileID: 7429054882358624813}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoardPhoto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,7 +533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8687846020413740925}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PostItsConteiner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: 6500468575987614376}
   - component: {fileID: 7016558096502414438}
   - component: {fileID: 4564680504773166205}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: State
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 3903072050878009194}
   - component: {fileID: 2294462686755229963}
   - component: {fileID: 6294467299081771190}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: State Post-it
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -808,7 +808,7 @@ GameObject:
   - component: {fileID: 5110663585469194789}
   - component: {fileID: 5301753513593467790}
   - component: {fileID: 3742156965709408508}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -973,6 +973,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: postit-model
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6ce722ff91673b640910d4eba6471076, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1054,6 +1058,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
       propertyPath: m_Name
       value: pictureFrame-model
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
