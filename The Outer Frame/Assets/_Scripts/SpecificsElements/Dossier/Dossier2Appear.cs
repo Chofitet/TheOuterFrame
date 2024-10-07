@@ -9,10 +9,10 @@ public class Dossier2Appear : MonoBehaviour
 
     private void Start()
     {
-        foreach (GameObject GO in ToAppear)
+       /* foreach (GameObject GO in ToAppear)
         {
             GO.SetActive(false);
-        }
+        }*/
     }
     public void CheckIfDossier2IsAppear(Component sender, object obj)
     {

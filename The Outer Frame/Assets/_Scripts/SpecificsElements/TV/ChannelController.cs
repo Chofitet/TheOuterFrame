@@ -17,7 +17,8 @@ public class ChannelController : MonoBehaviour
     [SerializeField] TMP_Text HeadlineText;
     [SerializeField] TMP_Text HeadlineText2;
     [SerializeField] TMP_Text NewTextContent;
-    [SerializeField] Image NewImg;
+    [SerializeField] Image BreakingNew;
+    [SerializeField] GameObject NewImg;
     [SerializeField] string TriggerAnim;
     [SerializeField] GameEvent OnIncreaseAlertLevel;
     [SerializeField] GameEvent OnChangeReporterAnim;
@@ -63,6 +64,7 @@ public class ChannelController : MonoBehaviour
         }
 
         EmergencyScreen.SetActive(false);
+        BreakingNew.enabled = true;
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
@@ -131,7 +133,13 @@ public class ChannelController : MonoBehaviour
         }
         NewTextContent.text = _new.GetNewText();
         if(_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
-        NewImg.sprite = _new.GetNewImag();
+
+        if (_new.GetNewImag())
+        {
+            BreakingNew.enabled = false;
+
+            NewImg.transform.GetChild(0).GetComponent<Image>().sprite = _new.GetNewImag();
+        }
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
         else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
         OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
