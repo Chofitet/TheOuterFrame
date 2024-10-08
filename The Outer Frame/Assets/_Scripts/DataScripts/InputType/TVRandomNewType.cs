@@ -10,6 +10,7 @@ public class TVRandomNewType : ScriptableObject, INewType
     [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headlineTwoLines;
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] Sprite image;
+    [SerializeField] int alertLevelIncrement;
     [SerializeField] int channel;
     [NonSerialized] bool wasStremed;
 
@@ -24,7 +25,7 @@ public class TVRandomNewType : ScriptableObject, INewType
 
     public int GetIncreaseAlertLevel()
     {
-        return 0;
+        return alertLevelIncrement;
     }
 
     public int GetMinTransmitionTime()

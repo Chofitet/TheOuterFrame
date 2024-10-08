@@ -12,6 +12,7 @@ public class WordsManager : MonoBehaviour
     [SerializeField] List<WordData> wordsDic = new List<WordData>();
     [SerializeField] List<StateEnum> Actions = new List<StateEnum>();
     [SerializeField] bool SaveProgress;
+    [SerializeField] GameEvent OnRemoveEraceInstance;
     [SerializeField] GameEvent OnChangeStateOfWord;
     [SerializeField] GameEvent OnChangeStateSeenOfWord;
     public static WordsManager WM { get; private set; }
@@ -180,5 +181,21 @@ public class WordsManager : MonoBehaviour
         return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r\(\)\s]", "");
     }
 
+    public void CheckEraseWordContitions(Component sender, object obj)
+    {
+        List<WordData> deletedWords = new List<WordData>();
+        foreach (WordData _word in wordsDic)
+        {
+
+            if (deletedWords.Contains(_word)) continue;
+
+            if (_word.GetEraseState())
+            {
+                deletedWords.Add(_word);
+                OnRemoveEraceInstance?.Invoke(this, _word);
+                continue;
+            }
+        }
+    }
 }
 

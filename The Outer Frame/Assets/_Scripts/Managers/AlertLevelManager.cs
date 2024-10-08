@@ -8,6 +8,8 @@ public class AlertLevelManager : MonoBehaviour
     [SerializeField] int InitAlertLevel;
     [SerializeField] TMP_Text NumLevel;
     [SerializeField] BlinkMaterialEffect Led;
+    [ColorUsage(true, true)] [SerializeField] Color IncreaseColor;
+    [ColorUsage(true, true)] [SerializeField] Color DecreaseColor;
     [SerializeField] GameEvent ButtonElement;
     [SerializeField] GameEvent OnUpAlertLevel;
     [SerializeField] GameEvent OnDownAlertLevel;
@@ -28,10 +30,12 @@ public class AlertLevelManager : MonoBehaviour
 
         if (incruseNum > 0)
         {
+            Led.SetSpecificColor(IncreaseColor);
             OnUpAlertLevel?.Invoke(this, null);
         }
         else if (incruseNum < 0)
         {
+            Led.SetSpecificColor(DecreaseColor);
             OnDownAlertLevel?.Invoke(this, null);
         }
 

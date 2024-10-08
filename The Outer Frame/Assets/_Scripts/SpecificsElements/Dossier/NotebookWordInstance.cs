@@ -29,6 +29,7 @@ public class NotebookWordInstance : MonoBehaviour
             text.gameObject.GetComponent<FadeWordsEffect>().StartEffect();
         }
 
+
         OnWritingShakeNotebook?.Invoke(this, writingTime);
         OnWritingNotebookSound?.Invoke(this, null);
 
@@ -41,12 +42,13 @@ public class NotebookWordInstance : MonoBehaviour
 
     public void RefreshWord(Component sender, object obj)
     {
-        if (wordReference.GetInactiveState())
+        if (wordReference.GetInactiveState() && !wordReference.GetEraseState())
         {
             GetComponent<Button>().enabled = false;
             strikethrough.SetActive(true);
             CrossOutWord();
         }
+        
     }
     public void ReplaceWord(WordData word)
     {
@@ -62,6 +64,12 @@ public class NotebookWordInstance : MonoBehaviour
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y),0.3f);
         OnCrossWordSound?.Invoke(this, null);
+    }
+
+    public void EraseCrossWord()
+    {
+        RectTransform line = strikethrough.GetComponent<RectTransform>();
+        line.DOSizeDelta(new Vector2(0, line.sizeDelta.y), 0.3f);
     }
 
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")

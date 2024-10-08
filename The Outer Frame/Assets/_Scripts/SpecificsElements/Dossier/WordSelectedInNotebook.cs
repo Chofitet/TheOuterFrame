@@ -56,9 +56,11 @@ public class WordSelectedInNotebook : MonoBehaviour
     void AddWord(WordData word)
     {
         OnDelayNotChangeView?.Invoke(this, 1f);
+
+        if (word.GetIsFound()) return;
         if (word.GetWordThatReplaces())
         {
-            ReplaceWordInList(word.GetWordThatReplaces(),word);
+            ReplaceWordInList(SearchForWordThatReplaceRetroactive(word), word);
         }
         else
         {
@@ -158,7 +160,26 @@ public class WordSelectedInNotebook : MonoBehaviour
                 if (DeleteInfo.isErase()) OnRemoveEraceInstance?.Invoke(this, _word);
                 else _word.SetInactive();
             }
+
         }
+    }
+
+
+    WordData SearchForWordThatReplaceRetroactive(WordData word)
+    {
+        WordData currentWord = word.GetWordThatReplaces();
+        WordData auxWord = word.GetWordThatReplaces();
+
+        while (currentWord != null)
+        {
+            currentWord.SetIsFound();
+
+            auxWord = currentWord;
+
+            currentWord = currentWord.GetWordThatReplaces();
+        }
+
+        return auxWord;
     }
 
     public void UnselectWord() => SelectedWord = null;

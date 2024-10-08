@@ -93,6 +93,11 @@ public class BlinkMaterialEffect : MonoBehaviour
             .SetEase(Ease.InOutSine));
     }
 
+    public void SetSpecificColor(Color c)
+    {
+        _color = c;
+    }
+
     public void SetOtherColor(Component sender, object obj)
     {
         _color = otherColorTochange;
