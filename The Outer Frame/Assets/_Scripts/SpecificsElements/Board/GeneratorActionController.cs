@@ -75,6 +75,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (InactiveConditionals.Count == 0) return false;
         if (!CheckForConditionals(InactiveConditionals)) return false;
 
+        GetComponent<BoxCollider>().enabled = false;
         return true;
     }
 
@@ -83,13 +84,13 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (!IdeaButtom) return;
 
         BtnGenerateIdeaController btn = IdeaButtom.GetComponent<BtnGenerateIdeaController>();
-
+        
         if (btn.GetState().GetIsDone())
-       {
+        {
             CheckImage.SetActive(true);
             btn.InactiveIdea();
             isDone = true;
-       }
+        }
     }
     public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
     {

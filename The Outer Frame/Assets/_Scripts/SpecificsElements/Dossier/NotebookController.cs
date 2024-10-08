@@ -74,6 +74,8 @@ public class NotebookController : MonoBehaviour
         WordData wordToRemove = (WordData)obj;
         List<GameObject> WordsToRemove = new List<GameObject>();
 
+        string see = sender.name;
+
         once = true;
 
         foreach (GameObject instanceWord in WordsInstances)

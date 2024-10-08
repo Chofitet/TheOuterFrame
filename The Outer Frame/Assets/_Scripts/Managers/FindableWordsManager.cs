@@ -312,6 +312,13 @@ public class FindableWordsManager : MonoBehaviour
     {
         FindableWordsBTNs.RemoveAll(s => s == null);
 
+        foreach (GameObject fw in FindableWordsBTNs)
+        {
+            if (fw.GetComponent<FindableWordBTNController>().Getword().GetIsFound())
+            {
+                Destroy(fw);
+            }
+        }
    }
    
 

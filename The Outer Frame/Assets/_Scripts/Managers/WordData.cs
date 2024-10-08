@@ -34,6 +34,9 @@ public class WordData : ScriptableObject
     [Header("Inactive Conditions")]
     [SerializeField] List<ScriptableObject> InactiveConditions = new List<ScriptableObject>();
 
+    [Header("Erase Conditions")]
+    [SerializeField] List<ConditionalClass> EraseConditions = new List<ConditionalClass>();
+
     [SerializeField] WordData WordThatReplaces;
     [SerializeField] bool CopyHistory;
     [SerializeField] List<DeleteCrossoutWorsd> WordsThatDeletes = new List<DeleteCrossoutWorsd>();
@@ -291,8 +294,7 @@ public class WordData : ScriptableObject
 
         return CheckInactiveConditions();
     }
-
-     bool CheckInactiveConditions()
+    bool CheckInactiveConditions()
     {
         if (isInactive) return true;
         if (InactiveConditions.Count == 0) return false;
@@ -308,6 +310,37 @@ public class WordData : ScriptableObject
         }
         return true;
     }
+    public bool GetEraseState()
+    {
+        return CheckEraseConditions();
+    }
+    bool CheckEraseConditions()
+    {
+        if (EraseConditions.Count == 0) return false;
+
+        foreach (ConditionalClass conditional in EraseConditions)
+        {
+            IConditionable auxInterface = conditional.condition as IConditionable;
+
+            bool conditionState = auxInterface.GetAlternativeConditional();
+
+            if (!conditional.ifNot)
+            {
+                conditionState = !conditionState;
+            }
+
+            if (conditionState)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+
+
 
     public void SetInactive()
     {
@@ -416,7 +449,9 @@ public class WordData : ScriptableObject
         isFound = x;
     }
 
-    public bool GetIsFound() { return isFound; }
+    public bool GetIsFound() { return isFound;}
+
+   
 
 }
 [Serializable]

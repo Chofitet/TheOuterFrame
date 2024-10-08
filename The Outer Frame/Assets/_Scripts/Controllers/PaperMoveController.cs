@@ -114,7 +114,7 @@ public class PaperMoveController : MonoBehaviour
 
     public void LeavePaperPile(Component sender, object obj)
     {
-        
+        if (!currentPaper) return;
         RefreshPaperQueue(true);
         currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration);
         currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration);
