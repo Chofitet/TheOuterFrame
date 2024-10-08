@@ -66,6 +66,7 @@ public class NotebookWordInstance : MonoBehaviour
         OnCrossWordSound?.Invoke(this, null);
     }
 
+
     public void EraseCrossWord()
     {
         RectTransform line = strikethrough.GetComponent<RectTransform>();
