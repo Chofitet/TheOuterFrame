@@ -13,15 +13,27 @@ MonoBehaviour:
   m_Name: NewsAnchor
   m_EditorClassIdentifier: 
   wordName: Anchorman
-  FindableAs: []
-  Form_DatabaseNameVersion: 
-  ProgressorNameVersion: 
+  FindableAs:
+  - Anchorman
+  - anchorman
+  Form_DatabaseNameVersion: Anchorman
+  ProgressorNameVersion: Anchorman
   PhoneNumber: 
   isAPhoneNumber: 0
-  Type: 0
-  reportTypes: []
+  Type: 1
+  reportTypes:
+  - {fileID: 11400000, guid: 72b1e539170e00f43b6e5a39e37a4538, type: 2}
+  - {fileID: 11400000, guid: 3470352339d1b17418f655b4cdcc4ab7, type: 2}
+  - {fileID: 11400000, guid: 61d4e53585d85cb46ae3decfcc0411bf, type: 2}
+  - {fileID: 11400000, guid: 63ede584363c07044adee81e7747b117, type: 2}
+  - {fileID: 11400000, guid: 5ea00c8a50746774092e3836cfcd1aca, type: 2}
+  - {fileID: 11400000, guid: b55ccce517a71864a863287c775df5d0, type: 2}
+  - {fileID: 11400000, guid: 82e2909614986ed45a2d64c276a0fe88, type: 2}
+  - {fileID: 11400000, guid: c56cc7d76c1ece64c96a96b3a05b082f, type: 2}
+  - {fileID: 11400000, guid: 69c02756cbda9fd438675034f2e9be54, type: 2}
+  - {fileID: 11400000, guid: 25efad6261d6ee54491b3a6b885c7bbd, type: 2}
   TVNewTypes: []
-  DBTypes: {fileID: 0}
+  DBTypes: {fileID: 11400000, guid: cef6d649f56572344a46e3856ddb2c67, type: 2}
   CallTypes: []
   InactiveConditions: []
   WordThatReplaces: {fileID: 0}

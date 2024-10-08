@@ -111,7 +111,7 @@ public class PCWikiController : MonoBehaviour
             if(auxDictionary[i] == "")
             {
                 DataBaseFields[i].SetActive(false);
-                return;
+                continue;
             }
             DataBaseFields[i].SetActive(true);
             DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>().text = auxDictionary[i];
