@@ -9,6 +9,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] WordData word;
 
     [SerializeField] GameObject PostItConteiner;
+    [SerializeField] GameEvent OnPutPhotoOnBoard;
     MoveBoardElementsToPos[] PostIts;
 
     private void Start()
@@ -25,6 +26,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
             transform.position = new Vector3(0, 0, 0);
             transform.GetChild(0).gameObject.SetActive(true);
             ActiveChildPosits();
+            OnPutPhotoOnBoard?.Invoke(this, word);
             //ActiveOtherPhotoReplaced();
             return true;
         }

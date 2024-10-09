@@ -10,6 +10,7 @@ public class NotebookController : MonoBehaviour
     List<Transform> WordSpots = new List<Transform>();
     List<GameObject> WordsInstances = new List<GameObject>();
     [SerializeField] Transform WordAnchors;
+    List<WordData> InctiveWordsOnBoard = new List<WordData>();
     int i = 0;
     bool once;
     List<int> removedIndex = new List<int>();
@@ -104,6 +105,44 @@ public class NotebookController : MonoBehaviour
         {
             WordsInstances.Remove(w);
             Destroy(w);
+        }
+    }
+
+    public void PutingWordOnBoard(Component sender, object obj)
+    {
+        InctiveWordsOnBoard.Add((WordData)obj);
+        DisableWordsOfList(InctiveWordsOnBoard);
+    }
+
+    public void CheckView(Component sender, object obj)
+    {
+        ViewStates actualView = (ViewStates)obj;
+
+        if(actualView == ViewStates.BoardView)
+        {
+            DisableWordsOfList(InctiveWordsOnBoard);
+        }
+        else
+        {
+            List<WordData> Empylist = new List<WordData>();
+            DisableWordsOfList(Empylist);
+        }
+    }
+
+    void DisableWordsOfList(List<WordData> list)
+    {
+        foreach (GameObject instanceBTN in WordsInstances) 
+        {
+            instanceBTN.GetComponent<Button>().enabled = true;
+
+            foreach (WordData word in list)
+            {
+                NotebookWordInstance Wordinstance = instanceBTN.GetComponent<NotebookWordInstance>();
+                if(Wordinstance.GetWord() == word)
+                {
+                    instanceBTN.GetComponent<Button>().enabled = false;
+                }
+            }
         }
     }
 

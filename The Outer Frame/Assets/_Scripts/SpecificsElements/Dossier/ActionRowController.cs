@@ -38,7 +38,7 @@ public class ActionRowController : MonoBehaviour
             ActionText.font = writingFont;
             if (!_isFirstTimeIdeaAdded) return;
             fadeAction.StartEffect();
-            Invoke("ClickButton", 0.6f);
+            Invoke("ClickButton", 3f);
         }
     }
 
