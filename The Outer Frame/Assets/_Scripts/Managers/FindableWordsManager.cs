@@ -13,7 +13,6 @@ public class FindableWordsManager : MonoBehaviour
     [SerializeField] GameObject ButtonFindableWordPrefab;
     List<GameObject> FindableWordsBTNs = new List<GameObject>();
     [SerializeField] GameEvent OnFindableWordInstance;
-    [SerializeField] Texture2D[] CursorTextures;
     
     public static FindableWordsManager FWM { get; private set; }
 
@@ -27,11 +26,6 @@ public class FindableWordsManager : MonoBehaviour
         {
             FWM = this;
         }
-    }
-
-    private void Start()
-    {
-        Cursor.SetCursor(CursorTextures[0], new Vector2(16, 16), CursorMode.ForceSoftware);
     }
 
     public void InstanciateFindableWord(TMP_Text textField, bool applyXCorrection = false)

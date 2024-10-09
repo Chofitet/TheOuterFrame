@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 6592215315726425342}
   - component: {fileID: 1800291645160190155}
   - component: {fileID: 5448267931498313990}
+  - component: {fileID: 7182147792530027463}
   m_Layer: 0
   m_Name: NotebookWordPrefab
   m_TagString: Untagged
@@ -491,7 +492,6 @@ MonoBehaviour:
   text: {fileID: 976639871496013436}
   strikethrough: {fileID: 4746003229699241807}
   OnWritingShakeNotebook: {fileID: 11400000, guid: 91b91b8ed370dec49bc053924dd787de, type: 2}
-  OnEraseWordInNotebook: {fileID: 11400000, guid: aaa8249cb6836ee40a62c7d8d9e34a99, type: 2}
   OnCrossWordSound: {fileID: 11400000, guid: 34e24a3358b56814cad33862402de1ef, type: 2}
   OnWritingNotebookSound: {fileID: 11400000, guid: fb485f55efe0c7c4abce479643c237e3, type: 2}
 --- !u!114 &1800291645160190155
@@ -554,3 +554,15 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0.7
+--- !u!114 &7182147792530027463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8693245384509004982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
