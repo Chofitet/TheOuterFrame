@@ -28,6 +28,7 @@ public class ViewManager : MonoBehaviour
     ViewStates currentviewState;
     bool isInputDisable;
     bool isInPause;
+    bool isGameOver;
 
     private void Start()
     {
@@ -105,21 +106,25 @@ public class ViewManager : MonoBehaviour
                 BackToGeneralViewWhitMoving();
                 break;
             case ViewStates.PinchofonoView:
+                if (isGameOver) return;
                 OnNotebookTake.Invoke(this, true);
                 OnPinchofonoView?.Invoke(this, null);
                 break;
             case ViewStates.BoardView:
+                if (isGameOver) return;
                 TimeManager.timeManager.PauseTime();
                 OnBoardView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.PCView:
+                if (isGameOver) return;
                 OnPCWiew?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.ProgressorView:
+                if (isGameOver) return;
                 OnProgressorView?.Invoke(this, null);
                 break;
             case ViewStates.TVView:
@@ -128,24 +133,29 @@ public class ViewManager : MonoBehaviour
                 OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.DossierView:
+                if (isGameOver) return;
                 OnDossierView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.OnTakenPaperView:
+                if (isGameOver) return;
                 OnTakenPaperView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.OnTakeSomeInBoard:
+                if (isGameOver) return;
                 OnTakeSomeInBoard?.Invoke(this, null);
                 break;
             case ViewStates.GameOverView:
                 TimeManager.timeManager.NormalizeTime();
                 OnGameOverView.Invoke(this, "RetryMenu");
                 OnNotebookTake.Invoke(this, false);
+                isGameOver = true;
                 break;
             case ViewStates.PauseView:
+                if (isGameOver) return;
                 OnPauseView?.Invoke(this, null);
                 break;
         }

@@ -21,7 +21,7 @@ public class ReportController : MonoBehaviour
     WordData word;
     ReportType report;
 
-    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, bool isOtherActionInGroupDoing, TimeData timeComplete)
+    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, TimeData timeComplete)
     {
         word = _word;
         report = _report;
@@ -57,9 +57,9 @@ public class ReportController : MonoBehaviour
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
-        else if(isOtherActionInGroupDoing)
+        else if(isOtherActionInGroupDoing != null)
         {
-            Resulttxt.text = "We are currently " + word.GetDoingAction(0).GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
+            Resulttxt.text = "We are currently " + isOtherActionInGroupDoing.GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
             status = "<color=#AE0000>REJECTED</color>";
             photo1.Set("", WrongResultImg[6]);
             isNotCompleted = true;

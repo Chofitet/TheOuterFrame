@@ -26,10 +26,12 @@ public class CursorManager : MonoBehaviour
     [SerializeField] Texture2D DefaultCursor;
     [SerializeField] Texture2D ClickCursor;
     [SerializeField] Texture2D InteractiveCursor;
+    bool isClicking;
 
 
     public void SetInteractCursor()
     {
+        if (isClicking) return;
         Cursor.SetCursor(InteractiveCursor, new Vector2(InteractiveCursor.width / 2, InteractiveCursor.height / 2), CursorMode.Auto);
     }
 
@@ -45,6 +47,7 @@ public class CursorManager : MonoBehaviour
             Cursor.SetCursor(ClickCursor, new Vector2(ClickCursor.width / 2, ClickCursor.height / 2), CursorMode.Auto);
             StopAllCoroutines();
             StartCoroutine(BackToDefault());
+            isClicking = true;
         }
     }
 
@@ -52,6 +55,7 @@ public class CursorManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         Cursor.SetCursor(DefaultCursor, new Vector2(DefaultCursor.width / 2, DefaultCursor.height / 2), CursorMode.Auto);
+        isClicking = false;
     }
 
 }

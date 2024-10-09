@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 273756753439522530}
   - component: {fileID: 7612253375668514039}
   - component: {fileID: 6470023526836284848}
+  - component: {fileID: 6136246526340736401}
   m_Layer: 10
   m_Name: BtnGenerateIdeaPrefab
   m_TagString: Untagged
@@ -160,6 +161,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6136246526340736401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479744454099256895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1698638971177894008
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +190,7 @@ GameObject:
   - component: {fileID: 8987662926447436985}
   - component: {fileID: 15457265573197226}
   - component: {fileID: 6096548891662584677}
+  - component: {fileID: 8873669410146490017}
   m_Layer: 10
   m_Name: BoardPostIdea
   m_TagString: Untagged
@@ -376,6 +390,18 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 1
+--- !u!114 &8873669410146490017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698638971177894008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d077e3509694842a7d3cf061c84f1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3674964693397007206
 GameObject:
   m_ObjectHideFlags: 0

@@ -69,6 +69,13 @@ public class PhoneRowNotebookController : MonoBehaviour
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
     }
 
+    public void EraseAnim()
+    {
+        StartCoroutine(AnimFade(txtName, false, txtName, true, " "));
+
+        StartCoroutine(AnimFade(Num, false, Num, true, " "));
+    }
+
     private void ButtonPress()
     {
         if(word.GetIsAPhoneNumber())

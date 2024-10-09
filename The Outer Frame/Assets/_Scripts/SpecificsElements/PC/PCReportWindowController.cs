@@ -51,7 +51,7 @@ public class PCReportWindowController : MonoBehaviour
 
         ReportType report = (ReportType) obj;
 
-        ReportToFill.initReport(word, report, false, false, false, false, report.GetTimeWhenWasDone());
+        ReportToFill.initReport(word, report, false, false, false, null, report.GetTimeWhenWasDone());
     }
 
     public void QuitPanelReport()

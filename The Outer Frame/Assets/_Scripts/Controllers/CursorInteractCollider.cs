@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class CursorInteractCollider : MonoBehaviour
 {
-    private void OnMouseEnter()
+    private void OnMouseOver()
     {
         CursorManager.CM.SetInteractCursor();
+    }
+
+    private void OnMouseEnter()
+    {
+        
     }
 
     private void OnMouseExit()

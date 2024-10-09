@@ -26,7 +26,7 @@ public class SlotController : MonoBehaviour
     bool isAlreadyDone;
     bool isAutomaticAction;
     bool isTheSameAction;
-    bool isOtherGroupActionDoing;
+    StateEnum isOtherGroupActionDoing;
     TimeData timeComplete;
     bool inFillFast;
     ReportType Report;
@@ -76,7 +76,7 @@ public class SlotController : MonoBehaviour
         else if (ActionGroupManager.AGM.ChekAreInTheSameGroup(word, state))
         {
             FillFast();
-            isOtherGroupActionDoing = true;
+            isOtherGroupActionDoing = _word.GetDoingAction(0);
             Debug.Log("Otra acción del grupo en proceso");
             SetLEDState(Color.red);
         }
@@ -148,7 +148,7 @@ public class SlotController : MonoBehaviour
         {
             AutomaticAction();
         }
-        else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isOtherGroupActionDoing)
+        else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isOtherGroupActionDoing != null)
         {
             AutomaticAction();
         }
@@ -205,6 +205,7 @@ public class SlotController : MonoBehaviour
         Icon.SetActive(false);
         Report = null;
         isActionComplete = false;
+        isOtherGroupActionDoing = null;
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
         SetLEDState(Color.green);
@@ -230,7 +231,7 @@ public class SlotController : MonoBehaviour
 
     public bool GetIsTheSameAction() { return isTheSameAction; }
 
-    public bool GetIsOtherGroupActionDoing() {return isOtherGroupActionDoing;}
+    public StateEnum GetIsOtherGroupActionDoing() {return isOtherGroupActionDoing;}
 
     public TimeData GetTimeComplete() { return timeComplete;}
 

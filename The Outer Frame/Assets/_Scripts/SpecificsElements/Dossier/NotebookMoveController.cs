@@ -21,6 +21,7 @@ public class NotebookMoveController : MonoBehaviour
     bool IsPhonesOpen;
     bool isUp;
     GameObject child;
+    bool isGameOver;
 
     ViewStates lastView;
 
@@ -33,6 +34,7 @@ public class NotebookMoveController : MonoBehaviour
     public void OnChangeView(Component sender, object obj)
     {
         //anim.Play("notebook armature|idle");
+        if (isGameOver) return;
         ViewStates newview = (ViewStates)obj;
         switch (newview)
         {
@@ -66,6 +68,7 @@ public class NotebookMoveController : MonoBehaviour
                 break;
             case ViewStates.GameOverView:
                 SetPos(0, false);
+                isGameOver = true;
                 break;
         }
         lastView = newview;

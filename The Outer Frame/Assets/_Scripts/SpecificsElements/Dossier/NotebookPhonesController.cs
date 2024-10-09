@@ -8,37 +8,37 @@ public class NotebookPhonesController : MonoBehaviour
     [SerializeField] GameObject PhoneNumberPrefab;
     [SerializeField] Transform WordContainer;
     List<GameObject> WordsInstances = new List<GameObject>();
+    List<int> removedIndex = new List<int>(); // Lista para almacenar los índices eliminados
     int i = 0;
+    bool once = false;
 
     // Refresh When is added a new Phone
     public void RefreshPhones(Component component, object obj)
     {
-       WordData LastPhoneAdded = (WordData)obj;
+        WordData LastPhoneAdded = (WordData)obj;
 
-        if (WordReplaceOther(LastPhoneAdded)) return;
+        int auxIndex = i;
+        bool replaceBool = WordReplaceOther(LastPhoneAdded);
 
-        if (LastPhoneAdded.GetIsAPhoneNumber() && WordsInstances.Count !=0)
+        // Verifica si hay un índice libre para reutilizar
+        if (removedIndex.Count != 0 && !once)
+        {
+            auxIndex = removedIndex[0];
+            removedIndex.RemoveAt(0);
+        }
+        else if (removedIndex.Count == 0 && !replaceBool)
+        {
+            i++;
+        }
+
+        if (replaceBool) return;
+
+        if (LastPhoneAdded.GetIsPhoneNumberFound())
         {
             foreach (GameObject phone in WordsInstances)
             {
                 PhoneRowNotebookController PhoneScript = phone.GetComponent<PhoneRowNotebookController>();
-                if (PhoneScript.GetWord().GetName() == LastPhoneAdded.GetName())
-                {
-                    if(FindWordToReplaceNum(LastPhoneAdded))
-                    {
-                        PhoneScript.ReplaceNumberWithWord(FindWordToReplaceNum(LastPhoneAdded));
-                        return;
-                    }
-                }
-            }
-        }
-
-        if (LastPhoneAdded.GetIsPhoneNumberFound())
-        {
-            foreach(GameObject phone in WordsInstances)
-            {
-                PhoneRowNotebookController PhoneScript = phone.GetComponent<PhoneRowNotebookController>();
-               if ( PhoneScript.GetWord().GetPhoneNumber() == LastPhoneAdded.GetPhoneNumber())
+                if (PhoneScript.GetWord().GetPhoneNumber() == LastPhoneAdded.GetPhoneNumber())
                 {
                     PhoneScript.UpdateNumber();
                     return;
@@ -46,14 +46,53 @@ public class NotebookPhonesController : MonoBehaviour
             }
         }
 
-       GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
-       wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
-       wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded);
-       WordsInstances.Add(wordaux);
+        GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
+        wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
+        wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded);
+        WordsInstances.Add(wordaux);
 
-       i++;
+        once = false;
     }
 
+    // Función para borrar una instancia de teléfono
+    public void RemovePhoneInstance(Component sender, object obj)
+    {
+        WordData phoneToRemove = (WordData)obj;
+        List<GameObject> PhonesToRemove = new List<GameObject>();
+
+        once = true;
+
+        foreach (GameObject instancePhone in WordsInstances)
+        {
+            PhoneRowNotebookController script = instancePhone.GetComponent<PhoneRowNotebookController>();
+            if (script.GetWord() == phoneToRemove)
+            {
+                script.EraseAnim();
+                PhonesToRemove.Add(instancePhone);
+
+                int index = WordsInstances.FindIndex(phone => phone == instancePhone);
+                if (index != -1)
+                {
+                    removedIndex.Add(index);
+                }
+            }
+        }
+
+        StartCoroutine(DeletePhone(PhonesToRemove));
+    }
+
+    // Coroutine para eliminar los números de teléfono después de la animación
+    IEnumerator DeletePhone(List<GameObject> list)
+    {
+        yield return new WaitForSeconds(0.5f);
+        foreach (GameObject phone in list)
+        {
+            WordsInstances.Remove(phone);
+            Destroy(phone);
+        }
+    }
+
+    // Función para reemplazar un número por otro
     bool WordReplaceOther(WordData newword)
     {
         bool aux = false;
@@ -67,10 +106,11 @@ public class NotebookPhonesController : MonoBehaviour
                 ClearUnderLine();
                 aux = true;
             }
-
         }
         return aux;
     }
+
+
 
     WordData FindWordToReplaceNum(WordData Num)
     {
