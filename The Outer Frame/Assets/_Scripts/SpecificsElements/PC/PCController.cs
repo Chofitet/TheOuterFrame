@@ -13,6 +13,8 @@ public class PCController : MonoBehaviour
     [SerializeField] GameEvent OnWikiWindow;
     [SerializeField] GameEvent OnWordAccessScreen;
     [SerializeField] GameEvent OnKeyBoardSound;
+    [SerializeField] List<GameObject> PanelsAppearsOnSearch = new List<GameObject>();
+    GameEvent LastWindow;
     bool isWaitingAWord;
     bool inWordAccessWindow;
 
@@ -25,6 +27,7 @@ public class PCController : MonoBehaviour
         isWaitingAWord = true;
         textAnim = SearchBar.GetComponent<TypingAnimText>();
         textAnim.SetCharacterPerSecond(2);
+        foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
         StartCoroutine(IdleSearchBarAnim());
     }
 
@@ -34,6 +37,7 @@ public class PCController : MonoBehaviour
         if (!isInPCView) return;
         if (inWordAccessWindow) return;
         WordData _word = (WordData)obj;
+        
         word = _word;
         SearchBar.text = word.GetForm_DatabaseNameVersion();
         StopCoroutine(IdleSearchBarAnim());
@@ -42,6 +46,7 @@ public class PCController : MonoBehaviour
         SearchBar.GetComponent<TypingAnimText>().AnimateTyping();
         OnKeyBoardSound?.Invoke(this, null);
 
+        
 
     }
 
@@ -70,6 +75,12 @@ public class PCController : MonoBehaviour
         SearchWordInWiki();
     }
 
+    public void UpdateDataBase(Component sender, object obj)
+    {
+        SearchWordInWiki();
+        LastWindow?.Invoke(this, null);
+    }
+
     public void SearchWordInWiki()
     {
         if (!word)
@@ -79,6 +90,7 @@ public class PCController : MonoBehaviour
             return;
         }
 
+        foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(true);
         DataBaseType db = WordsManager.WM.RequestBDWikiData(word);
 
         if (db.GetAccessWord() && !db.GetisWordAccessFound())
@@ -105,6 +117,7 @@ public class PCController : MonoBehaviour
     public void ChangeWindow(GameEvent gameEvent)
     {
         gameEvent?.Invoke(this, null);
+        LastWindow = gameEvent;
     }
 
     

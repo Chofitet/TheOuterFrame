@@ -139,6 +139,12 @@ public class WordsManager : MonoBehaviour
         FindWordInList(_word).AddStateInHistory(WordState);
     }
 
+    public void AddStateOnSeenHistory(WordData _word, StateEnum WordState)
+    {
+        FindWordInList(_word).CheckStateSeen(WordState);
+
+    }
+
     WordData FindWordInList(WordData _word)
     {
         if(!_word)

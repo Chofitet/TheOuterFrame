@@ -83,6 +83,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
         textField.textInfo.Clear();
 
+        Debug.Log(textField.text);
 
         if (textField.IsActive())
         {
