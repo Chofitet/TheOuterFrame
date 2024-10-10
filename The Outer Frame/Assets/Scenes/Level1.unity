@@ -5850,6 +5850,7 @@ GameObject:
   m_Component:
   - component: {fileID: 105340701}
   - component: {fileID: 105340702}
+  - component: {fileID: 105340703}
   m_Layer: 0
   m_Name: CursorManager
   m_TagString: Untagged
@@ -5887,10 +5888,40 @@ MonoBehaviour:
   DefaultCursor: {fileID: 2800000, guid: a5b44d2c52e0ba041ae24384879eb7f7, type: 3}
   ClickCursor: {fileID: 2800000, guid: e4637df0c0c23ad4c89c9dd3d45e67ed, type: 3}
   InteractiveCursor: {fileID: 2800000, guid: e25f178d28e679842b1a5f833f961e78, type: 3}
-  PCDefaultCursor: {fileID: 0}
-  PCClickCursor: {fileID: 0}
-  PCInteractiveCursor: {fileID: 0}
-  targetCanvas: {fileID: 0}
+  PCDefaultCursor: {fileID: 2800000, guid: 6c6e0b5de0b2a684ea5077267027fa38, type: 3}
+  PCClickCursor: {fileID: 2800000, guid: 2d09e1dfda0535b43b6327f5812b99a5, type: 3}
+  PCInteractiveCursor: {fileID: 2800000, guid: 27f9a0c9d27790642a8ca73e7a7e7877, type: 3}
+  targetCanvas: {fileID: 566693297}
+--- !u!114 &105340703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105340700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: de4c2261a9464294dbcdf9529638137f, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 105340702}
+        m_TargetAssemblyTypeName: CursorManager, Assembly-CSharp
+        m_MethodName: CheckView
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!1 &106389808
 GameObject:
   m_ObjectHideFlags: 0
@@ -28949,7 +28980,9 @@ MonoBehaviour:
   OnWikiWindow: {fileID: 11400000, guid: a25167cbc8f56aa4a8357305b9b4a7d4, type: 2}
   OnWordAccessScreen: {fileID: 11400000, guid: ecf2aa4a92a3b3c4db92511ac3d3dfa8, type: 2}
   OnKeyBoardSound: {fileID: 11400000, guid: a5d1b9e67544bd64baea3fb4026c380b, type: 2}
-  PanelsAppearsOnSearch: []
+  PanelsAppearsOnSearch:
+  - {fileID: 424912063}
+  - {fileID: 2140569070}
 --- !u!114 &566693286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51230,7 +51263,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873657060}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.49476507, y: 0.5051807, z: -0.4947657, w: 0.50518006}
+  m_LocalRotation: {x: 0.4947643, y: 0.50518143, z: -0.4947664, w: 0.50517935}
   m_LocalPosition: {x: 0.0500002, y: 0.48822832, z: -0.030000392}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -113392,8 +113425,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1882143085}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 60.04, y: 0}
   m_Pivot: {x: 0, y: 1}
