@@ -177,6 +177,8 @@ public class WordSelectedInNotebook : MonoBehaviour
             auxWord = currentWord;
 
             currentWord = currentWord.GetWordThatReplaces();
+
+            if (currentWord == auxWord) break;
         }
 
         return auxWord;
