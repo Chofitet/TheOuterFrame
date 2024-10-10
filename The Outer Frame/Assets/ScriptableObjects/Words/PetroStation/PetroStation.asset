@@ -44,7 +44,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c736879f9ed41db488b90d524d040431, type: 2}
   - {fileID: 11400000, guid: dae022795273219419a63641a837dc01, type: 2}
   - {fileID: 11400000, guid: 350cf4b21d380834d8cca49915194850, type: 2}
-  InactiveConditions: []
+  InactiveConditions:
+  - {fileID: 11400000, guid: 866bcb8604ef6cf45b5db14e5734929f, type: 2}
+  EraseConditions:
+  - condition: {fileID: 11400000, guid: f08d576282c5ab84a9668cf598cddbd6, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: ed61fb827c41bf24f9af0a6f755151d3, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 1d27c707bf4fd2047b6a8d5433c083db, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 25488ecb2b1990c4b898dfb91c59e261, type: 2}
+    ifNot: 0
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0
   WordsThatDeletes: []

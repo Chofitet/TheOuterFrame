@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e79fc005c88bf4084b841a22c08b1a, type: 3}
+  m_Name: SecusysStolen
+  m_EditorClassIdentifier: 
+  state: {fileID: 0}
+  headline: 
+  headlineTwoLines: PETROL STATION SECURITY FOOTAGE STOLEN BY UNKNOWN CULPRIT!
+  text: 'WHAT ARE THEY TRYING TO COVER UP? THE TRUTH? THINGS? STUFF?
+
+    THIS STATION
+    VOWS TO FIND OUT!'
+  image: {fileID: 0}
+  channel: 1
+  priority: 5
+  alertLevelIncrement: 21
+  Emergency: 0
+  TimeToAppear: 6
+  MinTransmitionTime: 8
+  Conditions:
+  - condition: {fileID: 11400000, guid: 6d7f9e14d37a622429f3baf0992994d6, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 8d3a6bb41307eff4da21ad21870fe3c1, type: 2}
+    ifNot: 0
