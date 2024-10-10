@@ -228,7 +228,6 @@ public class FindableWordsManager : MonoBehaviour
         {
             string a = otherW.GetWord();
             string b = actualWord.GetWord();
-            Debug.Log(otherW.GetWord());
             if (otherW.GetWord() == actualWord.GetWord()) return aux;
             if(AreInTheSameParagraph(textField, otherW,actualWord))
             {

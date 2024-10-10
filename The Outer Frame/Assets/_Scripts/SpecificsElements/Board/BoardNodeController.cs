@@ -27,6 +27,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
             transform.GetChild(0).gameObject.SetActive(true);
             ActiveChildPosits();
             OnPutPhotoOnBoard?.Invoke(this, word);
+            word.SetPlacedInBoard();
             //ActiveOtherPhotoReplaced();
             return true;
         }

@@ -50,6 +50,7 @@ public class WordData : ScriptableObject
     [NonSerialized] bool isPhoneNumberFound;
     [NonSerialized] bool isInactive;
     [NonSerialized] List<StateEnum> CurrentDoingActions = new List<StateEnum>();
+    [NonSerialized] bool isPlacedInBoad;
     #region GetInputLogic
 
     public void InitSet()
@@ -286,6 +287,8 @@ public class WordData : ScriptableObject
         }
     }
 
+ 
+
     #endregion
 
     #region InactiveLogic
@@ -451,7 +454,12 @@ public class WordData : ScriptableObject
 
     public bool GetIsFound() { return isFound;}
 
-   
+   public void SetPlacedInBoard()
+    {
+        isPlacedInBoad = true;
+    }
+
+    public bool GetPlacedInBoard() { return isPlacedInBoad; }
 
 }
 [Serializable]

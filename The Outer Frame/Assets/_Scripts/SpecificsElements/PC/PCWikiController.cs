@@ -77,13 +77,10 @@ public class PCWikiController : MonoBehaviour
     {
         if(CheckAreLocked())
         {
-            LockField.text = "Lock Cargo Doors";
+            LockField.text = "Unlocked";
+            LockBTN.GetComponent<Button>().interactable = false;
             WordsManager.WM.AddStateOnHistory(input.GetwordToUnlock(), input.GetUnlockState());
-        }
-        else
-        {
-            LockField.text = "Unlock Cargo Doors";
-            WordsManager.WM.CleanStateOnHistory(input.GetwordToUnlock(), input.GetUnlockState());
+            WordsManager.WM.AddStateOnSeenHistory(input.GetwordToUnlock(), input.GetUnlockState());
         }
     }
 
