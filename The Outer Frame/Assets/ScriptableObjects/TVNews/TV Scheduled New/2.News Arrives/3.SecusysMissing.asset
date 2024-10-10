@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
-  m_Name: 3.BathroomDoorKickedDown
+  m_Name: 3.SecusysMissing
   m_EditorClassIdentifier: 
-  headline: DOORS KICKED DOWN NEAR ROAD 54 CRASH SITE
-  headlineTwoLines: 
-  text: 
+  headline: 
+  headlineTwoLines: PETRO STATION AT ROAD 54 SECURITY SYSTEM STOLEN!!
+  text: 'WHAT ARE THEY TRYING TO HIDE? THINGS? STUFF?
+
+    THIS STATION WILL FIND
+    OUT!'
   image: {fileID: 0}
   channel: 1
   Priority: 1
-  alertLevelIncrement: 19
+  alertLevelIncrement: 21
   Emergency: 0
   Day: 0
   Hour: 8
-  Minute: 35
-  MinTransmitionTime: 3
+  Minute: 50
+  MinTransmitionTime: 10
   Conditions:
-  - condition: {fileID: 11400000, guid: ed61fb827c41bf24f9af0a6f755151d3, type: 2}
+  - condition: {fileID: 11400000, guid: 6d7f9e14d37a622429f3baf0992994d6, type: 2}
     ifNot: 0
-  - condition: {fileID: 11400000, guid: 31786559b3577114fa863e4bd4cd2276, type: 2}
-    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}
