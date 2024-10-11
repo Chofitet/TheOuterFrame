@@ -137,7 +137,15 @@ public class ConditionalClass
 {
     public ScriptableObject condition;
     public bool ifNot;
+
+    [NonSerialized] public bool Doit;
+    public void SetDoit(bool x = false)
+    {
+         Doit = x;
+    }
 }
+
+    
 
 [Serializable]
 public class PhotoInfo

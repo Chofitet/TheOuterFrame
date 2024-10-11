@@ -27,21 +27,36 @@ public class NotebookController : MonoBehaviour
     {
         WordData LastWordAdded = (WordData)obj;
 
+        
+
         int auxIndex = i;
+
+        bool isOutOfRange = false;
+        if (i >= WordAnchors.childCount - 1) isOutOfRange = true;
+
+
         bool replaceBool = WordReplaceOther(LastWordAdded);
-        if (removedIndex.Count != 0 && !once)
+
+        if (removedIndex.Count == 0 && !replaceBool && !isOutOfRange)
+        {
+            i++;
+        }
+         else if (removedIndex.Count != 0 && !once)
         {
             auxIndex = removedIndex[0];
             removedIndex.Remove(removedIndex[0]);
         }
-        else if (removedIndex.Count == 0 && !replaceBool)
+        else if(isOutOfRange && !replaceBool)
         {
-            i++;
+            auxIndex = SearchIndexOfCrossWord(LastWordAdded);
+            removedIndex.Remove(removedIndex[0]);
+            return;
         }
 
         if (replaceBool) return;
 
         if (LastWordAdded.GetIsAPhoneNumber()) return;
+
         GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
         wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
         wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded);
@@ -49,6 +64,30 @@ public class NotebookController : MonoBehaviour
 
         once = false;
     }
+
+    int SearchIndexOfCrossWord(WordData newword)
+    {
+        List<GameObject> WordsToRemove = new List<GameObject>();
+        int _index = 0;
+        foreach (GameObject w in WordsInstances)
+        {
+            NotebookWordInstance script = w.GetComponent<NotebookWordInstance>();
+            if (script.GetWord().GetInactiveState())
+            {
+                script.ReplaceWord(newword);
+                ClearUnderLine();
+
+                _index = WordsInstances.FindIndex(word => word == w);
+                if (_index != -1)
+                {
+                    removedIndex.Add(_index);
+                }
+                break;
+            }
+        }
+        return _index;
+    }
+
 
     bool WordReplaceOther(WordData newword)
     {
@@ -95,12 +134,11 @@ public class NotebookController : MonoBehaviour
             }
         }
 
-        StartCoroutine(delete(WordsToRemove));
+        delete(WordsToRemove);
     }
 
-    IEnumerator delete(List<GameObject> list)
+    void delete(List<GameObject> list)
     {
-        yield return new WaitForSeconds(0.5f);
         foreach (GameObject w in list)
         {
             WordsInstances.Remove(w);

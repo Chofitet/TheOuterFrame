@@ -13,6 +13,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] GameEvent OnCrossWordSound;
     [SerializeField] GameEvent OnWritingNotebookSound;
     WordData wordReference;
+    bool isCross;
 
     public void Initialization(WordData word)
     {
@@ -53,6 +54,7 @@ public class NotebookWordInstance : MonoBehaviour
     public void ReplaceWord(WordData word)
     {
         text.text = wordReference.GetName();
+        if (isCross) EraseCrossWord();
         StartCoroutine(AnimFade(text,false,text,true,word.GetName()));
         wordReference = word;
         word.SetIsFound();
@@ -64,12 +66,15 @@ public class NotebookWordInstance : MonoBehaviour
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y),0.3f);
         OnCrossWordSound?.Invoke(this, null);
+        isCross = true;
     }
 
 
     public void EraseCrossWord()
     {
         RectTransform line = strikethrough.GetComponent<RectTransform>();
+        line.pivot = new Vector2(1, 0);
+        line.localPosition = new Vector2(line.sizeDelta.x, line.localPosition.y);
         line.DOSizeDelta(new Vector2(0, line.sizeDelta.y), 0.3f);
     }
 
