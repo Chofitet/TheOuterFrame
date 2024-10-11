@@ -22,9 +22,17 @@ public class FindableWordBTNController : MonoBehaviour
     WordData word;
     int wordIndex;
 
+    bool wasFinded;
+
     private void OnEnable()
     {
         rectTransform = GetComponent<RectTransform>();
+    }
+
+    private void OnDisable()
+    {
+        if (wasFinded) return;
+        ApplyShader("");
     }
 
     public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, int WordIndex)
@@ -64,7 +72,7 @@ public class FindableWordBTNController : MonoBehaviour
         UnBoldWord();
     }
 
-    void ApplyShader(string MaterialName)
+    void ApplyShader(string MaterialName, bool eraceSpace = true)
     {
         string[] words = textField.text.Split(' ');
         string auxText = "";
@@ -106,16 +114,19 @@ public class FindableWordBTNController : MonoBehaviour
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
 
                 string materialName = string.Empty;
-                try
+
+                if (MaterialName != "")
                 {
-                    materialName = "\"" + textField.font.name + "" + MaterialName;
-                    strBuilder = strBuilder.Replace(combinedWord, "<material=" + materialName + ">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
-                    Debug.Log(materialName);
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogWarning("Error al obtener el path del material: " + ex.Message);
-                    strBuilder = strBuilder.Replace(combinedWord,  CleanUnnecessaryCharacter(combinedWord));
+                    try
+                    {
+                        materialName = "\"" + textField.font.name + "" + MaterialName;
+                        strBuilder = strBuilder.Replace(combinedWord, "<material=" + materialName + ">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogWarning("Error al obtener el path del material: " + ex.Message);
+                        strBuilder = strBuilder.Replace(combinedWord, CleanUnnecessaryCharacter(combinedWord));
+                    }
                 }
                 auxText += strBuilder + extraCharacters + " ";
             }
@@ -170,6 +181,7 @@ public class FindableWordBTNController : MonoBehaviour
     {
         OnFindableWordButtonPress?.Invoke(this, word);
         ApplyShader("Grey");
+        wasFinded = true;
         Destroy(gameObject);
     }
 

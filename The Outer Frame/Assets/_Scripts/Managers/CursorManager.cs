@@ -96,13 +96,18 @@ public class CursorManager : MonoBehaviour
     {
         if ((ViewStates)obj == ViewStates.PCView)
         {
-            Invoke("ChangeCursorInPC", 0.5f);
+            StartCoroutine(ChangeCursorInPC());
         }
-        else isInPcView = false;
+        else
+        {
+            StopAllCoroutines();
+            isInPcView = false;
+        }
     }
 
-    void ChangeCursorInPC()
+    IEnumerator ChangeCursorInPC()
     {
+        yield return new WaitForSeconds(0.5f);
         isInPcView = true;
         SetDefaultCursor();
     }

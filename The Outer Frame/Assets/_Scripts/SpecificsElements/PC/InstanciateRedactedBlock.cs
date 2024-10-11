@@ -83,6 +83,9 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
         textField.textInfo.Clear();
 
+        string[] words = textField.text.Split(' ');
+        int WordsCount = words.Length;
+
         Debug.Log(textField.text);
 
         if (textField.IsActive())
@@ -91,22 +94,24 @@ public class InstanciateRedactedBlock : MonoBehaviour
         }
         var wordLocation = Vector3.zero;
             int e = 0;
+            int i = 0;
 
-            foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
+       foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
+       {
+            int wordDiference = textField.textInfo.wordCount;
+            if (i >= WordsCount - (WordsCount - wordDiference)) break;
+            if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord())) continue;
+            string actualWord = wordInfo.GetWord();
+            if (wordInfo.GetWord().Contains("REDACTED"))
             {
-                if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord())) continue;
-                 string actualWord = wordInfo.GetWord();
-                if (wordInfo.GetWord().Contains("REDACTED"))
-                {
-                    
-                    var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
-                    var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
-                    wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
-                    aux.Add(wordLocation);
+                var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
+                var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
+                wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
+                aux.Add(wordLocation);
                     
                 e++;
-                
             }
+            i++;
         }
         return aux;
     }

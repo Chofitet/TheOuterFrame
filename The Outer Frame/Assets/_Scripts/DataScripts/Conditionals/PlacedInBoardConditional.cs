@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Placed In Board Conditional", menuName = "Conditionals/PlacedInBoardConditional")]
 public class PlacedInBoardConditional : ScriptableObject, IConditionable
 {
-    [SerializeField] WordData PhotoWord;
+    [SerializeField] WordData Word;
 
     public bool CheckIfHaveTime()
     {
@@ -14,7 +14,7 @@ public class PlacedInBoardConditional : ScriptableObject, IConditionable
 
     public bool GetAlternativeConditional()
     {
-        return PhotoWord.GetPlacedInBoard();
+        return Word.GetPlacedInBoard();
     }
 
     public IConditionable GetLastCompletedConditional()
@@ -24,7 +24,7 @@ public class PlacedInBoardConditional : ScriptableObject, IConditionable
 
     public bool GetStateCondition()
     {
-        return PhotoWord.GetPlacedInBoard();
+        return Word.GetPlacedInBoard();
     }
 
     public int GetTimeToShowNews()

@@ -111,7 +111,9 @@ public class PCWikiController : MonoBehaviour
                 continue;
             }
             DataBaseFields[i].SetActive(true);
-            DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>().text = auxDictionary[i];
+            TMP_Text auxText = DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>();
+            auxText.text = auxDictionary[i];
+            InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(auxText);
             FindableWordsManager.FWM.InstanciateFindableWord(DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>());
         }
     }
