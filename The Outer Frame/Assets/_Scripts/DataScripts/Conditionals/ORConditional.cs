@@ -29,6 +29,7 @@ public class ORConditional : ScriptableObject, IConditionable
 
             if (conditionState)
             {
+                conditional.SetDoit(true);
                 return true;
             }
         }
@@ -50,6 +51,7 @@ public class ORConditional : ScriptableObject, IConditionable
 
             if (conditionState)
             {
+                conditional.SetDoit(true);
                 return true;
             }
         }

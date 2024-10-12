@@ -315,7 +315,8 @@ public class WordData : ScriptableObject
     }
     public bool GetEraseState()
     {
-        return CheckEraseConditions();
+        // desactivado el CheckEraseConditions()
+        return false;
     }
     bool CheckEraseConditions()
     {
@@ -336,8 +337,9 @@ public class WordData : ScriptableObject
             {
                 return false;
             }
+            conditional.SetDoit(true);
         }
-
+        
         return true;
     }
 
