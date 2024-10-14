@@ -12,13 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: BenBenjiPhone
   m_EditorClassIdentifier: 
-  wordName: '(864) 553-9756 '
-  PhoneNumber: '(864) 553-9756 '
+  wordName: (864) 553-9756
+  FindableAs:
+  - (864) 553-9756
+  Form_DatabaseNameVersion: 
+  ProgressorNameVersion: 
+  PhoneNumber: (864) 553-9756
   isAPhoneNumber: 1
+  Type: 0
   reportTypes: []
   TVNewTypes: []
   DBTypes: {fileID: 0}
   CallTypes: []
-  exceptions: []
   InactiveConditions: []
-  AutomaticActions: []
+  EraseConditions: []
+  WordThatReplaces: {fileID: 0}
+  CopyHistory: 0
+  WordsThatDeletes: []
