@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNew", menuName = "News/ReactiveNew")]
-public class TVNewType : ScriptableObject, IStateComparable, INewType
+public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteableScriptableObject
 {
     [HideInInspector][SerializeField] StateEnum state;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string headline;
@@ -21,6 +21,15 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType
     [NonSerialized] bool wasStremed;
     bool isOrderMatters;
 
+    private void OnEnable()
+    {
+        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
+    }
+
+    public void ResetScriptableObject()
+    {
+        wasStremed = false;
+    }
 
     public StateEnum GetState()
     {
@@ -220,4 +229,6 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType
     {
         return headlineTwoLines;
     }
+
+    
 }

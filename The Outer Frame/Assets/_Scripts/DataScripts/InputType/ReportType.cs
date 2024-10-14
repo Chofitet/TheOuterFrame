@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "New Report", menuName = "Report")]
-public class ReportType : ScriptableObject, IStateComparable
+public class ReportType : ScriptableObject, IStateComparable, IReseteableScriptableObject
 {
     [SerializeField] StateEnum Action;
     [SerializeField] StateEnum state;
@@ -16,13 +16,14 @@ public class ReportType : ScriptableObject, IStateComparable
     [SerializeField] List<PhotoInfo> Photos = new List<PhotoInfo>();
     [SerializeField] List<ConditionalClass> Conditionals;
     [SerializeField] bool isOrderMatters;
+    [SerializeField] bool TriggerDrawerAnim;
     [NonSerialized] bool wasSet;
     [NonSerialized] bool doing;
     [NonSerialized] bool wasRegisteredInDB;
 
-    public StateEnum GetState() { return state;}
+    public StateEnum GetState() { return state; }
     public StateEnum GetAction() { return Action; }
-    public string GetText() {  return Text;}
+    public string GetText() { return Text; }
     public string GetTextForRepetition() { return TextForRepetition; }
     public int GetChangeTimeOfAction() { return ChangeTimeOfAction; }
 
@@ -36,6 +37,8 @@ public class ReportType : ScriptableObject, IStateComparable
 
     private void OnEnable()
     {
+        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
+
         if (!state)
         {
             state = ScriptableObject.CreateInstance<StateEnum>();
@@ -44,12 +47,21 @@ public class ReportType : ScriptableObject, IStateComparable
         }
     }
 
+
+    public void ResetScriptableObject()
+    {
+        wasSet = false;
+        doing = false;
+        wasRegisteredInDB = false;
+
+    }
+
     public TimeData GetTimeWhenWasDone() { return CompleteTime; }
 
     public bool GetWasSet() { return wasSet; }
 
     public bool SetWasSet() => wasSet = true;
-    public bool GetIsAutomatic() { return isAutomatic;}
+    public bool GetIsAutomatic() { return isAutomatic; }
 
     public void SetDoing(bool x) { doing = x; }
 
@@ -58,6 +70,8 @@ public class ReportType : ScriptableObject, IStateComparable
     public void setwasRegisteredInDB() => wasRegisteredInDB = true;
 
     public bool GetwasRegisteredInDB() { return wasRegisteredInDB; }
+
+    public bool GetTriggerDrawerAnim() { return TriggerDrawerAnim; }
 
     public bool CheckIfIsDefault()
     {
@@ -82,7 +96,7 @@ public class ReportType : ScriptableObject, IStateComparable
 
             bool conditionState = auxInterface.GetStateCondition();
 
-            Debug.Log("last compete conditional of "+ auxInterface +  " is " + auxInterface.GetLastCompletedConditional());
+            Debug.Log("last compete conditional of " + auxInterface + " is " + auxInterface.GetLastCompletedConditional());
 
             if (!conditional.ifNot)
             {
@@ -127,7 +141,6 @@ public class ReportType : ScriptableObject, IStateComparable
 
         return true;
     }
-
 }
 [Serializable]
 public class ConditionalClass
