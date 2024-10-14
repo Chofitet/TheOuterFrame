@@ -25,7 +25,12 @@ public class IndividualReportController : MonoBehaviour
 
     public void FinishReport()
     {
-        if (isComplete)
+        if(report.GetTriggerDrawerAnim())
+        {
+            OnTakePhotoReport?.Invoke(this, Photo1);
+        }
+
+        if (isComplete && !report.GetTriggerDrawerAnim())
         {
             UpdatePCDatabase?.Invoke(this, word);
             report.setwasRegisteredInDB();
@@ -36,11 +41,6 @@ public class IndividualReportController : MonoBehaviour
         }
         StartCoroutine(delay());
         OnBackToGeneralView?.Invoke(this, null);
-
-        if (report.GetTriggerDrawerAnim())
-        {
-            OnTakePhotoReport?.Invoke(this, Photo1);
-        }
     }
 
     IEnumerator delay()
@@ -48,6 +48,5 @@ public class IndividualReportController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
-
 
 }

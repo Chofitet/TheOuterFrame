@@ -16,6 +16,16 @@ public class PCWikiController : MonoBehaviour
 
     public void CompleteFields(Component sender, object _wordData)
     {
+        if (_wordData == null)
+        {
+            WikiData.text = "YOU SEARCH NOTHING YOU GET NOTHING";
+            FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);
+
+            HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
+
+            InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
+            return;
+        }
         WordData wordData = (WordData)_wordData;
 
         input = WordsManager.WM.RequestBDWikiData(wordData);
@@ -41,9 +51,9 @@ public class PCWikiController : MonoBehaviour
 
     IEnumerator Delay(DataBaseType input)
     {
-
         yield return new WaitForSeconds(0.2f);
         if (input.GetText() != null) WikiData.text = input.GetText();
+        
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);
 
         HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);

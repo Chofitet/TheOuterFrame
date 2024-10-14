@@ -87,6 +87,9 @@ public class PCController : MonoBehaviour
         {
             SearchBar.text = " |";
             OnShakeNotebook?.Invoke(this, null);
+            WikiTitleSearchedWord.text = "";
+            foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
+            OnPCSearchWord?.Invoke(this, word);
             return;
         }
 
@@ -107,6 +110,8 @@ public class PCController : MonoBehaviour
         StartCoroutine(IdleSearchBarAnim());
         
         OnPCSearchWord?.Invoke(this, word);
+
+        word = null;
     }
 
     public void CloseWordAccessWindow(Component sender, object obj)

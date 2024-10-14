@@ -15,6 +15,7 @@ public class PCReportWindowController : MonoBehaviour
     //OnSearchWord
     public void GetWord(Component sender, object _word)
     {
+        if (_word == null) return;
         word = (WordData)_word;
     }
 

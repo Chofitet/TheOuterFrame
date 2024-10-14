@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AccessWordWindow : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class AccessWordWindow : MonoBehaviour
     [SerializeField] GameObject Conteiner;
     [SerializeField] TMP_Text SearchBar;
     [SerializeField] GameEvent OnCloseWoredAccessWindow;
+    [SerializeField] Image SearchBarGameObject;
     WordData SearchedWord;
     WordData TryAccessWord;
     private bool isInPCView;
@@ -71,7 +73,9 @@ public class AccessWordWindow : MonoBehaviour
         {
             Invoke("UnlockPage", 2f);
             isUnlockingPage = true;
+            SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
             SearchBar.text = "ACCESS GRANTED";
+
             WordsManager.WM.RequestBDWikiData(SearchedWord).SetisWordAccessFound();
         }
         else
