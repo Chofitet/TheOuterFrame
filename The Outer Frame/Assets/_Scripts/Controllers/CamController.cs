@@ -45,6 +45,9 @@ public class CamController : MonoBehaviour
             case ViewStates.PauseView:
                 SetPriority(8);
                 break;
+            case ViewStates.DrawerView:
+                SetPriority(9);
+                break;
         }
     }
 

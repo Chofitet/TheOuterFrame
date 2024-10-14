@@ -16,6 +16,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     [SerializeField] List<PhotoInfo> Photos = new List<PhotoInfo>();
     [SerializeField] List<ConditionalClass> Conditionals;
     [SerializeField] bool isOrderMatters;
+    [SerializeField] bool TriggerDrawerAnim;
     [NonSerialized] bool wasSet;
     [NonSerialized] bool doing;
     [NonSerialized] bool wasRegisteredInDB;
@@ -69,6 +70,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     public void setwasRegisteredInDB() => wasRegisteredInDB = true;
 
     public bool GetwasRegisteredInDB() { return wasRegisteredInDB; }
+
+    public bool GetTriggerDrawerAnim() { return TriggerDrawerAnim; }
 
     public bool CheckIfIsDefault()
     {

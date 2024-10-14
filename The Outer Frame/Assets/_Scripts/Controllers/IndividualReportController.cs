@@ -10,6 +10,8 @@ public class IndividualReportController : MonoBehaviour
     [SerializeField] GameEvent UpdatePCDatabase;
     [SerializeField] GameEvent OnDescartReport;
     [SerializeField] GameEvent OnBackToGeneralView;
+    [SerializeField] GameObject Photo1;
+    [SerializeField] GameEvent OnTakePhotoReport;
     public void SetType(bool x, WordData _word ,ReportType _report)
     {
         report = _report;
@@ -34,6 +36,11 @@ public class IndividualReportController : MonoBehaviour
         }
         StartCoroutine(delay());
         OnBackToGeneralView?.Invoke(this, null);
+
+        if (report.GetTriggerDrawerAnim())
+        {
+            OnTakePhotoReport?.Invoke(this, Photo1);
+        }
     }
 
     IEnumerator delay()
@@ -41,5 +48,6 @@ public class IndividualReportController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
+
 
 }

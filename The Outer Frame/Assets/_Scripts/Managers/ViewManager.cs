@@ -16,11 +16,11 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnViewStateChange;
     [SerializeField] GameEvent OnNotebookTake;
     [SerializeField] GameEvent OnNotebookLeave;
-    [SerializeField] GameEvent OnFindableWordsActive;
     [SerializeField] GameEvent OnTakeSomeInBoard;
     [SerializeField] GameEvent OnTakenPaperView;
     [SerializeField] GameEvent OnGameOverView;
     [SerializeField] GameEvent OnPauseView;
+    [SerializeField] GameEvent OnDrawerView;
     [SerializeField] GameEvent OnBackToPause;
     [SerializeField] GameEvent OnSitDownSound;
     Coroutine StartDelay;
@@ -102,7 +102,6 @@ public class ViewManager : MonoBehaviour
         {
             case ViewStates.GeneralView:
                 OnGeneralView?.Invoke(this, false);
-                OnFindableWordsActive?.Invoke(this, null);
                 BackToGeneralViewWhitMoving();
                 break;
             case ViewStates.PinchofonoView:
@@ -115,13 +114,11 @@ public class ViewManager : MonoBehaviour
                 TimeManager.timeManager.PauseTime();
                 OnBoardView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
-                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.PCView:
                 if (isGameOver) return;
                 OnPCWiew?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
-                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.ProgressorView:
                 if (isGameOver) return;
@@ -130,19 +127,16 @@ public class ViewManager : MonoBehaviour
             case ViewStates.TVView:
                 OnTVView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
-                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.DossierView:
                 if (isGameOver) return;
                 OnDossierView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
-                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.OnTakenPaperView:
                 if (isGameOver) return;
                 OnTakenPaperView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
-                OnFindableWordsActive?.Invoke(this, null);
                 break;
             case ViewStates.OnTakeSomeInBoard:
                 if (isGameOver) return;
@@ -157,6 +151,10 @@ public class ViewManager : MonoBehaviour
             case ViewStates.PauseView:
                 if (isGameOver) return;
                 OnPauseView?.Invoke(this, null);
+                break;
+            case ViewStates.DrawerView:
+                OnDrawerView?.Invoke(this, null);
+                OnNotebookTake.Invoke(this, false);
                 break;
         }
         OnViewStateChange?.Invoke(this, NewView);
@@ -215,4 +213,5 @@ public enum ViewStates
     OnTakeSomeInBoard,
     GameOverView,
     PauseView,
+    DrawerView
 }
