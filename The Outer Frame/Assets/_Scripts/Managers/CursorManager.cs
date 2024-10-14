@@ -102,6 +102,7 @@ public class CursorManager : MonoBehaviour
         {
             StopAllCoroutines();
             isInPcView = false;
+            isClicking = false;
         }
     }
 

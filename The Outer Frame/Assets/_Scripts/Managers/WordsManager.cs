@@ -142,7 +142,6 @@ public class WordsManager : MonoBehaviour
     public void AddStateOnSeenHistory(WordData _word, StateEnum WordState)
     {
         FindWordInList(_word).CheckStateSeen(WordState);
-
     }
 
     WordData FindWordInList(WordData _word)
@@ -170,7 +169,8 @@ public class WordsManager : MonoBehaviour
     }
     public WordData FindWordDataWithString(string WordToCompare)
     {
-        WordData WD = null;
+        WordData WD = wordsDic[0];
+        
         foreach (WordData w in wordsDic)
         {
             if (NormalizeWord(w.FindFindableName(WordToCompare)) == (NormalizeWord(WordToCompare)))
@@ -184,7 +184,7 @@ public class WordsManager : MonoBehaviour
 
     string NormalizeWord(string word)
     {
-        return Regex.Replace(word.ToLower(), @"<\/?link>|[\?\.,\n\r\(\)\s]", "");
+        return Regex.Replace(word.Trim().ToLower(), @"[^\w]", "");
     }
 
     public void CheckEraseWordContitions(Component sender, object obj)

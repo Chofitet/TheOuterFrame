@@ -43,10 +43,11 @@ public class CallType : ScriptableObject, IStateComparable
         if (!isInterrupted) return Dialogue;
         else return IterruptedDialogue;
     }
-    public void SetCached()
+    public void SetCached(bool x)
     {
-        isCatch = true;
-        SetTimeWhenWasDone();
+        isCatch = x;
+        if (x) SetTimeWhenWasDone();
+        else CompleteTime = new TimeData(0,0,0);
     }
     public bool GetIsCatch() { return isCatch; }
 

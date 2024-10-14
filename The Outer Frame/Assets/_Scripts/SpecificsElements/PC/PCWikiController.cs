@@ -44,9 +44,9 @@ public class PCWikiController : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
         if (input.GetText() != null) WikiData.text = input.GetText();
-        FindableWordsManager.FWM.InstanciateFindableWord(WikiData);
+        FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);
 
-        HyperlinksManager.HLM.InstanciateHyperLink(WikiData);
+        HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
 
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
         image.sprite = input.GetImage();
@@ -114,7 +114,7 @@ public class PCWikiController : MonoBehaviour
             TMP_Text auxText = DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>();
             auxText.text = auxDictionary[i];
             InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(auxText);
-            FindableWordsManager.FWM.InstanciateFindableWord(DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>());
+            FindableWordsManager.FWM.InstanciateFindableWord(DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>(),FindableBtnType.FindableBTN);
         }
     }
 }

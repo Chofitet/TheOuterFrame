@@ -86,6 +86,14 @@ public class ChannelController : MonoBehaviour
 
     void SetUpFirstNew(INewType _new)
     {
+        EmergencyScreen.SetActive(false);
+        BreakingNew.enabled = true;
+
+        MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
+        TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
+
+        _new.SetWasStreamed();
+
         if (_new.GetHeadline2() != "")
         {
             HeadlineText2.gameObject.SetActive(true);
@@ -103,7 +111,7 @@ public class ChannelController : MonoBehaviour
         if (_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
         NewImg.transform.GetChild(0).GetComponent<Image>().sprite = _new.GetNewImag();
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
-        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
+        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
         OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
 
     }
@@ -141,7 +149,7 @@ public class ChannelController : MonoBehaviour
             NewImg.transform.GetChild(0).GetComponent<Image>().sprite = _new.GetNewImag();
         }
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
-        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText);
+        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
         OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
 
     }
@@ -151,7 +159,8 @@ public class ChannelController : MonoBehaviour
     {
         EmergencyScreen.SetActive(true);
         EmergencyTextField.text = _new.GetHeadline();
-        FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField);
+        isFirstNew = false;
+        FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField,FindableBtnType.FindableBTN);
     }
 
     public void resetChannel()

@@ -45,7 +45,7 @@ public class PinchofonoManager : MonoBehaviour
                 if (call.CheckForConditionals())
                 {
                     CallToShow = call;
-                    call.SetCached();
+                    call.SetCached(true);
                     OnCallCatch?.Invoke(this, null);
                 }
             }
@@ -94,8 +94,10 @@ public class PinchofonoManager : MonoBehaviour
     public void AbortCall(Component sender, object obj)
     {
         TimeManager.OnMinuteChange -= CounterPassTime;
+        TimeManager.OnSecondsChange -= SecondPass;
         minutePassCounter = 0;
         CountDown.text = "00:00:00";
+        CallToShow.SetCached(false);
         CallToShow = null;
         isInterrupted = false;
     }

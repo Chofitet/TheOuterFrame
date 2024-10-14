@@ -8,13 +8,12 @@ public class TextConverterInFindableWords : MonoBehaviour
 {
 
     TMP_Text textfield;
-    [SerializeField] bool XPosFix;
 
     void Start()
     {
         textfield = GetComponent<TMP_Text>();
 
-        FindableWordsManager.FWM.InstanciateFindableWord(textfield, XPosFix);
+        FindableWordsManager.FWM.InstanciateFindableWord(textfield,FindableBtnType.FindableBTN);
     }
 
 

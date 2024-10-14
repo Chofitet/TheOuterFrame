@@ -195,6 +195,7 @@ public class TVManager : MonoBehaviour
     }
     INewType SetRandomNew(int channel)
     {
+        int a = RandomNews.Count;
         if (RandomNews.Count == 0) return null;
 
         List<TVRandomNewType> AuxRandomNewList = new List<TVRandomNewType>();
@@ -206,21 +207,21 @@ public class TVManager : MonoBehaviour
                 AuxRandomNewList.Add(auxRandomNew);
             }
         }
-
+        TVRandomNewType randomTVNewRandom;
         if (AuxRandomNewList.Count != 0)
         {
-            TVRandomNewType randomTVNewRandom = AuxRandomNewList[UnityEngine.Random.Range(0, RandomNews.Count - 1)];
+            randomTVNewRandom = AuxRandomNewList[UnityEngine.Random.Range(0, RandomNews.Count - 1)];
             RandomNews.Remove(randomTVNewRandom);
             return randomTVNewRandom;
         }
         else
         {
-            TVRandomNewType randomTVNewRandom = RandomNews[UnityEngine.Random.Range(0, RandomNews.Count - 1)];
-            RandomNews.Remove(randomTVNewRandom);
+            randomTVNewRandom = RandomNews[UnityEngine.Random.Range(0, RandomNews.Count - 1)];
+           RandomNews.Remove(randomTVNewRandom);
             return randomTVNewRandom;
         }
-        
     }
+
 
     void ResetChannels()
     {

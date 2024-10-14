@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Word", menuName ="Word")]
@@ -371,11 +372,14 @@ public class WordData : ScriptableObject
 
     public string FindFindableName(string wordCompere){
         string aux = "";
-        foreach(string s in FindableAs)
+        string normalizedWord = Regex.Replace(wordCompere.Trim(), @"[^\w]", "");
+
+        foreach (string s in FindableAs)
         {
-            if(s == wordCompere)
+            string normalizedFindable = Regex.Replace(s.Trim(), @"[^\w]", "");
+            if (normalizedWord == normalizedFindable)
             {
-                aux = s;
+                aux = normalizedFindable;
             }
         }
         return aux;
