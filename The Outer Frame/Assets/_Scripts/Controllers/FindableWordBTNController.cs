@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class FindableWordBTNController : MonoBehaviour
+public class FindableWordBTNController : MonoBehaviour, IFindableBTN
 {
     RectTransform rectTransform;
 
@@ -23,6 +23,7 @@ public class FindableWordBTNController : MonoBehaviour
     int wordIndex;
 
     bool wasFinded;
+    bool once;
 
     private void OnEnable()
     {
@@ -31,38 +32,23 @@ public class FindableWordBTNController : MonoBehaviour
 
     private void OnDisable()
     {
-        if (wasFinded) return;
+        if (wasFinded || _isRepitedButton) return;
         ApplyShader("");
     }
 
-    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, int WordIndex)
+    bool _isRepitedButton;
+    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton)
     {
         rectTransform.sizeDelta = new Vector2(Width, Heigth);
         textField = TextField;
         word = Word;
-        wordIndex = WordIndex;
-        
-        transform.localPosition = transform.localPosition - new Vector3(IndexFilter(), 0, 0);
+        _isRepitedButton = isRepitedButton;
         ApplyShader("Bold");
-    }
-
-    float IndexFilter()
-    {
-        switch(wordIndex)
-        {
-            case 1: return 0; break;
-            case 2: return 4; break;
-            case 3: return 9; break;
-            case 4: return 18; break;
-        }
-
-        return 0;
     }
 
     public void ChangeToColorToHighligth()
     {
         OnFindableWordButtonHover?.Invoke(this, 4);
-        Debug.Log("hover");
         ApplyShader("Red");
     }
 
@@ -104,7 +90,9 @@ public class FindableWordBTNController : MonoBehaviour
             }
 
             string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
-            string FoundAs = NormalizeWord(word.FindFindableName(CleanUnnecessaryCharacter(NormalizeWord(combinedWord)))).ToLower();
+            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)))).ToLower();
+
+            combinedWordClean = Regex.Replace(combinedWordClean.Trim(), @"[^\w]", "");
 
             if ((combinedWordClean == FoundAs) && combinedWord.Contains("link"))
             {
@@ -158,7 +146,7 @@ public class FindableWordBTNController : MonoBehaviour
     string NormalizeWord(string word)
     {
         string _word;
-        _word = Regex.Replace(word, @"<\/?link>|[\?\.,\n\r]", "");
+        _word = Regex.Replace(word, @"<\/?link>|[\?\.,\n\r\s-]", "");
         return RemoveMaterialTags(_word);
     }
     string CleanUnnecessaryCharacter(string word)
@@ -184,6 +172,7 @@ public class FindableWordBTNController : MonoBehaviour
         wasFinded = true;
         Destroy(gameObject);
     }
+
 
     private bool IsVisible()
     {

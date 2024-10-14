@@ -16,7 +16,6 @@ public class ReportType : ScriptableObject, IStateComparable
     [SerializeField] List<PhotoInfo> Photos = new List<PhotoInfo>();
     [SerializeField] List<ConditionalClass> Conditionals;
     [SerializeField] bool isOrderMatters;
-    [SerializeField] bool XPosFix;
     [NonSerialized] bool wasSet;
     [NonSerialized] bool doing;
     [NonSerialized] bool wasRegisteredInDB;
@@ -59,8 +58,6 @@ public class ReportType : ScriptableObject, IStateComparable
     public void setwasRegisteredInDB() => wasRegisteredInDB = true;
 
     public bool GetwasRegisteredInDB() { return wasRegisteredInDB; }
-
-    public bool GetTryCorrectXPos() { return XPosFix; }
 
     public bool CheckIfIsDefault()
     {

@@ -179,10 +179,9 @@ public class PinchofonoController : MonoBehaviour
     //OnSelectedWordInNotebook
     public void EnterName(Component sender, object obj)
     {
+        if (isRecording) return;
         StopAllCoroutines();
-        ScreenContent.SetActive(true);
-        RecordingNumberPanel.SetActive(true);
-        EnterValidPanel.SetActive(false);
+        ShowPanel(ScreenContent);
         WordData word = (WordData)obj;
         if (!IsInView) return;
         if (!word.GetIsPhoneNumberFound())
@@ -191,6 +190,8 @@ public class PinchofonoController : MonoBehaviour
             EnterValidPanel.SetActive(true);
             return;
         }
+        RecordingNumberPanel.SetActive(true);
+        EnterValidPanel.SetActive(false);
         txtNumber.text = word.GetPhoneNumber();
         hasNumberEnter = true;
         ActualWord = word;

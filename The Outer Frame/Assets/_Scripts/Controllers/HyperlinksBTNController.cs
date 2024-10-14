@@ -13,18 +13,19 @@ public class HyperlinksBTNController : MonoBehaviour
     WordData word;
     string OriginalText;
     [SerializeField] GameEvent OnPressHyperLink;
-
+    bool _isRepitedButton;
 
     private void OnEnable()
     {
         rectTransform = GetComponent<RectTransform>();
     }
-    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField)
+    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton)
     {
         rectTransform.sizeDelta = new Vector2(Width, Heigth);
         textField = TextField;
         word = Word;
         OriginalText = textField.text;
+        _isRepitedButton = isRepitedButton;
         ApplyEffectOnHover("#00F3FF");
     }
 
@@ -67,7 +68,9 @@ public class HyperlinksBTNController : MonoBehaviour
             }
 
             string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
-            string FoundAs = NormalizeWord(word.FindFindableName(CleanUnnecessaryCharacter(NormalizeWord(combinedWord)))).ToLower();
+            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)))).ToLower();
+
+            combinedWordClean = Regex.Replace(combinedWordClean.Trim(), @"[^\w]", "");
 
             if ((combinedWordClean == FoundAs) && combinedWord.Contains("<u>"))
             {
@@ -130,5 +133,10 @@ public class HyperlinksBTNController : MonoBehaviour
     public void UnapplyEffect()
     {
         ApplyEffectOnHover("#00F3FF");
+    }
+
+    public WordData Getword()
+    {
+        return word;
     }
 }
