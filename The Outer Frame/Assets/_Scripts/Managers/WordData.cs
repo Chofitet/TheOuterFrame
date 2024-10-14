@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Word", menuName ="Word")]
-public class WordData : ScriptableObject
+public class WordData : ScriptableObject, IReseteableScriptableObject
 {
     [Header("Word General Data")]
     [SerializeField] string wordName;
@@ -45,8 +45,8 @@ public class WordData : ScriptableObject
     [NonSerialized] List<StateEnum> stateHistory = new List<StateEnum>();
     [NonSerialized] List<StateEnum> CheckedStateHistory = new List<StateEnum>();
     [NonSerialized] Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
-    StateEnum currentState;
-    private List<ActionState> ActionsStates = new List<ActionState>();
+    [NonSerialized] StateEnum currentState;
+    [NonSerialized] private List<ActionState> ActionsStates = new List<ActionState>();
     [NonSerialized] bool isFound;
     [NonSerialized] bool isPhoneNumberFound;
     [NonSerialized] bool isInactive;
@@ -288,15 +288,34 @@ public class WordData : ScriptableObject
         }
     }
 
- 
+
 
     #endregion
 
     #region InactiveLogic
 
+    private void OnEnable()
+    {
+        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
+    }
+
+    void IReseteableScriptableObject.ResetScriptableObject()
+    {
+        stateHistory.Clear();
+        CheckedStateHistory.Clear();
+        StateHistoryTime.Clear();
+        currentState = null;
+        ActionsStates.Clear();
+        isFound = false;
+        isPhoneNumberFound = false;
+        isInactive = false;
+        CurrentDoingActions.Clear();
+        isPlacedInBoad = false;
+        Debug.Log("reseted " + name);
+    }
     public bool GetInactiveState() {
 
-        return CheckInactiveConditions();
+     return CheckInactiveConditions();
     }
     bool CheckInactiveConditions()
     {
@@ -421,6 +440,7 @@ public class WordData : ScriptableObject
     {
         stateHistory.Clear();
         CheckedStateHistory.Clear();
+
     }
 
     public void ReplaceHistory(WordData oldword)

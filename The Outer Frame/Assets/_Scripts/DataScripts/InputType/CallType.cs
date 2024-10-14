@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New Call", menuName ="Calls")]
-public class CallType : ScriptableObject, IStateComparable
+public class CallType : ScriptableObject, IStateComparable, IReseteableScriptableObject
 {
     
     [Header("StartTime")]
@@ -58,6 +58,18 @@ public class CallType : ScriptableObject, IStateComparable
 
     public void SetIsinterrrupted() { isInterrupted = true; }
     public StateEnum GetState() { return state; }
+
+    private void OnEnable()
+    {
+        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
+    }
+
+    public void ResetScriptableObject()
+    {
+        isCatch = false;
+        isInterrupted = false;
+        word = null;
+    }
 
     public void SetWord(WordData _word)
     {
@@ -175,4 +187,5 @@ public class CallType : ScriptableObject, IStateComparable
         return true;
     }
 
+   
 }

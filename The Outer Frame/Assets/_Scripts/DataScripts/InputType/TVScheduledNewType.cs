@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New ScheduledNew", menuName = "News/ScheduledNew")]
-public class TVScheduledNewType : ScriptableObject, INewType
+public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScriptableObject
 {
     [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headline;
     [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headlineTwoLines;
@@ -25,6 +25,16 @@ public class TVScheduledNewType : ScriptableObject, INewType
 
     [SerializeField] TVScheduledNewType ReplacedBy;
     [NonSerialized] bool wasStremed;
+
+    private void OnEnable()
+    {
+        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
+    }
+
+    public void ResetScriptableObject()
+    {
+        wasStremed = false;
+    }
 
     //Lista de condicionantes y chequeo de si son true todas para desactivar o reprogramar noticia
 

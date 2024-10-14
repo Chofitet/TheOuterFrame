@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New BDEnter", menuName = "DB")]
-public class DataBaseType : ScriptableObject
+public class DataBaseType : ScriptableObject, IReseteableScriptableObject
 {
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] WordData AccessWord;
@@ -29,7 +29,17 @@ public class DataBaseType : ScriptableObject
     [SerializeField] string classification;
     [SerializeField] string serial;
     [NonSerialized] bool isWordAccessFound;
-    
+
+    private void OnEnable()
+    {
+        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
+    }
+
+    public void ResetScriptableObject()
+    {
+        isWordAccessFound = false;
+    }
+
 
     public WordData GetAccessWord() { return AccessWord; }
     public string GetText() { return text; }
@@ -80,4 +90,5 @@ public class DataBaseType : ScriptableObject
         return aux;
     }
 
+    
 }
