@@ -13,14 +13,28 @@ MonoBehaviour:
   m_Name: TheCabin
   m_EditorClassIdentifier: 
   wordName: Cabin
-  FindableAs: []
+  FindableAs:
+  - a cabin
+  - cabin
+  - the cabin
+  - The cabin
   Form_DatabaseNameVersion: Cabin
   ProgressorNameVersion: Cabin
   PhoneNumber: 
   isAPhoneNumber: 0
   Type: 0
-  reportTypes: []
-  TVNewTypes: []
+  reportTypes:
+  - {fileID: 11400000, guid: 35d8bc8104e3ae34bb30575344d168d2, type: 2}
+  - {fileID: 11400000, guid: abbedae7a87225341892804602795eaa, type: 2}
+  - {fileID: 11400000, guid: 022969a0d712fd44c9a17bf23281c8da, type: 2}
+  - {fileID: 11400000, guid: 1f2d2736a67ec1d408f3e01c40c0c037, type: 2}
+  - {fileID: 11400000, guid: e5b1aa72d80360a41abe9005b51ab654, type: 2}
+  - {fileID: 11400000, guid: 0a4af13ba0d5a0a428cdd7bb6533e5b2, type: 2}
+  - {fileID: 11400000, guid: e7aa780689c19bc488364c62e55e6a12, type: 2}
+  - {fileID: 11400000, guid: cc462f44894f1fb41adca72d5242b54b, type: 2}
+  - {fileID: 11400000, guid: 85a9f0f1c26bcd84fbc2ed3b66114bf4, type: 2}
+  TVNewTypes:
+  - {fileID: 11400000, guid: 3348490086315e948b5805a9d50a58fd, type: 2}
   DBTypes: {fileID: 11400000, guid: 60e8afe0c1dcf4a4eb4989832ba60e8d, type: 2}
   CallTypes: []
   InactiveConditions: []
