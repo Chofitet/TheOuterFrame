@@ -49,6 +49,15 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
 
     public bool GetIfIsAEmergency(){ return Emergency;}
 
+    public void AddConditional(ConditionalClass condition)
+    {
+        Conditions.Add(condition);
+    }
+    public void removeCondition()
+    {
+        if (Conditions[0] == null) return;
+        Conditions.RemoveAt(0);
+    }
     public int GetIncreaseAlertLevel()
     {
         return alertLevelIncrement;

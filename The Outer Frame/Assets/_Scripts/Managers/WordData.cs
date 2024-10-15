@@ -41,6 +41,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     [SerializeField] WordData WordThatReplaces;
     [SerializeField] bool CopyHistory;
     [SerializeField] List<DeleteCrossoutWorsd> WordsThatDeletes = new List<DeleteCrossoutWorsd>();
+    
 
     [NonSerialized] List<StateEnum> stateHistory = new List<StateEnum>();
     [NonSerialized] List<StateEnum> CheckedStateHistory = new List<StateEnum>();
@@ -386,6 +387,17 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     }
 
     #endregion
+
+    public TVNewType GetVilifiedNew() {
+        TVNewType VilifiedNew = null;
+        foreach (TVNewType _new in TVNewTypes)
+        {
+            if(_new.name.ToLower().Contains("vilif"))
+            {
+                VilifiedNew = _new;
+            }
+        }
+        return VilifiedNew; }
 
     public string GetName() { return wordName; }
 

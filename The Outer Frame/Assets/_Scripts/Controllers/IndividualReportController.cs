@@ -12,6 +12,7 @@ public class IndividualReportController : MonoBehaviour
     [SerializeField] GameEvent OnBackToGeneralView;
     [SerializeField] GameObject Photo1;
     [SerializeField] GameEvent OnTakePhotoReport;
+    [SerializeField] GameEvent OnTakeFinalReport;
     public void SetType(bool x, WordData _word ,ReportType _report)
     {
         report = _report;
@@ -25,6 +26,11 @@ public class IndividualReportController : MonoBehaviour
 
     public void FinishReport()
     {
+        if(report.GetFinalReport())
+        {
+            OnTakeFinalReport?.Invoke(this, null);
+        }
+
         if(report.GetTriggerDrawerAnim())
         {
             OnTakePhotoReport?.Invoke(this, Photo1);
