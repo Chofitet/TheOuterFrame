@@ -16,11 +16,11 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: f98f8ca8394b5484caf13a68b75758e8, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "It\u2019s a VTT. That has crashed right through a big road sign. The front
-    is completely caved in at the passenger\u2019s side, it seems like something
-    threw it out of the road. Whatever it hit, <link>it was BIG</link>. \r\n\r\n<link>The
-    cargo compartment</link> is locked and <link>the driver</link> is nowhere to
-    be found. \n"
+  Text: "It\u2019s a VTT. That has crashed right through a <link>big sign that reads
+    \"Don't forget to text Mom on her day\"</link>. The front is completely caved
+    in at the passenger\u2019s side, it seems like something threw it out of the
+    road. Whatever it hit, <link>it was BIG</link>. \r\n\r\n<link>The cargo compartment</link>
+    is locked and <link>the driver</link> is nowhere to be found. \n"
   TextForRepetition: this is the first time i look at this truck (this is a repeat)
   Photos:
   - photo: {fileID: 0}
@@ -35,4 +35,4 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 38fa24c1e252f0048b7923c8eac8f865, type: 2}
     ifNot: 1
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
