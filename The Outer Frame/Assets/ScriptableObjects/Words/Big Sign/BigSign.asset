@@ -12,18 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: BigSign
   m_EditorClassIdentifier: 
-  wordName: 
-  FindableAs: []
-  Form_DatabaseNameVersion: 
-  ProgressorNameVersion: 
+  wordName: '"Text Mom" Sign'
+  FindableAs:
+  - Don't forget to text Mom on her day
+  - big sign
+  - big sign
+  - Big sign that reads "Don't forget to text Mom on her day"
+  - big sign that reads "Don't forget to text Mom on her day"
+  Form_DatabaseNameVersion: '"Text Mom" Sign'
+  ProgressorNameVersion: '"Text Mom" Sign'
   PhoneNumber: 
   isAPhoneNumber: 0
   Type: 0
-  reportTypes: []
-  TVNewTypes: []
-  DBTypes: {fileID: 0}
+  reportTypes:
+  - {fileID: 11400000, guid: b7607d2f21714fa45891e338f664ef45, type: 2}
+  - {fileID: 11400000, guid: 15a6195015b2bcf44a0c53d3db6b9209, type: 2}
+  - {fileID: 11400000, guid: 7e54ee893bbef064dae9813858629436, type: 2}
+  - {fileID: 11400000, guid: a5e8568dfef2c1441a76023edffc53b4, type: 2}
+  - {fileID: 11400000, guid: 59d2a3eb0a46b03408791e985c1e2da7, type: 2}
+  - {fileID: 11400000, guid: af8c60461159db84bb8e071f66a8d641, type: 2}
+  - {fileID: 11400000, guid: ac4ee58d65d67c541b2dabd7f8b17c9b, type: 2}
+  - {fileID: 11400000, guid: efbf6e4e2a03f8a42829f0da9bde0d1a, type: 2}
+  - {fileID: 11400000, guid: 5e65b22103787654696ba433adb86d10, type: 2}
+  - {fileID: 11400000, guid: 085e35e267a9a984897dce652a332b07, type: 2}
+  TVNewTypes:
+  - {fileID: 11400000, guid: c0926570f84e9aa41b9850b5f6f0afab, type: 2}
+  DBTypes: {fileID: 11400000, guid: 60e8afe0c1dcf4a4eb4989832ba60e8d, type: 2}
   CallTypes: []
-  InactiveConditions: []
+  InactiveConditions:
+  - {fileID: 11400000, guid: 5d00dc8f548f304458b4f7403642553e, type: 2}
   EraseConditions: []
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0
