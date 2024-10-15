@@ -55,7 +55,7 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
     }
     public void removeCondition()
     {
-        if (Conditions[0] == null) return;
+        if (Conditions.Count == 0) return;
         Conditions.RemoveAt(0);
     }
     public int GetIncreaseAlertLevel()
