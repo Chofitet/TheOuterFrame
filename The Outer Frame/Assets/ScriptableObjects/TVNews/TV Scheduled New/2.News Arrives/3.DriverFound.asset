@@ -13,20 +13,22 @@ MonoBehaviour:
   m_Name: 3.DriverFound
   m_EditorClassIdentifier: 
   headline: 
-  headlineTwoLines: SCARED DRIVER FOUND
+  headlineTwoLines: 'SCARED TRUCK DRIVER FOUND
+
+    HIDING FROM THE TRUTH?'
   text: <link>THE DRIVER</link> SUSPECTED OF THE REPORTED CRASH AT ROAD 54 WAS FOUND
     HIDING INSIDE A BATHROOM STALL AND IS DEFLECTING QUESTIONS
   image: {fileID: 0}
   channel: 1
   Priority: 1
-  alertLevelIncrement: 15
+  alertLevelIncrement: 18
   Emergency: 0
   Day: 0
   Hour: 8
   Minute: 38
   MinTransmitionTime: 6
   Conditions:
-  - condition: {fileID: 11400000, guid: 4db02c4d0e13c29419c319ccd8a753ec, type: 2}
+  - condition: {fileID: 11400000, guid: 42d726425049bfa46a9ba9e10bc67045, type: 2}
     ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
