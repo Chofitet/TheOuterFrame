@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class SceneManagerScript : MonoBehaviour
 {
+    [SerializeField] GameEvent OnStartGame;
     private void Start()
     {
         fadeObject = Instantiate(fadeScenePrefab, transform);
+        OnStartGame?.Invoke(this, null);
     }
 
     [SerializeField] GameObject fadeScenePrefab;

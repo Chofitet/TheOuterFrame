@@ -134,7 +134,8 @@ public class ClockController : MonoBehaviour
     {
         if (isSpeedUp) anim.SetTrigger("speedDown");
         isSpeedUp = false;
-        ClockBTN.transform.DOMove(NormalClockPoas.position, 0.3f);
+        ClockBTN.GetComponent<Collider>().enabled = false;
+        ClockBTN.transform.DOMove(NormalClockPoas.position, 0.3f).OnComplete(()=> ClockBTN.GetComponent<Collider>().enabled = true);
     }
 
     public void OnSpeedUpTime(Component sender, object obj)
@@ -142,7 +143,8 @@ public class ClockController : MonoBehaviour
         if(!isSpeedUp)anim.SetTrigger("speedUp");
         isSpeedUp = true;
          OnViewChange?.Invoke(this, null);
-         ClockBTN.transform.DOMove(SpeedClockPos.position, 0.3f);
+        ClockBTN.GetComponent<Collider>().enabled = false;
+        ClockBTN.transform.DOMove(SpeedClockPos.position, 0.3f).OnComplete(() => ClockBTN.GetComponent<Collider>().enabled = true);
        
     }
 

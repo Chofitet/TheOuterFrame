@@ -100,12 +100,14 @@ public class TimeManager : MonoBehaviour
                 Minute++;
                 Seconds = 0;
                 OnMinuteChange?.Invoke();
+                Debug.Log("minute: " + Minute);
 
                 if (Minute >= 60)
                 {
                     Hour++;
                     Minute = 0;
                     OnHourChange?.Invoke();
+                    Debug.Log("Hour: " + Hour);
                 }
 
                 if (Minute % MinutesToChangeNews == 0)

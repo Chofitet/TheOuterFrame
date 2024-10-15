@@ -86,7 +86,7 @@ public class PCController : MonoBehaviour
         if (!word)
         {
             SearchBar.text = " |";
-            OnShakeNotebook?.Invoke(this, null);
+            if(isInPCView) OnShakeNotebook?.Invoke(this, null);
             WikiTitleSearchedWord.text = "";
             foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
             OnPCSearchWord?.Invoke(this, word);

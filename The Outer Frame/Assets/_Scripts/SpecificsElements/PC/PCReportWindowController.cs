@@ -9,7 +9,7 @@ public class PCReportWindowController : MonoBehaviour
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelReporte;
     [SerializeField] ReportController ReportToFill;
-    
+    bool isDeleted;
     WordData word;
 
     //OnSearchWord
@@ -22,6 +22,7 @@ public class PCReportWindowController : MonoBehaviour
    //OnReportWindow
     public void InstanciateBtnReport(Component sender, object _word)
     {
+
         if (!word) return;
         foreach (Transform child in Grid.GetComponentsInChildren<Transform>())
         {
@@ -30,7 +31,8 @@ public class PCReportWindowController : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
-
+        
+        if (isDeleted) return;
         //recorrer todos los reportes de la palabra, chequear que su state esté en el historial de visto, y pasar el reporte a 
 
         List<StateEnum> stateHistory = WordsManager.WM.GetHistorySeen(word);
@@ -60,5 +62,8 @@ public class PCReportWindowController : MonoBehaviour
         panelReporte.SetActive(false);
     }
 
-    //public void Delete 
+    public void DeleteAllReports(Component sender, object obj)
+    {
+        isDeleted = true;
+    }
 }

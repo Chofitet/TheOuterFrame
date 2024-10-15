@@ -9,7 +9,7 @@ public class PCCallsWindowController : MonoBehaviour
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelCall;
     [SerializeField] TranscriptionCallController CallToFild;
-
+    bool isDeleted;
     WordData word;
 
     //OnSearchWord
@@ -30,7 +30,8 @@ public class PCCallsWindowController : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
-
+        
+        if (isDeleted) return;
         List<CallType> CallsHistory = WordsManager.WM.GetAllCathedCalls(word);
 
         foreach (var call in CallsHistory)
@@ -52,5 +53,10 @@ public class PCCallsWindowController : MonoBehaviour
     public void QuitPanelReport()
     {
         panelCall.SetActive(false);
+    }
+
+    public void DeleteAllReports(Component sender, object obj)
+    {
+        isDeleted = true;
     }
 }

@@ -9,6 +9,7 @@ public class UpdateWindowController : MonoBehaviour
     [SerializeField] TMP_Text Datatxt;
     [SerializeField] GameObject DeletingPanel;
     [SerializeField] Image BackGround;
+    [SerializeField] GameEvent OnWikiWindow;
     bool isDeleting;
     public void UpdatePC(Component sender, object obj)
     {
@@ -16,7 +17,11 @@ public class UpdateWindowController : MonoBehaviour
 
         Datatxt.text = word.GetForm_DatabaseNameVersion();
 
-        if (isDeleting) SetDeletingPC();
+        if (isDeleting)
+        {
+            SetDeletingPC();
+            OnWikiWindow?.Invoke(this, null);
+        }
     }
 
     public void DeletingPC(Component sender, object obj)
@@ -26,7 +31,6 @@ public class UpdateWindowController : MonoBehaviour
 
     void SetDeletingPC()
     {
-        BackGround.color = Color.red;
         DeletingPanel.SetActive(true);
     }
 }

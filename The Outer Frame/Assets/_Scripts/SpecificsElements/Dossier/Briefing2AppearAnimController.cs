@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
+
 public class Briefing2AppearAnimController : MonoBehaviour
 {
     
@@ -15,6 +17,8 @@ public class Briefing2AppearAnimController : MonoBehaviour
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     bool once;
+    GameObject GO;
+    [SerializeField] InstanceFindableWordsInTMPText BrieffingText2;
 
     Sequence BriefingOnTVSequence;
     Sequence BriefingOnDossier;
@@ -22,8 +26,10 @@ public class Briefing2AppearAnimController : MonoBehaviour
     private void Start()
     {
         TimeManager.OnMinuteChange += CheckAppearConditions;
-        transform.GetChild(0).gameObject.SetActive(false);
+        GO = transform.GetChild(0).gameObject;
+        
     }
+
 
     private void OnDisable()
     {
@@ -35,7 +41,8 @@ public class Briefing2AppearAnimController : MonoBehaviour
         if (CheckForConditionals() && !once)
         {
             once = true;
-            transform.GetChild(0).gameObject.SetActive(true);
+            GO.SetActive(true);
+            BrieffingText2.InstanciateWords();
             BriefingOnTV();
         }
     }
