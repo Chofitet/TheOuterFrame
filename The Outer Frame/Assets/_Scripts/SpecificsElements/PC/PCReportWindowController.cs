@@ -9,7 +9,7 @@ public class PCReportWindowController : MonoBehaviour
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelReporte;
     [SerializeField] ReportController ReportToFill;
-
+    
     WordData word;
 
     //OnSearchWord
@@ -60,4 +60,5 @@ public class PCReportWindowController : MonoBehaviour
         panelReporte.SetActive(false);
     }
 
+    //public void Delete 
 }

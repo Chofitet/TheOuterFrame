@@ -17,6 +17,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     [SerializeField] List<ConditionalClass> Conditionals;
     [SerializeField] bool isOrderMatters;
     [SerializeField] bool TriggerDrawerAnim;
+    [SerializeField] bool FinalReport;
     [NonSerialized] bool wasSet;
     [NonSerialized] bool doing;
     [NonSerialized] bool wasRegisteredInDB;
@@ -72,6 +73,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     public bool GetwasRegisteredInDB() { return wasRegisteredInDB; }
 
     public bool GetTriggerDrawerAnim() { return TriggerDrawerAnim; }
+
+    public bool GetFinalReport() { return FinalReport; }
 
     public bool CheckIfIsDefault()
     {
@@ -153,6 +156,15 @@ public class ConditionalClass
     {
          Doit = x;
     }
+
+    public ConditionalClass(WordData word, StateEnum state, bool ifNot = false)
+    {
+        WordStateConditional conditional = ScriptableObject.CreateInstance<WordStateConditional>();
+        conditional.SetWord(word);
+        conditional.SetState(state);
+        condition = conditional;
+    }
+
 }
 
     

@@ -9,6 +9,8 @@ public class WordStateConditional : ScriptableObject, IConditionable
     [SerializeField] StateEnum state;
     [SerializeField] int TimeToAppearOnTV;
 
+    public void SetWord(WordData x) => word = x;
+    public void SetState(StateEnum x) => state = x;
 
     public bool CheckIfHaveTime()
     {

@@ -17,6 +17,7 @@ public class TVManager : MonoBehaviour
     [SerializeField] Animator anim;
     private void Start()
     {
+        AddVilifiedNewsToReactiveList(WordsManager.WM.GetVilifiedNews());
         FillEmptiesChannels();
         ChangeChannel(null, Channels[InitChannel].gameObject);
     }
@@ -253,5 +254,13 @@ public class TVManager : MonoBehaviour
         }
     }
 
+    void AddVilifiedNewsToReactiveList(List<TVNewType> list)
+    {
+        foreach(TVNewType _new in list)
+        {
+            if (ReactiveNews.Contains(_new)) continue;
 
+            ReactiveNews.Add(_new);
+        }
+    }
 }

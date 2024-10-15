@@ -15,6 +15,7 @@ public class WordsManager : MonoBehaviour
     [SerializeField] GameEvent OnRemoveEraceInstance;
     [SerializeField] GameEvent OnChangeStateOfWord;
     [SerializeField] GameEvent OnChangeStateSeenOfWord;
+    List<TVNewType> VilifiedNewsList = new List<TVNewType>();
     public static WordsManager WM { get; private set; }
 
 
@@ -42,6 +43,8 @@ public class WordsManager : MonoBehaviour
             word.SetIsFound(false);
             
         }
+
+        SetVilifiedCondition();
     }
 
     private void Start()
@@ -51,6 +54,11 @@ public class WordsManager : MonoBehaviour
             word.InitSet();
             word.SetListOfActions(Actions);
         }
+    }
+
+    private void OnDisable()
+    {
+        DeleteVilifiedCondition();
     }
     public ReportType RequestReport(WordData _word, StateEnum state)
     {
@@ -201,6 +209,30 @@ public class WordsManager : MonoBehaviour
                 OnRemoveEraceInstance?.Invoke(this, _word);
                 continue;
             }
+        }
+    }
+
+    public List<TVNewType> GetVilifiedNews() { return VilifiedNewsList; }
+
+    void SetVilifiedCondition()
+    {
+        foreach(WordData word in wordsDic)
+        {
+            if (!word.GetVilifiedNew()) continue;
+            TVNewType VilifiedNew = word.GetVilifiedNew();
+
+            VilifiedNew.AddConditional(new ConditionalClass(word, Actions[8]));
+
+            VilifiedNewsList.Add(VilifiedNew);
+        }
+    }
+
+    void DeleteVilifiedCondition()
+    {
+        foreach (WordData word in wordsDic)
+        {
+            if (!word.GetVilifiedNew()) continue;
+            word.GetVilifiedNew().removeCondition();
         }
     }
 }
