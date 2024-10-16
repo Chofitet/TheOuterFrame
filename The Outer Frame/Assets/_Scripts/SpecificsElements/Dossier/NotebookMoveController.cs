@@ -78,7 +78,7 @@ public class NotebookMoveController : MonoBehaviour
     {
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
-        Ease ease = lastView == ViewStates.DossierView && num != 0 ? Ease.Linear : Ease.InOutCirc;
+        Ease ease = Ease.InOutCirc;
         currentTarget = Positions[num];
         isMoving = true;
         lerpTime = 0;

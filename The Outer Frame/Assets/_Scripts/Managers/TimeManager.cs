@@ -19,6 +19,12 @@ public class TimeManager : MonoBehaviour
     [SerializeField] int MinutesToChangeNews;
     [SerializeField] GameEvent OnStopSpeedTimeSound;
 
+    [Header("Time Game Over")]
+    [SerializeField] TimeCheckConditional TimeToLose;
+    [SerializeField] GameEvent OnElementClick;
+    [SerializeField] GameEvent OnGameOverTime;
+    [SerializeField] GameEvent OnDisableInput;
+
     bool isTimePaused;
 
     float TimeVariation;
@@ -101,6 +107,7 @@ public class TimeManager : MonoBehaviour
                 Seconds = 0;
                 OnMinuteChange?.Invoke();
                 Debug.Log("minute: " + Minute);
+                CheckGameOverCondition();
 
                 if (Minute >= 60)
                 {
@@ -171,6 +178,19 @@ public class TimeManager : MonoBehaviour
         OnAcceleratedTime?.Invoke(this, false);
 
     }
+
+    bool once;
+    void CheckGameOverCondition()
+    {
+        if(TimeToLose.GetStateCondition() && !once)
+        {
+            OnElementClick?.Invoke(this, ViewStates.GameOverView);
+            OnDisableInput?.Invoke(this, null);
+            OnGameOverTime?.Invoke(this, null);
+            once = true;
+        }
+    }
+
 }
 
 public struct TimeData

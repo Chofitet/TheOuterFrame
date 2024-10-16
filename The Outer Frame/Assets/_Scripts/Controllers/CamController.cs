@@ -8,7 +8,8 @@ public class CamController : MonoBehaviour
 {
     [SerializeField] CinemachineVirtualCamera[] posCamara;
     ViewStates actualView;
-
+    float delayTime;
+    float _delay = 0.2f;
     public void UpdateCurrentView(Component sender, object View)
     {
         ViewStates newview = (ViewStates)View;
@@ -17,36 +18,46 @@ public class CamController : MonoBehaviour
         {
             case ViewStates.GeneralView:
                 SetPriority(0);
+                delayTime = 0;
                 break;
             case ViewStates.DossierView:
                 SetPriority(0);
+                delayTime = _delay;
                 break;
             case ViewStates.PinchofonoView:
                 SetPriority(1);
+                delayTime = 0;
                 break;
             case ViewStates.BoardView:
                 SetPriority(2);
+                delayTime = 0;
                 break;
             case ViewStates.PCView:
                 SetPriority(3);
+                delayTime = 0;
                 break;
             case ViewStates.ProgressorView:
                 SetPriority(4);
+                delayTime = 0;
                 break;
             case ViewStates.TVView:
                 SetPriority(5);
                 break;
             case ViewStates.OnTakenPaperView:
                 SetPriority(0);
+                delayTime = _delay;
                 break;
             case ViewStates.GameOverView:
                 SetPriority(7);
+                delayTime = 0;
                 break;
             case ViewStates.PauseView:
                 SetPriority(8);
+                delayTime = 0;
                 break;
             case ViewStates.DrawerView:
                 SetPriority(9);
+                delayTime = 0;
                 break;
         }
     }
@@ -62,6 +73,13 @@ public class CamController : MonoBehaviour
 
     void SetPriority(int num)
     {
+        StartCoroutine(DelayChangeView(num));
+        
+    }
+
+    IEnumerator DelayChangeView(int num)
+    {
+        yield return new WaitForSeconds(delayTime);
         posCamara[num].Priority = 100;
         SetOthersPriorityZero(posCamara[num]);
     }

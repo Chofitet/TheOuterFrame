@@ -798,13 +798,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: a9fd7bdb6033e554098562b324fa9b49, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 89a0034a67f6a244d859d967d30595a3, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6766850930327235409}
         m_TargetAssemblyTypeName: SlotController, Assembly-CSharp
-        m_MethodName: OnTimeSpeedChanged
+        m_MethodName: TurnOffProgressor
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

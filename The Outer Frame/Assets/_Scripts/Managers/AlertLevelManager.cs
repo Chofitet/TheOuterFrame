@@ -11,6 +11,7 @@ public class AlertLevelManager : MonoBehaviour
     [ColorUsage(true, true)] [SerializeField] Color IncreaseColor;
     [ColorUsage(true, true)] [SerializeField] Color DecreaseColor;
     [SerializeField] GameEvent ButtonElement;
+    [SerializeField] GameEvent OnGameOverAlert;
     [SerializeField] GameEvent OnUpAlertLevel;
     [SerializeField] GameEvent OnDownAlertLevel;
     int level;
@@ -28,6 +29,12 @@ public class AlertLevelManager : MonoBehaviour
 
         NumLevel.text = level + "%";
 
+        if (level >= 100)
+        {
+            Invoke("end", 0.2f);
+            return;
+        }
+
         if (incruseNum > 0)
         {
             Led.SetSpecificColor(IncreaseColor);
@@ -39,13 +46,11 @@ public class AlertLevelManager : MonoBehaviour
             OnDownAlertLevel?.Invoke(this, null);
         }
 
-        if(level >= 100)
-        {
-            end();
-        }
+        
     }
     private void end()
     {
+        OnGameOverAlert?.Invoke(this, null);
         ButtonElement?.Invoke(this, ViewStates.GameOverView);
     }
 

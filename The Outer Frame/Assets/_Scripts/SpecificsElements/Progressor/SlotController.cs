@@ -219,6 +219,17 @@ public class SlotController : MonoBehaviour
         }
     }
 
+    public void TurnOffProgressor(Component sender, object obj)
+    {
+        Icon.SetActive(false);
+        Report = null;
+        ProgressBar.value = 0;
+        TimeManager.OnSecondsChange -= UpdateProgress;
+        Wordtxt.text = "";
+        Actiontxt.text = "";
+        SetLEDState(Color.black);
+    }
+
     public WordData GetWord() { return _word; }
 
     public StateEnum GetState() { return _state; }

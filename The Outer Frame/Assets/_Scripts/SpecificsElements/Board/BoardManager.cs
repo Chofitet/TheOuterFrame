@@ -9,6 +9,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnBoardPlacedConections;
     [SerializeField] GameEvent OnRefreshInfoInBoard;
     [SerializeField] GameEvent OnTakeOutInfoInBoard;
+    [SerializeField] GameEvent OnRefreshNotebook;
     [SerializeField] Transform StartPos;
     [SerializeField] Transform TakeOutPos;
     bool IsInView;
@@ -47,5 +48,6 @@ public class BoardManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
         OnRefreshInfoInBoard?.Invoke(this, null);
+        OnRefreshNotebook?.Invoke(this,null);
     }
 }

@@ -76,12 +76,14 @@ public class DossierMoveController : MonoBehaviour
                 .SetEase(Ease.InOutSine))
             .OnComplete(() =>
             {
-                isFollowingTarget = false; // Detenemos el seguimiento al finalizar el movimiento
+                // Detenemos el seguimiento al finalizar el movimiento
                 isAddingIdea = false;
                 AddIdeaSequence.Kill();
                 DossierAnim.ResetTrigger("open");
                 OnEnableInput?.Invoke(this, null);
-            });
+            })
+            .AppendInterval(0.2f)
+            .AppendCallback(() => isFollowingTarget = false);
     }
 
     public void CancelAddIdeaAnim(Component sender, object obj)
