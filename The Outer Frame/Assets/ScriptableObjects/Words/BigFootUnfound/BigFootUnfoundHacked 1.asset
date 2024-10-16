@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: BigFootUnfoundHacked
+  m_Name: BigFootUnfoundHacked 1
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   state: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
@@ -40,9 +40,11 @@ MonoBehaviour:
     text: YEAH!
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
     text: GEO LOCATED
+  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
+    text: WHOOPLA PARK
   Conditionals:
   - condition: {fileID: 11400000, guid: 68e04c5e4fdac1f4abf0c3cee2f03ac0, type: 2}
-    ifNot: 0
+    ifNot: 1
   isOrderMatters: 0
   TriggerDrawerAnim: 0
   FinalReport: 0

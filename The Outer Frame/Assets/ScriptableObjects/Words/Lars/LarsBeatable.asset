@@ -9,11 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21787a5276d74c24e9e60eb8d3299788, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e60f3f8eb45d81468a6b63e9e366543, type: 3}
   m_Name: LarsBeatable
   m_EditorClassIdentifier: 
+  MinConditionsForTrue: 3
   Conditions:
+  - condition: {fileID: 11400000, guid: d9a62ce5a235147449d29b5194af4603, type: 2}
+    ifNot: 0
   - condition: {fileID: 11400000, guid: 33f4b059eafb7de479227ff82ffe087d, type: 2}
     ifNot: 0
   - condition: {fileID: 11400000, guid: e9b91e3426038ad4192a9db24e6166f3, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: f806b8d731b90304ca523e0de29da5ba, type: 2}
     ifNot: 0
