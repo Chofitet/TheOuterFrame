@@ -70,6 +70,7 @@ public class ClockController : MonoBehaviour
         if (TM.GetActualMinute() == 60)
         {
             Minute = "00";
+            
         }
 
         MinuteMovibleFlipFront.text = Minute;
@@ -78,7 +79,9 @@ public class ClockController : MonoBehaviour
         MinuteInamovibleFlipBack.text = PreviousMinute;
         MinuteMovibleFlipBack.text = PreviousMinute;
 
-        Invoke("ChangeBackMinute", MinuteAnim.length);
+       Invoke("ChangeBackMinute", MinuteAnim.length);
+       
+        if (TM.GetActualMinute() == 60) return;
 
         anim.SetTrigger("minute");
     }
@@ -102,7 +105,7 @@ public class ClockController : MonoBehaviour
         HourInamovibleFlipBack.text = PreviousHour;
         HourMovibleFlipBack.text = PreviousHour;
 
-        Invoke("ChangeBackHour", HourAnim.length);
+        Invoke("ChangeBackHour", HourAnim.length * _TimeVariation);
 
         anim.SetTrigger("hour");
     }
@@ -148,11 +151,11 @@ public class ClockController : MonoBehaviour
        
     }
 
-
+    float _TimeVariation;
     public void SetClockSpeed(Component sender, object obj)
     {
         float TimeVariation = (float)obj;
-
+        _TimeVariation = 1/TimeVariation;
         anim.SetFloat("clockSpeed", TimeVariation);
     }
 

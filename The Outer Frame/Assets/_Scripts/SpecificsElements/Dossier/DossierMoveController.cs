@@ -21,6 +21,7 @@ public class DossierMoveController : MonoBehaviour
     Sequence AddIdeaSequence;
     Sequence MoveDossierSequence;
     bool isAddingIdea;
+    bool isUp;
 
     private bool isFollowingTarget;
     private float lerpTime;
@@ -85,10 +86,11 @@ public class DossierMoveController : MonoBehaviour
             .AppendInterval(0.2f)
             .AppendCallback(() => isFollowingTarget = false);
     }
-
+    ViewStates actualView;
     public void CancelAddIdeaAnim(Component sender, object obj)
     {
-        if((ViewStates)obj == ViewStates.GeneralView)
+
+        if (actualView == ViewStates.GeneralView)
         {
             if (AddIdeaSequence != null && AddIdeaSequence.IsActive()) AddIdeaSequence.Kill();
             else return;
@@ -117,26 +119,33 @@ public class DossierMoveController : MonoBehaviour
         }
     }
 
+    public void CheckView(Component sender, object obj)
+    {
+        actualView = (ViewStates)obj;
+    }
+
     public void TakeDossier(Component sender, object obj)
     {
         if (isAddingIdea) return;
         if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
-
+        isUp = true;
         MoveDossierSequence = DOTween.Sequence();
 
         MoveDossierSequence.Append(transform.DOMove(TakenPosition.position, 0.4f)).SetEase(Ease.InOutSine)
-                            .Join(transform.DORotate(TakenPosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo);
+                            .Join(transform.DORotate(TakenPosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InOutSine);
     }
     public void LeaveDossier(Component sender, object obj)
     {
+        float LeaveVelocity = 0.5f;
+        if (isUp && actualView != ViewStates.GeneralView && actualView != ViewStates.OnTakenPaperView && actualView != ViewStates.GameOverView) LeaveVelocity = 0.3f;
         if (isAddingIdea) return;
         if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
 
         MoveDossierSequence = DOTween.Sequence();
-
+        isUp = false;
         MoveDossierSequence
-            .Append(transform.DOMove(LeavePosition.position, 0.5f)).SetEase(Ease.InOutSine)
-            .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InExpo)
+            .Append(transform.DOMove(LeavePosition.position, LeaveVelocity)).SetEase(Ease.InOutSine)
+            .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, LeaveVelocity - 0.2f)).SetEase(Ease.InOutSine)
         .OnComplete(() =>
          {
              transform.GetChild(0).transform.DOLocalRotate(Vector3.zero, 0.2f);
@@ -145,6 +154,7 @@ public class DossierMoveController : MonoBehaviour
 
     public void CompleteSlotsProgressorAnim(Component sender, object obj)
     {
+
         if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
         MoveDossierSequence = DOTween.Sequence();
 

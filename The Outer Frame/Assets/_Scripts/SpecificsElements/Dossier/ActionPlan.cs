@@ -14,6 +14,7 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] Button ApproveBtn;
     [SerializeField] GameEvent OnWriteShakeDossier;
     List<ActionRowController> Actions = new List<ActionRowController>();
+    WordData word;
     StateEnum state;
     bool isOneToggleSelected;
     bool isProgressorFull;
@@ -51,6 +52,7 @@ public class ActionPlan : MonoBehaviour
 
     void OnButtonRowPress(ActionRowController script)
     {
+
         if(!isOneToggleSelected)
         {
             script.OnButtonClick();
@@ -64,7 +66,7 @@ public class ActionPlan : MonoBehaviour
         }
 
         if (state.GetSpecialActionWord()) ApproveBtn.enabled = true;
-        else if (!state.GetSpecialActionWord() && WordSelectedInNotebook.Notebook.GetSelectedWord())
+        else if (!state.GetSpecialActionWord() && word)
         {
             ApproveBtn.enabled = true;
             OnWriteShakeDossier?.Invoke(this, 0.5f);
@@ -74,9 +76,12 @@ public class ActionPlan : MonoBehaviour
 
     public void SelectedWord(Component sender, object obj)
     {
+        if(!isInDossier) return;
         if(state) ApproveBtn.enabled = true;
+        if (!WordSelectedInNotebook.Notebook.GetSelectedWord()) return;
+        word = WordSelectedInNotebook.Notebook.GetSelectedWord();
 
-        if(!isOneToggleSelected)
+        if (!isOneToggleSelected)
         {
             OnButtonRowPress(Actions[0]);
         }
@@ -93,7 +98,8 @@ public class ActionPlan : MonoBehaviour
         }
 
         ApproveBtn.enabled = false;
-        OnApprovedActionPlan.Invoke(this,state);
+        DataFromActionPlan data = new DataFromActionPlan(word, state);
+        OnApprovedActionPlan.Invoke(this, data);
         OnSetGeneralView?.Invoke(this, null);
     }
 
@@ -113,4 +119,23 @@ public class ActionPlan : MonoBehaviour
         ApproveBtn.transform.GetChild(0).gameObject.SetActive(false);
     }
 
+    bool isInDossier;
+    public void CheckView(Component sender, object obj)
+    {
+        if ((ViewStates)obj == ViewStates.DossierView) isInDossier = true;
+        else isInDossier = false;
+    }
+
+}
+
+public class DataFromActionPlan
+{
+    public WordData word;
+    public StateEnum state;
+
+    public DataFromActionPlan(WordData _word, StateEnum _state)
+    {
+        word = _word;
+        state = _state;
+    }
 }

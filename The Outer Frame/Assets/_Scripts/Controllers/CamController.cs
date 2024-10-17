@@ -9,7 +9,7 @@ public class CamController : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera[] posCamara;
     ViewStates actualView;
     float delayTime;
-    float _delay = 0.2f;
+    float _delay = 0f;
     public void UpdateCurrentView(Component sender, object View)
     {
         ViewStates newview = (ViewStates)View;

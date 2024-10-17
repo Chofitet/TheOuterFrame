@@ -14,6 +14,7 @@ public class DossierController : MonoBehaviour
     private bool isInDossierView;
     bool isInBrifing2;
     bool isInActionPlan;
+    bool wasBrieffing2Taked;
 
     private void Start()
     {
@@ -55,7 +56,8 @@ public class DossierController : MonoBehaviour
 
     public void ChangeBrifing2(Component sender, object obj)
     {
-        if (isInBrifing2) return;
+        
+        if (isInBrifing2 || !wasBrieffing2Taked) return;
 
         //changetobrifing
         if (!isInDossierView) return;
@@ -92,6 +94,11 @@ public class DossierController : MonoBehaviour
     public void OnTakeIdea(Component sender, object obj)
     {
         IsTakingIdea = true;
+    }
+
+    public void OnAppearBrieffing2(Component sender, object obj)
+    {
+        wasBrieffing2Taked = true;
     }
 
 }

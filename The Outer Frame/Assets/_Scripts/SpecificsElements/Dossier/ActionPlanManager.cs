@@ -14,6 +14,11 @@ public class ActionPlanManager : MonoBehaviour
     bool IsProgressorFull;
     bool isFirstTimeIdeaAdded;
 
+    private void Start()
+    {
+        SetActionPlan(null, null);
+    }
+
     public void SetActionPlan(Component sender, object obj)
     {
         if (transform.childCount != 0) Destroy(transform.GetChild(0).gameObject);
@@ -36,8 +41,8 @@ public class ActionPlanManager : MonoBehaviour
 
     public void RemoveAction(Component sender, object obj)
     {
-        StateEnum removeAction = (StateEnum)obj;
-
+        DataFromActionPlan data = (DataFromActionPlan)obj;
+        StateEnum removeAction = data.state;
         if (removeAction.GetSpecialActionWord())
         {
             Actions.Remove(removeAction);
@@ -59,6 +64,7 @@ public class ActionPlanManager : MonoBehaviour
     {
         GameObject actionPLan = transform.GetChild(0).gameObject;
         OnCloneActionPlan?.Invoke(this, actionPLan);
+        SetActionPlan(null, null);
     }
 
     public void ReparentToMoveActionPlan(Component sender, object obj)

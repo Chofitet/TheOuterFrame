@@ -10,10 +10,11 @@ public class ProgressorManager : MonoBehaviour
     [SerializeField] GameEvent OnProgressorSetSlot;
     
 
-    public void SetActionInCourse(Component c, object _state)
+    public void SetActionInCourse(Component c, object _data)
     {
-        WordData _word = WordSelectedInNotebook.Notebook.GetSelectedWord();
-        StateEnum state = (StateEnum) _state;
+        DataFromActionPlan data = (DataFromActionPlan)_data;
+        StateEnum state = data.state;
+        WordData _word = data.word;
         if (state == null) return;
         if (state.GetSpecialActionWord()) _word = state.GetSpecialActionWord();
 

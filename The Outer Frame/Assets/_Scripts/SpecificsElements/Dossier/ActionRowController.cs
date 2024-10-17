@@ -21,6 +21,7 @@ public class ActionRowController : MonoBehaviour
     FadeWordsEffect fade;
     FadeWordsEffect fadeAction;
     bool once;
+    WordData Word;
 
     public void Initialization(StateEnum _state, bool _isFirstTimeIdeaAdded)
     {
@@ -36,7 +37,7 @@ public class ActionRowController : MonoBehaviour
             isSpecialAction = true;
             DotsLine.SetActive(false);
             ActionText.font = writingFont;
-            Invoke("ClickButton", 0.5f);
+            Invoke("ClickButton", 1.5f);
             if (!_isFirstTimeIdeaAdded) return;
             fadeAction.StartEffect();
            
@@ -47,14 +48,16 @@ public class ActionRowController : MonoBehaviour
     {
         if (isSpecialAction || !isInView) return;
 
+        Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
+
         if (toggle.isOn && once)
         {
-            StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, WordSelectedInNotebook.Notebook.GetSelectedWord().GetForm_DatabaseNameVersion()));
+            StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, Word.GetForm_DatabaseNameVersion()));
             
         }
         if(toggle.isOn && !once)
         {
-            Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetForm_DatabaseNameVersion();
+            Wordtext.text = Word.GetForm_DatabaseNameVersion();
             fade.StartEffect();
             OnWrittingFormSound?.Invoke(this, null);
         }
@@ -77,9 +80,9 @@ public class ActionRowController : MonoBehaviour
         toggle.isOn = true;
 
         if (isSpecialAction) return;
-        if (WordSelectedInNotebook.Notebook.GetSelectedWord())
+        if (Word)
         {
-            Wordtext.text = WordSelectedInNotebook.Notebook.GetSelectedWord().GetForm_DatabaseNameVersion();
+            Wordtext.text = Word.GetForm_DatabaseNameVersion();
             fade.StartEffect();
             OnWrittingFormSound?.Invoke(this, null);
         }

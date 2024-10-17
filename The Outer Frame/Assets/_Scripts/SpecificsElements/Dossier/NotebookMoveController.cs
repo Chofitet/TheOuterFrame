@@ -22,6 +22,7 @@ public class NotebookMoveController : MonoBehaviour
     bool isUp;
     GameObject child;
     bool isGameOver;
+    Transform OriginalTransform;
 
     ViewStates lastView;
 
@@ -29,6 +30,7 @@ public class NotebookMoveController : MonoBehaviour
     {
         child = transform.GetChild(0).gameObject;
         anim = child.GetComponent<Animator>();
+        OriginalTransform = transform.parent;
     }
 
     public void OnChangeView(Component sender, object obj)
@@ -46,7 +48,7 @@ public class NotebookMoveController : MonoBehaviour
                 SetPos(6);
                 break;
             case ViewStates.PinchofonoView:
-                SetPos(1, true ,true);
+                SetPos(1, true, OriginalTransform, true);
                 break;
             case ViewStates.BoardView:
                 SetPos(2);
@@ -74,14 +76,15 @@ public class NotebookMoveController : MonoBehaviour
         lastView = newview;
     }
 
-    void SetPos(int num, bool _isUp = true , bool isPinchofono= false)
+    void SetPos(int num, bool _isUp = true , Transform trans = null,  bool isPinchofono= false)
     {
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
-        Ease ease = Ease.InOutCirc;
         currentTarget = Positions[num];
         isMoving = true;
         lerpTime = 0;
+
+        SetTransform(Positions[num]);
 
         moveSequence = DOTween.Sequence();
 
@@ -90,8 +93,8 @@ public class NotebookMoveController : MonoBehaviour
             moveSequence.AppendCallback(() => CloseNotebook());
         }
 
-        moveSequence.PrependInterval(0.1f);
-        moveSequence.Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(ease))
+        //moveSequence.PrependInterval(0.1f);
+        moveSequence.Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutCirc))
                     .OnComplete(() =>
                     {
                         isMoving = false;
@@ -100,6 +103,7 @@ public class NotebookMoveController : MonoBehaviour
                             OpenPhoneNums();
                         }
                         child.transform.DOLocalRotate(Vector3.zero, 0.2f);
+                        SetTransform(OriginalTransform);
                     });
         
         isUp = _isUp;
@@ -117,6 +121,11 @@ public class NotebookMoveController : MonoBehaviour
         }
     }
 
+    void SetTransform(Transform trans)
+    {
+        if (trans == null) return;
+        transform.SetParent(trans);
+    }
     
     public void WriteWord(Component sender, object obj)
     {
@@ -170,14 +179,18 @@ public class NotebookMoveController : MonoBehaviour
 
     void OpenPhoneNums()
     {
+        if (IsPhonesOpen) return;
         anim.SetTrigger("open");
+        anim.ResetTrigger("close");
         IsPhonesOpen = true;
         OnSlidePhoneUpSound?.Invoke(this, null);
     }
 
     void CloseNotebook()
     {
+        if (!IsPhonesOpen) return;
         anim.SetTrigger("close");
+        anim.ResetTrigger("open");
         IsPhonesOpen = false;
         OnSlidePhoneDownSound?.Invoke(this, null);
     }
