@@ -20,7 +20,7 @@ public class PCController : MonoBehaviour
     bool isWaitingAWord;
     bool inWordAccessWindow;
 
-    WordData LastDBSearch;
+    WordData _LastSearchedWord;
     WordData word;
     bool isInPCView;
     TypingAnimText textAnim;
@@ -75,7 +75,7 @@ public class PCController : MonoBehaviour
         if (!isInPCView) return;
         WordData _word = (WordData)obj;
         word = _word;
-        SearchWordInWiki(true);
+        SearchWordInWiki(_LastSearchedWord);
     }
     public void UpdateDataBase(Component sender, object obj)
     {
@@ -91,7 +91,12 @@ public class PCController : MonoBehaviour
         SearchWordInWiki();
     }
 
-    public void SearchWordInWiki(bool SearchedFromLink = false)
+    public void SearchBTN()
+    {
+        SearchWordInWiki();
+    }
+
+    public void SearchWordInWiki(WordData LastSearchedWord = null)
     {
         BtnBackToLastEntry.SetActive(false);
         if (!word)
@@ -105,16 +110,15 @@ public class PCController : MonoBehaviour
         }
 
         if(word == IrrelevantDB) foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
-
-        foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(true);
+        else foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(true);
         DataBaseType db = WordsManager.WM.RequestBDWikiData(word);
 
         StopAllCoroutines();
 
-        if (SearchedFromLink)
+        if (LastSearchedWord != null)
         {
             StartCoroutine(DelayBTNBackLatEntryAppear());
-            BtnBackToLastEntry.GetComponent<BackToLastEntryBTNController>().SetWordToBack(word);
+            BtnBackToLastEntry.GetComponent<BackToLastEntryBTNController>().SetWordToBack(LastSearchedWord);
         }
             
 
@@ -133,6 +137,7 @@ public class PCController : MonoBehaviour
         
         OnPCSearchWord?.Invoke(this, word);
 
+        _LastSearchedWord = word;
         word = null;
     }
 

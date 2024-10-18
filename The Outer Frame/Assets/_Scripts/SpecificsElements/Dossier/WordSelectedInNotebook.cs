@@ -100,7 +100,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         yield return new WaitForSeconds(1.1f);
         OnSlidePhones?.Invoke(this, true);
         if(!num) OnShowNumNotebook?.Invoke(this, word);
-        else OnShowNumNotebook?.Invoke(this, num);
+        else OnShowNumNotebook?.Invoke(this, word);
         yield return new WaitForSeconds(1.1f);
         OnSlidePhones?.Invoke(this, false);
     }

@@ -20,7 +20,6 @@ public class PhoneRowNotebookController : MonoBehaviour
         button.onClick.AddListener(ButtonPress);
         word = _word;
         txtName.text = word.GetName();
-
         float writingTime = 0;
 
         if (word.GetIsAPhoneNumber())

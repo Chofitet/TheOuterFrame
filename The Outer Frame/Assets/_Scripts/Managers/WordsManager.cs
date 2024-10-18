@@ -54,6 +54,8 @@ public class WordsManager : MonoBehaviour
             word.InitSet();
             word.SetListOfActions(Actions);
         }
+
+        //CopyCallsToPhoneWords();
     }
 
     private void OnDisable()
@@ -238,6 +240,24 @@ public class WordsManager : MonoBehaviour
         {
             if (!word.GetVilifiedNew()) continue;
             word.GetVilifiedNew().removeCondition();
+        }
+    }
+
+    void CopyCallsToPhoneWords()
+    {
+        foreach(WordData phone in wordsDic)
+        {
+            if (!phone.GetIsAPhoneNumber()) continue;
+
+            foreach(WordData word in wordsDic)
+            {
+                if (phone.GetIsAPhoneNumber()) continue;
+                
+                if(word.GetPhoneNumber() == phone.GetPhoneNumber())
+                {
+                    phone.SetListOfCalls(word.GetListOfCalls());
+                }
+            }
         }
     }
 }

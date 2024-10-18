@@ -474,6 +474,10 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     public bool SetIsPhoneNumberFound() => isPhoneNumberFound = true;
     public bool GetIsAPhoneNumber() { return isAPhoneNumber; }
 
+    public List<CallType> GetListOfCalls() { return CallTypes; }
+
+    public void SetListOfCalls(List<CallType> list) { CallTypes = list; }
+
     public ActionGoupType GetActionGroupType() { return Type; }
 
     public WordData GetWordThatReplaces() { return WordThatReplaces; }
