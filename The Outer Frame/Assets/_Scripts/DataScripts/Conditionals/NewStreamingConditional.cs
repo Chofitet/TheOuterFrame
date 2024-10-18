@@ -12,17 +12,14 @@ public class NewStreamingConditional : ScriptableObject, IConditionable
         return false;
     }
 
-    public bool GetAlternativeConditional()
-    {
-        throw new System.NotImplementedException();
-    }
+    
 
     public IConditionable GetLastCompletedConditional()
     {
         throw new System.NotImplementedException();
     }
 
-    public bool GetStateCondition()
+    public bool GetStateCondition(int NumOfAlternativeCondition = 1)
     {
         if (New is not INewType) Debug.LogWarning("The conditional " + name + " have a wrong type of Scriptable Object assigned in a field");
         INewType _new = New as INewType;

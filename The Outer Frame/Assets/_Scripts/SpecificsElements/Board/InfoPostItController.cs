@@ -49,7 +49,7 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
 
             IConditionable auxConditional = conditional as IConditionable;
 
-            bool conditionState = auxConditional.GetAlternativeConditional();
+            bool conditionState = auxConditional.GetStateCondition(2);
 
             if (!ifnot)
             {

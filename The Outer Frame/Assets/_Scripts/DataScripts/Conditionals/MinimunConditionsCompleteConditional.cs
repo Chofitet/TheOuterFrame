@@ -15,7 +15,7 @@ public class MinimunConditionsCompleteConditional : ScriptableObject, ICondition
 
     public IConditionable GetLastCompletedConditional(){ return GetLastCompleteConditional(); }
 
-    public bool GetStateCondition(){ return CheckForAllConditionals(); }
+    public bool GetStateCondition(int numCondition = 1){ return CheckForAllConditionals(); }
 
     public int GetTimeToShowNews(){throw new System.NotImplementedException();}
 
@@ -51,7 +51,7 @@ public class MinimunConditionsCompleteConditional : ScriptableObject, ICondition
         {
             IConditionable auxInterface = conditional.condition as IConditionable;
 
-            bool conditionState = auxInterface.GetAlternativeConditional();
+            bool conditionState = auxInterface.GetStateCondition(2);
 
             if (conditional.ifNot)
             {

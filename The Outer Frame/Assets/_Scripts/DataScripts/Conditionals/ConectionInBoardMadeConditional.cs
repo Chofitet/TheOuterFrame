@@ -11,19 +11,14 @@ public class ConectionInBoardMadeConditional : IConditionable
         return false;
     }
 
-    public bool GetAlternativeConditional()
-    {
-        return true;
-    }
-
     public IConditionable GetLastCompletedConditional()
     {
         throw new System.NotImplementedException();
     }
 
-    public bool GetStateCondition()
+    public bool GetStateCondition(int NumOfAlternativeConditional)
     {
-        throw new System.NotImplementedException();
+        return true;
     }
 
     public int GetTimeToShowNews()

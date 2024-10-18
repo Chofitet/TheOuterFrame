@@ -1,7 +1,6 @@
 public interface IConditionable 
 {
-    bool GetStateCondition();
-    bool GetAlternativeConditional();
+    bool GetStateCondition(int NumOfAlternativeConditional = 1);
     bool CheckIfHaveTime();
     TimeData GetTimeWhenWasComplete();
     IConditionable GetLastCompletedConditional();

@@ -12,17 +12,13 @@ public class PlacedInBoardConditional : ScriptableObject, IConditionable
         return false;
     }
 
-    public bool GetAlternativeConditional()
-    {
-        return Word.GetPlacedInBoard();
-    }
 
     public IConditionable GetLastCompletedConditional()
     {
         return this as IConditionable;
     }
 
-    public bool GetStateCondition()
+    public bool GetStateCondition(int NumOfAlternative = 1)
     {
         return Word.GetPlacedInBoard();
     }

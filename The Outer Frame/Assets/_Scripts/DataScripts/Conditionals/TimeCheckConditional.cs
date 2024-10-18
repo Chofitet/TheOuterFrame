@@ -34,7 +34,7 @@ public class TimeCheckConditional : ScriptableObject, IConditionable
         return false;
     }
 
-    public bool GetStateCondition()
+    public bool GetStateCondition(int NumAlternativeConditions = 1)
     {
         int timeToCheck = new TimeData(Day, Hour, Minute).GetTimeInNum();
         int ActualTime = TimeManager.timeManager.GetTime().GetTimeInNum();
@@ -56,10 +56,6 @@ public class TimeCheckConditional : ScriptableObject, IConditionable
         throw new System.NotImplementedException();
     }
 
-    public bool GetAlternativeConditional()
-    {
-        return GetStateCondition();
-    }
 
     public IConditionable GetLastCompletedConditional()
     {

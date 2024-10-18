@@ -99,7 +99,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
 
             bool conditionState = auxInterface.GetStateCondition();
 
-            Debug.Log("last compete conditional of " + auxInterface + " is " + auxInterface.GetLastCompletedConditional());
+            //Debug.Log("last compete conditional of " + auxInterface + " is " + auxInterface.GetLastCompletedConditional());
 
             if (!conditional.ifNot)
             {

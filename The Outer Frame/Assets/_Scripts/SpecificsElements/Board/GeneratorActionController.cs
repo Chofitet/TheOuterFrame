@@ -107,7 +107,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
                     if (auxInterface == null)
                         throw new Exception("La condición no implementa IConditionable.");
 
-                    bool conditionState = auxInterface.GetAlternativeConditional();
+                    bool conditionState = auxInterface.GetStateCondition(2);
 
                     if (conditional.ifNot)
                     {

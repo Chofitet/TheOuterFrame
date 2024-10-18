@@ -8,8 +8,10 @@ public class ORConditional : ScriptableObject, IConditionable
     [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
 
     public bool CheckIfHaveTime(){return false;}
-    public bool GetAlternativeConditional(){return CheckForAllAlternativeConditionals(); }
-    public bool GetStateCondition() { return CheckForAllConditionals(); }
+    public bool GetStateCondition(int NumAlternativeCondition = 1) {
+        if (NumAlternativeCondition == 1) return CheckForAllConditionals();
+        else return CheckForAllAlternativeConditionals();
+    }
     public TimeData GetTimeWhenWasComplete(){ throw new System.NotImplementedException();}
 
     public IConditionable GetLastCompletedConditional() { return GetLastCompleteConditional(); }
@@ -42,7 +44,7 @@ public class ORConditional : ScriptableObject, IConditionable
         {
             IConditionable auxInterface = conditional.condition as IConditionable;
 
-            bool conditionState = auxInterface.GetAlternativeConditional();
+            bool conditionState = auxInterface.GetStateCondition(2);
 
             if (conditional.ifNot)
             {
