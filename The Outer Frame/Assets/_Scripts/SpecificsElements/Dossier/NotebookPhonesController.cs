@@ -21,7 +21,7 @@ public class NotebookPhonesController : MonoBehaviour
 
         bool replaceBool = WordReplaceOther(LastPhoneAdded);
 
-        if (SearchForAnExistingPhoneNum(LastPhoneAdded)) return;
+        
 
         // Verifica si hay un índice libre para reutilizar
         if (removedIndex.Count != 0 && !once)
@@ -48,6 +48,8 @@ public class NotebookPhonesController : MonoBehaviour
                 }
             }
         }
+
+        if (SearchForAnExistingPhoneNum(LastPhoneAdded)) return;
 
         GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
         wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
@@ -118,8 +120,6 @@ public class NotebookPhonesController : MonoBehaviour
     bool SearchForAnExistingPhoneNum(WordData word)
     {
         if (word.GetIsAPhoneNumber()) return false;
-        if (!word.GetIsPhoneNumberFound()) return false;
-        
 
         foreach (GameObject w in WordsInstances)
         {
@@ -127,6 +127,8 @@ public class NotebookPhonesController : MonoBehaviour
 
             if (script.GetWord().GetPhoneNumber() == word.GetPhoneNumber())
             {
+                if (!script.GetWord().GetIsPhoneNumberFound()) continue;
+
                 script.ReplaceNumberWithWord(word);
                 return true;
             }

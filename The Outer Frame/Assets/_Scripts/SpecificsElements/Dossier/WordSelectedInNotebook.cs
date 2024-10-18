@@ -88,13 +88,18 @@ public class WordSelectedInNotebook : MonoBehaviour
         }
         else
         {
-            IsWordAlreadyExist(num).SetIsPhoneNumberFound();
+            IsWordAlreadyExist(num).SetIsPhoneNumberFound(); 
         }
 
         OnSlidePhones?.Invoke(this,true);
         OnShowNumNotebook?.Invoke(this, IsWordAlreadyExist(num));
+        
     }
 
+    void a(WordData word)
+    {
+        word.SetIsPhoneNumberFound();
+    }
     IEnumerator SlideDelay(WordData num, WordData word)
     {
         yield return new WaitForSeconds(1.1f);
@@ -102,6 +107,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         if(!num) OnShowNumNotebook?.Invoke(this, word);
         else OnShowNumNotebook?.Invoke(this, word);
         yield return new WaitForSeconds(1.1f);
+        
         OnSlidePhones?.Invoke(this, false);
     }
 
@@ -114,7 +120,6 @@ public class WordSelectedInNotebook : MonoBehaviour
             if(num.GetName() == word.GetPhoneNumber())
             {
                 aux = num;
-                word.SetIsPhoneNumberFound();
                 
             }
         }
@@ -128,6 +133,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         {
             if(word.GetPhoneNumber() == Num.GetName())
             {
+
                 return word;
             }
         }

@@ -55,7 +55,7 @@ public class WordsManager : MonoBehaviour
             word.SetListOfActions(Actions);
         }
 
-        //CopyCallsToPhoneWords();
+            CopyCallsToPhoneWords();
     }
 
     private void OnDisable()
@@ -251,7 +251,7 @@ public class WordsManager : MonoBehaviour
 
             foreach(WordData word in wordsDic)
             {
-                if (phone.GetIsAPhoneNumber()) continue;
+                if (word.GetIsAPhoneNumber()) continue;
                 
                 if(word.GetPhoneNumber() == phone.GetPhoneNumber())
                 {

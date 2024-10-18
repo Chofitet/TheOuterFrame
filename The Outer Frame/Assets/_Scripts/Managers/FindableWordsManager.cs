@@ -239,7 +239,12 @@ public class FindableWordsManager : MonoBehaviour
 
         foreach (GameObject fw in FindableWordsBTNs)
         {
-            if (fw.GetComponent<FindableWordBTNController>().Getword().GetIsFound())
+            WordData word = fw.GetComponent<FindableWordBTNController>().Getword();
+            if (word.GetIsFound())
+            {
+                Destroy(fw);
+            }
+            else if(word.GetIsPhoneNumberFound() && word.GetIsAPhoneNumber())
             {
                 Destroy(fw);
             }
