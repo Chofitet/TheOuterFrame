@@ -16,14 +16,16 @@ public class WordStateConditional : ScriptableObject, IConditionable
     {
         return true;
     }
-    public bool GetStateCondition()
+    public bool GetStateCondition(int alternativeConditional = 1)
     {
-        return WordsManager.WM.CheckIfStateWasDone(word, state);
-    }
+        switch (alternativeConditional)
+        {
+            case 1: return WordsManager.WM.CheckIfStateWasDone(word, state);
+            case 2: return WordsManager.WM.CheckIfStateSeenWasDone(word, state);
+            case 3: return WordsManager.WM.CheckIfStateSeenWasEntryInDB(word, state);
+        }
 
-    public bool GetAlternativeConditional()
-    {
-        return WordsManager.WM.CheckIfStateSeenWasDone(word, state);
+       return WordsManager.WM.CheckIfStateWasDone(word, state);
     }
 
     public TimeData GetTimeWhenWasComplete()

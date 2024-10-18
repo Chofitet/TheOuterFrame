@@ -123,6 +123,11 @@ public class WordsManager : MonoBehaviour
         return FindWordInList(_word).CheckIfStateSeenWasDone(WordState);
     }
 
+    public bool CheckIfStateSeenWasEntryInDB(WordData _word, StateEnum WordState)
+    {
+        return FindWordInList(_word).CheckIfStateSeenWasEntryInDB(WordState);
+    }
+
     public TimeData RequestTimeDataOfState(WordData _word, StateEnum WordState)
     {
         return FindWordInList(_word).GetTimeOfState(WordState);

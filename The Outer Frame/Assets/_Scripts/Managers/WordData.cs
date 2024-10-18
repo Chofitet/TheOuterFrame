@@ -24,6 +24,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     [Header("BD Data")]
     [SerializeField] DataBaseType DBTypes;
+    [SerializeField] List<DataBaseType> UpdatedDataBase = new List<DataBaseType>();
+    [NonSerialized] DataBaseType CurrentDB;
 
     [Header("Calls")]
     [SerializeField] List<CallType> CallTypes = new List<CallType>();
@@ -45,6 +47,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     [NonSerialized] List<StateEnum> stateHistory = new List<StateEnum>();
     [NonSerialized] List<StateEnum> CheckedStateHistory = new List<StateEnum>();
+    [NonSerialized] List<StateEnum> DBEntryStateHistory = new List<StateEnum>();
     [NonSerialized] Dictionary<StateEnum, TimeData> StateHistoryTime = new Dictionary<StateEnum, TimeData>();
     [NonSerialized] StateEnum currentState;
     [NonSerialized] private List<ActionState> ActionsStates = new List<ActionState>();
@@ -58,6 +61,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     public void InitSet()
     {
         SetCallsInfo();
+        CurrentDB = DBTypes;
     }
 
     public TVNewType GetTVnew(StateEnum state)
@@ -147,7 +151,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public DataBaseType GetDB()
     {
-        return DBTypes;
+        GetDataUpdate();
+        return CurrentDB;
     }
 
     public List<CallType> GetCall()
@@ -269,9 +274,27 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         }
         return false;
     }
+
+    public bool CheckIfStateSeenWasEntryInDB(StateEnum state)
+    {
+        for (int i = 0; i < DBEntryStateHistory.Count; i++)
+        {
+            if (DBEntryStateHistory[i] == state)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public void CheckStateSeen(StateEnum newState)
     {
         CheckedStateHistory.Add(newState);
+    }
+
+    public void AddStateInDBEntryStateHistory(StateEnum newState)
+    {
+        if (DBEntryStateHistory.Contains(newState)) return;
+        DBEntryStateHistory.Add(newState);
     }
 
     public void AddStateInHistory(StateEnum newState)
@@ -347,7 +370,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         {
             IConditionable auxInterface = conditional.condition as IConditionable;
 
-            bool conditionState = auxInterface.GetAlternativeConditional();
+            bool conditionState = auxInterface.GetStateCondition(2);
 
             if (!conditional.ifNot)
             {
@@ -387,6 +410,20 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     }
 
     #endregion
+
+    public void GetDataUpdate()
+    {
+        if (UpdatedDataBase.Count == 0) return;
+        foreach(DataBaseType DB in UpdatedDataBase)
+        {
+            if(DB.CheckConditionals())
+            {
+                CurrentDB = DB;
+                DB.SetWasSetted();
+            }
+        }
+
+    }
 
     public TVNewType GetVilifiedNew() {
         TVNewType VilifiedNew = null;

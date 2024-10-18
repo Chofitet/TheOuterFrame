@@ -12,18 +12,12 @@ public class WordFoundConditional : ScriptableObject, IConditionable
         return false;
     }
 
-    public bool GetAlternativeConditional()
-    {
-        if (!word) Debug.LogWarning("the Word Found conditional " + name + " not have a word assigned");
-        return word.GetIsFound();
-    }
-
     public IConditionable GetLastCompletedConditional()
     {
         return this as IConditionable;
     }
 
-    public bool GetStateCondition()
+    public bool GetStateCondition(int NumAlternativeCondition)
     {
         if (!word) Debug.LogWarning("the Word Found conditional " + name + " not have a word assigned");
         return word.GetIsFound();

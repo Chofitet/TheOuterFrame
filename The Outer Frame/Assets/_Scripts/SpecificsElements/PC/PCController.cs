@@ -14,10 +14,13 @@ public class PCController : MonoBehaviour
     [SerializeField] GameEvent OnWordAccessScreen;
     [SerializeField] GameEvent OnKeyBoardSound;
     [SerializeField] List<GameObject> PanelsAppearsOnSearch = new List<GameObject>();
+    [SerializeField] WordData IrrelevantDB;
+    [SerializeField] GameObject BtnBackToLastEntry;
     GameEvent LastWindow;
     bool isWaitingAWord;
     bool inWordAccessWindow;
 
+    WordData LastDBSearch;
     WordData word;
     bool isInPCView;
     TypingAnimText textAnim;
@@ -72,17 +75,25 @@ public class PCController : MonoBehaviour
         if (!isInPCView) return;
         WordData _word = (WordData)obj;
         word = _word;
-        SearchWordInWiki();
+        SearchWordInWiki(true);
     }
-
     public void UpdateDataBase(Component sender, object obj)
     {
         SearchWordInWiki();
         LastWindow?.Invoke(this, null);
     }
 
-    public void SearchWordInWiki()
+    public void BackLastEntry(Component sender, object obj)
     {
+        if (!isInPCView) return;
+        WordData _word = (WordData)obj;
+        word = _word;
+        SearchWordInWiki();
+    }
+
+    public void SearchWordInWiki(bool SearchedFromLink = false)
+    {
+        BtnBackToLastEntry.SetActive(false);
         if (!word)
         {
             SearchBar.text = " |";
@@ -93,8 +104,19 @@ public class PCController : MonoBehaviour
             return;
         }
 
+        if(word == IrrelevantDB) foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
+
         foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(true);
         DataBaseType db = WordsManager.WM.RequestBDWikiData(word);
+
+        StopAllCoroutines();
+
+        if (SearchedFromLink)
+        {
+            StartCoroutine(DelayBTNBackLatEntryAppear());
+            BtnBackToLastEntry.GetComponent<BackToLastEntryBTNController>().SetWordToBack(word);
+        }
+            
 
         if (db.GetAccessWord() && !db.GetisWordAccessFound())
         {
@@ -106,7 +128,7 @@ public class PCController : MonoBehaviour
         WikiTitleSearchedWord.text = word.GetForm_DatabaseNameVersion();
 
         isWaitingAWord = true;
-        StopAllCoroutines();
+       
         StartCoroutine(IdleSearchBarAnim());
         
         OnPCSearchWord?.Invoke(this, word);
@@ -138,5 +160,10 @@ public class PCController : MonoBehaviour
         }
     }
 
+    IEnumerator DelayBTNBackLatEntryAppear()
+    {
+        yield return new WaitForSeconds(0.4f);
+        BtnBackToLastEntry.SetActive(true);
+    }
 
 }

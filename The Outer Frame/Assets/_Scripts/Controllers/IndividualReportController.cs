@@ -39,6 +39,7 @@ public class IndividualReportController : MonoBehaviour
         if (isComplete && !report.GetTriggerDrawerAnim())
         {
             UpdatePCDatabase?.Invoke(this, word);
+            word.AddStateInDBEntryStateHistory(report.GetState());
             report.setwasRegisteredInDB();
         }
         else

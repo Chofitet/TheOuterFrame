@@ -29,6 +29,7 @@ public class PCWikiController : MonoBehaviour
         WordData wordData = (WordData)_wordData;
 
         input = WordsManager.WM.RequestBDWikiData(wordData);
+        input.SetWasSearched();
 
         foreach (Transform child in WikiData.transform)
         {

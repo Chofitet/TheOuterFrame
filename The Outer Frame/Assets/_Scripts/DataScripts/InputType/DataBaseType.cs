@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New BDEnter", menuName = "DB")]
-public class DataBaseType : ScriptableObject, IReseteableScriptableObject
+public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
 {
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] WordData AccessWord;
@@ -28,7 +28,11 @@ public class DataBaseType : ScriptableObject, IReseteableScriptableObject
     [SerializeField] string areacode;
     [SerializeField] string classification;
     [SerializeField] string serial;
+
+    [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     [NonSerialized] bool isWordAccessFound;
+    [NonSerialized] bool wasSearched;
+    [NonSerialized] bool WasSetted;
 
     private void OnEnable()
     {
@@ -38,6 +42,8 @@ public class DataBaseType : ScriptableObject, IReseteableScriptableObject
     public void ResetScriptableObject()
     {
         isWordAccessFound = false;
+        wasSearched = false;
+        WasSetted = false;
     }
 
 
@@ -57,6 +63,11 @@ public class DataBaseType : ScriptableObject, IReseteableScriptableObject
     public WordData GetwordToUnlock() { return wordToUnlock; }
 
     public StateEnum GetUnlockState() { return UnlockState; }
+
+    public void SetWasSearched() => wasSearched = true;
+    public bool GetWasSearched() { return wasSearched; }
+
+    public void SetWasSetted() => WasSetted = true;
 
     private TimeData CompleteTime;
     public void SetTimeWhenWasDone()
@@ -88,6 +99,33 @@ public class DataBaseType : ScriptableObject, IReseteableScriptableObject
         Debug.Log(aux);
 
         return aux;
+    }
+
+    public bool CheckConditionals()
+    {
+        if (Conditions == null) return true;
+        if (WasSetted) return false;
+
+        foreach (ConditionalClass conditional in Conditions)
+        {
+            IConditionable auxInterface = conditional.condition as IConditionable;
+
+            bool conditionState = auxInterface.GetStateCondition(3);
+
+
+            if (!conditional.ifNot)
+            {
+                conditionState = !conditionState;
+            }
+
+            if (conditionState)
+            {
+                return false;
+            }
+        }
+
+            return true;
+      
     }
 
     
