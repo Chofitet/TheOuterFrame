@@ -90,9 +90,9 @@ public class WordSelectedInNotebook : MonoBehaviour
         {
             IsWordAlreadyExist(num).SetIsPhoneNumberFound(); 
         }
-
+        num.SetIsPhoneNumberFound();
         OnSlidePhones?.Invoke(this,true);
-        OnShowNumNotebook?.Invoke(this, IsWordAlreadyExist(num));
+        OnShowNumNotebook?.Invoke(this, num);
         
     }
 
@@ -131,7 +131,7 @@ public class WordSelectedInNotebook : MonoBehaviour
     {
         foreach(WordData word in WordsFound)
         {
-            if(word.GetPhoneNumber() == Num.GetName())
+            if(word.GetPhoneNumber() == Num.GetPhoneNumber())
             {
 
                 return word;

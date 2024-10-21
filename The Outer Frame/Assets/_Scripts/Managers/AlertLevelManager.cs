@@ -27,8 +27,6 @@ public class AlertLevelManager : MonoBehaviour
         int incruseNum = (int)obj;
         level = level + incruseNum;
 
-        NumLevel.text = level + "%";
-
         if (level >= 100)
         {
             Invoke("end", 0.2f);
@@ -46,7 +44,8 @@ public class AlertLevelManager : MonoBehaviour
             OnDownAlertLevel?.Invoke(this, null);
         }
 
-        
+        if (level < 0) level = 0;
+        NumLevel.text = level + "%";
     }
     private void end()
     {

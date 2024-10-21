@@ -63,6 +63,7 @@ public class NotebookWordInstance : MonoBehaviour
 
     public void CrossOutWord()
     {
+        if (isCross) return;
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y),0.3f);
         OnCrossWordSound?.Invoke(this, null);
