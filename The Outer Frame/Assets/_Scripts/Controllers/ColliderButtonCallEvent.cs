@@ -9,12 +9,13 @@ public class ColliderButtonCallEvent : MonoBehaviour
     [SerializeField] GameEvent[] EventsToTrigger;
     [SerializeField] bool DisabledInTouch;
     [SerializeField] GameObject SomethingToPass;
+    [SerializeField] float FloatToPass;
 
     private void OnMouseUpAsButton()
     {
         foreach(GameEvent e in EventsToTrigger)
         {
-            e?.Invoke(this, SomethingToPass);
+            e?.Invoke(this, Something());
         }
 
         if (DisabledInTouch) GetComponent<BoxCollider>().enabled = false;
@@ -23,5 +24,13 @@ public class ColliderButtonCallEvent : MonoBehaviour
     public void EnableBTN(Component sender, object obj)
     {
         GetComponent<BoxCollider>().enabled = true;
+    }
+
+    private object Something()
+    {
+        if (SomethingToPass != null) return SomethingToPass;
+        else if (FloatToPass != 0) return FloatToPass;
+
+        return null;
     }
 }

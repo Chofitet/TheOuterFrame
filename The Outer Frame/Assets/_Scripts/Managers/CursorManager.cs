@@ -23,7 +23,7 @@ public class CursorManager : MonoBehaviour
     private void Start()
     {
         Cursor.SetCursor(DefaultCursor, new Vector2(DefaultCursor.width / 2, DefaultCursor.height / 2), CursorMode.Auto);
-        raycaster = targetCanvas.GetComponent<GraphicRaycaster>();
+        if(targetCanvas != null)  raycaster = targetCanvas.GetComponent<GraphicRaycaster>();
         eventSystem = EventSystem.current;
     }
 
@@ -115,6 +115,7 @@ public class CursorManager : MonoBehaviour
 
     private bool IsPointerOverCanvas()
     {
+        if(!raycaster) return false;
         pointerEventData = new PointerEventData(eventSystem);
         pointerEventData.position = Input.mousePosition;
 

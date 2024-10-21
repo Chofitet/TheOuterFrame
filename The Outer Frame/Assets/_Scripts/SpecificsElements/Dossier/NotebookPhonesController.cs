@@ -36,8 +36,9 @@ public class NotebookPhonesController : MonoBehaviour
 
         if (replaceBool) return;
 
-        if (LastPhoneAdded.GetIsPhoneNumberFound())
+        if (LastPhoneAdded.GetIsPhoneNumberFound() && LastPhoneAdded.GetIsAPhoneNumber())
         {
+            // Entra si la palabra está agregada pero le falta el número
             foreach (GameObject phone in WordsInstances)
             {
                 PhoneRowNotebookController PhoneScript = phone.GetComponent<PhoneRowNotebookController>();
@@ -49,6 +50,7 @@ public class NotebookPhonesController : MonoBehaviour
             }
         }
 
+        //Entra si hay un número agregado y falta su palabra
         if (SearchForAnExistingPhoneNum(LastPhoneAdded)) return;
 
         GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
@@ -130,6 +132,7 @@ public class NotebookPhonesController : MonoBehaviour
                 if (!script.GetWord().GetIsPhoneNumberFound()) continue;
 
                 script.ReplaceNumberWithWord(word);
+                word.SetIsPhoneNumberFound();
                 return true;
             }
 

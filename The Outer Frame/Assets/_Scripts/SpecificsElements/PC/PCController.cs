@@ -79,6 +79,7 @@ public class PCController : MonoBehaviour
     }
     public void UpdateDataBase(Component sender, object obj)
     {
+        word = _LastSearchedWord;
         SearchWordInWiki();
         LastWindow?.Invoke(this, null);
     }
@@ -98,7 +99,7 @@ public class PCController : MonoBehaviour
 
     public void SearchWordInWiki(WordData LastSearchedWord = null)
     {
-        BtnBackToLastEntry.SetActive(false);
+        //BtnBackToLastEntry.SetActive(false);
         if (!word)
         {
             SearchBar.text = " |";
@@ -115,11 +116,11 @@ public class PCController : MonoBehaviour
 
         StopAllCoroutines();
 
-        if (LastSearchedWord != null)
+        /*if (LastSearchedWord != null)
         {
             StartCoroutine(DelayBTNBackLatEntryAppear());
             BtnBackToLastEntry.GetComponent<BackToLastEntryBTNController>().SetWordToBack(LastSearchedWord);
-        }
+        }*/
             
 
         if (db.GetAccessWord() && !db.GetisWordAccessFound())

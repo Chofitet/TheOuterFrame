@@ -62,8 +62,14 @@ public class PCWikiController : MonoBehaviour
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
         image.sprite = input.GetImage();
         CompleteFields();
+        Invoke("DelayLoadCrossBar", 0.1f);
         //PhoneNumber.text = input.GetPhoneNum();
         //FindableWordsManager.FWM.InstanciateFindableWord(PhoneNumber);
+    }
+
+    private void DelayLoadCrossBar()
+    {
+        WikiData.ForceMeshUpdate();
     }
 
     bool CheckForUnlockCondition(DataBaseType DB)

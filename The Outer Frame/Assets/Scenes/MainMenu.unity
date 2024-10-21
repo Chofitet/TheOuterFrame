@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 313980241}
   - component: {fileID: 313980240}
   - component: {fileID: 313980239}
+  - component: {fileID: 313980243}
   m_Layer: 5
   m_Name: CreditBTN
   m_TagString: Untagged
@@ -407,6 +408,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313980237}
   m_CullTransparentMesh: 1
+--- !u!114 &313980243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313980237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &335737071
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,6 +702,7 @@ GameObject:
   - component: {fileID: 728913032}
   - component: {fileID: 728913031}
   - component: {fileID: 728913034}
+  - component: {fileID: 728913035}
   m_Layer: 5
   m_Name: PlayBTN
   m_TagString: Untagged
@@ -826,6 +840,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e069a67fbe9177e4db980499aaedcb61, type: 2}
   SomethingToPass: {fileID: 0}
   SomeStringToPass: Intro
+--- !u!114 &728913035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728913029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1100718995
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,6 +865,7 @@ GameObject:
   - component: {fileID: 1100718999}
   - component: {fileID: 1100718998}
   - component: {fileID: 1100718997}
+  - component: {fileID: 1100719001}
   m_Layer: 5
   m_Name: QuitBTN
   m_TagString: Untagged
@@ -976,6 +1003,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100718995}
   m_CullTransparentMesh: 1
+--- !u!114 &1100719001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100718995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1133050854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1133050856}
+  - component: {fileID: 1133050855}
+  m_Layer: 0
+  m_Name: CursorSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1133050855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133050854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbad10dcc51140f4bb240cee48227167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultCursor: {fileID: 2800000, guid: a5b44d2c52e0ba041ae24384879eb7f7, type: 3}
+  ClickCursor: {fileID: 2800000, guid: e4637df0c0c23ad4c89c9dd3d45e67ed, type: 3}
+  InteractiveCursor: {fileID: 2800000, guid: e25f178d28e679842b1a5f833f961e78, type: 3}
+  PCDefaultCursor: {fileID: 0}
+  PCClickCursor: {fileID: 0}
+  PCInteractiveCursor: {fileID: 0}
+  targetCanvas: {fileID: 0}
+--- !u!4 &1133050856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133050854}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.02371437, y: 0.24559397, z: -0.09955045}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1289978937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,6 +1432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38544370cad95794199debd67e2d3d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnStartGame: {fileID: 0}
   fadeScenePrefab: {fileID: 2873694115137627895, guid: c6a5178aac375ff488c2c774b98ed10b, type: 3}
 --- !u!4 &1500169390
 Transform:
@@ -1812,3 +1903,4 @@ SceneRoots:
   - {fileID: 1730181742}
   - {fileID: 1500169390}
   - {fileID: 506394338}
+  - {fileID: 1133050856}
