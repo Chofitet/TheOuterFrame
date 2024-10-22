@@ -190,7 +190,9 @@ public class WordSelectedInNotebook : MonoBehaviour
         return auxWord;
     }
 
-    public void UnselectWord() => SelectedWord = null;
+    public void UnselectWord()
+    {
+        SelectedWord = null; }
 
 
     public void SetSelectedWord(WordData word)

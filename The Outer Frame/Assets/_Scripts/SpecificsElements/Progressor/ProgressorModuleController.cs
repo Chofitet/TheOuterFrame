@@ -79,7 +79,9 @@ public class ProgressorModuleController : MonoBehaviour
 
     public void AbortLogic(Component sender, object obj)
     {
-        if (!isFull) return;
+        Debug.Log(isFull);
+
+        //if (!isFull) return;
         if (!isAbortOpen)
         {
             if (sender.gameObject == SwitchAbortBTN)

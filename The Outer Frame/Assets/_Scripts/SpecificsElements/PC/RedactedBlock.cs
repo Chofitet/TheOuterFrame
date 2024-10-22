@@ -6,11 +6,28 @@ using UnityEngine;
 public class RedactedBlock : MonoBehaviour
 {
 
-    public void Initialization()
+    public void Initialization(string redactedText)
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
 
         rectTransform.localPosition = rectTransform.localPosition + new Vector3(-1.288529f, 0.327f, 0);
+
+        if (redactedText == "RE")
+        {
+            rectTransform.sizeDelta = new Vector2(5.3f, rectTransform.sizeDelta.y);
+        }
+        else if (redactedText == "REDA")
+        {
+            rectTransform.sizeDelta = new Vector2(8.3f, rectTransform.sizeDelta.y);
+        }
+        else if (redactedText == "REDACTED")
+        {
+           
+        }
+        else if (redactedText == "REDACTEDTO")
+        {
+            rectTransform.sizeDelta = new Vector2(17.4f, rectTransform.sizeDelta.y);
+        }
 
         //Invoke("CheckIfInsideRect", 0.1f);
     }

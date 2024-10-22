@@ -61,6 +61,11 @@ public class WordsManager : MonoBehaviour
     private void OnDisable()
     {
         DeleteVilifiedCondition();
+
+        foreach (WordData word in wordsDic)
+        {
+            word.disableSet();
+        }
     }
     public ReportType RequestReport(WordData _word, StateEnum state)
     {
@@ -242,6 +247,7 @@ public class WordsManager : MonoBehaviour
             word.GetVilifiedNew().removeCondition();
         }
     }
+
 
     void CopyCallsToPhoneWords()
     {

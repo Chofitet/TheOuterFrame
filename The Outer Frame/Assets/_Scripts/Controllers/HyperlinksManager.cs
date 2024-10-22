@@ -13,6 +13,10 @@ public class HyperlinksManager : MonoBehaviour
     public static HyperlinksManager HLM { get; private set; }
     List<GameObject> HyperLinkBTNs = new List<GameObject>();
 
+    [Header("Remove from Irrelevant")]
+    [SerializeField] WordData Irrelevant;
+    [SerializeField] List<DataRemoveIrrelevant> DataToUpdateIrrelevantDB = new List<DataRemoveIrrelevant>();
+
     private void Awake()
     {
         if (HLM != null && HLM != this)
@@ -43,6 +47,8 @@ public class HyperlinksManager : MonoBehaviour
             }
             currentTransform = currentTransform.parent;
         }
+
+        RemoveFindableAsToIrrelevant();
 
         try
         {
@@ -205,4 +211,48 @@ public class HyperlinksManager : MonoBehaviour
 
         return Regex.Replace(normalizedText, @"<u>(.*?)<\/u>", "ii$1ij");
     }
+
+    void RemoveFindableAsToIrrelevant()
+    {
+        foreach(DataRemoveIrrelevant data in DataToUpdateIrrelevantDB)
+        {
+            if(CheckConditionals(data.Conditions))
+            {
+                Irrelevant.DeleteFoundAsWord(data.FindableAsToRemove);
+            }
+        }
+    }
+
+    public bool CheckConditionals(List<ConditionalClass> list)
+    {
+        //es el estado default
+        if (list == null) return true;
+
+        foreach (ConditionalClass conditional in list)
+        {
+            IConditionable auxInterface = conditional.condition as IConditionable;
+
+            bool conditionState = auxInterface.GetStateCondition(3);
+
+            //Debug.Log("last compete conditional of " + auxInterface + " is " + auxInterface.GetLastCompletedConditional());
+
+            if (!conditional.ifNot)
+            {
+                conditionState = !conditionState;
+            }
+
+            if (conditionState)
+            {
+                return false;
+            }
+        }
+
+            return true;
+    }
+}
+[Serializable]
+public class DataRemoveIrrelevant
+{
+    public string FindableAsToRemove;
+    public List<ConditionalClass> Conditions;
 }
