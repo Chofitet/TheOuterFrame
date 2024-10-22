@@ -12,6 +12,7 @@ public class NotebookMoveController : MonoBehaviour
     [SerializeField] GameEvent OnSlidePhoneDownSound;
     [SerializeField] GameEvent OnTakeNotebookSound;
     [SerializeField] GameEvent OnLeaveNotebookSound;
+    [SerializeField] GameEvent OnManualSlidePhonePage;
     Animator anim;
     private Sequence moveSequence;
     private Sequence moveWiteWordSequence;
@@ -156,6 +157,7 @@ public class NotebookMoveController : MonoBehaviour
 
         if (obj is bool)
         {
+            
             bool toOpenPhones = (bool)obj;
             if (!IsPhonesOpen && toOpenPhones) OpenPhoneNums();
             else if(IsPhonesOpen && !toOpenPhones)
@@ -164,6 +166,7 @@ public class NotebookMoveController : MonoBehaviour
             }
             return;
         }
+        OnManualSlidePhonePage?.Invoke(this, null);
         if (!IsPhonesOpen) OpenPhoneNums();
         else
         {

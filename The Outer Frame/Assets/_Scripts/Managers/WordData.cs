@@ -544,12 +544,12 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     List<string> InitFindableAs;
     void SaveFindableAs()
     {
-        InitFindableAs = FindableAs;
+        InitFindableAs = new List<string>(FindableAs); 
     }
 
     void RestartFindableAs()
     {
-        FindableAs = InitFindableAs;
+        FindableAs = new List<string>(InitFindableAs);
     }
 
     public TimeData GetTimeOfState(StateEnum state)

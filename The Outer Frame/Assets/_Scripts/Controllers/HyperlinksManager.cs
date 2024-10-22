@@ -218,7 +218,7 @@ public class HyperlinksManager : MonoBehaviour
         {
             if(CheckConditionals(data.Conditions))
             {
-                data.word.DeleteFoundAsWord(data.FindableAsToRemove);
+                Irrelevant.DeleteFoundAsWord(data.FindableAsToRemove);
             }
         }
     }
@@ -232,7 +232,7 @@ public class HyperlinksManager : MonoBehaviour
         {
             IConditionable auxInterface = conditional.condition as IConditionable;
 
-            bool conditionState = auxInterface.GetStateCondition();
+            bool conditionState = auxInterface.GetStateCondition(3);
 
             //Debug.Log("last compete conditional of " + auxInterface + " is " + auxInterface.GetLastCompletedConditional());
 
@@ -250,10 +250,9 @@ public class HyperlinksManager : MonoBehaviour
             return true;
     }
 }
-
-class DataRemoveIrrelevant
+[Serializable]
+public class DataRemoveIrrelevant
 {
-    public WordData word;
     public string FindableAsToRemove;
     public List<ConditionalClass> Conditions;
 }

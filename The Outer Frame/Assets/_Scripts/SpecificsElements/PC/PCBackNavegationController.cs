@@ -45,7 +45,7 @@ public class PCBackNavegationController : MonoBehaviour
             if (SearchedWordsHistory.Last() == null || SearchedWordsHistory.Last() == Irrelevant) SearchedWordsHistory.RemoveAt(SearchedWordsHistory.Count - 1);
 
 
-            if (word == SearchedWordsHistory.Last()) return;
+            if(SearchedWordsHistory.Count != 0) if (word == SearchedWordsHistory.Last()) return;
         }
 
 

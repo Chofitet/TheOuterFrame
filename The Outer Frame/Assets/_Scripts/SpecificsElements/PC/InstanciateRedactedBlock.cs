@@ -55,12 +55,12 @@ public class InstanciateRedactedBlock : MonoBehaviour
             }
             RedactedBlockList.Clear();
 
-            List<Vector3> PositionsWord = SearchForRedactedBlocks(textField, false);
+            List<RedactedBlockData> PositionsWord = SearchForRedactedBlocks(textField, false);
 
-            foreach (Vector3 w in PositionsWord)
+            foreach (RedactedBlockData w in PositionsWord)
             {
-                GameObject auxObj = Instantiate(redactedBlockPrefab, w, textField.transform.rotation, textField.transform);
-                auxObj.GetComponent<RedactedBlock>().Initialization();
+                GameObject auxObj = Instantiate(redactedBlockPrefab, w.position, textField.transform.rotation, textField.transform);
+                auxObj.GetComponent<RedactedBlock>().Initialization(w.redactedText);
                 RedactedBlockList.Add(auxObj);
             }
         }
@@ -77,9 +77,9 @@ public class InstanciateRedactedBlock : MonoBehaviour
     }
 
 
-    List<Vector3> SearchForRedactedBlocks(TMP_Text textField, bool applyXCorrection)
+    List<RedactedBlockData> SearchForRedactedBlocks(TMP_Text textField, bool applyXCorrection)
     {
-        List<Vector3> aux = new List<Vector3>();
+        List<RedactedBlockData> aux = new List<RedactedBlockData>();
 
         textField.textInfo.Clear();
 
@@ -102,17 +102,29 @@ public class InstanciateRedactedBlock : MonoBehaviour
             if (i >= WordsCount - (WordsCount - wordDiference)) break;
             if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord())) continue;
             string actualWord = wordInfo.GetWord();
-            if (wordInfo.GetWord().Contains("REDACTED"))
+            if (wordInfo.GetWord() == "REDACTED" || wordInfo.GetWord() == "RE" || wordInfo.GetWord() == "REDACTEDTO" || wordInfo.GetWord() == "REDA")
             {
                 var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
                 var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
                 wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
-                aux.Add(wordLocation);
+                aux.Add(new RedactedBlockData(wordLocation, wordInfo.GetWord()));
                     
                 e++;
             }
             i++;
         }
         return aux;
+    }
+}
+
+class RedactedBlockData
+{
+    public Vector3 position;
+    public string redactedText;
+
+    public RedactedBlockData(Vector3 _position, string _redactedText)
+    {
+        position = _position;
+        redactedText = _redactedText;
     }
 }
