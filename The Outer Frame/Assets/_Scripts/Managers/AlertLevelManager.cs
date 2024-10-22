@@ -16,7 +16,7 @@ public class AlertLevelManager : MonoBehaviour
     [SerializeField] GameEvent OnDownAlertLevel;
     int level;
 
-    private void Start()
+    private void OnEnable()
     {
         level = InitAlertLevel;
     }
@@ -26,6 +26,9 @@ public class AlertLevelManager : MonoBehaviour
     {
         int incruseNum = (int)obj;
         level = level + incruseNum;
+
+        if (level < 0) level = 0;
+        NumLevel.text = level + "%";
 
         if (level >= 100)
         {
@@ -44,8 +47,7 @@ public class AlertLevelManager : MonoBehaviour
             OnDownAlertLevel?.Invoke(this, null);
         }
 
-        if (level < 0) level = 0;
-        NumLevel.text = level + "%";
+
     }
     private void end()
     {

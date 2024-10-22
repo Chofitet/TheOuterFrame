@@ -62,6 +62,12 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
         SetCallsInfo();
         CurrentDB = DBTypes;
+        SaveFindableAs();
+    }
+
+    public void disableSet()
+    {
+        RestartFindableAs();
     }
 
     public TVNewType GetTVnew(StateEnum state)
@@ -518,6 +524,32 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         }
 
         ActionsStates = oldword.GetActionStatesList();
+    }
+
+    public void DeleteFoundAsWord(string foundAsTxt)
+    {
+        string WordToRemove = "";
+
+        foreach(string s in FindableAs)
+        {
+            if(foundAsTxt == s)
+            {
+                WordToRemove = s;
+            }
+        }
+
+        FindableAs.Remove(WordToRemove);
+    }
+
+    List<string> InitFindableAs;
+    void SaveFindableAs()
+    {
+        InitFindableAs = FindableAs;
+    }
+
+    void RestartFindableAs()
+    {
+        FindableAs = InitFindableAs;
     }
 
     public TimeData GetTimeOfState(StateEnum state)
