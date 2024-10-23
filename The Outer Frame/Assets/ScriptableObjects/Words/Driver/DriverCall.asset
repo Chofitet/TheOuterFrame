@@ -12,12 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: DriverCall
   m_EditorClassIdentifier: 
-  StartTime: {fileID: 11400000, guid: 01f290b79b6e4764ba235c400a3d44f5, type: 2}
-  EndTime: {fileID: 11400000, guid: d1fcce0d1f3429843adab6a06f7f5bab, type: 2}
+  StartHour: 4
+  StartMinute: 25
+  EndHour: 5
+  EndMinute: 55
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
-  Dialogue: HI DARLING
+  From: 
+  To: 
+  Dialogue: "HONEY I THINK IM IN TROUBLE. FIRST OF ALL IM FINE SO DONT YOU GO ALL
+    WORRY LIKE IM OKAY BUT THE THING IS I CRASHED <link>THE TRUCK</link> I DIDNT
+    MEAN TO DO IT <link>SOMETHING BIG</link> JUMPED IN FRONT OF IT AT LEAST THATS
+    WHAT I REMEMBER WHATEVER IT WAS IT LEFT BECAUSE THERE WAS NOTHING BUT ME AND
+    <link>THE TRUCK</link> WHEN I WOKE UP AND NO I AM NOT DRINKING AGAIN \r\nAND
+    YOULL JUST HAVE TO BELIEVE ME ON THAT. I AM HIDING NEAR THE THING I AM KIND OF
+    AFRAID OF MY BOSS YOU SEE? BUT WHEN I GET THE COURAGE I WILL GO TALK TO THEM\r\n"
+  IterruptedDialogue: 
+  Involved: []
   Conditions:
   - condition: {fileID: 11400000, guid: 4db02c4d0e13c29419c319ccd8a753ec, type: 2}
     ifNot: 1
