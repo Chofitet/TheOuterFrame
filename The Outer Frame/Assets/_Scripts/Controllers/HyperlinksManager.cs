@@ -17,6 +17,16 @@ public class HyperlinksManager : MonoBehaviour
     [SerializeField] WordData Irrelevant;
     [SerializeField] List<DataRemoveIrrelevant> DataToUpdateIrrelevantDB = new List<DataRemoveIrrelevant>();
 
+    private void OnEnable()
+    {
+        TimeManager.OnMinuteChange += RemoveFindableAsToIrrelevant;
+    }
+
+    private void OnDisable()
+    {
+        TimeManager.OnMinuteChange -= RemoveFindableAsToIrrelevant;
+    }
+
     private void Awake()
     {
         if (HLM != null && HLM != this)

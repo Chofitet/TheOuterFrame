@@ -187,12 +187,13 @@ public class WordsManager : MonoBehaviour
     {
         return FindWordInList(_word).GetInactiveState();
     }
-    public WordData FindWordDataWithString(string WordToCompare)
+    public WordData FindWordDataWithString(string WordToCompare, WordData WordIgnore = null)
     {
         WordData WD = wordsDic[0];
-        
+
         foreach (WordData w in wordsDic)
         {
+            if (WordIgnore == w) continue;
             if (NormalizeWord(w.FindFindableName(WordToCompare)) == (NormalizeWord(WordToCompare)))
             {
                 WD = w;

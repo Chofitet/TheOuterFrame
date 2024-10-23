@@ -126,6 +126,11 @@ public class ActionPlan : MonoBehaviour
         else isInDossier = false;
     }
 
+    public void ProgressorSetNotFull(Component sender, object obj)
+    {
+        isProgressorFull = false;
+    }
+
 }
 
 public class DataFromActionPlan

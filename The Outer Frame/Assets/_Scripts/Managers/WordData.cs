@@ -422,6 +422,11 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         if (UpdatedDataBase.Count == 0) return;
         foreach(DataBaseType DB in UpdatedDataBase)
         {
+            if (DB == null)
+            {
+                Debug.Log("The word " + GetName() + " have a null update database");
+                continue;
+            }
             if(DB.CheckConditionals())
             {
                 CurrentDB = DB;

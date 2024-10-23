@@ -14,7 +14,7 @@ public class FindableWordsManager : MonoBehaviour
     [SerializeField] GameObject ButtonHyperLink;
     List<GameObject> FindableWordsBTNs = new List<GameObject>();
     [SerializeField] GameEvent OnFindableWordInstance;
-
+    [SerializeField] WordData Irrelevant;
    
     
     public static FindableWordsManager FWM { get; private set; }
@@ -188,7 +188,7 @@ public class FindableWordsManager : MonoBehaviour
                         combinedWordLength = combinedWordLength + spaceToAdd;
                         heightInfo += heightInfo / 4;
                         checkSlicebtn = true;
-                        findableWords.Add(new FindableWordData( word,wordLocation, combinedWordLength,heightInfo, checkSlicebtn));
+                        findableWords.Add(new FindableWordData( word,wordLocation, combinedWordLength,heightInfo, checkSlicebtn, Irrelevant));
                         wordLocation = textField.transform.TransformPoint(
                         textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].topLeft);
                         combinedWordLength = 0;
@@ -201,7 +201,7 @@ public class FindableWordsManager : MonoBehaviour
                 combinedWordLength = combinedWordLength + spaceToAdd;
                 heightInfo += heightInfo / 4;
 
-                findableWords.Add(new FindableWordData(word,wordLocation,combinedWordLength,heightInfo,checkSlicebtn));
+                findableWords.Add(new FindableWordData(word,wordLocation,combinedWordLength,heightInfo,checkSlicebtn, Irrelevant));
             }
 
         return findableWords;
@@ -266,9 +266,9 @@ public struct FindableWordData
     float heigth;
     bool isRepitedButton;
 
-    public FindableWordData(string _name, Vector3 _position, float _with, float _heigth, bool _isRepitedButton)
+    public FindableWordData(string _name, Vector3 _position, float _with, float _heigth, bool _isRepitedButton, WordData _WordIgnore = null)
     {
-        name = WordsManager.WM.FindWordDataWithString(_name);
+        name = WordsManager.WM.FindWordDataWithString(_name, _WordIgnore);
         position = _position;
         width = _with;
         heigth = _heigth;
