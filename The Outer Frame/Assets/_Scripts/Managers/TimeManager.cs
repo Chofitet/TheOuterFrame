@@ -106,7 +106,7 @@ public class TimeManager : MonoBehaviour
                 Minute++;
                 Seconds = 0;
                 OnMinuteChange?.Invoke();
-                Debug.Log("minute: " + Minute);
+               // Debug.Log("minute: " + Minute);
                 CheckGameOverCondition();
 
                 if (Minute >= 60)
