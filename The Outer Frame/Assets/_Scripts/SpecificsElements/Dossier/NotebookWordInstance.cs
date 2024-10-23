@@ -53,6 +53,7 @@ public class NotebookWordInstance : MonoBehaviour
     }
     public void ReplaceWord(WordData word)
     {
+        Debug.Log(wordReference.GetName());
         text.text = wordReference.GetName();
         if (isCross) EraseCrossWord();
         StartCoroutine(AnimFade(text,false,text,true,word.GetName()));

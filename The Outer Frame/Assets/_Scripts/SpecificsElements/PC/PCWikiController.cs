@@ -10,6 +10,7 @@ public class PCWikiController : MonoBehaviour
     [SerializeField] Image image;
     [SerializeField] GameObject LockBTN;
     [SerializeField] TMP_Text LockField;
+    [SerializeField] RectTransform content;
     [SerializeField] List<GameObject> DataBaseFields = new List<GameObject>();
 
     DataBaseType input;
@@ -62,7 +63,7 @@ public class PCWikiController : MonoBehaviour
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
         image.sprite = input.GetImage();
         CompleteFields();
-        Invoke("DelayLoadCrossBar", 0.1f);
+        content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, WikiData.GetComponent<RectTransform>().sizeDelta.y);
         //PhoneNumber.text = input.GetPhoneNum();
         //FindableWordsManager.FWM.InstanciateFindableWord(PhoneNumber);
     }

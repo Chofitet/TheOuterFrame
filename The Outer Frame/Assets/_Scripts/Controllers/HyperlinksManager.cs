@@ -101,6 +101,7 @@ public class HyperlinksManager : MonoBehaviour
         string auxiliaryText = AddCustomTagsToLinks(textField.text); //Replace <link> and </link> to "ii" and "ij"
         textField.text = auxiliaryText;
         HashSet<string> registeredWords = new HashSet<string>();
+        List<string> CleanWords = new List<string>();
 
         if (textField.IsActive()) textField.ForceMeshUpdate();
 
@@ -126,10 +127,11 @@ public class HyperlinksManager : MonoBehaviour
 
                     if (wordInRange.GetWord() == "ii") wordCount--;
 
-                    if (wordInRange.GetWord().EndsWith("ij"))
+                    if (wordInRange.GetWord().Contains("ij"))
                     {
                         //find word finish with </link>
                         if (wordInRange.GetWord() == "ij") wordCount--;
+                        CleanWords.Add(CleanUpAfterTag(wordInRange.GetWord()));
                         break;
                     }
                     currentIndex++;
@@ -195,7 +197,7 @@ public class HyperlinksManager : MonoBehaviour
                     combinedWordLength = combinedWordLength + spaceToAdd;
                     heightInfo += heightInfo / 4;
                     checkSlicebtn = true;
-                    findableWords.Add(new FindableWordData(word, wordLocation, combinedWordLength, heightInfo, checkSlicebtn));
+                    findableWords.Add(new FindableWordData(SearchCleanedWord(CleanWords, word), wordLocation, combinedWordLength, heightInfo, checkSlicebtn));
                     wordLocation = textField.transform.TransformPoint(
                     textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].topLeft);
                     combinedWordLength = 0;
@@ -208,7 +210,7 @@ public class HyperlinksManager : MonoBehaviour
             combinedWordLength = combinedWordLength + spaceToAdd;
             heightInfo += heightInfo / 4;
 
-            findableWords.Add(new FindableWordData(word, wordLocation, combinedWordLength, heightInfo, checkSlicebtn));
+            findableWords.Add(new FindableWordData(SearchCleanedWord(CleanWords,word), wordLocation, combinedWordLength, heightInfo, checkSlicebtn));
         }
 
         return findableWords;
@@ -220,6 +222,41 @@ public class HyperlinksManager : MonoBehaviour
         normalizedText = Regex.Replace(normalizedText, @"\s+", " ");
 
         return Regex.Replace(normalizedText, @"<u>(.*?)<\/u>", "ii$1ij");
+    }
+
+    string CleanUpAfterTag(string word)
+    {
+        if (word.StartsWith("ii"))
+        {
+            word = word.Substring(2); // Elimina los primeros 2 caracteres "ii"
+        }
+
+        int index = word.IndexOf("ij");
+        if (index != -1)
+        {
+            return word.Substring(0, index); // +2 para incluir "ij"
+        }
+        return word.Trim(); 
+    }
+
+    string SearchCleanedWord(List<string> list, string word)
+    {
+        // Dividimos la palabra en un array por los espacios
+        string[] words = word.Split(' ');
+
+        // Buscamos en la lista si alguna palabra coincide con la última palabra de 'words'
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (words[words.Length - 1].Contains(list[i]))
+            {
+                // Reemplazar la última palabra por la coincidencia encontrada
+                words[words.Length - 1] = list[i];
+                break;
+            }
+        }
+
+        // Volvemos a unir las palabras en una cadena
+        return string.Join(" ", words);
     }
 
     void RemoveFindableAsToIrrelevant()

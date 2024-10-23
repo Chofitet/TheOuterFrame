@@ -28,13 +28,16 @@ public class PhoneRowNotebookController : MonoBehaviour
             txtName.text = "?????";
             Num.text = word.GetPhoneNumber();
             button.enabled = true;
-            StartCoroutine(AnimFade(Num, true , txtName,true));
+            Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+            txtName.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
         }
 
         if (!word.GetIsPhoneNumberFound())
         {
             writingTime = 0.5f + 0.5f;
-            StartCoroutine(AnimFade(txtName, true, Num, true));
+            Num.text = "?????";
+            Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+            txtName.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
         }
 
         OnWritingShakeNotebook?.Invoke(this, writingTime);
@@ -61,10 +64,14 @@ public class PhoneRowNotebookController : MonoBehaviour
         txtName.text = word.GetName();
         word = _word;
         StartCoroutine(AnimFade(txtName, false, txtName, true, _word.GetName()));
-        string auxNum = "?????";
-        if (_word.GetIsPhoneNumberFound()) auxNum = _word.GetPhoneNumber();
+        
+        if (_word.GetIsPhoneNumberFound())
+        {
+            string auxNum = "?????";
+            auxNum = _word.GetPhoneNumber();
 
-        StartCoroutine(AnimFade(Num, false, Num, true, auxNum));
+            StartCoroutine(AnimFade(Num, false, Num, true, auxNum));
+        }
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
     }
 
