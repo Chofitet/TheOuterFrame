@@ -146,6 +146,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         if (index != -1)
         {
             WordsFound[index] = newWord;
+            if (oldWord.GetIsPhoneNumberFound()) newWord.SetIsPhoneNumberFound();
             if(newWord.GetCopyHistory()) newWord.ReplaceHistory(oldWord);
         }
         else

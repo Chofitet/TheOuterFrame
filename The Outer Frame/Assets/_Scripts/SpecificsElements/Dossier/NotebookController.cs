@@ -99,8 +99,8 @@ public class NotebookController : MonoBehaviour
             NotebookWordInstance script = w.GetComponent<NotebookWordInstance>();
             if (script.GetWord() == newword.GetWordThatReplaces())
             {
-                script.ReplaceWord(newword);
                 ClearUnderLine();
+                script.ReplaceWord(newword);
                 aux = true;
             }
             

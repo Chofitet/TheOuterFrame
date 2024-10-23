@@ -42,7 +42,7 @@ public class PCController : MonoBehaviour
         WordData _word = (WordData)obj;
         
         word = _word;
-        SearchBar.text = word.GetForm_DatabaseNameVersion();
+        SearchBar.text = " " + word.GetForm_DatabaseNameVersion();
         StopCoroutine(IdleSearchBarAnim());
         textAnim.SetCharacterPerSecond();
         isWaitingAWord = false;

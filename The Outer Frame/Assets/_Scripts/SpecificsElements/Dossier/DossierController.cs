@@ -30,7 +30,7 @@ public class DossierController : MonoBehaviour
         anim.SetTrigger("toAP");
         ActionPlanBtn.GetComponent<BoxCollider>().enabled = false;
         BrifingBtn.GetComponent<BoxCollider>().enabled = true;
-        Brifing2BTN.GetComponent<BoxCollider>().enabled = true;
+        if (wasBrieffing2Taked) Brifing2BTN.GetComponent<BoxCollider>().enabled = true;
         isInActionPlan = true;
         isInBrifing = false;
         isInBrifing2 = false;
@@ -46,7 +46,7 @@ public class DossierController : MonoBehaviour
         anim.SetTrigger("toBA");
         BrifingBtn.GetComponent<BoxCollider>().enabled = false;
         ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
-        Brifing2BTN.GetComponent<BoxCollider>().enabled = true;
+        if(wasBrieffing2Taked) Brifing2BTN.GetComponent<BoxCollider>().enabled = true;
 
         isInBrifing = true;
         isInActionPlan = false;
