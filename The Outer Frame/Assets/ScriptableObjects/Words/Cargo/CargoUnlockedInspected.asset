@@ -19,9 +19,9 @@ MonoBehaviour:
   Text: "We did it! We are inside! \nIt's a cluster of mess, there's equipment thrown
     about and <link>green stuff</link> everywhere. \nMore importantly a big dark
     glass box labeled <link>VESSEL Q7-016</link> is laying shattered on the floor.
-    \nAnd it has a big hole. \nAnd it's empty... \nWhatever was in it has liquified
-    into <link>green goo</link> or escaped. \n \nThere's a code printed on the inside
-    of the broken vessel: <link>E-CODE b02i2E90L</link>. \n\nOur bet is on something
+    And it has a big hole. And it's empty... \nWhatever was in it has liquified into
+    <link>green goo</link> or escaped. \n\nThere's a code printed on the inside of
+    the broken vessel: <link>E-CODE b02i2E90L</link>. \n\nOur bet is on something
     being on the loose, Boss. "
   TextForRepetition: 'We already explained why not.
 
@@ -37,4 +37,5 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: bee3a3f0236098241af2f156e6b6669f, type: 2}
     ifNot: 0
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

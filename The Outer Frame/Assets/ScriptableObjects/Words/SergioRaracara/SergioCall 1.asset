@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
+  m_Name: SergioCall 1
+  m_EditorClassIdentifier: 
+  StartHour: 5
+  StartMinute: 0
+  EndHour: 5
+  EndMinute: 30
+  state: {fileID: 0}
+  DelayToShowCallInMinutes: 30
+  CatchWindowInMinutes: 30
+  From: (505) 723-3748
+  To: 
+  Dialogue: '- - - - - - - GUESS WHO - - - - STILL HERE - - STILL FINE - - - - -
+    - I AM REALLY UP FOR A BUBBLE BATH WHEN I COME BACK - - - THIS PLACE STINKS PRETTY
+    BAD - - - WONDER HEN WAS THE LAST TIME ANYBODY CLEANED HERE - - MAYBE SHOULD
+    HAVE HID IN ANOTHER PLACE - - - - - - - - - - - - - - - - - - - - - - - - - -
+    - - - - - I DONT THINK YOU ARE SUPPOSE TO LEAVE MESSAGE AFTER MESSAGE WHEN YOU
+    ARE LAYING LOW - - BUT HEY - - - IM NEW IN ALL THIS (END OF RECORDING)
+
+'
+  IterruptedDialogue: ' - - - - - - - GUESS WHO - - - - STILL HERE - - STILL FINE
+    - - - - - - I AM REALLY UP FOR A BUBBLE BATH WHEN I COME BACK - - - THIS PLACE
+    STINKS PRETTY BAD - - - WONDER HEN WAS THE LAST TIME ANYBODY CLEANED HERE - -
+    WHAT THE (END OF RECORDING)'
+  Involved:
+  - {fileID: 11400000, guid: d7e0ff8badff61546818ab28ba2ce877, type: 2}
+  Conditions:
+  - condition: {fileID: 11400000, guid: 4db02c4d0e13c29419c319ccd8a753ec, type: 2}
+    ifNot: 1
+  isOrderMatters: 0

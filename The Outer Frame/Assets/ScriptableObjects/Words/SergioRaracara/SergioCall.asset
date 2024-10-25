@@ -19,16 +19,27 @@ MonoBehaviour:
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
-  From: 
+  From: (505) 723-3748
   To: 
-  Dialogue: "HONEY I THINK IM IN TROUBLE. FIRST OF ALL IM FINE SO DONT YOU GO ALL
-    WORRY LIKE IM OKAY BUT THE THING IS I CRASHED <link>THE TRUCK</link> I DIDNT
-    MEAN TO DO IT <link>SOMETHING BIG</link> JUMPED IN FRONT OF IT AT LEAST THATS
-    WHAT I REMEMBER WHATEVER IT WAS IT LEFT BECAUSE THERE WAS NOTHING BUT ME AND
-    <link>THE TRUCK</link> WHEN I WOKE UP AND NO I AM NOT DRINKING AGAIN \r\nAND
-    YOULL JUST HAVE TO BELIEVE ME ON THAT. I AM HIDING NEAR THE THING I AM KIND OF
-    AFRAID OF MY BOSS YOU SEE? BUT WHEN I GET THE COURAGE I WILL GO TALK TO THEM\r\n"
-  IterruptedDialogue: 
-  Involved: []
-  Conditions: []
+  Dialogue: "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - HONEY- -
+    - I HOPE YOU GET THIS MESSAGE - - - FIRST OF ALL IM FINE - SO DONT YOU GO ALL
+    WORRY - - - - - NOTHING HAPPEN TO ME- - - IM - - - OKAY - BUT THING IS - - -
+    - I AM GOING TO LAY LOW FOR A WHILE - - - - - - I MAY BE IN REAL TROUBLE - -
+    - - - - SEE - - - - I CRASHED <material=\"EuropeanTypewriterSDFBold><link>THE
+    TRUCK</link></material> - - I DIDNT MEAN TO <material=\"EuropeanTypewriterSDFBold><link>SOMETHING
+    BIG</link></material> JUMPED IN FRONT OF IT <material=\"EuropeanTypewriterSDFBold><link>A
+    NINE FOOT COW</link></material> OR AT LEAST THATS WHAT I THINK IT WAS - - - -
+    BUT NOBODY IS GOINT TO BE BELIEVE ME BECAUSE WHATEVER IT WAS IT LEFT - - - -
+    - NO I AM NOT DRINKING AGAIN - AND YOULL JUST HAVE TO BELIEVE ME ON THAT - -
+    - - - - I AM HIDING NEAR WHERE I CRASH THE THING - - - - I AM KIND OF AFRAID
+    OF MY BOSS SEE - - - - WISH I CO(END OF RECORDING)\n "
+  IterruptedDialogue: ' - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    HONEY- - - I HOPE YOU GET THIS MESSAGE - - - FIRST OF ALL IM FINE - SO DONT YOU
+    GO ALL WORRY - - - - - NOTHING HAPPEN TO ME- - - IM - - - OKAY - BUT THING IS
+    - - - - I AM GOING TO LAY LOW FOR A - - - - SOMEONE GOT INSI (END OF RECORDING)'
+  Involved:
+  - {fileID: 11400000, guid: d7e0ff8badff61546818ab28ba2ce877, type: 2}
+  Conditions:
+  - condition: {fileID: 11400000, guid: 4db02c4d0e13c29419c319ccd8a753ec, type: 2}
+    ifNot: 1
   isOrderMatters: 0
