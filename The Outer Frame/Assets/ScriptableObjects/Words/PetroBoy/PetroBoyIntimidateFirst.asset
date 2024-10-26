@@ -19,7 +19,8 @@ MonoBehaviour:
   Text: "We had a chat with the kid. \r\nYou know. About what maybe kinda happens
     to people who talk way out of turn.\r\n\r\nAnd guess what? He seems to have lost
     all that fiery enthusiasm for sharing what he THOUGHT that happened here tonight.\r\n\r\nHe'll
-    mind his tongue. We won\u2019t need to worry about him.\r\n"
+    mind his tongue. We won\u2019t need to worry about him spilling the beans or
+    getting in our way.\r\n"
   TextForRepetition: We already did that, please check the corresponding report.
   Photos:
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
@@ -28,4 +29,5 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 2911a4787a866f148bd6a4a397ee5325, type: 2}
     ifNot: 1
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

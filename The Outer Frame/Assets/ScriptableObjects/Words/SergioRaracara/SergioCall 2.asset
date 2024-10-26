@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SergioCall 2
   m_EditorClassIdentifier: 
   StartHour: 5
-  StartMinute: 35
+  StartMinute: 40
   EndHour: 6
   EndMinute: 5
   state: {fileID: 0}
@@ -21,8 +21,16 @@ MonoBehaviour:
   CatchWindowInMinutes: 30
   From: (505) 723-3748
   To: 
-  Dialogue: "(END OF RECORDING)\n "
-  IterruptedDialogue: ' (END OF RECORDING)'
+  Dialogue: "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    - - - - - - - - - - - - - - -  YUP ITS ME - - - - - - - - - STILL OKAY - - -
+    BUT -  THERE'S A LOT OF NOISE OUTSIDE - - - - SO ILL KEEP QUIET FOR A LIL WHILE
+    - - - - - - - - HOPE THEY DONT GET INSIDE - - - - - - - - - - - - WHERE ARE YOU
+    - -  - - - - - - - (END OF THE CALL)\n "
+  IterruptedDialogue: '- - - - - - - - - - - - - - - - - - - - -  YUP ITS ME - -
+    - - - - - - - STILL OKAY - - - BUT THERE''S A LOT OF NOISE OUTSIDE - - - - -
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    - - - - - - - - - - - - - - - - WHAT THE(END OF THE CALL)'
   Involved:
   - {fileID: 11400000, guid: d7e0ff8badff61546818ab28ba2ce877, type: 2}
   Conditions:
