@@ -14,13 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
-  isAutomatic: 0
+  isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: 'It''s not big town but it would take us hours to '
-  TextForRepetition: 
+  Text: It would take us hours to scour the whole thing. Maybe there's another way
+    to get some quick intel?
+  TextForRepetition: "WE SAID:  It would take us hours to scour the whole thing.
+    \nMaybe there's another way to get some quick intel?"
   Photos:
-  - photo: {fileID: 0}
-    text: 
+  - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
+    text: MAYBE NEVER
   Conditionals: []
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

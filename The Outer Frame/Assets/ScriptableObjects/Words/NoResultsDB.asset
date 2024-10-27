@@ -10,14 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efb605444a9586044be0c5b68a67b146, type: 3}
-  m_Name: UnrelatedSearch
+  m_Name: NoResultsDB
   m_EditorClassIdentifier: 
-  text: 'Your Search Results has been deemed as unrelated to current assigment.
-
-    ACCESS
-    DENIED
-
-'
+  text: "Your search query has led to no results whatsoever.\n\n\nThere may not exist
+    content associated. \nOr (REDACTED) considers you are looking into stuff irrelevant
+    to your current assignment.\n\nMaybe this is simply not your day.\n"
   AccessWord: {fileID: 0}
   hasLockedBTN: 0
   wordToUnlock: {fileID: 0}
@@ -37,3 +34,4 @@ MonoBehaviour:
   areacode: 
   classification: 
   serial: 
+  Conditions: []
