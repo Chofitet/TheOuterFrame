@@ -15,6 +15,7 @@ MonoBehaviour:
   wordName: A-15?
   FindableAs:
   - subject A-15
+  - A-15
   Form_DatabaseNameVersion: A-15
   ProgressorNameVersion: A-15
   PhoneNumber: 
@@ -34,12 +35,11 @@ MonoBehaviour:
   TVNewTypes:
   - {fileID: 11400000, guid: a71f55677f098524b9da9189d9f75697, type: 2}
   DBTypes: {fileID: 11400000, guid: c642ea856ca073040877c18006c0168d, type: 2}
+  UpdatedDataBase: []
   CallTypes: []
-  InactiveConditions: []
+  InactiveConditions:
+  - {fileID: 0}
+  EraseConditions: []
   WordThatReplaces: {fileID: 11400000, guid: 165932bbf154fae409efe22bbc4a1cd7, type: 2}
   CopyHistory: 0
-  WordsThatDeletes:
-  - word: {fileID: 11400000, guid: d11841b10bd288144ba8b18405e144c9, type: 2}
-    DeleteType: 0
-  - word: {fileID: 11400000, guid: 6e1ecd0b73106d847ae85952d0d168a5, type: 2}
-    DeleteType: 0
+  WordsThatDeletes: []

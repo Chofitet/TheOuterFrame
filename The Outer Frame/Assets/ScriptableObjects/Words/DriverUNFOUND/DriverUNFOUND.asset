@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: DriverUNFOUND
   m_EditorClassIdentifier: 
-  wordName: Truck's Driver??
+  wordName: Truck's Driver ?
   FindableAs:
   - driver
   - Driver
@@ -40,8 +40,15 @@ MonoBehaviour:
   DBTypes: {fileID: 11400000, guid: 3cf52800f57b5784ea4a0505f18727f9, type: 2}
   UpdatedDataBase: []
   CallTypes:
-  - {fileID: 11400000, guid: 9e8221a835ca18740b7991be4f47deff, type: 2}
-  InactiveConditions: []
+  - {fileID: 11400000, guid: 7d8e7127fc7a9364198e2c6500dc9160, type: 2}
+  - {fileID: 11400000, guid: 90bb6a9ef9063ef4596a9c60b691cfd5, type: 2}
+  - {fileID: 11400000, guid: 7c18063e8cdef644ea26def0dbaf5984, type: 2}
+  - {fileID: 11400000, guid: 82a7a50c65e589b44a94b19f7aa4f587, type: 2}
+  - {fileID: 11400000, guid: bf101b979aeb4ae47857a766b69c334c, type: 2}
+  - {fileID: 11400000, guid: 50f4cf8af55c42b44a9f8e33f320a38d, type: 2}
+  - {fileID: 11400000, guid: ae71d24dd8711764baabf3eaa510db9f, type: 2}
+  InactiveConditions:
+  - {fileID: 11400000, guid: 0a0dce72273dc644f8963164e25074df, type: 2}
   EraseConditions:
   - condition: {fileID: 11400000, guid: 0a0dce72273dc644f8963164e25074df, type: 2}
     ifNot: 0

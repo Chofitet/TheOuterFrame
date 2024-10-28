@@ -16,12 +16,21 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 80cb235b60e024c4b8eb6c61e0d19c20, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: afraid now
+  Text: 'He looks a little scared now but he keeps repeating hilself.
+
+    "I did''t
+    take any pictures of anything and I didn''t tell the news"
+
+
+    We are starting
+    to believe the lad.'
   TextForRepetition: "We did that already. \nRemember to read the Reports."
   Photos:
-  - photo: {fileID: 0}
-    text: 
+  - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
+    text: WHAT TO DO?
   Conditionals:
   - condition: {fileID: 11400000, guid: 43e705d835fafef44a2609444361ce2e, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

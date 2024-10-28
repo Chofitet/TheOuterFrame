@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
+  m_Name: SergioCall 3
+  m_EditorClassIdentifier: 
+  StartHour: 6
+  StartMinute: 20
+  EndHour: 6
+  EndMinute: 35
+  state: {fileID: 0}
+  DelayToShowCallInMinutes: 30
+  CatchWindowInMinutes: 30
+  From: (505) 723-3748
+  To: 
+  Dialogue: '- - - - - - - - - ITS ALL THAT THINGS FAULT - - - - - - - - - - - I
+    MEAN IF I WERE <link>THE BIGGEST COW EVER KNOWN TO MAN</link> I WOULDNT BE LIKE
+    HEY LOOK AT MEEE  HEY HEY HEY LOOK IM MOOING ON <link>THE ROAD</link> AND JUMPING
+    IN FRONT OF <link>TRUCKS</link> JUST BECAUSE I HAVE THE BIGGEST COW LEGS EVER
+    AND STUFF - - - - - - - - - - - I WOULD BE SMARTER THAN THAT SEE - - - - - -
+    - - - - - - - - - - - - - - I WOULD PROBABLY - - - - - - - I DONT KNOW - - HELP
+    SOMEONE IN NEED - - - BUT I WOULD BE A BETTER COW THATS FOR SURE - - - - - -
+    - - - - - - - ANYWAY - - - - - - - - - - - - - - - STILL PRETTY NERVOUS - - -
+    - - - - - - BUT IM FINE - - - - - - - - - - - - MISS YOU - (END OF THE CALL)'
+  IterruptedDialogue: '- - - - - - - - - ITS ALL THAT THINGS FAULT - - - - - - -
+    - - - - I MEAN IF I WERE <link>THE BIGGEST COW EVER KNOWN TO MAN</link> I WOULDNT
+    BE LIKE HEY LOOK AT MEEE  HEY HEY HEY LOOK IM MOOING ON WHAT THE(END OF THE CALL)'
+  Involved:
+  - {fileID: 11400000, guid: d7e0ff8badff61546818ab28ba2ce877, type: 2}
+  Conditions:
+  - condition: {fileID: 11400000, guid: 4db02c4d0e13c29419c319ccd8a753ec, type: 2}
+    ifNot: 1
+  isOrderMatters: 0

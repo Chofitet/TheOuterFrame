@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: VTT
   m_EditorClassIdentifier: 
-  wordName: Transport Truck
+  wordName: '"Transport Truck"'
   FindableAs:
   - Transport Trucks
   - truck
@@ -21,6 +21,7 @@ MonoBehaviour:
   - our vehicle
   - the truck
   - THE TRUCK
+  - TRUCKS
   Form_DatabaseNameVersion: Transport Truck
   ProgressorNameVersion: Transport Truck
   PhoneNumber: 
@@ -49,6 +50,7 @@ MonoBehaviour:
   CallTypes: []
   InactiveConditions:
   - {fileID: 11400000, guid: 41bb0fbc777b41145897f32c3534be84, type: 2}
+  - {fileID: 11400000, guid: 528d2117d08524e48a6ed04bd04f12c0, type: 2}
   EraseConditions: []
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0
