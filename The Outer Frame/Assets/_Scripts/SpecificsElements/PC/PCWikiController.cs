@@ -8,6 +8,7 @@ public class PCWikiController : MonoBehaviour
 {
     [SerializeField] TMP_Text WikiData;
     [SerializeField] Image image;
+    [SerializeField] GameObject PhotoField;
     [SerializeField] GameObject LockBTN;
     [SerializeField] TMP_Text LockField;
     [SerializeField] RectTransform content;
@@ -81,8 +82,11 @@ public class PCWikiController : MonoBehaviour
         image.sprite = input.GetImage();
         CompleteFields();
         content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, WikiData.GetComponent<RectTransform>().sizeDelta.y);
-        if (!input.GetImage()) image.gameObject.SetActive(false);
-        else image.gameObject.SetActive(true);
+        if (input.GetImage() == null)
+        {
+            PhotoField.SetActive(false);
+        }
+        else PhotoField.gameObject.SetActive(true);
     
         WikiInfoContent.SetActive(CheckFieldsInWikiInfoContent());
         
