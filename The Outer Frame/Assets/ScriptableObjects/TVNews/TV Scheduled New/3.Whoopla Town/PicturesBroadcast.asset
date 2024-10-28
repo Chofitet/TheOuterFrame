@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: PicturesBroadcast
   m_EditorClassIdentifier: 
   headline: 
-  headlineTwoLines: BIG FOOR LIVES IN WHOOPLA PARK!
+  headlineTwoLines: '<u>BREKING THE INTERNET</u>
+
+    THE BIG FOOT LIVES
+
+    IN
+    WHOOPLA PARK'
   text: 
   image: {fileID: 0}
   channel: 1
   Priority: 1
-  alertLevelIncrement: 45
-  Emergency: 0
+  alertLevelIncrement: 100
+  Emergency: 1
   Day: 0
   Hour: 11
   Minute: 0
   MinTransmitionTime: 10
   Conditions:
-  - condition: {fileID: 11400000, guid: 697f584b176df1f40971e3fc93c156d5, type: 2}
-    ifNot: 0
   - condition: {fileID: 11400000, guid: 030762016c963a54a98175f01d4b4506, type: 2}
     ifNot: 1
   ReplacedIf: []
