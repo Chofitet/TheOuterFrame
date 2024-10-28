@@ -14,7 +14,7 @@ public class DinamicMaterialAssigner : MonoBehaviour
         if (meshRenderer != null)
         {
             // Crea un nuevo material en tiempo de ejecución
-            Material newMaterial = new Material(Shader.Find("Sprites/Default")); // Usamos un shader para sprites
+            Material newMaterial = new Material(Shader.Find("Sprites/Diffuse")); // Usamos un shader para sprites
 
             // Asigna la textura del sprite al nuevo material
             newMaterial.mainTexture = sprite.texture;

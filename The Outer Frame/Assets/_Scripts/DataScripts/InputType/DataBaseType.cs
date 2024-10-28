@@ -28,6 +28,18 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
     [SerializeField] string areacode;
     [SerializeField] string classification;
     [SerializeField] string serial;
+    [SerializeField] string adress;
+    [SerializeField] string ManufacturedBy;
+    [SerializeField] string Email;
+    [SerializeField] string ActiveLot;
+    [SerializeField] string Consualties;
+    [SerializeField] string DeclaredCasualties;
+    [SerializeField] string Married;
+    [SerializeField] string Size;
+    [SerializeField] string Branch;
+    [SerializeField] string MadeBy;
+    [SerializeField] string Technology;
+    [SerializeField] string Type;
 
     [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     [NonSerialized] bool isWordAccessFound;
@@ -95,6 +107,17 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
          aux.Add(11,areacode);
          aux.Add(12,classification);
          aux.Add(13,serial);
+        aux.Add(14, ManufacturedBy);
+        aux.Add(15, Email);
+        aux.Add(16, ActiveLot);
+        aux.Add(17, Consualties);
+        aux.Add(18, DeclaredCasualties);
+        aux.Add(19, Married);
+        aux.Add(20, Size);
+        aux.Add(21, Branch);
+        aux.Add(22, MadeBy);
+        aux.Add(23, Technology);
+        aux.Add(24, Type);
 
         Debug.Log(aux);
 
