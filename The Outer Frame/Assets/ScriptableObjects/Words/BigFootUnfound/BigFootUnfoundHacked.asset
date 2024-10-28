@@ -15,10 +15,10 @@ MonoBehaviour:
   Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   state: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: 0
-  Text: "That hairy sucker has kept the first email he ever made and does not own
-    a VPN. \r\n\r \nSeems to be connected to the park's public wifi... we could track
-    his geo location by his IP! \r\n\r \n\r\r \n...and BAM! Here it is! \r\n\r \nBig
+  ChangeTimeOfAction: 6
+  Text: "That hairy sucker has kept the first email it ever made and does not own
+    a VPN.  Seems to be connected to the park's public wifi... we could track its
+    geo location by its IP! \r\n\r \n\r\r \n...and BAM! Here it is! \r\n\r \nBig
     Foot's desktop's <link>IP Geolocation</link> inside <link>Whoopla Park</link>
     woods. \nYou thought you would have to ask, didn't you? \r\nWell we\u2019re here
     for you, Boss! \r\nYou know that, right? \r\nWe have each other's back. All of
@@ -40,9 +40,7 @@ MonoBehaviour:
     text: YEAH!
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
     text: GEO LOCATED
-  Conditionals:
-  - condition: {fileID: 11400000, guid: 68e04c5e4fdac1f4abf0c3cee2f03ac0, type: 2}
-    ifNot: 0
+  Conditionals: []
   isOrderMatters: 0
   TriggerDrawerAnim: 0
   FinalReport: 0

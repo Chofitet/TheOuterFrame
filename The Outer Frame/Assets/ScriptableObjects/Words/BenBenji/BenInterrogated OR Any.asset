@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21787a5276d74c24e9e60eb8d3299788, type: 3}
+  m_Name: BenInterrogated OR Any
+  m_EditorClassIdentifier: 
+  Conditions:
+  - condition: {fileID: 11400000, guid: e617a404801778f4b879ead661b4ee74, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 90a7a0e1a2faa8c49b1a8778812a2999, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 43e705d835fafef44a2609444361ce2e, type: 2}
+    ifNot: 0
