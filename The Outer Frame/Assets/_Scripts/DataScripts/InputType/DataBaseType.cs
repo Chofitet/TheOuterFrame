@@ -107,17 +107,18 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
          aux.Add(11,areacode);
          aux.Add(12,classification);
          aux.Add(13,serial);
-        aux.Add(14, ManufacturedBy);
-        aux.Add(15, Email);
-        aux.Add(16, ActiveLot);
-        aux.Add(17, Consualties);
-        aux.Add(18, DeclaredCasualties);
-        aux.Add(19, Married);
-        aux.Add(20, Size);
-        aux.Add(21, Branch);
-        aux.Add(22, MadeBy);
-        aux.Add(23, Technology);
-        aux.Add(24, Type);
+        aux.Add(14, adress);
+        aux.Add(15, ManufacturedBy);
+        aux.Add(16, Email);
+        aux.Add(17, ActiveLot);
+        aux.Add(18, Consualties);
+        aux.Add(19, DeclaredCasualties);
+        aux.Add(20, Married);
+        aux.Add(21, Size);
+        aux.Add(22, Branch);
+        aux.Add(23, MadeBy);
+        aux.Add(24, Technology);
+        aux.Add(25, Type);
 
         Debug.Log(aux);
 
