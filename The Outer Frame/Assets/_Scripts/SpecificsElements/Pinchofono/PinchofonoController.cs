@@ -27,6 +27,8 @@ public class PinchofonoController : MonoBehaviour
     bool hasNumberEnter;
     bool printOnce;
     bool haveCallToPrint;
+    bool waitingForPrint;
+    bool printInQueue;
 
     CallType CallToPrint;
     private Animator anim;
@@ -43,11 +45,12 @@ public class PinchofonoController : MonoBehaviour
         StopAllCoroutines();
         AbortConfirmationPanel.SetActive(false);
 
-        if (CallToPrint)
+        if (waitingForPrint)
         {
             StartCoroutine(ShowErrorMessagePanel("You have a pending call"));
             return;
         }
+
 
         if (!hasNumberEnter)
         {
@@ -78,6 +81,12 @@ public class PinchofonoController : MonoBehaviour
         else if(printOnce)
         {
             StartCoroutine(ShowErrorMessagePanel("Take printed call first"));
+        }
+
+        if (printInQueue)
+        {
+            StartCoroutine(ShowErrorMessagePanel("Please empty printer output tray"));
+            return;
         }
         else
         {
@@ -159,7 +168,9 @@ public class PinchofonoController : MonoBehaviour
         CallToPrint = call;
 
         haveCallToPrint = true;
+        waitingForPrint = true;
         SetIsRecordingFalse();
+        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY TO PRINTING";
     }
 
     //CallToPrint
@@ -171,15 +182,18 @@ public class PinchofonoController : MonoBehaviour
         
         printOnce = true;
         ActualWord = null;
-
+        waitingForPrint = false;
+        printInQueue = true;
         anim.SetBool("isCallPossible", false);
         anim.SetTrigger("recordReady");
+        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY TO TAKE";
     }
 
     //OnSelectedWordInNotebook
     public void EnterName(Component sender, object obj)
     {
         if (isRecording) return;
+        if (waitingForPrint) return;
         StopAllCoroutines();
         ShowPanel(ScreenContent);
         WordData word = (WordData)obj;
@@ -253,11 +267,14 @@ public class PinchofonoController : MonoBehaviour
         ShowPanel(ScreenContent);
         RecordingNumberPanel.SetActive(false);
         EnterValidPanel.SetActive(true);
+        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "ENTER A VALID NUMBER";
+        if(waitingForPrint) EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "ENTER A VALID NUMBER";
         anim.SetBool("IsRecording", false);
         anim.SetFloat("tapeSpinSpeed", 0);
         anim.SetBool("isCallPossible", false);
         anim.SetTrigger("recordReady");
         isRecording = false;
+        printInQueue = false;
         txtNumber.text = "";
         CallToPrint = null;
         txtMessage.text = "";

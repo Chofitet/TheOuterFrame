@@ -7,11 +7,14 @@ using UnityEngine.UI;
 public class SliderUpdateAnim : MonoBehaviour
 {
     Slider slider;
+    Sequence BarSequence;
 
 
     Sequence sequence;
     public void AnimSlider(Component sender, object obj)
     {
+        if (sequence.IsActive()) sequence.Kill();
+
         slider = GetComponent<Slider>();
         slider.value = 0;
 

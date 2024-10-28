@@ -39,7 +39,7 @@ public class MaterialAssignerEditor : Editor
             if (meshRenderer != null)
         {
             // Crea un nuevo material
-            Material newMaterial = new Material(Shader.Find("Sprites/Default")); // Usa el shader adecuado para sprites
+            Material newMaterial = new Material(Shader.Find("Sprites/Diffuse")); // Usa el shader adecuado para sprites
 
             // Asigna la textura del sprite al material
             newMaterial.mainTexture = materialAssigner.photo.texture;
