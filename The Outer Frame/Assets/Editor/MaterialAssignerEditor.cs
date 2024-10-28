@@ -34,32 +34,42 @@ public class MaterialAssignerEditor : Editor
         // Obtener el MeshRenderer del objeto
         MeshRenderer meshRenderer = materialAssigner.GetComponent<MeshRenderer>();
 
-        if (meshRenderer.materials.Length < 2) return;
-
-            if (meshRenderer != null)
+        if (meshRenderer == null || meshRenderer.materials.Length < 2)
         {
-            // Crea un nuevo material
-            Material newMaterial = new Material(Shader.Find("Sprites/Diffuse")); // Usa el shader adecuado para sprites
+            Debug.LogWarning("No MeshRenderer found on the object or not enough material slots.");
+            return;
+        }
 
-            // Asigna la textura del sprite al material
-            newMaterial.mainTexture = materialAssigner.photo.texture;
+        // Ruta del material basado en el nombre de la textura
+        string materialPath = "Assets/Materials/" + materialAssigner.photo.name + "_Material.mat";
 
-            
-            Material[] materials = new Material[2];
-            materials[0] = meshRenderer.material;  // Conserva el primer material actual
-            materials[1] = newMaterial;  // Asigna el nuevo material en el segundo slot
-            meshRenderer.materials = materials;
-           
-            // Guarda el nuevo material como un asset
-            string materialPath = "Assets/Materials/" + materialAssigner.photo.name + "_Material.mat";
-            AssetDatabase.CreateAsset(newMaterial, materialPath);
-            AssetDatabase.SaveAssets();
+        // Intenta cargar el material existente
+        Material existingMaterial = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
 
-            Debug.Log("Material successfully created and assigned.");
+        Material newMaterial;
+        if (existingMaterial != null)
+        {
+            // Si el material ya existe, úsalo
+            newMaterial = existingMaterial;
+            Debug.Log("Material found and assigned.");
         }
         else
         {
-            Debug.LogWarning("No MeshRenderer found on the object.");
+            // Si el material no existe, crea uno nuevo
+            newMaterial = new Material(Shader.Find("Sprites/Default"));
+            newMaterial.mainTexture = materialAssigner.photo.texture;
+
+            // Guarda el nuevo material como un asset
+            AssetDatabase.CreateAsset(newMaterial, materialPath);
+            AssetDatabase.SaveAssets();
+
+            Debug.Log("New material created and assigned.");
         }
+
+        // Asigna los materiales al MeshRenderer
+        Material[] materials = new Material[2];
+        materials[0] = meshRenderer.materials[0]; // Conserva el primer material actual
+        materials[1] = newMaterial; // Asigna el nuevo o existente material en el segundo slot
+        meshRenderer.materials = materials;
     }
 }
