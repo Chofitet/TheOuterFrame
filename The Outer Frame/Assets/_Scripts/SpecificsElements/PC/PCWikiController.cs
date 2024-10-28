@@ -12,8 +12,24 @@ public class PCWikiController : MonoBehaviour
     [SerializeField] TMP_Text LockField;
     [SerializeField] RectTransform content;
     [SerializeField] List<GameObject> DataBaseFields = new List<GameObject>();
-
+    [SerializeField] GameObject WikiInfoContent;
+    List<GameObject> FIeldsInWikiInfo = new List<GameObject>();
     DataBaseType input;
+    bool once;
+
+    private void OnEnable()
+    {
+        if (once) return;
+        WikiInfoContent.SetActive(true);
+        for(int i = 0; i< 15; i++)
+        {
+            GameObject fieldChild = WikiInfoContent.transform.GetChild(i).gameObject; 
+            FIeldsInWikiInfo.Add(fieldChild);
+            fieldChild.SetActive(false);
+        }
+        WikiInfoContent.SetActive(false);
+        once = true;
+    }
 
     public void CompleteFields(Component sender, object _wordData)
     {
@@ -61,9 +77,15 @@ public class PCWikiController : MonoBehaviour
         HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
 
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
+        WikiInfoContent.SetActive(true);
         image.sprite = input.GetImage();
         CompleteFields();
         content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, WikiData.GetComponent<RectTransform>().sizeDelta.y);
+        if (!input.GetImage()) image.gameObject.SetActive(false);
+        else image.gameObject.SetActive(true);
+    
+        WikiInfoContent.SetActive(CheckFieldsInWikiInfoContent());
+        
         //PhoneNumber.text = input.GetPhoneNum();
         //FindableWordsManager.FWM.InstanciateFindableWord(PhoneNumber);
     }
@@ -134,5 +156,22 @@ public class PCWikiController : MonoBehaviour
             InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(auxText);
             FindableWordsManager.FWM.InstanciateFindableWord(DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>(),FindableBtnType.FindableBTN);
         }
+    }
+
+   
+
+bool CheckFieldsInWikiInfoContent()
+    {
+
+        foreach(GameObject field in FIeldsInWikiInfo)
+        {
+            if (field.activeSelf)
+            {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 }

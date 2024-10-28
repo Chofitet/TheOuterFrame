@@ -110,10 +110,12 @@ public class PaperMoveController : MonoBehaviour
             return;
         }
         LeavePaperPile(null,null);
+       
     }
-
+    bool isChangingPapers;
     public void LeavePaperPile(Component sender, object obj)
     {
+
         if (!currentPaper) return;
         RefreshPaperQueue(true);
         currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration);
@@ -172,7 +174,7 @@ public class PaperMoveController : MonoBehaviour
     {
         if(isAdding)
         {
-            if (PapersQueue.Contains(currentPaper)) return;
+            if (isChangingPapers) return;
             if (PapersQueue.Count != 0) TransformOffset = PapersQueue.Count * new Vector3(0, 0.002f, 0);
             RotationOffset = new Vector3(0, UnityEngine.Random.Range(-10, 10), 0);
             //DisableOtherPapers();
@@ -182,6 +184,7 @@ public class PaperMoveController : MonoBehaviour
         {
             PapersQueue.Remove(currentPaper);
         }
+        isChangingPapers = false;
     }
 
     void DisableOtherPapers()
@@ -255,7 +258,8 @@ public class PaperMoveController : MonoBehaviour
             {
                 oldPaper.GetComponent<BoxCollider>().enabled = true;
                 oldPaper.transform.SetParent(ReportPilePos);
-            }); 
+            });
+       
     }
 
     void EnableLastBoxCollider()
