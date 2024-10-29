@@ -11,6 +11,8 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] GameObject PostItConteiner;
     [SerializeField] GameEvent OnPutPhotoOnBoard;
     MoveBoardElementsToPos[] PostIts;
+    [SerializeField] GameObject PhotoModel;
+    [SerializeField] GameObject Canvas;
 
     private void Start()
     {
@@ -40,9 +42,16 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         {
             if (posit.GetComponent<IPlacedOnBoard>().GetIsTaken()) return;
             posit.MoveToPlacedPos(null, transform.position);
-            
+
+            if (posit.GetIsAUpdatedPhoto() && posit.GetIsPlaced())
+            {
+                PhotoModel.SetActive(false);
+                Canvas.SetActive(false);
+            }
         }
     }
+
+    
 
    /* void ActiveOtherPhotoReplaced()
     {

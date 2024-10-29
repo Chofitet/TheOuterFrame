@@ -480,6 +480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnPlaceInBoardSound: {fileID: 11400000, guid: 2c9296cbe527d0f4cb8829a7009c4d58, type: 2}
+  IsAUpdatedPhoto: 0
 --- !u!114 &1009317246403769621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,6 +496,8 @@ MonoBehaviour:
   word: {fileID: 0}
   PostItConteiner: {fileID: 6733472062007798123}
   OnPutPhotoOnBoard: {fileID: 11400000, guid: 490f8bfecb614a443b1662b765549be9, type: 2}
+  PhotoModel: {fileID: 2094197267770435949}
+  Canvas: {fileID: 3422671225331037626}
 --- !u!114 &7429054882358624813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,7 +853,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9176868425791844629}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1063,6 +1066,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

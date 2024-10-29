@@ -111,7 +111,7 @@ public class PCWikiController : MonoBehaviour
         {
             LockField.gameObject.SetActive(false);
             LockBTN.SetActive(false);
-            LockField.text = "Unlock Cargo Doors";
+            //LockField.text = "Unlock Cargo Doors";
         }
 
         return false;
@@ -164,7 +164,7 @@ public class PCWikiController : MonoBehaviour
 
    
 
-bool CheckFieldsInWikiInfoContent()
+    bool CheckFieldsInWikiInfoContent()
     {
 
         foreach(GameObject field in FIeldsInWikiInfo)
