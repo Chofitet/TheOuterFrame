@@ -16,16 +16,18 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "He's gone. \nHe must have really liked trips to the farm. \n \nAs we were
-    saying our goodbyes we found a <link>Secusys</link> terminal under the counter.
-    That thing probably has some footage of whatever happened on <link>the road</link>. "
+  Text: "He's gone. \nHe must have really liked trips to the farm. \n  \nAs we were
+    saying our goodbyes we found a <link>Secusys terminal</link> under the counter.
+    That thing probably has some footage of whatever happened on <link>the road</link>.  "
   TextForRepetition: 
   Photos:
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
     text: PETRO BOY AWAY!
+  - photo: {fileID: 21300000, guid: fa30d45b3265cfe44889fdaa36a3cbe7, type: 3}
+    text: '! ! !'
   Conditionals:
   - condition: {fileID: 11400000, guid: 4fec0d9b987291b4ab045db3ed90b855, type: 2}
-    ifNot: 0
+    ifNot: 1
   isOrderMatters: 0
   TriggerDrawerAnim: 0
   FinalReport: 0

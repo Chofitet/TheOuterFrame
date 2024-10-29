@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: LarsHackedBeforePicFound
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
+  state: {fileID: 11400000, guid: 6652aa02f9d4bd448923cfc07fed5879, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: 'Oh, boy, do we got some dirt on him.
+
+    Maybe we can extort him into give
+    us the pictures or we''ll make his dirty laundry public. '
+  TextForRepetition: Not necessary. We already got what we wanted.
+  Photos:
+  - photo: {fileID: 21300000, guid: a21473e66381ecb4f94e1128b63c5081, type: 3}
+    text: MMMH
+  - photo: {fileID: 21300000, guid: 2dd7fde01fe193844a6e994f56257338, type: 3}
+    text: HACKED!
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 030762016c963a54a98175f01d4b4506, type: 2}
+    ifNot: 1
+  isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

@@ -9,8 +9,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6984e9d1bc4ac2d4bb50302ab5162316, type: 3}
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: VTTInspectedBeforeCleanup
   m_EditorClassIdentifier: 
-  word: {fileID: 11400000, guid: 018e05312fb468c4bbe0cd5478c38f6a, type: 2}
-  state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  state: {fileID: 11400000, guid: 76e45446c5ba0774881893dddecd5ca1, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: "It\u2019s a VTT. That has crashed right through a <link>big sign that reads
+    \"Don't forget to text Mom on her day\"</link>. The front is completely caved
+    in at the passenger\u2019s side, it seems like something threw it out of the
+    road. Whatever it hit, <link>it was BIG</link>. \r\n\r \n<link>The cargo compartment</link>
+    is locked and <link>the driver</link> is nowhere to be found. \r\n\r\nIf it wasn't
+    for some <link>radioactive looking goo</link> seeping through the backdoors I'd
+    said everything is well not so OK but... this is bad. This is a bad one right
+    here. We need to access this thing pronto to check the real status of the situation.\r\n"
+  TextForRepetition: "We already did that. \nJust check the corresponding Report."
+  Photos:
+  - photo: {fileID: 21300000, guid: cf6e63028c42f5a4a996ee31157a490a, type: 3}
+    text: THE TRUCK
+  - photo: {fileID: 21300000, guid: 45eb73e361fa9d94e8926e30ffae07b6, type: 3}
+    text: THE BACK
+  - photo: {fileID: 21300000, guid: eeb759d3e82c0704e9a0cceefa696b90, type: 3}
+    text: GOOIE
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 18af5eccc49c54a45bfc5306f8d5c660, type: 2}
+    ifNot: 1
+  isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0
