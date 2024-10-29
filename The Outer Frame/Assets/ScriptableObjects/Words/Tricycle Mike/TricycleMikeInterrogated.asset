@@ -15,14 +15,21 @@ MonoBehaviour:
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: -1
-  Text: He refuses to speak to us unless we promise that he and <link>Mora</link>
+  ChangeTimeOfAction: -4
+  Text: 'He refuses to speak to us unless we promise that he and <link>Mora</link>
     will be OK.
-  TextForRepetition: He refuses to speak to us unless we promise that he and <link>Mora</link>
+
+    He said that pointing at a tricycle...'
+  TextForRepetition: 'He refuses to speak to us unless we promise that he and <link>Mora</link>
     will be OK.
+
+    He said that pointing at a tricycle...'
   Photos:
-  - photo: {fileID: 0}
-    text: 
+  - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
+    text: OPTIONS?
+  - photo: {fileID: 21300000, guid: 7c1a5ae82d168e54088b8bb4d98e0bbb, type: 3}
+    text: MORA
   Conditionals: []
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0
