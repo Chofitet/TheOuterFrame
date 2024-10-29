@@ -116,6 +116,18 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         }
         return null;
     }
+
+    public List<ReportType> GetListOfReportFromState(StateEnum state)
+    {
+        List<ReportType> auxList = new List<ReportType>();
+
+        foreach (ReportType report in reportTypes)
+        {
+            if (!report) continue;
+            if (report.GetState() == state) auxList.Add(report);
+        }
+        return auxList;
+    }
     ReportType GetLastReportOfAnAction(StateEnum state)
     {
 

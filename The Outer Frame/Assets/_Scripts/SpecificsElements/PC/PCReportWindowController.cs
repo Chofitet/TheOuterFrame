@@ -40,10 +40,14 @@ public class PCReportWindowController : MonoBehaviour
 
         foreach (var state in stateHistory)
         {
-            ReportType report = WordsManager.WM.RequestSpecificReport(word, state);
-            if (!report.GetwasRegisteredInDB()) continue;
-            GameObject btn = Instantiate(PrefabBtneport, Grid.transform, false);
-            btn.GetComponent<PCReportController>().Inicialization(word, report);
+            List<ReportType> reports = word.GetListOfReportFromState(state);
+            foreach(ReportType R in reports)
+            {
+                if (!R.GetwasRegisteredInDB()) continue;
+                GameObject btn = Instantiate(PrefabBtneport, Grid.transform, false);
+                btn.GetComponent<PCReportController>().Inicialization(word, R);
+            }
+            
         }
     }
 
