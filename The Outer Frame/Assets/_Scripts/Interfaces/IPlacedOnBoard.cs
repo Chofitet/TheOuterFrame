@@ -11,4 +11,6 @@ public interface IPlacedOnBoard
     public bool GetIsTaken();
 
     public bool IsOutOfBoard();
+
+
 }

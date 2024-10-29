@@ -131,6 +131,8 @@ public class PCController : MonoBehaviour
         }
 
         WikiTitleSearchedWord.text = word.GetForm_DatabaseNameVersion();
+       /*WikiTitleSearchedWord.ForceMeshUpdate();
+        FindableWordsManager.FWM.InstanciateFindableWord(WikiTitleSearchedWord,FindableBtnType.FindableBTN);*/
 
         isWaitingAWord = true;
        

@@ -116,4 +116,11 @@ public class ReportController : MonoBehaviour
         Destroy(this);
     }
 
+    public void _Reset()
+    {
+        photo1.gameObject.SetActive(false);
+        photo2.gameObject.SetActive(false);
+        photo3.gameObject.SetActive(false);
+    }
+
 }

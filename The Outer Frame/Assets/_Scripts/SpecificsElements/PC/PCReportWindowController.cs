@@ -53,7 +53,7 @@ public class PCReportWindowController : MonoBehaviour
         panelReporte.SetActive(true);
 
         ReportType report = (ReportType) obj;
-
+        ReportToFill._Reset();
         ReportToFill.initReport(word, report, false, false, false, null, report.GetTimeWhenWasDone());
     }
 

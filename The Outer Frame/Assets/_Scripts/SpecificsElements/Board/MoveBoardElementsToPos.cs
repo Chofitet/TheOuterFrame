@@ -8,6 +8,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
 {
     IPlacedOnBoard conditions = null;
     [SerializeField] GameEvent OnPlaceInBoardSound;
+    [SerializeField] bool IsAUpdatedPhoto;
     Vector3 FinalPosition;
     Vector3 FinalRotation;
     GameObject Content;
@@ -43,6 +44,8 @@ public class MoveBoardElementsToPos : MonoBehaviour
     }
 
     public void SetToReplace() => toReplece = true;
+
+    public bool GetIsAUpdatedPhoto() { return IsAUpdatedPhoto; }
 
     public void MoveToPlacedPos(Component sender, object obj)
     {
@@ -108,5 +111,10 @@ public class MoveBoardElementsToPos : MonoBehaviour
     public bool  GetIsPlaced()
     {
         return isPlaced;
+    }
+
+    public IPlacedOnBoard GetConditions()
+    {
+        return conditions;
     }
 }
