@@ -22,11 +22,20 @@ public class MoveObjectToThisPos : MonoBehaviour
     }
     public void BackLastObjectToPos(Component sender, object obj)
     {
+        float offset = 0;
+        if (sender is DossierMoveController) offset = 0.03f;
         if (!LastObj) return;
         tweenPos.Kill();
         tweenRot.Kill();
-        tweenPos= LastObj.transform.DOMove(initPos, 0.5f).SetEase(Ease.InOutCirc);
-        tweenRot = LastObj.transform.DORotate(initRot, 0.3f).SetEase(Ease.InOutCirc).OnComplete(() => { LastObj = null; });
+        tweenPos = LastObj.transform.DOMove(LastObj.transform.position + new Vector3(offset, 0, 0), 0.2f)
+        .SetEase(Ease.InOutSine)
+        .OnComplete(() =>
+        {
+            tweenPos = LastObj.transform.DOMove(initPos, 0.5f)
+                .SetEase(Ease.InOutSine);
+            tweenRot = LastObj.transform.DORotate(initRot, 0.3f).SetEase(Ease.InOutSine).OnComplete(() => { LastObj = null; });
+        });
+        
         
     }
 

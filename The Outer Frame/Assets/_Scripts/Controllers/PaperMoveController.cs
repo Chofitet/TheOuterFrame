@@ -204,6 +204,7 @@ public class PaperMoveController : MonoBehaviour
         moveToPcSequence = DOTween.Sequence();
 
         GameObject paperMove = currentPaper;
+        if (!paperMove) return;
         currentPaper = null;
 
         if(paperMove.GetComponent<IndividualReportController>())
@@ -237,6 +238,7 @@ public class PaperMoveController : MonoBehaviour
         moveDescart = DOTween.Sequence();
 
         GameObject paperMove = currentPaper;
+        if (!paperMove) return;
         currentPaper = null;
 
         moveDescart.Append(paperMove.transform.DOMove(DescartPos.transform.position, 0.5f).SetEase(Ease.InBack));

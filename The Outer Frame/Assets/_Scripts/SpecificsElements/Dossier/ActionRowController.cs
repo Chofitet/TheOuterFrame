@@ -37,7 +37,7 @@ public class ActionRowController : MonoBehaviour
             isSpecialAction = true;
             DotsLine.SetActive(false);
             ActionText.font = writingFont;
-            Invoke("ClickButton", 1.5f);
+            Invoke("ClickButton", 2f);
             if (!_isFirstTimeIdeaAdded) return;
             fadeAction.StartEffect();
            

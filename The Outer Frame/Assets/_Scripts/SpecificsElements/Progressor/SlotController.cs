@@ -187,6 +187,7 @@ public class SlotController : MonoBehaviour
     {
         _word.SetDoingAction(_state, false);
         isAborted = true;
+        inFillFast = false;
         OnFinishActionProgress?.Invoke(this, this);
         TimeManager.OnSecondsChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();

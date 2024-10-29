@@ -79,8 +79,7 @@ public class ProgressorModuleController : MonoBehaviour
 
     public void AbortLogic(Component sender, object obj)
     {
-        Debug.Log(isFull);
-
+       
         //if (!isFull) return;
         if (!isAbortOpen)
         {
@@ -97,7 +96,6 @@ public class ProgressorModuleController : MonoBehaviour
                 anim.SetTrigger("abortPush");
                 Invoke("AbortAction", 0.3f);
                 isAbortOpen = false;
-                isFull = false;
             }
 
             if (sender.gameObject == SwitchAbortBTN)

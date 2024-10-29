@@ -17,6 +17,7 @@ public class DossierMoveController : MonoBehaviour
     [SerializeField] GameEvent OnNotebookTake;
     [SerializeField] GameEvent OnEnableInput;
     [SerializeField] GameEvent OnDisableInput;
+    [SerializeField] GameEvent OnBackPositToBoardPos;
     Animator DossierAnim;
     Sequence AddIdeaSequence;
     Sequence MoveDossierSequence;
@@ -61,6 +62,11 @@ public class DossierMoveController : MonoBehaviour
             .AppendCallback(() =>
             {
                 OnWriteDossier?.Invoke(this, 1.5f);
+            })
+            .AppendInterval(0.5f)
+            .AppendCallback(()=>
+            {
+                OnBackPositToBoardPos?.Invoke(this, null);
             })
             .AppendInterval(1f)
             .AppendCallback(() =>
