@@ -131,6 +131,11 @@ public class ActionPlan : MonoBehaviour
         isProgressorFull = false;
     }
 
+    public void ProgressorSetFull(Component sender, object obj)
+    {
+        isProgressorFull = true;
+    }
+
 }
 
 public class DataFromActionPlan

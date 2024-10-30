@@ -45,8 +45,9 @@ public class PinchofonoManager : MonoBehaviour
                 if (call.CheckForConditionals())
                 {
                     CallToShow = call;
-                    call.SetCached(true);
+                    CallToShow.SetCached(true);
                     OnCallCatch?.Invoke(this, null);
+                    return;
                 }
             }
         }

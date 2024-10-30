@@ -17,6 +17,7 @@ public class ReportController : MonoBehaviour
     [SerializeField] PhotoReportSetter photo3;
     [SerializeField] Sprite ThumbUp;
     [SerializeField] List<Sprite> WrongResultImg = new List<Sprite>();
+    
     bool isNotCompleted;
     WordData word;
     ReportType report;
@@ -43,7 +44,7 @@ public class ReportController : MonoBehaviour
         else if (isAlreadyDone)
         {
             Resulttxt.text = report.GetTextForRepetition();
-            photo1.Set("", WrongResultImg[new System.Random().Next(2) == 0 ? 5 : 8]);
+            photo1.Set("REMEMBER TO READ", WrongResultImg[new System.Random().Next(2) == 0 ? 5 : 8]);
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
             status = "<color=#AE0000>REJECTED</color>";
             isNotCompleted = true;
@@ -53,7 +54,7 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "We are already doing that exact same thing.";
             status = "<color=#AE0000>REJECTED</color>";
-            photo1.Set("", WrongResultImg[new System.Random().Next(2) == 0 ? 6 : 8]);
+            photo1.Set("JUST HAVE TO WAIT", WrongResultImg[new System.Random().Next(2) == 0 ? 6 : 8]);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }

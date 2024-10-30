@@ -73,9 +73,10 @@ public class PinchofonoController : MonoBehaviour
         StopAllCoroutines();
         AbortConfirmationPanel.SetActive(false);
 
-        if (!haveCallToPrint)
+        if (!haveCallToPrint && !CallToPrint)
         {
             StartCoroutine(ShowErrorMessagePanel("No calls to print yet"));
+            return;
 
         }
         else if(printOnce)
@@ -92,7 +93,7 @@ public class PinchofonoController : MonoBehaviour
         {
             ShowPanel(ScreenContent);
             OnPrintCall?.Invoke(this, null);
-            
+            CallToPrint = null;
         }
         
     }
@@ -276,7 +277,7 @@ public class PinchofonoController : MonoBehaviour
         isRecording = false;
         printInQueue = false;
         txtNumber.text = "";
-        CallToPrint = null;
+        //CallToPrint = null;
         txtMessage.text = "";
         AbortConfirmationPanel.SetActive(false);
         printOnce = false;
