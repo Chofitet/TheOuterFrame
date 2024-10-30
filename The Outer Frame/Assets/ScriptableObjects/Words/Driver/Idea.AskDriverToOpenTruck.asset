@@ -9,16 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75cd8a0f1fed7a747adc9ae31f7f430a, type: 3}
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: Idea.AskDriverToOpenTruck
   m_EditorClassIdentifier: 
-  InfinitiveVerb: Ask Sergio to open the cargo doors
-  Actioning: Asking Sergio to open the cargo doors
-  Actioned: Asked Sergio to open the cargo doors
-  TimeToComplete: 1
-  TimeToShowNew: 0
-  observationtxt: 
-  Agent: {fileID: 0}
-  IdeaWordData: {fileID: 11400000, guid: 4fcc12d083ecd584db9c2365d36be419, type: 2}
-  IdeaVerb: ASKING
-  IdeaWord: Sergio TO OPEN CARGO
+  Action: {fileID: 11400000, guid: 4dbffa1d24f8fdd48be227860086e4d9, type: 2}
+  state: {fileID: 11400000, guid: 4dbffa1d24f8fdd48be227860086e4d9, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: 'He doesn''t know how to open the cargo doors.
+
+    his orders are to deliver
+    the whole <link>truck</link> and to give this code on arrival: <link>Delivery
+    285-P9</link>. '
+  TextForRepetition: 
+  Photos:
+  - photo: {fileID: 21300000, guid: c4ba1584f9396984baff6ad9ed1c761b, type: 3}
+    text: . . .
+  - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
+    text: WE TRIED
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 60de3132269f6ce4bab187ee821b4484, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 49a789323cc43d8498e19b0bfe3c7f92, type: 2}
+    ifNot: 1
+  isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

@@ -22,10 +22,12 @@ MonoBehaviour:
   Emergency: 0
   Day: 0
   Hour: 7
-  Minute: 43
+  Minute: 54
   MinTransmitionTime: 7
   Conditions:
   - condition: {fileID: 11400000, guid: 5d00dc8f548f304458b4f7403642553e, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 5e3f162beae27c242920a73d1ea64639, type: 2}
     ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0

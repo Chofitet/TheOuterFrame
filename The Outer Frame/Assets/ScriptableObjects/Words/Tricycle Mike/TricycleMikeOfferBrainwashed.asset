@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: TricycleMikeOfferBrainwashed
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 753df31ef07ffaf47adadc6626322adb, type: 2}
+  state: {fileID: 11400000, guid: 753df31ef07ffaf47adadc6626322adb, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: 'He is in no condition of making any deals after the brain thing we did...
+
+
+    Perhaps
+    we should have acted in another order.'
+  TextForRepetition: 'He is in no condition of making any deals after the brain thing
+    we did...
+
+
+    Perhaps we should have acted in another order.'
+  Photos:
+  - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
+    text: COULDN'T
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 485ee194adf47e84f948016cae7459cf, type: 2}
+    ifNot: 0
+  isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

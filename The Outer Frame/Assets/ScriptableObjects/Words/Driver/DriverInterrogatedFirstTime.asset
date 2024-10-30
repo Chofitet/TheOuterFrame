@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: DriverInterrogatedFirstTime
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
+  state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: "The guy is really scared.\nHis name is <link>Sergio Raracara</link>. \nHe
+    knows he works for us so no need to worry about squealing.\nHe might be suffering
+    from a concussion, but swears that out of nowhere, while he was \"driving his
+    own bussines\", <link>the BIGGEST cow he has ever seen</link> jumped at full
+    cow-speed in front of the truck. \n\nWhen he woke up, the cow was no more but
+    the <link>cargo</link> doors were open. So he closed them without looking inside
+    as he's not allowed to interact with wathever it's there. "
+  TextForRepetition: Already did that. Check the corresponding Report.
+  Photos:
+  - photo: {fileID: 21300000, guid: c4ba1584f9396984baff6ad9ed1c761b, type: 3}
+    text: MMH
+  - photo: {fileID: 21300000, guid: 0a7b6bd54caa0a149a1f7282b8f59d45, type: 3}
+    text: A BIG ONE
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 49a789323cc43d8498e19b0bfe3c7f92, type: 2}
+    ifNot: 1
+  isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0
