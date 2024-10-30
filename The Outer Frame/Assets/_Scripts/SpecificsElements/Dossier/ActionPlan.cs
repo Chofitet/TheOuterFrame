@@ -122,7 +122,7 @@ public class ActionPlan : MonoBehaviour
     bool isInDossier;
     public void CheckView(Component sender, object obj)
     {
-        if ((ViewStates)obj == ViewStates.DossierView) isInDossier = true;
+        if ((ViewStates)obj == ViewStates.DossierView || (ViewStates)obj == ViewStates.OnTakenPaperView) isInDossier = true;
         else isInDossier = false;
     }
 

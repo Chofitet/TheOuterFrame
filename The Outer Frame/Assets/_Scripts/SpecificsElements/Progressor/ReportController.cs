@@ -43,7 +43,7 @@ public class ReportController : MonoBehaviour
         else if (isAlreadyDone)
         {
             Resulttxt.text = report.GetTextForRepetition();
-            photo1.Set("", WrongResultImg[5]);
+            photo1.Set("", WrongResultImg[new System.Random().Next(2) == 0 ? 5 : 8]);
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
             status = "<color=#AE0000>REJECTED</color>";
             isNotCompleted = true;
@@ -53,7 +53,7 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "We are already doing that exact same thing.";
             status = "<color=#AE0000>REJECTED</color>";
-            photo1.Set("", WrongResultImg[6]);
+            photo1.Set("", WrongResultImg[new System.Random().Next(2) == 0 ? 6 : 8]);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }

@@ -124,7 +124,7 @@ public class ActionRowController : MonoBehaviour
     {
         ViewStates actualView = (ViewStates)obj;
 
-        if (actualView == ViewStates.DossierView) isInView = true;
+        if (actualView == ViewStates.DossierView || actualView == ViewStates.OnTakenPaperView) isInView = true;
         else isInView = false;
     }
 }

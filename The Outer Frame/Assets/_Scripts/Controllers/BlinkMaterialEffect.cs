@@ -50,6 +50,7 @@ public class BlinkMaterialEffect : MonoBehaviour
     }
     public void ActiveBlink(Component sender, object obj)
     {
+        StopAllCoroutines();
         if (material.IsKeywordEnabled("_EMISSION"))
         {
             

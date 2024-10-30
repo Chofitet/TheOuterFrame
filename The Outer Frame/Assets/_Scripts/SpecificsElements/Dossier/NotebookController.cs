@@ -152,11 +152,12 @@ public class NotebookController : MonoBehaviour
         DisableWordsOfList(InctiveWordsOnBoard);
     }
 
+    ViewStates actualView;
     public void CheckView(Component sender, object obj)
     {
-        ViewStates actualView = (ViewStates)obj;
+        actualView = (ViewStates)obj;
 
-        if(actualView == ViewStates.BoardView)
+        if (actualView == ViewStates.BoardView)
         {
             DisableWordsOfList(InctiveWordsOnBoard);
         }
@@ -186,7 +187,7 @@ public class NotebookController : MonoBehaviour
 
     public void ClearUnderLine()
     {
-        foreach(GameObject word in WordsInstances)
+        foreach (GameObject word in WordsInstances)
         {
             word.GetComponent<NotebookWordInstance>().ClearUnderline();
         }

@@ -193,14 +193,16 @@ public class WordSelectedInNotebook : MonoBehaviour
 
     public void UnselectWord()
     {
+        if (actualView != ViewStates.DossierView || actualView != ViewStates.OnTakenPaperView) return;
         SelectedWord = null; }
 
 
     public void SetSelectedWord(WordData word)
     {
         SelectedWord = word;
+        if (actualView == ViewStates.OnTakenPaperView) OnButtonElementClick?.Invoke(this, ViewStates.DossierView);
         OnSelectedWordInNotebook?.Invoke(this, SelectedWord);
-        if(actualView == ViewStates.OnTakenPaperView) OnButtonElementClick?.Invoke(this, ViewStates.DossierView);
+        
     }
 
     ViewStates actualView;
