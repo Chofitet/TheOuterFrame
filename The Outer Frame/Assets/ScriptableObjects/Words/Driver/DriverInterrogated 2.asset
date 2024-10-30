@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DriverInterrogated 2
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  state: {fileID: 0}
+  state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
   Text: 'He doesn''t know how they open the cargo doors, he only knows that he has
@@ -27,5 +27,8 @@ MonoBehaviour:
     ifNot: 0
   - condition: {fileID: 11400000, guid: 943f7c831f97a514aa18834ef5319415, type: 2}
     ifNot: 0
+  - condition: {fileID: 11400000, guid: 49a789323cc43d8498e19b0bfe3c7f92, type: 2}
+    ifNot: 1
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

@@ -16,17 +16,22 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'We just made him extra nervous.
+  Text: 'He is in no condition to get extra anxious after the brain thing we did...
 
-    He''s pretty collaborative, we just
-    have to ask.'
-  TextForRepetition: 'We just made him extra nervous.
 
-    He''s pretty collaborative,
-    we just have to ask.'
+    Perhaps
+    we should have acted in another order.'
+  TextForRepetition: 'WE SAID: He is in no condition to get extra anxious after the
+    brain thing we did...
+
+
+    Perhaps we should have acted in another order.'
   Photos:
-  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
-    text: DONE!
-  Conditionals: []
+  - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
+    text: MMH
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 49a789323cc43d8498e19b0bfe3c7f92, type: 2}
+    ifNot: 0
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

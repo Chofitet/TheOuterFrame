@@ -16,9 +16,10 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: "That would nosedive us into a Game Over like situation.\r\nWE NEED TO CHECK
-    THE STATUS OF THE CARGO FIRST.\r\nAlso it\u2019s wrecked, it won\u2019t start,
-    it\u2019s lodged into that big sign and we can\u2019t move it by ourselves.\r\n"
+  Text: "That would nosedive us into a Game Over like situation. \r\nWE NEED TO CHECK
+    THE STATUS OF THE CARGO FIRST. \r\nAlso it\u2019s wrecked, it won\u2019t start,
+    it\u2019s lodged into that <link>\"Don't forget to text Mom on her day\" billboard</link>
+    and we can\u2019t move it by ourselves. \r\n"
   TextForRepetition: "We already explained why we can't. \nJust check the original
     report on the DB."
   Photos:
@@ -26,4 +27,5 @@ MonoBehaviour:
     text: BIG NO-NO
   Conditionals: []
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0
