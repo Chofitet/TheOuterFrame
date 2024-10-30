@@ -29,7 +29,9 @@ MonoBehaviour:
     text: OPTIONS?
   - photo: {fileID: 21300000, guid: 7c1a5ae82d168e54088b8bb4d98e0bbb, type: 3}
     text: MORA
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 485ee194adf47e84f948016cae7459cf, type: 2}
+    ifNot: 1
   isOrderMatters: 0
   TriggerDrawerAnim: 0
   FinalReport: 0

@@ -18,16 +18,24 @@ MonoBehaviour:
   ChangeTimeOfAction: 0
   Text: "Everything we have done and everything we are doing is being recorded. \nAlso
     they have <link>someone</link> arriving and leaving on <link>a tricycle</link>
-    minutes after the crash and dragging <link>green glowing stuff</link> al lover
-    the <link>the road<link>."
+    minutes after the crash and dragging <link>green glowing stuff</link> all over
+    <link>Road 54<link>. \n \nAnd you can also see some of us working around the
+    premises minutes later. "
   TextForRepetition: "Everything we have done and everything we are doing is being
     recorded. \nAlso they have <link>someone</link> arriving and leaving on <link>a
     tricycle</link> minutes after the crash and dragging <link>green glowing stuff</link>
-    al lover the <link>the road<link>."
+    all over <link>Road 54<link>. \n \nAnd you can also see some of us working around
+    the premises minutes later. "
   Photos:
-  - photo: {fileID: 0}
+  - photo: {fileID: 21300000, guid: 0ec5b4b5d3b2f554da093b5cbc9013ef, type: 3}
+    text: BUT WHO?
+  - photo: {fileID: 21300000, guid: 1f61f0f5791f607408d0e80f8aecf2fa, type: 3}
     text: KINDA BAD
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 174c4b2d43f3760458cfbf32a4450ce4, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 43994936b8273bc459ee021cd42e7d4e, type: 2}
+    ifNot: 1
   isOrderMatters: 0
   TriggerDrawerAnim: 0
   FinalReport: 0
