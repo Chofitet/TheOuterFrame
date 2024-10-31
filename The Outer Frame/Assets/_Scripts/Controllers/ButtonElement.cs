@@ -8,12 +8,13 @@ public class ButtonElement : MonoBehaviour
     [SerializeField] GameEvent OnButtonElementClick;
     [SerializeField] ViewStates view;
     bool isActive = true;
+    [SerializeField] bool NotInactiveBTN;
 
     private void OnMouseUpAsButton()
     {
         if (!isActive) return;
         OnButtonElementClick?.Invoke(this, view);
-        GetComponent<BoxCollider>().enabled = false;
+        if(!NotInactiveBTN) GetComponent<BoxCollider>().enabled = false;
     }
 
     public void DisableEnableButton(Component sender, object obj)

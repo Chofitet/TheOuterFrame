@@ -23,7 +23,6 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnDrawerView;
     [SerializeField] GameEvent OnBackToPause;
     [SerializeField] GameEvent OnSitDownSound;
-    Coroutine StartDelay;
     bool isAPaperHolding;
     ViewStates currentviewState;
     bool isInputDisable;
