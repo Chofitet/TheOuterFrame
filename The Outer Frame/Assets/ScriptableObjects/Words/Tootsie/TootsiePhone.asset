@@ -12,13 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: TootsiePhone
   m_EditorClassIdentifier: 
-  wordName: (864) 553-7575
-  PhoneNumber: (864) 553-7575
+  wordName: (864) 553-9757
+  FindableAs:
+  - (864) 553-9757
+  Form_DatabaseNameVersion: 
+  ProgressorNameVersion: 
+  PhoneNumber: (864) 553-9757
   isAPhoneNumber: 1
+  Type: 0
   reportTypes: []
   TVNewTypes: []
   DBTypes: {fileID: 0}
-  CallTypes: []
-  exceptions: []
+  UpdatedDataBase: []
+  CallTypes:
+  - {fileID: 11400000, guid: 9ffd147fe0d58dc4eaf2016c0aa87694, type: 2}
+  - {fileID: 11400000, guid: ff1007d355d6e2c439a267467ed1ca83, type: 2}
+  - {fileID: 11400000, guid: e48d724633b04e140b4f9f3c7cd56fbd, type: 2}
+  - {fileID: 11400000, guid: 33a8bb3261cac644fb3de1974f991e27, type: 2}
+  - {fileID: 11400000, guid: 730f9ab5036d2674c80e0f05f09fcf3b, type: 2}
+  - {fileID: 11400000, guid: 0d22d26101bfbb7438a5ce7762f632f1, type: 2}
+  - {fileID: 11400000, guid: bda858ec3f7cb93498dd7779cfa6df54, type: 2}
+  - {fileID: 11400000, guid: de416075bc2cda24c91c8ffad2bc7a74, type: 2}
   InactiveConditions: []
-  AutomaticActions: []
+  EraseConditions: []
+  WordThatReplaces: {fileID: 0}
+  CopyHistory: 0
+  WordsThatDeletes: []
