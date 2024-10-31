@@ -18,10 +18,14 @@ MonoBehaviour:
   ChangeTimeOfAction: 0
   Text: "That thing is supposed to be inside the cargo compartment. \r\nWe should
     get access to it before talking about doing anything else.\r\n"
-  TextForRepetition: "That thing is supposed to be inside the cargo compartment.
+  TextForRepetition: "WE SAID:\nThat thing is supposed to be inside the cargo compartment.
     \r\nWe should get access to it before talking about doing anything else.\r\n"
-  Photos: []
+  Photos:
+  - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
+    text: NOT YET
   Conditionals:
   - condition: {fileID: 11400000, guid: 95dcef167cd4049439d47deff9e5f43c, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0
