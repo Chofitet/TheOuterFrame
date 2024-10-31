@@ -16,15 +16,21 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "It's green, it glows, it's gooey, it's coming out of the <link>trucks behind</link>.
-    \r\nIt's EVIDENCE. \r\nAnd Mike rode all over it leaving <link>tricycle tracks</link>
-    that go all the way south down <link>Road 54</link>. \r"
+  Text: "It's green, it glows, it's gooey, it's coming out of a <link>trucks behind</link>.
+    \r\nIt\u2019s quite the paranormal clich\xE9!  \r\nAnd Mike rode all over it
+    leaving <link>tricycle tracks</link> that go all the way south down <link>Road
+    54</link>. \r"
   TextForRepetition: "We already did that. \nRead the Reports."
   Photos:
-  - photo: {fileID: 0}
-    text: GREEN
+  - photo: {fileID: 21300000, guid: eeb759d3e82c0704e9a0cceefa696b90, type: 3}
+    text: GOOPIE
+  - photo: {fileID: 21300000, guid: dcd963a4e9f713b4ea19cb8b50fa039c, type: 3}
+    text: MMMH
+  - photo: {fileID: 21300000, guid: 45eb73e361fa9d94e8926e30ffae07b6, type: 3}
+    text: THE TRUCKS BACK
   Conditionals:
   - condition: {fileID: 11400000, guid: 43994936b8273bc459ee021cd42e7d4e, type: 2}
     ifNot: 0
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0
