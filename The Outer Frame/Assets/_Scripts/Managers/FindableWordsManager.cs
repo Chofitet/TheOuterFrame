@@ -182,7 +182,7 @@ public class FindableWordsManager : MonoBehaviour
                     heightInfo = Math.Max(heightInfo, Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y));
 
                     //  check to slice btn in differents text lines
-                    if (textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i].firstCharacterIndex].lineNumber != textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i+1].firstCharacterIndex].lineNumber && i+1 != wordCount)
+                    if (i + 1 < wordCount && textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i].firstCharacterIndex].lineNumber != textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i+1].firstCharacterIndex].lineNumber && i+1 != wordCount)
                     {
                     
                         combinedWordLength = combinedWordLength + spaceToAdd;

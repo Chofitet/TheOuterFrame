@@ -23,6 +23,7 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnDialingSound;
     [SerializeField] GameEvent OnOpenPhonePadSound;
     [SerializeField] GameEvent OnClosePhonePadSound;
+    [SerializeField] Canvas canvas;
     WordData ActualWord;
     bool isRecording;
     bool IsInView;
@@ -176,14 +177,14 @@ public class PinchofonoController : MonoBehaviour
         RecordingNumberPanel.SetActive(false);
         EnterValidPanel.SetActive(true);
         EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY FOR PRINTING";
-        StartCoroutine(BlinkText(EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>()));
+        StartCoroutine(BlinkText());
     }
 
-    private IEnumerator BlinkText(TMP_Text text)
+    private IEnumerator BlinkText()
     {
         while (waitingForPrint)
         {
-            text.enabled = !text.enabled;
+            canvas.enabled = !canvas.enabled;
             yield return new WaitForSeconds(0.5f);
         }
     }

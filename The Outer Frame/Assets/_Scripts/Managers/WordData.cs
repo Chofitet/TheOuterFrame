@@ -475,7 +475,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         string aux = "";
         string normalizedWord = Regex.Replace(wordCompere.Trim(), @"[^\w]", "");
 
-        if(comesFromDBTitle) return Regex.Replace(Form_DatabaseNameVersion.Trim(), @"[^\w]", "");
+        if (comesFromDBTitle) return Regex.Replace(GetForm_DatabaseNameVersion().Trim(), @"[^\w]", "");
+
 
         foreach (string s in FindableAs)
         {
