@@ -200,7 +200,7 @@ public class WordSelectedInNotebook : MonoBehaviour
     public void SetSelectedWord(WordData word)
     {
         SelectedWord = word;
-        if (actualView == ViewStates.OnTakenPaperView) OnButtonElementClick?.Invoke(this, ViewStates.DossierView);
+        if (actualView == ViewStates.OnTakenPaperView || actualView == ViewStates.GeneralView) OnButtonElementClick?.Invoke(this, ViewStates.DossierView);
         OnSelectedWordInNotebook?.Invoke(this, SelectedWord);
         
     }

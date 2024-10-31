@@ -171,7 +171,19 @@ public class PinchofonoController : MonoBehaviour
         haveCallToPrint = true;
         waitingForPrint = true;
         SetIsRecordingFalse();
-        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY TO PRINTING";
+        RecordingNumberPanel.SetActive(false);
+        EnterValidPanel.SetActive(true);
+        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY FOR PRINTING";
+        StartCoroutine(BlinkText(EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>()));
+    }
+
+    private IEnumerator BlinkText(TMP_Text text)
+    {
+        while (waitingForPrint)
+        {
+            text.enabled = !text.enabled;
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 
     //CallToPrint

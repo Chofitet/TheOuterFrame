@@ -241,6 +241,7 @@ public class HyperlinksManager : MonoBehaviour
 
     string SearchCleanedWord(List<string> list, string word)
     {
+        if (word == "VTTD") return "VTTD";
         // Dividimos la palabra en un array por los espacios
         string[] words = word.Split(' ');
 

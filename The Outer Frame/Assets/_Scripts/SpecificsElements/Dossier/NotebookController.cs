@@ -97,7 +97,7 @@ public class NotebookController : MonoBehaviour
         {
             if (!newword.GetWordThatReplaces()) continue;
             NotebookWordInstance script = w.GetComponent<NotebookWordInstance>();
-            if (script.GetWord() == newword.GetWordThatReplaces())
+            if (SearchForWordThatReplaceRetroactive(script.GetWord(), newword))
             {
                 ClearUnderLine();
                 script.ReplaceWord(newword);
@@ -106,6 +106,23 @@ public class NotebookController : MonoBehaviour
             
         }
         return aux;
+    }
+
+    bool SearchForWordThatReplaceRetroactive(WordData oldWord, WordData newWord)
+    {
+        WordData currentWord = newWord.GetWordThatReplaces();
+        WordData startWord = oldWord;
+
+        while (currentWord != null)
+        {
+            if (currentWord == startWord) 
+                return true;
+
+            currentWord.SetIsFound(); 
+            currentWord = currentWord.GetWordThatReplaces();
+        }
+
+        return false; 
     }
 
     //refresh when a word are erace
@@ -160,6 +177,16 @@ public class NotebookController : MonoBehaviour
         if (actualView == ViewStates.BoardView)
         {
             DisableWordsOfList(InctiveWordsOnBoard);
+        }
+        else if (actualView == ViewStates.TVView)
+        {
+            List<WordData> listAllWord = new List<WordData>();
+            foreach(GameObject instance in WordsInstances)
+            {
+                listAllWord.Add(instance.GetComponent<NotebookWordInstance>().GetWord());
+            }
+
+            DisableWordsOfList(listAllWord);
         }
         else
         {

@@ -205,6 +205,11 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
         foreach (CallType call in CallTypes)
         {
+            if(!call)
+            {
+                Debug.LogWarning("The word " + GetName() + "have a empy call");
+                return;
+            }
             call.SetWord(this);
         }
     }
@@ -460,7 +465,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
             }
             else
             {
-                Debug.LogWarning("the word " + GetName() + " dont have a vilified new assigned");
+                //Debug.LogWarning("the word " + GetName() + " dont have a vilified new assigned");
             }
         }
         return VilifiedNew; }

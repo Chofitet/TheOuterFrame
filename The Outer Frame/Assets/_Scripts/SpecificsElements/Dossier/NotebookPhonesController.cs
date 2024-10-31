@@ -9,6 +9,7 @@ public class NotebookPhonesController : MonoBehaviour
     [SerializeField] Transform WordContainer;
     List<GameObject> WordsInstances = new List<GameObject>();
     List<int> removedIndex = new List<int>(); // Lista para almacenar los índices eliminados
+    List<WordData> InctiveWordsOnBoard = new List<WordData>();
     int i = 0;
     bool once = false;
 
@@ -107,7 +108,7 @@ public class NotebookPhonesController : MonoBehaviour
         {
             if (!newword.GetWordThatReplaces()) continue;
             PhoneRowNotebookController script = w.GetComponent<PhoneRowNotebookController>();
-            if (script.GetWord() == newword.GetWordThatReplaces())
+            if (SearchForWordThatReplaceRetroactive(script.GetWord(),newword))
             {
                 script.ReplaceNumber(newword);
                 ClearUnderLine();
@@ -117,6 +118,23 @@ public class NotebookPhonesController : MonoBehaviour
         }
 
         return aux;
+    }
+
+    bool SearchForWordThatReplaceRetroactive(WordData oldWord, WordData newWord)
+    {
+        WordData currentWord = newWord.GetWordThatReplaces();
+        WordData startWord = oldWord;
+
+        while (currentWord != null)
+        {
+            if (currentWord == startWord)
+                return true;
+
+            currentWord.SetIsFound();
+            currentWord = currentWord.GetWordThatReplaces();
+        }
+
+        return false;
     }
 
     bool SearchForAnExistingPhoneNum(WordData word)
@@ -172,16 +190,52 @@ public class NotebookPhonesController : MonoBehaviour
         }
     }
 
-    public void DisablePhoneBTN(Component sender, object obj)
+    public void PutingWordOnBoard(Component sender, object obj)
     {
-        /*if (obj is not bool) return;
+        InctiveWordsOnBoard.Add((WordData)obj);
+        DisableWordsOfList(InctiveWordsOnBoard);
+    }
 
-        if (WordContainer.childCount == 0) return;
-        GameObject[] btns = WordContainer.gameObject.GetComponentsInChildren<GameObject>();
-        
-        foreach (GameObject btn in btns)
+    ViewStates actualView;
+    public void CheckView(Component sender, object obj)
+    {
+        actualView = (ViewStates)obj;
+
+        if (actualView == ViewStates.BoardView)
         {
-            btn.SetActive(!(bool)obj);
-        }*/
+            DisableWordsOfList(InctiveWordsOnBoard);
+        }
+        else if (actualView == ViewStates.TVView)
+        {
+            List<WordData> listAllWord = new List<WordData>();
+            foreach (GameObject instance in WordsInstances)
+            {
+                listAllWord.Add(instance.GetComponent<PhoneRowNotebookController>().GetWord());
+            }
+
+            DisableWordsOfList(listAllWord);
+        }
+        else
+        {
+            List<WordData> Empylist = new List<WordData>();
+            DisableWordsOfList(Empylist);
+        }
+    }
+
+    void DisableWordsOfList(List<WordData> list)
+    {
+        foreach (GameObject instanceBTN in WordsInstances)
+        {
+            instanceBTN.GetComponent<Button>().enabled = true;
+
+            foreach (WordData word in list)
+            {
+                PhoneRowNotebookController Wordinstance = instanceBTN.GetComponent<PhoneRowNotebookController>();
+                if (Wordinstance.GetWord() == word)
+                {
+                    instanceBTN.GetComponent<Button>().enabled = false;
+                }
+            }
+        }
     }
 }

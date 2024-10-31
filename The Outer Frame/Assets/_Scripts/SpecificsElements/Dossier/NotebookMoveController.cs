@@ -24,6 +24,7 @@ public class NotebookMoveController : MonoBehaviour
     GameObject child;
     bool isGameOver;
     Transform OriginalTransform;
+    bool dontLeaveNotebook;
 
     ViewStates lastView;
 
@@ -33,6 +34,8 @@ public class NotebookMoveController : MonoBehaviour
         anim = child.GetComponent<Animator>();
         OriginalTransform = transform.parent;
     }
+
+
 
     public void OnChangeView(Component sender, object obj)
     {
@@ -44,27 +47,35 @@ public class NotebookMoveController : MonoBehaviour
             case ViewStates.GeneralView:
                 if(IsPhonesOpen) anim.SetTrigger("close");
                 if (isUp) SetPos(0, false);
+                if (dontLeaveNotebook) SetPos(6);
+                dontLeaveNotebook = false;
                 break;
             case ViewStates.DossierView:
                 SetPos(6);
+                dontLeaveNotebook = false;
                 break;
             case ViewStates.PinchofonoView:
                 SetPos(1, true, OriginalTransform, true);
+                dontLeaveNotebook = true;
                 break;
             case ViewStates.BoardView:
                 SetPos(2);
+                dontLeaveNotebook = true;
                 break;
             case ViewStates.PCView:
                 SetPos(3);
+                dontLeaveNotebook = true;
                 break;
             case ViewStates.ProgressorView:
                 if(isUp) SetPos(0,false);
                 break;
             case ViewStates.OnTakenPaperView:
                 SetPos(6);
+                dontLeaveNotebook = true;
                 break;
             case ViewStates.TVView:
                 SetPos(5);
+                dontLeaveNotebook = true;
                 break;
             case ViewStates.PauseView:
                 SetPos(0, false);
@@ -109,6 +120,7 @@ public class NotebookMoveController : MonoBehaviour
         
         isUp = _isUp;
 
+        if (dontLeaveNotebook) return;
         if (isUp) OnTakeNotebookSound?.Invoke(this, null);
         else OnLeaveNotebookSound?.Invoke(this, null);
     }
@@ -119,6 +131,11 @@ public class NotebookMoveController : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, currentTarget.position, lerpTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, currentTarget.rotation, lerpTime);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Mouse1) && !dontLeaveNotebook && isUp)
+        {
+            SetPos(0, false);
         }
     }
 
