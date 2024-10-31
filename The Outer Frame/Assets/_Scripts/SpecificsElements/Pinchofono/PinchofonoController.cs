@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 
@@ -223,7 +225,8 @@ public class PinchofonoController : MonoBehaviour
         hasNumberEnter = true;
         ActualWord = word;
         txtNumber.GetComponent<TypingAnimText>().AnimateTyping();
-        anim.SetTrigger("padDial");
+        //anim.SetTrigger("padDial");
+        StartCoroutine(AnimPadDial(word.GetPhoneNumber()));
         OnDialingSound?.Invoke(this, null);
         anim.SetTrigger("recordReady");
         anim.SetTrigger("recordReadyWobble");
@@ -272,6 +275,19 @@ public class PinchofonoController : MonoBehaviour
         anim.SetBool("IsRecording", false);
         anim.SetFloat("tapeSpinSpeed", 0);
         isRecording = false;
+    }
+
+    IEnumerator AnimPadDial(string number)
+    {
+        number = Regex.Replace(number, @"[()\-\s]", "");
+
+        string[] numbers = number.Select(c => c.ToString()).ToArray();
+
+        foreach (string digit in numbers)
+        {
+            anim.SetTrigger("dial" + digit);
+            yield return new WaitForSeconds(0.175f);
+        }
     }
 
     public void ResetAll(Component sender, object obj)
