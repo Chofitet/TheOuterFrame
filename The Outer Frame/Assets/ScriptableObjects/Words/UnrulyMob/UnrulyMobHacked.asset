@@ -12,15 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: UnrulyMobHacked
   m_EditorClassIdentifier: 
-  Action: {fileID: 0}
-  state: {fileID: 0}
-  isAutomatic: 0
+  Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
+  state: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
+  isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: 
-  TextForRepetition: 
+  Text: There is no scenario in which we go to confront them and we come out alive.
+  TextForRepetition: 'WE SAID:
+
+
+    There is no scenario in which we go to confront
+    them and we come out alive.'
   Photos:
-  - photo: {fileID: 0}
-    text: 
+  - photo: {fileID: 21300000, guid: 349a3a10f44025848a769d5cbb952c35, type: 3}
+    text: 'NO '
+  - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
+    text: WAY
   Conditionals: []
   isOrderMatters: 0
-  XPosFix: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0
