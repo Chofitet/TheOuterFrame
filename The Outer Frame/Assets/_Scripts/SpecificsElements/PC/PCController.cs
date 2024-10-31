@@ -135,7 +135,7 @@ public class PCController : MonoBehaviour
         {
             WikiTitleSearchedWord.text = "<link>" + word.GetForm_DatabaseNameVersion() + "</link>";
             WikiTitleSearchedWord.ForceMeshUpdate();
-            FindableWordsManager.FWM.InstanciateFindableWord(WikiTitleSearchedWord, FindableBtnType.FindableBTN);
+            FindableWordsManager.FWM.InstanciateFindableWord(WikiTitleSearchedWord, FindableBtnType.FindableBTN, true);
         }
 
         isWaitingAWord = true;

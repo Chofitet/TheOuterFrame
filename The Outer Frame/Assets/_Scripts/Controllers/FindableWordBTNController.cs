@@ -37,12 +37,14 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     }
 
     bool _isRepitedButton;
-    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton)
+    bool _comesFromDBTitle;
+    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton, bool comesFromDBTitle = false)
     {
         rectTransform.sizeDelta = new Vector2(Width, Heigth);
         textField = TextField;
         word = Word;
         _isRepitedButton = isRepitedButton;
+        _comesFromDBTitle = comesFromDBTitle;
         ApplyShader("Bold");
     }
 
@@ -90,7 +92,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
             }
 
             string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
-            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)))).ToLower();
+            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)),_comesFromDBTitle)).ToLower();
 
             combinedWordClean = Regex.Replace(combinedWordClean.Trim(), @"[^\w]", "");
 

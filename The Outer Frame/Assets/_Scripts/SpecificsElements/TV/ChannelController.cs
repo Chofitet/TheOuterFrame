@@ -99,6 +99,7 @@ public class ChannelController : MonoBehaviour
             HeadlineText2.gameObject.SetActive(true);
             HeadlineText.gameObject.SetActive(false);
             HeadlineText2.text = _new.GetHeadline2();
+            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText2, FindableBtnType.FindableBTN);
 
         }
         else
@@ -108,6 +109,7 @@ public class ChannelController : MonoBehaviour
             HeadlineText.text = _new.GetHeadline();
         }
         NewTextContent.text = _new.GetNewText();
+        FindableWordsManager.FWM.InstanciateFindableWord(NewTextContent, FindableBtnType.FindableBTN);
         if (_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
         NewImg.transform.GetChild(0).GetComponent<Image>().sprite = _new.GetNewImag();
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
