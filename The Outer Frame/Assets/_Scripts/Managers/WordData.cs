@@ -566,12 +566,19 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     List<string> InitFindableAs;
     void SaveFindableAs()
     {
-        InitFindableAs = new List<string>(FindableAs); 
+        InitFindableAs = new List<string>(FindableAs);
+        AddFormDataBaseOnFindableAs();
     }
 
     void RestartFindableAs()
     {
         FindableAs = new List<string>(InitFindableAs);
+    }
+
+    void AddFormDataBaseOnFindableAs()
+    {
+        if (Form_DatabaseNameVersion == "") return;
+        FindableAs.Add(Form_DatabaseNameVersion);
     }
 
     public TimeData GetTimeOfState(StateEnum state)
@@ -599,6 +606,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     }
 
     public bool GetPlacedInBoard() { return isPlacedInBoad; }
+
+    public List<ReportType> GetReportList() { return reportTypes; }
 
 }
 [Serializable]
