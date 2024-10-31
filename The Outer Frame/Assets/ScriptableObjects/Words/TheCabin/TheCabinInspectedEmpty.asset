@@ -18,10 +18,10 @@ MonoBehaviour:
   ChangeTimeOfAction: 0
   Text: The cabin is completely empty. It seems somehow smaller.
   TextForRepetition: 
-  Photos:
-  - photo: {fileID: 21300000, guid: ea5bab8a9935dbe4897b73d020479306, type: 3}
-    text: '"HI"'
-  Conditionals: []
+  Photos: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 3eb6b319a9051e14da82e153fea6b178, type: 2}
+    ifNot: 1
   isOrderMatters: 0
   TriggerDrawerAnim: 0
   FinalReport: 0

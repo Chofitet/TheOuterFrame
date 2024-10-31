@@ -41,7 +41,9 @@ MonoBehaviour:
   UpdatedDataBase: []
   CallTypes: []
   InactiveConditions: []
-  EraseConditions: []
+  EraseConditions:
+  - condition: {fileID: 11400000, guid: 030762016c963a54a98175f01d4b4506, type: 2}
+    ifNot: 0
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0
   WordsThatDeletes: []

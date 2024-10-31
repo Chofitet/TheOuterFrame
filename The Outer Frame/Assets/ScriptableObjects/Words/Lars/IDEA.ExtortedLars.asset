@@ -9,9 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6984e9d1bc4ac2d4bb50302ab5162316, type: 3}
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.ExtortedLars
   m_EditorClassIdentifier: 
-  word: {fileID: 11400000, guid: 3594797ea10c6504195e10c59f5aacaf, type: 2}
+  Action: {fileID: 11400000, guid: 0c4ce772ac5a4bf428bb65d310fc5310, type: 2}
   state: {fileID: 11400000, guid: 0c4ce772ac5a4bf428bb65d310fc5310, type: 2}
-  TimeToAppearOnTV: 0
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: 'He extorted us right back!
+
+    We had to give him our lunch money...
+
+
+    Now
+    this is ridiculous.'
+  TextForRepetition: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 46930c464f80c00489025e8ac84091e6, type: 3}
+    text: WHAT A JERK!
+  Conditionals: []
+  isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0
