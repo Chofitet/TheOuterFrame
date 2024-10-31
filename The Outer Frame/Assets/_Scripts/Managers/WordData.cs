@@ -455,7 +455,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public TVNewType GetVilifiedNew() {
         TVNewType VilifiedNew = null;
-        if(TVNewTypes.Count == 0 && !GetIsAPhoneNumber()) Debug.LogWarning("the word " + GetName() + " dont have a vilified new assigned");
+       // if(TVNewTypes.Count == 0 && !GetIsAPhoneNumber()) Debug.LogWarning("the word " + GetName() + " dont have a vilified new assigned");
         foreach (TVNewType _new in TVNewTypes)
         {
             if(_new.name.ToLower().Contains("vilif"))
