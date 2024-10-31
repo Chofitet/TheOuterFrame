@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -472,9 +471,11 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public string GetName() { return wordName; }
 
-    public string FindFindableName(string wordCompere){
+    public string FindFindableName(string wordCompere, bool comesFromDBTitle = false){
         string aux = "";
         string normalizedWord = Regex.Replace(wordCompere.Trim(), @"[^\w]", "");
+
+        if(comesFromDBTitle) return Regex.Replace(Form_DatabaseNameVersion.Trim(), @"[^\w]", "");
 
         foreach (string s in FindableAs)
         {
@@ -567,7 +568,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     void SaveFindableAs()
     {
         InitFindableAs = new List<string>(FindableAs);
-        AddFormDataBaseOnFindableAs();
+        //AddFormDataBaseOnFindableAs();
     }
 
     void RestartFindableAs()

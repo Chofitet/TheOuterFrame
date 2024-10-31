@@ -31,7 +31,7 @@ public class FindableWordsManager : MonoBehaviour
         }
     }
 
-    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType)
+    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, bool _comesFromDBTitle = false)
     {
         // btnType para cuando quiera refactorizar este script para que funcione con links tambien
 
@@ -70,7 +70,7 @@ public class FindableWordsManager : MonoBehaviour
                 if (w.GetWordData().GetIsFound()) continue;
                 GameObject auxObj = Instantiate(ButtonFindableWordPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
                 auxObj.name = "FindableBTN_" + w.GetWordData().GetName();
-                auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton());
+                auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle);
                 FindableWordsBTNs.Add(auxObj);
                 OnFindableWordInstance?.Invoke(this, auxObj);
                 auxObj.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(auxObj));
