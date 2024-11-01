@@ -16,7 +16,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     [SerializeField] List<PhotoInfo> Photos = new List<PhotoInfo>();
     [SerializeField] List<ConditionalClass> Conditionals;
     [SerializeField] bool isOrderMatters;
-    [SerializeField] bool KillAgent;
+    [SerializeField] bool AgentDown;
     [SerializeField] bool TriggerDrawerAnim;
     [SerializeField] bool FinalReport;
     [NonSerialized] bool wasSet;
@@ -30,7 +30,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     public int GetChangeTimeOfAction() { return ChangeTimeOfAction; }
 
     public List<PhotoInfo> GetReportImage() { return Photos; }
-    public bool GetKillAgent() { return KillAgent; }
+    public bool GetKillAgent() { return AgentDown; }
     
 
     private TimeData CompleteTime;
