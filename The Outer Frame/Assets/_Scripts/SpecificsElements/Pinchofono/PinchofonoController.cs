@@ -44,6 +44,7 @@ public class PinchofonoController : MonoBehaviour
 
     public void RecBTNPressed(Component sender, object obj)
     {
+        canvas.enabled = true;
         anim.SetTrigger("recordPush");
         StopAllCoroutines();
         AbortConfirmationPanel.SetActive(false);
@@ -72,6 +73,7 @@ public class PinchofonoController : MonoBehaviour
 
     public void PrintBTNPressed(Component sender, object obj)
     {
+        canvas.enabled = true;
         anim.SetTrigger("printPush");
         StopAllCoroutines();
         AbortConfirmationPanel.SetActive(false);
@@ -103,6 +105,7 @@ public class PinchofonoController : MonoBehaviour
 
     public void AbortBTNPressed(Component sender, object obj)
     {
+        canvas.enabled = true;
         anim.SetTrigger("abortPush");
         StopAllCoroutines();
 
@@ -210,9 +213,11 @@ public class PinchofonoController : MonoBehaviour
     {
         if (isRecording) return;
         if (waitingForPrint) return;
+        
         StopAllCoroutines();
-        ShowPanel(ScreenContent);
         WordData word = (WordData)obj;
+        if (word.GetPhoneNumber() == "UNLISTED") return;
+        ShowPanel(ScreenContent);
         if (!IsInView) return;
         if (!word.GetIsPhoneNumberFound())
         {

@@ -85,7 +85,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
         BtnGenerateIdeaController btn = IdeaButtom.GetComponent<BtnGenerateIdeaController>();
         
-        if (btn.GetState().GetIsDone())
+        
+        if (btn.GetState().GetSpecialActionWord().CheckIfStateSeenWasDone(btn.GetState()))
         {
             CheckImage.SetActive(true);
             btn.InactiveIdea();

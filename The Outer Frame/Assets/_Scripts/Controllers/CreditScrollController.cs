@@ -8,15 +8,22 @@ public class CreditScrollController : MonoBehaviour
     [SerializeField] GameObject ScrollPanel;
     [SerializeField] Transform EndPos;
     [SerializeField] float Speed;
+    [SerializeField] float timeToStart;
     [SerializeField] GameEvent ChangeScene;
 
     private void Start()
     {
-        ScrollCredits();
+        StartCoroutine(delay());
     }
 
     void ScrollCredits()
     {
         ScrollPanel.transform.DOMove(EndPos.position, Speed).SetEase(Ease.Linear).OnComplete(()=> { ChangeScene?.Invoke(this, "MainMenu"); });
+    }
+
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(timeToStart);
+        ScrollCredits();
     }
 }

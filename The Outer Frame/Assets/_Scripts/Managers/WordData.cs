@@ -577,6 +577,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         FindableAs = new List<string>(InitFindableAs);
     }
 
+    public List<string> GetFindableList() { return FindableAs; }
+
     void AddFormDataBaseOnFindableAs()
     {
         if (Form_DatabaseNameVersion == "") return;

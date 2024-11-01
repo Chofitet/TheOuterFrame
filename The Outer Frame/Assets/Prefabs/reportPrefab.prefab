@@ -2219,6 +2219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   view: 7
+  NotInactiveBTN: 0
 --- !u!114 &171533184221195993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2861,6 +2862,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   view: 7
+  NotInactiveBTN: 0
 --- !u!114 &3486983384381167194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3307,6 +3309,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7769892177269892594}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5447743975724026902}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8165689592033335213}
   m_SourcePrefab: {fileID: 100100000, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
 --- !u!1 &122790049115117963 stripped
 GameObject:
@@ -3325,6 +3333,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d2f6070689c674ea2e99b5466913b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5447743975724026902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122790049115117963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2c0a2ee6a0d7c429c7a8ddd336e29f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8165689592033335213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122790049115117963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 89a0034a67f6a244d859d967d30595a3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5447743975724026902}
+        m_TargetAssemblyTypeName: ChangeMaterialToDiffuse, Assembly-CSharp
+        m_MethodName: ChangeToDiffuse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!4 &792611864994759473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
@@ -3495,6 +3545,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3213997936887931969}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8349132137035636901}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1860374081275438618}
   m_SourcePrefab: {fileID: 100100000, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
 --- !u!1 &3702366565555626541 stripped
 GameObject:
@@ -3513,6 +3569,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d2f6070689c674ea2e99b5466913b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8349132137035636901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3702366565555626541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2c0a2ee6a0d7c429c7a8ddd336e29f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1860374081275438618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3702366565555626541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 89a0034a67f6a244d859d967d30595a3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5447743975724026902}
+        m_TargetAssemblyTypeName: ChangeMaterialToDiffuse, Assembly-CSharp
+        m_MethodName: ChangeToDiffuse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!4 &4047225791741278359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
@@ -3601,6 +3699,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 104827499006798042}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6130267766233268649}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1643593207421015255}
   m_SourcePrefab: {fileID: 100100000, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
 --- !u!1 &7337601466577692036 stripped
 GameObject:
@@ -3619,6 +3723,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d2f6070689c674ea2e99b5466913b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6130267766233268649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7337601466577692036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2c0a2ee6a0d7c429c7a8ddd336e29f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1643593207421015255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7337601466577692036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 89a0034a67f6a244d859d967d30595a3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5447743975724026902}
+        m_TargetAssemblyTypeName: ChangeMaterialToDiffuse, Assembly-CSharp
+        m_MethodName: ChangeToDiffuse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
 --- !u!4 &7971288897677164350 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
