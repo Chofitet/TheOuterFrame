@@ -8,6 +8,7 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] SlotController slot;
     [SerializeField] GameEvent OnPrintReport;
     [SerializeField] GameEvent OnTryPrintFullPrinter;
+    [SerializeField] GameEvent OnDisableAgentOnSlot;
     bool isFull;
     bool IsReadyToPrint;
     bool isAbortOpen;
@@ -168,6 +169,7 @@ public class ProgressorModuleController : MonoBehaviour
                 ReadyToPrintLED.TurnOffLight(this, null);
                 PrintBTN.GetComponent<Collider>().enabled = false;
                 OnPrintReport?.Invoke(this, slot);
+                if(slot.GetReport().GetKillAgent()) OnDisableAgentOnSlot?.Invoke(this, gameObject);
             }
             else
             {

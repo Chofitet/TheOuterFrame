@@ -52,4 +52,12 @@ public class ProgressorManager : MonoBehaviour
 
         return AuxSlot;
     }
+
+    public void DisableSlot(Component sender, object obj)
+    {
+        GameObject slot = (GameObject)obj;
+        ProgressorModuleController SlotToRemove = slot.GetComponent<ProgressorModuleController>();
+        Slots.Remove(SlotToRemove);
+        
+    }
 }

@@ -14,7 +14,9 @@ public class SlotController : MonoBehaviour
     [SerializeField] TMP_Text Actiontxt;
     [SerializeField] Slider ProgressBar;
     [SerializeField] GameObject Icon;
+    [SerializeField] GameObject AgentIcon;
     [SerializeField] GameEvent OnFinishActionProgress;
+    
 
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
@@ -35,6 +37,8 @@ public class SlotController : MonoBehaviour
     public void initParameters(WordData word, StateEnum state)
     {
         gameObject.SetActive(true);
+        transform.GetChild(0).gameObject.SetActive(true);
+        AgentIcon.SetActive(false);
         _word = word;
         Report = WordsManager.WM.RequestReport(word, state);
         _state = state;
@@ -160,6 +164,7 @@ public class SlotController : MonoBehaviour
         _word.SetDoingAction(_state, false);
         inFillFast = false;
         Report = WordsManager.WM.RequestReport(_word, _state);
+        AgentIcon.SetActive(false);
         if (!Report.GetWasSet())
         {
             isAlreadyDone = false;
@@ -179,6 +184,7 @@ public class SlotController : MonoBehaviour
     {
         inFillFast = false;
         OnFinishActionProgress?.Invoke(this, this);
+        AgentIcon.SetActive(false);
         TimeManager.OnMinuteChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();
     }
@@ -202,14 +208,17 @@ public class SlotController : MonoBehaviour
 
     void ResetSlot()
     {
-        gameObject.SetActive(false);
         Icon.SetActive(false);
-        Report = null;
+        
         isActionComplete = false;
         isOtherGroupActionDoing = null;
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
         SetLEDState(Color.green);
+        AgentIcon.SetActive(true);
+        if (Report.GetKillAgent()) DisableAgent();
+        Report = null;
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
     void SetLEDState(Color _color)
@@ -229,6 +238,12 @@ public class SlotController : MonoBehaviour
         Wordtxt.text = "";
         Actiontxt.text = "";
         SetLEDState(Color.black);
+    }
+
+    void DisableAgent()
+    {
+        AgentIcon.GetComponent<Image>().color = Color.red;
+        AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 90));
     }
 
     public WordData GetWord() { return _word; }
