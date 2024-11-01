@@ -228,4 +228,9 @@ public class NotebookMoveController : MonoBehaviour
 
     }
 
+    public void LeaveNotebook(Component sender, object obj)
+    {
+        SetPos(0, false);
+    }
+
 }
