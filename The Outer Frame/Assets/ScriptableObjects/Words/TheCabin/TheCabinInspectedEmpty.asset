@@ -16,12 +16,14 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 8966baa246faa9f48ab5d3546bfcac07, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: The cabin is completely empty. It seems somehow smaller.
-  TextForRepetition: 
+  Text: "The cabin is completely empty. \nIt seems somehow smaller from the inside."
+  TextForRepetition: "The cabin is completely empty. \nIt seems somehow smaller from
+    the inside."
   Photos: []
   Conditionals:
   - condition: {fileID: 11400000, guid: 3eb6b319a9051e14da82e153fea6b178, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
   FinalReport: 0
