@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
+  m_Name: 08.00.Interview2
+  m_EditorClassIdentifier: 
+  headline: <link>WHOOPLA PARK</link> MONSTER
+  headlineTwoLines: 
+  text: LOCAL BOY SWEARS HAVING EVIDENCE OF MYSTERIOUS CREATURE ROAMING THE WOODS
+    NEAR THE PEACEFUL TOWN OF <link>WHOOPLA TOWN</link>
+  image: {fileID: 0}
+  channel: 1
+  Priority: 1
+  alertLevelIncrement: 16
+  Emergency: 0
+  Day: 0
+  Hour: 8
+  Minute: 0
+  MinTransmitionTime: 4
+  Conditions:
+  - condition: {fileID: 11400000, guid: 030762016c963a54a98175f01d4b4506, type: 2}
+    ifNot: 1
+  ReplacedIf: []
+  isOrderMatters: 0
+  ReplacedBy: {fileID: 0}
