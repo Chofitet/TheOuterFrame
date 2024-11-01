@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: SecuSysInspected
+  m_Name: SecuSysInspectedCan
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
-  state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  state: {fileID: 11400000, guid: 61614aa9380a9b744b3385a4d91249d8, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
   Text: "Here is where all the security footage is stored.\r\nIt looks like a modem
@@ -25,7 +25,9 @@ MonoBehaviour:
   Photos:
   - photo: {fileID: 21300000, guid: fa30d45b3265cfe44889fdaa36a3cbe7, type: 3}
     text: THIS THING
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 7f661753ff6be2e4da5e7e5e777c969d, type: 2}
+    ifNot: 0
   isOrderMatters: 0
   TriggerDrawerAnim: 0
   FinalReport: 0
