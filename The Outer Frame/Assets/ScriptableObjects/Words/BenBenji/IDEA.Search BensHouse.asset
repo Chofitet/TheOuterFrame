@@ -9,16 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75cd8a0f1fed7a747adc9ae31f7f430a, type: 3}
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.Search BensHouse
   m_EditorClassIdentifier: 
-  InfinitiveVerb: Search Ben's home for the pictures
-  Actioning: Searching Ben's home for the pictures
-  Actioned: Searched  Ben's home for the pictures
-  TimeToComplete: 7
-  TimeToShowNew: 0
-  observationtxt: 
-  Agent: {fileID: 0}
-  IdeaWordData: {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
-  IdeaVerb: 'Searching '
-  IdeaWord: Ben's home for the pictures
+  Action: {fileID: 11400000, guid: 86178661b5fc7af43b13ac05814b9a28, type: 2}
+  state: {fileID: 11400000, guid: 86178661b5fc7af43b13ac05814b9a28, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: Maybe he was telling the truth. We found nothing!
+  TextForRepetition: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
+    text: NOTHING AT ALL
+  Conditionals: []
+  isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0
