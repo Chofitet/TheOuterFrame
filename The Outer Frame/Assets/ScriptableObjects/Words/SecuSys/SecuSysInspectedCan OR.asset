@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21787a5276d74c24e9e60eb8d3299788, type: 3}
+  m_Name: SecuSysInspectedCan OR
+  m_EditorClassIdentifier: 
+  Conditions:
+  - condition: {fileID: 11400000, guid: a99a5e489c38a5142aa6a0b743b5cb9f, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: c9bc96a5972796840816406f58ec206a, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 3c7e1717090ae8e47ba470f415120e5f, type: 2}
+    ifNot: 1
