@@ -15,17 +15,12 @@ MonoBehaviour:
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   state: {fileID: 11400000, guid: 57d5d87d1a334df4aa51fd9a9f916766, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: 0
-  Text: 'wow.
-
-    He''s stubborn as mule!
-
-    He says that he knows he doesn''t
-    have to tell us anything.
-
-
-    The thing is he saw it yesterday.'
-  TextForRepetition: "We did that already. \nRemember to read the Reports."
+  ChangeTimeOfAction: -3
+  Text: "\"I did't take any pictures of anything and I didn't tell the news\"\nThat's
+    all we could get out him.\nQuite the defiant little fellow we got here.\r\n\r"
+  TextForRepetition: "WE SAID:\n\n\"I did't take any pictures of anything and I didn't
+    tell the news\"\nThat's all we could get out him.\nQuite the defiant little fellow
+    we got here.\r\n\r"
   Photos:
   - photo: {fileID: 21300000, guid: a386b393bdf5b714da978fb6d293816e, type: 3}
     text: STUBBORN
@@ -35,5 +30,6 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 8259b86435796e041a925b089fc567cb, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
   FinalReport: 0
