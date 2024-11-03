@@ -9,17 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75cd8a0f1fed7a747adc9ae31f7f430a, type: 3}
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.TellBen
   m_EditorClassIdentifier: 
-  InfinitiveVerb: 'Tell Ben: Tootsie and EVERYONE is in BIG trouble if 12 o''clock
-    reaches and we don''t have the pictures'
-  Actioning: 'Telling Ben: Tootsie and EVERYONE is in BIG trouble'
-  Actioned: 'Told Ben: Tootsie and EVERYONE is in BIG trouble'
-  TimeToComplete: 2
-  TimeToShowNew: 0
-  observationtxt: 
-  Agent: {fileID: 0}
-  IdeaWordData: {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
-  IdeaVerb: Telling Ben
-  IdeaWord: EVERYONE is in BIG trouble
+  Action: {fileID: 11400000, guid: d9a62349d93a8aa438a733a645bd7e1f, type: 2}
+  state: {fileID: 11400000, guid: d9a62349d93a8aa438a733a645bd7e1f, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: "We told him about the CLEANING CREW. \n \nHe said he doesn't want to get
+    <link>Tootsie</link> or <link>Miss Marcelle</link> in trouble. \n \n\"He is <link>at
+    58 Lamon Street</link>, I don't know where she is I'm not lying I'm really not.\"
+    \n \n\"It wasn't me who took them. She wanted to give the <link>pictures</link>
+    to him, said it was important, but when she couldn't find him yesterday she gave
+    them to me. It wasn't me who took them. I never lied to any of you.\" "
+  TextForRepetition: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
+    text: IT WORKED!
+  - photo: {fileID: 21300000, guid: 283b03536f4bc1d4ea469922c4bdc142, type: 3}
+    text: MISS MARCELLE
+  - photo: {fileID: 21300000, guid: 49f91b3871225744f91c81c409c968db, type: 3}
+    text: TOOTSIE
+  Conditionals: []
+  isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

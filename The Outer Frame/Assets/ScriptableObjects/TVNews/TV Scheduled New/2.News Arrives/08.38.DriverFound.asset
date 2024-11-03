@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: 08.38.DriverFound
   m_EditorClassIdentifier: 
   headline: 
-  headlineTwoLines: 'SCARED TRUCK DRIVER FOUND
+  headlineTwoLines: '<link>SERGIO RARACARA: THE SUSPECTED DRIVER</link> OF WHATEVER
+    CAUSED ALL THAT
 
-    HIDING FROM THE TRUTH?'
-  text: <link>THE DRIVER</link> SUSPECTED OF THE REPORTED CRASH AT ROAD 54 WAS FOUND
-    HIDING INSIDE A BATHROOM STALL AND IS DEFLECTING QUESTIONS
+'
+  text: 'EVEN THOUGH HE EVADES QUESTIONS IT IS OBVIOUS. HE WAS FOUND HIDING FROM
+    THE TRUTH INSIDE <link>ROAD 54</link> <link>PETRO STATION</link> <link>BATHROOM</link>. '
   image: {fileID: 21300000, guid: df27202bc744d764fb06ca93f1f4c5bc, type: 3}
   channel: 1
   Priority: 1
@@ -29,6 +30,12 @@ MonoBehaviour:
   MinTransmitionTime: 4
   Conditions:
   - condition: {fileID: 11400000, guid: 42d726425049bfa46a9ba9e10bc67045, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 91308efac81c43c47996e266617aecda, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 4a694302674d27b458bf4475ed1037cc, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 49a789323cc43d8498e19b0bfe3c7f92, type: 2}
     ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
