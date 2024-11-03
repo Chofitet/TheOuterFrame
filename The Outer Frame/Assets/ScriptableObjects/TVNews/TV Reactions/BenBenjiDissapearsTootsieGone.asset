@@ -10,23 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64e79fc005c88bf4084b841a22c08b1a, type: 3}
-  m_Name: BenBenjiDissapearsTootsieTalks
+  m_Name: BenBenjiDissapearsTootsieGone
   m_EditorClassIdentifier: 
   state: {fileID: 0}
   headline: 
-  headlineTwoLines: 'HAVE YOU SEEN MY KID?
-
-    PARENTS IN DISTRESS <link>AT WHOOPLA</link>'
-  text: HIS <link>NEXT DOOR FRIEND "TOOTSIE"</link> SAYS
+  headlineTwoLines: 
+  text: HIS <link>NEXT DOOR FRIEND "TOOTSIE"</link>
   image: {fileID: 21300000, guid: c3fa7ff3c30f5aa4484ef068a2018228, type: 3}
   channel: 1
   priority: 5
   alertLevelIncrement: 20
   Emergency: 0
-  TimeToAppear: 5
-  MinTransmitionTime: 8
+  TimeToAppear: 2
+  MinTransmitionTime: 4
   Conditions:
   - condition: {fileID: 11400000, guid: 8ae525e5e60ef97429c0aeeff34da951, type: 2}
     ifNot: 0
   - condition: {fileID: 11400000, guid: d1c7874b6b4b0e449a98248f0fb5124f, type: 2}
-    ifNot: 1
+    ifNot: 0
