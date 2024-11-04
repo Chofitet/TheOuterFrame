@@ -82,6 +82,7 @@ public class ReportController : MonoBehaviour
         }
 
         ActionCalltxt.text = actionVerb + " " + DeleteSpetialCharacter(Name);
+        CheckTextOverflow();
         Statustxt.text = status + " at OCT 30th " + $"{timeComplete.Hour:00}:{timeComplete.Minute:00}";
 
         GetComponent<IndividualReportController>().SetType(false, word, report);
@@ -115,6 +116,28 @@ public class ReportController : MonoBehaviour
         OnMovePaperToTakenPos?.Invoke(this, gameObject);
         if(!isNotCompleted) WordsManager.WM.RequestChangeStateSeen(word, report.GetState());
         Destroy(this);
+    }
+
+    void CheckTextOverflow()
+    {
+        float containerWidth = ActionCalltxt.transform.parent.GetComponent<RectTransform>().rect.width;
+        Vector2 preferredSize = ActionCalltxt.GetPreferredValues();
+
+        if (preferredSize.x > containerWidth) TruncateTextWithEllipsis(containerWidth);
+        else ActionCalltxt.text = ActionCalltxt.text.Replace(" . . .", "");
+    }
+
+    void TruncateTextWithEllipsis(float containerWidth)
+    {
+        string originalText = ActionCalltxt.text;
+        string truncatedText = originalText;
+
+        while (ActionCalltxt.GetPreferredValues(truncatedText + " . . .").x > containerWidth && truncatedText.Length > 0)
+        {
+            truncatedText = truncatedText.Substring(0, truncatedText.Length - 1);
+        }
+
+        ActionCalltxt.text = truncatedText + " . . .";
     }
 
     public void _Reset()

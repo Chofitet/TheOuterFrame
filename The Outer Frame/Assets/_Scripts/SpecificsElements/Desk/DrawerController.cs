@@ -18,6 +18,7 @@ public class DrawerController : MonoBehaviour
     [SerializeField] GameEvent OnButtonElementClick;
     [SerializeField] GameEvent OnDrawerOpenSound;
     [SerializeField] GameEvent OnDrawerCloseSound;
+
     Vector3 StartPos;
     Sequence OpenDrawerSequence;
     Sequence MovePhotoSequehnce;

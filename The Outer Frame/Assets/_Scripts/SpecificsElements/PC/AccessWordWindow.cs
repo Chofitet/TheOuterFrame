@@ -52,7 +52,7 @@ public class AccessWordWindow : MonoBehaviour
     public void CompleteAccessBar(Component sender, object obj)
     {
         if (!isInPCView) return;
-        if (!Conteiner.active) return;
+        if (!Conteiner.activeSelf) return;
         WordData _word = (WordData)obj;
         TryAccessWord = _word;
         SearchBar.text = DeleteSpetialCharacter(TryAccessWord.GetName());
@@ -105,7 +105,7 @@ public class AccessWordWindow : MonoBehaviour
 
     void startVerticalBarAnim()
     {
-        if (!Conteiner.active) return;
+        if (!Conteiner.activeSelf) return;
         isWaitingAWord = true;
         textAnim.SetCharacterPerSecond(2);
         StartCoroutine(IdleSearchBarAnim());

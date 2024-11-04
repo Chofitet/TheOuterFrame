@@ -84,6 +84,10 @@ public class NotebookMoveController : MonoBehaviour
                 SetPos(0, false);
                 isGameOver = true;
                 break;
+            case ViewStates.DrawerView:
+                dontLeaveNotebook = false;
+                SetPos(0, false);
+                break;
         }
         lastView = newview;
     }

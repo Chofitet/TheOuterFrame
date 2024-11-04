@@ -98,7 +98,7 @@ public class PinchofonoManager : MonoBehaviour
         TimeManager.OnSecondsChange -= SecondPass;
         minutePassCounter = 0;
         CountDown.text = "00:00:00";
-        CallToShow.SetCached(false);
+        if(CallToShow) CallToShow.SetCached(false);
         CallToShow = null;
         isInterrupted = false;
     }

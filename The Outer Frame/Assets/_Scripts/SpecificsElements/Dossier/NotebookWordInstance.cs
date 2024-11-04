@@ -33,6 +33,7 @@ public class NotebookWordInstance : MonoBehaviour
 
         OnWritingShakeNotebook?.Invoke(this, writingTime);
         OnWritingNotebookSound?.Invoke(this, null);
+        Invoke("Alpha1", 1);
 
     }
 
@@ -90,6 +91,7 @@ public class NotebookWordInstance : MonoBehaviour
 
     void SetSelectedWord()
     {
+        
         text.text = "<u>" + wordReference.GetName() + "</u>";
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordReference);
     }
@@ -97,6 +99,11 @@ public class NotebookWordInstance : MonoBehaviour
     public void ClearUnderline()
     {
         text.text = wordReference.GetName();
+    }
+
+    void Alpha1()
+    {
+        text.color = new Vector4(text.color.r, text.color.g, text.color.b, 1);
     }
 
     public WordData GetWord() { return wordReference; }

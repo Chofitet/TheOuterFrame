@@ -121,7 +121,7 @@ public class PCWikiController : MonoBehaviour
     {
         if(CheckAreLocked())
         {
-            LockField.text = "Unlocked";
+            LockField.text = "CARGO DOOR: UNLOCKED";
             LockBTN.GetComponent<Button>().interactable = false;
             WordsManager.WM.AddStateOnHistory(input.GetwordToUnlock(), input.GetUnlockState());
             WordsManager.WM.AddStateOnSeenHistory(input.GetwordToUnlock(), input.GetUnlockState());

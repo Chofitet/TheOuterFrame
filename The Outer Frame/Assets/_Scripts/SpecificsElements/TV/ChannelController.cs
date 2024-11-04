@@ -17,11 +17,11 @@ public class ChannelController : MonoBehaviour
     [SerializeField] TMP_Text HeadlineText;
     [SerializeField] TMP_Text HeadlineText2;
     [SerializeField] TMP_Text NewTextContent;
-    [SerializeField] Image BreakingNew;
     [SerializeField] GameObject NewImg;
     [SerializeField] string TriggerAnim;
     [SerializeField] GameEvent OnIncreaseAlertLevel;
     [SerializeField] GameEvent OnChangeReporterAnim;
+    [SerializeField] Sprite BreakingImage;
     TimeCheckConditional MinTimeToShowNew;
     TimeCheckConditional TimeToRestartRandoms;
 
@@ -64,7 +64,7 @@ public class ChannelController : MonoBehaviour
         }
 
         EmergencyScreen.SetActive(false);
-        BreakingNew.enabled = true;
+        
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
@@ -87,7 +87,6 @@ public class ChannelController : MonoBehaviour
     void SetUpFirstNew(INewType _new)
     {
         EmergencyScreen.SetActive(false);
-        BreakingNew.enabled = true;
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
@@ -111,7 +110,15 @@ public class ChannelController : MonoBehaviour
         NewTextContent.text = _new.GetNewText();
         FindableWordsManager.FWM.InstanciateFindableWord(NewTextContent, FindableBtnType.FindableBTN);
         if (_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
-        NewImg.transform.GetChild(0).GetComponent<Image>().sprite = _new.GetNewImag();
+        
+        if (_new.GetNewImag())
+        {
+            NewImg.transform.GetChild(0).GetComponent<Image>().sprite = _new.GetNewImag();
+        }
+        else
+        {
+            NewImg.transform.GetChild(0).GetComponent<Image>().sprite = BreakingImage;
+        }
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
         else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
         OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
@@ -133,6 +140,7 @@ public class ChannelController : MonoBehaviour
             HeadlineText2.gameObject.SetActive(true);
             HeadlineText.gameObject.SetActive(false);
             HeadlineText2.text = _new.GetHeadline2();
+            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText2, FindableBtnType.FindableBTN);
 
         }
         else
@@ -142,13 +150,16 @@ public class ChannelController : MonoBehaviour
             HeadlineText.text = _new.GetHeadline();
         }
         NewTextContent.text = _new.GetNewText();
-        if(_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
+        FindableWordsManager.FWM.InstanciateFindableWord(NewTextContent, FindableBtnType.FindableBTN);
+        if (_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
 
         if (_new.GetNewImag())
         {
-            BreakingNew.enabled = false;
-
             NewImg.transform.GetChild(0).GetComponent<Image>().sprite = _new.GetNewImag();
+        }
+        else
+        {
+            NewImg.transform.GetChild(0).GetComponent<Image>().sprite = BreakingImage;
         }
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
         else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
