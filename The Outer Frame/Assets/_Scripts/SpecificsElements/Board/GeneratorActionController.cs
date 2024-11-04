@@ -17,6 +17,9 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] GameEvent OnMoveObjectToPapersPos;
     [SerializeField] GameObject CheckImage;
     [SerializeField] GameEvent OnMoveToCornerIdea;
+    [SerializeField] GameEvent OnMoveToOutOfView;
+    [SerializeField] GameEvent OnSetTakenPosit;
+    bool ActionIsDoing;
     bool isDone;
     private bool istaken;
     GameObject IdeaButtom;
@@ -50,6 +53,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     {
         GetComponent<BoxCollider>().enabled = false;
         istaken = true;
+        OnSetTakenPosit?.Invoke(null, gameObject);
     }
 
     public void Reset(Component sender, object obj)
@@ -78,6 +82,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         GetComponent<BoxCollider>().enabled = false;
         return true;
     }
+
 
     void CheckIfDone()
     {
@@ -164,6 +169,34 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public void MoveToCorner()
     {
         OnMoveToCornerIdea?.Invoke(null, gameObject);
+        GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(true);
+    }
+
+    public void CheckAportActionIdea(Component sender, object obj)
+    {
+        StateEnum action = (StateEnum)obj;
+        if (ActionsToAdd[0] == action)
+        {
+            GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(false);
+            ActionIsDoing = false;
+        }
+    }
+
+    public void IsAddingOtherAction(Component sender, object obj)
+    {
+        if (ActionIsDoing) return;
+        if (istaken) return;
+        StateEnum action = (StateEnum)obj;
+        if (ActionsToAdd[0] != action)
+        {
+            GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(false);
+        }
+    }
+    public void SetActionIsDoing(Component sender, object obj)
+    {
+        DataFromActionPlan data = (DataFromActionPlan)obj;
+        StateEnum action = data.state;
+        if (ActionsToAdd[0] == action) ActionIsDoing = true;
     }
 
     public bool ActiveInBegining()

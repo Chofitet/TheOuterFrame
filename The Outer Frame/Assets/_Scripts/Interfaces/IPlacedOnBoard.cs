@@ -12,5 +12,4 @@ public interface IPlacedOnBoard
 
     public bool IsOutOfBoard();
 
-
 }

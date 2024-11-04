@@ -15,6 +15,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
     bool isPlaced;
     bool isTaken;
     bool toReplece;
+    bool isOutOfBoard;
     private void Start()
     {
         FinalPosition = transform.position;
@@ -49,6 +50,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
     public void MoveToPlacedPos(Component sender, object obj)
     {
+        if (isOutOfBoard) return;
         if (conditions == null)
         {
             Debug.Log(transform.parent.parent.parent.gameObject.name);
@@ -117,4 +119,11 @@ public class MoveBoardElementsToPos : MonoBehaviour
     {
         return conditions;
     }
+
+    public void SetIsOutOfBoard(bool x)
+    {
+        isOutOfBoard = x;
+        isPlaced = false;
+    }
+
 }

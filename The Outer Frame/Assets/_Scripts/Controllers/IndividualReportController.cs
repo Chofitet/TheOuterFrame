@@ -13,6 +13,7 @@ public class IndividualReportController : MonoBehaviour
     [SerializeField] GameObject Photo1;
     [SerializeField] GameEvent OnTakePhotoReport;
     [SerializeField] GameEvent OnTakeFinalReport;
+    [SerializeField] GameEvent OnReactiveIdeaPosit;
     public void SetType(bool x, WordData _word ,ReportType _report)
     {
         report = _report;
@@ -27,6 +28,7 @@ public class IndividualReportController : MonoBehaviour
     public void FinishReport()
     {
 
+        OnReactiveIdeaPosit.Invoke(this, report.GetAction());
         if (report.GetFinalReport())
         {
             OnTakeFinalReport?.Invoke(this, null);
@@ -49,6 +51,7 @@ public class IndividualReportController : MonoBehaviour
         }
         StartCoroutine(delay());
         OnBackToGeneralView?.Invoke(this, null);
+        
     }
 
     IEnumerator delay()
@@ -56,5 +59,6 @@ public class IndividualReportController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
+
 
 }

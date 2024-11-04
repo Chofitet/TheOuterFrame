@@ -10,6 +10,7 @@ public class MoveObjectToThisPos : MonoBehaviour
     GameObject LastObj;
     Tween tweenPos;
     Tween tweenRot;
+    Sequence MoveSequence;
     public void moveObjectToThisPos(Component sender, object obj)
     {
         if (LastObj) return;
@@ -17,27 +18,30 @@ public class MoveObjectToThisPos : MonoBehaviour
         LastObj = _object;
         initPos = LastObj.transform.position;
         initRot = LastObj.transform.rotation.eulerAngles;
-        tweenPos = LastObj.transform.DOMove(transform.position, 0.5f).SetEase(Ease.InOutCirc);
-        tweenRot = LastObj.transform.DORotate(transform.rotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc);
+
+        if (MoveSequence != null && MoveSequence.IsActive()) MoveSequence.Kill();
+
+        MoveSequence = DOTween.Sequence();
+
+        MoveSequence.Append(LastObj.transform.DOMove(transform.position, 0.5f).SetEase(Ease.InOutCirc))
+                    .Join(LastObj.transform.DORotate(transform.rotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc));
+
     }
     public void BackLastObjectToPos(Component sender, object obj)
     {
-        float offset = 0;
-        if (sender is DossierMoveController) offset = 0.03f;
         if (!LastObj) return;
-        tweenPos.Kill();
-        tweenRot.Kill();
-        tweenPos = LastObj.transform.DOMove(LastObj.transform.position + new Vector3(offset, 0, 0), 0.2f)
-        .SetEase(Ease.InOutSine)
-        .OnComplete(() =>
-        {
-            tweenPos = LastObj.transform.DOMove(initPos, 0.5f)
-                .SetEase(Ease.InOutSine);
-            tweenRot = LastObj.transform.DORotate(initRot, 0.3f).SetEase(Ease.InOutSine).OnComplete(() => { LastObj = null; });
-        });
-        
-        
+
+        if (MoveSequence != null && MoveSequence.IsActive()) MoveSequence.Kill();
+
+        MoveSequence = DOTween.Sequence();
+
+        MoveSequence.Append(LastObj.transform.DOMove(initPos, 0.5f).SetEase(Ease.InOutCirc))
+                    .Join(LastObj.transform.DORotate(initRot, 0.3f).SetEase(Ease.InOutCirc))
+                    .OnComplete(()=> { LastObj = null; });
+
+
     }
+
 
     public void DeleteLastObject(Component sender, object obj)
     {

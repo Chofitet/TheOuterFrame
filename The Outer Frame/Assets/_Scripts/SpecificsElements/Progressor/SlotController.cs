@@ -16,6 +16,7 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameObject Icon;
     [SerializeField] GameObject AgentIcon;
     [SerializeField] GameEvent OnFinishActionProgress;
+    [SerializeField] GameEvent OnReactiveIdeaPosit;
     
 
     [SerializeField] Image[] LEDObjects;
@@ -195,6 +196,7 @@ public class SlotController : MonoBehaviour
         isAborted = true;
         inFillFast = false;
         OnFinishActionProgress?.Invoke(this, this);
+        OnReactiveIdeaPosit?.Invoke(this, _state);
         TimeManager.OnSecondsChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();
 

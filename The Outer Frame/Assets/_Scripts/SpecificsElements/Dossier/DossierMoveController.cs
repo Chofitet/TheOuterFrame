@@ -66,7 +66,7 @@ public class DossierMoveController : MonoBehaviour
             .AppendInterval(0.5f)
             .AppendCallback(()=>
             {
-                OnBackPositToBoardPos?.Invoke(this, null);
+                OnBackPositToBoardPos?.Invoke(this, posit);
             })
             .AppendInterval(1f)
             .AppendCallback(() =>
@@ -170,4 +170,10 @@ public class DossierMoveController : MonoBehaviour
 
     }
 
+    GameObject posit;
+
+    public void LastTakedPosit(Component sender, object obj)
+    {
+        posit = (GameObject)obj;
+    }
 }
