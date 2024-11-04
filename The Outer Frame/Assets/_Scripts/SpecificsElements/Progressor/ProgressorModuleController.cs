@@ -169,7 +169,7 @@ public class ProgressorModuleController : MonoBehaviour
                 ReadyToPrintLED.TurnOffLight(this, null);
                 PrintBTN.GetComponent<Collider>().enabled = false;
                 OnPrintReport?.Invoke(this, slot);
-                if(slot.GetReport().GetKillAgent()) OnDisableAgentOnSlot?.Invoke(this, gameObject);
+                if(slot.GetReport().GetKillAgent() && slot.GetIsComplete()) OnDisableAgentOnSlot?.Invoke(this, gameObject);
             }
             else
             {

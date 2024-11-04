@@ -123,7 +123,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
     public void SetIsOutOfBoard(bool x)
     {
         isOutOfBoard = x;
-        isPlaced = false;
+        if(x) isPlaced = false;
     }
 
 }

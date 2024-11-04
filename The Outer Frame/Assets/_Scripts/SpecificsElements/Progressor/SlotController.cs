@@ -211,14 +211,17 @@ public class SlotController : MonoBehaviour
     void ResetSlot()
     {
         Icon.SetActive(false);
-        
+
+        AgentIcon.SetActive(true);
+        if (Report.GetKillAgent() && isActionComplete) DisableAgent();
+
         isActionComplete = false;
         isOtherGroupActionDoing = null;
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
         SetLEDState(Color.green);
-        AgentIcon.SetActive(true);
-        if (Report.GetKillAgent()) DisableAgent();
+        
+        
         Report = null;
         transform.GetChild(0).gameObject.SetActive(false);
     }
@@ -263,5 +266,7 @@ public class SlotController : MonoBehaviour
     public StateEnum GetIsOtherGroupActionDoing() {return isOtherGroupActionDoing;}
 
     public TimeData GetTimeComplete() { return timeComplete;}
+
+    public bool GetIsComplete() { return isActionComplete; }
 
 }

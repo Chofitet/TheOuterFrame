@@ -13,6 +13,7 @@ public class TVManager : MonoBehaviour
     [SerializeField] List<TVScheduledNewType> ScheduledNews = new List<TVScheduledNewType>();
     List<INewType> QueueOfNews = new List<INewType>();
     [SerializeField] List<TVNewType> ReactiveNews = new List<TVNewType>();
+    [SerializeField] TVRandomNewType RunOutOfNews;
     [SerializeField] List<TVRandomNewType> RandomNews = new List<TVRandomNewType>();
     [SerializeField] Animator anim;
     private void Start()
@@ -197,7 +198,10 @@ public class TVManager : MonoBehaviour
     INewType SetRandomNew(int channel)
     {
         int a = RandomNews.Count;
-        if (RandomNews.Count == 0) return null;
+        if (RandomNews.Count == 0)
+        {
+            return RunOutOfNews;
+        }
 
         List<TVRandomNewType> AuxRandomNewList = new List<TVRandomNewType>();
 
