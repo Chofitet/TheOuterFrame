@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 0}
   headline: 
-  headlineTwoLines: PETRO STATION SECURITY FOOTAGE STOLEN BY UNKNOWN CULPRIT!
+  headlineTwoLines: <link>PETRO STATION</link> SECURITY SYSTEM STOLEN BY UNKNOWN
+    CULPRIT!
   text: 'WHAT ARE THEY TRYING TO COVER UP? THE TRUTH? THINGS? STUFF?
 
     THIS STATION
@@ -25,7 +26,7 @@ MonoBehaviour:
   alertLevelIncrement: 21
   Emergency: 0
   TimeToAppear: 3
-  MinTransmitionTime: 3
+  MinTransmitionTime: 4
   Conditions:
   - condition: {fileID: 11400000, guid: 6d7f9e14d37a622429f3baf0992994d6, type: 2}
     ifNot: 0

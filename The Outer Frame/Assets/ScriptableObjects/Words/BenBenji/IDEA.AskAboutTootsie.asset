@@ -9,16 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75cd8a0f1fed7a747adc9ae31f7f430a, type: 3}
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.AskAboutTootsie
   m_EditorClassIdentifier: 
-  InfinitiveVerb: Ask Ben about Tootsie
-  Actioning: Asking Ben about Tootsie
-  Actioned: Asked Ben about Tootsie
-  TimeToComplete: 1
-  TimeToShowNew: 0
-  observationtxt: 
-  Agent: {fileID: 0}
-  IdeaWordData: {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
-  IdeaVerb: Asking
-  IdeaWord: Ben about Tootsie
+  Action: {fileID: 11400000, guid: 1098c00fa047f894fb386f044c78aa7c, type: 2}
+  state: {fileID: 11400000, guid: 1098c00fa047f894fb386f044c78aa7c, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: 'He says he is not selling out his friend.
+
+
+    The loyalty on this one!'
+  TextForRepetition: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
+    text: NOW WHAT?
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 8259b86435796e041a925b089fc567cb, type: 2}
+    ifNot: 1
+  isOrderMatters: 0
+  TriggerDrawerAnim: 0
+  FinalReport: 0

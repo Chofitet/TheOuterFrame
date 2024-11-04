@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: 09.00.NothingWeirdTruckAgain
   m_EditorClassIdentifier: 
   headline: 
-  headlineTwoLines: 'NOTHING WEIRD AT ROAD 54
-
-    YET!'
+  headlineTwoLines: "NOTHING WEIRD <link>AT ROAD 54</link> \nYET!"
   text: WAS IT ALL HOAX? COULD ALL OF IT BE UNDER THE SHADOW OF A BIGGER WHATEVER?
   image: {fileID: 0}
   channel: 1
@@ -31,6 +29,8 @@ MonoBehaviour:
     ifNot: 0
   - condition: {fileID: 11400000, guid: 18af5eccc49c54a45bfc5306f8d5c660, type: 2}
     ifNot: 0
+  - condition: {fileID: 11400000, guid: 915772c89f5913a4895f7f3834f019e3, type: 2}
+    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}

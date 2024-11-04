@@ -13,24 +13,27 @@ MonoBehaviour:
   m_Name: 08.59.TrycicleMikeNotOffered
   m_EditorClassIdentifier: 
   headline: 
-  headlineTwoLines: 'TRICYCLE MAN
+  headlineTwoLines: '"I WAS THERE"
 
-    INSANITY DECLARES'
-  text: 'SOMETHING WEIRD CAME OUT OF A THAT TRUCK ON ROAD 54
-
-    SOMETHING THAT
-    WAS MORE THAN MAN AND TRICYCLE'
+    LOCAL CHARACTER  DECLARES'
+  text: '"<link>SOMETHING HUGEMONGOUS</link> CAME OUT OF <link>A TRUCK</link> <link>AT
+    ROAD 54</link> SOMETHING THAT WAS MORE THAN MAN AND TRICYCLE." SAYS <link>TRICYCLE
+    MIKE</link>'
   image: {fileID: 21300000, guid: 3cebf6d149e6e0e448747a62b9e0586a, type: 3}
   channel: 1
   Priority: 1
   alertLevelIncrement: 15
-  Emergency: 1
+  Emergency: 0
   Day: 0
   Hour: 8
   Minute: 59
   MinTransmitionTime: 4
   Conditions:
   - condition: {fileID: 11400000, guid: 7f59ee4df22c1fc4b8a0fb175c927f80, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 485ee194adf47e84f948016cae7459cf, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 754fb13a4e1009b45b4e457388082d5c, type: 2}
     ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
