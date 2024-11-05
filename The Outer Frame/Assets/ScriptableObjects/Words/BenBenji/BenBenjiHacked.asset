@@ -15,15 +15,17 @@ MonoBehaviour:
   Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   state: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: 0
-  Text: "Well.. what do you know? \r\nHe seems like a really bright kid! \r\nIf we
-    don't get rid of him we have to put him working for us.\n\nHAVING SAID THAT,
-    he might be building a bomb down his house basement. \r\n"
-  TextForRepetition: "We did that already. \nRemember to read the Reports."
+  ChangeTimeOfAction: -7
+  Text: "Well, what do you know? \r\nHe uses one heck of a protection system.\r\nHe
+    seems like a really bright kid! \r\nIf we don't get rid of him we should put
+    him to work for us.\n\nWe couln't find anything . . ."
+  TextForRepetition: "We already tried that. \nRemember to read the Reports."
   Photos:
-  - photo: {fileID: 21300000, guid: 2dd7fde01fe193844a6e994f56257338, type: 3}
-    text: GOTCHA
+  - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
+    text: DANG
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
