@@ -15,11 +15,13 @@ public class ActionPlanManager : MonoBehaviour
     [SerializeField] GameEvent OnSendEndActionPlan;
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] GameEvent OnEnableInput;
+   
 
     [Header("Second To Last Action of the Game")]
     [SerializeField] WordData SecondToLastWord;
     [SerializeField] StateEnum SecondToLastAction;
     [SerializeField] StateEnum SecondToLastIdea;
+    [SerializeField] ScriptableObject condition;
     bool isSecodToLastActionDoit;
 
     [Header("Final Action of the Game")]
@@ -38,7 +40,7 @@ public class ActionPlanManager : MonoBehaviour
         if (transform.childCount != 0) Destroy(transform.GetChild(0).gameObject);
         
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
-        AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull, isFirstTimeIdeaAdded, SecondToLastWord, SecondToLastAction, SecondToLastIdea, isSecodToLastActionDoit);
+        AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull, isFirstTimeIdeaAdded, SecondToLastWord, SecondToLastAction, SecondToLastIdea, condition, isSecodToLastActionDoit);
         transform.Rotate(Vector3.zero);
         isFirstTimeIdeaAdded = false;
       }

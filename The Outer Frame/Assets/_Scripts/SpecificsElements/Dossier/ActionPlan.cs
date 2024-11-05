@@ -24,8 +24,9 @@ public class ActionPlan : MonoBehaviour
     bool isProgressorFull;
     bool isFirstTimeIdeaAdded;
     bool isSecodToLastActionDoit;
+    IConditionable condition;
 
-    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded, WordData _FinalActionWord, StateEnum _FinalActionState, StateEnum _FinalActionIdea, bool _isSecodToLastActionDoit)
+    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded, WordData _FinalActionWord, StateEnum _FinalActionState, StateEnum _FinalActionIdea,ScriptableObject _condition, bool _isSecodToLastActionDoit)
     {
         isFirstTimeIdeaAdded = _isFirstTimeIdeaAdded;
         InstantiateActionRows(ActionList);
@@ -35,6 +36,7 @@ public class ActionPlan : MonoBehaviour
         FinalActionState = _FinalActionState;
         FinalActionIdea = _FinalActionIdea;
         isSecodToLastActionDoit = _isSecodToLastActionDoit;
+        condition = _condition as IConditionable;
     }
 
     void InstantiateActionRows(List<StateEnum> listActions)
@@ -113,10 +115,10 @@ public class ActionPlan : MonoBehaviour
             return;
         }
 
-        if(FinalActionWord == word && FinalActionState == state)
+        if(FinalActionWord == word && FinalActionState == state && condition.GetStateCondition())
         {
             OnFinalActionSend?.Invoke(this, null);
-            state = FinalActionIdea;
+           // state = FinalActionIdea;
             ProgressorSetFull(null, null);
             return;
         }

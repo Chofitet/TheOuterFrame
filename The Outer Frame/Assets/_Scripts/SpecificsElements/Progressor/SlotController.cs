@@ -33,7 +33,7 @@ public class SlotController : MonoBehaviour
     TimeData timeComplete;
     bool inFillFast;
     ReportType Report;
-
+    bool isAgentDead;
 
     public void initParameters(WordData word, StateEnum state)
     {
@@ -213,7 +213,7 @@ public class SlotController : MonoBehaviour
         Icon.SetActive(false);
 
         AgentIcon.SetActive(true);
-        if (Report.GetKillAgent() && isActionComplete) DisableAgent();
+        if ((Report.GetKillAgent() && isActionComplete) || isAgentDead) DisableAgent();
 
         isActionComplete = false;
         isOtherGroupActionDoing = null;
@@ -248,14 +248,21 @@ public class SlotController : MonoBehaviour
     void DisableAgent()
     {
         AgentIcon.GetComponent<Image>().color = Color.red;
-        AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 90));
+        if(!isAgentDead) AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 90));
+        isAgentDead = true;
     }
 
     public void DisanableWithFinalReport(Component sender, object obj)
     {
         if ((StateEnum)obj == _state) return;
         TimeManager.OnSecondsChange -= UpdateProgress;
-        if (AgentIcon.activeSelf) DisableAgent();
+
+        bool aux = (AgentIcon.activeSelf);
+
+        AgentIcon.SetActive(true);
+        DisableAgent();
+        if(!aux) AgentIcon.SetActive(false);
+
     }
 
     public WordData GetWord() { return _word; }

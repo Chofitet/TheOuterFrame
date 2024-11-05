@@ -81,6 +81,7 @@ public class ReportController : MonoBehaviour
             btnText.text = "DISPOSE";
         }
 
+        if (report.GetFinalReport()) btnText.transform.parent.gameObject.SetActive(false);
         ActionCalltxt.text = actionVerb + " " + DeleteSpetialCharacter(Name);
         CheckTextOverflow();
         Statustxt.text = status + " at OCT 30th " + $"{timeComplete.Hour:00}:{timeComplete.Minute:00}";

@@ -20,6 +20,7 @@ public class ProgressorManager : MonoBehaviour
 
         if (!GetUnusedSlot())
         {
+            OnProgressorSetSlot?.Invoke(this, true);
             return;
         }
 
@@ -74,5 +75,6 @@ public class ProgressorManager : MonoBehaviour
         }
 
         Slots.RemoveAll(slot => RemoveList.Contains(slot));
+        OnProgressorSetSlot?.Invoke(this, true);
     }
 }
