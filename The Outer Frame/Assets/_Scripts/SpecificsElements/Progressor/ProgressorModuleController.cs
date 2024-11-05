@@ -23,6 +23,7 @@ public class ProgressorModuleController : MonoBehaviour
     bool isPrinterFull;
     BlinkMaterialEffect blinkmaterialAbort;
     Color OriginalColor;
+    bool isEndOfGame;
 
     private WordData word;
     private StateEnum state;
@@ -80,7 +81,7 @@ public class ProgressorModuleController : MonoBehaviour
 
     public void AbortLogic(Component sender, object obj)
     {
-       
+        if (isEndOfGame) return;
         //if (!isFull) return;
         if (!isAbortOpen)
         {
@@ -186,7 +187,12 @@ public class ProgressorModuleController : MonoBehaviour
         isPrinterFull = x;
     }
 
+    public void OnEndGame(Component sender, object obj)
+    {
+        isEndOfGame = true;
+    }
 
+    public StateEnum GetState() { return state; }
 
 
 }

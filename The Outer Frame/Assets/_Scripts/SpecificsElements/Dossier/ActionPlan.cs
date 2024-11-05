@@ -13,20 +13,28 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameEvent OnSetGeneralView;
     [SerializeField] Button ApproveBtn;
     [SerializeField] GameEvent OnWriteShakeDossier;
+    [SerializeField] GameEvent OnFinalActionSend;
+    WordData FinalActionWord;
+    StateEnum FinalActionState;
+    StateEnum FinalActionIdea;
     List<ActionRowController> Actions = new List<ActionRowController>();
     WordData word;
     StateEnum state;
     bool isOneToggleSelected;
     bool isProgressorFull;
     bool isFirstTimeIdeaAdded;
+    bool isSecodToLastActionDoit;
 
-    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded)
+    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded, WordData _FinalActionWord, StateEnum _FinalActionState, StateEnum _FinalActionIdea, bool _isSecodToLastActionDoit)
     {
         isFirstTimeIdeaAdded = _isFirstTimeIdeaAdded;
         InstantiateActionRows(ActionList);
         ApproveBtn.enabled = false;
         isProgressorFull = _progressorfull;
-        
+        FinalActionWord = _FinalActionWord;
+        FinalActionState = _FinalActionState;
+        FinalActionIdea = _FinalActionIdea;
+        isSecodToLastActionDoit = _isSecodToLastActionDoit;
     }
 
     void InstantiateActionRows(List<StateEnum> listActions)
@@ -89,6 +97,7 @@ public class ActionPlan : MonoBehaviour
         OnWriteShakeDossier?.Invoke(this, 0.5f);
     }
 
+
     public void ApprovedActionPlan()
     {
         if (isProgressorFull)
@@ -97,10 +106,40 @@ public class ActionPlan : MonoBehaviour
             return;
         }
 
+        if (isSecodToLastActionDoit)
+        {
+            OnFinalActionSend?.Invoke(this, null);
+            ProgressorSetFull(null, null);
+            return;
+        }
+
+        if(FinalActionWord == word && FinalActionState == state)
+        {
+            OnFinalActionSend?.Invoke(this, null);
+            state = FinalActionIdea;
+            ProgressorSetFull(null, null);
+            return;
+        }
+
+        SendActionToProgressor();
+    }
+
+    void SendActionToProgressor()
+    {
         ApproveBtn.enabled = false;
         DataFromActionPlan data = new DataFromActionPlan(word, state);
         OnApprovedActionPlan.Invoke(this, data);
         OnSetGeneralView?.Invoke(this, null);
+    }
+
+    public void SendFinalActionToProgressor(Component sender, object obj)
+    {
+        ApproveBtn.enabled = false;
+        DataFromActionPlan data = new DataFromActionPlan(FinalActionWord, FinalActionIdea);
+        OnApprovedActionPlan.Invoke(this, data);
+        Actions[9].CheckToggle();
+        OnSetGeneralView?.Invoke(this, null);
+       
     }
 
     public void DestroyActionPlan(Component sender, object obj)

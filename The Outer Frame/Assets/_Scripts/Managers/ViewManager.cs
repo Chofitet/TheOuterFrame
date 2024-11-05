@@ -23,11 +23,13 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnDrawerView;
     [SerializeField] GameEvent OnBackToPause;
     [SerializeField] GameEvent OnSitDownSound;
+    [SerializeField] GameEvent OnSendReportAutomatically;
     bool isAPaperHolding;
     ViewStates currentviewState;
     bool isInputDisable;
     bool isInPause;
     bool isGameOver;
+    bool inOnFinalReport;
 
     private void Start()
     {
@@ -44,6 +46,8 @@ public class ViewManager : MonoBehaviour
         if (isInputDisable) return;
         if (Input.GetKeyDown(KeyCode.Mouse1) && currentviewState != ViewStates.GeneralView)
         {
+            if (inOnFinalReport) OnSendReportAutomatically?.Invoke(this, null);
+
             if (currentviewState == ViewStates.OnTakeSomeInBoard)
             {
                 UpdateViewState(this, ViewStates.BoardView);
@@ -105,11 +109,13 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.PinchofonoView:
                 if (isGameOver) return;
+                if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
                 OnNotebookTake.Invoke(this, true);
                 OnPinchofonoView?.Invoke(this, null);
                 break;
             case ViewStates.BoardView:
                 if (isGameOver) return;
+                if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
                 TimeManager.timeManager.PauseTime();
                 OnBoardView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
@@ -121,9 +127,11 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.ProgressorView:
                 if (isGameOver) return;
+                if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
                 OnProgressorView?.Invoke(this, null);
                 break;
             case ViewStates.TVView:
+                if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
                 OnTVView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 break;
@@ -139,6 +147,7 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.OnTakeSomeInBoard:
                 if (isGameOver) return;
+                if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
                 OnTakeSomeInBoard?.Invoke(this, null);
                 break;
             case ViewStates.GameOverView:
@@ -196,6 +205,11 @@ public class ViewManager : MonoBehaviour
         {
             isInputDisable = true;
         }
+    }
+
+    public void OnFinalReportTake(Component sender, object obj)
+    {
+        inOnFinalReport = true;
     }
 }
 

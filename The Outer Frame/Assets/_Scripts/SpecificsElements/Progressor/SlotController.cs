@@ -251,6 +251,13 @@ public class SlotController : MonoBehaviour
         AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 90));
     }
 
+    public void DisanableWithFinalReport(Component sender, object obj)
+    {
+        if ((StateEnum)obj == _state) return;
+        TimeManager.OnSecondsChange -= UpdateProgress;
+        if (AgentIcon.activeSelf) DisableAgent();
+    }
+
     public WordData GetWord() { return _word; }
 
     public StateEnum GetState() { return _state; }

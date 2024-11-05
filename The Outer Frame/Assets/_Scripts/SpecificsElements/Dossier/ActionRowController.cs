@@ -127,4 +127,9 @@ public class ActionRowController : MonoBehaviour
         if (actualView == ViewStates.DossierView || actualView == ViewStates.OnTakenPaperView) isInView = true;
         else isInView = false;
     }
+
+    public void CheckToggle()
+    {
+        toggle.isOn = true;
+    }
 }
