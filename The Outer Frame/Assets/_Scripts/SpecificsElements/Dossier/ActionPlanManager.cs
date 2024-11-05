@@ -103,7 +103,6 @@ public class ActionPlanManager : MonoBehaviour
     {
         OnEnableInput?.Invoke(this,null);
         OnSendLastActionPlan?.Invoke(null, SecondToLastIdea);
-        Invoke("DeleteAllActions", 2f);
     }
 
     void SendEndActionPlan()
@@ -118,7 +117,7 @@ public class ActionPlanManager : MonoBehaviour
         SetActionPlan(null, null);
     }
 
-    void DeleteAllActions()
+    public void DeleteAllActions(Component sender, object obj)
     {
         Actions.Clear();
         SetActionPlan(null, null);
