@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: SecondToLast
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 5472d372b50458c498e702d075d84ea4, type: 2}
+  state: {fileID: 11400000, guid: 5472d372b50458c498e702d075d84ea4, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: THIS IS SECOND TO LAST
+  TextForRepetition: 
+  Photos: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 3eb6b319a9051e14da82e153fea6b178, type: 2}
+    ifNot: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 1
