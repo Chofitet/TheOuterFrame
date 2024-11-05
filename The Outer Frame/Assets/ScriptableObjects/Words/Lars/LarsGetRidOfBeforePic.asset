@@ -16,7 +16,7 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: b7b902880364ad64995aa0f4ad634ad4, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: -3
-  Text: He stepped on my toes and push me back!
+  Text: He got rid of one of us!
   TextForRepetition: We tried that alredy!
   Photos:
   - photo: {fileID: 21300000, guid: a18c82a4f2eb51c408c6d2ff2673090b, type: 3}
@@ -25,5 +25,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 030762016c963a54a98175f01d4b4506, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 1
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: P.S. BathroomInspected 1
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: -4
+  Text: "The bathroom door is closed\r\nIt has one of those frames that goes over
+    the door, so you can\u2019t unlock it by pushing a card inside the space in between
+    and jiggling it.\r\n\r\nWe need a key to access it.\r\n\r\n(Last mission we unlearnt
+    lock picking in exchange for another skill)\r\n"
+  TextForRepetition: "The bathroom door is closed\r\nIt has one of those frames that
+    goes over the door, so you can\u2019t unlock it by pushing a card inside the
+    space in between and jiggling it.\r\n\r\nWe need a key to access it.\r\n\r\n(Last
+    mission we unlearnt lock picking in exchange for another skill)\r\n"
+  Photos:
+  - photo: {fileID: 21300000, guid: 040b71834a88bc14089dd0785d07ff41, type: 3}
+    text: SHUT
+  Conditionals:
+  - condition: {fileID: 0}
+    ifNot: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0

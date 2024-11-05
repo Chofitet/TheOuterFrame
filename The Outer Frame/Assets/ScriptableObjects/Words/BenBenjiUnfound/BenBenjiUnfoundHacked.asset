@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   state: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
-  isAutomatic: 1
-  ChangeTimeOfAction: 0
-  Text: 'We''ll need to find him first.
-
-    We know he lives in Whoopla Town but
-    WHERE?'
+  isAutomatic: 0
+  ChangeTimeOfAction: -7
+  Text: "Well, what do you know? \r\nHe uses one heck of a protection system.\r\nHe
+    seems like a really bright kid! \r\nIf we don't get rid of him we should put
+    him to work for us.\n\nWe couln't find anything . . ."
   TextForRepetition: 'We''ll need to find him first.
 
     We know he lives in Whoopla
@@ -29,5 +28,7 @@ MonoBehaviour:
     text: NOT YET
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
