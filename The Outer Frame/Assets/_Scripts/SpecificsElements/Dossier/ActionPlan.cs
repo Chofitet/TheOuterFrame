@@ -93,6 +93,7 @@ public class ActionPlan : MonoBehaviour
 
         if (!isOneToggleSelected)
         {
+            if (Actions.Count == 0) return;
             OnButtonRowPress(Actions[0]);
         }
 
@@ -115,7 +116,7 @@ public class ActionPlan : MonoBehaviour
             return;
         }
 
-        if(FinalActionWord == word && FinalActionState == state && condition.GetStateCondition())
+        if(FinalActionWord == word && condition.GetStateCondition())
         {
             OnFinalActionSend?.Invoke(this, null);
            // state = FinalActionIdea;
@@ -139,7 +140,7 @@ public class ActionPlan : MonoBehaviour
         ApproveBtn.enabled = false;
         DataFromActionPlan data = new DataFromActionPlan(FinalActionWord, FinalActionIdea);
         OnApprovedActionPlan.Invoke(this, data);
-        Actions[9].CheckToggle();
+        if(Actions.Count >= 9) Actions[9].CheckToggle();
         OnSetGeneralView?.Invoke(this, null);
        
     }

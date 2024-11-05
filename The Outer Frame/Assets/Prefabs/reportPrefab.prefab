@@ -2919,6 +2919,7 @@ GameObject:
   - component: {fileID: 4046370047275422105}
   - component: {fileID: 7205605723046686865}
   - component: {fileID: 1929965428480570480}
+  - component: {fileID: 7715416349359175979}
   m_Layer: 9
   m_Name: reportPrefab
   m_TagString: Untagged
@@ -3183,6 +3184,36 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0
+--- !u!114 &7715416349359175979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8818181090750843214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 5c0b83c1d8c4e7c48b89eb46fa45aa2a, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1164539977058065183}
+        m_TargetAssemblyTypeName: IndividualReportController, Assembly-CSharp
+        m_MethodName: OnSendReportAutomatically
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0.1
 --- !u!1 &8899401202558587827
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,6 @@ public class ActionPlanManager : MonoBehaviour
     [SerializeField] GameEvent OnSendEndActionPlan;
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] GameEvent OnEnableInput;
-   
 
     [Header("Second To Last Action of the Game")]
     [SerializeField] WordData SecondToLastWord;
@@ -25,8 +25,8 @@ public class ActionPlanManager : MonoBehaviour
     bool isSecodToLastActionDoit;
 
     [Header("Final Action of the Game")]
-    [SerializeField] StateEnum FinalIdea;
-    
+    [SerializeField] List<FinalActionsToInActionPlan> FinalActionsToAddInActionPLan = new List<FinalActionsToInActionPlan>();
+
     bool IsProgressorFull;
     bool isFirstTimeIdeaAdded;
 
@@ -94,15 +94,16 @@ public class ActionPlanManager : MonoBehaviour
      public void AddFinalFinalAction(Component sender, object obj)
     {
         if (!isSecodToLastActionDoit) return;
-        AddAction(null, FinalIdea);
+        //AddAction(null, FinalIdea);
         OnDisableInput?.Invoke(this, null);
-        Invoke("SendEndActionPlan", 2f);
+        SendEndActionPlan();
     }
 
     void SendLastActionPlan()
     {
         OnEnableInput?.Invoke(this,null);
         OnSendLastActionPlan?.Invoke(null, SecondToLastIdea);
+        Invoke("DeleteAllActions", 2f);
     }
 
     void SendEndActionPlan()
@@ -115,6 +116,34 @@ public class ActionPlanManager : MonoBehaviour
     {
         isSecodToLastActionDoit = true;
         SetActionPlan(null, null);
-
     }
+
+    void DeleteAllActions()
+    {
+        Actions.Clear();
+        SetActionPlan(null, null);
+    }
+
+    public void CheckToAddFinalActions(Component sender, object obj)
+    {
+        WordData word = (WordData)obj;
+
+        foreach(FinalActionsToInActionPlan data in FinalActionsToAddInActionPLan)
+        {
+            if(data.WordToFound == word)
+            {
+                if (Actions.Contains(data.ActionToAdd)) continue;
+                Actions.Add(data.ActionToAdd);
+            }
+        }
+
+        SetActionPlan(null, null);
+    }
+}
+
+[Serializable]
+public class FinalActionsToInActionPlan
+{
+    public WordData WordToFound;
+    public StateEnum ActionToAdd;
 }

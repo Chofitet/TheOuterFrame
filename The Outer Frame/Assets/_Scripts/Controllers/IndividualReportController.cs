@@ -60,6 +60,8 @@ public class IndividualReportController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public ReportType GetRepoertype() { return report; }
+
     public void OnSendReportAutomatically(Component sender, object obj)
     {
         if (!report.GetFinalReport()) return;

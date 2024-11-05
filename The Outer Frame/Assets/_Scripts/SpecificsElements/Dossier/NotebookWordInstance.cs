@@ -63,6 +63,13 @@ public class NotebookWordInstance : MonoBehaviour
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
     }
 
+    public void ReplaceWordInstantly(WordData word)
+    {
+        wordReference = word;
+        word.SetIsFound();
+        text.text = wordReference.GetName();
+    }
+
     public void CrossOutWord()
     {
         if (isCross) return;
