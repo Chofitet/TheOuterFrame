@@ -7,6 +7,7 @@ public class NotebookController : MonoBehaviour
 {
     [SerializeField] GameObject WordPrefab;
     [SerializeField] Transform WordContainer;
+    [SerializeField] WordData CabinWord;
     List<Transform> WordSpots = new List<Transform>();
     List<GameObject> WordsInstances = new List<GameObject>();
     [SerializeField] Transform WordAnchors;
@@ -108,6 +109,16 @@ public class NotebookController : MonoBehaviour
         return aux;
     }
 
+    public void ReplaceAllWithCabin(Component sender, object obj)
+    {
+        foreach(GameObject w in WordsInstances)
+        {
+            NotebookWordInstance script = w.GetComponent<NotebookWordInstance>();
+
+            script.ReplaceWordInstantly(CabinWord);
+        }
+    }
+
     bool SearchForWordThatReplaceRetroactive(WordData oldWord, WordData newWord)
     {
         WordData currentWord = newWord.GetWordThatReplaces();
@@ -124,6 +135,8 @@ public class NotebookController : MonoBehaviour
 
         return false; 
     }
+
+
 
     //refresh when a word are erace
     public void RemoveEraceInstance(Component sender, object obj)
@@ -152,6 +165,14 @@ public class NotebookController : MonoBehaviour
         }
 
         delete(WordsToRemove);
+    }
+
+    public void DeleteAllWords(Component sender, object obj)
+    {
+        List<GameObject> auxList = new List<GameObject>(WordsInstances);
+
+        delete(auxList);
+        i = 0;
     }
 
     void delete(List<GameObject> list)

@@ -101,7 +101,10 @@ public class PaperMoveController : MonoBehaviour
     public void OnLevePaperToPile(Component sender, object obj)
     {
         if (!currentPaper) return;
-
+        if (currentPaper.GetComponent<IndividualReportController>())
+        {
+            if (currentPaper.GetComponent<IndividualReportController>().GetRepoertype().GetFinalReport()) return;
+        }
         if(actualPaperState == PaperState.HoldingRight)
         {
             TakeReport(null, currentPaper);

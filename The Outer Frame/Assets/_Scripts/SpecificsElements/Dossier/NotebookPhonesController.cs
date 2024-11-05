@@ -7,6 +7,7 @@ public class NotebookPhonesController : MonoBehaviour
 {
     [SerializeField] GameObject PhoneNumberPrefab;
     [SerializeField] Transform WordContainer;
+    [SerializeField] WordData CabinWord;
     List<GameObject> WordsInstances = new List<GameObject>();
     List<int> removedIndex = new List<int>(); // Lista para almacenar los índices eliminados
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
@@ -100,6 +101,15 @@ public class NotebookPhonesController : MonoBehaviour
         }
     }
 
+    public void DeleteAllWords(Component sender, object obj)
+    {
+        List<GameObject> auxList = new List<GameObject>(WordsInstances);
+
+        StartCoroutine(DeletePhone(auxList));
+        i = 0;
+    }
+
+
     // Función para reemplazar un número por otro
     bool WordReplaceOther(WordData newword)
     {
@@ -118,6 +128,17 @@ public class NotebookPhonesController : MonoBehaviour
         }
 
         return aux;
+    }
+
+
+    public void ReplaceAllWithCabin(Component sender, object obj)
+    {
+        foreach (GameObject w in WordsInstances)
+        {
+            PhoneRowNotebookController script = w.GetComponent<PhoneRowNotebookController>();
+
+            script.ReplaceWordInstantly(CabinWord);
+        }
     }
 
     bool SearchForWordThatReplaceRetroactive(WordData oldWord, WordData newWord)

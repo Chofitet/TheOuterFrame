@@ -75,6 +75,12 @@ public class PhoneRowNotebookController : MonoBehaviour
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
     }
 
+    public void ReplaceWordInstantly(WordData _word)
+    {
+        word = _word;
+        txtName.text = word.GetName();
+    }
+
     public void EraseAnim()
     {
         StartCoroutine(AnimFade(txtName, false, txtName, true, " "));
