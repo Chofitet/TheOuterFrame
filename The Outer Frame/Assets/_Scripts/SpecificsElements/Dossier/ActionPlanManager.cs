@@ -11,6 +11,20 @@ public class ActionPlanManager : MonoBehaviour
     [SerializeField] Transform OtherParent;
     [SerializeField] Transform OriginalParent;
     [SerializeField] GameEvent OnCloneActionPlan;
+    [SerializeField] GameEvent OnSendLastActionPlan;
+    [SerializeField] GameEvent OnSendEndActionPlan;
+    [SerializeField] GameEvent OnDisableInput;
+    [SerializeField] GameEvent OnEnableInput;
+
+    [Header("Second To Last Action of the Game")]
+    [SerializeField] WordData SecondToLastWord;
+    [SerializeField] StateEnum SecondToLastAction;
+    [SerializeField] StateEnum SecondToLastIdea;
+    bool isSecodToLastActionDoit;
+
+    [Header("Final Action of the Game")]
+    [SerializeField] StateEnum FinalIdea;
+    
     bool IsProgressorFull;
     bool isFirstTimeIdeaAdded;
 
@@ -24,7 +38,7 @@ public class ActionPlanManager : MonoBehaviour
         if (transform.childCount != 0) Destroy(transform.GetChild(0).gameObject);
         
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
-        AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull, isFirstTimeIdeaAdded);
+        AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull, isFirstTimeIdeaAdded, SecondToLastWord, SecondToLastAction, SecondToLastIdea, isSecodToLastActionDoit);
         transform.Rotate(Vector3.zero);
         isFirstTimeIdeaAdded = false;
       }
@@ -67,17 +81,38 @@ public class ActionPlanManager : MonoBehaviour
         SetActionPlan(null, null);
     }
 
-    public void ReparentToMoveActionPlan(Component sender, object obj)
+    public void AddFinalAction(Component sender, object obj)
     {
-        
-       // actionPLan.SetActive(false);
-        /*transform.SetParent(OtherParent);*/
+        if (isSecodToLastActionDoit) return;
+        AddAction(null, SecondToLastIdea);
+        OnDisableInput?.Invoke(this, null);
+        Invoke("SendLastActionPlan", 2f);
     }
-    public void ReparentToActionPlan(Component sender, object obj)
+
+     public void AddFinalFinalAction(Component sender, object obj)
     {
-       /* transform.SetParent(OriginalParent);
-        transform.Translate(Vector3.zero);
-        transform.Rotate(Vector3.zero);
-        transform.rotation = new Quaternion(0, 0, 0, 0);*/
+        if (!isSecodToLastActionDoit) return;
+        AddAction(null, FinalIdea);
+        OnDisableInput?.Invoke(this, null);
+        Invoke("SendEndActionPlan", 2f);
+    }
+
+    void SendLastActionPlan()
+    {
+        OnEnableInput?.Invoke(this,null);
+        OnSendLastActionPlan?.Invoke(null, SecondToLastIdea);
+    }
+
+    void SendEndActionPlan()
+    {
+        OnEnableInput?.Invoke(this, null);
+        OnSendEndActionPlan?.Invoke(null, "Credits");
+    }
+
+    public void SetisSecodToLastActionDoit(Component sender, object obj)
+    {
+        isSecodToLastActionDoit = true;
+        SetActionPlan(null, null);
+
     }
 }

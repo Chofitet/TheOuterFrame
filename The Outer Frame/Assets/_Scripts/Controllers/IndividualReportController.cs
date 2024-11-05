@@ -14,6 +14,8 @@ public class IndividualReportController : MonoBehaviour
     [SerializeField] GameEvent OnTakePhotoReport;
     [SerializeField] GameEvent OnTakeFinalReport;
     [SerializeField] GameEvent OnReactiveIdeaPosit;
+    [SerializeField] GameEvent OnGrabFinalReport;
+    [SerializeField] GameEvent OnTakeSecondToLastReport;
     public void SetType(bool x, WordData _word ,ReportType _report)
     {
         report = _report;
@@ -27,8 +29,6 @@ public class IndividualReportController : MonoBehaviour
 
     public void FinishReport()
     {
-
-        OnReactiveIdeaPosit.Invoke(this, report.GetAction());
         if (report.GetFinalReport())
         {
             OnTakeFinalReport?.Invoke(this, null);
@@ -60,5 +60,24 @@ public class IndividualReportController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void OnSendReportAutomatically(Component sender, object obj)
+    {
+        if (!report.GetFinalReport()) return;
+        FinishReport();
+    }
+
+    public void OnTakeReport(Component sender, object obj)
+    {
+        if ((GameObject)obj != gameObject) return;
+
+        OnReactiveIdeaPosit.Invoke(this, report.GetAction());
+
+        if (report.GetFinalReport()) OnGrabFinalReport?.Invoke(this, null);
+
+        if (report.GetSecondToLastReport())
+        {
+            OnTakeSecondToLastReport?.Invoke(this, null);
+        }
+    }
 
 }

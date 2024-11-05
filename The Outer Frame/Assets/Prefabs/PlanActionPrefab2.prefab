@@ -153,6 +153,8 @@ GameObject:
   - component: {fileID: 8168768457096165934}
   - component: {fileID: 1119478417338786282}
   - component: {fileID: -2070780127031411002}
+  - component: {fileID: 1918406760156891282}
+  - component: {fileID: 5438105260921204910}
   m_Layer: 0
   m_Name: PlanActionPrefab2
   m_TagString: Untagged
@@ -265,6 +267,7 @@ MonoBehaviour:
   OnSetGeneralView: {fileID: 11400000, guid: 2174b205fb10b4440b02c579faad015a, type: 2}
   ApproveBtn: {fileID: 3903721326796803651}
   OnWriteShakeDossier: {fileID: 11400000, guid: 6739f944f3b99c94d9cf6032cf2a055a, type: 2}
+  OnFinalActionSend: {fileID: 11400000, guid: 1ced714df6a195d4d9b211ff956fdf37, type: 2}
 --- !u!114 &7890689546900030479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +424,66 @@ MonoBehaviour:
       - m_Target: {fileID: 7199042322043686895}
         m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
         m_MethodName: ProgressorSetFull
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &1918406760156891282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968318278359937755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 210e2f7dff51a2a4690e6dcf1cedf37e, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7199042322043686895}
+        m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
+        m_MethodName: SendFinalActionToProgressor
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+--- !u!114 &5438105260921204910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968318278359937755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: c2ff81b0bc3549442b8c21ddba100981, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7199042322043686895}
+        m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
+        m_MethodName: SendFinalActionToProgressor
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

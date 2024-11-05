@@ -60,4 +60,19 @@ public class ProgressorManager : MonoBehaviour
         Slots.Remove(SlotToRemove);
         
     }
+
+    public void DisableAllExept(Component sender, object obj)
+    {
+        StateEnum finalState = (StateEnum)obj;
+
+        List<ProgressorModuleController> RemoveList = new List<ProgressorModuleController>();
+
+        foreach (ProgressorModuleController s in Slots)
+        {
+            if (finalState == s.GetState()) continue;
+            RemoveList.Add(s);
+        }
+
+        Slots.RemoveAll(slot => RemoveList.Contains(slot));
+    }
 }

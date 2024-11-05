@@ -18,7 +18,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     [SerializeField] bool isOrderMatters;
     [SerializeField] bool AgentDown;
     [SerializeField] bool TriggerDrawerAnim;
-    [SerializeField] bool FinalReport;
+    [SerializeField] bool DeleteDBReport;
+    [SerializeField] bool SecondToLastReport;
     [NonSerialized] bool wasSet;
     [NonSerialized] bool doing;
     [NonSerialized] bool wasRegisteredInDB;
@@ -32,6 +33,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     public List<PhotoInfo> GetReportImage() { return Photos; }
     public bool GetKillAgent() { return AgentDown; }
     
+    public bool GetSecondToLastReport() { return SecondToLastReport; }
 
     private TimeData CompleteTime;
     public void SetTimeWhenWasDone()
@@ -77,7 +79,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
 
     public bool GetTriggerDrawerAnim() { return TriggerDrawerAnim; }
 
-    public bool GetFinalReport() { return FinalReport; }
+    public bool GetFinalReport() { return DeleteDBReport; }
 
     public bool CheckIfIsDefault()
     {
