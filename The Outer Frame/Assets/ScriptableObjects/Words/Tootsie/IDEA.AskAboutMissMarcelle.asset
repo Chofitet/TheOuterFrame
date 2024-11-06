@@ -16,7 +16,14 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: b67c279114197ca4dbf12b06cfc39828, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: He doesn't know where she lives, only that she was passing through.
+  Text: '"I don''t know where she lives, she said she was passing through."
+
+
+    Seems
+    like he''s telling the truth.
+
+
+    Or he belives that to be the truth.'
   TextForRepetition: 
   Photos:
   - photo: {fileID: 21300000, guid: 9ffdc79406e82a542b917ac902b567c1, type: 3}
@@ -25,5 +32,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: b236203a5205d81498d8bbfd42055e73, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
