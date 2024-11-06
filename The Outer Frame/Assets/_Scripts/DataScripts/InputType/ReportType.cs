@@ -20,6 +20,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     [SerializeField] bool TriggerDrawerAnim;
     [SerializeField] bool DeleteDBReport;
     [SerializeField] bool SecondToLastReport;
+    [SerializeField] bool LastReport;
     [NonSerialized] bool wasSet;
     [NonSerialized] bool doing;
     [NonSerialized] bool wasRegisteredInDB;
@@ -74,6 +75,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     public bool getDoing() { return doing; }
 
     public void setwasRegisteredInDB() => wasRegisteredInDB = true;
+
+    public bool GetIsTheLastReport() { return LastReport; }
 
     public bool GetwasRegisteredInDB() { return wasRegisteredInDB; }
 

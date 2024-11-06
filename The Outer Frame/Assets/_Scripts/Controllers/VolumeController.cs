@@ -37,4 +37,10 @@ public class VolumeController : MonoBehaviour
             audioSource.DOFade(originalVolume, fadeDuration);
         }
     }
+
+    public void ChangeFadeOut(Component sender, object obj)
+    {
+
+        fadeDuration = (float)obj;
+    }
 }

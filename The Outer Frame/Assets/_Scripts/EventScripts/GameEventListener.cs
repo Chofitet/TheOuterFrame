@@ -13,12 +13,20 @@ public class GameEventListener : MonoBehaviour
     [SerializeField] CustomGameEvent Event;
     [SerializeField] float DelayCall = 0;
 
+    [Header("Data To Pass")]
+    [SerializeField] float _float;
+
     private void OnEnable() => TriggerEvent.registerListener(this);
 
     private void OnDisable() => TriggerEvent.UnregisterListener(this);
 
     public void Raise(Component sender, object data)
     {
+        if(data == null)
+        {
+            if (_float != 0) data = _float;
+        }
+
         if (IsDesactive) return;
         if(DelayCall == 0)
         {

@@ -47,7 +47,7 @@ public class PCWikiController : MonoBehaviour
         WordData wordData = (WordData)_wordData;
 
         input = WordsManager.WM.RequestBDWikiData(wordData);
-        input.SetWasSearched();
+        if(isInPCView) input.SetWasSearched();
 
         foreach (Transform child in WikiData.transform)
         {
@@ -162,7 +162,21 @@ public class PCWikiController : MonoBehaviour
         }
     }
 
-   
+    bool isInPCView;
+
+    public void CheckPCView(Component sender, object obj)
+    {
+        ViewStates view = (ViewStates)obj;
+
+        if (view == ViewStates.PCView)
+        {
+            isInPCView = true;
+            if(input) input.SetWasSearched();
+        }
+        else isInPCView = false;
+
+
+    }
 
     bool CheckFieldsInWikiInfoContent()
     {

@@ -126,6 +126,7 @@ public class ActionPlanManager : MonoBehaviour
     public void CheckToAddFinalActions(Component sender, object obj)
     {
         WordData word = (WordData)obj;
+        bool aux = false;
 
         foreach(FinalActionsToInActionPlan data in FinalActionsToAddInActionPLan)
         {
@@ -133,10 +134,11 @@ public class ActionPlanManager : MonoBehaviour
             {
                 if (Actions.Contains(data.ActionToAdd)) continue;
                 Actions.Add(data.ActionToAdd);
+                aux = true;
             }
         }
 
-        SetActionPlan(null, null);
+        if(aux) SetActionPlan(null, null);
     }
 }
 
