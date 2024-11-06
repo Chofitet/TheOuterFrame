@@ -16,7 +16,7 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 1098c00fa047f894fb386f044c78aa7c, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'He says he is not selling out his friend.
+  Text: '" I''m not selling out my friend."
 
 
     The loyalty on this one!'
@@ -28,5 +28,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 8259b86435796e041a925b089fc567cb, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
