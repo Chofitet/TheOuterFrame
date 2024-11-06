@@ -127,7 +127,7 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.ProgressorView:
                 if (isGameOver) return;
-                if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
+                if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null);}
                 OnProgressorView?.Invoke(this, null);
                 break;
             case ViewStates.TVView:

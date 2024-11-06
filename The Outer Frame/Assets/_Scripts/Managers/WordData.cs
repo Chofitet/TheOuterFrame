@@ -446,7 +446,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
             if(DB.CheckConditionals())
             {
                 CurrentDB = DB;
-                DB.SetWasSetted();
+                //DB.SetWasSetted();
             }
         }
 

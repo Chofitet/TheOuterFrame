@@ -132,4 +132,6 @@ public class ActionRowController : MonoBehaviour
     {
         toggle.isOn = true;
     }
+
+    public bool GetIsOn() { return toggle.isOn; }
 }

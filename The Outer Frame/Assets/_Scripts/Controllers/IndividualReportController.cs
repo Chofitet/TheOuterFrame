@@ -29,6 +29,7 @@ public class IndividualReportController : MonoBehaviour
 
     public void FinishReport()
     {
+        if (report.GetIsTheLastReport()) return;
         if (report.GetFinalReport())
         {
             OnTakeFinalReport?.Invoke(this, null);

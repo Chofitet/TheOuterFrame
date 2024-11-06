@@ -88,10 +88,16 @@ public class ActionPlan : MonoBehaviour
     {
         if(!isInDossier) return;
         if(state) ApproveBtn.enabled = true;
+        bool isActionIdeaSelect = false;
+        if (Actions.Count >= 10)
+        {
+            isActionIdeaSelect = Actions[9].GetIsOn();
+            if (isActionIdeaSelect) isOneToggleSelected = false;
+        }
         if (!WordSelectedInNotebook.Notebook.GetSelectedWord()) return;
         word = WordSelectedInNotebook.Notebook.GetSelectedWord();
 
-        if (!isOneToggleSelected)
+        if (!isOneToggleSelected || isActionIdeaSelect)
         {
             if (Actions.Count == 0) return;
             OnButtonRowPress(Actions[0]);

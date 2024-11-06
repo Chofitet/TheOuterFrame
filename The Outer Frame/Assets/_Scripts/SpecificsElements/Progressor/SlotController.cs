@@ -243,6 +243,7 @@ public class SlotController : MonoBehaviour
         Wordtxt.text = "";
         Actiontxt.text = "";
         SetLEDState(Color.black);
+        AgentIcon.SetActive(false);
     }
 
     void DisableAgent()
