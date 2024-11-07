@@ -16,11 +16,15 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: dfff690b5c109ca48a414c8d92d4154e, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: "That kid won't let us go near it.\nHe's very territorial!\r"
-  TextForRepetition: 'We already tried that.
+  Text: "That kid won't let us go near it.\n\nHe's very territorial!\r"
+  TextForRepetition: 'WE SAID:
 
-    Check the corresponding Report.
-    (FAIL)'
+
+    That kid won''t let us go near it.
+
+
+    He''s
+    very territorial!'
   Photos:
   - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
     text: DANG IT
@@ -35,6 +39,11 @@ MonoBehaviour:
     ifNot: 1
   - condition: {fileID: 11400000, guid: 03743c9e03c0eb044a12fd024bff7a25, type: 2}
     ifNot: 1
+  - condition: {fileID: 11400000, guid: c9bc96a5972796840816406f58ec206a, type: 2}
+    ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
