@@ -5,9 +5,12 @@ using UnityEngine;
 public class SceneManagerScript : MonoBehaviour
 {
     [SerializeField] GameEvent OnStartGame;
+    [SerializeField] float OtherBeginDuration;
+    [SerializeField] float OtherDuration;
     private void Start()
     {
         fadeObject = Instantiate(fadeScenePrefab, transform);
+        if(OtherBeginDuration !=0) fadeObject.GetComponent<FadeSceneController>().fadeDuration(OtherBeginDuration);
         OnStartGame?.Invoke(this, null);
     }
 
@@ -30,5 +33,10 @@ public class SceneManagerScript : MonoBehaviour
     public void QuitGame(Component sender, object obj)
     {
         Application.Quit();
+    }
+
+    public void ChangeFadeDuration(Component sender, object obj)
+    {
+        fadeObject.GetComponent<FadeSceneController>().fadeDuration(OtherDuration);
     }
 }

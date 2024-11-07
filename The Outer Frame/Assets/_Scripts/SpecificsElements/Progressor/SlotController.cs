@@ -13,7 +13,8 @@ public class SlotController : MonoBehaviour
     [SerializeField] TMP_Text Wordtxt;
     [SerializeField] TMP_Text Actiontxt;
     [SerializeField] Slider ProgressBar;
-    [SerializeField] GameObject Icon;
+    [SerializeField] GameObject AbortIcon;
+    [SerializeField] GameObject CheckIcon;
     [SerializeField] GameObject AgentIcon;
     [SerializeField] GameEvent OnFinishActionProgress;
     [SerializeField] GameEvent OnReactiveIdeaPosit;
@@ -178,6 +179,7 @@ public class SlotController : MonoBehaviour
         timeComplete = TimeManager.timeManager.GetTime();
         OnFinishActionProgress?.Invoke(this, this);
         if (_state.GetSpecialActionWord()) _state.SetIsDone(true);
+        CheckIcon.SetActive(true);
     }
 
 
@@ -200,7 +202,7 @@ public class SlotController : MonoBehaviour
         TimeManager.OnSecondsChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();
 
-        Icon.SetActive(true);
+        AbortIcon.SetActive(true);
     }
 
     public void CleanSlot()
@@ -210,8 +212,8 @@ public class SlotController : MonoBehaviour
 
     void ResetSlot()
     {
-        Icon.SetActive(false);
-
+        AbortIcon.SetActive(false);
+        CheckIcon.SetActive(false);
         AgentIcon.SetActive(true);
         if ((Report.GetKillAgent() && isActionComplete) || isAgentDead) DisableAgent();
 
@@ -236,7 +238,8 @@ public class SlotController : MonoBehaviour
 
     public void TurnOffProgressor(Component sender, object obj)
     {
-        Icon.SetActive(false);
+        AbortIcon.SetActive(false);
+        CheckIcon.SetActive(false);
         Report = null;
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;

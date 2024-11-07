@@ -82,7 +82,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
 
     public bool GetTriggerDrawerAnim() { return TriggerDrawerAnim; }
 
-    public bool GetFinalReport() { return DeleteDBReport; }
+    public bool GetDeleteDBRepoert() { return DeleteDBReport; }
 
     public bool CheckIfIsDefault()
     {

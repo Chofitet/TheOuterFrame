@@ -15,6 +15,7 @@ public class ReportController : MonoBehaviour
     [SerializeField] PhotoReportSetter photo1;
     [SerializeField] PhotoReportSetter photo2;
     [SerializeField] PhotoReportSetter photo3;
+    [SerializeField] PhotoReportSetter photoQR;
     [SerializeField] Sprite ThumbUp;
     [SerializeField] List<Sprite> WrongResultImg = new List<Sprite>();
     
@@ -81,7 +82,7 @@ public class ReportController : MonoBehaviour
             btnText.text = "DISPOSE";
         }
 
-        if (report.GetFinalReport() || report.GetIsTheLastReport()) btnText.transform.parent.gameObject.SetActive(false);
+        if (report.GetDeleteDBRepoert() || report.GetIsTheLastReport()) btnText.transform.parent.gameObject.SetActive(false);
         ActionCalltxt.text = actionVerb + " " + DeleteSpetialCharacter(Name);
         CheckTextOverflow();
         Statustxt.text = status + " at OCT 30th " + $"{timeComplete.Hour:00}:{timeComplete.Minute:00}";
@@ -101,7 +102,13 @@ public class ReportController : MonoBehaviour
     {
         List<PhotoInfo> photoInfo = report.GetReportImage();
 
-        if(photoInfo.Count >= 1) photo1.Set(photoInfo[0]?.text, photoInfo[0]?.photo);
+        if (report.GetDeleteDBRepoert())
+        {
+            photoQR.Set(photoInfo[0]?.text, photoInfo[0]?.photo);
+            return;
+        }
+
+        if (photoInfo.Count >= 1) photo1.Set(photoInfo[0]?.text, photoInfo[0]?.photo);
         if (photoInfo.Count >= 2) photo2.Set(photoInfo[1]?.text, photoInfo[1]?.photo);
         if (photoInfo.Count >= 3) photo3.Set(photoInfo[2]?.text, photoInfo[2]?.photo);
     }

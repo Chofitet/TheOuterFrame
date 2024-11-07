@@ -2685,6 +2685,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   DelayCall: 0
+  _float: 0
 --- !u!114 &1512394077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3548,6 +3549,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1929313398}
         m_TargetAssemblyTypeName: SceneManagerScript, Assembly-CSharp
+        m_MethodName: ChangeFadeDuration
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1929313398}
+        m_TargetAssemblyTypeName: SceneManagerScript, Assembly-CSharp
         m_MethodName: OnChangeScene
         m_Mode: 0
         m_Arguments:
@@ -3559,6 +3572,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 3
+  _float: 0
 --- !u!114 &1929313398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3572,6 +3586,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnStartGame: {fileID: 0}
+  OtherBeginDuration: 200
+  OtherDuration: 0
   fadeScenePrefab: {fileID: 2873694115137627895, guid: c6a5178aac375ff488c2c774b98ed10b, type: 3}
 --- !u!4 &1929313399
 Transform:
@@ -3724,7 +3740,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1986824601
 ParticleSystemRenderer:
   serializedVersion: 6

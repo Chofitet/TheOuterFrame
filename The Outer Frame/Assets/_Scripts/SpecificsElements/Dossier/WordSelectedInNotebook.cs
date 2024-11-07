@@ -71,6 +71,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         DeleteOtherWords(word);
         OnShowWordsNotebook?.Invoke(this, word);
 
+
         if(word.GetPhoneNumber() != "" )
         {
             StartCoroutine(SlideDelay(IsNumAlreadyInList(word), word));

@@ -16,4 +16,9 @@ public class LigthController : MonoBehaviour
     {
         _light.DOIntensity(attenuateFactor, 2);
     }
+
+    public void SetAttenuateFactor(Component sender, object obj)
+    {
+        attenuateFactor = (float)obj;
+    }
 }

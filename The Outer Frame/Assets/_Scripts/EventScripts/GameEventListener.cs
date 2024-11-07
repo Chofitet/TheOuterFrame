@@ -56,4 +56,9 @@ public class GameEventListener : MonoBehaviour
         TriggerEvent = triggerEvent;
         Event = _event;
     }
+
+    public void SetDelay(Component sender, object obj)
+    {
+        DelayCall = (float)obj;
+    }
 }

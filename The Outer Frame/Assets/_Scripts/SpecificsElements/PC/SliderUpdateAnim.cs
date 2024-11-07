@@ -8,11 +8,12 @@ public class SliderUpdateAnim : MonoBehaviour
 {
     Slider slider;
     Sequence BarSequence;
-
+    [SerializeField] float duration;
 
     Sequence sequence;
     public void AnimSlider(Component sender, object obj)
     {
+
         if (sequence.IsActive()) sequence.Kill();
 
         slider = GetComponent<Slider>();
@@ -23,8 +24,8 @@ public class SliderUpdateAnim : MonoBehaviour
         float randomcharge = Random.Range(0.3f, 0.8f);
 
         sequence.AppendInterval(0.5f)
-                .Append(slider.DOValue(randomcharge, 1.5f)).SetEase(Ease.Linear)
-                .Append(slider.DOValue(1, 1f)).SetEase(Ease.Linear);
+                .Append(slider.DOValue(randomcharge, duration)).SetEase(Ease.Linear)
+                .Append(slider.DOValue(1, duration/2)).SetEase(Ease.Linear);
     }
 
     [ContextMenu("test Anim Slider")]
@@ -32,4 +33,5 @@ public class SliderUpdateAnim : MonoBehaviour
     {
         AnimSlider(null, null);
     }
+
 }

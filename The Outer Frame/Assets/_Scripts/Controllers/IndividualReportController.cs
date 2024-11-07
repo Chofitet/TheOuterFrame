@@ -30,7 +30,7 @@ public class IndividualReportController : MonoBehaviour
     public void FinishReport()
     {
         if (report.GetIsTheLastReport()) return;
-        if (report.GetFinalReport())
+        if (report.GetDeleteDBRepoert())
         {
             OnTakeFinalReport?.Invoke(this, null);
         }
@@ -65,7 +65,7 @@ public class IndividualReportController : MonoBehaviour
 
     public void OnSendReportAutomatically(Component sender, object obj)
     {
-        if (!report.GetFinalReport()) return;
+        if (!report.GetDeleteDBRepoert()) return;
         FinishReport();
     }
 
@@ -75,7 +75,7 @@ public class IndividualReportController : MonoBehaviour
 
         OnReactiveIdeaPosit.Invoke(this, report.GetAction());
 
-        if (report.GetFinalReport()) OnGrabFinalReport?.Invoke(this, null);
+        if (report.GetDeleteDBRepoert()) OnGrabFinalReport?.Invoke(this, null);
 
         if (report.GetSecondToLastReport())
         {
