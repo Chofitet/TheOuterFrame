@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 2c677775adf65ae4b89270a531626d46, type: 2}
-  isAutomatic: 0
+  isAutomatic: 1
   ChangeTimeOfAction: 0
   Text: 'That kid won''t let us near it.
 
 
-    He''s quite te territorial fellow.'
+    He''s quite the territorial fellow.'
   TextForRepetition: "WE SAID: \n\nThat kid won't let us near it.\n\nHe's quite te
     territorial fellow."
   Photos:
@@ -29,5 +29,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 7f661753ff6be2e4da5e7e5e777c969d, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
