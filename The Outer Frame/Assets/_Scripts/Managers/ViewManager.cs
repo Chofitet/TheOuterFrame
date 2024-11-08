@@ -151,6 +151,7 @@ public class ViewManager : MonoBehaviour
                 OnTakeSomeInBoard?.Invoke(this, null);
                 break;
             case ViewStates.GameOverView:
+                if (inOnFinalReport) return;
                 TimeManager.timeManager.NormalizeTime();
                 OnGameOverView.Invoke(this, "RetryMenu");
                 OnNotebookTake.Invoke(this, false);

@@ -13,14 +13,19 @@ public class ColliderButtonCallEvent : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        foreach(GameEvent e in EventsToTrigger)
+        triggerEvents();
+    }
+
+
+    void triggerEvents()
+    {
+        foreach (GameEvent e in EventsToTrigger)
         {
             e?.Invoke(this, Something());
         }
 
         if (DisabledInTouch) GetComponent<BoxCollider>().enabled = false;
     }
-
     public void EnableBTN(Component sender, object obj)
     {
         GetComponent<BoxCollider>().enabled = true;
@@ -32,5 +37,10 @@ public class ColliderButtonCallEvent : MonoBehaviour
         else if (FloatToPass != 0) return FloatToPass;
 
         return null;
+    }
+
+    public void TriggerEvents(Component sender, object obj)
+    {
+        triggerEvents();
     }
 }

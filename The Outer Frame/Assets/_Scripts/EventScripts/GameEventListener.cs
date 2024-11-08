@@ -15,6 +15,7 @@ public class GameEventListener : MonoBehaviour
 
     [Header("Data To Pass")]
     [SerializeField] float _float;
+    [SerializeField] string _string;
 
     private void OnEnable() => TriggerEvent.registerListener(this);
 
@@ -25,6 +26,7 @@ public class GameEventListener : MonoBehaviour
         if(data == null)
         {
             if (_float != 0) data = _float;
+            if (_string != "") data = _string;
         }
 
         if (IsDesactive) return;

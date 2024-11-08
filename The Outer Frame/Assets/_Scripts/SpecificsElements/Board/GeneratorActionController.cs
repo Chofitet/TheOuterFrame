@@ -12,13 +12,15 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] List<ConditionalClass> Conditionals = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
     [SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
-    [SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
-    [SerializeField] GameObject Content;
-    [SerializeField] GameEvent OnMoveObjectToPapersPos;
-    [SerializeField] GameObject CheckImage;
-    [SerializeField] GameEvent OnMoveToCornerIdea;
-    [SerializeField] GameEvent OnMoveToOutOfView;
-    [SerializeField] GameEvent OnSetTakenPosit;
+    [SerializeField] bool isAFailedIdea;
+    [HideInInspector] [SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
+    [HideInInspector][SerializeField] GameObject Content;
+    [HideInInspector] [SerializeField] GameEvent OnMoveObjectToPapersPos;
+    [HideInInspector] [SerializeField] GameObject CheckImage;
+    [HideInInspector] [SerializeField] GameEvent OnMoveToCornerIdea;
+    [HideInInspector] [SerializeField] GameEvent OnMoveToOutOfView;
+    [HideInInspector] [SerializeField] GameEvent OnSetTakenPosit;
+    [HideInInspector] [SerializeField] GameObject CroosIcon;
     bool ActionIsDoing;
     bool isDone;
     private bool istaken;
@@ -93,7 +95,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         
         if (btn.GetState().GetSpecialActionWord().CheckIfStateSeenWasDone(btn.GetState()))
         {
-            CheckImage.SetActive(true);
+            if (!isAFailedIdea) CheckImage.SetActive(true);
+            else CroosIcon.SetActive(true);
             btn.InactiveIdea();
             isDone = true;
         }

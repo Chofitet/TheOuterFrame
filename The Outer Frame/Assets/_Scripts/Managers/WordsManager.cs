@@ -15,6 +15,7 @@ public class WordsManager : MonoBehaviour
     [SerializeField] GameEvent OnRemoveEraceInstance;
     [SerializeField] GameEvent OnChangeStateOfWord;
     [SerializeField] GameEvent OnChangeStateSeenOfWord;
+    [SerializeField] DataBaseType EmpyDataBase; 
     List<TVNewType> VilifiedNewsList = new List<TVNewType>();
     public static WordsManager WM { get; private set; }
 
@@ -265,6 +266,14 @@ public class WordsManager : MonoBehaviour
                     phone.SetListOfCalls(word.GetListOfCalls());
                 }
             }
+        }
+    }
+
+    public void EmpyAllDataBases(Component sender, object obj)
+    {
+        foreach(WordData word in wordsDic)
+        {
+            word.SetDataBase(EmpyDataBase);
         }
     }
 }
