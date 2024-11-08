@@ -15,11 +15,14 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     [SerializeField] GameEvent OnFindableWordButtonPress;
     [SerializeField] GameEvent OnFindableWordButtonHover;
     [SerializeField] GameEvent OnFindableWordButtonUnHover;
+    [SerializeField] WordData TheCabin;
     [SerializeField] LayerMask visibleLayerMask;
     [SerializeField] LayerMask ignoreLayerMask;
+    bool isInactive;
 
     TMP_Text textField;
     WordData word;
+    WordData wordToPass;
     int wordIndex;
 
     bool wasFinded;
@@ -43,6 +46,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         rectTransform.sizeDelta = new Vector2(Width, Heigth);
         textField = TextField;
         word = Word;
+        wordToPass = word;
         _isRepitedButton = isRepitedButton;
         _comesFromDBTitle = comesFromDBTitle;
         ApplyShader("Bold");
@@ -50,18 +54,21 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
 
     public void ChangeToColorToHighligth()
     {
+        if (isInactive) return;
         OnFindableWordButtonHover?.Invoke(this, 4);
         ApplyShader("Red");
     }
 
     public void ChangeToColorToNormal()
     {
+        if (isInactive) return;
         OnFindableWordButtonUnHover?.Invoke(this, 3);
         UnBoldWord();
     }
 
     void ApplyShader(string MaterialName, bool eraceSpace = true)
     {
+        if (isInactive) return;
         string[] words = textField.text.Split(' ');
         string auxText = "";
         int i = 0;
@@ -169,7 +176,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
 
     public void RegisterWord()
     {
-        OnFindableWordButtonPress?.Invoke(this, word);
+        OnFindableWordButtonPress?.Invoke(this, wordToPass);
         ApplyShader("Grey");
         wasFinded = true;
         Destroy(gameObject);
@@ -196,4 +203,11 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     public bool GetIsVisible() { return IsVisible(); }
     public TMP_Text GetTextField() { return textField; }
     public WordData Getword() { return word; }
+
+    public void ReplaceWordToCabin(Component sender, object obj)
+    {
+        ApplyShader("");
+        isInactive = true;
+        wordToPass = TheCabin;
+    }
 }

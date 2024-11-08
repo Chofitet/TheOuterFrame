@@ -265,6 +265,7 @@ public class PinchofonoController : MonoBehaviour
             anim.SetTrigger("padOpen");
             OnOpenPhonePadSound?.Invoke(this, null);
         }
+        StopAllCoroutines();
     }
 
     //OnStartRecordingCall

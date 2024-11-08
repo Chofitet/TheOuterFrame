@@ -61,6 +61,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
         SetCallsInfo();
         CurrentDB = DBTypes;
+        DataBaseEmpy = false;
         SaveFindableAs();
     }
 
@@ -443,13 +444,19 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
                 Debug.Log("The word " + GetName() + " have a null update database");
                 continue;
             }
-            if(DB.CheckConditionals())
+            if(DB.CheckConditionals() && !DataBaseEmpy)
             {
                 CurrentDB = DB;
                 //DB.SetWasSetted();
             }
         }
 
+    }
+    [NonSerialized] bool DataBaseEmpy;
+    public void SetDataBase(DataBaseType DB)
+    {
+        DataBaseEmpy = true;
+        CurrentDB = DB;
     }
 
     public TVNewType GetVilifiedNew() {

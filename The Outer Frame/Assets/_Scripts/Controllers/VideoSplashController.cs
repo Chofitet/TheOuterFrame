@@ -19,7 +19,7 @@ public class VideoSplashController : MonoBehaviour
     {
         yield return new WaitForSeconds ((float)video.length);
 
-        EventTotrigger?.Invoke(this, "MainMenu");
+        EventTotrigger?.Invoke(this, "SapucaiLogo");
 
         
     }
