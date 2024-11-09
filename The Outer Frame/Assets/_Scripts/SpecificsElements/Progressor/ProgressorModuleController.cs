@@ -87,6 +87,7 @@ public class ProgressorModuleController : MonoBehaviour
         {
             if (sender.gameObject == SwitchAbortBTN)
             {
+                anim.ResetTrigger("abortSwitchOff");
                 anim.SetTrigger("abortSwitchOn");
                 isAbortOpen = true;
             }
@@ -102,6 +103,7 @@ public class ProgressorModuleController : MonoBehaviour
 
             if (sender.gameObject == SwitchAbortBTN)
             {
+                anim.ResetTrigger("abortSwitchOn");
                 anim.SetTrigger("abortSwitchOff");
                 isAbortOpen = false;
             }

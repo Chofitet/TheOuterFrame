@@ -51,7 +51,7 @@ public class PinchofonoController : MonoBehaviour
 
         if (waitingForPrint)
         {
-            StartCoroutine(ShowErrorMessagePanel("You have a pending call"));
+            StartCoroutine(ShowErrorMessagePanel("PLEASE PRINT TRANSCRIPTION IN QUEUE"));
             return;
         }
 
@@ -59,7 +59,7 @@ public class PinchofonoController : MonoBehaviour
         if (!hasNumberEnter)
         {
             SetIsRecordingFalse();
-            StartCoroutine(ShowErrorMessagePanel("Enter a number"));
+            StartCoroutine(ShowErrorMessagePanel("PLEASE ENTER A VALID PHONE NUMBER"));
         }
         else
         {
@@ -78,20 +78,26 @@ public class PinchofonoController : MonoBehaviour
         StopAllCoroutines();
         AbortConfirmationPanel.SetActive(false);
 
+        if (!haveCallToPrint && !CallToPrint && isRecording)
+        {
+            StartCoroutine(ShowErrorMessagePanel("Please stand by, recording in progress"));
+            return;
+        }
+
         if (!haveCallToPrint && !CallToPrint)
         {
-            StartCoroutine(ShowErrorMessagePanel("No calls to print yet"));
+            StartCoroutine(ShowErrorMessagePanel("NO TRANSCRIPTION IN QUEUE"));
             return;
-
         }
+
         else if(printOnce)
         {
-            StartCoroutine(ShowErrorMessagePanel("Take printed call first"));
+            StartCoroutine(ShowErrorMessagePanel("please empty the printing tray"));
         }
 
         if (printInQueue)
         {
-            StartCoroutine(ShowErrorMessagePanel("Please empty printer output tray"));
+            StartCoroutine(ShowErrorMessagePanel("please empty the printing tray"));
             return;
         }
         else
@@ -99,6 +105,7 @@ public class PinchofonoController : MonoBehaviour
             ShowPanel(ScreenContent);
             OnPrintCall?.Invoke(this, null);
             CallToPrint = null;
+            anim.SetTrigger("padOpen");
         }
         
     }
@@ -111,14 +118,14 @@ public class PinchofonoController : MonoBehaviour
 
         if (CallToPrint)
         {
-            StartCoroutine(ShowErrorMessagePanel("You have a pending call"));
+            StartCoroutine(ShowErrorMessagePanel("TOO LATE TO CANCEL, THE RECORDING IS DONE"));
            
             return;
         }
 
         if (!isRecording)
         {
-            StartCoroutine(ShowErrorMessagePanel("No recording to abort"));
+            StartCoroutine(ShowErrorMessagePanel("PLEASE BEGIN SOMETHING TO CANCEL IT"));
             
         }
         else
