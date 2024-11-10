@@ -28,9 +28,19 @@ MonoBehaviour:
     RECORDING)
 
 '
-  IterruptedDialogue: 
+  IterruptedDialogue: '- BUT HOW COULD HE KNOW- - - - - - -  YOU JUST GOT THEM -
+    - - HOW COULD HE HAVE KNOWN - - - - - - - - - - - - - - - - - - - - - - - - -
+    - - - SHE SAID TO NOT LOOSE THEM - - - - - - - - - - - - - - - - - WHAT ARE WE
+    GOING TO DO? - - - - - - - - - - <link>TOOTSIE</link> - - - WHAT ARE WE GOING
+    TO D(END OF RECORDING)
+
+'
   Involved:
   - {fileID: 11400000, guid: 754487f661e18d9449ce2c8061cb18e5, type: 2}
   - {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
-  Conditions: []
+  Conditions:
+  - condition: {fileID: 11400000, guid: b236203a5205d81498d8bbfd42055e73, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 87bcdb57473da004c90d24d21786f1cc, type: 2}
+    ifNot: 1
   isOrderMatters: 0

@@ -24,9 +24,14 @@ MonoBehaviour:
   Dialogue: '- PEOPLE ARE SAYING THAT SOMETHING HAPPENED ON A ROAD NEAR - - - - -
     - - DO YOU THINK  - - - HAS TO BE OKAY - - - - - - - - - - - - - - <link>TOOTSIE</link>
     WHAT ARE WE GOING TO DO? - - - - - I THINK I HEAR SOMEONE OUTSIDE (END OF RECORDING)'
-  IterruptedDialogue: 
+  IterruptedDialogue: '- PEOPLE ARE SAYING THAT SOMETHING HAPPENED ON A ROAD NEAR
+    - - - - - - - DO YOU THINK  - - - HAS TO BE OKAY - - - - - - - - - - - - - -
+    <link>TOOTSIE</link> WHAT ARE WE GOING TO DO? - - - - - I THINK I HEAR SOMEONE
+    OUTSIDE (END OF RECORDING)'
   Involved:
   - {fileID: 11400000, guid: 754487f661e18d9449ce2c8061cb18e5, type: 2}
   - {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
-  Conditions: []
+  Conditions:
+  - condition: {fileID: 0}
+    ifNot: 0
   isOrderMatters: 0
