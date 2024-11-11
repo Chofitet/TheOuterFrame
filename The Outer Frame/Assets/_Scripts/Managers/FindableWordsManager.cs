@@ -15,8 +15,8 @@ public class FindableWordsManager : MonoBehaviour
     List<GameObject> FindableWordsBTNs = new List<GameObject>();
     [SerializeField] GameEvent OnFindableWordInstance;
     [SerializeField] WordData Irrelevant;
-   
-    
+    [SerializeField] WordData LastWord;
+    bool isInLastWord;
     public static FindableWordsManager FWM { get; private set; }
 
     private void Awake()
@@ -67,6 +67,7 @@ public class FindableWordsManager : MonoBehaviour
 
             foreach (FindableWordData w in PositionsWord)
             {
+                if (isInLastWord && w.GetWordData() != LastWord) continue;
                 if (w.GetWordData().GetIsFound()) continue;
                 GameObject auxObj = Instantiate(ButtonFindableWordPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
                 auxObj.name = "FindableBTN_" + w.GetWordData().GetName();
@@ -251,7 +252,10 @@ public class FindableWordsManager : MonoBehaviour
         }
    }
    
-
+    public void SetDisableGrabWord(Component sender, object obj)
+    {
+        isInLastWord = true;
+    }
 }
 public enum FindableBtnType
 {
