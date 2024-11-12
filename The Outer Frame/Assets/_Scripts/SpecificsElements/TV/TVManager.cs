@@ -245,7 +245,7 @@ public class TVManager : MonoBehaviour
         canvasGroup.interactable = true;
         ChannelController channel = aux.GetComponent<ChannelController>();
         anim.SetTrigger(channel.GetTriggerAnim());
-        ChannelNumTxt.text = (Channels.IndexOf(channel) + 1).ToString();
+        ChannelNumTxt.text = channel.GetNumOfChannel();
 
         foreach (ChannelController ch in Channels)
         {

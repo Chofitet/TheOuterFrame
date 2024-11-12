@@ -176,17 +176,18 @@ public class PaperMoveController : MonoBehaviour
 
     private void RefreshPaperQueue(bool isAdding)
     {
-        if(isAdding)
+        if (isAdding)
         {
             if (PapersQueue.Count != 0) TransformOffset = PapersQueue.Count * new Vector3(0, 0.002f, 0);
             RotationOffset = new Vector3(0, UnityEngine.Random.Range(-10, 10), 0);
             //DisableOtherPapers();
-            PapersQueue.Add(currentPaper);
+            if(!PapersQueue.Contains(currentPaper)) PapersQueue.Add(currentPaper);
         }
         else
         {
             PapersQueue.Remove(currentPaper);
         }
+        PapersQueue.RemoveAll(item => item == null);
     }
 
     void DisableOtherPapers()

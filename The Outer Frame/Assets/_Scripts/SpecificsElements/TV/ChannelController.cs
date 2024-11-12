@@ -9,6 +9,7 @@ public class ChannelController : MonoBehaviour
 
     bool isFull;
     bool isFirstNew;
+    [SerializeField] string numOfChannel;
     [SerializeField] bool isStaticChannel;
     [SerializeField] int DefaultMinutesToPassNews;
     [SerializeField] OverlayAnimation OverlayAnims;
@@ -35,6 +36,8 @@ public class ChannelController : MonoBehaviour
     public bool GetIsFull() { return isFull; }
 
     public void SetIsFull(bool x) => isFull = x;
+
+    public string GetNumOfChannel() { return numOfChannel; }
 
     public bool GetIsMinTimePass() 
     {

@@ -83,6 +83,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
         {
             Debug.LogError($"Error: Ocurrió una excepción inesperada. Detalles: {e.Message}");
         }
+
     } 
 
     public void MoveToTakeOutPos(Component sender, object obj)
@@ -105,9 +106,14 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
         Content.SetActive(true);
 
-        transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad);
+        transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad);/*.OnComplete(() => 
+        {
+            if (isOutOfBoard) Content.SetActive(false);
+            else Content.SetActive(true);
+        });*/
         transform.DORotate(FinalRotation, 0.3f).SetEase(Ease.InOutCirc);
         OnPlaceInBoardSound?.Invoke(this, null);
+         
     }
 
     public bool  GetIsPlaced()
