@@ -254,6 +254,7 @@ public class SlotController : MonoBehaviour
         AgentIcon.GetComponent<Image>().color = Color.red;
         if(!isAgentDead) AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 90));
         isAgentDead = true;
+
     }
 
     public void DisanableWithFinalReport(Component sender, object obj)

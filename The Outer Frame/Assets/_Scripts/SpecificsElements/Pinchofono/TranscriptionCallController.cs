@@ -29,8 +29,8 @@ public class TranscriptionCallController : MonoBehaviour
         txtCall.text = call.GetDialogue();
         txtFrom.text = call.GetFrom();
         FindableWordsManager.FWM.InstanciateFindableWord(txtFrom,FindableBtnType.FindableBTN);
-        txtTo.text = call.GetTo();
-        FindableWordsManager.FWM.InstanciateFindableWord(txtTo,FindableBtnType.FindableBTN);
+        //txtTo.text = call.GetTo();
+        //FindableWordsManager.FWM.InstanciateFindableWord(txtTo,FindableBtnType.FindableBTN);
         txtAt.text = TimeManager.timeManager.GetTime().ToString() + " 30TH OCT";
         GetComponent<IndividualCallController>().SetType(true, call);
         FindableWordsManager.FWM.InstanciateFindableWord(txtCall,FindableBtnType.FindableBTN);

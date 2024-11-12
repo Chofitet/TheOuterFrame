@@ -1099,6 +1099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   view: 7
+  NotInactiveBTN: 0
 --- !u!114 &5229616036150630109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1129,6 +1130,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0
+  _float: 0
+  _string: 
 --- !u!114 &5454041765905835969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1307,7 +1310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4629845258096724116
 RectTransform:
   m_ObjectHideFlags: 0

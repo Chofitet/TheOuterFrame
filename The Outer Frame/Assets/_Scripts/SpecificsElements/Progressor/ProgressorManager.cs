@@ -8,7 +8,9 @@ public class ProgressorManager : MonoBehaviour
     [SerializeField] List<ProgressorModuleController> Slots = new List<ProgressorModuleController>();
     [SerializeField] int numOfSlots;
     [SerializeField] GameEvent OnProgressorSetSlot;
-    
+    [SerializeField] GameEvent ElementButtonClick;
+    [SerializeField] GameEvent OnAnyAgenEnableGameOver;
+    [SerializeField] GameEvent OnDisableInput;
 
     public void SetActionInCourse(Component c, object _data)
     {
@@ -59,7 +61,24 @@ public class ProgressorManager : MonoBehaviour
         GameObject slot = (GameObject)obj;
         ProgressorModuleController SlotToRemove = slot.GetComponent<ProgressorModuleController>();
         Slots.Remove(SlotToRemove);
-        
+    }
+
+    public void CheckAllAgentsDown(Component sender, object obj)
+    {
+        if (Slots.Count == 0)
+        {
+            ElementButtonClick?.Invoke(this, ViewStates.GameOverView);
+            OnAnyAgenEnableGameOver?.Invoke(this, null);
+            OnDisableInput?.Invoke(this, null);
+        }
+    }
+
+    [ContextMenu("Test Game Over")]
+    public void TestGameOver()
+    {
+        ElementButtonClick?.Invoke(this, ViewStates.GameOverView);
+        OnAnyAgenEnableGameOver?.Invoke(this, null);
+        OnDisableInput?.Invoke(this, null);
     }
 
     public void DisableAllExept(Component sender, object obj)
