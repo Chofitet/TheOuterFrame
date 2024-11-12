@@ -16,14 +16,19 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 642cf89db1f9b514c8431d2ddf1c4409, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 1
-  Text: "No way, Jose. That thing is leaking <link>fluorescent stuff</link> everywhere.
-    It could explode for all we know! \n\nWe need to find out what is carrying. "
+  Text: "We got a man down.\n\nHe hurt his foot really bad!\n\nWe shouldn't have
+    kicked that thing anyway. it is leaking <link>fluorescent stuff</link> everywhere.
+    It could explode on impact for all we know! \n\nWe need to find out what is carrying. "
   TextForRepetition: 'We already tried that.
 
     Remember to read each Report.'
   Photos:
   - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
-    text: NO-NO
+    text: UPS!
   Conditionals: []
   isOrderMatters: 0
-  XPosFix: 0
+  AgentDown: 1
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
