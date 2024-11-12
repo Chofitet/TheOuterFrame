@@ -68,6 +68,7 @@ public class PinchofonoController : MonoBehaviour
             OnStartRecording?.Invoke(this, null);
             OnClosePhonePadSound?.Invoke(this, null);
             SetIsRecordingTrue();
+            StopCoroutine(AnimPadDial(""));
         }
     }
 
@@ -272,6 +273,7 @@ public class PinchofonoController : MonoBehaviour
             anim.SetTrigger("padOpen");
             OnOpenPhonePadSound?.Invoke(this, null);
         }
+        StopCoroutine(AnimPadDial(""));
         StopAllCoroutines();
     }
 
