@@ -16,7 +16,7 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: 'We should find the Sergio first, then we''ll get to decide what to do.
+  Text: 'We should find Sergio first, then we''ll get to decide what to do.
 
 '
   TextForRepetition: "WE SAID:\n\nWe should find the driver first, then we\u2019ll
@@ -28,5 +28,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 75c399ba044115b498551401a398df2e, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
