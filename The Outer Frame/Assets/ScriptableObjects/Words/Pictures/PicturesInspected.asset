@@ -16,11 +16,12 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: '(something interesting) <link>Big Foot</link> with <link>friend</link>. '
-  TextForRepetition: 'We already did that.
-
-    Remember to take your pills and read
-    the Reports.'
+  Text: "We don't know exactly where they were taken. \n \nThe pictures show <link>Big
+    Foot</link> with a mysterious person at <link>the woods</link>.  A <link>friend</link>?
+    \n \n"
+  TextForRepetition: "WE SAID:\n\nWe don't know exactly where they were taken. \n
+    \nThe pictures show <link>Big Foot</link> with a mysterious person at <link>the
+    woods</link>.  A <link>friend</link>? \n \n"
   Photos:
   - photo: {fileID: 21300000, guid: 521f5edf07141644e88ce82e8c72d898, type: 3}
     text: YUP
@@ -28,5 +29,8 @@ MonoBehaviour:
     text: FRIEND?
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
