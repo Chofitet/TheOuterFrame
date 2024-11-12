@@ -37,7 +37,7 @@ public class PrinterController : MonoBehaviour
 
     public void TakeReport(Component component, object obj)
     {
-        OnResetProgressorSlot?.Invoke(this, slot.gameObject);
+        if(slot) OnResetProgressorSlot?.Invoke(this, slot.gameObject);
         OnFullPrinter?.Invoke(this, false);
         slot = null;
     }

@@ -187,7 +187,6 @@ public class PaperMoveController : MonoBehaviour
         {
             PapersQueue.Remove(currentPaper);
         }
-        PapersQueue.RemoveAll(item => item == null);
     }
 
     void DisableOtherPapers()

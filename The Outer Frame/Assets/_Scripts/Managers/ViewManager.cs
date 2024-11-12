@@ -24,6 +24,8 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnBackToPause;
     [SerializeField] GameEvent OnSitDownSound;
     [SerializeField] GameEvent OnSendReportAutomatically;
+    [SerializeField] GameEvent OnEnableInput;
+    [SerializeField] GameEvent OnDisableInput;
     bool isAPaperHolding;
     ViewStates currentviewState;
     bool isInputDisable;
@@ -33,11 +35,13 @@ public class ViewManager : MonoBehaviour
 
     private void Start()
     {
+        OnDisableInput?.Invoke(this, null);
         Invoke("SetStartView", 0.6f);
     }
 
     void SetStartView()
     {
+        OnEnableInput?.Invoke(this, null);
         UpdateViewState(null, StartView);
     }
 
