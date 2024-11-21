@@ -34,7 +34,7 @@ public class PaperMoveController : MonoBehaviour
     Vector3 TransformOffset;
     Vector3 RotationOffset;
 
-    enum PaperState
+    public enum PaperState
     {
         Nothing,
         Taken,
@@ -65,6 +65,7 @@ public class PaperMoveController : MonoBehaviour
         
     }
 
+
     public void TakeHoldingReport(Component sender, object obj)
     {
         if (PaperState.HoldingRight != actualPaperState) return;
@@ -80,10 +81,12 @@ public class PaperMoveController : MonoBehaviour
             return;
         }
 
+
         GameObject reportObject = (GameObject)obj;
         reportObject.transform.SetParent(TakenPos.transform);
+        
 
-        if(currentPaper != reportObject) changePaperInPile(reportObject);
+        if (currentPaper != reportObject) changePaperInPile(reportObject);
 
         if (PaperState.HoldingRight == actualPaperState && currentPaper != reportObject)
         {
@@ -91,6 +94,7 @@ public class PaperMoveController : MonoBehaviour
         }
 
         currentPaper = reportObject;
+        currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Taken);
 
         SetPosition(TakenPos);
         SetPaperState(PaperState.Taken);
@@ -121,13 +125,14 @@ public class PaperMoveController : MonoBehaviour
     {
 
         if (!currentPaper) return;
-        RefreshPaperQueue(true);
+        currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
+        currentPaper.transform.SetParent(ReportPilePos);
+        RefreshPaperQueue();
         currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration);
         currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration);
         currentPaper.GetComponent<BoxCollider>().enabled = true;
-        currentPaper.transform.SetParent(ReportPilePos);
         currentPaper = null;
-        SetPaperState(PaperState.Staked);
+        SetPaperState(PaperState.Nothing);
 
     }
 
@@ -174,30 +179,25 @@ public class PaperMoveController : MonoBehaviour
         }
     }
 
-    private void RefreshPaperQueue(bool isAdding)
+    private void RefreshPaperQueue()
     {
-        if (isAdding)
+        int stakedCount = 0;
+
+        foreach (Transform child in ReportPilePos.transform)
         {
-            if (PapersQueue.Count != 0) TransformOffset = PapersQueue.Count * new Vector3(0, 0.002f, 0);
+            PaperStatesController paperController = child.GetComponent<PaperStatesController>();
+            if (paperController != null && paperController.GetPaperState() == PaperState.Staked)
+            {
+                stakedCount++;
+            }
+        }
+
+            TransformOffset = stakedCount * new Vector3(0, 0.002f, 0);
             RotationOffset = new Vector3(0, UnityEngine.Random.Range(-10, 10), 0);
-            //DisableOtherPapers();
-            if(!PapersQueue.Contains(currentPaper)) PapersQueue.Add(currentPaper);
-        }
-        else
-        {
-            PapersQueue.Remove(currentPaper);
-        }
+            
+       
     }
 
-    void DisableOtherPapers()
-    {
-        if (PapersQueue.Count == 0) return;
-        foreach(GameObject paper in PapersQueue)
-        {
-            if (paper == PapersQueue.Last()) return;
-            paper.GetComponent<BoxCollider>().enabled = false;
-        }
-    }
 
     public void PositionOnPC(Component sender, object obj)
     {
@@ -254,6 +254,9 @@ public class PaperMoveController : MonoBehaviour
         GameObject oldPaper = currentPaper;
         isChangingPapers = true;
 
+        oldPaper.transform.SetParent(ReportPilePos);
+        oldPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
+        RefreshPaperQueue();
         swapPapersSequence = DOTween.Sequence();
         swapPapersSequence.Append(oldPaper.transform.DOMove(ReportPilePos2.transform.position, 0.3f))
             .Append(oldPaper.transform.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration))
@@ -261,7 +264,7 @@ public class PaperMoveController : MonoBehaviour
             .OnComplete(() =>
             {
                 oldPaper.GetComponent<BoxCollider>().enabled = true;
-                oldPaper.transform.SetParent(ReportPilePos);
+                
                 isChangingPapers = false;
             });
        
