@@ -18,15 +18,26 @@ MonoBehaviour:
   ChangeTimeOfAction: 0
   Text: 'We would have to locate the creature first.
 
-    Though we already tested
-    it''s fur.'
-  TextForRepetition: 'We would have to locate the creature first.
 
-    Though we
-    already tested it''s fur.'
+    We already lab tested
+    it''s fur, though.'
+  TextForRepetition: 'WE SAID:
+
+
+    We would have to locate the creature first.
+
+
+    We
+    already lab tested it''s fur, though.'
   Photos:
   - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
     text: STILL MISSING
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 8096a0eb5dc96d34386375952535bd9c, type: 2}
+    ifNot: 0
   isOrderMatters: 0
-  XPosFix: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
