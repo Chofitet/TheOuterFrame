@@ -23,7 +23,7 @@ public class SliderUpdateAnim : MonoBehaviour
 
         float randomcharge = Random.Range(0.3f, 0.8f);
 
-        sequence.AppendInterval(0.5f)
+        sequence.AppendInterval(0.2f)
                 .Append(slider.DOValue(randomcharge, duration)).SetEase(Ease.Linear)
                 .Append(slider.DOValue(1, duration/2)).SetEase(Ease.Linear);
     }

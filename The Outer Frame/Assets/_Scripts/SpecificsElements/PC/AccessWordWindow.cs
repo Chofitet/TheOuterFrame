@@ -51,6 +51,7 @@ public class AccessWordWindow : MonoBehaviour
     //OnSelectedWordInNotebook
     public void CompleteAccessBar(Component sender, object obj)
     {
+        SearchBar.text = " |";
         if (!isInPCView) return;
         if (!Conteiner.activeSelf) return;
         WordData _word = (WordData)obj;
@@ -70,7 +71,8 @@ public class AccessWordWindow : MonoBehaviour
 
     public void TryAccess()
     {
-        if(TryAccessWord == WordsManager.WM.RequestBDWikiData(SearchedWord).GetAccessWord())
+        
+        if (TryAccessWord == WordsManager.WM.RequestBDWikiData(SearchedWord).GetAccessWord())
         {
             Invoke("UnlockPage", 2f);
             isUnlockingPage = true;
@@ -83,6 +85,11 @@ public class AccessWordWindow : MonoBehaviour
         else
         {
             SearchBar.text = "ACCESS DENIED";
+        }
+
+        if (TryAccessWord == null)
+        {
+            SearchBar.text = " |";
         }
     }
 
