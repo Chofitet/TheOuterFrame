@@ -55,7 +55,7 @@ public class NotebookMoveController : MonoBehaviour
                 dontLeaveNotebook = false;
                 break;
             case ViewStates.PinchofonoView:
-                SetPos(1, true, OriginalTransform, true);
+                SetPos(1, true, OriginalTransform, true, 0.2f);
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.BoardView:
@@ -74,7 +74,7 @@ public class NotebookMoveController : MonoBehaviour
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.TVView:
-                SetPos(5);
+                SetPos(5,true,null,false,0.35f);
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.PauseView:
@@ -92,7 +92,7 @@ public class NotebookMoveController : MonoBehaviour
         lastView = newview;
     }
 
-    void SetPos(int num, bool _isUp = true , Transform trans = null,  bool isPinchofono= false)
+    void SetPos(int num, bool _isUp = true , Transform trans = null,  bool isPinchofono= false, float delayToGrab = 0)
     {
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
@@ -100,7 +100,8 @@ public class NotebookMoveController : MonoBehaviour
         isMoving = true;
         lerpTime = 0;
 
-        SetTransform(Positions[num]);
+        float _delayToGrab = 0;
+        if (!isUp) _delayToGrab = delayToGrab;
 
         moveSequence = DOTween.Sequence();
 
@@ -109,8 +110,9 @@ public class NotebookMoveController : MonoBehaviour
             moveSequence.AppendCallback(() => CloseNotebook());
         }
 
-        //moveSequence.PrependInterval(0.1f);
-        moveSequence.Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutCirc))
+        moveSequence.PrependInterval(_delayToGrab)
+            .AppendCallback(()=> { SetTransform(Positions[num]); })
+            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutCirc))
                     .OnComplete(() =>
                     {
                         isMoving = false;
@@ -197,6 +199,7 @@ public class NotebookMoveController : MonoBehaviour
 
     public void ShakeNotebook(Component sender, object obj)
     {
+        if (!isUp) return;
         transform.DOShakeRotation(0.4f, new Vector3(0,5,0),8,90,true,ShakeRandomnessMode.Harmonic);
         transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic);
     }

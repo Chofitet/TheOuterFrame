@@ -101,15 +101,17 @@ public class WordSelectedInNotebook : MonoBehaviour
     {
         word.SetIsPhoneNumberFound();
     }
+
+    bool isNotebookDown;
     IEnumerator SlideDelay(WordData num, WordData word)
     {
         yield return new WaitForSeconds(1.1f);
-        OnSlidePhones?.Invoke(this, true);
+        if(!isNotebookDown) OnSlidePhones?.Invoke(this, true);
         if(!num) OnShowNumNotebook?.Invoke(this, word);
         else OnShowNumNotebook?.Invoke(this, word);
         yield return new WaitForSeconds(1.1f);
-        
-        OnSlidePhones?.Invoke(this, false);
+
+        if (!isNotebookDown) OnSlidePhones?.Invoke(this, false);
     }
 
     WordData IsNumAlreadyInList(WordData word)
@@ -210,6 +212,9 @@ public class WordSelectedInNotebook : MonoBehaviour
     public void ActualView(Component sender, object obj)
     {
         actualView = (ViewStates)obj;
+
+        if (actualView == ViewStates.GeneralView) isNotebookDown = true;
+        else isNotebookDown = false;
     }
 
     public WordData GetSelectedWord(){return SelectedWord;}
