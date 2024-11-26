@@ -16,14 +16,16 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: "That thing is shred metal.\nIt looks scarier than any of us. \nNo way."
-  TextForRepetition: 'It would be pointless.
-
-    But we already told you that.'
+  Text: "That thing is shred metal.\n\nIt looks scarier than any of us. \n\nNo way."
+  TextForRepetition: "WE SAID:\n\nThat thing is shred metal.\n\nIt looks scarier
+    than any of us. \n\nNo way."
   Photos:
   - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
     text: POINTLESS
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
