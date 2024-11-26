@@ -12,9 +12,11 @@ public class SoundEventListener : MonoBehaviour
     [SerializeField][Range(-3,3)] float MinPitchVariation = 1;
     [SerializeField] [Range(-3, 3)] float MaxPitchVariation = 1;
     [SerializeField] List<AudioClip> Clips = new List<AudioClip>();
+    [SerializeField] bool isDestroyable;
     AudioSource audioSource;
     Vector2 PitchVariation;
     SoundInfo _soundInfo;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -28,7 +30,7 @@ public class SoundEventListener : MonoBehaviour
     public void PlaySound(Component sender, object obj)
     {
         if (!audioSource.clip && Clips.Count == 0) return;
-        _soundInfo = new SoundInfo(audioSource, SoundDuration, PitchVariation, Clips, transform, name);
+        _soundInfo = new SoundInfo(audioSource, SoundDuration, PitchVariation, Clips, transform, name, isDestroyable);
        OnPlaySound?.Invoke(this, _soundInfo);
     }
 

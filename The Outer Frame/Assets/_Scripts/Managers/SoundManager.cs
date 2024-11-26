@@ -31,7 +31,7 @@ public class SoundManager : MonoBehaviour
 
         audioSource.Play();
 
-        if (audioSource.loop)
+        if (audioSource.loop || soundInfo.isDestroyable)
         {
             LoopingSounds.Add(SoundInstance);
             return;
@@ -75,8 +75,9 @@ public struct SoundInfo
     public Vector2 pitchVariation;
     public List<AudioClip> clips;
     public Transform WordPosition;
+    public bool isDestroyable;
 
-    public SoundInfo(AudioSource _audioClip, float _playDuration, Vector2 _pitchVariation, List<AudioClip> _clips, Transform _WordPosition, string _name)
+    public SoundInfo(AudioSource _audioClip, float _playDuration, Vector2 _pitchVariation, List<AudioClip> _clips, Transform _WordPosition, string _name, bool _isDestroyable)
     {
         audioSource = _audioClip;
         //playDuration = _playDuration;
@@ -84,6 +85,7 @@ public struct SoundInfo
         clips = _clips;
         WordPosition = _WordPosition;
         Name = _name;
+        isDestroyable = _isDestroyable;
     }
 
     

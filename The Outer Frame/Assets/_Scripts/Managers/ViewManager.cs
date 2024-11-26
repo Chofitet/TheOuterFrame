@@ -190,7 +190,7 @@ public class ViewManager : MonoBehaviour
 
     void BackToGeneralViewWhitMoving()
     {
-        if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView)
+        if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView )
         {
             OnSitDownSound?.Invoke(this, null);
         }

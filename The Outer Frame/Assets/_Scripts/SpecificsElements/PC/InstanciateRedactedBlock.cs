@@ -86,7 +86,6 @@ public class InstanciateRedactedBlock : MonoBehaviour
         string[] words = textField.text.Split(' ');
         int WordsCount = words.Length;
 
-        Debug.Log(textField.text);
 
         if (textField.IsActive())
         {
