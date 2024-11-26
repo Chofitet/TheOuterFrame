@@ -114,7 +114,6 @@ public class TimeManager : MonoBehaviour
                     Hour++;
                     Minute = 0;
                     OnHourChange?.Invoke();
-                    Debug.Log("Hour: " + Hour);
                 }
 
                 if (Minute % MinutesToChangeNews == 0)

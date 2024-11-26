@@ -57,7 +57,11 @@ public class ChannelController : MonoBehaviour
 
     public void SetNew(INewType _new)
     {
-        if (_new == null) return;
+        if (_new == null)
+        {
+            Debug.Log("new is null");
+            return;
+        }
 
         if (!isFirstNew)
         {
@@ -78,6 +82,7 @@ public class ChannelController : MonoBehaviour
         OverlayAnims.QuipOut();
         OnChangeReporterAnim?.Invoke(this, null);
 
+
         StartCoroutine(BackUI(OverlayAnims.GetAnimTime(), _new));
 
         _new.SetWasStreamed();
@@ -95,6 +100,8 @@ public class ChannelController : MonoBehaviour
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
 
         _new.SetWasStreamed();
+
+        OverlayAnims.NewsFormatIdle();
 
         if (_new.GetHeadline2() != "")
         {

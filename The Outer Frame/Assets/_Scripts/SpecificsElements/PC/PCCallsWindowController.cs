@@ -55,6 +55,11 @@ public class PCCallsWindowController : MonoBehaviour
         panelCall.SetActive(false);
     }
 
+    public void OnQuitPanel(Component sender, object obj)
+    {
+        panelCall.SetActive(false);
+    }
+
     public void DeleteAllReports(Component sender, object obj)
     {
         isDeleted = true;

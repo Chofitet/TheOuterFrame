@@ -36,9 +36,11 @@ public class OverlayAnimation : MonoBehaviour
     Sequence pictureInAnim;
     Sequence pictureOutAnim;
     Sequence quipAnim;
+    bool first;
 
     private void Start()
     {
+
         textStartingPosition = newsTextUI.transform.position;
         //newsTextUI.transform.position = textOffscreenPositionRight.position;
 
@@ -54,6 +56,7 @@ public class OverlayAnimation : MonoBehaviour
         NewContentTMPtxt = newsTextUI.transform.GetChild(0).GetComponent<TMP_Text>();
         HeadlineTMPtxt = newsTitleUI.transform.GetChild(0).GetComponent<TMP_Text>();
         QuipTMPtxt = newsQuipUI.transform.GetChild(0).GetComponent<TMP_Text>();
+        first = true;
 
     }
 
@@ -104,11 +107,22 @@ public class OverlayAnimation : MonoBehaviour
         NewsOut();
     }
 
+    public void NewsFormatIdle()
+    {
+        if (!first) return;
+        newsTitleUI.transform.position = titleStartingPosition;
+        newsTextUI.transform.position = textStartingPosition;
+
+        picsUI.transform.position = picsStartingPosition;
+
+        newsQuipUI.transform.position = quipStartingPosition;
+    }
+
     //////////////////////////////
 
     public void PicsIn()
     {
-        if (pictureInAnim != null && pictureInAnim.IsActive()) pictureInAnim.Kill();
+        if (newsOutAnim != null && newsOutAnim.IsActive()) newsOutAnim.Kill();
         picsUI.transform.position = picsOffscreenPosition.transform.position;
 
         pictureInAnim = DOTween.Sequence();

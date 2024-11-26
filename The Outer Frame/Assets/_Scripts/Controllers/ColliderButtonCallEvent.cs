@@ -10,6 +10,7 @@ public class ColliderButtonCallEvent : MonoBehaviour
     [SerializeField] bool DisabledInTouch;
     [SerializeField] GameObject SomethingToPass;
     [SerializeField] float FloatToPass;
+    bool isInactive;
 
     private void OnMouseUpAsButton()
     {
@@ -19,6 +20,7 @@ public class ColliderButtonCallEvent : MonoBehaviour
 
     void triggerEvents()
     {
+        if (isInactive) return;
         foreach (GameEvent e in EventsToTrigger)
         {
             e?.Invoke(this, Something());
@@ -37,6 +39,11 @@ public class ColliderButtonCallEvent : MonoBehaviour
         else if (FloatToPass != 0) return FloatToPass;
 
         return null;
+    }
+
+    public void Disable(Component sender, object obj)
+    {
+        isInactive = true;
     }
 
     public void TriggerEvents(Component sender, object obj)

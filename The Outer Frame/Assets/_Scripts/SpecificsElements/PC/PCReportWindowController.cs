@@ -66,6 +66,10 @@ public class PCReportWindowController : MonoBehaviour
         panelReporte.SetActive(false);
     }
 
+    public void OnQuitPanelReport(Component sender, object obj)
+    {
+        panelReporte.SetActive(false);
+    }
     public void DeleteAllReports(Component sender, object obj)
     {
         isDeleted = true;
