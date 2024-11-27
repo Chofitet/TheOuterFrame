@@ -16,26 +16,28 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 9417a1a9040d78e4a9d5c53d8b97b22d, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "The boy swears he saw nothing. \r\nHe didn't go outside when whatever happened
-    happened. \n\r\n\"Leave the register alone? My boss would kill me!\" \n \r\nBut
-    he HEARD it all. \n\rIn short: around 5 to 4 AM there were some weird mooing
-    sounds, \u201Csome special cow must have escaped\u201D, followed by a sudden
-    screech of tires, and then <link>something BIG</link> crashed. \u201CIt sounded
-    like a boulder struck something kinda crash\". \r\nThere was a long silence after
-    that. Interrupted by screaming and a deafening roar. \r\n\"Something was mean
-    angry out there.\"  \r\nIt sounded like a small stampede passed by. \r\nAnd then
-    nothing. \n\r\nAlso: he is the one who called the news... \r\nAnd he's over excited
-    about  appearing on TV sharing what he THINKS it happened.  \r\nHe liked telling
-    us THAT idea... \r"
+  Text: "The boy swears he saw nothing.  \n\r \n\"Leave the register alone? My boss
+    would kill me!\" \n \r\nBut he HEARD it all. \n\n\rIn short: around 5 to 4 AM
+    there were some weird mooing sounds, \u201Csome special cow must have escaped\u201D,
+    followed by a sudden screech of tires, and then <link>something BIG</link> crashed.
+    \u201CIt sounded like a boulder struck something\".\n  \r\nThere was a long silence
+    after that. Interrupted by screaming and a deafening roar. \r\n\"Something was
+    mean angry out there.\"  \r\nIt sounded like a small stampede passed by. \r\nAnd
+    then nothing. \n\r\nAlso: he is the one who called the news... \r\nAnd he's over
+    excited about  appearing on TV sharing what he THINKS it happened.\n  \r\nHe
+    liked telling us THAT idea... \r"
   TextForRepetition: We already did that, please check the corresponding report.
   Photos:
   - photo: {fileID: 21300000, guid: 50d54830966e9044d972377d9ffa29e9, type: 3}
-    text: HE SWEARS
+    text: IT'S ALL TRUE
   Conditionals:
   - condition: {fileID: 11400000, guid: 2fc580847f09a9a4cb77028e0cd372d7, type: 2}
     ifNot: 1
   - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

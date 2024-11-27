@@ -16,15 +16,14 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 0e9d32ed67c697445a06c9c06a57038e, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'The kid says "the bathroom use is reserved for customers only".
+  Text: 'He said "the bathroom use is reserved for customers only".
 
 
     Guess,
     we''ll have to buy something...
 
 '
-  TextForRepetition: 'The kid says "the bathroom use is reserved for customers only".
-
+  TextForRepetition: 'The kid said "the bathroom use is reserved for customers only".
 
 
     Guess,
@@ -40,5 +39,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

@@ -16,10 +16,10 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 15f2ec4ce7d820c44b0ca8f6e46c0722, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "He opened the bathroom for us. What a lad!\n\nIt's a three stall bathroom.\nAnd
-    guess who we found hiding in the middle onel? <link>The driver: Sergio Raracara</link>. 
-    \nHe got scared when we came in and dropped his phone in the jon. No need to
-    worry about intel getting out now.\n"
+  Text: "He opened the bathroom for us. What a lad! \n \nIt's a three stall bathroom.
+    \n \nAnd guess who we found hiding in the middle onel? <link>The driver: Sergio
+    Raracara</link>.  \n \nHe got scared when we came in and dropped his phone in
+    the jon. No need to worry about intel getting out now. \n"
   TextForRepetition: 
   Photos:
   - photo: {fileID: 21300000, guid: 94b851d96413cec4bb49e980f12bd84a, type: 3}
@@ -30,5 +30,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

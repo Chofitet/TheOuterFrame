@@ -16,17 +16,10 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: ae0892713d245034ab08c250774b4a08, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'Oh, boy, do we got some dirt on him.
-
-    But we are OK for now. He learned
-    enough lessons for today.'
-  TextForRepetition: 'WE SAID:
-
-
-    Oh, boy, do we got some dirt on him.
-
-    But
-    we are OK for now. He learned enough lessons for today.'
+  Text: "Oh, boy, do we got some dirt on him.\n\nBut we are OK for now. \n\nHe learned
+    enough lessons for today."
+  TextForRepetition: "WE SAID:\n\nOh, boy, do we got some dirt on him.\n\nBut we
+    are OK for now. \n\nHe learned enough lessons for today."
   Photos:
   - photo: {fileID: 21300000, guid: e06a638f6a0c6b145a751b4532918535, type: 3}
     text: ENOUGH FOR TODAY
@@ -34,5 +27,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 030762016c963a54a98175f01d4b4506, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
