@@ -16,13 +16,10 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: 'WE SAID:
-
-
-    We should find the Sergio first, then we''ll get to decide
-    what to do.'
-  TextForRepetition: "Ok. Maybe we could try that BUT we\u2019d have to save it for
-    after we find him.\r\n"
+  Text: "Ok. Maybe we could try that BUT we\u2019d have to save it for after we find
+    him.\r\n"
+  TextForRepetition: "WE SAID:\n\nOk. Maybe we could try that BUT we\u2019d have
+    to save it for after we find him.\r\n"
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: STILL MISSING
@@ -30,5 +27,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 75c399ba044115b498551401a398df2e, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

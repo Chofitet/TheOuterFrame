@@ -16,16 +16,20 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: a8cba594c091fc24892cf741db0243c8, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "We did it! We are inside! \nIt's a cluster of mess, there's equipment thrown
-    around and <link>green stuff</link> everywhere. \nMore importantly a big dark
-    glass vessel labeled <link>VESSEL Q7-016</link> has completely shattered on one
-    side. And it's empty... \nWhatever was in it was liquified into <link>green goo</link>
-    or escaped. \n\nThere's a code printed on the inside of the broken case: <link>E-CODE
-    b02i2E90L</link>. \n\nOur bet is on something being on the loose, Boss. "
-  TextForRepetition: 'We alredy did that.
-
-
-    Remember to read your Reports.'
+  Text: "We did it! We are inside! \n  \nIt's a cluster of mess, there's equipment
+    thrown around and <link>green stuff</link> everywhere. \nMore importantly a big
+    dark glass vessel labeled <link>VESSEL Q7-016</link> has completely shattered
+    on one side. It's empty... \nWhatever was in it was liquified into <link>green
+    goo</link> or escaped. \n \nThere's a code printed on the inside of the broken
+    case: <link>E-CODE b02i2E90L</link>. \n\nOur bet is on something being on the
+    loose, Boss. "
+  TextForRepetition: "WE SAID:\n\n We did it! We are inside! \n  \nIt's a cluster
+    of mess, there's equipment thrown around and <link>green stuff</link> everywhere.
+    \nMore importantly a big dark glass vessel labeled <link>VESSEL Q7-016</link>
+    has completely shattered on one side. It's empty... \nWhatever was in it was
+    liquified into <link>green goo</link> or escaped. \n \nThere's a code printed
+    on the inside of the broken case: <link>E-CODE b02i2E90L</link>. \n\nOur bet
+    is on something being on the loose, Boss. "
   Photos:
   - photo: {fileID: 21300000, guid: 36d2dfa55de16e64a939af1f25f9f460, type: 3}
     text: A VESSEL
@@ -37,5 +41,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: bee3a3f0236098241af2f156e6b6669f, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
