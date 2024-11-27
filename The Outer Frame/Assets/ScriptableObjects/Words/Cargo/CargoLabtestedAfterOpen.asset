@@ -17,9 +17,8 @@ MonoBehaviour:
   isAutomatic: 1
   ChangeTimeOfAction: 0
   Text: That <link>gooey stuff</link> is the only thing worthy of being labtested.
-  TextForRepetition: 'We already explained why not.
-
-    Remember to read each Report.'
+  TextForRepetition: "WE SAID: \n\nThat <link>gooey stuff</link> is the only thing
+    worthy of being labtested."
   Photos:
   - photo: {fileID: 21300000, guid: 45eb73e361fa9d94e8926e30ffae07b6, type: 3}
     text: YUK
@@ -27,5 +26,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: bee3a3f0236098241af2f156e6b6669f, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

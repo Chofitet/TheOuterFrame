@@ -18,20 +18,28 @@ MonoBehaviour:
   ChangeTimeOfAction: 0
   Text: 'We just made him extra nervous.
 
+
     He''s pretty collaborative, we just
     have to ask.'
-  TextForRepetition: 'We just made him extra nervous.
+  TextForRepetition: 'WE SAID:
 
-    He''s pretty collaborative,
-    we just have to ask.'
+
+    We just made him extra nervous.
+
+
+    He''s
+    pretty collaborative, we just have to ask.'
   Photos:
-  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
-    text: DONE!
   - photo: {fileID: 21300000, guid: c4ba1584f9396984baff6ad9ed1c761b, type: 3}
     text: SERGIO
+  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
+    text: DONE!
   Conditionals:
   - condition: {fileID: 11400000, guid: 49a789323cc43d8498e19b0bfe3c7f92, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

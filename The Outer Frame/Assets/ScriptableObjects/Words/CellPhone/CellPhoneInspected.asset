@@ -16,13 +16,18 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: The cellphone's screen is cracked, and the battery is completely out of juice.
-    It looks as if someone or something might have ran over it.
-  TextForRepetition: We already did that. Just check the report or the DB
+  Text: "The cellphone's screen is cracked.\n\nThe battery is completely out of juice.
+    \n\nIt looks as if someone or something might have ran over it."
+  TextForRepetition: "WE SAID:\n\nThe cellphone's screen is cracked.\n\nThe battery
+    is completely out of juice. \n\nIt looks as if someone or something might have
+    ran over it."
   Photos:
   - photo: {fileID: 21300000, guid: 64b1c85ac6bd31b41a942622f610dc72, type: 3}
     text: NOT LOOKING GOOD
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

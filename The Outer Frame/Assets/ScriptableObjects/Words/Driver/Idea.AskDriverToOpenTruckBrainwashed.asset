@@ -21,11 +21,8 @@ MonoBehaviour:
 
     Perhaps
     we should have acted in another order.'
-  TextForRepetition: 'WE SAID: He is in no condition to do anything after the brain
-    thing we did...
-
-
-    Perhaps we should have acted in another order.'
+  TextForRepetition: "WE SAID: \n\nHe is in no condition to do anything after the
+    brain thing we did...\n\nPerhaps we should have acted in another order."
   Photos:
   - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
     text: WE TRIED
@@ -35,5 +32,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 49a789323cc43d8498e19b0bfe3c7f92, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

@@ -17,8 +17,8 @@ MonoBehaviour:
   isAutomatic: 1
   ChangeTimeOfAction: 0
   Text: "We should find him first, then we\u2019ll get to decide what to do.\r\n"
-  TextForRepetition: "We should find him first, then we\u2019ll get to decide what
-    to do.\r\n"
+  TextForRepetition: "WE SAID:\n\nWe should find him first, then we\u2019ll get to
+    decide what to do.\r\n"
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: STILL MISSING
@@ -26,5 +26,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 75c399ba044115b498551401a398df2e, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

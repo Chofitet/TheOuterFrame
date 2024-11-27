@@ -16,18 +16,21 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: 'We asked some fast questions to the truck''s behind.
-
-    There were no
-    answers.
-
-'
-  TextForRepetition: 'We already tried that.
-
-    Remember to read each Report.'
+  Text: "The cargo doors are locked. \n \nVTT's cargo doors cannot be manually opened
+    from the outside. \n \nALSO there's some <link>fluorescent goo</link> spilling
+    out all over <link>Road 54</link>. \n \nWe need a way to unlock this thing to
+    check what we're dealing with. \n"
+  TextForRepetition: "WE SAID:\n\nThe cargo doors are locked. \n \nVTT's cargo doors
+    cannot be manually opened from the outside. \n \nALSO there's some <link>fluorescent
+    goo</link> spilling out all over <link>Road 54</link>. \n \nWe need a way to
+    unlock this thing to check what we're dealing with. \n"
   Photos:
   - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
     text: NIET
   Conditionals: []
   isOrderMatters: 0
-  XPosFix: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

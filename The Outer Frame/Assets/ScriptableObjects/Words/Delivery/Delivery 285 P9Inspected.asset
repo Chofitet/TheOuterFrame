@@ -14,14 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
-  isAutomatic: 0
+  isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: YUP, it's just a code. Wonder what it does.
-  TextForRepetition: We should check this code.
+  Text: "YUP, it's just a code. \n\nWonder what it does."
+  TextForRepetition: "WE SAID:\n\nYUP, it's just a code. \n\nWonder what it does."
   Photos:
   - photo: {fileID: 0}
     text: MMMH
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

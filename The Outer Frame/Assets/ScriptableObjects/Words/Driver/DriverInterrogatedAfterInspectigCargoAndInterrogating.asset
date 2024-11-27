@@ -16,8 +16,8 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'He doesn''t know how they open the cargo doors, he only knows that he has
-    to give this code on arrival: <link>Delivery 285-P9</link>'
+  Text: "He doesn't know how they open the cargo doors. \n \nHe only knows that he
+    has to give this code on arrival: <link>Delivery 285-P9</link>. "
   TextForRepetition: The cargo is registered under <link>Delivery 285-P9</link>.
   Photos:
   - photo: {fileID: 21300000, guid: c4ba1584f9396984baff6ad9ed1c761b, type: 3}
@@ -30,5 +30,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 49a789323cc43d8498e19b0bfe3c7f92, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
