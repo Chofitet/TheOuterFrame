@@ -16,17 +16,20 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 0b87f38c2d6d31245962f89ba9a7bde6, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "He was stupidly enthusiastic about explaining how the security cameras work.
-    \r\nEverything they captured is stored into a <link>Secusys thingie</link> (which
-    they cleverly hid under the cash counter). And at the end of the month they upload
-    all the footage to the NuBe. \r\n"
+  Text: "He was ridiculously enthusiastic about explaining how the security cameras
+    work. \n\r \n\"Everything they capture is stored in a <link>Secusys thingie</link>\"
+    (which they cleverly hid under the cash counter). \n \nThey upload all the footage
+    to the NuBe at the end of the week."
   TextForRepetition: We already did that, check the report or the DB.
   Photos:
-  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
+  - photo: {fileID: 21300000, guid: 50d54830966e9044d972377d9ffa29e9, type: 3}
     text: USEFUL!
   Conditionals:
   - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

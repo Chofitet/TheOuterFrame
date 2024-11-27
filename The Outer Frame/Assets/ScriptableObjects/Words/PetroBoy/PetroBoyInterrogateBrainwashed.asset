@@ -16,16 +16,13 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 9417a1a9040d78e4a9d5c53d8b97b22d, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'He is in no condition of being interrogated after the brain thing we did...
+  Text: 'He is in no condition to answer anything after the brain thing we did...
 
 
     Perhaps
-    we should have acted in another order.'
-  TextForRepetition: 'WE SAID: He is in no condition of being interrogated after
-    the brain thing we did...
-
-
-    Perhaps we should have acted in another order'
+    we should have tried this earlier?'
+  TextForRepetition: "WE SAID: \n\nHe is in no condition to answer anything after
+    the brain thing we did...\n\nPerhaps we should have tried this earlier?"
   Photos:
   - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
     text: SOCIAL SKILLS
@@ -35,5 +32,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

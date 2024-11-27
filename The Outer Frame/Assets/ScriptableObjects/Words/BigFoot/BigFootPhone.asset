@@ -13,12 +13,20 @@ MonoBehaviour:
   m_Name: BigFootPhone
   m_EditorClassIdentifier: 
   wordName: (909) 001-0239
+  FindableAs: []
+  Form_DatabaseNameVersion: 
+  ProgressorNameVersion: 
   PhoneNumber: (909) 001-0239
   isAPhoneNumber: 1
+  Type: 0
   reportTypes: []
   TVNewTypes: []
-  DBTypes: {fileID: 0}
-  CallTypes: []
-  exceptions: []
+  DBTypes: {fileID: 11400000, guid: 03ee1c376faf2b343b19e41495fd04fd, type: 2}
+  UpdatedDataBase: []
+  CallTypes:
+  - {fileID: 11400000, guid: 590202cf7ae888a49a79d72ed920df25, type: 2}
   InactiveConditions: []
-  AutomaticActions: []
+  EraseConditions: []
+  WordThatReplaces: {fileID: 0}
+  CopyHistory: 0
+  WordsThatDeletes: []

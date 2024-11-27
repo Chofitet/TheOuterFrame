@@ -21,12 +21,8 @@ MonoBehaviour:
 
 
     Perhaps we should have acted in another order.'
-  TextForRepetition: 'WE SAID: He is in no condition of recognazing a good intimidation
-    after the brain thing we did...
-
-
-    Perhaps we should have acted in another
-    order.'
+  TextForRepetition: "WE SAID: \n\nHe is in no condition of recognazing a good intimidation
+    after the brain thing we did...\n\nPerhaps we should have acted in another order."
   Photos:
   - photo: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
     text: NOPE
@@ -36,5 +32,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

@@ -16,12 +16,17 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: "That won\u2019t work. Trust us. We knew a gal that tried that.\r\n"
-  TextForRepetition: "That won\u2019t work. Trust us. We knew a gal that tried that.\r\n"
+  Text: "That won\u2019t work. \n\nTrust us. \n\nWe knew a gal that tried that.\n\nWe
+    knew.\r\n"
+  TextForRepetition: "WE SAID:\n\nThat won\u2019t work. \n\nTrust us. \n\nWe knew
+    a gal that tried that.\n\nWe knew."
   Photos:
   - photo: {fileID: 21300000, guid: 9ffdc79406e82a542b917ac902b567c1, type: 3}
     text: NOPE
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

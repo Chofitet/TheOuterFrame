@@ -16,7 +16,7 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 00488eedf7e2adb479883b2d041e4dfd, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "We had a chat with the kid. \r\nYou know. About what maybe kinda happens
+  Text: "We had a chat with the kid. \n\r\nYou know. About what maybe kinda happens
     to people who talk way out of turn.\r\n\r\nAnd guess what? He seems to have lost
     all that fiery enthusiasm for sharing what he THOUGHT that happened here tonight.\r\n\r\nHe'll
     mind his tongue. We won\u2019t need to worry about him spilling the beans or
@@ -31,5 +31,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
