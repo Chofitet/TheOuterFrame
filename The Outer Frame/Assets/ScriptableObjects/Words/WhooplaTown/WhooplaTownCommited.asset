@@ -16,16 +16,17 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: We could declare an entire town insane but there's not enough rooms to lock
-    its people up.
-  TextForRepetition: 'WE SAID: We could declare an entire town insane but there''s
-    not enough rooms to lock its people up.
-
-    Remember to read your Reports.'
+  Text: We could declare the entire town insane, but there aren't enough rooms to
+    lock all of its people up.
+  TextForRepetition: "WE SAID: \n\nWe could declare the entire town insane, but there
+    aren't enough rooms to lock all of its people up."
   Photos:
   - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
     text: SO LET'S NOT
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

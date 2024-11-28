@@ -16,14 +16,17 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: It would take us hours to scour the whole thing. Maybe there's another way
-    to get some quick intel?
-  TextForRepetition: "WE SAID:  It would take us hours to scour the whole thing.
+  Text: "It would take us hours to scour the whole thing. \n\nMaybe there's a quicker
+    way to get some intel?"
+  TextForRepetition: "WE SAID:\n\nIt would take us hours to scour the whole thing.\n
     \nMaybe there's another way to get some quick intel?"
   Photos:
   - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
     text: MAYBE NEVER
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
