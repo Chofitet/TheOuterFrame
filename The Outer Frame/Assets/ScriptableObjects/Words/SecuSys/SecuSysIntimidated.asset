@@ -16,13 +16,16 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: It won't respond to intimidation techniques. It's not a sentient machine.
-  TextForRepetition: It won't respond to intimidation techniques. It's not a sentient
-    machine.
+  Text: "It won't respond to intimidation techniques. \n\nIt's not a sentient machine."
+  TextForRepetition: "we said:\n\nIt won't respond to intimidation techniques. \n\nIt's
+    not a sentient machine."
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: VOID
   Conditionals: []
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

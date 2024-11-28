@@ -16,8 +16,17 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: It's the upstairs person property.
-  TextForRepetition: It's the upstairs person property.
+  Text: 'We can''t.
+
+
+    It''s the upstairs person property.'
+  TextForRepetition: 'WE SAID:
+
+
+    We can''t.
+
+
+    It''s the upstairs person property.'
   Photos:
   - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
     text: RULES ARE RULES
@@ -25,5 +34,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 039e116a61c669e498d57d9226eb564f, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

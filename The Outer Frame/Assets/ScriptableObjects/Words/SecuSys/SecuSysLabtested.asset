@@ -17,10 +17,10 @@ MonoBehaviour:
   isAutomatic: 0
   ChangeTimeOfAction: 0
   Text: "Excluding the occasional foot percussive maintenance, it seems nobody really
-    touches this terminal except for a gal called Edna Pandislei. \r\nWe already
+    touches this terminal except for a gal called Edna Pandislei. \n\r\nWe already
     looked into her, she's a Secusys tech support employee. They usually come in
-    the middle of the month to check if everything is ok.\r\nIt looks like she missed
-    her last appointment.\r\n\r\nShe is not relevant to this case.\r\n"
+    the middle of the month to check if everything is ok.\n\r\nIt looks like she
+    missed her last appointment.\r\n\r\nShe is not relevant to this case.\r\n"
   TextForRepetition: 'We already did that.
 
     Check the corresponding Report.'
@@ -29,4 +29,8 @@ MonoBehaviour:
     text: 'USEFUL? '
   Conditionals: []
   isOrderMatters: 0
-  XPosFix: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

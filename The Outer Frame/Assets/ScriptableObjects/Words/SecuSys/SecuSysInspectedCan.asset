@@ -16,12 +16,12 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 61614aa9380a9b744b3385a4d91249d8, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "Here is where all the security footage is stored.\r\nIt looks like as if
-    modem and an external hard drive drank a lot of wine at a Xmas party. \r\nSeems
+  Text: "Here is where all the security footage is stored. \n\r\nIt looks like as
+    if modem and an external hard drive drank a lot of wine at a Xmas party. \n \r\nSeems
     to be working fine.\r\n"
-  TextForRepetition: 'We already did that.
-
-    Check the corresponding Report.'
+  TextForRepetition: "WE SAID:\n\nHere is where all the security footage is stored.
+    \n\r\nIt looks like as if modem and an external hard drive drank a lot of wine
+    at a Xmas party. \n \r\nSeems to be working fine."
   Photos:
   - photo: {fileID: 21300000, guid: fa30d45b3265cfe44889fdaa36a3cbe7, type: 3}
     text: THIS THING
@@ -31,4 +31,6 @@ MonoBehaviour:
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

@@ -16,8 +16,25 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: 'That vessel was never inside the cargo. '
-  TextForRepetition: 'That vessel was never inside the cargo. '
+  Text: '1) That''s imposible
+
+
+    2)  That''s dumb
+
+
+    3) That vessel was never
+    inside the cargo and we don''t know where it is.'
+  TextForRepetition: 'WE SAID:
+
+
+    1) That''s imposible
+
+
+    2)  That''s dumb
+
+
+    3)
+    That vessel was never inside the cargo and we don''t know where it is.'
   Photos:
   - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
     text: NOW WHAT
@@ -25,5 +42,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 95dcef167cd4049439d47deff9e5f43c, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

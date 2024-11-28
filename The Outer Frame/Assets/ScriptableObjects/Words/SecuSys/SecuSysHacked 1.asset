@@ -17,13 +17,16 @@ MonoBehaviour:
   isAutomatic: 0
   ChangeTimeOfAction: 0
   Text: "We got access to its content and downloaded tonight's <link>camera footage</link>.
-    \r\nIt\u2019s blurry as heck. The crash itself was not filmed but they captured
-    <link>someone</link> arriving at 4:00 AM on Mora and then leaving quite in a
-    hurry draggin <link>a fluorescent substance</link> all over <link>the road</link>.\nAlso
-    cameras keep on recording, they have everything we've done since we arrived...\r"
-  TextForRepetition: 'We already did that.
-
-    Check the corresponding Report. (COULD)'
+    \n \r\nIt\u2019s blurry as heck. The crash itself was not filmed but <link>someone</link>
+    arrived at 4:00 AM on Mora and then left in a hurry draggin <link>a fluorescent
+    substance</link> all over <link>the road</link>. \n\nAlso, the cameras keep on
+    recording, they have footage of  everything we've done since we arrived... \r"
+  TextForRepetition: "WE SAID:\n\nWe got access to its content and downloaded tonight's
+    <link>camera footage</link>. \n \r\nIt\u2019s blurry as heck. The crash itself
+    was not filmed but <link>someone</link> arrived at 4:00 AM on Mora and then left
+    in a hurry draggin <link>a fluorescent substance</link> all over <link>the road</link>.
+    \n\nAlso, the cameras keep on recording, they have footage of  everything we've
+    done since we arrived... "
   Photos:
   - photo: {fileID: 21300000, guid: fa30d45b3265cfe44889fdaa36a3cbe7, type: 3}
     text: TECHIE
@@ -39,5 +42,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 43994936b8273bc459ee021cd42e7d4e, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
