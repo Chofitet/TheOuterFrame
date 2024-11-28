@@ -25,7 +25,7 @@ public class ChannelController : MonoBehaviour
     [SerializeField] Sprite BreakingImage;
     TimeCheckConditional MinTimeToShowNew;
     TimeCheckConditional TimeToRestartRandoms;
-
+    INewType New;
 
     private void Start()
     {
@@ -71,7 +71,8 @@ public class ChannelController : MonoBehaviour
         }
 
         EmergencyScreen.SetActive(false);
-        
+
+        New = _new;
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
@@ -83,7 +84,7 @@ public class ChannelController : MonoBehaviour
         OnChangeReporterAnim?.Invoke(this, null);
 
 
-        StartCoroutine(BackUI(OverlayAnims.GetAnimTime(), _new));
+        
 
         _new.SetWasStreamed();
 
@@ -135,9 +136,14 @@ public class ChannelController : MonoBehaviour
 
     }
 
-    IEnumerator BackUI(float time, INewType _new)
+    public void OnAnimLayoutFinish(Component sender, object obj)
     {
-        yield return new WaitForSeconds(time);
+        BackUI(OverlayAnims.GetAnimTime(), New);
+    }
+
+    void BackUI(float time, INewType _new)
+    {
+       // yield return new WaitForSeconds(time);
 
         
 

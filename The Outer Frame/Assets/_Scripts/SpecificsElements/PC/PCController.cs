@@ -135,7 +135,8 @@ public class PCController : MonoBehaviour
             return;
         }
 
-        WikiTitleSearchedWord.text = word.GetForm_DatabaseNameVersion();
+
+        WikiTitleSearchedWord.text =  WordsManager.WM.FindWordWithPhoneNum(word).GetForm_DatabaseNameVersion();
         if (word.GetReportList().Count != 0 && !word.GetIsFound())
         {
             WikiTitleSearchedWord.text = "<link>" + word.GetForm_DatabaseNameVersion() + "</link>";

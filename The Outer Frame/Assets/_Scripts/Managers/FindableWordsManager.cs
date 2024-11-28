@@ -69,6 +69,7 @@ public class FindableWordsManager : MonoBehaviour
             {
                 if (isInLastWord && w.GetWordData() != LastWord) continue;
                 if (w.GetWordData().GetIsFound()) continue;
+                if (w.GetWordData().GetInactiveState()) continue;
                 GameObject auxObj = Instantiate(ButtonFindableWordPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
                 auxObj.name = "FindableBTN_" + w.GetWordData().GetName();
                 auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle);
@@ -246,6 +247,10 @@ public class FindableWordsManager : MonoBehaviour
                 Destroy(fw);
             }
             else if(word.GetIsPhoneNumberFound() && word.GetIsAPhoneNumber())
+            {
+                Destroy(fw);
+            }
+            else if(word.GetInactiveState())
             {
                 Destroy(fw);
             }

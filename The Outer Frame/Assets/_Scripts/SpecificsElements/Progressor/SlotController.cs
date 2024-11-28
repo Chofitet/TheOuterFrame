@@ -75,7 +75,6 @@ public class SlotController : MonoBehaviour
         {
             FillFast();
             isTheSameAction = true;
-            Debug.Log("misma palabra + acción");
             SetLEDState(Color.red);
         }
         // Se está haciendo uno del mismo ActionGroup
@@ -83,7 +82,6 @@ public class SlotController : MonoBehaviour
         {
             FillFast();
             isOtherGroupActionDoing = _word.GetDoingAction(0);
-            Debug.Log("Otra acción del grupo en proceso");
             SetLEDState(Color.red);
         }
         // Es una acción automática
@@ -137,7 +135,7 @@ public class SlotController : MonoBehaviour
     {
         if (inFillFast && ProgressBar.value <= ProgressBar.maxValue)
         {
-            ProgressBar.value += Time.deltaTime;
+            ProgressBar.value += Time.deltaTime * TimeManager.timeManager.GetActuaTimeVariationSpeed() * 0.15f;
         }
 
         if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isAlreadyDone)

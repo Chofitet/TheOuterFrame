@@ -3317,6 +3317,7 @@ GameObject:
   - component: {fileID: 1929965428480570480}
   - component: {fileID: 7715416349359175979}
   - component: {fileID: -4961398443103396464}
+  - component: {fileID: 7420500121881901827}
   m_Layer: 9
   m_Name: reportPrefab
   m_TagString: Untagged
@@ -3635,6 +3636,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2fb0640ac23454889eebb1a68ade75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7420500121881901827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8818181090750843214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 89a0034a67f6a244d859d967d30595a3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7502035540380240527}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
 --- !u!1 &8899401202558587827
 GameObject:
   m_ObjectHideFlags: 0

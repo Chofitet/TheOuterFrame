@@ -108,6 +108,8 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
                 if (combinedWord.StartsWith("<material")) combinedWord = RemoveMaterialTags(combinedWord);
 
                 string extraCharacters = GetExtraCharacters(combinedWord);
+                extraCharacters = extraCharacters.Replace(",,", ",");
+                Debug.Log(FoundAs + extraCharacters);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
 
                 string materialName = string.Empty;
@@ -152,6 +154,8 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         }
         return "";
     }
+
+
     string NormalizeWord(string word)
     {
         string _word;

@@ -269,6 +269,21 @@ public class WordsManager : MonoBehaviour
         }
     }
 
+    public WordData FindWordWithPhoneNum(WordData phone)
+    {
+        if (!phone.GetIsAPhoneNumber()) return phone;
+
+        string phoneNum = phone.GetPhoneNumber();
+
+        foreach (WordData word in wordsDic)
+        {
+            if (word.GetIsAPhoneNumber()) continue;
+
+            if (word.GetPhoneNumber() == phoneNum) return word;
+        }
+        return phone;
+    }
+
     public void EmpyAllDataBases(Component sender, object obj)
     {
         foreach(WordData word in wordsDic)
