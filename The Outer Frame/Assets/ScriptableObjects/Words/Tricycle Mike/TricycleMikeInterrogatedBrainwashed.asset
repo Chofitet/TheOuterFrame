@@ -16,16 +16,13 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: -4
-  Text: 'He is in no condition of answering any questions after the brain thing we
-    did...
+  Text: 'He is in no condition to answer any questions after the brain thing we did...
 
 
-    Perhaps we should hace acted in another order.'
-  TextForRepetition: 'WE SAID: He is in no condition of making any deals after the
-    brain thing we did...
-
-
-    Perhaps we should have acted in another order.'
+    Perhaps
+    we should hace acted in another order.'
+  TextForRepetition: "WE SAID: \n\nHe is in no condition to answer any questions
+    after the brain thing we did...\n\nPerhaps we should hace acted in another order."
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: WHAT TO DO?
@@ -33,5 +30,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 485ee194adf47e84f948016cae7459cf, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
