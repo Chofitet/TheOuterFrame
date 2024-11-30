@@ -10,15 +10,15 @@ public class RedactedBlock : MonoBehaviour
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
 
-        rectTransform.localPosition = rectTransform.localPosition + new Vector3(-1.288529f, 0.327f, 0);
+        rectTransform.localPosition = rectTransform.localPosition + new Vector3(-1.288529f, 0.327f - 0.1f, 0);
 
         if (redactedText == "RE")
         {
-            rectTransform.sizeDelta = new Vector2(5.3f, rectTransform.sizeDelta.y);
+            rectTransform.sizeDelta = new Vector2(4.49f, rectTransform.sizeDelta.y);
         }
         else if (redactedText == "REDA")
         {
-            rectTransform.sizeDelta = new Vector2(8.3f, rectTransform.sizeDelta.y);
+            rectTransform.sizeDelta = new Vector2(7.64f, rectTransform.sizeDelta.y);
         }
         else if (redactedText == "REDACTED")
         {
@@ -26,7 +26,7 @@ public class RedactedBlock : MonoBehaviour
         }
         else if (redactedText == "REDACTEDTO")
         {
-            rectTransform.sizeDelta = new Vector2(17.4f, rectTransform.sizeDelta.y);
+            rectTransform.sizeDelta = new Vector2(15.86f, rectTransform.sizeDelta.y);
         }
 
         //Invoke("CheckIfInsideRect", 0.1f);
