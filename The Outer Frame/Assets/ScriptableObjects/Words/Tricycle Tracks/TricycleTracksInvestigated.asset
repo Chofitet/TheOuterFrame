@@ -16,13 +16,17 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: -2
-  Text: "They go on for long distance. Maybe we should send some one to follow the
-    trail. \nBut, hey, that's just my idea."
-  TextForRepetition: They go on for quite a while. Maybe we should send some one
-    to follow them. But that's just my idea.
+  Text: "Those tracks do go on for long distance.\n\nMaybe we should send someone
+    to follow the trail. \n\nBut, hey, that's just my idea."
+  TextForRepetition: "WE SAID:\n\nThose tracks do go on into the horizon.\n\nMaybe
+    we should send someone to follow the trail. \n\nBut, hey, that's just my idea."
   Photos:
   - photo: {fileID: 21300000, guid: a21473e66381ecb4f94e1128b63c5081, type: 3}
     text: THAT WOULD BE QUITE THE WALK
   Conditionals: []
   isOrderMatters: 0
-  XPosFix: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
