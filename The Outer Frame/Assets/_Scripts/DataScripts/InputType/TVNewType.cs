@@ -29,6 +29,8 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
     public void ResetScriptableObject()
     {
         wasStremed = false;
+        EndTime = null;
+        CompleteTime = new TimeData(0,0,0);
     }
 
     public StateEnum GetState()
