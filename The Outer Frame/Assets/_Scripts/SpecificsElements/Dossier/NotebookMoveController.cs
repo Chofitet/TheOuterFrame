@@ -197,10 +197,12 @@ public class NotebookMoveController : MonoBehaviour
         }
     }
 
+    bool isShaking = false;
     public void ShakeNotebook(Component sender, object obj)
     {
-        if (!isUp) return;
-        transform.DOShakeRotation(0.4f, new Vector3(0,5,0),8,90,true,ShakeRandomnessMode.Harmonic);
+        if (!isUp || isShaking) return;
+        isShaking = true;
+        transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic).OnComplete(() => isShaking = false); ;
         transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic);
     }
 

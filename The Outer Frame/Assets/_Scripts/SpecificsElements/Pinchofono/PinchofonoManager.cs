@@ -70,7 +70,7 @@ public class PinchofonoManager : MonoBehaviour
         }
 
         //Paso de info de la llamada cacheada
-        if (minutePassCounter - 1 == minutesToRecording)
+        if (minutePassCounter - 1 >= minutesToRecording)
         {
             TimeManager.OnMinuteChange -= CounterPassTime;
             TimeManager.OnSecondsChange -= SecondPass;

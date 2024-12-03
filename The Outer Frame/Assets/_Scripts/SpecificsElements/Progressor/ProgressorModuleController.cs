@@ -196,5 +196,22 @@ public class ProgressorModuleController : MonoBehaviour
 
     public StateEnum GetState() { return state; }
 
+    public void ResetAndCleanModule(Component sender, object obj)
+    {
+        slot.CleanSlot();
+        resetSlot();
+    }
+
+    void resetSlot()
+    {
+        isFull = false;
+        anim.ResetTrigger("printMessage");
+        anim.ResetTrigger("receiveMessage");
+        ReadyToPrintLED.TurnOffLight(null, null);
+        PrintBTN.GetComponent<Collider>().enabled = false;
+        blinkmaterialAbort.TurnOffLight(null, null);
+        anim.SetTrigger("resetProgressor");
+
+    }
 
 }
