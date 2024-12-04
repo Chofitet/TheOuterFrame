@@ -13,6 +13,7 @@ public class AccessWordWindow : MonoBehaviour
     [SerializeField] GameEvent OnCloseWoredAccessWindow;
     [SerializeField] GameEvent OnAccessWiki;
     [SerializeField] Image SearchBarGameObject;
+    [SerializeField] GameEvent OnKeyboardSoundEvent;
     WordData SearchedWord;
     WordData TryAccessWord;
     private bool isInPCView;
@@ -61,7 +62,7 @@ public class AccessWordWindow : MonoBehaviour
         textAnim.SetCharacterPerSecond();
         isWaitingAWord = false;
         SearchBar.GetComponent<TypingAnimText>().AnimateTyping();
-
+        OnKeyboardSoundEvent?.Invoke(this, null);
     }
 
     string DeleteSpetialCharacter(string txt)

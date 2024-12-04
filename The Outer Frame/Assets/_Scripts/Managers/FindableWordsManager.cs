@@ -261,6 +261,12 @@ public class FindableWordsManager : MonoBehaviour
     {
         isInLastWord = true;
     }
+
+    public void RemoveAllFindableWords(Component sender, object obj)
+    {
+        foreach (GameObject fw in FindableWordsBTNs) Destroy(fw);
+
+    }
 }
 public enum FindableBtnType
 {

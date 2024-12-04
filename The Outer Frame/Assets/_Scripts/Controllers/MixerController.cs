@@ -13,7 +13,7 @@ public class MixerController : MonoBehaviour
 
     private void Start()
     {
-        float mixerVolume;
+       /* float mixerVolume;
 
         if (audiomixer.GetFloat(AudioMixerGroup, out mixerVolume))
         {
@@ -24,7 +24,13 @@ public class MixerController : MonoBehaviour
             VolumeValue = 1;
         }
 
-        // Actualiza el texto con el valor redondeado
+        textFiled.text = Mathf.RoundToInt((VolumeValue * 10)).ToString();*/
+    }
+
+    public void SetVolume(Component sender, object obj)
+    {
+        VolumeValue = (float)obj;
+        audiomixer.SetFloat(AudioMixerGroup, Mathf.Log10(VolumeValue) * 20);
         textFiled.text = Mathf.RoundToInt((VolumeValue * 10)).ToString();
     }
 
@@ -34,5 +40,6 @@ public class MixerController : MonoBehaviour
         VolumeValue = Mathf.Clamp(VolumeValue, 0.001f, 1);
         audiomixer.SetFloat(AudioMixerGroup, Mathf.Log10(VolumeValue) * 20);
         textFiled.text = Mathf.RoundToInt((VolumeValue * 10)).ToString();
+
     }
 }

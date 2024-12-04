@@ -213,7 +213,8 @@ public class SlotController : MonoBehaviour
         AbortIcon.SetActive(false);
         CheckIcon.SetActive(false);
         AgentIcon.SetActive(true);
-        if ((Report.GetKillAgent() && isActionComplete) || isAgentDead) DisableAgent();
+        if(Report !=null) if ((Report.GetKillAgent() && isActionComplete)) DisableAgent();
+        if(isAgentDead) DisableAgent();
 
         isActionComplete = false;
         isOtherGroupActionDoing = null;
