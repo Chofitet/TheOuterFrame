@@ -82,7 +82,7 @@ public class ReportController : MonoBehaviour
             btnText.text = "DISPOSE";
         }
 
-        if (report.GetDeleteDBRepoert() || report.GetIsTheLastReport()) btnText.transform.parent.gameObject.SetActive(false);
+        
         ActionCalltxt.text = actionVerb + " " + DeleteSpetialCharacter(Name);
         CheckTextOverflow();
         Statustxt.text = status + " at OCT 30th " + $"{timeComplete.Hour:00}:{timeComplete.Minute:00}";
@@ -90,6 +90,7 @@ public class ReportController : MonoBehaviour
         GetComponent<IndividualReportController>().SetType(false, word, report);
 
         if (isNotCompleted) return;
+        if (report.GetDeleteDBRepoert() || report.GetIsTheLastReport()) btnText.transform.parent.gameObject.SetActive(false);
         Resulttxt.text = report.GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt,FindableBtnType.FindableBTN);
         GetComponent<IndividualReportController>().SetType(true, word, report);

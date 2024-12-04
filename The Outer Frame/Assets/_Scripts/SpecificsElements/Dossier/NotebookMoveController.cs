@@ -139,7 +139,7 @@ public class NotebookMoveController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, currentTarget.rotation, lerpTime);
         }
 
-        if(Input.GetKeyDown(KeyCode.Mouse1) && !dontLeaveNotebook && isUp)
+        if(Input.GetKeyDown(KeyCode.Mouse1) && !dontLeaveNotebook && isUp && !inputDisable)
         {
             SetPos(0, false);
         }
@@ -240,6 +240,17 @@ public class NotebookMoveController : MonoBehaviour
     public void LeaveNotebook(Component sender, object obj)
     {
         SetPos(0, false);
+    }
+
+    bool inputDisable;
+    public void DisableInput(Component sender, object obj)
+    {
+        inputDisable = true;
+    }
+
+    public void EnableInput(Component sender, object obj)
+    {
+        inputDisable = false;
     }
 
 }

@@ -221,8 +221,8 @@ public class SlotController : MonoBehaviour
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
         SetLEDState(Color.green);
-        
-        
+
+        inFillFast = false;
         Report = null;
         transform.GetChild(0).gameObject.SetActive(false);
     }

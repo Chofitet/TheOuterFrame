@@ -154,6 +154,7 @@ public class ProgressorModuleController : MonoBehaviour
     
     void AbortAction()
     {
+        if (DisableAbort) return;
         slot.AbortAction();
         anim.SetTrigger("receiveMessage");
 
@@ -202,6 +203,7 @@ public class ProgressorModuleController : MonoBehaviour
         resetSlot();
     }
 
+    bool DisableAbort;
     void resetSlot()
     {
         isFull = false;
@@ -211,6 +213,7 @@ public class ProgressorModuleController : MonoBehaviour
         PrintBTN.GetComponent<Collider>().enabled = false;
         blinkmaterialAbort.TurnOffLight(null, null);
         anim.SetTrigger("resetProgressor");
+        DisableAbort = true;
 
     }
 

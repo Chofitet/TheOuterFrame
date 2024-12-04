@@ -63,6 +63,10 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         CurrentDB = DBTypes;
         DataBaseEmpy = false;
         SaveFindableAs();
+        isFound = false;
+        isPhoneNumberFound = false;
+        isInactive = false;
+        isPlacedInBoad = false;
     }
 
     public void disableSet()

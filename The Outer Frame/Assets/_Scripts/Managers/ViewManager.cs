@@ -47,7 +47,12 @@ public class ViewManager : MonoBehaviour
 
     void Update()
     {
-        if (isInputDisable) return;
+        if (isInputDisable)
+        {
+            Debug.Log("disable");
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse1) && currentviewState != ViewStates.GeneralView)
         {
             if (inOnFinalReport) OnSendReportAutomatically?.Invoke(this, null);
