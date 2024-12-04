@@ -93,32 +93,32 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
     {
         Dictionary<int,string> aux = new Dictionary<int,string>();
 
-        aux.Add(0,phoneNum);
-        aux.Add(1,age);
-        aux.Add(2,location);
-         aux.Add(3,born);
-         aux.Add(4,occupation);
-         aux.Add(5,found);
-         aux.Add(6,status);
-        aux.Add(7,government);
-         aux.Add(8,populatoin); // Typo corregido
-         aux.Add(9,area);
-         aux.Add(10,zipcode);
-         aux.Add(11,areacode);
-         aux.Add(12,classification);
-         aux.Add(13,serial);
-        aux.Add(14, adress);
-        aux.Add(15, ManufacturedBy);
-        aux.Add(16, Email);
-        aux.Add(17, ActiveLot);
-        aux.Add(18, Consualties);
-        aux.Add(19, DeclaredCasualties);
-        aux.Add(20, Married);
-        aux.Add(21, Size);
-        aux.Add(22, Branch);
-        aux.Add(23, MadeBy);
-        aux.Add(24, Technology);
-        aux.Add(25, Type);
+        aux.Add(0, Type);
+        aux.Add(1, status);
+        aux.Add(2, MadeBy);
+         aux.Add(3, Branch);
+         aux.Add(4, Technology);
+         aux.Add(5, serial);
+         aux.Add(6, born);
+        aux.Add(7,  age);
+         aux.Add(8, Size); // Typo corregido
+         aux.Add(9,occupation);
+         aux.Add(10,phoneNum);
+         aux.Add(11, Email);
+         aux.Add(12, adress);
+         aux.Add(13, location);
+        aux.Add(14, found);
+        aux.Add(15, Married);
+        aux.Add(16, area);
+        aux.Add(17, areacode);
+        aux.Add(18, zipcode);
+        aux.Add(19, populatoin);
+        aux.Add(20, government);
+        aux.Add(21, classification);
+        aux.Add(22, ManufacturedBy);
+        aux.Add(23, ActiveLot);
+        aux.Add(24, Consualties);
+        aux.Add(25, DeclaredCasualties);
 
         Debug.Log(aux);
 

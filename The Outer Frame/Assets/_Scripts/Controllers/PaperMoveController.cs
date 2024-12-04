@@ -293,4 +293,28 @@ public class PaperMoveController : MonoBehaviour
             Debug.LogWarning("El GameObject no tiene hijos.");
         }
     }
+
+    public void DisableAllPapersInPile(Component sender, object obj)
+    {
+        foreach (Transform child in ReportPilePos.transform)
+        {
+            PaperStatesController paperController = child.GetComponent<PaperStatesController>();
+            if (paperController != null && paperController.GetPaperState() == PaperState.Staked)
+            {
+                child.GetComponent<BoxCollider>().enabled = false;
+            }
+        }
+    }
+
+    public void DeleteAllPapersInPile(Component sender, object obj)
+    {
+        foreach (Transform child in ReportPilePos.transform)
+        {
+            PaperStatesController paperController = child.GetComponent<PaperStatesController>();
+            if (paperController != null && paperController.GetPaperState() == PaperState.Staked)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
 }

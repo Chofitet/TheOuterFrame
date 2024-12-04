@@ -65,13 +65,18 @@ public class IndividualReportController : MonoBehaviour
 
     public void OnSendReportAutomatically(Component sender, object obj)
     {
-        if (!report.GetDeleteDBRepoert()) return;
+        if (!report.GetDeleteDBRepoert() || !wasTaken) return;
         FinishReport();
     }
 
+    bool wasTaken;
     public void OnTakeReport(Component sender, object obj)
     {
         if ((GameObject)obj != gameObject) return;
+
+        wasTaken = true;
+
+        if (!isComplete) return;
 
         OnReactiveIdeaPosit.Invoke(this, report.GetAction());
 
