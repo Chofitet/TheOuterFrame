@@ -17,10 +17,15 @@ MonoBehaviour:
   isAutomatic: 0
   ChangeTimeOfAction: 0
   Text: "It's green, it glows, it's gooey, it's coming out of the <link>trucks behind</link>.
-    \r\nIt\u2019s quite the paranormal clich\xE9! \r\nIt's EVIDENCE. \r\nAnd someone
-    rode all over it with a small vehicle leaving glowing <link>tricycle tracks</link>
-    that go south <link>the road</link>. \nWe might want to check that out. \r"
-  TextForRepetition: We already did that. Read the Reports.
+    \r\nIt\u2019s quite the paranormal clich\xE9! \n\r \nIt's EVIDENCE. \n\r \nAnd
+    someone rode all over it with a small vehicle leaving glowing <link>tricycle
+    tracks</link> that go south down <link>the road</link>. \n \nWe might want to
+    check that out. \r"
+  TextForRepetition: "WE SAID:\n\nIt's green, it glows, it's gooey, it's coming out
+    of the <link>trucks behind</link>. \r\nIt\u2019s quite the paranormal clich\xE9!
+    \n\r \nIt's EVIDENCE. \n\r \nAnd someone rode all over it with a small vehicle
+    leaving glowing <link>tricycle tracks</link> that go south <link>the road</link>.
+    \n \nWe might want to check that out. "
   Photos:
   - photo: {fileID: 21300000, guid: eeb759d3e82c0704e9a0cceefa696b90, type: 3}
     text: GREEN
@@ -32,5 +37,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 43994936b8273bc459ee021cd42e7d4e, type: 2}
     ifNot: 1
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

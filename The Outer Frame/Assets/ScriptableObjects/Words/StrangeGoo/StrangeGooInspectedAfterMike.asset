@@ -17,10 +17,13 @@ MonoBehaviour:
   isAutomatic: 0
   ChangeTimeOfAction: 0
   Text: "It's green, it glows, it's gooey, it's coming out of a <link>trucks behind</link>.
-    \r\nIt\u2019s quite the paranormal clich\xE9!  \r\nAnd Mike rode all over it
-    leaving <link>tricycle tracks</link> that go all the way south down <link>Road
+    \r\nIt\u2019s quite the paranormal clich\xE9!  \n \r\nAnd Mike rode all over
+    it leaving <link>tricycle tracks</link> that go all the way south down <link>Road
     54</link>. \r"
-  TextForRepetition: "We already did that. \nRead the Reports."
+  TextForRepetition: "WE SAID:\n\nIt's green, it glows, it's gooey, it's coming out
+    of a <link>trucks behind</link>. \r\nIt\u2019s quite the paranormal clich\xE9! 
+    \n \r\nAnd Mike rode all over it leaving <link>tricycle tracks</link> that go
+    all the way south down <link>Road 54</link>. "
   Photos:
   - photo: {fileID: 21300000, guid: eeb759d3e82c0704e9a0cceefa696b90, type: 3}
     text: GOOPIE
@@ -32,5 +35,8 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 43994936b8273bc459ee021cd42e7d4e, type: 2}
     ifNot: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
