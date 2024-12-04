@@ -188,6 +188,9 @@ public class PinchofonoController : MonoBehaviour
         RecordingNumberPanel.SetActive(false);
         EnterValidPanel.SetActive(true);
         EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY FOR PRINTING";
+
+        StopAllCoroutines();
+        ShowPanel(ScreenContent);
         //StartCoroutine(BlinkText());
     }
 
@@ -207,6 +210,7 @@ public class PinchofonoController : MonoBehaviour
         GameObject aux = Instantiate(CallTranscriptionPrefab, InstanciateSpot);
         aux.GetComponent<TranscriptionCallController>().Inicialization(CallToPrint, ActualWord);
         
+
         printOnce = true;
         ActualWord = null;
         waitingForPrint = false;
