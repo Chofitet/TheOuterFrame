@@ -16,6 +16,7 @@ public class IndividualReportController : MonoBehaviour
     [SerializeField] GameEvent OnReactiveIdeaPosit;
     [SerializeField] GameEvent OnGrabFinalReport;
     [SerializeField] GameEvent OnTakeSecondToLastReport;
+    [SerializeField] GameEvent OnActionRejected;
     public void SetType(bool x, WordData _word ,ReportType _report)
     {
         report = _report;
@@ -76,7 +77,11 @@ public class IndividualReportController : MonoBehaviour
 
         wasTaken = true;
 
-        if (!isComplete) return;
+        if (!isComplete)
+        {
+            OnActionRejected?.Invoke(this, report.GetAction());
+            return;
+        }
 
         OnReactiveIdeaPosit.Invoke(this, report.GetAction());
 

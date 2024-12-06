@@ -25,7 +25,7 @@ public class TimeManager : MonoBehaviour
     [SerializeField] GameEvent OnGameOverTime;
     [SerializeField] GameEvent OnDisableInput;
 
-    bool isTimePaused;
+    bool isDisableToLoose;
 
     float TimeVariation;
 
@@ -181,6 +181,7 @@ public class TimeManager : MonoBehaviour
     bool once;
     void CheckGameOverCondition()
     {
+        if (isDisableToLoose) return;
         if(TimeToLose.GetStateCondition() && !once)
         {
             OnElementClick?.Invoke(this, ViewStates.GameOverView);
@@ -188,6 +189,11 @@ public class TimeManager : MonoBehaviour
             OnGameOverTime?.Invoke(this, null);
             once = true;
         }
+    }
+
+    public void DisableLoose(Component senddr, object obj)
+    {
+        isDisableToLoose = true;
     }
 
 }

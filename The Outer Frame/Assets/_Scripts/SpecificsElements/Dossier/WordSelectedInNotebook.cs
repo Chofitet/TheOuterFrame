@@ -60,7 +60,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         if (word.GetIsFound()) return;
         if (word.GetWordThatReplaces())
         {
-            ReplaceWordInList(SearchForWordThatReplaceRetroactive(word), word);
+            ReplaceWordInList(word.MarkWordsWordThatReplaceRetroactive(), word);
         }
         else
         {
@@ -212,6 +212,8 @@ public class WordSelectedInNotebook : MonoBehaviour
     public void ActualView(Component sender, object obj)
     {
         actualView = (ViewStates)obj;
+
+        if (actualView == ViewStates.BoardView) SelectedWord = null;
 
         if (actualView == ViewStates.GeneralView) isNotebookDown = true;
         else isNotebookDown = false;

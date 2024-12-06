@@ -195,6 +195,17 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(false);
         }
     }
+
+    public void IsActionRejected(Component sender, object obj)
+    {
+        StateEnum action = (StateEnum)obj;
+        if (ActionsToAdd[0] == action)
+        {
+            GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(false);
+            ActionIsDoing = false;
+        }
+    }
+
     public void SetActionIsDoing(Component sender, object obj)
     {
         DataFromActionPlan data = (DataFromActionPlan)obj;
