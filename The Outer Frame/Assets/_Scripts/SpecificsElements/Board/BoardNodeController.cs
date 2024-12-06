@@ -13,6 +13,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
     MoveBoardElementsToPos[] PostIts;
     [SerializeField] GameObject PhotoModel;
     [SerializeField] GameObject Canvas;
+    bool AwaitingForPlace;
 
     private void Start()
     {
@@ -23,20 +24,22 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
 
     public bool GetConditionalState()
     {
-        if (word.GetIsFound() && WordSelectedInNotebook.Notebook.GetSelectedWord() == word)
+        if (word.GetIsFound() && WordSelectedInNotebook.Notebook.GetSelectedWord() == word || CheckRetroactiveWordWasPlaced() || (!AwaitingForPlace && word.GetPlacedInBoard()))
         {
             transform.position = new Vector3(0, 0, 0);
             transform.GetChild(0).gameObject.SetActive(true);
             ActiveChildPosits();
+            MarkRetroactiveWordPlaced();
             OnPutPhotoOnBoard?.Invoke(this, word);
             word.SetPlacedInBoard();
+            AwaitingForPlace = true;
             //ActiveOtherPhotoReplaced();
             return true;
         }
         else return false;
     }
 
-    void ActiveChildPosits()
+        void ActiveChildPosits()
     {
         foreach(MoveBoardElementsToPos posit in PostIts)
         {
@@ -51,7 +54,25 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         }
     }
 
-    
+    bool CheckRetroactiveWordWasPlaced() 
+    {
+        if (word.SearchForWordsThatReplaceRetroactive().Count == 0) return false;
+
+        foreach(WordData previousWord in word.SearchForWordsThatReplaceRetroactive())
+        {
+            if (previousWord.GetPlacedInBoard() && word.GetIsFound()) return true;
+        }
+
+        return false;
+    }
+
+    void MarkRetroactiveWordPlaced()
+    {
+        foreach (WordData previousWord in word.SearchForWordsThatReplaceRetroactive())
+        {
+            previousWord.SetPlacedInBoard();
+        }
+    }
 
    /* void ActiveOtherPhotoReplaced()
     {
@@ -75,4 +96,5 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
     {
         return false;
     }
+
 }

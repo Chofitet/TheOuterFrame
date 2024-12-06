@@ -165,12 +165,12 @@ public class FindableWordsManager : MonoBehaviour
 
                 word = word.TrimEnd();
 
-                if (registeredWords.Contains(word))
+                /*if (registeredWords.Contains(word))
                 {
                     continue;
                 }
 
-                registeredWords.Add(word);
+                registeredWords.Add(word);*/
 
                 for (int i = 0; i < wordCount; i++)
                 {

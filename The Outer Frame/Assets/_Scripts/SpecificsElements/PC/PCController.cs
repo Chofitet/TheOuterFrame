@@ -154,6 +154,12 @@ public class PCController : MonoBehaviour
         word = null;
     }
 
+    public void SetWikiTitleSearchedWord(Component sender, object obj)
+    {
+        WordData searchedWord = (WordData)obj;
+        WikiTitleSearchedWord.text = searchedWord.GetForm_DatabaseNameVersion();
+    }
+
     public void CloseWordAccessWindow(Component sender, object obj)
     {
         inWordAccessWindow = false;

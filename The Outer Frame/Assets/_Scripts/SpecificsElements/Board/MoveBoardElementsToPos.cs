@@ -106,11 +106,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
         Content.SetActive(true);
 
-        transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad);/*.OnComplete(() => 
-        {
-            if (isOutOfBoard) Content.SetActive(false);
-            else Content.SetActive(true);
-        });*/
+        transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad);
         transform.DORotate(FinalRotation, 0.3f).SetEase(Ease.InOutCirc);
         OnPlaceInBoardSound?.Invoke(this, null);
          
