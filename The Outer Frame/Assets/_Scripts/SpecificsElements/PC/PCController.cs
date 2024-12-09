@@ -156,8 +156,21 @@ public class PCController : MonoBehaviour
 
     public void SetWikiTitleSearchedWord(Component sender, object obj)
     {
+        if (obj == null) return;
+
         WordData searchedWord = (WordData)obj;
-        WikiTitleSearchedWord.text = searchedWord.GetForm_DatabaseNameVersion();
+        string newWord = searchedWord.GetForm_DatabaseNameVersion();
+        string existingText = WikiTitleSearchedWord.text;
+
+        // Verificar si el texto existente contiene etiquetas <material>
+        if (existingText.Contains("<material=") && existingText.Contains("</material>"))
+        {
+            // Si tiene etiquetas <material>, no sobrescribe el texto
+            return;
+        }
+
+        // Si no tiene etiquetas <material>, actualiza el texto
+        WikiTitleSearchedWord.text = newWord;
     }
 
     public void CloseWordAccessWindow(Component sender, object obj)

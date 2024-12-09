@@ -130,8 +130,26 @@ public class DossierMoveController : MonoBehaviour
         actualView = (ViewStates)obj;
     }
 
+    bool isReturningFromProgressor;
+
+    public void SetIsReturningFromProgressor(Component sender, object obj)
+    {
+        isReturningFromProgressor = true;
+    }
+
+    public void SetFalseIsReturningFromProgressor(Component sender, object obj)
+    {
+        isReturningFromProgressor = false;
+    }
+
     public void TakeDossier(Component sender, object obj)
     {
+        if (isReturningFromProgressor)
+        {
+            TakeDossierFromProgressor();
+            isReturningFromProgressor = false;
+            return;
+        }
         if (isAddingIdea) return;
         if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
         isUp = true;
@@ -139,6 +157,31 @@ public class DossierMoveController : MonoBehaviour
 
         MoveDossierSequence.Append(transform.DOMove(TakenPosition.position, 0.4f)).SetEase(Ease.InOutSine)
                             .Join(transform.DORotate(TakenPosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InOutSine);
+    }
+
+    void TakeDossierFromProgressor()
+    {
+        float takeVelocity = 0.4f;
+
+        if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
+
+        MoveDossierSequence = DOTween.Sequence();
+
+        // Iniciar la secuencia
+        MoveDossierSequence
+            .AppendCallback(() =>
+            {
+            // Activar el seguimiento en el Update
+            isFollowingTarget = true;
+            })
+            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, takeVelocity, takeVelocity)
+                .SetEase(Ease.InOutSine))
+            .OnComplete(() =>
+            {
+            // Desactivar el seguimiento y resetear estados
+            isFollowingTarget = false;
+                isReturningFromProgressor = false;
+            });
     }
     public void LeaveDossier(Component sender, object obj)
     {

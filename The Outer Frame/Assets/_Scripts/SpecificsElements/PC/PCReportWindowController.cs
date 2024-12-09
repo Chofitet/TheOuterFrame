@@ -9,6 +9,7 @@ public class PCReportWindowController : MonoBehaviour
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelReporte;
     [SerializeField] ReportController ReportToFill;
+    [SerializeField] GameEvent OnEnableReportPCBtn;
     bool isDeleted;
     WordData word;
 
@@ -17,6 +18,7 @@ public class PCReportWindowController : MonoBehaviour
     {
         if (_word == null) return;
         word = (WordData)_word;
+        checkHaveReportsToShow();
     }
 
    //OnReportWindow
@@ -37,7 +39,6 @@ public class PCReportWindowController : MonoBehaviour
 
         List<StateEnum> stateHistory = WordsManager.WM.GetHistorySeen(word);
 
-
         foreach (var state in stateHistory)
         {
             List<ReportType> reports = word.GetListOfReportFromState(state);
@@ -48,6 +49,24 @@ public class PCReportWindowController : MonoBehaviour
                 btn.GetComponent<PCReportController>().Inicialization(word, R);
             }
             
+        }
+
+        
+    }
+
+    void checkHaveReportsToShow()
+    {
+        List<StateEnum> stateHistory = WordsManager.WM.GetHistorySeen(word);
+
+        foreach (var state in stateHistory)
+        {
+            List<ReportType> reports = word.GetListOfReportFromState(state);
+            foreach (ReportType R in reports)
+            {
+                if (!R.GetwasRegisteredInDB()) continue;
+                OnEnableReportPCBtn?.Invoke(this, null);
+            }
+
         }
     }
 

@@ -90,16 +90,32 @@ public class PhoneRowNotebookController : MonoBehaviour
 
     private void ButtonPress()
     {
-        if(word.GetIsAPhoneNumber())
+        if (word.GetIsAPhoneNumber() && actualView != ViewStates.PinchofonoView)
         {
-            Num.text = "<u>" + word.GetName() + "</u>";
+            return;
+        }
+
+        if (word.GetIsAPhoneNumber())
+        {
+            Num.text = "<u>" + word.GetPhoneNumber() + "</u>";
             WordSelectedInNotebook.Notebook.SetSelectedWord(word);
             return;
         }
 
-        txtName.text = "<u>" + word.GetName() + "</u>";
-        
-        WordSelectedInNotebook.Notebook.SetSelectedWord(word);
+        if (actualView == ViewStates.PinchofonoView)
+        {
+            if (!word.GetIsPhoneNumberFound()) return;
+            Num.text = "<u>" + word.GetPhoneNumber() + "</u>";
+            WordSelectedInNotebook.Notebook.SetSelectedWord(word);
+            return;
+        }
+        else
+        {
+            txtName.text = "<u>" + word.GetName() + "</u>";
+
+            WordSelectedInNotebook.Notebook.SetSelectedWord(word);
+        }
+
     }
 
     public void ClearUnderline()
@@ -109,7 +125,15 @@ public class PhoneRowNotebookController : MonoBehaviour
             Num.text = word.GetName();
             return;
         }
+        if(word.GetIsPhoneNumberFound()) Num.text = word.GetPhoneNumber();
         txtName.text = word.GetName();
+    }
+
+    ViewStates actualView;
+
+    public void CheckView(Component sender, object obj)
+    {
+        actualView = (ViewStates)obj;
     }
 
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")

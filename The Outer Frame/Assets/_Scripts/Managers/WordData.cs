@@ -128,6 +128,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         foreach (ReportType report in reportTypes)
         {
             if (!report) continue;
+            if (auxList.Contains(report)) continue;
             if (report.GetState() == state) auxList.Add(report);
         }
         return auxList;
