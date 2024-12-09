@@ -9,6 +9,7 @@ public class PCCallsWindowController : MonoBehaviour
     [SerializeField] GameObject Grid;
     [SerializeField] GameObject panelCall;
     [SerializeField] TranscriptionCallController CallToFild;
+    [SerializeField] GameEvent OnEnableTranscriptionPCBtn;
     bool isDeleted;
     WordData word;
 
@@ -17,6 +18,7 @@ public class PCCallsWindowController : MonoBehaviour
     {
         if (_word == null) return;
         word = (WordData)_word;
+        checkHaveCallsToShow();
     }
 
     //OnCalltWindow
@@ -38,6 +40,16 @@ public class PCCallsWindowController : MonoBehaviour
         {
             GameObject btn = Instantiate(PrefabBtCall, Grid.transform, false);
             btn.GetComponent<PCCallController>().Inicialization(call);
+        }
+    }
+
+    void checkHaveCallsToShow()
+    {
+        List<CallType> CallsHistory = WordsManager.WM.GetAllCathedCalls(word);
+
+        foreach (var call in CallsHistory)
+        {
+            OnEnableTranscriptionPCBtn?.Invoke(this, null);
         }
     }
 
