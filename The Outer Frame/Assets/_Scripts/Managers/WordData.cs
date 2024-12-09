@@ -624,7 +624,49 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public List<ReportType> GetReportList() { return reportTypes; }
 
+    public WordData MarkWordsWordThatReplaceRetroactive()
+    {
+        WordData currentWord = GetWordThatReplaces();
+        WordData auxWord = GetWordThatReplaces();
+
+        while (currentWord != null)
+        {
+            currentWord.SetIsFound();
+
+            auxWord = currentWord;
+
+            currentWord = currentWord.GetWordThatReplaces();
+
+            if (currentWord == auxWord) break;
+        }
+
+        return auxWord;
+    }
+
+    public List<WordData> SearchForWordsThatReplaceRetroactive()
+    {
+        List<WordData> words = new List<WordData>();
+
+        WordData currentWord = GetWordThatReplaces();
+        WordData auxWord = GetWordThatReplaces();
+
+        while (currentWord != null)
+        {
+            auxWord = currentWord;
+
+            words.Add(currentWord);
+
+            currentWord = currentWord.GetWordThatReplaces();
+
+            if (currentWord == auxWord) break;
+        }
+
+        return words;
+    }
+
 }
+
+
 [Serializable]
 public class ActionState
 {

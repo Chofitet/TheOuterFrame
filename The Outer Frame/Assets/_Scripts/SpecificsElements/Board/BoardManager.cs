@@ -10,6 +10,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnRefreshInfoInBoard;
     [SerializeField] GameEvent OnTakeOutInfoInBoard;
     [SerializeField] GameEvent OnRefreshNotebook;
+    [SerializeField] GameEvent OnAutoUpdatePreviusPhoto;
     [SerializeField] Transform StartPos;
     [SerializeField] Transform TakeOutPos;
     bool IsInView;
@@ -33,6 +34,7 @@ public class BoardManager : MonoBehaviour
     {
         if (!IsInView) return;
         OnBoardPlacedPhotos?.Invoke(null, StartPos.position);
+        OnAutoUpdatePreviusPhoto?.Invoke(null, StartPos.position);
         Invoke("Conections", 0.6f);
     }
 

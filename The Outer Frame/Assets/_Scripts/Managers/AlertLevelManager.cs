@@ -15,6 +15,7 @@ public class AlertLevelManager : MonoBehaviour
     [SerializeField] GameEvent OnUpAlertLevel;
     [SerializeField] GameEvent OnDownAlertLevel;
     int level;
+    bool isStoped;
 
     private void OnEnable()
     {
@@ -24,6 +25,7 @@ public class AlertLevelManager : MonoBehaviour
 
     public void UpdateNum(Component sender, object obj)
     {
+        if (isStoped) return;
         int incruseNum = (int)obj;
         level = level + incruseNum;
 
@@ -55,9 +57,8 @@ public class AlertLevelManager : MonoBehaviour
         ButtonElement?.Invoke(this, ViewStates.GameOverView);
     }
 
-    [ContextMenu("TestGameOver")]
-    private void TestgameOver()
+    public void StopAlertLevelManager(Component sender, object obj)
     {
-        Invoke("end", 5);
+        isStoped = true;
     }
 }
