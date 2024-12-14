@@ -263,8 +263,8 @@ public class PinchofonoController : MonoBehaviour
 
         if(view != ViewStates.PinchofonoView && IsInView )
         {
-            anim.SetTrigger("padClose");
-            if(!isRecording && view != ViewStates.OnTakenPaperView) OnClosePhonePadSound?.Invoke(this, null);
+            if(!isRecording && !waitingForPrint) anim.SetTrigger("padClose");
+            if(!isRecording && view != ViewStates.OnTakenPaperView && !waitingForPrint) OnClosePhonePadSound?.Invoke(this, null);
             AbortConfirmationPanel.SetActive(false);
             ShowPanel(ScreenContent);
             hasNumberEnter = false;

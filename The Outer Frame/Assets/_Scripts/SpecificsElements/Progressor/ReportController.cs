@@ -47,14 +47,14 @@ public class ReportController : MonoBehaviour
             Resulttxt.text = report.GetTextForRepetition();
             photo1.Set("REMEMBER TO READ", WrongResultImg[new System.Random().Next(2) == 0 ? 5 : 8]);
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
-            status = "<color=#AE0000>REJECTED</color>";
+            status = "<color=#AE0000>REDUNDANT</color>";
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
         else if (isTheSameAction)
         {
             Resulttxt.text = "We are already doing that exact same thing.";
-            status = "<color=#AE0000>REJECTED</color>";
+            status = "<color=#AE0000>REDUNDANT</color>";
             photo1.Set("JUST HAVE TO WAIT", WrongResultImg[new System.Random().Next(2) == 0 ? 6 : 8]);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
@@ -62,7 +62,7 @@ public class ReportController : MonoBehaviour
         else if(isOtherActionInGroupDoing != null)
         {
             Resulttxt.text = "We are currently " + isOtherActionInGroupDoing.GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
-            status = "<color=#AE0000>REJECTED</color>";
+            status = "<color=#AE0000>CONFLICTED</color>";
             photo1.Set("", WrongResultImg[6]);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
@@ -77,7 +77,7 @@ public class ReportController : MonoBehaviour
         }
         else if (report.GetIsAutomatic())
         {
-            status = "<color=#AE0000>REJECTED</color>";
+            status = "<color=#AE0000>IMPOSSIBLE</color>";
             
             btnText.text = "DISPOSE";
         }

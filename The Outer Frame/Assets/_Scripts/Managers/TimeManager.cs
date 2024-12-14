@@ -213,7 +213,10 @@ public struct TimeData
 
     public override string ToString()
     {
-        return $"{Hour} : {Minute}";
+        string _min = $"{Minute:00}";
+        string _hour = $"{Hour:00}";
+
+        return $"{_hour} : {_min}";
     }
 
     public  int GetTimeInNum()
