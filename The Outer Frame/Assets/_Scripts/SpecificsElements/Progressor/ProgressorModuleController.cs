@@ -29,6 +29,10 @@ public class ProgressorModuleController : MonoBehaviour
     private StateEnum state;
     private int time;
 
+    bool isWaitingForSetSlot;
+    float elapsedTime;
+    float adjustedDurationForSetSlot;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -37,6 +41,11 @@ public class ProgressorModuleController : MonoBehaviour
         light.enabled = true;
         light.intensity = 0;
 
+    }
+
+    private void Update()
+    {
+        AdjustTimeToSetSlot();
     }
 
     public void SetAction(WordData _word,StateEnum _state,int _time)
@@ -55,11 +64,32 @@ public class ProgressorModuleController : MonoBehaviour
         if (!isReady) return;
         anim.SetTrigger("sendMessage");
         TurnOnLight(0.8f);
+        float animationDuration = 1.3f;
+        adjustedDurationForSetSlot = animationDuration / TimeVariation;
+        elapsedTime = 0f;
+        isWaitingForSetSlot = true;
     }
 
+    void AdjustTimeToSetSlot()
+    {
+        if (!isWaitingForSetSlot) return;
+
+        // Incrementar el tiempo transcurrido teniendo en cuenta la variación del tiempo
+        elapsedTime += Time.deltaTime * TimeVariation;
+
+        if (elapsedTime >= adjustedDurationForSetSlot)
+        {
+            // Finalizar espera y ejecutar InitSlot
+            isWaitingForSetSlot = false;
+            InitSlot(null, null);
+        }
+    }
+
+    Sequence sequenceLigth;
     void TurnOnLight(float waitDuration)
     {
-        Sequence sequenceLigth = DOTween.Sequence();
+        if (sequenceLigth != null && sequenceLigth.IsActive()) sequenceLigth.Kill();
+        sequenceLigth = DOTween.Sequence();
         sequenceLigth.Append(light.DOIntensity(InitLigthIntensity, 0.3f))
                      .AppendInterval(waitDuration)
                     .Append(light.DOIntensity(0, 0.3f))
@@ -217,10 +247,19 @@ public class ProgressorModuleController : MonoBehaviour
 
     }
 
+    float TimeVariation = 1;
     public void accelerateAnims(Component sender, object obj)
     {
-        float TimeVariation = (float)obj;
+        TimeVariation = (float)obj;
         anim.SetFloat("speed", TimeVariation);
+
+        if (isWaitingForSetSlot)
+        {
+            if (sequenceLigth != null && sequenceLigth.IsActive()) sequenceLigth.Kill();
+            light.intensity = 0;
+            float remainingTime = adjustedDurationForSetSlot - elapsedTime;
+            adjustedDurationForSetSlot = remainingTime / TimeVariation + elapsedTime;
+        }
     }
 
 }

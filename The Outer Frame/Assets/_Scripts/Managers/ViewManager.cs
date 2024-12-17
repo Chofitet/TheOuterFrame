@@ -100,20 +100,20 @@ public class ViewManager : MonoBehaviour
 
     public void BackToGeneralView(Component sender, object _view)
     {
-       
+        
         OnNotebookLeave?.Invoke(this, null);
         UpdateViewState(this, ViewStates.GeneralView);
     }
 
     public void UpdateViewState(Component sender, object _view)
     {
-        
         ViewStates NewView = (ViewStates)_view;
         if (NewView == currentviewState) return;
         switch (NewView)
         {
             case ViewStates.GeneralView:
                 OnGeneralView?.Invoke(this, false);
+                TimeManager.timeManager.NormalizeTime();
                 BackToGeneralViewWhitMoving();
                 break;
             case ViewStates.PinchofonoView:
@@ -131,6 +131,7 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.PCView:
                 if (isGameOver) return;
+                TimeManager.timeManager.SetAnotherSpeed(0.5f);
                 OnPCWiew?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 break;
@@ -141,7 +142,8 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.TVView:
                 if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
-                OnTVView?.Invoke(this, null);
+                TimeManager.timeManager.SetAnotherSpeed(0.75f);
+               OnTVView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 break;
             case ViewStates.DossierView:
