@@ -178,6 +178,13 @@ public class TimeManager : MonoBehaviour
 
     }
 
+    public void SetAnotherSpeed(float _speed)
+    {
+        TimeVariation = _speed;
+        OnTimeSpeedChange?.Invoke(this, _speed);
+        OnAcceleratedTime?.Invoke(this, false);
+    }
+
     bool once;
     void CheckGameOverCondition()
     {
