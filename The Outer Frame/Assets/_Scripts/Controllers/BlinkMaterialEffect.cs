@@ -114,6 +114,18 @@ public class BlinkMaterialEffect : MonoBehaviour
         StartCoroutine(turnLigthDelay());
     }
 
+    public void TurnOffForXSeconds(Component sender, object obj)
+    {
+        StartCoroutine(turnOffLigthDelay());
+    }
+
+    IEnumerator turnOffLigthDelay()
+    {
+        TurnOffLight(null, null);
+        yield return new WaitForSeconds(TurnLightDuration);
+        TurnOnLigth(null, null);
+    }
+
     IEnumerator turnLigthDelay()
     {
         TurnOnLigth(null, null);

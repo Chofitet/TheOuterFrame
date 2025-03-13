@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class PinchofonoController : MonoBehaviour
 {
@@ -17,13 +19,19 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnPrintCall;
     [SerializeField] GameEvent OnAbortCallRecording;
     [SerializeField] GameObject ScreenContent;
+    [SerializeField] GameObject CounterContent;
+    [SerializeField] GameObject WaveContent;
+    [SerializeField] GameObject PressToRecordingText;
+    [SerializeField] GameObject RecordingText;
     [SerializeField] GameObject ErrorMessageContent;
     [SerializeField] GameObject EnterValidPanel;
     [SerializeField] GameObject RecordingNumberPanel;
+    [SerializeField] GameObject LeftRecordingNumberPanel;
     [SerializeField] GameEvent OnDialingSound;
     [SerializeField] GameEvent OnOpenPhonePadSound;
     [SerializeField] GameEvent OnClosePhonePadSound;
     [SerializeField] Canvas canvas;
+    [SerializeField] GameEvent OnRefreshPinchofonoScreen;
     WordData ActualWord;
     bool isRecording;
     bool IsInView;
@@ -40,6 +48,11 @@ public class PinchofonoController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         anim.SetFloat("tapeSpinSpeed", 0);
+        CounterContent.SetActive(false);
+        WaveContent.SetActive(false);
+
+        LeftRecordingNumberPanel.SetActive(false);
+        RecordingNumberPanel.SetActive(true);
     }
 
     public void RecBTNPressed(Component sender, object obj)
@@ -48,6 +61,7 @@ public class PinchofonoController : MonoBehaviour
         anim.SetTrigger("recordPush");
         StopAllCoroutines();
         AbortConfirmationPanel.SetActive(false);
+        StartCoroutine(RefreshScreen());
 
         if (waitingForPrint)
         {
@@ -68,7 +82,15 @@ public class PinchofonoController : MonoBehaviour
             OnStartRecording?.Invoke(this, null);
             OnClosePhonePadSound?.Invoke(this, null);
             SetIsRecordingTrue();
+            CounterContent.SetActive(true);
+            WaveContent.SetActive(true);
+            LeftRecordingNumberPanel.SetActive(true);
+            RecordingNumberPanel.SetActive(false);
+            PressToRecordingText.SetActive(false);
+            RecordingText.SetActive(true);
             StopCoroutine(AnimPadDial(""));
+
+            
         }
     }
 
@@ -78,6 +100,7 @@ public class PinchofonoController : MonoBehaviour
         anim.SetTrigger("printPush");
         StopAllCoroutines();
         AbortConfirmationPanel.SetActive(false);
+        StartCoroutine(RefreshScreen());
 
         if (!haveCallToPrint && !CallToPrint && isRecording)
         {
@@ -107,6 +130,12 @@ public class PinchofonoController : MonoBehaviour
             OnPrintCall?.Invoke(this, null);
             CallToPrint = null;
             anim.SetTrigger("padOpen");
+            CounterContent.SetActive(false);
+            WaveContent.SetActive(false);
+            LeftRecordingNumberPanel.SetActive(false);
+            RecordingNumberPanel.SetActive(true);
+            EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().alignment = TextAlignmentOptions.Midline;
+
         }
         
     }
@@ -116,6 +145,7 @@ public class PinchofonoController : MonoBehaviour
         canvas.enabled = true;
         anim.SetTrigger("abortPush");
         StopAllCoroutines();
+        StartCoroutine(RefreshScreen());
 
         if (CallToPrint)
         {
@@ -126,7 +156,7 @@ public class PinchofonoController : MonoBehaviour
 
         if (!isRecording)
         {
-            StartCoroutine(ShowErrorMessagePanel("PLEASE BEGIN SOMETHING TO CANCEL IT"));
+            StartCoroutine(ShowErrorMessagePanel("PLEASE BEGIN SOMETHING \n TO CANCEL IT"));
             
         }
         else
@@ -143,6 +173,7 @@ public class PinchofonoController : MonoBehaviour
         ResetAll(null,null);
         OnAbortCallRecording?.Invoke(this, null);
         OnOpenPhonePadSound?.Invoke(this, null);
+        StartCoroutine(RefreshScreen());
     }
 
     public void CancelAbort()
@@ -150,6 +181,7 @@ public class PinchofonoController : MonoBehaviour
         StopAllCoroutines();
         ShowPanel(ScreenContent);
         AbortConfirmationPanel.SetActive(false);
+        StartCoroutine(RefreshScreen());
     }
 
     IEnumerator ShowErrorMessagePanel(string message, float timeToAwait = 3)
@@ -159,11 +191,12 @@ public class PinchofonoController : MonoBehaviour
         yield return new WaitForSeconds(timeToAwait);
         txtMessage.text = "";
         ShowPanel(ScreenContent);
+        StartCoroutine(RefreshScreen());
     }
 
     void ShowPanel(GameObject panel)
     {
-        if(panel == ScreenContent)
+        if (panel == ScreenContent)
         {
             ScreenContent.SetActive(true);
             ErrorMessageContent.SetActive(false);
@@ -187,10 +220,15 @@ public class PinchofonoController : MonoBehaviour
         SetIsRecordingFalse();
         RecordingNumberPanel.SetActive(false);
         EnterValidPanel.SetActive(true);
-        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY FOR PRINTING";
+        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY \n FOR PRINTING";
+        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().alignment = TextAlignmentOptions.MidlineLeft;
 
         StopAllCoroutines();
         ShowPanel(ScreenContent);
+        PressToRecordingText.SetActive(false);
+        RecordingText.SetActive(false);
+
+        LeftRecordingNumberPanel.SetActive(false);
         //StartCoroutine(BlinkText());
     }
 
@@ -218,6 +256,7 @@ public class PinchofonoController : MonoBehaviour
         anim.SetBool("isCallPossible", false);
         anim.SetTrigger("recordReady");
         EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY TO TAKE";
+        StartCoroutine(RefreshScreen());
     }
 
     //OnSelectedWordInNotebook
@@ -240,9 +279,10 @@ public class PinchofonoController : MonoBehaviour
         RecordingNumberPanel.SetActive(true);
         EnterValidPanel.SetActive(false);
         txtNumber.text = word.GetPhoneNumber();
+        LeftRecordingNumberPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = word.GetPhoneNumber();
         hasNumberEnter = true;
         ActualWord = word;
-        txtNumber.GetComponent<TypingAnimText>().AnimateTyping();
+        
         //anim.SetTrigger("padDial");
         StartCoroutine(AnimPadDial(word.GetPhoneNumber()));
         OnDialingSound?.Invoke(this, null);
@@ -279,6 +319,7 @@ public class PinchofonoController : MonoBehaviour
         }
         StopCoroutine(AnimPadDial(""));
         StopAllCoroutines();
+        canvas.gameObject.SetActive(true);
     }
 
     //OnStartRecordingCall
@@ -299,6 +340,9 @@ public class PinchofonoController : MonoBehaviour
 
     IEnumerator AnimPadDial(string number)
     {
+        StartCoroutine(RefreshScreen());
+        yield return new WaitForSeconds(0.2f);
+        txtNumber.GetComponent<TypingAnimText>().AnimateTyping();
         number = Regex.Replace(number, @"[()\-\s]", "");
 
         string[] numbers = number.Select(c => c.ToString()).ToArray();
@@ -310,14 +354,22 @@ public class PinchofonoController : MonoBehaviour
         }
     }
 
+    IEnumerator RefreshScreen()
+    {
+        OnRefreshPinchofonoScreen.Invoke(null, null);
+        canvas.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        canvas.gameObject.SetActive(true);
+    }
+
     public void ResetAll(Component sender, object obj)
     {
         StopAllCoroutines();
         ShowPanel(ScreenContent);
         RecordingNumberPanel.SetActive(false);
         EnterValidPanel.SetActive(true);
-        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "ENTER A VALID NUMBER";
-        if(waitingForPrint) EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "ENTER A VALID NUMBER";
+        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "ENTER A PHONE NUMBER \n TO WIRETAP";
+        if(waitingForPrint) EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "ENTER A PHONE NUMBER \n TO WIRETAP";
         anim.SetBool("IsRecording", false);
         anim.SetFloat("tapeSpinSpeed", 0);
         anim.SetBool("isCallPossible", false);
@@ -330,6 +382,13 @@ public class PinchofonoController : MonoBehaviour
         AbortConfirmationPanel.SetActive(false);
         printOnce = false;
         haveCallToPrint = false;
+        PressToRecordingText.SetActive(true);
+        RecordingText.SetActive(false);
+        CounterContent.SetActive(false);
+        WaveContent.SetActive(false);
+
+        LeftRecordingNumberPanel.SetActive(false);
+        RecordingNumberPanel.SetActive(false);
     }
 
 }
