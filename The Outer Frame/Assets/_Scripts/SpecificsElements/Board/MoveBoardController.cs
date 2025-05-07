@@ -6,11 +6,13 @@ using DG.Tweening;
 public class MoveBoardController : MonoBehaviour
 {
     [SerializeField] GameObject board;
+    [SerializeField] GameObject initialPos;
     [SerializeField] AnimationCurve MyCurveAnim;
 
     private void Start()
     {
         board.SetActive(false);
+        board.transform.position = initialPos.transform.position;
     }
 
     public void MoveBoard(Component sender, object obj)
