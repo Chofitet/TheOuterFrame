@@ -1151,7 +1151,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -1181,7 +1181,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -3.246315, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1223,8 +1223,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 46.01, y: 0}
-  m_SizeDelta: {x: 56.6, y: 0}
+  m_AnchoredPosition: {x: 47.05, y: 0}
+  m_SizeDelta: {x: 54.53, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3226464415988436147
 CanvasRenderer:
@@ -2259,6 +2259,7 @@ MonoBehaviour:
   EventsToTrigger:
   - {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
   - {fileID: 11400000, guid: 14b4f5d941939264aa0924e69fe30969, type: 2}
+  delay: 0
   DisabledInTouch: 1
   SomethingToPass: {fileID: 8818181090750843214}
   FloatToPass: 0
@@ -2276,6 +2277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   view: 7
+  delay: 0
   NotInactiveBTN: 0
 --- !u!114 &8433175860005586554
 MonoBehaviour:
@@ -2433,7 +2435,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -1.5999985, y: -9.489998}
-  m_SizeDelta: {x: 10.67, y: 3.14}
+  m_SizeDelta: {x: 11.63, y: 3.14}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8187921485854984413
 CanvasRenderer:
@@ -2496,7 +2498,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -2792,6 +2794,7 @@ MonoBehaviour:
   EventsToTrigger:
   - {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
   - {fileID: 11400000, guid: 14b4f5d941939264aa0924e69fe30969, type: 2}
+  delay: 0
   DisabledInTouch: 1
   SomethingToPass: {fileID: 8818181090750843214}
   FloatToPass: 0
@@ -2809,6 +2812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   view: 7
+  delay: 0
   NotInactiveBTN: 0
 --- !u!114 &171533184221195993
 MonoBehaviour:
@@ -3499,6 +3503,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   view: 7
+  delay: 0
   NotInactiveBTN: 0
 --- !u!114 &3486983384381167194
 MonoBehaviour:
@@ -3514,6 +3519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EventsToTrigger:
   - {fileID: 11400000, guid: 83f132bf4607c6f4b88024d84b6161be, type: 2}
+  delay: 0
   DisabledInTouch: 0
   SomethingToPass: {fileID: 8818181090750843214}
   FloatToPass: 0

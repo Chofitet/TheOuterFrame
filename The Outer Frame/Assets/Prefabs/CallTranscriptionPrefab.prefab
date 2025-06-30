@@ -688,7 +688,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -1083,6 +1083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EventsToTrigger:
   - {fileID: 11400000, guid: 945e699245eef354fa099591b0aed1ba, type: 2}
+  delay: 0
   DisabledInTouch: 1
   SomethingToPass: {fileID: 4052442833119381466}
   FloatToPass: 0
@@ -1100,6 +1101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   view: 7
+  delay: 0
   NotInactiveBTN: 0
 --- !u!114 &5229616036150630109
 MonoBehaviour:
@@ -2012,8 +2014,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -40.1, y: 0.39999962}
-  m_SizeDelta: {x: 9.841, y: 3.25}
+  m_AnchoredPosition: {x: -39.6, y: 0.39999962}
+  m_SizeDelta: {x: 10.84, y: 3.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5551351247128388819
 CanvasRenderer:
@@ -2076,7 +2078,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -2404,6 +2406,7 @@ GameObject:
   - component: {fileID: 3576441785311146221}
   - component: {fileID: 8286034581954155241}
   - component: {fileID: 6403479462225507255}
+  - component: {fileID: 5285925949313451794}
   m_Layer: 10
   m_Name: FinishBTN
   m_TagString: Untagged
@@ -2508,7 +2511,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 3576441785311146221}
   m_OnClick:
     m_PersistentCalls:
@@ -2537,6 +2540,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5285925949313451794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7926552717951635605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 641ff3e4639df3447bd2e36f2a47362c, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8286034581954155241}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  DelayCall: 0.1
+  _float: 0
+  _string: 
 --- !u!1 &8163302515818293033
 GameObject:
   m_ObjectHideFlags: 0

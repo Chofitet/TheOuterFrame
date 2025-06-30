@@ -7,6 +7,7 @@ using UnityEngine;
 public class ColliderButtonCallEvent : MonoBehaviour
 {
     [SerializeField] GameEvent[] EventsToTrigger;
+    [SerializeField] float delay;
     [SerializeField] bool DisabledInTouch;
     [SerializeField] GameObject SomethingToPass;
     [SerializeField] float FloatToPass;
@@ -14,6 +15,11 @@ public class ColliderButtonCallEvent : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
+        if (delay != 0)
+        {
+            Invoke("CallWithDelay", delay);
+            return;
+        }
         triggerEvents();
     }
 
@@ -47,6 +53,11 @@ public class ColliderButtonCallEvent : MonoBehaviour
     }
 
     public void TriggerEvents(Component sender, object obj)
+    {
+        triggerEvents();
+    }
+
+    void CallWithDelay()
     {
         triggerEvents();
     }

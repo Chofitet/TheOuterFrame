@@ -14,6 +14,8 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] Button ApproveBtn;
     [SerializeField] GameEvent OnWriteShakeDossier;
     [SerializeField] GameEvent OnFinalActionSend;
+    [SerializeField] GameEvent OnShakeNotebook;
+    [SerializeField] GameObject shakeBtn;
     WordData FinalActionWord;
     StateEnum FinalActionState;
     StateEnum FinalActionIdea;
@@ -75,19 +77,32 @@ public class ActionPlan : MonoBehaviour
             else state = script.GetState();
         }
 
-        if (state.GetSpecialActionWord()) ApproveBtn.enabled = true;
+        if (state.GetSpecialActionWord())
+        {
+            shakeBtn.SetActive(false);
+            ApproveBtn.enabled = true;
+        }
         else if (!state.GetSpecialActionWord() && word)
         {
+            shakeBtn.SetActive(false);
             ApproveBtn.enabled = true;
             OnWriteShakeDossier?.Invoke(this, 0.5f);
         }
-        else ApproveBtn.enabled = false;
+        else
+        {
+            shakeBtn.SetActive(true);
+            ApproveBtn.enabled = false;
+        }
     }
 
     public void SelectedWord(Component sender, object obj)
     {
         if(!isInDossier) return;
-        if(state) ApproveBtn.enabled = true;
+        if (state)
+        {
+            shakeBtn.SetActive(false);
+            ApproveBtn.enabled = true;
+        }
         bool isActionIdeaSelect = false;
         if (Actions.Count >= 10)
         {
@@ -133,9 +148,16 @@ public class ActionPlan : MonoBehaviour
         SendActionToProgressor();
     }
 
+    public void ShakeBtn()
+    {
+        if (!isOneToggleSelected) return;
+        OnShakeNotebook?.Invoke(this, null);
+    }
+
     void SendActionToProgressor()
     {
         ApproveBtn.enabled = false;
+        shakeBtn.SetActive(true);
         DataFromActionPlan data = new DataFromActionPlan(word, state);
         OnApprovedActionPlan.Invoke(this, data);
         OnSetGeneralView?.Invoke(this, null);
@@ -144,6 +166,7 @@ public class ActionPlan : MonoBehaviour
     public void SendFinalActionToProgressor(Component sender, object obj)
     {
         ApproveBtn.enabled = false;
+        shakeBtn.SetActive(true);
         DataFromActionPlan data = new DataFromActionPlan(FinalActionWord, FinalActionIdea);
         OnApprovedActionPlan.Invoke(this, data);
         if(Actions.Count >= 9) Actions[9].CheckToggle();

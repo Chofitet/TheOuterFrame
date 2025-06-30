@@ -113,7 +113,7 @@ public class ViewManager : MonoBehaviour
         {
             case ViewStates.GeneralView:
                 OnGeneralView?.Invoke(this, false);
-                TimeManager.timeManager.NormalizeTime();
+                if(currentviewState == ViewStates.PCView) TimeManager.timeManager.NormalizeTime();
                 BackToGeneralViewWhitMoving();
                 break;
             case ViewStates.PinchofonoView:

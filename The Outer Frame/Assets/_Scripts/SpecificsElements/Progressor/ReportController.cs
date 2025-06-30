@@ -45,6 +45,7 @@ public class ReportController : MonoBehaviour
         else if (isAlreadyDone)
         {
             Resulttxt.text = report.GetTextForRepetition();
+            FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt, FindableBtnType.FindableBTN);
             photo1.Set("REMEMBER TO READ", WrongResultImg[new System.Random().Next(2) == 0 ? 5 : 8]);
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
             status = "<color=#AE0000>REDUNDANT</color>";

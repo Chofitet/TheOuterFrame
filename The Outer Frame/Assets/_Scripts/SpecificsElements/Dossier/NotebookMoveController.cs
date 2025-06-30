@@ -16,6 +16,7 @@ public class NotebookMoveController : MonoBehaviour
     Animator anim;
     private Sequence moveSequence;
     private Sequence moveWiteWordSequence;
+    private Sequence shakeSequence;
     private Transform currentTarget;
     private bool isMoving = false;
     private float lerpTime = 0;
@@ -96,6 +97,11 @@ public class NotebookMoveController : MonoBehaviour
     {
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
+        if (shakeSequence != null && shakeSequence.IsActive())
+        {
+            shakeSequence.Kill();
+        }
+        isShaking = false;
         currentTarget = Positions[num];
         isMoving = true;
         lerpTime = 0;
@@ -112,7 +118,7 @@ public class NotebookMoveController : MonoBehaviour
 
         moveSequence.PrependInterval(_delayToGrab)
             .AppendCallback(()=> { SetTransform(Positions[num]); })
-            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutCirc))
+            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutQuart))
                     .OnComplete(() =>
                     {
                         isMoving = false;
@@ -202,8 +208,12 @@ public class NotebookMoveController : MonoBehaviour
     {
         if (!isUp || isShaking) return;
         isShaking = true;
-        transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic).OnComplete(() => isShaking = false); ;
-        transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic);
+
+        shakeSequence = DOTween.Sequence();
+
+        shakeSequence
+            .Append(transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic).OnComplete(() => isShaking = false))
+            .Join(transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic));
     }
 
     void OpenPhoneNums()

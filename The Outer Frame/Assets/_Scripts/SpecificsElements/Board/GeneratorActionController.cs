@@ -69,6 +69,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (!CheckForConditionals(Conditionals)) return;
        
         Content.SetActive(true);
+        GetComponent<BoxCollider>().enabled = true;
 
         BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
         IdeaButtom = BtnGeneratorIdeaPrefab.gameObject;

@@ -18,6 +18,8 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameObject AgentIcon;
     [SerializeField] GameEvent OnFinishActionProgress;
     [SerializeField] GameEvent OnReactiveIdeaPosit;
+    [SerializeField] GameObject TryAbortPanel;
+    [SerializeField] GameObject LedPanel;
     
 
     [SerializeField] Image[] LEDObjects;
@@ -266,6 +268,47 @@ public class SlotController : MonoBehaviour
         AgentIcon.SetActive(true);
         DisableAgent();
         if(!aux) AgentIcon.SetActive(false);
+
+    }
+
+    bool inBlinkAbortPanel = false;
+    public void cancelTryAbortBlink()
+    {
+        TryAbortPanel.SetActive(false);
+        LedPanel.SetActive(true);
+        StopCoroutine("BlinkTryAbort");
+        inBlinkAbortPanel = false;
+    }
+
+    public void ActiveTryAbortPanel()
+    {
+        if (inBlinkAbortPanel) return;
+        TryAbortPanel.SetActive(true);
+        LedPanel.SetActive(false);
+        StartCoroutine(BlinkTryAbort());
+        foreach(BlinkTMPText child in TryAbortPanel.GetComponentsInChildren<BlinkTMPText>())
+        {
+            child.ActiveBlink(this,null);
+            child.gameObject.GetComponent<WarpTextExample>().UpdateText();
+        }
+    }
+
+    IEnumerator BlinkTryAbort()
+    {
+        inBlinkAbortPanel = true;
+        yield return new WaitForSeconds(3.4f);
+
+        foreach (BlinkTMPText child in TryAbortPanel.GetComponentsInChildren<BlinkTMPText>())
+        {
+            child.TurnOffLight(this, null);
+        }
+
+        yield return new WaitForSeconds(0.4f);
+        inBlinkAbortPanel = false;
+        TryAbortPanel.SetActive(false);
+        LedPanel.SetActive(true);
+        if (Wordtxt.IsActive()) Wordtxt.GetComponent<WarpTextExample>().UpdateText();
+        if (Actiontxt.IsActive()) Actiontxt.GetComponent<WarpTextExample>().UpdateText();
 
     }
 

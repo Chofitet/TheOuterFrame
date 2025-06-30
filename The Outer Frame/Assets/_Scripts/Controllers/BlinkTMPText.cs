@@ -15,7 +15,7 @@ public class BlinkTMPText : MonoBehaviour
     Sequence BlinkSequence;
     private float currentIntensity = 0f;  // Estado actual de la intensidad del glow
 
-    void Start()
+    void OnEnable()
     {
         if (TurnOffDuration == 0) TurnOffDuration = duration;
 

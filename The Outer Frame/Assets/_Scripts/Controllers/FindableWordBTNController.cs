@@ -109,7 +109,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
 
                 string extraCharacters = GetExtraCharacters(combinedWord);
                 extraCharacters = extraCharacters.Replace(",,", ",");
-                Debug.Log(FoundAs + extraCharacters);
+                //Debug.Log(FoundAs + extraCharacters);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
 
                 string materialName = string.Empty;

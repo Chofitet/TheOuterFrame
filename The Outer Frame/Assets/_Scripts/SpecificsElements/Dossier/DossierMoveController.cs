@@ -18,6 +18,8 @@ public class DossierMoveController : MonoBehaviour
     [SerializeField] GameEvent OnEnableInput;
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] GameEvent OnBackPositToBoardPos;
+    [SerializeField] Transform cameraPivot;
+    [SerializeField] Transform InitCameraPivot;
     Animator DossierAnim;
     Sequence AddIdeaSequence;
     Sequence MoveDossierSequence;
@@ -27,8 +29,6 @@ public class DossierMoveController : MonoBehaviour
     private bool isFollowingTarget;
     private float lerpTime;
     [SerializeField] private float moveDuration = 0.7f;
-
-    
 
     void Update()
     {
@@ -73,17 +73,19 @@ public class DossierMoveController : MonoBehaviour
             {
                 OnChangeView?.Invoke(this, ViewStates.DossierView);
                 TimeManager.timeManager.NormalizeTime();
+                transform.SetParent(cameraPivot);
                 
             })
             .AppendCallback(() =>
             {
             isFollowingTarget = true;
             })
-            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, moveDuration)
-                .SetEase(Ease.InOutSine))
+            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, 0.5f)
+                .SetEase(Ease.InQuart))
             .OnComplete(() =>
             {
                 // Detenemos el seguimiento al finalizar el movimiento
+                transform.SetParent(InitCameraPivot);
                 isAddingIdea = false;
                 AddIdeaSequence.Kill();
                 DossierAnim.ResetTrigger("open");
@@ -113,7 +115,7 @@ public class DossierMoveController : MonoBehaviour
                 isFollowingTarget = true;
             })
             .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, moveDuration)
-             .SetEase(Ease.InOutSine))
+             .SetEase(Ease.InSine))
             .OnComplete(() =>
             {
                 

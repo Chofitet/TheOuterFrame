@@ -276,6 +276,7 @@ public class PinchofonoController : MonoBehaviour
             EnterValidPanel.SetActive(true);
             return;
         }
+        dialing = true;
         RecordingNumberPanel.SetActive(true);
         EnterValidPanel.SetActive(false);
         txtNumber.text = word.GetPhoneNumber();
@@ -293,12 +294,14 @@ public class PinchofonoController : MonoBehaviour
     //OnViewStateChange
     public void CheckPinchofonoView(Component sender, object obj)
     {
+        
         if (!isRecording)
         {
             EnterValidPanel.SetActive(true);
             txtNumber.text = "";
             RecordingNumberPanel.SetActive(false);
         }
+       
         ViewStates view = (ViewStates)obj;
 
         if(view != ViewStates.PinchofonoView && IsInView )
@@ -306,7 +309,6 @@ public class PinchofonoController : MonoBehaviour
             if(!isRecording && !waitingForPrint) anim.SetTrigger("padClose");
             if(!isRecording && view != ViewStates.OnTakenPaperView && !waitingForPrint) OnClosePhonePadSound?.Invoke(this, null);
             AbortConfirmationPanel.SetActive(false);
-            ShowPanel(ScreenContent);
             hasNumberEnter = false;
         }
 
@@ -319,7 +321,19 @@ public class PinchofonoController : MonoBehaviour
         }
         StopCoroutine(AnimPadDial(""));
         StopAllCoroutines();
-        canvas.gameObject.SetActive(true);
+
+        if (view == ViewStates.GeneralView && !isRecording && ErrorMessageContent.activeSelf)
+        {
+            StartCoroutine(RefreshScreen());
+            ShowPanel(ScreenContent);
+        }
+        else if (view == ViewStates.GeneralView && !isRecording && dialing)
+        {
+            StartCoroutine(RefreshScreen());
+            ShowPanel(ScreenContent);
+        }
+        else canvas.gameObject.SetActive(true);
+        dialing = false;
     }
 
     //OnStartRecordingCall
@@ -328,6 +342,7 @@ public class PinchofonoController : MonoBehaviour
         anim.SetBool("IsRecording", true);
         anim.SetFloat("tapeSpinSpeed", 1);
         isRecording = true;
+        dialing = false;
     }
 
     //OnStartRecordingCall
@@ -338,6 +353,7 @@ public class PinchofonoController : MonoBehaviour
         isRecording = false;
     }
 
+    bool dialing = false;
     IEnumerator AnimPadDial(string number)
     {
         StartCoroutine(RefreshScreen());

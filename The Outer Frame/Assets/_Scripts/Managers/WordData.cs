@@ -363,7 +363,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         isInactive = false;
         CurrentDoingActions.Clear();
         isPlacedInBoad = false;
-        Debug.Log("reseted " + name);
+        
+        //Debug.Log("reseted " + name);
     }
     public bool GetInactiveState() {
 
