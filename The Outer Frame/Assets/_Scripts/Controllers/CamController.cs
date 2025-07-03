@@ -10,6 +10,8 @@ public class CamController : MonoBehaviour
     ViewStates actualView;
     float delayTime;
     float _delay = 0f;
+    bool isInTutirial;
+    bool CameraDossierDefault = true;
     public void UpdateCurrentView(Component sender, object View)
     {
         ViewStates newview = (ViewStates)View;
@@ -21,7 +23,9 @@ public class CamController : MonoBehaviour
                 delayTime = 0;
                 break;
             case ViewStates.DossierView:
-                SetPriority(0);
+                if (!isInTutirial) SetPriority(0);
+                else SetPriority(10);
+                if (CameraDossierDefault) SetPriority(0);
                 delayTime = _delay;
                 break;
             case ViewStates.PinchofonoView:
@@ -52,11 +56,16 @@ public class CamController : MonoBehaviour
                 delayTime = 0;
                 break;
             case ViewStates.PauseView:
-                SetPriority(8);
+                if (!isInTutirial)SetPriority(8);
+                else SetPriority(11);
                 delayTime = 0;
                 break;
             case ViewStates.DrawerView:
                 SetPriority(9);
+                delayTime = 0;
+                break;
+            case ViewStates.TutorialView:
+                SetPriority(10);
                 delayTime = 0;
                 break;
         }
@@ -92,4 +101,14 @@ public class CamController : MonoBehaviour
         }
     }
 
+    public void SetIsInTutorial(Component sender, object obj)
+    {
+        isInTutirial = (bool)obj;
+        CameraDossierDefault = !isInTutirial;
+    }
+
+    public void SetCameraDossierDefault(Component sender, object obj)
+    {
+        CameraDossierDefault = true;
+    }
 }

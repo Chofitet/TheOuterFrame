@@ -96,7 +96,7 @@ public class NotebookWordInstance : MonoBehaviour
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
     }
 
-    void SetSelectedWord()
+    public void SetSelectedWord()
     {
         
         text.text = "<u>" + wordReference.GetName() + "</u>";

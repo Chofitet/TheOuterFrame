@@ -20,8 +20,10 @@ public class DossierMoveController : MonoBehaviour
     [SerializeField] GameEvent OnBackPositToBoardPos;
     [SerializeField] Transform cameraPivot;
     [SerializeField] Transform InitCameraPivot;
+    [SerializeField] GameObject[] AppearAPpileObjects;
     Animator DossierAnim;
     Sequence AddIdeaSequence;
+    Sequence AddAPpileSequence;
     Sequence MoveDossierSequence;
     bool isAddingIdea;
     bool isUp;
@@ -64,7 +66,7 @@ public class DossierMoveController : MonoBehaviour
                 OnWriteDossier?.Invoke(this, 1.5f);
             })
             .AppendInterval(0.5f)
-            .AppendCallback(()=>
+            .AppendCallback(() =>
             {
                 OnBackPositToBoardPos?.Invoke(this, posit);
             })
@@ -74,11 +76,11 @@ public class DossierMoveController : MonoBehaviour
                 OnChangeView?.Invoke(this, ViewStates.DossierView);
                 TimeManager.timeManager.NormalizeTime();
                 transform.SetParent(cameraPivot);
-                
+
             })
             .AppendCallback(() =>
             {
-            isFollowingTarget = true;
+                isFollowingTarget = true;
             })
             .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, 0.5f)
                 .SetEase(Ease.InQuart))
@@ -118,9 +120,9 @@ public class DossierMoveController : MonoBehaviour
              .SetEase(Ease.InSine))
             .OnComplete(() =>
             {
-                
-                isFollowingTarget = false; 
-                                           
+
+                isFollowingTarget = false;
+
                 isAddingIdea = false;
                 DossierAnim.ResetTrigger("open");
             });
@@ -173,15 +175,15 @@ public class DossierMoveController : MonoBehaviour
         MoveDossierSequence
             .AppendCallback(() =>
             {
-            // Activar el seguimiento en el Update
-            isFollowingTarget = true;
+                // Activar el seguimiento en el Update
+                isFollowingTarget = true;
             })
             .Append(DOTween.To(() => lerpTime, x => lerpTime = x, takeVelocity, takeVelocity)
                 .SetEase(Ease.InOutSine))
             .OnComplete(() =>
             {
-            // Desactivar el seguimiento y resetear estados
-            isFollowingTarget = false;
+                // Desactivar el seguimiento y resetear estados
+                isFollowingTarget = false;
                 isReturningFromProgressor = false;
             });
     }
@@ -220,5 +222,63 @@ public class DossierMoveController : MonoBehaviour
     public void LastTakedPosit(Component sender, object obj)
     {
         posit = (GameObject)obj;
+    }
+
+    public void AddAPpile(Component sender, object obj)
+    {
+        DossierAnim = transform.GetChild(0).GetComponent<Animator>();
+        AddAPpileSequence = DOTween.Sequence();
+        GetComponent<Animator>().enabled = false;
+        transform.position = InitShowInBoardPosition.position;
+        transform.rotation = InitShowInBoardPosition.rotation;
+        OnActionPlanDossier?.Invoke(this, null);
+
+        // Reseteamos el tiempo de Lerp y activamos el seguimiento del target
+        lerpTime = 0;
+        isFollowingTarget = false; // Inicialmente no sigue al target
+        DossierAnim.SetTrigger("instantActionplan");
+
+        OnDisableInput?.Invoke(this, null);
+
+        AddAPpileSequence
+            .Append(transform.DOMove(FinalShowInBoardPosition.position, 0.8f).SetEase(Ease.OutSine));
+    }
+
+    public void AddAPpile2part(Component sender, object obj)
+    {
+        foreach (GameObject _obj in AppearAPpileObjects)
+        {
+            _obj.SetActive(true);
+        }
+
+
+        if (AddAPpileSequence != null && AddAPpileSequence.IsActive()) AddAPpileSequence.Kill();
+        AddAPpileSequence = DOTween.Sequence();
+
+        AddAPpileSequence
+            .AppendInterval(1f)
+            .AppendCallback(() =>
+            {
+                OnChangeView?.Invoke(this, ViewStates.DossierView);
+                TimeManager.timeManager.NormalizeTime();
+                transform.SetParent(cameraPivot);
+
+            })
+            .AppendCallback(() =>
+            {
+                isFollowingTarget = true;
+            })
+            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, 0.5f)
+                .SetEase(Ease.InQuart))
+            .OnComplete(() =>
+            {
+                // Detenemos el seguimiento al finalizar el movimiento
+                transform.SetParent(InitCameraPivot);
+                AddAPpileSequence.Kill();
+                DossierAnim.ResetTrigger("open");
+                OnEnableInput?.Invoke(this, null);
+            })
+            .AppendInterval(0.2f)
+            .AppendCallback(() => isFollowingTarget = false);
     }
 }

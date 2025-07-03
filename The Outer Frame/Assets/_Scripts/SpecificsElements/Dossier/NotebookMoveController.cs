@@ -89,6 +89,12 @@ public class NotebookMoveController : MonoBehaviour
                 dontLeaveNotebook = false;
                 SetPos(0, false);
                 break;
+            case ViewStates.TutorialView:
+                if (IsPhonesOpen) anim.SetTrigger("close");
+                if (isUp) SetPos(0, false);
+                if (dontLeaveNotebook) SetPos(6);
+                dontLeaveNotebook = false;
+                break;
         }
         lastView = newview;
     }
@@ -261,6 +267,11 @@ public class NotebookMoveController : MonoBehaviour
     public void EnableInput(Component sender, object obj)
     {
         inputDisable = false;
+    }
+
+    public void UpdatePositionInBoardPosition(Component seender, object obj)
+    {
+        SetPos(2);
     }
 
 }

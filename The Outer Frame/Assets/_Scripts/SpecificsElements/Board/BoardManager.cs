@@ -13,6 +13,8 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnAutoUpdatePreviusPhoto;
     [SerializeField] Transform StartPos;
     [SerializeField] Transform TakeOutPos;
+    [SerializeField] GameEvent OnPlaced4WordsInBoard;
+    int WordsCounts;
     bool IsInView;
 
 
@@ -36,6 +38,8 @@ public class BoardManager : MonoBehaviour
         OnBoardPlacedPhotos?.Invoke(null, StartPos.position);
         OnAutoUpdatePreviusPhoto?.Invoke(null, StartPos.position);
         Invoke("Conections", 0.6f);
+        WordsCounts += 1;
+        if (WordsCounts == 4) OnPlaced4WordsInBoard?.Invoke(this, null);
     }
 
     void Conections()

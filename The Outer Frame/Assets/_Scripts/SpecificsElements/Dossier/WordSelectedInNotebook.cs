@@ -16,6 +16,7 @@ public class WordSelectedInNotebook : MonoBehaviour
     [SerializeField] GameEvent OnButtonElementClick;
     [SerializeField] GameEvent OnRefreshNotebook;
     [SerializeField] GameEvent OnRemoveEraceInstance;
+    [SerializeField] GameEvent OnTaked4Words;
     WordData SelectedWord;
 
     List<WordData> WordsFound = new List<WordData>();
@@ -51,6 +52,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         if (!word.GetIsAPhoneNumber()) AddWord(word);
         else AddNumber(word);
         OnRefreshNotebook?.Invoke(this, null);
+        if(WordsFound.Count == 4) OnTaked4Words?.Invoke(this, null);
     }
 
     void AddWord(WordData word)

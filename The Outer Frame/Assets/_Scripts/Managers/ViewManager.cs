@@ -21,6 +21,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnGameOverView;
     [SerializeField] GameEvent OnPauseView;
     [SerializeField] GameEvent OnDrawerView;
+    [SerializeField] GameEvent OnTutorialView;
     [SerializeField] GameEvent OnBackToPause;
     [SerializeField] GameEvent OnSitDownSound;
     [SerializeField] GameEvent OnSendReportAutomatically;
@@ -32,11 +33,19 @@ public class ViewManager : MonoBehaviour
     bool isInPause;
     bool isGameOver;
     bool inOnFinalReport;
+    bool isInTutorial = false;
 
     private void Start()
     {
-        OnDisableInput?.Invoke(this, null);
-        Invoke("SetStartView", 0.6f);
+        if (!isInTutorial)
+        {
+            OnDisableInput?.Invoke(this, null);
+            Invoke("SetStartView", 0.6f);
+        }
+        else
+        {
+            UpdateViewState(null, ViewStates.TutorialView);
+        }
     }
 
     void SetStartView()
@@ -53,30 +62,16 @@ public class ViewManager : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && currentviewState != ViewStates.GeneralView)
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            if (inOnFinalReport) OnSendReportAutomatically?.Invoke(this, null);
-
-            if (currentviewState == ViewStates.OnTakeSomeInBoard)
+            if (!isInTutorial)
             {
-                UpdateViewState(this, ViewStates.BoardView);
-                return;
+                if (currentviewState != ViewStates.GeneralView) CheckForBackToGeneralView();
             }
-            if (isAPaperHolding)
+            else
             {
-                UpdateViewState(this, ViewStates.OnTakenPaperView);
-                return;
+                if (currentviewState != ViewStates.TutorialView) CheckForBackToTutorialView();
             }
-            if (currentviewState == ViewStates.BoardView) TimeManager.timeManager.NormalizeTime();
-
-            if (isInPause)
-            {
-                TimeManager.timeManager.NormalizeTime();
-                OnBackToPause?.Invoke(this, null);
-                isInPause = false;
-            }
-
-            BackToGeneralView(null, null);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -91,11 +86,43 @@ public class ViewManager : MonoBehaviour
             else
             {
                 TimeManager.timeManager.NormalizeTime();
-                BackToGeneralView(null, null);
+                if (isInTutorial) CheckForBackToTutorialView();
+                else BackToGeneralView(null, null);
                 isInPause = false;
                 OnBackToPause?.Invoke(this, null);
             }
         }
+    }
+
+    void CheckForBackToGeneralView()
+    {
+        if (inOnFinalReport) OnSendReportAutomatically?.Invoke(this, null);
+
+        if (currentviewState == ViewStates.OnTakeSomeInBoard)
+        {
+            UpdateViewState(this, ViewStates.BoardView);
+            return;
+        }
+        if (isAPaperHolding)
+        {
+            UpdateViewState(this, ViewStates.OnTakenPaperView);
+            return;
+        }
+        if (currentviewState == ViewStates.BoardView) TimeManager.timeManager.NormalizeTime();
+
+        if (isInPause)
+        {
+            TimeManager.timeManager.NormalizeTime();
+            OnBackToPause?.Invoke(this, null);
+            isInPause = false;
+        }
+
+        BackToGeneralView(null, null);
+    }
+
+    void CheckForBackToTutorialView()
+    {
+        BackToTutrialView(null, null);
     }
 
     public void BackToGeneralView(Component sender, object _view)
@@ -103,6 +130,12 @@ public class ViewManager : MonoBehaviour
         
         OnNotebookLeave?.Invoke(this, null);
         UpdateViewState(this, ViewStates.GeneralView);
+    }
+
+    public void BackToTutrialView(Component sender, object _view)
+    {
+        OnNotebookLeave?.Invoke(this, null);
+        UpdateViewState(this, ViewStates.TutorialView);
     }
 
     public void UpdateViewState(Component sender, object _view)
@@ -176,6 +209,10 @@ public class ViewManager : MonoBehaviour
                 OnDrawerView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, false);
                 break;
+            case ViewStates.TutorialView:
+                OnTutorialView?.Invoke(this, null);
+                TimeManager.timeManager.PauseTime();
+                break;
         }
         OnViewStateChange?.Invoke(this, NewView);
         currentviewState = NewView;
@@ -201,6 +238,11 @@ public class ViewManager : MonoBehaviour
         {
             OnSitDownSound?.Invoke(this, null);
         }
+    }
+
+    public void SetIsInTutorial(Component sender, object obj)
+    {
+        isInTutorial = (bool)obj;
     }
 
     public void EnableInput(Component sender, object _view)
@@ -238,5 +280,6 @@ public enum ViewStates
     OnTakeSomeInBoard,
     GameOverView,
     PauseView,
-    DrawerView
+    DrawerView,
+    TutorialView
 }

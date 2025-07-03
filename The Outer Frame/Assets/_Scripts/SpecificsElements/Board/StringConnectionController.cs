@@ -34,15 +34,19 @@ public class StringConnectionController : MonoBehaviour
         startPosPin1 = AnimPin1.transform.position;
         startPosPin2 = AnimPin2.transform.position;
 
-        AnimPin2.transform.position = startPosPin1;
+    }
 
-        
+    public void UpdatePositionRotation(Component sender, object obj)
+    {
+        startPosPin1 = AnimPin1.transform.position;
+        startPosPin2 = AnimPin2.transform.position;
     }
 
     public void CheckConnection(Component sender, object obj)
     {
        if (Node1.GetIsPlaced() && Node2.GetIsPlaced() && CheckForConditionals())
         {
+            AnimPin2.transform.position = startPosPin1;
             content.SetActive(true);
             AnimPin2.transform.DOMove(startPosPin2, 0.5f).SetEase(Ease.InOutQuad);
             if(!isConnected) OnPuttingStringSound?.Invoke(this, null);

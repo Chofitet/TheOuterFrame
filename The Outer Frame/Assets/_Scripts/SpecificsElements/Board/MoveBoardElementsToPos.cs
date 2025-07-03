@@ -18,8 +18,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
     bool isOutOfBoard;
     private void Start()
     {
-        FinalPosition = transform.position;
-        FinalRotation = transform.rotation.eulerAngles;
+        UpdateFinalPositionRotation(null, null);
         conditions = GetComponent<IPlacedOnBoard>();
 
         if (conditions == null)
@@ -37,6 +36,36 @@ public class MoveBoardElementsToPos : MonoBehaviour
         {
             Invoke("sarasa", 0.1f);
         }
+    }
+
+
+    public void UpdateFinalPositionRotation(Component sender, object obj)
+    {
+        if(Content != null)
+        {
+            // Buscar TODOS los hijos, incluso los inactivos
+            var childrenWithMover = Content.GetComponentsInChildren<MoveBoardElementsToPos>(true);
+
+            foreach (var mover in childrenWithMover)
+            {
+                GameObject go = mover.gameObject;
+
+                // Si estaba inactivo, lo activamos temporalmente
+                bool wasActive = go.activeSelf;
+                if (!wasActive)
+                    go.SetActive(true);
+
+                // Ejecutar recursivamente el update
+                mover.UpdateFinalPositionRotation(sender, obj);
+
+                // Restaurar el estado original
+                if (!wasActive)
+                    go.SetActive(false);
+            }
+        }
+        Debug.Log("Updated: " + name);
+        FinalPosition = transform.position;
+        FinalRotation = transform.rotation.eulerAngles;
     }
 
     void sarasa()
