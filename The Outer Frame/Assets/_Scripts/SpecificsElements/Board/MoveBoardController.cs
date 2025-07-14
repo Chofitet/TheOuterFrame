@@ -46,6 +46,10 @@ public class MoveBoardController : MonoBehaviour
             board.transform.position = initialPos.transform.position;
             board.transform.rotation = initialPos.transform.rotation;
         }
+        else
+        {
+            board.SetActive(true);
+        }
     }
 
     [ContextMenu("MoveBoard")]

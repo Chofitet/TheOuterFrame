@@ -8,10 +8,12 @@ public class DossierMoveController : MonoBehaviour
     [SerializeField] Transform TakenPosition;
     [SerializeField] Transform LeavePosition;
     [SerializeField] Transform InitShowInBoardPosition;
+    [SerializeField] Transform InitShowInGeneralViewPosition;
     [SerializeField] Transform FinalShowInBoardPosition;
     [SerializeField] GameEvent OnBackToGeneralView;
     [SerializeField] GameEvent OnChangeView;
     [SerializeField] GameEvent OnActionPlanDossier;
+    [SerializeField] GameEvent OnBriefingDossier;
     [SerializeField] GameEvent OnWriteDossier;
     [SerializeField] GameEvent OnSetTimeSpeed;
     [SerializeField] GameEvent OnNotebookTake;
@@ -20,7 +22,6 @@ public class DossierMoveController : MonoBehaviour
     [SerializeField] GameEvent OnBackPositToBoardPos;
     [SerializeField] Transform cameraPivot;
     [SerializeField] Transform InitCameraPivot;
-    [SerializeField] GameObject[] AppearAPpileObjects;
     Animator DossierAnim;
     Sequence AddIdeaSequence;
     Sequence AddAPpileSequence;
@@ -224,61 +225,32 @@ public class DossierMoveController : MonoBehaviour
         posit = (GameObject)obj;
     }
 
-    public void AddAPpile(Component sender, object obj)
+   public void AddAPpile(Component sender, object obj)
     {
+        if (AddAPpileSequence != null && AddAPpileSequence.IsActive()) AddAPpileSequence.Kill();
         DossierAnim = transform.GetChild(0).GetComponent<Animator>();
         AddAPpileSequence = DOTween.Sequence();
-        GetComponent<Animator>().enabled = false;
-        transform.position = InitShowInBoardPosition.position;
-        transform.rotation = InitShowInBoardPosition.rotation;
-        OnActionPlanDossier?.Invoke(this, null);
-
-        // Reseteamos el tiempo de Lerp y activamos el seguimiento del target
-        lerpTime = 0;
-        isFollowingTarget = false; // Inicialmente no sigue al target
-        DossierAnim.SetTrigger("instantActionplan");
-
-        OnDisableInput?.Invoke(this, null);
+        transform.position = InitShowInGeneralViewPosition.position;
+        transform.rotation = InitShowInGeneralViewPosition.rotation;
+        DossierAnim.ResetTrigger("toBA");
+        DossierAnim.ResetTrigger("toAP");
+        DossierAnim.SetTrigger("instantBriefing");
+        OnBriefingDossier?.Invoke(this, null);
+        isAddingIdea = false;
 
         AddAPpileSequence
-            .Append(transform.DOMove(FinalShowInBoardPosition.position, 0.8f).SetEase(Ease.OutSine));
+            .Append(transform.DOMove(TakenPosition.position, 0.8f).SetEase(Ease.OutSine)).
+            OnComplete(() =>
+            {
+                DossierAnim.ResetTrigger("toBA");
+                OnActionPlanDossier?.Invoke(this, null);
+            });
+            
+
     }
 
-    public void AddAPpile2part(Component sender, object obj)
+    public void SetisAddingIdea(Component sender, object obj)
     {
-        foreach (GameObject _obj in AppearAPpileObjects)
-        {
-            _obj.SetActive(true);
-        }
-
-
-        if (AddAPpileSequence != null && AddAPpileSequence.IsActive()) AddAPpileSequence.Kill();
-        AddAPpileSequence = DOTween.Sequence();
-
-        AddAPpileSequence
-            .AppendInterval(1f)
-            .AppendCallback(() =>
-            {
-                OnChangeView?.Invoke(this, ViewStates.DossierView);
-                TimeManager.timeManager.NormalizeTime();
-                transform.SetParent(cameraPivot);
-
-            })
-            .AppendCallback(() =>
-            {
-                isFollowingTarget = true;
-            })
-            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, 0.5f)
-                .SetEase(Ease.InQuart))
-            .OnComplete(() =>
-            {
-                // Detenemos el seguimiento al finalizar el movimiento
-                transform.SetParent(InitCameraPivot);
-                AddAPpileSequence.Kill();
-                DossierAnim.ResetTrigger("open");
-                OnEnableInput?.Invoke(this, null);
-            })
-            .AppendInterval(0.2f)
-            .AppendCallback(() => isFollowingTarget = false);
+        isAddingIdea = true;
     }
 }

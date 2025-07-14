@@ -42,13 +42,19 @@ public class StringConnectionController : MonoBehaviour
         startPosPin2 = AnimPin2.transform.position;
     }
 
+    bool once = false;
     public void CheckConnection(Component sender, object obj)
     {
        if (Node1.GetIsPlaced() && Node2.GetIsPlaced() && CheckForConditionals())
         {
-            AnimPin2.transform.position = startPosPin1;
+            if (!once)
+            {
+                AnimPin2.transform.position = startPosPin1;
+                once = true;
+                AnimPin2.transform.DOMove(startPosPin2, 0.5f).SetEase(Ease.InOutQuad);
+            }
             content.SetActive(true);
-            AnimPin2.transform.DOMove(startPosPin2, 0.5f).SetEase(Ease.InOutQuad);
+            
             if(!isConnected) OnPuttingStringSound?.Invoke(this, null);
             isConnected = true;
         }

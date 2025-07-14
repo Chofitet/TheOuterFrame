@@ -9,22 +9,26 @@ public class DossierController : MonoBehaviour
     [SerializeField] GameObject BrifingBtn;
     [SerializeField] GameObject ActionPlanBtn;
     [SerializeField] GameObject Brifing2BTN;
+    [SerializeField] GameObject[] InactiveInTutorial;
     bool isInBrifing = true;
     bool IsTakingIdea;
     private bool isInDossierView;
     bool isInBrifing2;
     bool isInActionPlan;
     bool wasBrieffing2Taked;
+    [SerializeField] GameObject RunOutAPNote;
+    [SerializeField] GameEvent OnWritingShakeDossier;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+        BrifingBtn.GetComponent<BoxCollider>().enabled = false;
     }
 
     public void ChangeToActionPlan(Component sender, object obj)
     {
         if (isInActionPlan) return;
-
+        if (postItSeenInTutorial) RunOutAPNote.SetActive(true);
         //changetoActionPlan
         if (!isInDossierView && !IsTakingIdea) return;
         anim.SetTrigger("toAP");
@@ -35,6 +39,7 @@ public class DossierController : MonoBehaviour
         isInBrifing = false;
         isInBrifing2 = false;
         IsTakingIdea = false;
+        
     }
 
     public void ChangeToBrifing(Component sender, object obj)
@@ -75,10 +80,28 @@ public class DossierController : MonoBehaviour
     {
         isOpen = true;
     }
+
+    bool postItSeenInTutorial;
+    ViewStates currentState;
     public void StateCheck(Component sender, object obj)
     {
-        if ((ViewStates)obj == ViewStates.DossierView) isInDossierView = true;
+        if (currentState == ViewStates.TutorialView)
+        {
+            postItSeenInTutorial = true;
+        }
+        
+
+        currentState = (ViewStates)obj;
+
+        if (currentState == ViewStates.DossierView) isInDossierView = true;
         else isInDossierView = false;
+
+        if (currentState == ViewStates.BoardView)
+        {
+            postItSeenInTutorial = false;
+        }
+
+
     }
 
     public void CloseActionPlan(Component sender, object obj)
@@ -101,4 +124,30 @@ public class DossierController : MonoBehaviour
         wasBrieffing2Taked = true;
     }
 
+
+    bool isInTutorial;
+    public void SetActionPlanInTutorial(Component sender, object obj)
+    {
+        
+        if (obj == null) isInTutorial = true;
+        else isInTutorial = (bool)obj;
+
+        foreach(GameObject go in InactiveInTutorial)
+        {
+                go.SetActive(!isInTutorial);
+        }
+    }
+
+    public void ActiveFunctionalities(Component sender, object obj)
+    {
+        foreach (GameObject go in InactiveInTutorial)
+        {
+            go.SetActive(true);
+        }
+    }
+
+    public void ShakeDossier(Component sender, object obj)
+    {
+        if(isInTutorial && isInActionPlan) OnWritingShakeDossier?.Invoke(this, 0.5f);
+    }
 }

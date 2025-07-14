@@ -13,9 +13,12 @@ public class NotebookMoveController : MonoBehaviour
     [SerializeField] GameEvent OnTakeNotebookSound;
     [SerializeField] GameEvent OnLeaveNotebookSound;
     [SerializeField] GameEvent OnManualSlidePhonePage;
+    [SerializeField] Transform initPosBackDossier;
+    [SerializeField] Transform PosBackDossier;
+    [SerializeField] AnimationCurve OutOfBackDossierCurve;
     Animator anim;
     private Sequence moveSequence;
-    private Sequence moveWiteWordSequence;
+    private Sequence moveWithDossierSequence;
     private Sequence shakeSequence;
     private Transform currentTarget;
     private bool isMoving = false;
@@ -53,6 +56,7 @@ public class NotebookMoveController : MonoBehaviour
                 break;
             case ViewStates.DossierView:
                 SetPos(6);
+                if (isOutOfView) SetPos(7);
                 dontLeaveNotebook = false;
                 break;
             case ViewStates.PinchofonoView:
@@ -60,7 +64,8 @@ public class NotebookMoveController : MonoBehaviour
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.BoardView:
-                SetPos(2);
+                if (!isOutOfView) SetPos(2);
+                //else SetPos(7);
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.PCView:
@@ -91,9 +96,12 @@ public class NotebookMoveController : MonoBehaviour
                 break;
             case ViewStates.TutorialView:
                 if (IsPhonesOpen) anim.SetTrigger("close");
-                if (isUp) SetPos(0, false);
-                if (dontLeaveNotebook) SetPos(6);
-                dontLeaveNotebook = false;
+                if (!isOutOfView)
+                {
+                    if (isUp) SetPos(0, false);
+                    if (dontLeaveNotebook) SetPos(6);
+                    dontLeaveNotebook = false;
+                }
                 break;
         }
         lastView = newview;
@@ -273,5 +281,43 @@ public class NotebookMoveController : MonoBehaviour
     {
         SetPos(2);
     }
+    bool isOutOfView;
+    public void NotebookIsOutOfView(Component sender, object obj)
+    {
+        isOutOfView = !isOutOfView;
+    }
+
+    public void AnimNotebookIsOutOfView(Component sender, object obj)
+    {
+        NotebookIsOutOfView(null, null);
+        SetPos(7, true);
+    }
+
+    public void TakeNotebookWithDossier(Component sender, object obj)
+    {
+        if (moveWithDossierSequence != null && moveWithDossierSequence.IsActive()) moveWithDossierSequence.Kill();
+
+        moveWithDossierSequence = DOTween.Sequence();
+        transform.position = initPosBackDossier.position;
+        transform.rotation = initPosBackDossier.rotation;
+        isOutOfView = false;
+
+        moveWithDossierSequence.Append(transform.DOMove(PosBackDossier.position, 1.2f))
+                                .AppendInterval(1f)
+                                .Append(transform.DOMoveZ(Positions[6].position.z, 0.6f).SetEase(OutOfBackDossierCurve))
+                                .Join(transform.DOMoveX(Positions[6].position.x, 0.6f).SetEase(Ease.InOutBack))
+                                .Join(transform.DOMoveY(Positions[6].position.y, 0.6f))
+                                .Join(transform.DORotate(Positions[6].rotation.eulerAngles,0.6f));
+
+    }
+
+    [ContextMenu("Start TakeNotebookWithDossier")]
+    void TestTakeNotebookWithDossier()
+    {
+        TakeNotebookWithDossier(null, null);
+    }
+
+
+
 
 }

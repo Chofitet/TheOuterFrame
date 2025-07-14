@@ -63,7 +63,6 @@ public class MoveBoardElementsToPos : MonoBehaviour
                     go.SetActive(false);
             }
         }
-        Debug.Log("Updated: " + name);
         FinalPosition = transform.position;
         FinalRotation = transform.rotation.eulerAngles;
     }

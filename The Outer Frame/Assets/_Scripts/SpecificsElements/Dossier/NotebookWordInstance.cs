@@ -96,16 +96,25 @@ public class NotebookWordInstance : MonoBehaviour
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
     }
 
+    bool wasSelectedBefore = false;
     public void SetSelectedWord()
     {
-        
         text.text = "<u>" + wordReference.GetName() + "</u>";
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordReference);
+
+        if (wasSelectedBefore)
+        {
+            text.text = wordReference.GetName();
+            Invoke("ReSelectWord", 0.15f);
+        }
+
+        wasSelectedBefore = true;
     }
 
     public void ClearUnderline()
     {
         text.text = wordReference.GetName();
+        Invoke("SetwasSelectedBefore", 0.1f);
     }
 
     void Alpha1()
@@ -114,4 +123,13 @@ public class NotebookWordInstance : MonoBehaviour
     }
 
     public WordData GetWord() { return wordReference; }
+
+    void ReSelectWord()
+    {
+        text.text = "<u>" + wordReference.GetName() + "</u>";
+    }
+    void SetwasSelectedBefore()
+    {
+        wasSelectedBefore = false;
+    }
 }

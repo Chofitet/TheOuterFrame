@@ -243,6 +243,24 @@ public class NotebookPhonesController : MonoBehaviour
         }
     }
 
+    public void EnableInSlidePhones(Component sender, object obj)
+    {
+        List<WordData> Empylist = new List<WordData>();
+        DisableWordsOfList(Empylist);
+    }
+
+    public void DisableInSlidePhones(Component sender, object obj)
+    {
+        List<WordData> listAllWord = new List<WordData>();
+        foreach (GameObject instance in WordsInstances)
+        {
+            listAllWord.Add(instance.GetComponent<PhoneRowNotebookController>().GetWord());
+        }
+
+        DisableWordsOfList(listAllWord);
+    }
+
+    
     void DisableWordsOfList(List<WordData> list)
     {
         foreach (GameObject instanceBTN in WordsInstances)

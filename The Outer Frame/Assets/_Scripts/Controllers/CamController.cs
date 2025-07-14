@@ -25,7 +25,8 @@ public class CamController : MonoBehaviour
             case ViewStates.DossierView:
                 if (!isInTutirial) SetPriority(0);
                 else SetPriority(10);
-                if (CameraDossierDefault) SetPriority(0);
+                if (CameraDossierDefault) 
+                    SetPriority(0);
                 delayTime = _delay;
                 break;
             case ViewStates.PinchofonoView:

@@ -47,6 +47,11 @@ public class TriggerArrayOfEvents : MonoBehaviour
 
     }
 
+    public void ChangeSomeStringToPass(string x)
+    {
+        SomeStringToPass = x;
+    }
+
     void CallWithDelay()
     {
         TriggerEvents();

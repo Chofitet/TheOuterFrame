@@ -402,6 +402,8 @@ public class PinchofonoController : MonoBehaviour
         RecordingText.SetActive(false);
         CounterContent.SetActive(false);
         WaveContent.SetActive(false);
+        WordSelectedInNotebook.Notebook.UnselectWord();
+        hasNumberEnter = false;
 
         LeftRecordingNumberPanel.SetActive(false);
         RecordingNumberPanel.SetActive(false);

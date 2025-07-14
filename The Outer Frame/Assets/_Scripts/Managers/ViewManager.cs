@@ -5,7 +5,7 @@ using UnityEngine;
 public class ViewManager : MonoBehaviour
 {
     [SerializeField] ViewStates StartView;
-    [SerializeField] float DelayBetweenViews;
+    [SerializeField] float delayBetweenViews;
     [SerializeField] GameEvent OnGeneralView;
     [SerializeField] GameEvent OnPinchofonoView;
     [SerializeField] GameEvent OnBoardView;
@@ -34,6 +34,9 @@ public class ViewManager : MonoBehaviour
     bool isGameOver;
     bool inOnFinalReport;
     bool isInTutorial = false;
+    bool delayingView;
+    bool IsStuckInView;
+    ViewStates StuckView;
 
     private void Start()
     {
@@ -61,6 +64,8 @@ public class ViewManager : MonoBehaviour
             Debug.Log("disable");
             return;
         }
+
+        if (delayingView) return;
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -138,8 +143,14 @@ public class ViewManager : MonoBehaviour
         UpdateViewState(this, ViewStates.TutorialView);
     }
 
+    public void StuckMove(Component sender, object _view)
+    {
+        if (currentviewState == ViewStates.PauseView) return;
+        if (IsStuckInView) UpdateViewState(this, StuckView);
+    }
     public void UpdateViewState(Component sender, object _view)
     {
+        if (delayingView) return;
         ViewStates NewView = (ViewStates)_view;
         if (NewView == currentviewState) return;
         switch (NewView)
@@ -181,6 +192,7 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.DossierView:
                 if (isGameOver) return;
+                if (currentviewState == ViewStates.BoardView) TimeManager.timeManager.NormalizeTime();
                 OnDossierView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 break;
@@ -216,7 +228,8 @@ public class ViewManager : MonoBehaviour
         }
         OnViewStateChange?.Invoke(this, NewView);
         currentviewState = NewView;
-
+        StartCoroutine(DelayBetweenViews());
+        if(currentviewState != ViewStates.PauseView) if (isInPause) isInPause = false;
         //Debug.Log(currentviewState);
     }
 
@@ -264,6 +277,24 @@ public class ViewManager : MonoBehaviour
     public void OnFinalReportTake(Component sender, object obj)
     {
         inOnFinalReport = true;
+    }
+
+    IEnumerator DelayBetweenViews()
+    {
+        delayingView = true;
+        yield return new WaitForSeconds(delayBetweenViews);
+        delayingView = false;
+    }
+
+    public void SetStuck(Component sender, object obj)
+    {
+        IsStuckInView = true;
+        StuckView = (ViewStates)obj;
+    }
+
+    public void UnsetStuck(Component sender, object obj)
+    {
+        IsStuckInView = false;
     }
 }
 

@@ -9,6 +9,7 @@ public class RequestOptionsController : MonoBehaviour
     [SerializeField] Toggle LeaveOption;
     [SerializeField] GameEvent OnLeaveGame;
     [SerializeField] GameEvent ChangeScene;
+    bool isInTutorial;
 
     public void OnPressStampBTN()
     {
@@ -34,5 +35,13 @@ public class RequestOptionsController : MonoBehaviour
     {
         RetryOption.isOn = false;
         LeaveOption.isOn = false;
+    }
+
+    public void SetIsInTutorial(Component sender, object obj)
+    {
+        isInTutorial = (bool)obj;
+
+        if (isInTutorial) RetryOption.gameObject.SetActive(false);
+        else RetryOption.gameObject.SetActive(true);
     }
 }

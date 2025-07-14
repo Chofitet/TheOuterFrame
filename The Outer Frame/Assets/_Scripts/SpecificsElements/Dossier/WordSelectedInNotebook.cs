@@ -18,6 +18,7 @@ public class WordSelectedInNotebook : MonoBehaviour
     [SerializeField] GameEvent OnRemoveEraceInstance;
     [SerializeField] GameEvent OnTaked4Words;
     WordData SelectedWord;
+    bool isInTutorial;
 
     List<WordData> WordsFound = new List<WordData>();
     [SerializeField] List<WordData> WordsfromBeginning = new List<WordData>();
@@ -52,7 +53,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         if (!word.GetIsAPhoneNumber()) AddWord(word);
         else AddNumber(word);
         OnRefreshNotebook?.Invoke(this, null);
-        if(WordsFound.Count == 4) OnTaked4Words?.Invoke(this, null);
+        if(WordsFound.Count == 4 && isInTutorial) OnTaked4Words?.Invoke(this, null);
     }
 
     void AddWord(WordData word)
@@ -224,6 +225,11 @@ public class WordSelectedInNotebook : MonoBehaviour
     public WordData GetSelectedWord(){return SelectedWord;}
 
     public List<WordData> GetWordsList() { return WordsFound; }
+
+    public void SetIsInTutorial(Component sender, object obj)
+    {
+        isInTutorial = (bool)obj;
+    }
 
 }
 

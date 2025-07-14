@@ -16,6 +16,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnPlaced4WordsInBoard;
     int WordsCounts;
     bool IsInView;
+    bool isInTutorial;
 
 
     public void StateView(Component sender, object obj)
@@ -39,7 +40,7 @@ public class BoardManager : MonoBehaviour
         OnAutoUpdatePreviusPhoto?.Invoke(null, StartPos.position);
         Invoke("Conections", 0.6f);
         WordsCounts += 1;
-        if (WordsCounts == 4) OnPlaced4WordsInBoard?.Invoke(this, null);
+        if (WordsCounts == 4 && isInTutorial) OnPlaced4WordsInBoard?.Invoke(this, null);
     }
 
     void Conections()
@@ -55,5 +56,10 @@ public class BoardManager : MonoBehaviour
         OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
         OnRefreshInfoInBoard?.Invoke(this, null);
         OnRefreshNotebook?.Invoke(this,null);
+    }
+
+    public void SetIsInTutorial(Component sender, object obj)
+    {
+        isInTutorial = (bool)obj;
     }
 }
