@@ -782,6 +782,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3119810390631764731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6357411855730314611}
+  m_Layer: 9
+  m_Name: OutPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6357411855730314611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3119810390631764731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.492}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3291623739128814594}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3171846800578142672
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,6 +2354,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!1 &6531635402954508931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2858,6 +2890,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!1 &7384693493008157267
 GameObject:
   m_ObjectHideFlags: 0
@@ -3347,6 +3380,7 @@ Transform:
   - {fileID: 202037408357322300}
   - {fileID: 7854413263185648306}
   - {fileID: 747079974793892089}
+  - {fileID: 6357411855730314611}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7502035540380240527
@@ -3393,6 +3427,7 @@ MonoBehaviour:
   photo3: {fileID: 3357609071240976087}
   photoQR: {fileID: 2540310807939827138}
   ThumbUp: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
+  OutPos: {fileID: 6357411855730314611}
   WrongResultImg:
   - {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
   - {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
@@ -3435,6 +3470,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &7877078697688773515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3467,6 +3503,7 @@ MonoBehaviour:
   DelayCall: 2
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &1164539977058065183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3567,6 +3604,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &1929965428480570480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3599,6 +3637,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &7715416349359175979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3631,6 +3670,7 @@ MonoBehaviour:
   DelayCall: 0.1
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &-4961398443103396464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3675,6 +3715,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!1 &8899401202558587827
 GameObject:
   m_ObjectHideFlags: 0
@@ -4235,6 +4276,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!4 &792611864994759473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
@@ -4473,6 +4515,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!4 &3218843370027237765 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
@@ -4629,6 +4672,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!4 &4047225791741278359 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
@@ -4785,6 +4829,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!4 &7971288897677164350 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}

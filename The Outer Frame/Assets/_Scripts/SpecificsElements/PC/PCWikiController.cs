@@ -56,12 +56,13 @@ public class PCWikiController : MonoBehaviour
 
 
         WikiData.text = "";
-
+        
 
         image.sprite = null;
         //PhoneNumber.text = "";
 
         CheckForUnlockCondition(input);
+        WikiInfoContent.SetActive(false);
 
         StartCoroutine(Delay(input));
 
@@ -71,6 +72,7 @@ public class PCWikiController : MonoBehaviour
     IEnumerator Delay(DataBaseType input)
     {
         yield return new WaitForSeconds(0.2f);
+        WikiInfoContent.SetActive(true);
         if (input.GetText() != null) WikiData.text = input.GetText();
         
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);

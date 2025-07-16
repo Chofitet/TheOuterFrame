@@ -10,7 +10,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
     [SerializeField] GameEvent OnPlaceInBoardSound;
     [SerializeField] bool IsAUpdatedPhoto;
     Vector3 FinalPosition;
-    Vector3 FinalRotation;
+    Quaternion FinalRotation;
     GameObject Content;
     bool isPlaced;
     bool isTaken;
@@ -20,6 +20,8 @@ public class MoveBoardElementsToPos : MonoBehaviour
     {
         UpdateFinalPositionRotation(null, null);
         conditions = GetComponent<IPlacedOnBoard>();
+
+        
 
         if (conditions == null)
         {
@@ -64,7 +66,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
             }
         }
         FinalPosition = transform.position;
-        FinalRotation = transform.rotation.eulerAngles;
+        FinalRotation = transform.rotation;
     }
 
     void sarasa()
@@ -135,7 +137,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
         Content.SetActive(true);
 
         transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad);
-        transform.DORotate(FinalRotation, 0.3f).SetEase(Ease.InOutCirc);
+        transform.DORotate(FinalRotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc);
         OnPlaceInBoardSound?.Invoke(this, null);
          
     }
@@ -154,6 +156,15 @@ public class MoveBoardElementsToPos : MonoBehaviour
     {
         isOutOfBoard = x;
         if(x) isPlaced = false;
+    }
+
+    public void PlaceDirectly()
+    {
+        isPlaced = true;
+        transform.position = FinalPosition;
+        transform.rotation = FinalRotation;
+        Content.SetActive(true);
+
     }
 
 }

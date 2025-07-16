@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -152,12 +153,13 @@ public class ViewManager : MonoBehaviour
     {
         if (delayingView) return;
         ViewStates NewView = (ViewStates)_view;
+        StopAllCoroutines();
         if (NewView == currentviewState) return;
         switch (NewView)
         {
             case ViewStates.GeneralView:
                 OnGeneralView?.Invoke(this, false);
-                if(currentviewState == ViewStates.PCView) TimeManager.timeManager.NormalizeTime();
+                if(currentviewState == ViewStates.PCView ) TimeManager.timeManager.NormalizeTime();
                 BackToGeneralViewWhitMoving();
                 break;
             case ViewStates.PinchofonoView:
@@ -169,7 +171,8 @@ public class ViewManager : MonoBehaviour
             case ViewStates.BoardView:
                 if (isGameOver) return;
                 if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
-                TimeManager.timeManager.PauseTime();
+                StartCoroutine(DelayForTimeChange(() => TimeManager.timeManager.PauseTime()));
+                //TimeManager.timeManager.PauseTime();
                 OnBoardView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 break;
@@ -295,6 +298,13 @@ public class ViewManager : MonoBehaviour
     public void UnsetStuck(Component sender, object obj)
     {
         IsStuckInView = false;
+    }
+
+    IEnumerator DelayForTimeChange(Action callback)
+    {
+        yield return new WaitForSeconds(0.5f);
+        callback?.Invoke();
+
     }
 }
 

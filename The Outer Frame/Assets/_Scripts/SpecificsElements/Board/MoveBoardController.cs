@@ -21,13 +21,13 @@ public class MoveBoardController : MonoBehaviour
 
     public void MoveBoard(Component sender, object obj)
     {
-        board.transform.DOMove(transform.position, 3).SetEase(Ease.OutSine).OnComplete(() => { OnMoveBoardFinish?.Invoke(this, null); });
+        board.transform.DOMove(transform.position, 1.8f).SetEase(Ease.OutSine).OnComplete(() => { OnMoveBoardFinish?.Invoke(this, null); });
         board.SetActive(true);
     }
 
     public void MoveToTutorialPos(Component sender, object obj)
     {
-        board.transform.DOMove(TutorialPos.transform.position, 3).SetEase(Ease.OutSine).OnComplete(() => { OnMoveBoardFinish?.Invoke(this, null); });
+        board.transform.DOMove(TutorialPos.transform.position, 1.8f).SetEase(Ease.OutSine).OnComplete(() => { OnMoveBoardFinish?.Invoke(this, null); });
 
         board.SetActive(true);
     }

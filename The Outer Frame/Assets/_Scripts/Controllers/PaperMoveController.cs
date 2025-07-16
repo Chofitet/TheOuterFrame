@@ -22,6 +22,7 @@ public class PaperMoveController : MonoBehaviour
     [SerializeField] GameEvent OnSetPaperState;
     [SerializeField] GameEvent OnReportEnterDatabase;
     [SerializeField] GameEvent OnTranscriptionEnterDatabase;
+    [SerializeField] AnimationCurve ReportToButtomRigthCurve;
     private bool isMoving;
     GameObject currentPaper;
     bool isHolding;
@@ -72,7 +73,7 @@ public class PaperMoveController : MonoBehaviour
         TakeReport(null, currentPaper);
     }
 
-
+    bool auxComesFromRightPos = false;
     public void TakeReport(Component sender, object obj)
     {
         if (isChangingPapers) return;
@@ -93,10 +94,18 @@ public class PaperMoveController : MonoBehaviour
             LeavePaperPile(null,null);
         }
 
+        if (auxComesFromRightPos && isMoving) auxComesFromRightPos = true;
+        else
+        {
+            auxComesFromRightPos = (actualPaperState == PaperState.HoldingRight) ? true : false;
+        }
+
         currentPaper = reportObject;
         currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Taken);
 
         SetPosition(TakenPos);
+        if(!auxComesFromRightPos) SetPosition(TakenPos);
+        else SetPosition(TakenPos, Ease.OutSine, 1.5f);
         SetPaperState(PaperState.Taken);
         reportObject.GetComponent<BoxCollider>().enabled = false;
         EnableLastBoxCollider();
@@ -146,7 +155,7 @@ public class PaperMoveController : MonoBehaviour
         if (view != ViewStates.GeneralView && view!= ViewStates.OnTakenPaperView)
         {
             currentPaper.transform.SetParent(auxTrans);
-            SetPosition(auxTrans);
+            SetPosition(auxTrans, Ease.InCubic);
             SetPaperState(PaperState.HoldingRight);
             currentPaper.GetComponent<BoxCollider>().enabled = true;
         }
@@ -154,16 +163,27 @@ public class PaperMoveController : MonoBehaviour
 
     Transform currentTarget;
     float lerpTime;
-    void SetPosition(Transform target)
+    void SetPosition(Transform target, Ease easy = Ease.InOutCirc, float speedMove = 1)
     {
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
+
 
         currentTarget = target;
         isMoving = true;
         lerpTime = 0;
 
+        Vector3 positionOutProgressor = currentPaper.transform.position;
+        float timeToOutProgressor = 0;
+        if (currentPaper.GetComponent<ReportController>() != null)
+        { 
+            timeToOutProgressor = 0.3f;
+            positionOutProgressor = currentPaper.GetComponent<ReportController>().GetOutPos();
+        }
+
         moveSequence = DOTween.Sequence();
-        moveSequence.Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, takeDuration).SetEase(Ease.InOutCirc))
+        moveSequence
+            .Append(currentPaper.transform.DOMove(positionOutProgressor, timeToOutProgressor).SetEase(Ease.OutCirc))
+            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, speedMove).SetEase(easy))
                .OnComplete(() =>
                {
                         isMoving = false;

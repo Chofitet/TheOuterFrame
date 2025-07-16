@@ -14,6 +14,8 @@ public class NotebookController : MonoBehaviour
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
     int i = 0;
     bool once;
+    bool isStarting = true;
+
     List<int> removedIndex = new List<int>();
     private void Start()
     {
@@ -21,6 +23,15 @@ public class NotebookController : MonoBehaviour
         {
             WordSpots.Add(WordAnchors.GetChild(i));
         }
+
+        Invoke("SetisStartingFalse", 1f);
+
+    }
+
+    void SetisStartingFalse()
+    {
+        isStarting = false;
+        InctiveWordsOnBoard = new List<WordData>(WordSelectedInNotebook.Notebook.GetWordsInBeggining());
     }
 
     // Refresh When is added a new Word
@@ -60,7 +71,7 @@ public class NotebookController : MonoBehaviour
 
         GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
         wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
-        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded);
+        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded, isStarting);
         WordsInstances.Add(wordaux);
 
         once = false;

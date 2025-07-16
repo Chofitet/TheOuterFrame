@@ -17,6 +17,7 @@ public class ReportController : MonoBehaviour
     [SerializeField] PhotoReportSetter photo3;
     [SerializeField] PhotoReportSetter photoQR;
     [SerializeField] Sprite ThumbUp;
+    [SerializeField] Transform OutPos;
     [SerializeField] List<Sprite> WrongResultImg = new List<Sprite>();
     
     bool isNotCompleted;
@@ -155,6 +156,11 @@ public class ReportController : MonoBehaviour
         photo1.gameObject.SetActive(false);
         photo2.gameObject.SetActive(false);
         photo3.gameObject.SetActive(false);
+    }
+
+    public Vector3 GetOutPos()
+    {
+        return OutPos.transform.position;
     }
 
 }

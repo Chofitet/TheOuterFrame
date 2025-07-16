@@ -9,6 +9,7 @@ public class APpileController : MonoBehaviour
     [SerializeField] Transform Position2;
     [SerializeField] Transform Position3;
     [SerializeField] Transform Position4;
+    [SerializeField] Transform UltimaPosition;
     [SerializeField] Transform CamParent;
     [SerializeField] GameEvent OnAPpilePlaced;
     [SerializeField] GameEvent OnDisableInput;
@@ -49,12 +50,12 @@ public class APpileController : MonoBehaviour
 
         APpileMuveSequence = DOTween.Sequence();
 
+        // Primer Lerp: hacia Position3
         currentTarget = Position3;
         isLerping = true;
         lerpTime = 0f;
 
-        // Parte 1: Lerp a Position3
-        var lerpTween = DOTween.To(() => lerpTime, x => lerpTime = x, 1f, 0.5f)
+        var lerpToPosition3 = DOTween.To(() => lerpTime, x => lerpTime = x, 1f, 0.5f)
             .SetEase(Ease.InOutQuart)
             .OnComplete(() =>
             {
@@ -63,19 +64,40 @@ public class APpileController : MonoBehaviour
                 currentTarget = null;
             });
 
-        // Parte 2: Espera y sube dossier
+        // Segundo Lerp: hacia Position4
+
+        Tween lerpToPosition4 = DOTween.Sequence();
+
         var delayAndDossierSequence = DOTween.Sequence()
-            .AppendInterval(1f)
+            .AppendInterval(1)
             .AppendCallback(() => OnDoDossierUpForAPplacing?.Invoke(this, null))
+            .AppendCallback(() =>
+            {
+                lerpToPosition4 = DOTween.Sequence()
+                .AppendInterval(0.4f)
+                .AppendCallback(() =>
+                {
+                    currentTarget = Position4;
+                    isLerping = true;
+                    lerpTime = 0f;
+                })
+                .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1f, 0.7f)
+                    .SetEase(Ease.InOutQuart)
+                    .OnComplete(() =>
+                    {
+                        isLerping = false;
+                        lerpTime = 0f;
+                        currentTarget = null;
+                    })
+            );})
             .AppendInterval(1.2f)
             .AppendCallback(() =>
             {
-                currentTarget = Position4;
+                currentTarget = UltimaPosition;
 
-            // Parte 3: Movimiento final
-            var finalMoveSequence = DOTween.Sequence();
+                var finalMoveSequence = DOTween.Sequence();
                 finalMoveSequence.Append(transform.DOMoveX(currentTarget.position.x, 0.5f).SetEase(Ease.OutSine))
-                                 .Join(transform.DOMoveY(currentTarget.position.y, 0.5f).SetEase(Ease.InCubic))
+                                 .Join(transform.DOMoveY(currentTarget.position.y, 0.5f))
                                  .Join(transform.DOMoveZ(currentTarget.position.z, 0.5f))
                                  .Join(transform.DORotate(currentTarget.rotation.eulerAngles, 0.5f).SetEase(Ease.OutCubic))
                                  .OnComplete(() =>
@@ -88,8 +110,8 @@ public class APpileController : MonoBehaviour
                                  });
             });
 
-        // Encadenar todo en una sola secuencia para asegurar el orden
-        APpileMuveSequence.Append(lerpTween)
+        APpileMuveSequence.Append(lerpToPosition3)
+                          .Append(lerpToPosition4)
                           .Append(delayAndDossierSequence);
     }
 

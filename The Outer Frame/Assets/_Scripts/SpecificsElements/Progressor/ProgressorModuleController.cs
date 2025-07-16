@@ -81,6 +81,8 @@ public class ProgressorModuleController : MonoBehaviour
         // Incrementar el tiempo transcurrido teniendo en cuenta la variación del tiempo
         elapsedTime += Time.deltaTime * TimeVariation;
 
+       
+
         if (elapsedTime >= adjustedDurationForSetSlot)
         {
             // Finalizar espera y ejecutar InitSlot
@@ -278,6 +280,11 @@ public class ProgressorModuleController : MonoBehaviour
     {
         TimeVariation = (float)obj;
         anim.SetFloat("speed", TimeVariation);
+
+        if(TimeVariation == 1)
+        {
+            adjustedDurationForSetSlot = 1.3f;
+        }
 
         if (isWaitingForSetSlot)
         {

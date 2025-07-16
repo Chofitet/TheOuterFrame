@@ -13,6 +13,19 @@ public class NotebookPhonesController : MonoBehaviour
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
     int i = 0;
     bool once = false;
+    bool IsPhoneSlideOut;
+    bool isStarting = true;
+
+    private void Start(){ 
+        Invoke("SetisStartingFalse", 2f);
+        
+    }
+
+    void SetisStartingFalse()
+    {
+        isStarting = false;
+        InctiveWordsOnBoard = new List<WordData>(WordSelectedInNotebook.Notebook.GetWordsInBeggining());
+    }
 
     // Refresh When is added a new Phone
     public void RefreshPhones(Component component, object obj)
@@ -57,7 +70,7 @@ public class NotebookPhonesController : MonoBehaviour
 
         GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
         wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
-        wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded);
+        wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded, isStarting);
         WordsInstances.Add(wordaux);
 
         once = false;
@@ -213,6 +226,7 @@ public class NotebookPhonesController : MonoBehaviour
 
     public void PutingWordOnBoard(Component sender, object obj)
     {
+        if (!IsPhoneSlideOut) return;
         InctiveWordsOnBoard.Add((WordData)obj);
         DisableWordsOfList(InctiveWordsOnBoard);
     }
@@ -245,12 +259,15 @@ public class NotebookPhonesController : MonoBehaviour
 
     public void EnableInSlidePhones(Component sender, object obj)
     {
+        IsPhoneSlideOut = true;
         List<WordData> Empylist = new List<WordData>();
         DisableWordsOfList(Empylist);
+        PutingWordOnBoard(null, null);
     }
 
     public void DisableInSlidePhones(Component sender, object obj)
     {
+        IsPhoneSlideOut = false;
         List<WordData> listAllWord = new List<WordData>();
         foreach (GameObject instance in WordsInstances)
         {
@@ -266,6 +283,7 @@ public class NotebookPhonesController : MonoBehaviour
         foreach (GameObject instanceBTN in WordsInstances)
         {
             instanceBTN.GetComponent<Button>().enabled = true;
+            instanceBTN.GetComponent<Button>().interactable = true;
 
             foreach (WordData word in list)
             {
@@ -273,8 +291,10 @@ public class NotebookPhonesController : MonoBehaviour
                 if (Wordinstance.GetWord() == word)
                 {
                     instanceBTN.GetComponent<Button>().enabled = false;
+                    instanceBTN.GetComponent<Button>().interactable = false;
                 }
             }
         }
     }
+
 }

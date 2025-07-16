@@ -14,6 +14,8 @@ public class BoardManager : MonoBehaviour
     [SerializeField] Transform StartPos;
     [SerializeField] Transform TakeOutPos;
     [SerializeField] GameEvent OnPlaced4WordsInBoard;
+    [SerializeField] MoveBoardElementsToPos[] SetInTutorial;
+    [SerializeField] StringConnectionController[] ConnectInTutorial;
     int WordsCounts;
     bool IsInView;
     bool isInTutorial;
@@ -55,11 +57,35 @@ public class BoardManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
         OnRefreshInfoInBoard?.Invoke(this, null);
-        OnRefreshNotebook?.Invoke(this,null);
+        OnRefreshNotebook?.Invoke(this, null);
     }
 
     public void SetIsInTutorial(Component sender, object obj)
     {
         isInTutorial = (bool)obj;
+
+        if (!isInTutorial)
+        {
+            Invoke("ActiveElements", 0.2f);
+            Invoke("MakeConections", 0.2f);
+        }
+    }
+
+    void ActiveElements()
+    {
+        foreach (MoveBoardElementsToPos BoardElement in SetInTutorial)
+        {
+            if (!BoardElement) continue;
+            BoardElement.PlaceDirectly();
+        }
+    }
+
+    void MakeConections()
+    {
+        foreach (StringConnectionController BoardElement in ConnectInTutorial)
+        {
+            if (!BoardElement) continue;
+            BoardElement.ConnectDirectly();
+        }
     }
 }

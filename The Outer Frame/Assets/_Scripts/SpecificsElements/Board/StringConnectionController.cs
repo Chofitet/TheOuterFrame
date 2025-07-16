@@ -45,6 +45,7 @@ public class StringConnectionController : MonoBehaviour
     bool once = false;
     public void CheckConnection(Component sender, object obj)
     {
+       if (isConnected) return;
        if (Node1.GetIsPlaced() && Node2.GetIsPlaced() && CheckForConditionals())
         {
             if (!once)
@@ -109,5 +110,14 @@ public class StringConnectionController : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void ConnectDirectly()
+    {
+        isConnected = true;
+        content.SetActive(true);
+        AnimPin2.transform.position = startPosPin2;
+
+
     }
 }

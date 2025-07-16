@@ -21,7 +21,7 @@ public class WordSelectedInNotebook : MonoBehaviour
     bool isInTutorial;
 
     List<WordData> WordsFound = new List<WordData>();
-    [SerializeField] List<WordData> WordsfromBeginning = new List<WordData>();
+    public List<WordData> WordsfromBeginning = new List<WordData>();
 
     private void Awake()
     {
@@ -37,14 +37,6 @@ public class WordSelectedInNotebook : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        foreach (WordData w in WordsfromBeginning)
-        {
-            AddWordToNotebook(null,w);
-        }
-    }
-
     public void AddWordToNotebook(Component sender, object obj)
     {
         WordData word = (WordData)obj;
@@ -56,7 +48,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         if(WordsFound.Count == 4 && isInTutorial) OnTaked4Words?.Invoke(this, null);
     }
 
-    void AddWord(WordData word)
+    void AddWord(WordData word, bool isDirectly = false)
     {
         OnDelayNotChangeView?.Invoke(this, 1f);
 
@@ -70,20 +62,20 @@ public class WordSelectedInNotebook : MonoBehaviour
             WordsFound.Add(word);
         }
 
-        OnSlidePhones?.Invoke(this, false);
+        if (!isDirectly) OnSlidePhones?.Invoke(this, false);
         DeleteOtherWords(word);
         OnShowWordsNotebook?.Invoke(this, word);
 
 
         if(word.GetPhoneNumber() != "" )
         {
-            StartCoroutine(SlideDelay(IsNumAlreadyInList(word), word));
+            StartCoroutine(SlideDelay(IsNumAlreadyInList(word), word, isDirectly));
             OnDelayNotChangeView?.Invoke(this, 1f);
         }
 
         
     }
-    void AddNumber(WordData num)
+    void AddNumber(WordData num, bool isDirectly = false)
     {
         if (!IsWordAlreadyExist(num))
         {
@@ -95,7 +87,7 @@ public class WordSelectedInNotebook : MonoBehaviour
             IsWordAlreadyExist(num).SetIsPhoneNumberFound(); 
         }
         num.SetIsPhoneNumberFound();
-        OnSlidePhones?.Invoke(this,true);
+        if (!isDirectly) OnSlidePhones?.Invoke(this,true);
         OnShowNumNotebook?.Invoke(this, num);
         
     }
@@ -106,15 +98,15 @@ public class WordSelectedInNotebook : MonoBehaviour
     }
 
     bool isNotebookDown;
-    IEnumerator SlideDelay(WordData num, WordData word)
+    IEnumerator SlideDelay(WordData num, WordData word, bool isDirectly = false)
     {
         yield return new WaitForSeconds(1.1f);
-        if(!isNotebookDown) OnSlidePhones?.Invoke(this, true);
+        if(!isNotebookDown && !isDirectly) OnSlidePhones?.Invoke(this, true);
         if(!num) OnShowNumNotebook?.Invoke(this, word);
         else OnShowNumNotebook?.Invoke(this, word);
         yield return new WaitForSeconds(1.1f);
 
-        if (!isNotebookDown) OnSlidePhones?.Invoke(this, false);
+        if (!isNotebookDown && !isDirectly) OnSlidePhones?.Invoke(this, false);
     }
 
     WordData IsNumAlreadyInList(WordData word)
@@ -229,6 +221,28 @@ public class WordSelectedInNotebook : MonoBehaviour
     public void SetIsInTutorial(Component sender, object obj)
     {
         isInTutorial = (bool)obj;
+        if (!isInTutorial) AddWordsDirectly();
+    }
+
+    void AddWordsDirectly()
+    {
+        foreach (WordData w in WordsfromBeginning)
+        {
+            if (!w.GetIsAPhoneNumber()) AddWord(w, true);
+            else AddNumber(w, true);
+
+        }
+    }
+
+    public List<WordData> GetWordsInBeggining()
+    {
+        List<WordData> aux = new List<WordData>();
+
+        if (isInTutorial)
+        {
+            return aux;
+        }
+        else return WordsfromBeginning;
     }
 
 }

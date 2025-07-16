@@ -298,12 +298,12 @@ public class NotebookMoveController : MonoBehaviour
         if (moveWithDossierSequence != null && moveWithDossierSequence.IsActive()) moveWithDossierSequence.Kill();
 
         moveWithDossierSequence = DOTween.Sequence();
-        transform.position = initPosBackDossier.position;
-        transform.rotation = initPosBackDossier.rotation;
+       // transform.position = initPosBackDossier.position;
+       // transform.rotation = initPosBackDossier.rotation;
         isOutOfView = false;
-
-        moveWithDossierSequence.Append(transform.DOMove(PosBackDossier.position, 1.2f))
-                                .AppendInterval(1f)
+        //.Append(transform.DOMove(PosBackDossier.position, 1.2f))
+        moveWithDossierSequence
+                                .AppendInterval(1.2f) //1f
                                 .Append(transform.DOMoveZ(Positions[6].position.z, 0.6f).SetEase(OutOfBackDossierCurve))
                                 .Join(transform.DOMoveX(Positions[6].position.x, 0.6f).SetEase(Ease.InOutBack))
                                 .Join(transform.DOMoveY(Positions[6].position.y, 0.6f))

@@ -14,7 +14,7 @@ public class PhoneRowNotebookController : MonoBehaviour
     WordData word;
     Button button;
 
-    public void Initialization(WordData _word)
+    public void Initialization(WordData _word, bool NoAnim = false)
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(ButtonPress);
@@ -28,20 +28,30 @@ public class PhoneRowNotebookController : MonoBehaviour
             txtName.text = "?????";
             Num.text = word.GetPhoneNumber();
             button.enabled = true;
-            Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
-            txtName.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+            if (!NoAnim)
+            {
+                Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+                txtName.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+            }
         }
 
         if (!word.GetIsPhoneNumberFound())
         {
             writingTime = 0.5f + 0.5f;
             Num.text = "?????";
-            Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
-            txtName.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+            if (!NoAnim)
+            {
+                Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+                txtName.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+            }
         }
 
-        OnWritingShakeNotebook?.Invoke(this, writingTime);
-        OnWritingNotebookSound?.Invoke(this, null);
+        if(!NoAnim)
+        {
+            OnWritingShakeNotebook?.Invoke(this, writingTime);
+            OnWritingNotebookSound?.Invoke(this, null);
+        }
+        
     }
 
     public void UpdateNumber()
@@ -90,6 +100,8 @@ public class PhoneRowNotebookController : MonoBehaviour
 
     private void ButtonPress()
     {
+        if (!button.interactable) return;
+
         if (word.GetIsAPhoneNumber() && actualView != ViewStates.PinchofonoView)
         {
             return;

@@ -15,7 +15,7 @@ public class NotebookWordInstance : MonoBehaviour
     WordData wordReference;
     bool isCross;
 
-    public void Initialization(WordData word)
+    public void Initialization(WordData word, bool noAnim = false)
     {
         wordReference = word;
         text.text = wordReference.GetName();
@@ -27,14 +27,16 @@ public class NotebookWordInstance : MonoBehaviour
         {
             writingTime = 0.5f;
             word.SetIsFound();
-            text.gameObject.GetComponent<FadeWordsEffect>().StartEffect();
+            if(!noAnim) text.gameObject.GetComponent<FadeWordsEffect>().StartEffect();
         }
 
-
-        OnWritingShakeNotebook?.Invoke(this, writingTime);
-        OnWritingNotebookSound?.Invoke(this, null);
-        Invoke("Alpha1", 1);
-
+        if (!noAnim)
+        {
+            OnWritingShakeNotebook?.Invoke(this, writingTime);
+            OnWritingNotebookSound?.Invoke(this, null);
+            Invoke("Alpha1", 1);
+        }
+           
     }
 
     public void EraseAnim()

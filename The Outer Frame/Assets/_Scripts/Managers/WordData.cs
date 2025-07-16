@@ -42,7 +42,6 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     [SerializeField] WordData WordThatReplaces;
     [SerializeField] bool CopyHistory;
     [SerializeField] List<DeleteCrossoutWorsd> WordsThatDeletes = new List<DeleteCrossoutWorsd>();
-    
 
     [NonSerialized] List<StateEnum> stateHistory = new List<StateEnum>();
     [NonSerialized] List<StateEnum> CheckedStateHistory = new List<StateEnum>();

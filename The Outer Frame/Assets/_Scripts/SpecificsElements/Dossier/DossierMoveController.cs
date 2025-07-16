@@ -238,9 +238,11 @@ public class DossierMoveController : MonoBehaviour
         OnBriefingDossier?.Invoke(this, null);
         isAddingIdea = false;
 
+        //Append(transform.DOMove(TakenPosition.position, 0.8f).SetEase(Ease.OutSine))
+
         AddAPpileSequence
-            .Append(transform.DOMove(TakenPosition.position, 0.8f).SetEase(Ease.OutSine)).
-            OnComplete(() =>
+            .AppendInterval(0.8f)
+            .OnComplete(() =>
             {
                 DossierAnim.ResetTrigger("toBA");
                 OnActionPlanDossier?.Invoke(this, null);
