@@ -108,7 +108,6 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
                 if (combinedWord.StartsWith("<material")) combinedWord = RemoveMaterialTags(combinedWord);
 
                 string extraCharacters = GetExtraCharacters(combinedWord);
-                extraCharacters = extraCharacters.Replace(",,", ",");
                 //Debug.Log(FoundAs + extraCharacters);
                 StringBuilder strBuilder = new StringBuilder(combinedWord);
 
@@ -127,7 +126,12 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
                         strBuilder = strBuilder.Replace(combinedWord, CleanUnnecessaryCharacter(combinedWord));
                     }
                 }
-                auxText += strBuilder + extraCharacters + " ";
+
+                string stringToAdd = strBuilder + extraCharacters + " ";
+                stringToAdd = stringToAdd.Replace(",,", ",");
+                stringToAdd = stringToAdd.Replace("..", ".");
+
+                auxText += stringToAdd;
             }
             else
             {
@@ -135,6 +139,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
             }
             i++;
         }
+        
         textField.text = auxText;
     }
     string RemoveMaterialTags(string word)

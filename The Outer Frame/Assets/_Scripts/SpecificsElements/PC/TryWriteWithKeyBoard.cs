@@ -10,7 +10,7 @@ public class TryWriteWithKeyBoard : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            if (!Input.GetKeyDown(KeyCode.Escape) && actualView == ViewStates.PCView)
+            if (!Input.GetKeyDown(KeyCode.Escape) && actualView == ViewStates.PCView && !string.IsNullOrEmpty(Input.inputString))
             {
                 OnShakeNotebook?.Invoke(this, 1.5f);
             }

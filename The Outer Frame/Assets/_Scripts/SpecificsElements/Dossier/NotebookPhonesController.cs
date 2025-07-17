@@ -235,24 +235,26 @@ public class NotebookPhonesController : MonoBehaviour
     public void CheckView(Component sender, object obj)
     {
         actualView = (ViewStates)obj;
+        List<WordData> Empylist = new List<WordData>();
+        List<WordData> listAllWord = new List<WordData>();
+        foreach (GameObject instance in WordsInstances)
+        {
+            listAllWord.Add(instance.GetComponent<PhoneRowNotebookController>().GetWord());
+        }
 
         if (actualView == ViewStates.BoardView)
         {
-            DisableWordsOfList(InctiveWordsOnBoard);
+            DisableWordsOfList(listAllWord);
         }
         else if (actualView == ViewStates.TVView)
         {
-            List<WordData> listAllWord = new List<WordData>();
-            foreach (GameObject instance in WordsInstances)
-            {
-                listAllWord.Add(instance.GetComponent<PhoneRowNotebookController>().GetWord());
-            }
+         
 
             DisableWordsOfList(listAllWord);
         }
         else
         {
-            List<WordData> Empylist = new List<WordData>();
+            
             DisableWordsOfList(Empylist);
         }
     }
@@ -262,7 +264,7 @@ public class NotebookPhonesController : MonoBehaviour
         IsPhoneSlideOut = true;
         List<WordData> Empylist = new List<WordData>();
         DisableWordsOfList(Empylist);
-        PutingWordOnBoard(null, null);
+        if (actualView == ViewStates.BoardView) DisableWordsOfList(InctiveWordsOnBoard);
     }
 
     public void DisableInSlidePhones(Component sender, object obj)
@@ -275,6 +277,7 @@ public class NotebookPhonesController : MonoBehaviour
         }
 
         DisableWordsOfList(listAllWord);
+        
     }
 
     
