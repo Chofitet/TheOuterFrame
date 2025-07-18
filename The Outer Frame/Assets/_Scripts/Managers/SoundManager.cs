@@ -1,9 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager instance{ get; private set; }
+
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+
+    }
+
     List<GameObject> LoopingSounds = new List<GameObject>();
     public void InstantiateAndPlaySound(Component sender, object obj)
     {
@@ -12,6 +30,7 @@ public class SoundManager : MonoBehaviour
 
         GameObject SoundInstance = new GameObject(sender.name);
         SoundInstance.transform.position = soundInfo.WordPosition.position;
+        if (soundInfo.madeDontDestroyInLoad) DontDestroyOnLoad(SoundInstance);
 
         AudioSource audioSource = SoundInstance.AddComponent<AudioSource>();
 
@@ -46,7 +65,11 @@ public class SoundManager : MonoBehaviour
         LoopingSounds.RemoveAll(s => s == null);
         foreach (GameObject sound in LoopingSounds)
         {
-            if(soundInfo.Name == sound.name)
+            if(soundInfo.fadeOutTime != 0)
+            {
+                sound.GetComponent<AudioSource>().DOFade(0, soundInfo.fadeOutTime);
+            }
+            else if(soundInfo.Name == sound.name)
             {
                 Destroy(sound);
             }
@@ -55,7 +78,7 @@ public class SoundManager : MonoBehaviour
 
     void PlayRandomClip(AudioSource audioSource, List<AudioClip> _clips)
     {
-        int randomIndex = Random.Range(0, _clips.Count - 1);
+        int randomIndex = Random.Range(0, _clips.Count);
         audioSource.clip = _clips[randomIndex];
     }
 
@@ -76,8 +99,10 @@ public struct SoundInfo
     public List<AudioClip> clips;
     public Transform WordPosition;
     public bool isDestroyable;
+    public float fadeOutTime;
+    public bool madeDontDestroyInLoad;
 
-    public SoundInfo(AudioSource _audioClip, float _playDuration, Vector2 _pitchVariation, List<AudioClip> _clips, Transform _WordPosition, string _name, bool _isDestroyable)
+    public SoundInfo(AudioSource _audioClip, float _playDuration, Vector2 _pitchVariation, List<AudioClip> _clips, Transform _WordPosition, string _name, bool _isDestroyable, float _fadeOutTime, bool _madeDontDestroyInLoad)
     {
         audioSource = _audioClip;
         //playDuration = _playDuration;
@@ -86,6 +111,8 @@ public struct SoundInfo
         WordPosition = _WordPosition;
         Name = _name;
         isDestroyable = _isDestroyable;
+        fadeOutTime = _fadeOutTime;
+        madeDontDestroyInLoad = _madeDontDestroyInLoad;
     }
 
     

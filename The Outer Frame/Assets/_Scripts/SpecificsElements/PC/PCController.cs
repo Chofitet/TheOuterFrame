@@ -32,6 +32,7 @@ public class PCController : MonoBehaviour
         textAnim.SetCharacterPerSecond(2);
         foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
         StartCoroutine(IdleSearchBarAnim());
+        LastWindow = OnWikiWindow;
     }
 
     //OnSelectedWordInNotebook
@@ -84,11 +85,11 @@ public class PCController : MonoBehaviour
     }
     public void UpdateDataBase(Component sender, object obj)
     {
-        word = _LastSearchedWord;
+        word = (WordData)obj;
         SearchWordInWiki();
-        LastWindow?.Invoke(this, null);
+        OnWikiWindow?.Invoke(this, null);
     }
-
+    
     public void BackLastEntry(Component sender, object obj)
     {
         if (!isInPCView) return;
@@ -135,11 +136,13 @@ public class PCController : MonoBehaviour
             return;
         }
 
+        string TitleName = WordsManager.WM.FindWordWithPhoneNum(word).GetForm_DatabaseNameVersion();
 
-        WikiTitleSearchedWord.text =  WordsManager.WM.FindWordWithPhoneNum(word).GetForm_DatabaseNameVersion();
+        WikiTitleSearchedWord.text = TitleName;
+        
         if (word.GetReportList().Count != 0 && !word.GetIsFound())
         {
-            WikiTitleSearchedWord.text = "<link>" + word.GetForm_DatabaseNameVersion() + "</link>";
+            WikiTitleSearchedWord.text = "<link>" + TitleName + "</link>";
             WikiTitleSearchedWord.ForceMeshUpdate();
             FindableWordsManager.FWM.InstanciateFindableWord(WikiTitleSearchedWord, FindableBtnType.FindableBTN, true);
         }
@@ -159,7 +162,7 @@ public class PCController : MonoBehaviour
         if (obj == null) return;
 
         WordData searchedWord = (WordData)obj;
-        string newWord = searchedWord.GetForm_DatabaseNameVersion();
+        string newWord = WordsManager.WM.FindWordWithPhoneNum(searchedWord).GetForm_DatabaseNameVersion();
         string existingText = WikiTitleSearchedWord.text;
 
         // Verificar si el texto existente contiene etiquetas <material>

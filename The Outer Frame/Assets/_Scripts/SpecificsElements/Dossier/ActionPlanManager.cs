@@ -8,6 +8,7 @@ public class ActionPlanManager : MonoBehaviour
 {
     [SerializeField] List<StateEnum> Actions = new List<StateEnum>();
     StateEnum SpecialAction;
+    [SerializeField] bool isAFakeAP;
     [SerializeField] GameObject ActionPlanPrefab;
     [SerializeField] Transform OtherParent;
     [SerializeField] Transform OriginalParent;
@@ -30,9 +31,30 @@ public class ActionPlanManager : MonoBehaviour
     bool IsProgressorFull;
     bool isFirstTimeIdeaAdded;
 
+
     private void Start()
     {
         SetActionPlan(null, null);
+        if(isAFakeAP)
+        {
+            DisableButtonsRecursively(gameObject.transform);
+        }
+    }
+
+    public void DisableButtonsRecursively(Transform parent)
+    {
+        // Si el objeto tiene un botón, lo desactiva
+        Button button = parent.GetComponent<Button>();
+        if (button != null)
+        {
+            button.interactable = false;
+        }
+
+        // Recorre todos los hijos del objeto actual
+        foreach (Transform child in parent)
+        {
+            DisableButtonsRecursively(child);
+        }
     }
 
     public void SetActionPlan(Component sender, object obj)

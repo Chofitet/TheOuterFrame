@@ -207,6 +207,14 @@ public class ActionPlan : MonoBehaviour
         isProgressorFull = true;
     }
 
+    public void DisableAllBtns()
+    {
+        foreach (ActionRowController actions in Actions)
+        {
+            actions.gameObject.GetComponent<Button>().enabled = false;
+        }
+    }
+
 }
 
 public class DataFromActionPlan

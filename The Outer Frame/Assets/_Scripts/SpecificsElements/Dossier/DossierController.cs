@@ -18,6 +18,7 @@ public class DossierController : MonoBehaviour
     bool wasBrieffing2Taked;
     [SerializeField] GameObject RunOutAPNote;
     [SerializeField] GameEvent OnWritingShakeDossier;
+    [SerializeField] GameEvent OnShakeDossierSound;
 
     private void Start()
     {
@@ -39,7 +40,9 @@ public class DossierController : MonoBehaviour
         isInBrifing = false;
         isInBrifing2 = false;
         IsTakingIdea = false;
-        
+        onceInAP = false;
+
+
     }
 
     public void ChangeToBrifing(Component sender, object obj)
@@ -56,6 +59,7 @@ public class DossierController : MonoBehaviour
         isInBrifing = true;
         isInActionPlan = false;
         isInBrifing2 = false;
+       
 
     }
 
@@ -146,8 +150,14 @@ public class DossierController : MonoBehaviour
         }
     }
 
+    bool onceInAP; 
     public void ShakeDossier(Component sender, object obj)
     {
-        if(isInTutorial && isInActionPlan) OnWritingShakeDossier?.Invoke(this, 0.5f);
+        if (isInTutorial && isInActionPlan && onceInAP)
+        {
+            OnShakeDossierSound?.Invoke(this, null);
+            OnWritingShakeDossier?.Invoke(this, 0.5f);
+        }
+        onceInAP = true;
     }
 }

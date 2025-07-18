@@ -17,6 +17,7 @@ public class VolumeController : MonoBehaviour
         if (audioSource != null)
         {
             originalVolume = audioSource.volume;
+            audioSource.volume = 0;
         }
     }
 
@@ -42,5 +43,18 @@ public class VolumeController : MonoBehaviour
     {
 
         fadeDuration = (float)obj;
+    }
+
+    bool isInTutorial;
+    public void setTutorial(Component sender, object obj)
+    {
+        isInTutorial = (bool)obj;
+
+        if(!isInTutorial)
+        {
+            audioSource.Play();
+            audioSource.volume = 0;
+            FadeInVolume(null, 0.5f);
+        }
     }
 }

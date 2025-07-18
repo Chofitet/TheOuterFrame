@@ -247,8 +247,6 @@ public class DossierMoveController : MonoBehaviour
                 DossierAnim.ResetTrigger("toBA");
                 OnActionPlanDossier?.Invoke(this, null);
             });
-            
-
     }
 
     public void SetisAddingIdea(Component sender, object obj)

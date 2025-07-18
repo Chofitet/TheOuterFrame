@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class PinchofonoController : MonoBehaviour
 {
@@ -18,342 +19,81 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnStartRecording;
     [SerializeField] GameEvent OnPrintCall;
     [SerializeField] GameEvent OnAbortCallRecording;
-    [SerializeField] GameObject ScreenContent;
-    [SerializeField] GameObject CounterContent;
-    [SerializeField] GameObject WaveContent;
-    [SerializeField] GameObject PressToRecordingText;
-    [SerializeField] GameObject RecordingText;
-    [SerializeField] GameObject ErrorMessageContent;
-    [SerializeField] GameObject EnterValidPanel;
-    [SerializeField] GameObject RecordingNumberPanel;
     [SerializeField] GameObject LeftRecordingNumberPanel;
     [SerializeField] GameEvent OnDialingSound;
     [SerializeField] GameEvent OnOpenPhonePadSound;
     [SerializeField] GameEvent OnClosePhonePadSound;
+    [SerializeField] GameEvent OnBlinkPhoneScreen;
     [SerializeField] Canvas canvas;
     [SerializeField] GameEvent OnRefreshPinchofonoScreen;
+    [SerializeField] GameObject[] Screens;
+    int lastScreenNum = 0;
     WordData ActualWord;
-    bool isRecording;
     bool IsInView;
-    bool hasNumberEnter;
-    bool printOnce;
-    bool haveCallToPrint;
-    bool waitingForPrint;
-    bool printInQueue;
+    bool transcriptionInQueue;
 
     CallType CallToPrint;
     private Animator anim;
+
+    PhoneState currentState = PhoneState.waitingNumber;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         anim.SetFloat("tapeSpinSpeed", 0);
-        CounterContent.SetActive(false);
-        WaveContent.SetActive(false);
-
-        LeftRecordingNumberPanel.SetActive(false);
-        RecordingNumberPanel.SetActive(true);
     }
 
-    public void RecBTNPressed(Component sender, object obj)
+    public void ChangePhoneState(Component sender, object obj)
     {
-        canvas.enabled = true;
-        anim.SetTrigger("recordPush");
-        StopAllCoroutines();
-        AbortConfirmationPanel.SetActive(false);
-        StartCoroutine(RefreshScreen());
+        PhoneState nextState;
+        if (obj == null) nextState = PhoneState.waitingNumber;
+        else nextState = (PhoneState)obj;
 
-        if (waitingForPrint)
+        switch (nextState)
         {
-            StartCoroutine(ShowErrorMessagePanel("PLEASE PRINT TRANSCRIPTION IN QUEUE"));
-            return;
+            case PhoneState.waitingNumber:
+                ShowPanel(0);
+                break;
+            case PhoneState.waitingRec:
+                ShowPanel(1);
+                break;
+            case PhoneState.recording:
+                ShowPanel(2);
+                break;
+            case PhoneState.waitingPrinting:
+                ShowPanel(5);
+                break;
         }
-
-
-        if (!hasNumberEnter)
-        {
-            SetIsRecordingFalse();
-            StartCoroutine(ShowErrorMessagePanel("PLEASE ENTER A VALID PHONE NUMBER"));
-        }
-        else
-        {
-            ShowPanel(ScreenContent);
-            anim.SetBool("isCallPossible", true);
-            OnStartRecording?.Invoke(this, null);
-            OnClosePhonePadSound?.Invoke(this, null);
-            SetIsRecordingTrue();
-            CounterContent.SetActive(true);
-            WaveContent.SetActive(true);
-            LeftRecordingNumberPanel.SetActive(true);
-            RecordingNumberPanel.SetActive(false);
-            PressToRecordingText.SetActive(false);
-            RecordingText.SetActive(true);
-            StopCoroutine(AnimPadDial(""));
-
-            
-        }
-    }
-
-    public void PrintBTNPressed(Component sender, object obj)
-    {
-        canvas.enabled = true;
-        anim.SetTrigger("printPush");
-        StopAllCoroutines();
-        AbortConfirmationPanel.SetActive(false);
-        StartCoroutine(RefreshScreen());
-
-        if (!haveCallToPrint && !CallToPrint && isRecording)
-        {
-            StartCoroutine(ShowErrorMessagePanel("Please stand by, recording in progress"));
-            return;
-        }
-
-        if (!haveCallToPrint && !CallToPrint)
-        {
-            StartCoroutine(ShowErrorMessagePanel("NO TRANSCRIPTION IN QUEUE"));
-            return;
-        }
-
-        else if(printOnce)
-        {
-            StartCoroutine(ShowErrorMessagePanel("please empty the printing tray"));
-        }
-
-        if (printInQueue)
-        {
-            StartCoroutine(ShowErrorMessagePanel("please empty the printing tray"));
-            return;
-        }
-        else
-        {
-            ShowPanel(ScreenContent);
-            OnPrintCall?.Invoke(this, null);
-            CallToPrint = null;
-            anim.SetTrigger("padOpen");
-            CounterContent.SetActive(false);
-            WaveContent.SetActive(false);
-            LeftRecordingNumberPanel.SetActive(false);
-            RecordingNumberPanel.SetActive(true);
-            EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().alignment = TextAlignmentOptions.Midline;
-
-        }
-        
-    }
-
-    public void AbortBTNPressed(Component sender, object obj)
-    {
-        canvas.enabled = true;
-        anim.SetTrigger("abortPush");
-        StopAllCoroutines();
-        StartCoroutine(RefreshScreen());
-
-        if (CallToPrint)
-        {
-            StartCoroutine(ShowErrorMessagePanel("TOO LATE TO CANCEL, THE RECORDING IS DONE"));
-           
-            return;
-        }
-
-        if (!isRecording)
-        {
-            StartCoroutine(ShowErrorMessagePanel("PLEASE BEGIN SOMETHING \n TO CANCEL IT"));
-            
-        }
-        else
-        {
-            
-            StartCoroutine(ShowErrorMessagePanel("", 7f));
-            AbortConfirmationPanel.SetActive(true);
-        }
+        currentState = nextState;
 
     }
 
-    public void ConfirmAbort()
-    {
-        ResetAll(null,null);
-        OnAbortCallRecording?.Invoke(this, null);
-        OnOpenPhonePadSound?.Invoke(this, null);
-        StartCoroutine(RefreshScreen());
-    }
-
-    public void CancelAbort()
-    {
-        StopAllCoroutines();
-        ShowPanel(ScreenContent);
-        AbortConfirmationPanel.SetActive(false);
-        StartCoroutine(RefreshScreen());
-    }
-
-    IEnumerator ShowErrorMessagePanel(string message, float timeToAwait = 3)
-    {
-        ShowPanel(ErrorMessageContent);
-        txtMessage.text = message;
-        yield return new WaitForSeconds(timeToAwait);
-        txtMessage.text = "";
-        ShowPanel(ScreenContent);
-        StartCoroutine(RefreshScreen());
-    }
-
-    void ShowPanel(GameObject panel)
-    {
-        if (panel == ScreenContent)
-        {
-            ScreenContent.SetActive(true);
-            ErrorMessageContent.SetActive(false);
-        }
-        else
-        {
-            ScreenContent.SetActive(false);
-            ErrorMessageContent.SetActive(true);
-        }
-    }
-
-    //OnCallEndRecording
-    public void SetCallToPrint(Component sender, object obj)
-    {
-        CallType call = (CallType)obj;
-   
-        CallToPrint = call;
-
-        haveCallToPrint = true;
-        waitingForPrint = true;
-        SetIsRecordingFalse();
-        RecordingNumberPanel.SetActive(false);
-        EnterValidPanel.SetActive(true);
-        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY \n FOR PRINTING";
-        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().alignment = TextAlignmentOptions.MidlineLeft;
-
-        StopAllCoroutines();
-        ShowPanel(ScreenContent);
-        PressToRecordingText.SetActive(false);
-        RecordingText.SetActive(false);
-
-        LeftRecordingNumberPanel.SetActive(false);
-        //StartCoroutine(BlinkText());
-    }
-
-    private IEnumerator BlinkText()
-    {
-        while (waitingForPrint)
-        {
-            canvas.enabled = !canvas.enabled;
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
-
-    //CallToPrint
-    public void PrintCall(Component sender, object obj)
-    {
-        if (printOnce) return;
-        GameObject aux = Instantiate(CallTranscriptionPrefab, InstanciateSpot);
-        aux.GetComponent<TranscriptionCallController>().Inicialization(CallToPrint, ActualWord);
-        
-
-        printOnce = true;
-        ActualWord = null;
-        waitingForPrint = false;
-        printInQueue = true;
-        anim.SetBool("isCallPossible", false);
-        anim.SetTrigger("recordReady");
-        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "TRANSCRIPT READY TO TAKE";
-        StartCoroutine(RefreshScreen());
-    }
+    #region DialingLogic
 
     //OnSelectedWordInNotebook
     public void EnterName(Component sender, object obj)
     {
-        if (isRecording) return;
-        if (waitingForPrint) return;
-        
+        if (currentState != PhoneState.waitingNumber && currentState != PhoneState.waitingRec) return;
+
         StopAllCoroutines();
         WordData word = (WordData)obj;
         if (word.GetPhoneNumber() == "UNLISTED") return;
-        ShowPanel(ScreenContent);
         if (!IsInView) return;
+        ChangePhoneState(null, PhoneState.waitingRec);
         if (!word.GetIsPhoneNumberFound())
         {
-            RecordingNumberPanel.SetActive(false);
-            EnterValidPanel.SetActive(true);
             return;
         }
-        dialing = true;
-        RecordingNumberPanel.SetActive(true);
-        EnterValidPanel.SetActive(false);
         txtNumber.text = word.GetPhoneNumber();
         LeftRecordingNumberPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = word.GetPhoneNumber();
-        hasNumberEnter = true;
         ActualWord = word;
-        
+
         //anim.SetTrigger("padDial");
         StartCoroutine(AnimPadDial(word.GetPhoneNumber()));
         OnDialingSound?.Invoke(this, null);
         anim.SetTrigger("recordReady");
         anim.SetTrigger("recordReadyWobble");
     }
-
-    //OnViewStateChange
-    public void CheckPinchofonoView(Component sender, object obj)
-    {
-        
-        if (!isRecording)
-        {
-            EnterValidPanel.SetActive(true);
-            txtNumber.text = "";
-            RecordingNumberPanel.SetActive(false);
-        }
-       
-        ViewStates view = (ViewStates)obj;
-
-        if(view != ViewStates.PinchofonoView && IsInView )
-        {
-            if(!isRecording && !waitingForPrint) anim.SetTrigger("padClose");
-            if(!isRecording && view != ViewStates.OnTakenPaperView && !waitingForPrint) OnClosePhonePadSound?.Invoke(this, null);
-            AbortConfirmationPanel.SetActive(false);
-            hasNumberEnter = false;
-        }
-
-        IsInView = (view == ViewStates.PinchofonoView) ? true : false;
-
-        if (IsInView && !isRecording && !haveCallToPrint)
-        {
-            anim.SetTrigger("padOpen");
-            OnOpenPhonePadSound?.Invoke(this, null);
-        }
-        StopCoroutine(AnimPadDial(""));
-        StopAllCoroutines();
-
-        if (view == ViewStates.GeneralView && !isRecording && ErrorMessageContent.activeSelf)
-        {
-            StartCoroutine(RefreshScreen());
-            ShowPanel(ScreenContent);
-        }
-        else if (view == ViewStates.GeneralView && !isRecording && dialing)
-        {
-            StartCoroutine(RefreshScreen());
-            ShowPanel(ScreenContent);
-        }
-        else canvas.gameObject.SetActive(true);
-        dialing = false;
-    }
-
-    //OnStartRecordingCall
-    public void SetIsRecordingTrue()
-    {
-        anim.SetBool("IsRecording", true);
-        anim.SetFloat("tapeSpinSpeed", 1);
-        isRecording = true;
-        dialing = false;
-    }
-
-    //OnStartRecordingCall
-    public void SetIsRecordingFalse()
-    {
-        anim.SetBool("IsRecording", false);
-        anim.SetFloat("tapeSpinSpeed", 0);
-        isRecording = false;
-    }
-
-    bool dialing = false;
     IEnumerator AnimPadDial(string number)
     {
         StartCoroutine(RefreshScreen());
@@ -369,6 +109,149 @@ public class PinchofonoController : MonoBehaviour
             yield return new WaitForSeconds(0.175f);
         }
     }
+    #endregion
+
+    #region RecordingLogic
+    public void RecBTNPressed(Component sender, object obj)
+    {
+        anim.SetTrigger("recordPush");
+        StopAllCoroutines();
+
+        if (currentState == PhoneState.waitingNumber) ShowPanel(3, "TO START WIRETAPPING \n ENTER A VALID PHONE NUMBER");
+        else if (currentState == PhoneState.waitingRec)
+        {
+            anim.SetBool("isCallPossible", true);
+            OnStartRecording?.Invoke(this, null);
+            OnClosePhonePadSound?.Invoke(this, null);
+            SetIsRecordingTrue();
+            StopCoroutine(AnimPadDial(""));
+
+            ChangePhoneState(null, PhoneState.recording);
+        }
+    }
+
+    //OnStartRecordingCall
+    public void SetIsRecordingTrue()
+    {
+        anim.SetBool("IsRecording", true);
+        anim.SetFloat("tapeSpinSpeed", 1);
+    }
+
+    //OnStartRecordingCall
+    public void SetIsRecordingFalse()
+    {
+        anim.SetBool("IsRecording", false);
+        anim.SetFloat("tapeSpinSpeed", 0);
+    }
+    #endregion
+
+    #region PrintLogic
+    public void PrintBTNPressed(Component sender, object obj)
+    {
+        anim.SetTrigger("printPush");
+        StopAllCoroutines();
+
+        if (currentState == PhoneState.waitingNumber) ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
+        else if (currentState == PhoneState.waitingRec) ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
+        else if (currentState == PhoneState.recording) ShowPanel(3, "NOT YET, \n WIRETAPPING IN PROGRESS");
+        else if (currentState == PhoneState.waitingPrinting)
+        {
+            if(transcriptionInQueue)
+            {
+                ShowPanel(3, "EMPTY THE PRINTING TRAY \n PLEASE");
+                return;
+            }
+
+            ShowPanel(0);
+            OnPrintCall?.Invoke(this, null);
+            CallToPrint = null;
+            anim.SetTrigger("padOpen");
+
+            ChangePhoneState(null, PhoneState.waitingNumber);
+        }
+    }
+
+    //OnCallEndRecording
+    public void SetCallToPrint(Component sender, object obj)
+    {
+        CallType call = (CallType)obj;
+
+        CallToPrint = call;
+
+        SetIsRecordingFalse();
+
+
+        StopAllCoroutines();
+        ChangePhoneState(null, PhoneState.waitingPrinting);
+
+    }
+
+    //CallToPrint
+    public void PrintCall(Component sender, object obj)
+    {
+        GameObject aux = Instantiate(CallTranscriptionPrefab, InstanciateSpot);
+        aux.GetComponent<TranscriptionCallController>().Inicialization(CallToPrint, ActualWord);
+
+        ActualWord = null;
+        anim.SetBool("isCallPossible", false);
+        anim.SetTrigger("recordReady");
+        transcriptionInQueue = true;
+    }
+    #endregion
+
+    #region AbortLogic
+    public void AbortBTNPressed(Component sender, object obj)
+    {
+        canvas.enabled = true;
+        anim.SetTrigger("abortPush");
+        StopAllCoroutines();
+        StartCoroutine(RefreshScreen());
+
+        if (currentState == PhoneState.waitingNumber) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
+        else if (currentState == PhoneState.waitingRec) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
+        else if (currentState == PhoneState.recording) ShowPanel(4,"");
+        else if (currentState == PhoneState.waitingPrinting)ShowPanel(3, "THERE'S NOTHING TO CANCEL");
+    }
+
+    public void ConfirmAbort()
+    {
+        ResetAll(null,null);
+        OnAbortCallRecording?.Invoke(this, null);
+        OnOpenPhonePadSound?.Invoke(this, null);
+    }
+
+    public void CancelAbort()
+    {
+        StopAllCoroutines();
+        ShowPanel(2);
+    }
+    #endregion
+
+    #region ShowPanelsLogic
+
+    public void ShowPanel(int panelNum, string message = "")
+    {
+        StopAllCoroutines();
+        StartCoroutine(RefreshScreen());
+
+        foreach (GameObject screen in Screens)
+        {
+            CanvasGroup canvasG = screen.GetComponent<CanvasGroup>();
+
+            if (canvasG.alpha == 1)
+            {
+                int auxIndx = Array.IndexOf(Screens, screen);
+                if (auxIndx != 3 && auxIndx != 4) lastScreenNum = auxIndx;
+            }
+
+            canvasG.alpha = 0;
+        }
+
+        Screens[panelNum].GetComponent<CanvasGroup>().alpha = 1;
+
+        if (panelNum == 3 || panelNum == 4) StartCoroutine(ShowErrorMessagePanel(message, lastScreenNum));
+        if (panelNum == 5) OnBlinkPhoneScreen?.Invoke(this, null);
+    }
 
     IEnumerator RefreshScreen()
     {
@@ -377,36 +260,69 @@ public class PinchofonoController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         canvas.gameObject.SetActive(true);
     }
+    IEnumerator ShowErrorMessagePanel(string message, int lastPanel, float timeToAwait = 3)
+    {
+        txtMessage.text = message;
+        yield return new WaitForSeconds(timeToAwait);
+        ShowPanel(lastPanel);
+    }
+
+    #endregion
+
+
+    //OnViewStateChange
+    public void CheckPinchofonoView(Component sender, object obj)
+    {
+        ViewStates view = (ViewStates)obj;
+
+        bool Recording_WaitingForPrint = currentState != PhoneState.recording && currentState != PhoneState.waitingPrinting;
+
+        if (view != ViewStates.PinchofonoView && IsInView)
+        {
+            if(Recording_WaitingForPrint) anim.SetTrigger("padClose");
+            if(Recording_WaitingForPrint && view != ViewStates.OnTakenPaperView ) OnClosePhonePadSound?.Invoke(this, null);
+        }
+
+        IsInView = (view == ViewStates.PinchofonoView) ? true : false;
+
+        if (IsInView && Recording_WaitingForPrint)
+        {
+            anim.SetTrigger("padOpen");
+            OnOpenPhonePadSound?.Invoke(this, null);
+        }
+        StopCoroutine(AnimPadDial(""));
+
+        if (view == ViewStates.GeneralView && Recording_WaitingForPrint && PhoneState.waitingNumber != currentState)
+        {
+            ShowPanel(0);
+            ChangePhoneState(null,PhoneState.waitingNumber);
+        }
+    }
 
     public void ResetAll(Component sender, object obj)
     {
         StopAllCoroutines();
-        ShowPanel(ScreenContent);
-        RecordingNumberPanel.SetActive(false);
-        EnterValidPanel.SetActive(true);
-        EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "ENTER A PHONE NUMBER \n TO WIRETAP";
-        if(waitingForPrint) EnterValidPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "ENTER A PHONE NUMBER \n TO WIRETAP";
+        ChangePhoneState(null, PhoneState.waitingNumber);
         anim.SetBool("IsRecording", false);
         anim.SetFloat("tapeSpinSpeed", 0);
         anim.SetBool("isCallPossible", false);
         anim.SetTrigger("recordReady");
-        isRecording = false;
-        printInQueue = false;
         txtNumber.text = "";
         //CallToPrint = null;
-        txtMessage.text = "";
-        AbortConfirmationPanel.SetActive(false);
-        printOnce = false;
-        haveCallToPrint = false;
-        PressToRecordingText.SetActive(true);
-        RecordingText.SetActive(false);
-        CounterContent.SetActive(false);
-        WaveContent.SetActive(false);
         WordSelectedInNotebook.Notebook.UnselectWord();
-        hasNumberEnter = false;
-
-        LeftRecordingNumberPanel.SetActive(false);
-        RecordingNumberPanel.SetActive(false);
     }
 
+    public void TakeTranscriptionFromTray(Component sender, object obj)
+    {
+        transcriptionInQueue = false;
+    }
+
+}
+
+public enum PhoneState
+{
+    waitingNumber,
+    waitingRec,
+    recording,
+    waitingPrinting
 }

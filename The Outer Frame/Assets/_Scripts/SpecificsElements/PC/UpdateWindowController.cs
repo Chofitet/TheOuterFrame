@@ -10,12 +10,23 @@ public class UpdateWindowController : MonoBehaviour
     [SerializeField] GameObject DeletingPanel;
     [SerializeField] Image BackGround;
     [SerializeField] GameEvent OnWikiWindow;
+    [SerializeField] Image DatabaseImage;
+    [SerializeField] Sprite NoImage;
+    [SerializeField] TMP_Text PaperType;
     bool isDeleting;
     public void UpdatePC(Component sender, object obj)
     {
         WordData word = (WordData)obj;
 
-        Datatxt.text = word.GetForm_DatabaseNameVersion();
+        Datatxt.text = WordsManager.WM.FindWordWithPhoneNum(word).GetForm_DatabaseNameVersion();
+
+        Sprite _image = WordsManager.WM.RequestBDWikiData(word).GetImage();
+        if (_image == null) DatabaseImage.sprite = NoImage;
+        else DatabaseImage.sprite = _image;
+
+        bool isAReport = sender.gameObject.GetComponent<ReportController>() != null ? true : false;
+
+        PaperType.text = isAReport ? "REPORT TO:" : "TRANSCRIPTION TO:";
 
         if (isDeleting)
         {
@@ -33,4 +44,5 @@ public class UpdateWindowController : MonoBehaviour
     {
         DeletingPanel.SetActive(true);
     }
+
 }
