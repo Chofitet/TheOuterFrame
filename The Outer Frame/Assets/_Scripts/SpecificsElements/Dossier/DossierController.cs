@@ -19,6 +19,7 @@ public class DossierController : MonoBehaviour
     [SerializeField] GameObject RunOutAPNote;
     [SerializeField] GameEvent OnWritingShakeDossier;
     [SerializeField] GameEvent OnShakeDossierSound;
+    [SerializeField] GameEvent OnActionPlanDossier;
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class DossierController : MonoBehaviour
     public void ChangeToActionPlan(Component sender, object obj)
     {
         if (isInActionPlan) return;
+        Debug.Log("sender AP: " + sender.gameObject.name);
         if (postItSeenInTutorial) RunOutAPNote.SetActive(true);
         //changetoActionPlan
         if (!isInDossierView && !IsTakingIdea) return;
@@ -150,14 +152,29 @@ public class DossierController : MonoBehaviour
         }
     }
 
+    ViewStates currentView;
+    public void CheckVIew(Component sender, object obj)
+    {
+        currentView = (ViewStates)obj;
+    }
+
     bool onceInAP; 
     public void ShakeDossier(Component sender, object obj)
     {
-        if (isInTutorial && isInActionPlan && onceInAP)
+        if (isInTutorial && isInActionPlan && onceInAP && currentView == ViewStates.DossierView)
         {
             OnShakeDossierSound?.Invoke(this, null);
             OnWritingShakeDossier?.Invoke(this, 0.5f);
         }
         onceInAP = true;
+    }
+
+    public void TriggerOnActionPlanDossier(Component sender, object obj)
+    {
+        if (isInActionPlan) return;
+        if (currentView == ViewStates.DossierView)
+        {
+            OnActionPlanDossier?.Invoke(this, null);
+        }
     }
 }

@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 560622714182444892}
   - component: {fileID: -7775550837788489966}
   - component: {fileID: 8287205149463908253}
+  - component: {fileID: 2622402196148753364}
   m_Layer: 10
   m_Name: BoardPostIdea
   m_TagString: Untagged
@@ -577,6 +578,39 @@ MonoBehaviour:
       - m_Target: {fileID: 4308943302336270615}
         m_TargetAssemblyTypeName: MoveBoardElementsToPos, Assembly-CSharp
         m_MethodName: UpdateFinalPositionRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+--- !u!114 &2622402196148753364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698638971177894008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 46b82e4dbf558b04183490426c0f7347, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9068181064678660897}
+        m_TargetAssemblyTypeName: GeneratorActionController, Assembly-CSharp
+        m_MethodName: CheckView
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -196,7 +196,7 @@ public class DataPersistenceManager : MonoBehaviour
         {
             yield return new WaitForSeconds(autoSaveTimeSeconds);
             SaveGame();
-            Debug.Log("Auto Saved Game");
+           //Debug.Log("Auto Saved Game");
         }
     }
 }

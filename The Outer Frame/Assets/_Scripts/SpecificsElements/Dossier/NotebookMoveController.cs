@@ -29,7 +29,7 @@ public class NotebookMoveController : MonoBehaviour
     bool isGameOver;
     Transform OriginalTransform;
     bool dontLeaveNotebook;
-
+    bool cancelOutView;
     ViewStates lastView;
 
     private void Start()
@@ -65,6 +65,7 @@ public class NotebookMoveController : MonoBehaviour
                 break;
             case ViewStates.BoardView:
                 if (!isOutOfView) SetPos(2);
+                cancelOutView = false;
                 //else SetPos(7);
                 dontLeaveNotebook = true;
                 break;
@@ -85,6 +86,7 @@ public class NotebookMoveController : MonoBehaviour
                 break;
             case ViewStates.PauseView:
                 SetPos(0, false);
+                cancelOutView = true;
                 break;
             case ViewStates.GameOverView:
                 SetPos(0, false);
@@ -290,7 +292,7 @@ public class NotebookMoveController : MonoBehaviour
     public void AnimNotebookIsOutOfView(Component sender, object obj)
     {
         NotebookIsOutOfView(null, null);
-        SetPos(7, true);
+        if(!cancelOutView) SetPos(7, true);
     }
 
     public void TakeNotebookWithDossier(Component sender, object obj)

@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance{ get; private set; }
+    /*public static SoundManager instance{ get; private set; }
 
 
     private void Awake()
@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour
             DontDestroyOnLoad(instance);
         }
 
-    }
+    }*/
 
     List<GameObject> LoopingSounds = new List<GameObject>();
     public void InstantiateAndPlaySound(Component sender, object obj)

@@ -15,8 +15,10 @@ public class NotebookPhonesController : MonoBehaviour
     bool once = false;
     bool IsPhoneSlideOut;
     bool isStarting = true;
+    Vector3 initialConteinerPos;
 
-    private void Start(){ 
+    private void Start(){
+        initialConteinerPos = WordContainer.localPosition;
         Invoke("SetisStartingFalse", 2f);
         
     }
@@ -262,22 +264,14 @@ public class NotebookPhonesController : MonoBehaviour
     public void EnableInSlidePhones(Component sender, object obj)
     {
         IsPhoneSlideOut = true;
-        List<WordData> Empylist = new List<WordData>();
-        DisableWordsOfList(Empylist);
-        if (actualView == ViewStates.BoardView) DisableWordsOfList(InctiveWordsOnBoard);
+
+        WordContainer.transform.localPosition = initialConteinerPos;
     }
 
     public void DisableInSlidePhones(Component sender, object obj)
     {
         IsPhoneSlideOut = false;
-        List<WordData> listAllWord = new List<WordData>();
-        foreach (GameObject instance in WordsInstances)
-        {
-            listAllWord.Add(instance.GetComponent<PhoneRowNotebookController>().GetWord());
-        }
-
-        DisableWordsOfList(listAllWord);
-        
+        WordContainer.transform.localPosition = new Vector3(0,-300,0);
     }
 
     
@@ -299,5 +293,6 @@ public class NotebookPhonesController : MonoBehaviour
             }
         }
     }
+
 
 }

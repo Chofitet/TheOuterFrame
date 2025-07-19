@@ -23,6 +23,10 @@ public class MoveObjectToThisPos : MonoBehaviour
                 BackLastObjectToPos(null, LastObj);
                 MoveObject(anotherObject, 0.2f);
             }
+            else
+            {
+                MoveObject(anotherObject, 0);
+            }
             return;
         }
         GameObject _object = (GameObject)obj;
@@ -30,11 +34,15 @@ public class MoveObjectToThisPos : MonoBehaviour
         MoveObject(_object, 0);
     }
 
+    bool inMovingToPosition;
+
     void MoveObject(GameObject _object, float TimeToWait)
     {
+        inMovingToPosition = true;
         LastObj = _object;
         initPos = LastObj.transform.position;
         initRot = LastObj.transform.rotation.eulerAngles;
+        LastObj.GetComponent<BoxCollider>().enabled = false;
 
         if (MoveSequence != null && MoveSequence.IsActive()) MoveSequence.Kill();
 
@@ -42,11 +50,20 @@ public class MoveObjectToThisPos : MonoBehaviour
 
         MoveSequence.AppendInterval(TimeToWait)
                     .Append(LastObj.transform.DOMove(transform.position, 0.5f).SetEase(Ease.InOutCirc))
-                    .Join(LastObj.transform.DORotate(transform.rotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc));
+                    .Join(LastObj.transform.DORotate(transform.rotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc))
+                    .OnComplete(() =>
+                    {
+                        inMovingToPosition = false;
+                    });
     }
     public void BackLastObjectToPos(Component sender, object obj)
     {
-        if (!LastObj) return;
+        if (!LastObj)
+        {
+            Debug.Log("Any positsToReturn");
+            return;
+        }
+
 
         GameObject objectToBack;
         bool isReplaced = false;
@@ -65,9 +82,12 @@ public class MoveObjectToThisPos : MonoBehaviour
         BackSequence.Append(objectToBack.transform.DOMove(initPos, 0.5f).SetEase(Ease.InOutCirc))
                     .Join(objectToBack.transform.DORotate(initRot, 0.3f).SetEase(Ease.InOutCirc))
                     .OnComplete(()=> 
-                    { 
-                        if(!isReplaced) LastObj = null;
+                    {
+                        LastObj.GetComponent<BoxCollider>().enabled = true;
+                        objectToBack.GetComponent<BoxCollider>().enabled = true;
+                        if (!isReplaced && !inMovingToPosition) LastObj = null;
                         objectToBack = null;
+                        
                     });
 
 

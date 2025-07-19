@@ -63,6 +63,7 @@ public class NotebookWordInstance : MonoBehaviour
         wordReference = word;
         word.SetIsFound();
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
+        GetComponent<Button>().enabled = true;
     }
 
     public void ReplaceWordInstantly(WordData word)

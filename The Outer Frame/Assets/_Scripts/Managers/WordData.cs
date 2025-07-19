@@ -627,6 +627,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public WordData MarkWordsWordThatReplaceRetroactive()
     {
+        WordData LastWord = GetWordThatReplaces();
         WordData currentWord = GetWordThatReplaces();
         WordData auxWord = GetWordThatReplaces();
 
@@ -641,7 +642,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
             if (currentWord == auxWord) break;
         }
 
-        return auxWord;
+        return LastWord;
     }
 
     public List<WordData> SearchForWordsThatReplaceRetroactive()
