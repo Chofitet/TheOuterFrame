@@ -205,6 +205,12 @@ public class NotebookController : MonoBehaviour
     public void CheckView(Component sender, object obj)
     {
         actualView = (ViewStates)obj;
+        List<WordData> listAllWord = new List<WordData>();
+        foreach (GameObject instance in WordsInstances)
+        {
+            listAllWord.Add(instance.GetComponent<NotebookWordInstance>().GetWord());
+        }
+
 
         if (actualView == ViewStates.BoardView)
         {
@@ -212,12 +218,10 @@ public class NotebookController : MonoBehaviour
         }
         else if (actualView == ViewStates.TVView)
         {
-            List<WordData> listAllWord = new List<WordData>();
-            foreach(GameObject instance in WordsInstances)
-            {
-                listAllWord.Add(instance.GetComponent<NotebookWordInstance>().GetWord());
-            }
-
+            DisableWordsOfList(listAllWord);
+        }
+        else if(actualView == ViewStates.PinchofonoView)
+        {
             DisableWordsOfList(listAllWord);
         }
         else

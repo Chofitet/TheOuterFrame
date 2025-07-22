@@ -23,6 +23,10 @@ public class WordSelectedInNotebook : MonoBehaviour
     List<WordData> WordsFound = new List<WordData>();
     public List<WordData> WordsfromBeginning = new List<WordData>();
 
+    [Header("Final ShortCut")]
+    [SerializeField] bool TriggerFinal;
+    public List<WordData> WordsToTriggerFinal= new List<WordData>();
+
     private void Awake()
     {
 
@@ -77,14 +81,17 @@ public class WordSelectedInNotebook : MonoBehaviour
     }
     void AddNumber(WordData num, bool isDirectly = false)
     {
-        if (!IsWordAlreadyExist(num))
+        if (IsWordAlreadyExist(num).Count == 0)
         {
             WordsFound.Add(num);
             OnDelayNotChangeView?.Invoke(this, 2f);
         }
         else
         {
-            IsWordAlreadyExist(num).SetIsPhoneNumberFound(); 
+            foreach(WordData w in IsWordAlreadyExist(num))
+            {
+                w.SetIsPhoneNumberFound();
+            }
         }
         num.SetIsPhoneNumberFound();
         if (!isDirectly) OnSlidePhones?.Invoke(this,true);
@@ -125,17 +132,18 @@ public class WordSelectedInNotebook : MonoBehaviour
         return aux;
     }
 
-    WordData IsWordAlreadyExist(WordData Num)
+    List<WordData> IsWordAlreadyExist(WordData Num)
     {
+        List<WordData> WordsWithNumber = new List<WordData>();
         foreach(WordData word in WordsFound)
         {
             if(word.GetPhoneNumber() == Num.GetPhoneNumber())
             {
-
-                return word;
+                WordsWithNumber.Add(word);
+                continue;
             }
         }
-        return null;
+        return WordsWithNumber;
     }
 
     void ReplaceWordInList(WordData oldWord, WordData newWord)
@@ -232,6 +240,16 @@ public class WordSelectedInNotebook : MonoBehaviour
             else AddNumber(w, true);
 
         }
+        if(TriggerFinal)
+        {
+            foreach (WordData w in WordsToTriggerFinal)
+            {
+                if (!w.GetIsAPhoneNumber()) AddWord(w, true);
+                else AddNumber(w, true);
+
+            }
+        }
+        
     }
 
     public List<WordData> GetWordsInBeggining()
