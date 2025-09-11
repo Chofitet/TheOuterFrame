@@ -15,10 +15,7 @@ public class GameObjectMouseClickDetecter : MonoBehaviour
         graphicRaycaster = GetComponent<GraphicRaycaster>();
         eventSystem = FindObjectOfType<EventSystem>();
 
-        if (graphicRaycaster == null || eventSystem == null)
-        {
-            Debug.LogError("Asegúrate de que el World Canvas tenga un GraphicRaycaster y que haya un EventSystem en la escena.");
-        }
+        
     }
 
     private void Update()
@@ -46,11 +43,11 @@ public class GameObjectMouseClickDetecter : MonoBehaviour
             {
                 uiObjectNames.Add(result.gameObject.name);
             }
-            Debug.Log("UI objects clicked on World Canvas: " + string.Join(", ", uiObjectNames));
+            //Debug.Log("UI objects clicked on World Canvas: " + string.Join(", ", uiObjectNames));
         }
         else
         {
-            Debug.Log("Clicked on empty UI space in World Canvas.");
+            //Debug.Log("Clicked on empty UI space in World Canvas.");
         }
     }
 }

@@ -17,6 +17,7 @@ public class ReportController : MonoBehaviour
     [SerializeField] PhotoReportSetter photo3;
     [SerializeField] PhotoReportSetter photoQR;
     [SerializeField] Sprite ThumbUp;
+    [SerializeField] Transform OutPos;
     [SerializeField] List<Sprite> WrongResultImg = new List<Sprite>();
     
     bool isNotCompleted;
@@ -45,6 +46,7 @@ public class ReportController : MonoBehaviour
         else if (isAlreadyDone)
         {
             Resulttxt.text = report.GetTextForRepetition();
+            FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt, FindableBtnType.FindableBTN);
             photo1.Set("REMEMBER TO READ", WrongResultImg[new System.Random().Next(2) == 0 ? 5 : 8]);
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
             status = "<color=#AE0000>REDUNDANT</color>";
@@ -154,6 +156,11 @@ public class ReportController : MonoBehaviour
         photo1.gameObject.SetActive(false);
         photo2.gameObject.SetActive(false);
         photo3.gameObject.SetActive(false);
+    }
+
+    public Vector3 GetOutPos()
+    {
+        return OutPos.transform.position;
     }
 
 }

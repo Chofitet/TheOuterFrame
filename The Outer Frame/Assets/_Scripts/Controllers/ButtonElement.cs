@@ -7,14 +7,35 @@ public class ButtonElement : MonoBehaviour
 {
     [SerializeField] GameEvent OnButtonElementClick;
     [SerializeField] ViewStates view;
+    [SerializeField] float delay;
     bool isActive = true;
     [SerializeField] bool NotInactiveBTN;
+    bool CancelEvent;
 
     private void OnMouseUpAsButton()
     {
+        CancelEvent = false;
         if (!isActive) return;
+
+        if(delay != 0)
+        {
+            Invoke("CallEvent", delay);
+
+        }
+        else OnButtonElementClick?.Invoke(this, view);
+
+
+        if (!NotInactiveBTN) GetComponent<BoxCollider>().enabled = false;
+    }
+
+    void CallEvent()
+    {
+        if (CancelEvent)
+        {
+            CancelEvent = false;
+            return;
+        }
         OnButtonElementClick?.Invoke(this, view);
-        if(!NotInactiveBTN) GetComponent<BoxCollider>().enabled = false;
     }
 
     public void DisableEnableButton(Component sender, object obj)
@@ -37,5 +58,11 @@ public class ButtonElement : MonoBehaviour
     {
         isActive = false;
     }
+
+    public void SeTruetCancelEvent(Component sender, object obj)
+    {
+        CancelEvent = true;
+    }
+
 }
 

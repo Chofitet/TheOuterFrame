@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,7 @@ public class AlertLevelManager : MonoBehaviour
     [SerializeField] GameEvent OnGameOverAlert;
     [SerializeField] GameEvent OnUpAlertLevel;
     [SerializeField] GameEvent OnDownAlertLevel;
+    float timeFactor = 1;
     int level;
     bool isStoped;
 
@@ -27,14 +29,17 @@ public class AlertLevelManager : MonoBehaviour
     {
         if (isStoped) return;
         int incruseNum = (int)obj;
-        level = level + incruseNum;
-
+        int auxIncruise = level + incruseNum;
         if (level < 0) level = 1;
-        NumLevel.text = level + "%";
+        DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
+            if (auxIncruise >= 100)
+            {
+                Invoke("end", 0.2f);
+            }
+            }); 
 
-        if (level >= 100)
+        if (auxIncruise >= 100)
         {
-            Invoke("end", 0.2f);
             return;
         }
 
@@ -48,9 +53,8 @@ public class AlertLevelManager : MonoBehaviour
             Led.SetSpecificColor(DecreaseColor);
             OnDownAlertLevel?.Invoke(this, null);
         }
-
-
     }
+
     private void end()
     {
         OnGameOverAlert?.Invoke(this, null);
@@ -60,5 +64,15 @@ public class AlertLevelManager : MonoBehaviour
     public void StopAlertLevelManager(Component sender, object obj)
     {
         isStoped = true;
+    }
+
+    private void Update()
+    {
+        NumLevel.text = level + "%";
+    }
+
+    public void AccelerateAnims(Component sender, object obj)
+    {
+        timeFactor = (float)obj;
     }
 }

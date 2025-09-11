@@ -29,7 +29,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479744454099256895}
   m_LocalRotation: {x: 0.00000011920929, y: -0.0077274144, z: 0.00000010430813, w: 0.9999702}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000009774512}
+  m_LocalPosition: {x: 0, y: 0, z: 242}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -195,6 +195,8 @@ GameObject:
   - component: {fileID: 7237397471578244340}
   - component: {fileID: 560622714182444892}
   - component: {fileID: -7775550837788489966}
+  - component: {fileID: 8287205149463908253}
+  - component: {fileID: 2622402196148753364}
   m_Layer: 10
   m_Name: BoardPostIdea
   m_TagString: Untagged
@@ -276,6 +278,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &2136728357607030488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnButtonElementClick: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   view: 8
+  delay: 0
   NotInactiveBTN: 0
 --- !u!114 &4308943302336270615
 MonoBehaviour:
@@ -322,7 +326,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.04904091, y: 0.099690825, z: 0.10788073}
   m_Center: {x: -0.016757345, y: 0.000000019068848, z: -2.3017582e-15}
@@ -340,6 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EventsToTrigger:
   - {fileID: 11400000, guid: 71d803afeea21bc4483d6847e619149c, type: 2}
+  delay: 0
   DisabledInTouch: 0
   SomethingToPass: {fileID: 1698638971177894008}
   FloatToPass: 0
@@ -375,6 +380,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &6096548891662584677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +413,7 @@ MonoBehaviour:
   DelayCall: 1
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &8873669410146490017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,6 +458,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &7237397471578244340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,6 +491,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &560622714182444892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +524,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &-7775550837788489966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +557,73 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
+--- !u!114 &8287205149463908253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698638971177894008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 1
+  TriggerEvent: {fileID: 11400000, guid: d499567c621b84a419ae5c2254689050, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4308943302336270615}
+        m_TargetAssemblyTypeName: MoveBoardElementsToPos, Assembly-CSharp
+        m_MethodName: UpdateFinalPositionRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+--- !u!114 &2622402196148753364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698638971177894008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 46b82e4dbf558b04183490426c0f7347, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9068181064678660897}
+        m_TargetAssemblyTypeName: GeneratorActionController, Assembly-CSharp
+        m_MethodName: CheckView
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
 --- !u!1 &2257471455691103772
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6140575793715559219
 RectTransform:
   m_ObjectHideFlags: 0
@@ -883,7 +960,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 8, y: -0.007}
+  m_AnchoredPosition: {x: 2, y: -0.007}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &834384618070771921
@@ -1510,7 +1587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9217602266329748935
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1594,16 +1671,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8417826437342695182}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 30.996}
+  m_LocalScale: {x: -1, y: 0.975, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4291939931420460428}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -0.44746, y: -0.69756}
+  m_SizeDelta: {x: 100.9, y: 101.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2001058921409384565
 CanvasRenderer:
@@ -1661,7 +1738,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6ce722ff91673b640910d4eba6471076, type: 3}
       propertyPath: m_LocalScale.z
-      value: 9331.001
+      value: 1262.671
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6ce722ff91673b640910d4eba6471076, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1709,7 +1786,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 6ce722ff91673b640910d4eba6471076, type: 3}
       propertyPath: m_CastShadows
-      value: 3
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ce722ff91673b640910d4eba6471076, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 6ce722ff91673b640910d4eba6471076, type: 3}
       propertyPath: m_Materials.Array.data[0]

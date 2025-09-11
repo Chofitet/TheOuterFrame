@@ -5,11 +5,17 @@ using UnityEngine;
 public class TriggerArrayOfEvents : MonoBehaviour
 {
     [SerializeField] GameEvent[] EventsToTrigger;
+    [SerializeField] float delay;
     [SerializeField] GameObject SomethingToPass;
     [SerializeField] string SomeStringToPass;
 
     public void TriggerEvents()
     {
+        if (delay != 0)
+        {
+            Invoke("CallWithDelay", delay);
+            return;
+        }
 
         foreach (GameEvent e in EventsToTrigger)
         {
@@ -20,6 +26,12 @@ public class TriggerArrayOfEvents : MonoBehaviour
 
     public void TriggerEventsWithEvent(Component sender, object obj)
     {
+        if (delay != 0)
+        {
+            Invoke("CallWithDelay", delay);
+            return;
+        }
+
         foreach (GameEvent e in EventsToTrigger)
         {
             e?.Invoke(this, PassRigthValue());
@@ -33,5 +45,15 @@ public class TriggerArrayOfEvents : MonoBehaviour
 
         return null;
 
+    }
+
+    public void ChangeSomeStringToPass(string x)
+    {
+        SomeStringToPass = x;
+    }
+
+    void CallWithDelay()
+    {
+        TriggerEvents();
     }
 }

@@ -17,8 +17,10 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject PrintBTN;
     [SerializeField] GameObject SwitchAbortBTN;
     [SerializeField] GameObject AbortBTN;
+    [SerializeField] GameObject TryAbortBTN;
     [SerializeField] BlinkMaterialEffect ReadyToPrintLED;
     [SerializeField] Light light;
+    [SerializeField] GameObject colliderUnused;
     float InitLigthIntensity;
     bool isPrinterFull;
     BlinkMaterialEffect blinkmaterialAbort;
@@ -63,6 +65,8 @@ public class ProgressorModuleController : MonoBehaviour
     {
         if (!isReady) return;
         anim.SetTrigger("sendMessage");
+        TryAbortBTN.GetComponent<BoxCollider>().enabled = false;
+        SwitchAbortBTN.GetComponent<BoxCollider>().enabled = true;
         TurnOnLight(0.8f);
         float animationDuration = 1.3f;
         adjustedDurationForSetSlot = animationDuration / TimeVariation;
@@ -76,6 +80,8 @@ public class ProgressorModuleController : MonoBehaviour
 
         // Incrementar el tiempo transcurrido teniendo en cuenta la variación del tiempo
         elapsedTime += Time.deltaTime * TimeVariation;
+
+       
 
         if (elapsedTime >= adjustedDurationForSetSlot)
         {
@@ -107,6 +113,7 @@ public class ProgressorModuleController : MonoBehaviour
         slot.initParameters(word, state);
         isReady = false;
         blinkmaterialAbort.TurnOnLigth(null, null);
+        colliderUnused.GetComponent<BoxCollider>().enabled = false;
     }
 
     public void AbortLogic(Component sender, object obj)
@@ -146,6 +153,10 @@ public class ProgressorModuleController : MonoBehaviour
     {
         if(sender.gameObject == slot.gameObject)
         {
+            TryAbortBTN.GetComponent<BoxCollider>().enabled = true;
+            SwitchAbortBTN.GetComponent<BoxCollider>().enabled = false;
+            slot.cancelTryAbortBlink();
+
             anim.SetTrigger("receiveMessage");
             IsReadyToPrint = true;
             
@@ -163,7 +174,7 @@ public class ProgressorModuleController : MonoBehaviour
 
     void delayLigth()
     {
-        PrintBTN.GetComponent<Collider>().enabled = true;
+        PrintBTN.GetComponent<BoxCollider>().enabled = true;
         blinkmaterialAbort.TurnOffLight(null, null);
         ReadyToPrintLED.ActiveBlink(this, null);
     }
@@ -174,6 +185,8 @@ public class ProgressorModuleController : MonoBehaviour
         
         if (report == slot.gameObject)
         {
+            slot.cancelTryAbortBlink();
+            colliderUnused.GetComponent<BoxCollider>().enabled = true;
             slot.CleanSlot();
             isFull = false;
             IsReadyToPrint = true;
@@ -195,13 +208,14 @@ public class ProgressorModuleController : MonoBehaviour
     public void PrintReport(Component sender, object obj)
     {
         TimeManager.timeManager.NormalizeTime();
-        if(sender.gameObject == PrintBTN)
+        slot.cancelTryAbortBlink();
+        if (sender.gameObject == PrintBTN)
         {
             if (!isPrinterFull)
             {
                 anim.SetTrigger("printMessage");
                 ReadyToPrintLED.TurnOffLight(this, null);
-                PrintBTN.GetComponent<Collider>().enabled = false;
+                PrintBTN.GetComponent<BoxCollider>().enabled = false;
                 OnPrintReport?.Invoke(this, slot);
                 if(slot.GetReport().GetKillAgent() && slot.GetIsComplete()) OnDisableAgentOnSlot?.Invoke(this, gameObject);
             }
@@ -240,11 +254,25 @@ public class ProgressorModuleController : MonoBehaviour
         anim.ResetTrigger("printMessage");
         anim.ResetTrigger("receiveMessage");
         ReadyToPrintLED.TurnOffLight(null, null);
-        PrintBTN.GetComponent<Collider>().enabled = false;
+        PrintBTN.GetComponent<BoxCollider>().enabled = false;
+        colliderUnused.GetComponent<BoxCollider>().enabled = true;
         blinkmaterialAbort.TurnOffLight(null, null);
         anim.SetTrigger("resetProgressor");
         DisableAbort = true;
 
+    }
+
+
+    public void TryAbortAnim(Component sender, object obj)
+    {
+        GameObject btn = (GameObject)obj;
+
+        if (btn == TryAbortBTN)
+        {
+            anim.SetTrigger("tryAbortSwitch");
+            slot.ActiveTryAbortPanel();
+        }
+            
     }
 
     float TimeVariation = 1;
@@ -252,6 +280,11 @@ public class ProgressorModuleController : MonoBehaviour
     {
         TimeVariation = (float)obj;
         anim.SetFloat("speed", TimeVariation);
+
+        if(TimeVariation == 1)
+        {
+            adjustedDurationForSetSlot = 1.3f;
+        }
 
         if (isWaitingForSetSlot)
         {
