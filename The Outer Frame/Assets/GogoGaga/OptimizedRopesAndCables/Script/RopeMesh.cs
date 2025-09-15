@@ -10,7 +10,7 @@ namespace GogoGaga.OptimizedRopesAndCables
     public class RopeMesh : MonoBehaviour
     {
         [Range(3, 25)] public int OverallDivision = 6;
-        [Range(0.001f, 10)] public float ropeWidth = 0.3f;
+        [Range(0.0001f, 10)] public float ropeWidth = 0.3f;
         [Range(3, 20)] public int radialDivision = 8;
         [Tooltip("For now only base color is applied")]
         public Material material;

@@ -37,7 +37,7 @@ public class StringConnectionController : MonoBehaviour
         startPosPin2 = AnimPin2.transform.position;
         AnimPin2.transform.position = startPosPin1;
 
-        StartCoroutine(EnableMesh(false));
+        lineRenderer.enabled = false;
 
     }
 
@@ -136,7 +136,7 @@ public class StringConnectionController : MonoBehaviour
 
     IEnumerator EnableMesh(bool x)
     {
-        yield return new WaitForSeconds(0.23f);
+        yield return new WaitForSeconds(0.15f);
         lineRenderer.enabled = x;
     }
 }
