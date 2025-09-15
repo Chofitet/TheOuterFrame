@@ -19,6 +19,7 @@ public class StringConnectionController : MonoBehaviour
     [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     [SerializeField] bool isOrderMatters;
     [SerializeField] MeshRenderer lineRenderer;
+    [SerializeField] AnimationCurve curveStringAnim;
     GameObject content;
     bool isConnected;
 
@@ -35,7 +36,6 @@ public class StringConnectionController : MonoBehaviour
 
         startPosPin1 = AnimPin1.transform.position;
         startPosPin2 = AnimPin2.transform.position;
-        AnimPin2.transform.position = startPosPin1;
 
         lineRenderer.enabled = false;
 
@@ -43,8 +43,9 @@ public class StringConnectionController : MonoBehaviour
 
     public void UpdatePositionRotation(Component sender, object obj)
     {
-       /* startPosPin1 = AnimPin1.transform.position;
-        startPosPin2 = AnimPin2.transform.position;*/
+       startPosPin1 = AnimPin1.transform.position;
+        startPosPin2 = AnimPin2.transform.position;
+        
     }
 
     bool once = false;
@@ -58,14 +59,19 @@ public class StringConnectionController : MonoBehaviour
                 AnimPin2.transform.position = startPosPin1;
                 once = true;
 
-                Vector3 currentPos = startPosPin1;
+                Sequence seq = DOTween.Sequence();
 
-                DOTween.To(() => currentPos, x => currentPos = x, startPosPin2, 0.5f)
-                    .SetEase(Ease.InOutQuad)
-                    .OnUpdate(() =>
-                    {
-                        AnimPin2.transform.position = currentPos;
-                    });
+                seq.Join(
+                    AnimPin2.transform.DOMoveX(startPosPin2.x, 0.5f).SetEase(Ease.Linear)
+                );
+                seq.Join(
+                    AnimPin2.transform.DOMoveZ(startPosPin2.z, 0.5f).SetEase(curveStringAnim)
+                );
+
+                seq.Join(
+                    AnimPin2.transform.DOMoveY(startPosPin2.y, 0.5f).SetEase(curveStringAnim)
+                );
+
                 StartCoroutine(EnableMesh(true));
             }
             content.SetActive(true);
@@ -131,6 +137,7 @@ public class StringConnectionController : MonoBehaviour
         isConnected = true;
         content.SetActive(true);
         AnimPin2.transform.position = startPosPin2;
+        StartCoroutine(EnableMesh(true));
 
     }
 
