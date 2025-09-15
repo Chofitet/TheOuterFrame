@@ -28,6 +28,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnSendReportAutomatically;
     [SerializeField] GameEvent OnEnableInput;
     [SerializeField] GameEvent OnDisableInput;
+    [SerializeField] GameEvent OnNormalizeTime;
     bool isAPaperHolding;
     ViewStates currentviewState;
     bool isInputDisable;
@@ -73,11 +74,13 @@ public class ViewManager : MonoBehaviour
             if (!isInTutorial)
             {
                 if (currentviewState != ViewStates.GeneralView) CheckForBackToGeneralView();
+                TimeManager.timeManager.NormalizeTime();
             }
             else
             {
                 if (currentviewState != ViewStates.TutorialView) CheckForBackToTutorialView();
             }
+
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))

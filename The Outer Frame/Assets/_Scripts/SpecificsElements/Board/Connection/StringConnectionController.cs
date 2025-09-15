@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using GogoGaga.OptimizedRopesAndCables;
 
 
 public class StringConnectionController : MonoBehaviour
@@ -17,6 +18,7 @@ public class StringConnectionController : MonoBehaviour
     [SerializeField] GameEvent OnPuttingStringSound;
     [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     [SerializeField] bool isOrderMatters;
+    [SerializeField] MeshRenderer lineRenderer;
     GameObject content;
     bool isConnected;
 
@@ -33,13 +35,16 @@ public class StringConnectionController : MonoBehaviour
 
         startPosPin1 = AnimPin1.transform.position;
         startPosPin2 = AnimPin2.transform.position;
+        AnimPin2.transform.position = startPosPin1;
+
+        lineRenderer.enabled = false;
 
     }
 
     public void UpdatePositionRotation(Component sender, object obj)
     {
-        startPosPin1 = AnimPin1.transform.position;
-        startPosPin2 = AnimPin2.transform.position;
+       /* startPosPin1 = AnimPin1.transform.position;
+        startPosPin2 = AnimPin2.transform.position;*/
     }
 
     bool once = false;
@@ -52,7 +57,16 @@ public class StringConnectionController : MonoBehaviour
             {
                 AnimPin2.transform.position = startPosPin1;
                 once = true;
-                AnimPin2.transform.DOMove(startPosPin2, 0.5f).SetEase(Ease.InOutQuad);
+
+                Vector3 currentPos = startPosPin1;
+
+                DOTween.To(() => currentPos, x => currentPos = x, startPosPin2, 0.5f)
+                    .SetEase(Ease.InOutQuad)
+                    .OnUpdate(() =>
+                    {
+                        AnimPin2.transform.position = currentPos;
+                    });
+                StartCoroutine(EnableMesh(true));
             }
             content.SetActive(true);
             
@@ -118,6 +132,11 @@ public class StringConnectionController : MonoBehaviour
         content.SetActive(true);
         AnimPin2.transform.position = startPosPin2;
 
+    }
 
+    IEnumerator EnableMesh(bool x)
+    {
+        yield return new WaitForSeconds(0.15f);
+        lineRenderer.enabled = x;
     }
 }
