@@ -9,6 +9,7 @@ public class BlinkMaterialEffect : MonoBehaviour
     [SerializeField] float duration = 0.5f;
     [SerializeField] float TurnOffDuration;
     [SerializeField] float maxIntensity = 1f;
+    [SerializeField] float minIntensity = 1f;
     [SerializeField] bool BlinkInStart;
     [SerializeField] bool isTurnInStart;
     [SerializeField] float TurnLightDuration;
@@ -91,6 +92,17 @@ public class BlinkMaterialEffect : MonoBehaviour
         }
         BlinkSequence = DOTween.Sequence();
         BlinkSequence.Append(DOTween.To(() => currentIntensity, x => SetEmissionIntensity(x), maxIntensity, duration)
+            .SetEase(Ease.InOutSine));
+    }
+
+    public void LowLigth(Component sender, object obj)
+    {
+        if (BlinkSequence != null)
+        {
+            BlinkSequence.Kill();
+        }
+        BlinkSequence = DOTween.Sequence();
+        BlinkSequence.Append(DOTween.To(() => currentIntensity, x => SetEmissionIntensity(x), minIntensity, duration)
             .SetEase(Ease.InOutSine));
     }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +7,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
+using System.Xml;
 
+[RequireComponent(typeof(ShaderMaterialManager))]
 public class FindableWordBTNController : MonoBehaviour, IFindableBTN
 {
     RectTransform rectTransform;
@@ -57,13 +60,14 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         if (isInactive) return;
         OnFindableWordButtonHover?.Invoke(this, 4);
         ApplyShader("Red");
+        GlowMaterial();
     }
 
     public void ChangeToColorToNormal()
     {
         if (isInactive) return;
         OnFindableWordButtonUnHover?.Invoke(this, 3);
-        UnBoldWord();
+        StartCoroutine(UnBoldWord());
     }
 
     void ApplyShader(string MaterialName, bool eraceSpace = true)
@@ -178,11 +182,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         }
         return word;
     }
-    void UnBoldWord()
-    {
-        ApplyShader("Bold");
-    }
-
+    
     public void RegisterWord()
     {
         OnFindableWordButtonPress?.Invoke(this, wordToPass);
@@ -219,4 +219,45 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         isInactive = true;
         wordToPass = TheCabin;
     }
+
+    void GlowMaterial()
+    {
+        Material mat = GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(textField.font.name);
+
+                mat.SetFloat(ShaderUtilities.ID_OutlineWidth, 0f);
+                Debug.Log("material glow");
+                DOTween.To(
+                    () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
+                    x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
+                    0.25f,   
+                    0.15f  
+                ).SetEase(Ease.InOutSine);
+
+    }
+
+    IEnumerator UnBoldWord()
+    {
+        Material mat = GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(textField.font.name);
+
+        float startValue = mat.GetFloat(ShaderUtilities.ID_OutlineWidth);
+
+        float endValue = 0f;
+
+        bool finished = false;
+
+        DOTween.To(
+            () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
+            x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
+            endValue,
+            0.15f 
+        )
+        .SetEase(Ease.InOutSine)
+        .OnComplete(() => finished = true);
+
+        yield return new WaitUntil(() => finished);
+
+        ApplyShader("Bold");
+    }
+
 }
+
