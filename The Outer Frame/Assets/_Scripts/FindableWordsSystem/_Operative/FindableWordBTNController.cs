@@ -60,14 +60,14 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         if (isInactive) return;
         OnFindableWordButtonHover?.Invoke(this, 4);
         ApplyShader("Red");
-        GlowMaterial();
+        GlowOn();
     }
 
     public void ChangeToColorToNormal()
     {
         if (isInactive) return;
         OnFindableWordButtonUnHover?.Invoke(this, 3);
-        StartCoroutine(UnBoldWord());
+        GlowOff();
     }
 
     void ApplyShader(string MaterialName, bool eraceSpace = true)
@@ -103,7 +103,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
             }
 
             string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
-            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)),_comesFromDBTitle)).ToLower();
+            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)), _comesFromDBTitle)).ToLower();
 
             combinedWordClean = Regex.Replace(combinedWordClean.Trim(), @"[^\w]", "");
 
@@ -143,7 +143,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
             }
             i++;
         }
-        
+
         textField.text = auxText;
     }
     string RemoveMaterialTags(string word)
@@ -173,7 +173,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     }
     string CleanUnnecessaryCharacter(string word)
     {
-       
+
         int endIndex = word.IndexOf("</link>", StringComparison.OrdinalIgnoreCase);
         if (endIndex != -1)
         {
@@ -182,7 +182,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         }
         return word;
     }
-    
+
     public void RegisterWord()
     {
         OnFindableWordButtonPress?.Invoke(this, wordToPass);
@@ -201,7 +201,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         {
             if (hit.collider.gameObject == gameObject)
             {
-                
+
                 return true;
             }
         }
@@ -220,43 +220,52 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         wordToPass = TheCabin;
     }
 
-    void GlowMaterial()
+    private Sequence glowSequence;
+
+    public void GlowOn()
     {
-        Material mat = GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(textField.font.name);
+        Material mat = GetMat();
 
-                mat.SetFloat(ShaderUtilities.ID_OutlineWidth, 0f);
-                Debug.Log("material glow");
-                DOTween.To(
-                    () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
-                    x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
-                    0.25f,   
-                    0.15f  
-                ).SetEase(Ease.InOutSine);
+        // Cancelamos cualquier animación previa
+        glowSequence?.Kill();
 
+        glowSequence = DOTween.Sequence();
+
+        glowSequence.Append(
+            DOTween.To(
+                () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
+                x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
+                0.25f,   
+                0.15f    
+            ).SetEase(Ease.InOutSine)
+        );
     }
 
-    IEnumerator UnBoldWord()
+    public void GlowOff()
     {
-        Material mat = GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(textField.font.name);
+        Material mat = GetMat();
 
-        float startValue = mat.GetFloat(ShaderUtilities.ID_OutlineWidth);
+        glowSequence?.Kill();
 
-        float endValue = 0f;
+        glowSequence = DOTween.Sequence();
 
-        bool finished = false;
+        float enValue = 0.2f; //
 
-        DOTween.To(
-            () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
-            x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
-            endValue,
-            0.15f 
-        )
-        .SetEase(Ease.InOutSine)
-        .OnComplete(() => finished = true);
+        glowSequence.Append(
+            DOTween.To(
+                () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
+                x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
+                enValue,      
+                0.15f   
+            ).SetEase(Ease.InOutSine)
+        );
 
-        yield return new WaitUntil(() => finished);
+        glowSequence.OnComplete(() => ApplyShader("Bold"));
+    }
 
-        ApplyShader("Bold");
+    private Material GetMat()
+    {
+        return GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(textField.font.name);
     }
 
 }

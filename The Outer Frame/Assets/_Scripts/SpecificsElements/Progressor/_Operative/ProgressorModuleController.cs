@@ -20,8 +20,10 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject TryAbortBTN;
     [SerializeField] BlinkMaterialEffect ReadyToPrintLED;
     [SerializeField] Light light;
+    [SerializeField] Light light2;
     [SerializeField] GameObject colliderUnused;
     float InitLigthIntensity;
+    float InitLigthIntensity2;
     bool isPrinterFull;
     BlinkMaterialEffect blinkmaterialAbort;
     Color OriginalColor;
@@ -42,6 +44,9 @@ public class ProgressorModuleController : MonoBehaviour
         InitLigthIntensity = light.intensity;
         light.enabled = true;
         light.intensity = 0;
+        InitLigthIntensity2 = light2.intensity;
+        light2.enabled = true;
+        light2.intensity = 0;
 
     }
 
@@ -67,7 +72,8 @@ public class ProgressorModuleController : MonoBehaviour
         anim.SetTrigger("sendMessage");
         TryAbortBTN.GetComponent<BoxCollider>().enabled = false;
         SwitchAbortBTN.GetComponent<BoxCollider>().enabled = true;
-        TurnOnLight(0.8f);
+        TurnOnLightXTime(0.8f, light, InitLigthIntensity);
+        TurnOnLightXTime(0.8f, light2,InitLigthIntensity2);
         float animationDuration = 1.3f;
         adjustedDurationForSetSlot = animationDuration / TimeVariation;
         elapsedTime = 0f;
@@ -92,11 +98,11 @@ public class ProgressorModuleController : MonoBehaviour
     }
 
     Sequence sequenceLigth;
-    void TurnOnLight(float waitDuration)
+    void TurnOnLightXTime(float waitDuration, Light light, float lightIntencity)
     {
         if (sequenceLigth != null && sequenceLigth.IsActive()) sequenceLigth.Kill();
         sequenceLigth = DOTween.Sequence();
-        sequenceLigth.Append(light.DOIntensity(InitLigthIntensity, 0.3f))
+        sequenceLigth.Append(light.DOIntensity(lightIntencity, 0.3f))
                      .AppendInterval(waitDuration)
                     .Append(light.DOIntensity(0, 0.3f))
                     .OnComplete(() =>
@@ -105,6 +111,13 @@ public class ProgressorModuleController : MonoBehaviour
                     }); ;
     }
 
+    void TurnOnLight(Light light, float lightIntencity, float waitToTurnOn = 0)
+    {
+        if (sequenceLigth != null && sequenceLigth.IsActive()) sequenceLigth.Kill();
+        sequenceLigth = DOTween.Sequence();
+        sequenceLigth.AppendInterval(waitToTurnOn)
+            .Append(light.DOIntensity(lightIntencity, 0.3f));
+    }
 
     //OnSendAPTrackEnds
     public void InitSlot(Component sender, object obj)
@@ -168,7 +181,9 @@ public class ProgressorModuleController : MonoBehaviour
                 anim.SetTrigger("abortSwitchOff");
                 isAbortOpen = false;
             }
-            
+
+            TurnOnLight(light, InitLigthIntensity,0.3f);
+            TurnOnLight(light2, InitLigthIntensity2,0.3f);
         }
     }
 
@@ -218,6 +233,8 @@ public class ProgressorModuleController : MonoBehaviour
                 PrintBTN.GetComponent<BoxCollider>().enabled = false;
                 OnPrintReport?.Invoke(this, slot);
                 if(slot.GetReport().GetKillAgent() && slot.GetIsComplete()) OnDisableAgentOnSlot?.Invoke(this, gameObject);
+                TurnOnLight(light, 0);
+                TurnOnLight(light2, 0);
             }
             else
             {
