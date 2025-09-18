@@ -24,7 +24,7 @@ public class UpdateWindowController : MonoBehaviour
         if (_image == null) DatabaseImage.sprite = NoImage;
         else DatabaseImage.sprite = _image;
 
-        bool isAReport = sender.gameObject.GetComponent<ReportController>() != null ? true : false;
+        bool isAReport = sender.gameObject.GetComponent<IndividualReportController>() != null ? true : false;
 
         PaperType.text = isAReport ? "REPORT TO:" : "TRANSCRIPTION TO:";
 
