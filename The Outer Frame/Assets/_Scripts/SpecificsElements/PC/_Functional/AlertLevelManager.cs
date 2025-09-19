@@ -23,8 +23,7 @@ public class AlertLevelManager : MonoBehaviour
     {
         level = InitAlertLevel;
     }
-
-
+    
     public void UpdateNum(Component sender, object obj)
     {
         if (isStoped) return;
@@ -32,7 +31,7 @@ public class AlertLevelManager : MonoBehaviour
         int auxIncruise = level + incruseNum;
         if (level < 0) level = 1;
         DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
-            if (auxIncruise >= 100)
+            if (auxIncruise >= 200)
             {
                 Invoke("end", 0.2f);
             }
@@ -68,7 +67,17 @@ public class AlertLevelManager : MonoBehaviour
 
     private void Update()
     {
-        NumLevel.text = level + "%";
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Led.SetSpecificColor(IncreaseColor);
+            OnUpAlertLevel?.Invoke(this, null);
+            DOTween.Kill("ForceTo99"); 
+            DOTween.To(() => level, x => level = x, 99, 1f / timeFactor)
+                .SetEase(Ease.OutSine)
+                .SetId("ForceTo99");
+        }
+
+            NumLevel.text = level + "%";
     }
 
     public void AccelerateAnims(Component sender, object obj)
