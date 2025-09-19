@@ -102,7 +102,7 @@ public class ActionPlanManager : MonoBehaviour
     {
         GameObject actionPLan = transform.GetChild(0).gameObject;
         OnCloneActionPlan?.Invoke(this, actionPLan);
-        SetActionPlan(null, null);
+        Invoke("DelayCleanAP", 0.33f);
     }
 
     public void AddFinalAction(Component sender, object obj)
@@ -161,6 +161,11 @@ public class ActionPlanManager : MonoBehaviour
         }
 
         if(aux) SetActionPlan(null, null);
+    }
+
+    void DelayCleanAP()
+    {
+        SetActionPlan(null, null);
     }
 }
 
