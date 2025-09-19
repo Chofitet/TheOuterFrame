@@ -9,6 +9,7 @@ public class ColliderButtonCallEvent : MonoBehaviour
     [SerializeField] GameEvent[] EventsToTrigger;
     [SerializeField] float delay;
     [SerializeField] bool DisabledInTouch;
+    [SerializeField] float delayDisableInTouch;
     [SerializeField] GameObject SomethingToPass;
     [SerializeField] float FloatToPass;
     bool isInactive;
@@ -32,11 +33,11 @@ public class ColliderButtonCallEvent : MonoBehaviour
             e?.Invoke(this, Something());
         }
 
-        if (DisabledInTouch) GetComponent<BoxCollider>().enabled = false;
+        if (DisabledInTouch) StartCoroutine(EnableDisableBTN(false, delayDisableInTouch));
     }
     public void EnableBTN(Component sender, object obj)
     {
-        GetComponent<BoxCollider>().enabled = true;
+        StartCoroutine(EnableDisableBTN(true, 0));
     }
 
     private object Something()
@@ -60,5 +61,12 @@ public class ColliderButtonCallEvent : MonoBehaviour
     void CallWithDelay()
     {
         triggerEvents();
+    }
+
+    IEnumerator EnableDisableBTN(bool x,float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+
+        GetComponent<BoxCollider>().enabled = x;
     }
 }
