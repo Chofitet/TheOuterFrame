@@ -9,6 +9,7 @@ public class ReportController : MonoBehaviour
     [SerializeField] TMP_Text Resulttxt;
     [SerializeField] TMP_Text ActionCalltxt;
     [SerializeField] TMP_Text Statustxt;
+    [SerializeField] TMP_Text Hourtxt;
     [SerializeField] GameEvent OnMovePaperToTakenPos;
     [SerializeField] float DelayToPC;
     [SerializeField] TMP_Text btnText;
@@ -19,7 +20,12 @@ public class ReportController : MonoBehaviour
     [SerializeField] Sprite ThumbUp;
     [SerializeField] Transform OutPos;
     [SerializeField] List<Sprite> WrongResultImg = new List<Sprite>();
-    
+
+    [Header("MaterialSettings")]
+    [SerializeField] GameObject pageModel;
+    [SerializeField] Material materialUploadDB;
+    [SerializeField] Material materialDispose;
+
     bool isNotCompleted;
     WordData word;
     ReportType report;
@@ -35,6 +41,7 @@ public class ReportController : MonoBehaviour
         string Name = word.GetForm_DatabaseNameVersion();
         if (state.GetSpecialActionWord()) Name = "";
         string actionVerb = state.GetInfinitiveVerb();
+        SetMaterial(materialDispose);
 
         if (!report)
         {
@@ -61,7 +68,7 @@ public class ReportController : MonoBehaviour
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
-        else if(isOtherActionInGroupDoing != null)
+        else if (isOtherActionInGroupDoing != null)
         {
             Resulttxt.text = "We are currently " + isOtherActionInGroupDoing.GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
             status = "<color=#AE0000>CONFLICTED</color>";
@@ -69,7 +76,7 @@ public class ReportController : MonoBehaviour
             isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
-        else if(isAborted)
+        else if (isAborted)
         {
             Resulttxt.text = "The action \"" + actionVerb + " " + Name + "\" was aborted succesfully";
             status = "<color=#AE0000>ABORTED</color>";
@@ -80,22 +87,23 @@ public class ReportController : MonoBehaviour
         else if (report.GetIsAutomatic())
         {
             status = "<color=#AE0000>IMPOSSIBLE</color>";
-            
+
             btnText.text = "DISPOSE";
         }
 
-        
-        ActionCalltxt.text = actionVerb + " " + DeleteSpetialCharacter(Name);
+        Hourtxt.text = $"OCT 30 - {timeComplete.Hour:00}:{timeComplete.Minute:00}";
+        ActionCalltxt.text = $"{actionVerb} \"{DeleteSpetialCharacter(Name).ToUpper()}\"";
         CheckTextOverflow();
-        Statustxt.text = status + " at OCT 30th " + $"{timeComplete.Hour:00}:{timeComplete.Minute:00}";
+        Statustxt.text = status;// + " at OCT 30th " + $"{timeComplete.Hour:00}:{timeComplete.Minute:00}";
 
         GetComponent<IndividualReportController>().SetType(false, word, report);
 
         if (isNotCompleted) return;
         if (report.GetDeleteDBRepoert() || report.GetIsTheLastReport()) btnText.transform.parent.gameObject.SetActive(false);
         Resulttxt.text = report.GetText();
-        FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt,FindableBtnType.FindableBTN);
+        FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt, FindableBtnType.FindableBTN);
         GetComponent<IndividualReportController>().SetType(true, word, report);
+        if(!report.GetIsAutomatic()) SetMaterial(materialUploadDB);
 
         SetPhotos(report);
 
@@ -125,7 +133,7 @@ public class ReportController : MonoBehaviour
     {
         GetComponent<BoxCollider>().enabled = true;
         OnMovePaperToTakenPos?.Invoke(this, gameObject);
-        if(!isNotCompleted) WordsManager.WM.RequestChangeStateSeen(word, report.GetState());
+        if (!isNotCompleted) WordsManager.WM.RequestChangeStateSeen(word, report.GetState());
         Destroy(this);
     }
 
@@ -163,4 +171,13 @@ public class ReportController : MonoBehaviour
         return OutPos.transform.position;
     }
 
+    public void SetMaterial(Material material)
+    {
+        if (pageModel == null || material == null) return;
+
+        var renderer = pageModel.GetComponent<Renderer>();
+        if (renderer == null) return;
+
+        renderer.material = material;
+    }
 }
