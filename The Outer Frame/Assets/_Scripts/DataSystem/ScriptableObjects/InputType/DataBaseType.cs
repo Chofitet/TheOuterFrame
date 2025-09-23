@@ -4,42 +4,42 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New BDEnter", menuName = "DB")]
-public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
+public class DataBaseType : DataType,  IReseteableScriptableObject
 {
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
-    [SerializeField] WordData AccessWord;
+    public WordData AccessWord;
     [Header("Unlock Button")]
-    [SerializeField] bool hasLockedBTN;
-    [SerializeField] WordData wordToUnlock;
-    [SerializeField] StateEnum UnlockState;
+    public bool hasLockedBTN;
+    public WordData wordToUnlock;
+    public StateEnum UnlockState;
     [Header("Extra data")]
-    [SerializeField] Sprite image;
-    [SerializeField] string phoneNum;
-    [SerializeField] string age;
-    [SerializeField] string location;
-    [SerializeField] string born;
-    [SerializeField] string occupation;
-    [SerializeField] string found;
-    [SerializeField] string status;
-    [SerializeField] string government;
-    [SerializeField] string populatoin;
-    [SerializeField] string area;
-    [SerializeField] string zipcode;
-    [SerializeField] string areacode;
-    [SerializeField] string classification;
-    [SerializeField] string serial;
-    [SerializeField] string adress;
-    [SerializeField] string ManufacturedBy;
-    [SerializeField] string Email;
-    [SerializeField] string ActiveLot;
-    [SerializeField] string Consualties;
-    [SerializeField] string DeclaredCasualties;
-    [SerializeField] string Married;
-    [SerializeField] string Size;
-    [SerializeField] string Branch;
-    [SerializeField] string MadeBy;
-    [SerializeField] string Technology;
-    [SerializeField] string Type;
+    public Sprite image;
+    public string phoneNum;
+    public string age;
+    public string location;
+    public string born;
+    public string occupation;
+    public string found;
+    public string status;
+    public string government;
+    public string populatoin;
+    public string area;
+    public string zipcode;
+    public string areacode;
+    public string classification;
+    public string serial;
+    public string adress;
+    public string ManufacturedBy;
+    public string Email;
+    public string ActiveLot;
+    public string Consualties;
+    public string DeclaredCasualties;
+    public string Married;
+    public string Size;
+    public string Branch;
+    public string MadeBy;
+    public string Technology;
+    public string Type;
 
     [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     [NonSerialized] bool isWordAccessFound;
@@ -61,6 +61,7 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
 
     public WordData GetAccessWord() { return AccessWord; }
     public string GetText() { return text; }
+    public void SetText(string _text) => text = _text;
 
     public Sprite GetImage() { return image; }
 
