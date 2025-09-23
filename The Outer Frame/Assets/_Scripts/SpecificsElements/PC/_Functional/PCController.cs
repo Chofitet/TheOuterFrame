@@ -103,6 +103,16 @@ public class PCController : MonoBehaviour
         SearchWordInWiki();
     }
 
+    public void SearchBarBTN()
+    {
+        //triggers solo de la barra, tiembla si no hay palabra
+        if (!word)
+        {
+            SearchBar.text = " |";
+            if (isInPCView) OnShakeNotebook?.Invoke(this, null);
+        }
+    }
+
     public void SearchWordInWiki(WordData LastSearchedWord = null)
     {
         //BtnBackToLastEntry.SetActive(false);

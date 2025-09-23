@@ -19,8 +19,6 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     [SerializeField] GameEvent OnFindableWordButtonHover;
     [SerializeField] GameEvent OnFindableWordButtonUnHover;
     [SerializeField] WordData TheCabin;
-    [SerializeField] LayerMask visibleLayerMask;
-    [SerializeField] LayerMask ignoreLayerMask;
     bool isInactive;
 
     TMP_Text textField;

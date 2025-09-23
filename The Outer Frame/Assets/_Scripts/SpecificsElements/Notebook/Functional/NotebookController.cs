@@ -70,7 +70,7 @@ public class NotebookController : MonoBehaviour
         if (LastWordAdded.GetIsAPhoneNumber()) return;
 
         GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
-        wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
+        wordaux.GetComponent<NotebookWordInstance>().GetButton().onClick.AddListener(ClearUnderLine);
         wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded, isStarting);
         WordsInstances.Add(wordaux);
 
@@ -235,14 +235,14 @@ public class NotebookController : MonoBehaviour
     {
         foreach (GameObject instanceBTN in WordsInstances) 
         {
-            instanceBTN.GetComponent<Button>().enabled = true;
+            instanceBTN.GetComponent<NotebookWordInstance>().GetButton().enabled = true;
 
             foreach (WordData word in list)
             {
                 NotebookWordInstance Wordinstance = instanceBTN.GetComponent<NotebookWordInstance>();
                 if(Wordinstance.GetWord() == word)
                 {
-                    instanceBTN.GetComponent<Button>().enabled = false;
+                    instanceBTN.GetComponent<NotebookWordInstance>().GetButton().enabled = false;
                 }
             }
         }

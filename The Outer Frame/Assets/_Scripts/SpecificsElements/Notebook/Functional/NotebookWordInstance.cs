@@ -12,6 +12,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] GameEvent OnWritingShakeNotebook;
     [SerializeField] GameEvent OnCrossWordSound;
     [SerializeField] GameEvent OnWritingNotebookSound;
+    [SerializeField] Button btn;
     WordData wordReference;
     bool isCross;
 
@@ -19,7 +20,7 @@ public class NotebookWordInstance : MonoBehaviour
     {
         wordReference = word;
         text.text = wordReference.GetName();
-        GetComponent<Button>().onClick.AddListener(SetSelectedWord);
+        btn.onClick.AddListener(SetSelectedWord);
 
         float writingTime = 0;
 
@@ -48,7 +49,7 @@ public class NotebookWordInstance : MonoBehaviour
     {
         if (wordReference.GetInactiveState() && !wordReference.GetEraseState())
         {
-            GetComponent<Button>().enabled = false;
+            btn.enabled = false;
             strikethrough.SetActive(true);
             CrossOutWord();
         }
@@ -63,7 +64,7 @@ public class NotebookWordInstance : MonoBehaviour
         wordReference = word;
         word.SetIsFound();
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
-        GetComponent<Button>().enabled = true;
+        btn.enabled = true;
     }
 
     public void ReplaceWordInstantly(WordData word)
@@ -134,5 +135,10 @@ public class NotebookWordInstance : MonoBehaviour
     void SetwasSelectedBefore()
     {
         wasSelectedBefore = false;
+    }
+
+    public Button GetButton()
+    {
+        return btn;
     }
 }

@@ -92,15 +92,20 @@ public class CursorManager : MonoBehaviour
 
     bool isInPcView;
 
+    private Coroutine cursorCoroutine;
     public void CheckView(Component sender, object obj)
     {
         if ((ViewStates)obj == ViewStates.PCView)
         {
-            StartCoroutine(ChangeCursorInPC());
+            cursorCoroutine = StartCoroutine(ChangeCursorInPC());
         }
         else
         {
-            StopAllCoroutines();
+            if (cursorCoroutine != null)
+            {
+                StopCoroutine(cursorCoroutine);
+                cursorCoroutine = null;
+            }
             isInPcView = false;
             isClicking = false;
         }
