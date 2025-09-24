@@ -92,7 +92,8 @@ public class ReportController : MonoBehaviour
         }
 
         Hourtxt.text = $"OCT 30 - {timeComplete.Hour:00}:{timeComplete.Minute:00}";
-        ActionCalltxt.text = $"{actionVerb} \"{DeleteSpetialCharacter(Name).ToUpper()}\"";
+        if(Name != "") ActionCalltxt.text = $"{actionVerb} \"{DeleteSpetialCharacter(Name).ToUpper()}\"";
+        else { ActionCalltxt.text = $"{actionVerb}";}
         CheckTextOverflow();
         Statustxt.text = status;// + " at OCT 30th " + $"{timeComplete.Hour:00}:{timeComplete.Minute:00}";
 
