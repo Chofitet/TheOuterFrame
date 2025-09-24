@@ -8,7 +8,7 @@ public class FadeWordsEffect : MonoBehaviour
 {
     private TextMeshProUGUI m_TextComponent;
     [SerializeField] private float FadeSpeed = 20.0f;
-    private float auxfadespeed => FadeSpeed;
+    private float auxfadespeed;
     [SerializeField] private int RolloverCharacterSpread = 10;
     [SerializeField] GameEvent OnEraseSound;
     public void StartEffect(bool IsFadeTransparent = true)
@@ -20,10 +20,10 @@ public class FadeWordsEffect : MonoBehaviour
 
     public void OnStartEffect(Component sender, object obj)
     {
-        /*if ((GameObject)obj != gameObject) return;
+        if ((GameObject)obj != gameObject) return;
         m_TextComponent = GetComponent<TextMeshProUGUI>();
         StopAllCoroutines();
-        StartCoroutine(FadeInText(true));*/
+        StartCoroutine(FadeInText(true));
     }
 
     IEnumerator FadeInText(bool IsFadeTransparent)
@@ -49,7 +49,7 @@ public class FadeWordsEffect : MonoBehaviour
         int startingCharacterRange = currentCharacter;
         bool isRangeMax = false;
 
-        //DefineFadeSpeedAccordingWordLength(textInfo.characterCount);
+        DefineFadeSpeedAccordingWordLength(textInfo.characterCount);
 
         while (!isRangeMax)
         {
@@ -92,7 +92,7 @@ public class FadeWordsEffect : MonoBehaviour
 
                         m_TextComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, EndAlpha / 255f);
 
-                        //m_TextComponent.ForceMeshUpdate();
+                        m_TextComponent.ForceMeshUpdate();
 
                         yield return new WaitForSeconds(1.0f);
 
@@ -113,7 +113,7 @@ public class FadeWordsEffect : MonoBehaviour
         }
     }
 
-    /*void DefineFadeSpeedAccordingWordLength(float characterCount)
+    void DefineFadeSpeedAccordingWordLength(float characterCount)
     {
         auxfadespeed = FadeSpeed;
         for (int i = 0; characterCount > i; i++)
@@ -121,7 +121,7 @@ public class FadeWordsEffect : MonoBehaviour
             if (i > 12) return;
             auxfadespeed += 0.3f;
         }
-    }*/
+    }
 
 
 }
