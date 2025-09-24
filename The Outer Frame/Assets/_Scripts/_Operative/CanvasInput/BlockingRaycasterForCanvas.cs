@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class BlockingRaycasterForCanvas : MonoBehaviour
 {
     Canvas canvas;
-    [SerializeField] GameEvent gameEvent;
     [SerializeField] LayerMask blockingLayer; 
     private GraphicRaycaster raycaster;
 
