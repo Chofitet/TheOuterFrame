@@ -27,7 +27,7 @@ public class FadeTextsController : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3);
-        OnChangeLevel?.Invoke(this, "Level1");
+        OnChangeLevel?.Invoke(this, null);
     }
 }
 

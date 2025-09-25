@@ -1229,8 +1229,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EventsToTrigger:
   - {fileID: 11400000, guid: e069a67fbe9177e4db980499aaedcb61, type: 2}
+  delay: 0
   SomethingToPass: {fileID: 0}
-  SomeStringToPass: Level1
+  SomeStringToPass: LoadingScreen
 --- !u!114 &1258233175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1438,6 +1439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EventsToTrigger:
   - {fileID: 11400000, guid: e069a67fbe9177e4db980499aaedcb61, type: 2}
+  delay: 0
   SomethingToPass: {fileID: 0}
   SomeStringToPass: MainMenu
 --- !u!114 &1301997998
@@ -1598,6 +1600,7 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
 --- !u!114 &1501844448
 MonoBehaviour:
   m_ObjectHideFlags: 0

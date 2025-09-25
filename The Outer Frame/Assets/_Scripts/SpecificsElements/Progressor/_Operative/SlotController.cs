@@ -103,6 +103,11 @@ public class SlotController : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        TimeManager.OnSecondsChange -= UpdateProgress;
+    }
+
     void FillFast()
     {
         inFillFast = true;

@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ScriptableObjectResetter : MonoBehaviour
 {
     public static ScriptableObjectResetter instance { get; private set; }
     HashSet<IReseteableScriptableObject> SOlist = new HashSet<IReseteableScriptableObject>();
+    [SerializeField] GameEvent OnChangeScene;
 
     private void Awake()
     {
@@ -18,7 +20,14 @@ public class ScriptableObjectResetter : MonoBehaviour
             instance = this;
             
         }
+
+
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    public void ResetSOs(Component sender, object obj)
+    {
+        ResetAllScriptableObject();
     }
 
     public void RegisterScriptableObject(ScriptableObject _SO)
@@ -27,16 +36,15 @@ public class ScriptableObjectResetter : MonoBehaviour
         SOlist.Add(SO);
     }
 
-    public void OnRetryLevel(Component sender, object obj)
-    {
-        ResetAllScriptableObject();
-    }
-
-    void ResetAllScriptableObject()
+    async Task ResetAllScriptableObject()
     {
         foreach (IReseteableScriptableObject so in SOlist)
         {
             so.ResetScriptableObject();
         }
+
+        await Task.Delay(50);
+
+        OnChangeScene?.Invoke(this, "Level1");
     }
 }

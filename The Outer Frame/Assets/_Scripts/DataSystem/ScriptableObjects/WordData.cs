@@ -350,7 +350,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
     }
 
-    void IReseteableScriptableObject.ResetScriptableObject()
+    public void ResetScriptableObject()
     {
         stateHistory.Clear();
         CheckedStateHistory.Clear();
