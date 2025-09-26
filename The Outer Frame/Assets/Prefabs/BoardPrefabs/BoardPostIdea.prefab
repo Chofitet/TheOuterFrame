@@ -346,6 +346,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 71d803afeea21bc4483d6847e619149c, type: 2}
   delay: 0
   DisabledInTouch: 0
+  delayDisableInTouch: 0
   SomethingToPass: {fileID: 1698638971177894008}
   FloatToPass: 0
 --- !u!114 &15457265573197226
@@ -710,7 +711,6 @@ GameObject:
   - component: {fileID: 8709914900110661676}
   - component: {fileID: 2844825665158088428}
   - component: {fileID: 9020591682727593094}
-  - component: {fileID: 7197334480304743445}
   m_Layer: 10
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -834,21 +834,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7197334480304743445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3674964693397007206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70cd175a89a9d1943ad82fd426d0f69a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FadeSpeed: 17
-  RolloverCharacterSpread: 3
-  OnEraseSound: {fileID: 0}
 --- !u!1 &4315249211106127564
 GameObject:
   m_ObjectHideFlags: 0

@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70cd175a89a9d1943ad82fd426d0f69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FadeSpeed: 18
+  FadeSpeed: 0.45
   RolloverCharacterSpread: 3
   OnEraseSound: {fileID: 11400000, guid: aaa8249cb6836ee40a62c7d8d9e34a99, type: 2}
 --- !u!1 &642657854230671159
@@ -907,6 +907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EventsToTrigger:
   - {fileID: 11400000, guid: 8d5688dca90e49d438303f97072e3e52, type: 2}
+  delay: 0
   SomethingToPass: {fileID: 0}
   SomeStringToPass: 
 --- !u!1 &6062246628295916328
@@ -1002,6 +1003,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0.1
+  _float: 0
+  _string: 
+  viewState: 0
 --- !u!114 &3612240375461985165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,6 +1036,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
 --- !u!1 &6606883680521036748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,7 +1187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70cd175a89a9d1943ad82fd426d0f69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FadeSpeed: 20
+  FadeSpeed: 0.1
   RolloverCharacterSpread: 3
   OnEraseSound: {fileID: 11400000, guid: aaa8249cb6836ee40a62c7d8d9e34a99, type: 2}
 --- !u!1 &6845201715240550406
