@@ -447,6 +447,7 @@ GameObject:
   - component: {fileID: 223491756203607789}
   - component: {fileID: 6862691826630188540}
   - component: {fileID: 5460077460573926359}
+  - component: {fileID: 8335117385109324995}
   m_Layer: 10
   m_Name: BoardPhoto
   m_TagString: Untagged
@@ -620,6 +621,39 @@ MonoBehaviour:
       - m_Target: {fileID: 2259455543894736860}
         m_TargetAssemblyTypeName: MoveBoardElementsToPos, Assembly-CSharp
         m_MethodName: UpdateFinalPositionRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+--- !u!114 &8335117385109324995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4967887454629803203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 8b21dffda0c1e0843935a34d34680f09, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PhotoLightRuntimeAdjuster, Assembly-CSharp
+        m_MethodName: OnPutInBoard
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1185,10 +1219,10 @@ PrefabInstance:
       addedObject: {fileID: 5673522441686372862}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5585511894639224738}
+      addedObject: {fileID: 6424147754952427839}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6424147754952427839}
+      addedObject: {fileID: 4503232652779006995}
   m_SourcePrefab: {fileID: 100100000, guid: 4fb83818cc9677a4da7e611918f1c84c, type: 3}
 --- !u!4 &1611098983503803351 stripped
 Transform:
@@ -1213,18 +1247,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   photo: {fileID: 0}
---- !u!114 &5585511894639224738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094197267770435949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a2c0a2ee6a0d7c429c7a8ddd336e29f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6424147754952427839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,9 +1264,9 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5585511894639224738}
-        m_TargetAssemblyTypeName: ChangeMaterialToDiffuse, Assembly-CSharp
-        m_MethodName: ChangeToDiffuse
+      - m_Target: {fileID: 4503232652779006995}
+        m_TargetAssemblyTypeName: DisableEmissiveMaterial, Assembly-CSharp
+        m_MethodName: DisableEmission
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1258,3 +1280,15 @@ MonoBehaviour:
   _float: 0
   _string: 
   viewState: 0
+--- !u!114 &4503232652779006995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094197267770435949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec8380af0b327641b1d28fdf4faf923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

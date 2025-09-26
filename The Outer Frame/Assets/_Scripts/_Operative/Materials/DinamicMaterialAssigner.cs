@@ -6,29 +6,26 @@ public class DinamicMaterialAssigner : MonoBehaviour
 {
     public void AssignMaterial(Sprite sprite)
     {
-        // Obtener el MeshRenderer del objeto
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
         if (!sprite) return;
-        if (meshRenderer.materials.Length < 2) return;
+        if (meshRenderer == null || meshRenderer.materials.Length < 2) return;
 
-        if (meshRenderer != null)
-        {
-            // Crea un nuevo material en tiempo de ejecución
-            Material newMaterial = new Material(Shader.Find("Sprites/Default")); // Usamos un shader para sprites
+        // Crear material estándar
+        Material newMaterial = new Material(Shader.Find("Standard"));
 
-            // Asigna la textura del sprite al nuevo material
-            newMaterial.mainTexture = sprite.texture;
+        // Asignar la textura del sprite
+        newMaterial.mainTexture = sprite.texture;
 
-            Material[] materials = new Material[2];
-            materials[0] = meshRenderer.material; 
-            materials[1] = newMaterial; 
-            meshRenderer.materials = materials;
+        // Ajustar parámetros de Standard Shader
+        newMaterial.SetFloat("_Metallic", 1f);
+        newMaterial.SetFloat("_Glossiness", 0.25f);
 
-            Debug.Log("Material created and assigned at runtime." + sprite.name);
-        }
-        else
-        {
-            Debug.LogWarning("No MeshRenderer found on the object.");
-        }
+        // Asignar materiales al MeshRenderer
+        Material[] materials = new Material[2];
+        materials[0] = meshRenderer.material;
+        materials[1] = newMaterial;
+        meshRenderer.materials = materials;
+
+        Debug.Log("Material Standard creado y asignado: " + sprite.name);
     }
 }
