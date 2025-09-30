@@ -37,6 +37,7 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
     [NonSerialized] private bool isCatch;
     [NonSerialized] private bool isInterrupted;
     [NonSerialized] WordData word;
+    [NonSerialized] private bool wasEnterToDataBase;
 
 
     public string GetDialogue() {
@@ -50,6 +51,9 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
         else CompleteTime = new TimeData(0,0,0);
     }
     public bool GetIsCatch() { return isCatch; }
+
+    public void SetWasEnterToDataBase(bool x) => wasEnterToDataBase = x;
+    public bool GetWasEnterToDataBase() { return wasEnterToDataBase; }
 
     public string GetFrom() { return From; }
     public string GetTo() { return To; }
@@ -69,6 +73,7 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
         isCatch = false;
         isInterrupted = false;
         word = null;
+        wasEnterToDataBase = false;
     }
 
     public void SetWord(WordData _word)

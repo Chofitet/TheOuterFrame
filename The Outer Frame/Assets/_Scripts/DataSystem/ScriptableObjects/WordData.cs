@@ -222,7 +222,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
         List<CallType> auxList = new List<CallType>();
 
-        foreach(CallType call in CallTypes)
+        foreach (CallType call in CallTypes)
         {
             if (call.GetIsCatch())
             {
@@ -233,7 +233,21 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         return auxList;
     }
 
-    T  FindInputInList<T>(List<T> list, StateEnum state) where T : IStateComparable
+    public List<CallType> GetAllinDBCalls()
+    {
+        List<CallType> auxList = new List<CallType>();
+
+        foreach (CallType call in CallTypes)
+        {
+            if (call.GetWasEnterToDataBase())
+            {
+                auxList.Add(call);
+            }
+        }
+        return auxList;
+    }
+
+    T FindInputInList<T>(List<T> list, StateEnum state) where T : IStateComparable
     {
         T aux = default;
 

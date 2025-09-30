@@ -34,7 +34,7 @@ public class PCCallsWindowController : MonoBehaviour
         }
         
         if (isDeleted) return;
-        List<CallType> CallsHistory = WordsManager.WM.GetAllCathedCalls(word);
+        List<CallType> CallsHistory = WordsManager.WM.GetAllinDBCalls(word);
 
         foreach (var call in CallsHistory)
         {
@@ -45,7 +45,7 @@ public class PCCallsWindowController : MonoBehaviour
 
     void checkHaveCallsToShow()
     {
-        List<CallType> CallsHistory = WordsManager.WM.GetAllCathedCalls(word);
+        List<CallType> CallsHistory = WordsManager.WM.GetAllinDBCalls(word);
 
         foreach (var call in CallsHistory)
         {

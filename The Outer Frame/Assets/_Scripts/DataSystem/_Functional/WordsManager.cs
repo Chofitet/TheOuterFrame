@@ -107,6 +107,10 @@ public class WordsManager : MonoBehaviour
         return FindWordInList(word).GetAllCathedCalls();
     }
 
+    public List<CallType> GetAllinDBCalls(WordData word)
+    {
+        return FindWordInList(word).GetAllinDBCalls();
+    }
 
     public void RequestChangeState(WordData _word, ReportType report)
     {

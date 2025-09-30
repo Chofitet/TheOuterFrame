@@ -53,6 +53,7 @@ public class SlotController : MonoBehaviour
         {
             Wordtxt.text = state.GetSpeticialActionWordName();
         }
+        Wordtxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
         Wordtxt.GetComponent<WarpTextExample>().UpdateText();
         Actiontxt.text = state.GetActioningVerb();
         if (state.GetSpecialActionWord()) Actiontxt.text = state.GetIdeaVerb();
