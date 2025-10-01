@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ViewManager : MonoBehaviour
@@ -23,6 +24,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnPauseView;
     [SerializeField] GameEvent OnDrawerView;
     [SerializeField] GameEvent OnTutorialView;
+    [SerializeField] GameEvent OnZoomView;
     [SerializeField] GameEvent OnBackToPause;
     [SerializeField] GameEvent OnSitDownSound;
     [SerializeField] GameEvent OnSendReportAutomatically;
@@ -107,7 +109,7 @@ public class ViewManager : MonoBehaviour
     {
         if (inOnFinalReport) OnSendReportAutomatically?.Invoke(this, null);
 
-        if (currentviewState == ViewStates.OnTakeSomeInBoard)
+        if (currentviewState == ViewStates.OnTakeSomeInBoard || currentviewState == ViewStates.BoardZoomView)
         {
             UpdateViewState(this, ViewStates.BoardView);
             return;
@@ -232,6 +234,11 @@ public class ViewManager : MonoBehaviour
                 OnTutorialView?.Invoke(this, null);
                 TimeManager.timeManager.PauseTime();
                 break;
+            case ViewStates.BoardZoomView:
+                OnZoomView?.Invoke(this,null);
+                OnNotebookTake.Invoke(this, false);
+                break;
+
         }
         OnViewStateChange?.Invoke(this, NewView);
         currentviewState = NewView;
@@ -326,5 +333,6 @@ public enum ViewStates
     GameOverView,
     PauseView,
     DrawerView,
-    TutorialView
+    TutorialView,
+    BoardZoomView
 }

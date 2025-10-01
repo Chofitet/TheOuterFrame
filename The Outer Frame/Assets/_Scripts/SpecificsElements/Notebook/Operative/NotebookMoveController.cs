@@ -105,6 +105,10 @@ public class NotebookMoveController : MonoBehaviour
                     dontLeaveNotebook = false;
                 }
                 break;
+            case ViewStates.BoardZoomView:
+                SetPos(7,false);
+                break;
+
         }
         lastView = newview;
     }
