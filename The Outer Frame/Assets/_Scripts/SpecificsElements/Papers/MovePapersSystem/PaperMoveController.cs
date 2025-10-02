@@ -213,7 +213,7 @@ public class PaperMoveController : MonoBehaviour
         }
 
             TransformOffset = stakedCount * new Vector3(0, 0.002f, 0);
-            RotationOffset = new Vector3(0, UnityEngine.Random.Range(-10, 10), 0);
+            RotationOffset = new Vector3(0, UnityEngine.Random.Range(-5, 5), 0);
             
        
     }

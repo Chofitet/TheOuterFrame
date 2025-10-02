@@ -22,6 +22,7 @@ public class GameEventListener : MonoBehaviour
 
     private void OnDisable() => TriggerEvent.UnregisterListener(this);
 
+    bool isDelaying;
     public void Raise(Component sender, object data)
     {
         if(data == null)
@@ -51,7 +52,12 @@ public class GameEventListener : MonoBehaviour
 
     IEnumerator Delay(Component sender, object data)
     {
+        isDelaying = true;
         yield return new WaitForSeconds(DelayCall);
+        if (!isDelaying)
+        {
+            yield return null;
+        }
         Event.Invoke(sender, data);
     }
 
@@ -64,5 +70,9 @@ public class GameEventListener : MonoBehaviour
     public void SetDelay(Component sender, object obj)
     {
         DelayCall = (float)obj;
+    }
+    public void CancelDelayCall(Component sender, object obj)
+    {
+        isDelaying = false;
     }
 }

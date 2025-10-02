@@ -14,6 +14,7 @@ public class TVRandomNewType : ScriptableObject, INewType, IReseteableScriptable
     [SerializeField] int channel;
     [NonSerialized] bool wasStremed;
 
+
     private void OnEnable()
     {
         ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
@@ -77,5 +78,10 @@ public class TVRandomNewType : ScriptableObject, INewType, IReseteableScriptable
     public string GetHeadline2()
     {
         return headlineTwoLines;
+    }
+
+    public NewType GetNewType()
+    {
+        return NewType.RandomNews;
     }
 }

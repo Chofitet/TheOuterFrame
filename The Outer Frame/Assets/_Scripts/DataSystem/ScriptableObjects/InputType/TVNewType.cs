@@ -9,7 +9,9 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
     [HideInInspector][SerializeField] StateEnum state;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string headline;
     [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headlineTwoLines;
-    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
+    [SerializeField][TextArea(minLines: 3, maxLines: 10)] string text;
+    [SerializeField] NewType newType;
+    [TextArea(minLines: 3, maxLines: 10)][SerializeField] string CustomAclarationAlert;
     [SerializeField] Sprite image;
     [SerializeField] int channel;
     [SerializeField] int priority = 5;
@@ -142,7 +144,10 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
     }
 
     TimeCheckConditional EndTime = null;
-     void DefineTimeZone()
+
+    public NewType type { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+    void DefineTimeZone()
     {
         TimeData ActualTime = TimeManager.timeManager.GetTime();
 
@@ -241,5 +246,8 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
         return headlineTwoLines;
     }
 
-    
+    public NewType GetNewType()
+    {
+        return newType;
+    }
 }

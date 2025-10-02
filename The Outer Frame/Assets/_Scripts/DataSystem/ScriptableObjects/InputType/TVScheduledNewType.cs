@@ -6,9 +6,11 @@ using System;
 [CreateAssetMenu(fileName = "New ScheduledNew", menuName = "News/ScheduledNew")]
 public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScriptableObject
 {
-    [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headline;
-    [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headlineTwoLines;
-    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
+    [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headline;
+    [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
+    [SerializeField][TextArea(minLines: 3, maxLines: 10)] string text;
+    [SerializeField] NewType newType;
+    [TextArea(minLines: 3, maxLines: 10)][SerializeField] string CustomAclarationAlert;
     [SerializeField] Sprite image;
     [SerializeField] int channel;
     [SerializeField] int Priority = 1;
@@ -18,7 +20,7 @@ public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScripta
     [SerializeField] int Hour;
     [SerializeField] int Minute;
     [SerializeField] int MinTransmitionTime = 10;
-    [SerializeField] List<ConditionalClass> Conditions= new List<ConditionalClass>();
+    [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
 
     [SerializeField] List<ConditionalClass> ReplacedIf = new List<ConditionalClass>();
     [SerializeField] bool isOrderMatters;
@@ -38,14 +40,14 @@ public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScripta
 
     //Lista de condicionantes y chequeo de si son true todas para desactivar o reprogramar noticia
 
-    public TimeData GetTimeToShow(){ return new TimeData(Day, Hour, Minute); }
+    public TimeData GetTimeToShow() { return new TimeData(Day, Hour, Minute); }
     public string GetHeadline() { return headline; }
 
     public bool GetIfIsAEmergency() { return Emergency; }
 
     public int GetMinTransmitionTime() { return MinTransmitionTime; }
 
-    Sprite INewType.GetNewImag(){ return image;}
+    Sprite INewType.GetNewImag() { return image; }
 
     public TVScheduledNewType GetNew()
     {
@@ -129,7 +131,7 @@ public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScripta
 
         if (timeNew.Day == ActualTime.Day && timeNew.Hour == ActualTime.Hour && timeNew.Minute == (ActualTime.Minute))
         {
-            if(CheckForConditionals(Conditions))
+            if (CheckForConditionals(Conditions))
             {
                 return true;
             }
@@ -165,5 +167,10 @@ public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScripta
     public string GetHeadline2()
     {
         return headlineTwoLines;
+    }
+
+    public NewType GetNewType()
+    {
+        return newType;
     }
 }

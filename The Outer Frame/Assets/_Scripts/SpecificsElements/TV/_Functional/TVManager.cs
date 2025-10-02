@@ -16,8 +16,11 @@ public class TVManager : MonoBehaviour
     [SerializeField] TVRandomNewType RunOutOfNews;
     [SerializeField] List<TVRandomNewType> RandomNews = new List<TVRandomNewType>();
     [SerializeField] Animator anim;
+    TVNewTypeProperties TVNewPropertiesList;
+
     private void Start()
     {
+        TVNewPropertiesList = GetComponent<TVNewTypeProperties>();
         AddVilifiedNewsToReactiveList(WordsManager.WM.GetVilifiedNews());
         FillEmptiesChannels();
         ChangeChannel(null, Channels[InitChannel].gameObject);
@@ -164,7 +167,7 @@ public class TVManager : MonoBehaviour
             channelToSet = Channels[ChannelNum];
         }
 
-        channelToSet.SetNew(_new);
+        channelToSet.SetNew(_new, TVNewPropertiesList.GetTVNewPropertyData(_new.GetNewType()));
 
         return _new;
     }
@@ -190,7 +193,9 @@ public class TVManager : MonoBehaviour
             if (channel.GetisStaticChannel()) continue;
             if (channel.GetTimeToRestartRandoms())
             {
-                channel.SetNew(SetRandomNew(Channels.IndexOf(channel)));
+                INewType randomNew = SetRandomNew(Channels.IndexOf(channel));
+
+                channel.SetNew(randomNew,TVNewPropertiesList.GetTVNewPropertyData(randomNew.GetNewType()));
                 channel.SetIsFull(true);
             }
         }
@@ -267,4 +272,5 @@ public class TVManager : MonoBehaviour
             ReactiveNews.Add(_new);
         }
     }
+
 }

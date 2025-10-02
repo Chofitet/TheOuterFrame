@@ -26,6 +26,7 @@ public class ChannelController : MonoBehaviour
     TimeCheckConditional MinTimeToShowNew;
     TimeCheckConditional TimeToRestartRandoms;
     INewType New;
+    TVNewPropertiesData NewProperties;
 
     private void Start()
     {
@@ -55,13 +56,15 @@ public class ChannelController : MonoBehaviour
     //deberá gestionar una cola de noticias que le entran y partir los bloques que ya creo.
     //
 
-    public void SetNew(INewType _new)
+    public void SetNew(INewType _new, TVNewPropertiesData typeProperties)
     {
         if (_new == null)
         {
             Debug.Log("new is null");
             return;
         }
+
+        NewProperties = typeProperties;
 
         if (!isFirstNew)
         {
@@ -73,6 +76,7 @@ public class ChannelController : MonoBehaviour
         EmergencyScreen.SetActive(false);
 
         New = _new;
+        
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
@@ -132,7 +136,7 @@ public class ChannelController : MonoBehaviour
         }
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
         else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
-        OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
+        OnIncreaseAlertLevel?.Invoke(this, new AlertData(_new.GetIncreaseAlertLevel(), NewProperties.TextInAlertScreen));
 
     }
 
@@ -179,7 +183,7 @@ public class ChannelController : MonoBehaviour
         }
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
         else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
-        OnIncreaseAlertLevel?.Invoke(this, _new.GetIncreaseAlertLevel());
+        OnIncreaseAlertLevel?.Invoke(this, new AlertData(_new.GetIncreaseAlertLevel(), NewProperties.TextInAlertScreen));
 
     }
 
@@ -234,3 +238,5 @@ public class ChannelController : MonoBehaviour
         };
     }
 }
+
+
