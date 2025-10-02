@@ -4,10 +4,10 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNewRandom", menuName = "News/RandomNew")]
-public class TVRandomNewType : ScriptableObject, INewType, IReseteableScriptableObject
+public class TVRandomNewType : ScriptableObject, INewType, IReseteableScriptableObject, IPopUp
 {
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
-    [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headlineTwoLines;
+    [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] Sprite image;
     [SerializeField] int alertLevelIncrement;
@@ -30,7 +30,7 @@ public class TVRandomNewType : ScriptableObject, INewType, IReseteableScriptable
         return channel;
     }
 
-    public string GetHeadline(){return headline;}
+    public string GetHeadline() { return headline; }
 
     public bool GetIfIsAEmergency() { return false; }
 
@@ -83,5 +83,20 @@ public class TVRandomNewType : ScriptableObject, INewType, IReseteableScriptable
     public NewType GetNewType()
     {
         return NewType.RandomNews;
+    }
+
+    //POPUP implementation
+
+    public string PopupText
+    {
+        get { return ""; }
+    }
+
+    public PopUpType PopUpType
+    {
+        get
+        {
+            return PopUpType.None;
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
+
 public class BlinkMaterialEffect : MonoBehaviour
 {
     Material material; 
@@ -26,6 +28,11 @@ public class BlinkMaterialEffect : MonoBehaviour
         if (GetComponent<Renderer>())
         {
             material = GetComponent<Renderer>().material;
+            originalEmissionColor = material.GetColor("_EmissionColor");
+        }
+        else if (!GetComponent<Renderer>() && GetComponent<Image>())
+        {
+            material = GetComponent<Image>().material;
             originalEmissionColor = material.GetColor("_EmissionColor");
         }
         else return;

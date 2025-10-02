@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New ScheduledNew", menuName = "News/ScheduledNew")]
-public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScriptableObject
+public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScriptableObject, IPopUp
 {
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headline;
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
@@ -172,5 +172,22 @@ public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScripta
     public NewType GetNewType()
     {
         return newType;
+    }
+
+    //POPUP implementation
+
+    public string PopupText
+    {
+        get { return CustomAclarationAlert; }
+    }
+
+    public PopUpType PopUpType
+    {
+        get
+        {
+            if (alertLevelIncrement > 0) return PopUpType.bad;
+            if (alertLevelIncrement < 0) return PopUpType.good;
+            return PopUpType.common;
+        }
     }
 }

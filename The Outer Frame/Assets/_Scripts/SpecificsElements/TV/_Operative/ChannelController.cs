@@ -23,6 +23,7 @@ public class ChannelController : MonoBehaviour
     [SerializeField] GameEvent OnIncreaseAlertLevel;
     [SerializeField] GameEvent OnChangeReporterAnim;
     [SerializeField] Sprite BreakingImage;
+    [SerializeField] GameEvent OnInstanciatePopUp;
     TimeCheckConditional MinTimeToShowNew;
     TimeCheckConditional TimeToRestartRandoms;
     INewType New;
@@ -137,6 +138,7 @@ public class ChannelController : MonoBehaviour
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
         else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
         OnIncreaseAlertLevel?.Invoke(this, new AlertData(_new.GetIncreaseAlertLevel(), NewProperties.TextInAlertScreen));
+        OnInstanciatePopUp?.Invoke(this, _new as IPopUp);
 
     }
 
@@ -184,7 +186,7 @@ public class ChannelController : MonoBehaviour
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
         else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
         OnIncreaseAlertLevel?.Invoke(this, new AlertData(_new.GetIncreaseAlertLevel(), NewProperties.TextInAlertScreen));
-
+        OnInstanciatePopUp?.Invoke(this, _new as IPopUp);
     }
 
 

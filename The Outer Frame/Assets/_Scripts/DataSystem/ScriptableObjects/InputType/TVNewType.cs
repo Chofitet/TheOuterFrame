@@ -4,11 +4,11 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNew", menuName = "News/ReactiveNew")]
-public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteableScriptableObject
+public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteableScriptableObject, IPopUp
 {
     [HideInInspector][SerializeField] StateEnum state;
-    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string headline;
-    [TextArea(minLines: 3, maxLines: 10)] [SerializeField] string headlineTwoLines;
+    [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
+    [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] NewType newType;
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string CustomAclarationAlert;
@@ -32,7 +32,7 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
     {
         wasStremed = false;
         EndTime = null;
-        CompleteTime = new TimeData(0,0,0);
+        CompleteTime = new TimeData(0, 0, 0);
     }
 
     public StateEnum GetState()
@@ -47,11 +47,11 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
     }
 
     public string GetHeadline() { return headline; }
-    public TimeData GetTimeWhenWasDone() { return CompleteTime;}
+    public TimeData GetTimeWhenWasDone() { return CompleteTime; }
 
-    public Sprite GetNewImag(){return image;}
+    public Sprite GetNewImag() { return image; }
 
-    public bool GetIfIsAEmergency(){ return Emergency;}
+    public bool GetIfIsAEmergency() { return Emergency; }
 
     public void AddConditional(ConditionalClass condition)
     {
@@ -80,13 +80,13 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
             return false;
         }
 
-        if (!EndTime){return false;}
-        
-        if(EndTime.GetStateCondition()) return true;
+        if (!EndTime) { return false; }
+
+        if (EndTime.GetStateCondition()) return true;
 
         return false;
 
-        
+
     }
 
     public bool CheckConditionals()
@@ -145,8 +145,6 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
 
     TimeCheckConditional EndTime = null;
 
-    public NewType type { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
     void DefineTimeZone()
     {
         TimeData ActualTime = TimeManager.timeManager.GetTime();
@@ -191,26 +189,26 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
             return oneCondition.GetLastCompletedConditional().GetTimeToShowNews();
         }
 
-            foreach (ConditionalClass conditional in Conditions)
+        foreach (ConditionalClass conditional in Conditions)
         {
             IConditionable auxConditional = conditional.condition as IConditionable;
 
-                int completionTime = auxConditional.GetLastCompletedConditional().GetTimeWhenWasComplete().GetTimeInNum();
+            int completionTime = auxConditional.GetLastCompletedConditional().GetTimeWhenWasComplete().GetTimeInNum();
 
-                foreach (ConditionalClass otherConditional in Conditions)
+            foreach (ConditionalClass otherConditional in Conditions)
+            {
+                IConditionable otherAuxConditional = otherConditional.condition as IConditionable;
+
+
+                int otherCompletionTime = otherAuxConditional.GetLastCompletedConditional().GetTimeWhenWasComplete().GetTimeInNum();
+
+                if (completionTime > otherCompletionTime && completionTime > latestTime)
                 {
-                    IConditionable otherAuxConditional = otherConditional.condition as IConditionable;
-
-                        
-                        int otherCompletionTime = otherAuxConditional.GetLastCompletedConditional().GetTimeWhenWasComplete().GetTimeInNum();
-
-                        if (completionTime > otherCompletionTime && completionTime > latestTime)
-                        {
-                            latestTime = completionTime;
-                            lastCompleteConditional = auxConditional.GetLastCompletedConditional();
-                        }
+                    latestTime = completionTime;
+                    lastCompleteConditional = auxConditional.GetLastCompletedConditional();
                 }
-           
+            }
+
         }
         Debug.Log("LastCompleted conditional = " + lastCompleteConditional);
         return lastCompleteConditional.GetTimeToShowNews();
@@ -249,5 +247,22 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
     public NewType GetNewType()
     {
         return newType;
+    }
+
+    //POPUP implementation
+
+    public string PopupText
+    {
+        get { return CustomAclarationAlert; }
+    }
+
+    public PopUpType PopUpType
+    {
+        get
+        {
+            if (alertLevelIncrement > 0) return PopUpType.bad;
+            if (alertLevelIncrement < 0) return PopUpType.good;
+            return PopUpType.common;
+        }
     }
 }
