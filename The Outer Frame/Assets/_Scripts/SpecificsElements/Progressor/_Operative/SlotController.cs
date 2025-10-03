@@ -54,7 +54,7 @@ public class SlotController : MonoBehaviour
             Wordtxt.text = state.GetSpeticialActionWordName();
         }
         Wordtxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
-        Wordtxt.GetComponent<WarpTextExample>().UpdateText();
+        StartCoroutine(DelayedWarp());
         Actiontxt.text = state.GetActioningVerb();
         if (state.GetSpecialActionWord()) Actiontxt.text = state.GetIdeaVerb();
         Actiontxt.GetComponent<WarpTextExample>().UpdateText();
@@ -316,6 +316,12 @@ public class SlotController : MonoBehaviour
         if (Wordtxt.IsActive()) Wordtxt.GetComponent<WarpTextExample>().UpdateText();
         if (Actiontxt.IsActive()) Actiontxt.GetComponent<WarpTextExample>().UpdateText();
 
+    }
+
+    IEnumerator DelayedWarp()
+    {
+        yield return null; // espera 1 frame
+        Wordtxt.GetComponent<WarpTextExample>().UpdateText();
     }
 
     public WordData GetWord() { return _word; }

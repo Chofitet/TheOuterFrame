@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class NotebookWordInstance : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] Button btn;
     WordData wordReference;
     bool isCross;
-
+    bool isActiveInBoard;
     public void Initialization(WordData word, bool noAnim = false)
     {
         wordReference = word;
@@ -28,7 +29,7 @@ public class NotebookWordInstance : MonoBehaviour
         {
             writingTime = 0.5f;
             word.SetIsFound();
-            if(!noAnim) text.gameObject.GetComponent<FadeWordsEffect>().StartEffect();
+            if (!noAnim) text.gameObject.GetComponent<FadeWordsEffect>().StartEffect();
         }
 
         if (!noAnim)
@@ -37,7 +38,7 @@ public class NotebookWordInstance : MonoBehaviour
             OnWritingNotebookSound?.Invoke(this, null);
             Invoke("Alpha1", 1);
         }
-           
+
     }
 
     public void EraseAnim()
@@ -53,14 +54,14 @@ public class NotebookWordInstance : MonoBehaviour
             strikethrough.SetActive(true);
             CrossOutWord();
         }
-        
+
     }
     public void ReplaceWord(WordData word)
     {
         Debug.Log(wordReference.GetName());
         text.text = wordReference.GetName();
         if (isCross) EraseCrossWord();
-        StartCoroutine(AnimFade(text,false,text,true,word.GetName()));
+        StartCoroutine(AnimFade(text, false, text, true, word.GetName()));
         wordReference = word;
         word.SetIsFound();
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
@@ -72,13 +73,14 @@ public class NotebookWordInstance : MonoBehaviour
         wordReference = word;
         word.SetIsFound();
         text.text = wordReference.GetName();
+
     }
 
     public void CrossOutWord()
     {
         if (isCross) return;
         RectTransform line = strikethrough.GetComponent<RectTransform>();
-        line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y),0.3f);
+        line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y), 0.3f);
         OnCrossWordSound?.Invoke(this, null);
         isCross = true;
     }
@@ -105,7 +107,7 @@ public class NotebookWordInstance : MonoBehaviour
     {
         text.text = "<u>" + wordReference.GetName() + "</u>";
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordReference);
-
+        isActiveInBoard = false;
         if (wasSelectedBefore)
         {
             text.text = wordReference.GetName();
@@ -117,6 +119,7 @@ public class NotebookWordInstance : MonoBehaviour
 
     public void ClearUnderline()
     {
+        if (isActiveInBoard) return;
         text.text = wordReference.GetName();
         Invoke("SetwasSelectedBefore", 0.1f);
     }
@@ -141,4 +144,81 @@ public class NotebookWordInstance : MonoBehaviour
     {
         return btn;
     }
+    string materialName;
+    public void ApplyMaterial(string materialLabel = "")
+    {
+        if (text.text.Contains("<material=")) return;
+
+        materialName = "\"" + text.font.name + "" + materialLabel;
+
+        materialName = materialName.Replace(" ", "");
+
+        string newWord = "<material=" + materialName + ">" + text.text + "</material>";
+
+        text.text = newWord;
+
+    }
+
+    private Sequence thicknessSequence;
+
+    /// material modificator
+
+    public void ApplyThicknessAnim(bool x)
+    {
+        if (x)
+        {
+            ThicknessOn();
+            isActiveInBoard = true;
+        }
+        else
+        {
+            ThicknessOff();
+            isActiveInBoard = false;
+        }
+    }
+
+    public void ThicknessOn(float targetValue = 0.3f, float duration = 0.3f)
+    {
+        Material mat = GetMat();
+
+        // Cancelamos cualquier animación previa
+        thicknessSequence?.Kill();
+
+        thicknessSequence = DOTween.Sequence();
+
+        thicknessSequence.Append(
+            DOTween.To(
+                () => mat.GetFloat(ShaderUtilities.ID_FaceDilate),      
+                x => mat.SetFloat(ShaderUtilities.ID_FaceDilate, x),   // setter
+                targetValue,                                           // valor final
+                duration                                               // duración
+            ).SetEase(Ease.InOutSine)
+        );
+    }
+
+    public void ThicknessOff(float endValue = 0f, float duration = 0.3f)
+    {
+        Material mat = GetMat();
+
+        thicknessSequence?.Kill();
+
+        thicknessSequence = DOTween.Sequence();
+
+        thicknessSequence.Append(
+            DOTween.To(
+                () => mat.GetFloat(ShaderUtilities.ID_FaceDilate),
+                x => mat.SetFloat(ShaderUtilities.ID_FaceDilate, x),
+                endValue,
+                duration
+            ).SetEase(Ease.InOutSine)
+        );
+    }
+
+    private Material GetMat()
+    {
+        // Igual que en tu ejemplo, usás tu propio manager de materiales
+        return text.GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(materialName.Replace("\"", ""));
+    }
+
 }
+

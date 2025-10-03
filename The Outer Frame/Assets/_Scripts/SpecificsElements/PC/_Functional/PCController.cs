@@ -137,8 +137,8 @@ public class PCController : MonoBehaviour
             StartCoroutine(DelayBTNBackLatEntryAppear());
             BtnBackToLastEntry.GetComponent<BackToLastEntryBTNController>().SetWordToBack(LastSearchedWord);
         }*/
-            
 
+        if (db == null) return;
         if (db.GetAccessWord() && !db.GetisWordAccessFound())
         {
             OnWordAccessScreen?.Invoke(this, word);

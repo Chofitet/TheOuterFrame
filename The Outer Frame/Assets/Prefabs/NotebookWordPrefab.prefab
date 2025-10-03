@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 976639871496013436}
   - component: {fileID: 4453182348745804469}
   - component: {fileID: 1682480505006052977}
+  - component: {fileID: 3491815975724868493}
+  - component: {fileID: 1785741754617566741}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -201,6 +203,33 @@ MonoBehaviour:
   CurveScale: 1.5
   boundsMax: 8
   boundsMin: -8
+--- !u!114 &3491815975724868493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308161797540684817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79b6077dbaa06e44d9734d2ba8946cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1785741754617566741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 308161797540684817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bd1518865b9874eb1ee0fb6f0a8705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material:
+  - {fileID: 2100000, guid: b84e47ac2fa871d4aa319cab81814c15, type: 2}
+  - {fileID: 2100000, guid: 503e0f40dba621944866d4784c7f4701, type: 2}
 --- !u!1 &2226290453380634898
 GameObject:
   m_ObjectHideFlags: 0
