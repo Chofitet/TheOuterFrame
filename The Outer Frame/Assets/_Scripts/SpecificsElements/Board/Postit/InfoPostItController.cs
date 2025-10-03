@@ -106,5 +106,10 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
     {
         return false;
     }
+
+    public WordData GetWordData()
+    {
+        return null;
+    }
 }
 

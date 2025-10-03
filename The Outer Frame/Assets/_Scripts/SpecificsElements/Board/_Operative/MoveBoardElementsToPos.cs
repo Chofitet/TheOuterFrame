@@ -164,7 +164,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
         transform.position = FinalPosition;
         transform.rotation = FinalRotation;
         Content.SetActive(true);
-
+        if (conditions.GetWordData() != null) conditions.GetWordData().SetPlacedInBoard();
     }
 
 }

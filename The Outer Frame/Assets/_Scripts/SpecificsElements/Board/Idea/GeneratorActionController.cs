@@ -232,4 +232,9 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             GetComponent<BoxCollider>().enabled = false;
         }
     }
+
+    public WordData GetWordData()
+    {
+        return null;
+    }
 }

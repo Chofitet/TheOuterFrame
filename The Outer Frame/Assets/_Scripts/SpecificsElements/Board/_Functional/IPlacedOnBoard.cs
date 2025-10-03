@@ -12,4 +12,6 @@ public interface IPlacedOnBoard
 
     public bool IsOutOfBoard();
 
+    public WordData GetWordData();
+
 }

@@ -97,4 +97,9 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         return false;
     }
 
+    public WordData GetWordData()
+    {
+        return word;
+    }
+
 }
