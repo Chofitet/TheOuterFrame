@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21787a5276d74c24e9e60eb8d3299788, type: 3}
-  m_Name: End.Petrostation
+  m_Script: {fileID: 11500000, guid: 6e60f3f8eb45d81468a6b63e9e366543, type: 3}
+  m_Name: End.Road Solved
   m_EditorClassIdentifier: 
+  MinConditionsForTrue: 2
   Conditions:
-  - condition: {fileID: 11400000, guid: eb10b4d574b37f446a39d07785ecaa11, type: 2}
+  - condition: {fileID: 11400000, guid: 18af5eccc49c54a45bfc5306f8d5c660, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 5d00dc8f548f304458b4f7403642553e, type: 2}
     ifNot: 0
