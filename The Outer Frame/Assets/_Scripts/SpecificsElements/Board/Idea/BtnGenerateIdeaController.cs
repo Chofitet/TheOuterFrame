@@ -14,7 +14,8 @@ public class BtnGenerateIdeaController : MonoBehaviour
     public void Inicialization(StateEnum _State)
     {
         state = _State;
-        txtfield.text = state.GetInfinitiveVerb();
+        //si ya hay algo escrito, queda eso
+        if(txtfield.text == "") txtfield.text = state.GetInfinitiveVerb();
     }
 
      public void OnAddAction()

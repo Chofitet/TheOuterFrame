@@ -71,14 +71,14 @@ public class PCWikiController : MonoBehaviour
 
     IEnumerator Delay(DataBaseType input)
     {
-        WikiData.gameObject.SetActive(false);
-        WikiInfoContent.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        WikiInfoContent.SetActive(true);
         if (input.GetText() != null) WikiData.text = input.GetText();
         
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);
         HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
-        yield return new WaitForSeconds(0.2f);
+        WikiInfoContent.SetActive(true);
         image.sprite = input.GetImage();
         CompleteFields();
         content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, WikiData.GetComponent<RectTransform>().sizeDelta.y);
@@ -90,7 +90,7 @@ public class PCWikiController : MonoBehaviour
 
         
         WikiInfoContent.SetActive(CheckFieldsInWikiInfoContent());
-        WikiData.gameObject.SetActive(true);
+        
         //PhoneNumber.text = input.GetPhoneNum();
         //FindableWordsManager.FWM.InstanciateFindableWord(PhoneNumber);
     }

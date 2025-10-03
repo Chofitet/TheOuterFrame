@@ -198,7 +198,7 @@ public class NotebookController : MonoBehaviour
     public void PutingWordOnBoard(Component sender, object obj)
     {
         InctiveWordsOnBoard.Add((WordData)obj);
-        DisableWordsOfList(InctiveWordsOnBoard);
+        DisableWordsOfList(InctiveWordsOnBoard,"Board",false,true);
     }
 
     ViewStates actualView;
@@ -214,7 +214,7 @@ public class NotebookController : MonoBehaviour
 
         if (actualView == ViewStates.BoardView)
         {
-            DisableWordsOfList(InctiveWordsOnBoard);
+            DisableWordsOfList(InctiveWordsOnBoard,"Board",true,true);
         }
         else if (actualView == ViewStates.TVView)
         {
@@ -231,19 +231,29 @@ public class NotebookController : MonoBehaviour
         }
     }
 
-    void DisableWordsOfList(List<WordData> list)
+    void DisableWordsOfList(List<WordData> list, string material = "",bool changes = true, bool thickness = false)
     {
+        List<NotebookWordInstance> activeWords = new List<NotebookWordInstance>();
+
         foreach (GameObject instanceBTN in WordsInstances) 
         {
+            bool isActive = true;
             instanceBTN.GetComponent<NotebookWordInstance>().GetButton().enabled = true;
+            NotebookWordInstance Wordinstance = instanceBTN.GetComponent<NotebookWordInstance>();
 
             foreach (WordData word in list)
             {
-                NotebookWordInstance Wordinstance = instanceBTN.GetComponent<NotebookWordInstance>();
                 if(Wordinstance.GetWord() == word)
                 {
+                    isActive = false;
                     instanceBTN.GetComponent<NotebookWordInstance>().GetButton().enabled = false;
                 }
+            }
+            if (isActive)
+            {
+                //palabra que sigue activa
+                Wordinstance.ApplyMaterial(material);
+                if(changes) Wordinstance.ApplyThicknessAnim(thickness);
             }
         }
     }
@@ -264,4 +274,5 @@ public class NotebookController : MonoBehaviour
         }
     }
     
+
 }

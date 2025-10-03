@@ -41,7 +41,7 @@ public class FontSizeAdjustToOneLine : MonoBehaviour
                && tmpText.fontSize > minFontSize)
         {
             tmpText.fontSize -= 0.1f;
-            tmpText.ForceMeshUpdate();
+           // tmpText.ForceMeshUpdate();
         }
     }
 }
