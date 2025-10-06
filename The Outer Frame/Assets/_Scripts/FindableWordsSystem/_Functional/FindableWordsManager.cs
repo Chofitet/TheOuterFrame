@@ -244,14 +244,17 @@ public class FindableWordsManager : MonoBehaviour
             WordData word = fw.GetComponent<FindableWordBTNController>().Getword();
             if (word.GetIsFound())
             {
+                fw.GetComponent<FindableWordBTNController>().ApplyShaderMaterial("Grey");
                 Destroy(fw);
             }
             else if(word.GetIsPhoneNumberFound() && word.GetIsAPhoneNumber())
             {
+                fw.GetComponent<FindableWordBTNController>().ApplyShaderMaterial("Grey");
                 Destroy(fw);
             }
             else if(word.GetInactiveState())
             {
+                fw.GetComponent<FindableWordBTNController>().ApplyShaderMaterial("Grey");
                 Destroy(fw);
             }
         }

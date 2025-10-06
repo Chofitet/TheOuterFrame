@@ -68,6 +68,11 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         GlowOff();
     }
 
+    public void ApplyShaderMaterial(string x)
+    {
+        ApplyShader(x);
+    }
+
     void ApplyShader(string MaterialName, bool eraceSpace = true)
     {
         if (isInactive) return;
