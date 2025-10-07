@@ -1,3 +1,4 @@
+Ôªøusing System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +14,7 @@ public class FadeWordsEffect : MonoBehaviour
     [SerializeField] private int RolloverCharacterSpread = 10;
     [SerializeField] GameEvent OnEraseSound;
     Coroutine fadeCoroutine;
+    public Action OnComplete;
     public void StartEffect(bool isFadeTransparent = true)
     {
         m_TextComponent = GetComponent<TextMeshProUGUI>();
@@ -48,9 +50,16 @@ public class FadeWordsEffect : MonoBehaviour
     IEnumerator FadeInText(bool fadeIn, string text)
     {
         int length = text.Length;
-
-        float totalDuration = FadeSpeed; 
+        float totalDuration = FadeSpeed;
         float stepDuration = totalDuration / Mathf.Max(1, length);
+
+        // Materiales de m√°s claro a m√°s oscuro
+        string[] matLevels = {
+        "NipCensHandwritingLightSDFWriting1", // m√°s claro
+        "NipCensHandwritingLightSDFWriting2",
+        "NipCensHandwritingLightSDFWriting3",
+        "NipCensHandwritingLightSDFWriting4"  // m√°s oscuro
+    };
 
         if (fadeIn)
         {
@@ -62,28 +71,32 @@ public class FadeWordsEffect : MonoBehaviour
 
                 for (int i = 0; i < length; i++)
                 {
-                    if (i == currentIndex) // letra reciÈn apareciendo
-                        sb.Append($"<alpha=#55>{text[i]}");
-                    else if (i == currentIndex - 1) // intermedia
-                        sb.Append($"<alpha=#AA>{text[i]}");
-                    else if (i <= currentIndex - 2) // ya consolidada
-                        sb.Append($"<alpha=#FF>{text[i]}");
-                    else // todavÌa invisible
-                        sb.Append($"<alpha=#00>{text[i]}");
+                    int diff = currentIndex - i;
+
+                    if (diff == 0)
+                        sb.Append($"<material=\"{matLevels[1]}\">{text[i]}</material>"); // letra actual -> mat 2
+                    else if (diff == 1)
+                        sb.Append($"<material=\"{matLevels[2]}\">{text[i]}</material>"); // inmediata izquierda -> mat 3
+                    else if (diff >= 2 && diff <= 3)
+                        sb.Append($"<material=\"{matLevels[3]}\">{text[i]}</material>"); // dos siguientes a la izquierda -> mat 4
+                    else if (diff < 0)
+                        sb.Append($"<material=\"{matLevels[0]}\">{text[i]}</material>"); // a√∫n no dibujadas
+                    else
+                        sb.Append(text[i]); // resto de letras ya dibujadas -> normal
                 }
 
                 m_TextComponent.text = sb.ToString();
+                m_TextComponent.ForceMeshUpdate();
+
                 currentIndex++;
                 yield return new WaitForSeconds(stepDuration);
             }
 
-            // al final aseguramos el texto completo visible
-            m_TextComponent.text = text;
+            m_TextComponent.text = text; // al final todo normal
         }
         else
         {
             int currentIndex = length - 1;
-
             OnEraseSound?.Invoke(this, null);
 
             while (currentIndex >= 0)
@@ -94,11 +107,11 @@ public class FadeWordsEffect : MonoBehaviour
                 {
                     if (i == currentIndex) // letra empezando a borrarse
                         sb.Append($"<alpha=#AA>{text[i]}");
-                    else if (i == currentIndex + 1) // la que ya est· m·s apagada
+                    else if (i == currentIndex + 1) // m√°s apagada
                         sb.Append($"<alpha=#55>{text[i]}");
-                    else if (i > currentIndex + 1) // las que ya se borraron
+                    else if (i > currentIndex + 1) // ya borradas
                         sb.Append($"<alpha=#00>{text[i]}");
-                    else // todavÌa visibles
+                    else // todav√≠a visibles
                         sb.Append($"<alpha=#FF>{text[i]}");
                 }
 
@@ -110,7 +123,12 @@ public class FadeWordsEffect : MonoBehaviour
             // al final dejamos todo borrado
             m_TextComponent.text = "";
         }
+
+        OnComplete?.Invoke();
     }
+
+
+
 
 
 

@@ -11,6 +11,7 @@ public class NotebookPhonesController : MonoBehaviour
     List<GameObject> WordsInstances = new List<GameObject>();
     List<int> removedIndex = new List<int>(); // Lista para almacenar los índices eliminados
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
+    [SerializeField] NotebookProcessManager proccessManager;
     int i = 0;
     bool once = false;
     bool IsPhoneSlideOut;
@@ -53,7 +54,7 @@ public class NotebookPhonesController : MonoBehaviour
 
         if (replaceBool) return;
 
-        if (LastPhoneAdded.GetIsPhoneNumberFound() && LastPhoneAdded.GetIsAPhoneNumber())
+       /* if (LastPhoneAdded.GetIsPhoneNumberFound() && LastPhoneAdded.GetIsAPhoneNumber()) comentado porque ahora encontrár un numero automáticamente agrega su palabra.
         {
             // Entra si la palabra está agregada pero le falta el número
             foreach (GameObject phone in WordsInstances)
@@ -68,11 +69,11 @@ public class NotebookPhonesController : MonoBehaviour
         }
 
         //Entra si hay un número agregado y falta su palabra
-        if (SearchForAnExistingPhoneNum(LastPhoneAdded)) return;
+        if (SearchForAnExistingPhoneNum(LastPhoneAdded)) return;*/
 
         GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
         wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
-        wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded, isStarting);
+        wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded, isStarting, proccessManager);
         WordsInstances.Add(wordaux);
 
         once = false;
