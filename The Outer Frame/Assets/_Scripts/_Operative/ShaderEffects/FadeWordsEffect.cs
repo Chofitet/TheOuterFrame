@@ -19,7 +19,7 @@ public class FadeWordsEffect : MonoBehaviour
     {
         m_TextComponent = GetComponent<TextMeshProUGUI>();
         string auxText = m_TextComponent.text;
-        if (auxText.Contains("alpha"))
+        if (auxText.Contains("material"))
         {
             m_TextComponent.text = "";
             return;
@@ -36,7 +36,7 @@ public class FadeWordsEffect : MonoBehaviour
         if ((GameObject)obj != gameObject) return;
         m_TextComponent = GetComponent<TextMeshProUGUI>();
         string auxText = m_TextComponent.text;
-        if (auxText.Contains("alpha"))
+        if (auxText.Contains("material"))
         {
             m_TextComponent.text = "";
             return;

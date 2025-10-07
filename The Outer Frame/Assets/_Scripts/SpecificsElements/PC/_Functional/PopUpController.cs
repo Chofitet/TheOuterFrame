@@ -51,12 +51,28 @@ public class PopUpController : MonoBehaviour, IDragHandler, IBeginDragHandler
     public void OnDrag(PointerEventData eventData)
     {
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out var localPoint))
+         canvasRectTransform,
+         eventData.position,
+         eventData.pressEventCamera,
+         out var localPoint))
         {
-            rectTransform.localPosition = localPoint + offset;
+            Vector2 newPos = localPoint + (Vector2)offset;
+
+            // Tamaño del popup
+            Vector2 popupSize = rectTransform.sizeDelta;
+            // Tamaño del canvas
+            Vector2 canvasSize = canvasRectTransform.sizeDelta;
+
+            // Calculamos límites considerando pivot en esquina superior izquierda
+            float minX = 0;
+            float maxX = canvasSize.x - popupSize.x + 2;
+            float minY = -canvasSize.y + popupSize.y + 2;
+            float maxY = 0;
+
+            float clampedX = Mathf.Clamp(newPos.x, minX, maxX);
+            float clampedY = Mathf.Clamp(newPos.y, minY, maxY);
+
+            rectTransform.localPosition = new Vector2(clampedX, clampedY);
         }
     }
 }
