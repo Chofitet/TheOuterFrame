@@ -11,11 +11,13 @@ public class PhoneRowNotebookController : MonoBehaviour
     [SerializeField] TMP_Text Num;
     [SerializeField] GameEvent OnWritingShakeNotebook;
     [SerializeField] GameEvent OnWritingNotebookSound;
+    NotebookProcessManager processManager;
     WordData word;
     Button button;
 
-    public void Initialization(WordData _word, bool NoAnim = false)
+    public void Initialization(WordData _word, bool NoAnim = false, NotebookProcessManager _processManager = null)
     {
+        if (_processManager != null) processManager = _processManager;
         button = GetComponent<Button>();
         button.onClick.AddListener(ButtonPress);
         word = _word;
@@ -25,20 +27,22 @@ public class PhoneRowNotebookController : MonoBehaviour
         if (word.GetIsAPhoneNumber())
         {
             writingTime = 0.5f;
-            txtName.text = "?????";
+            txtName.text = WordsManager.WM.FindWordWithPhoneNum(word).GetName(); // volver a los "?????"
             Num.text = word.GetPhoneNumber();
             button.enabled = true;
             if (!NoAnim)
             {
-                Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
-                txtName.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+                //Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+                //txtName.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
+
+                StartCoroutine(AnimFade(txtName, true, Num, true));
             }
         }
 
         if (!word.GetIsPhoneNumberFound())
         {
             writingTime = 0.5f + 0.5f;
-            Num.text = "?????";
+            Num.text = "?????"; 
             if (!NoAnim)
             {
                 Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
@@ -57,14 +61,14 @@ public class PhoneRowNotebookController : MonoBehaviour
     public void UpdateNumber()
     {
         button.enabled = true;
-        Num.text = "?????";
+        Num.text = "?????"; 
         StartCoroutine(AnimFade(Num, false, Num, true,word.GetPhoneNumber()));
     }
 
     public void ReplaceNumberWithWord(WordData _word)
     {
         word = _word;
-        txtName.text = "?????";
+        txtName.text = "?????"; // volver a los "?????"
         StartCoroutine(AnimFade(txtName, false, txtName, true,word.GetName()));
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
     }
@@ -77,7 +81,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         
         if (_word.GetIsPhoneNumberFound())
         {
-            string auxNum = "?????";
+            string auxNum = "?????"; // volver a los "?????"
             auxNum = _word.GetPhoneNumber();
 
             StartCoroutine(AnimFade(Num, false, Num, true, auxNum));
@@ -150,11 +154,14 @@ public class PhoneRowNotebookController : MonoBehaviour
 
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
     {
+        processManager.RegisterProcess();
         first.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent1);
         yield return new WaitForSeconds(0.5f);
         if(first == second) first.text = txt;
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
         OnWritingNotebookSound?.Invoke(this, null);
+        yield return new WaitForSeconds(0.5f);
+        processManager.UnregisterProcess();
     }
 
     public WordData GetWord() { return word; }

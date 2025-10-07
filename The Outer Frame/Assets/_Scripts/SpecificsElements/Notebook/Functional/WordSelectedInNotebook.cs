@@ -71,11 +71,11 @@ public class WordSelectedInNotebook : MonoBehaviour
         OnShowWordsNotebook?.Invoke(this, word);
 
 
-        if(word.GetPhoneNumber() != "" )
+        /*if(word.GetPhoneNumber() != "" ) comentado porque sacamos esta funcionalidad, el numero solo se puede encontrar a si mismo
         {
             StartCoroutine(SlideDelay(IsNumAlreadyInList(word), word, isDirectly));
             OnDelayNotChangeView?.Invoke(this, 1f);
-        }
+        }*/
 
         
     }

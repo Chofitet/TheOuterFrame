@@ -14,11 +14,13 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] GameEvent OnCrossWordSound;
     [SerializeField] GameEvent OnWritingNotebookSound;
     [SerializeField] Button btn;
+    NotebookProcessManager processManager;
     WordData wordReference;
     bool isCross;
     bool isActiveInBoard;
-    public void Initialization(WordData word, bool noAnim = false)
+    public void Initialization(WordData word, bool noAnim = false, NotebookProcessManager _processManager = null)
     {
+        if(_processManager != null) processManager = _processManager;
         wordReference = word;
         text.text = wordReference.GetName();
         btn.onClick.AddListener(SetSelectedWord);
@@ -29,7 +31,13 @@ public class NotebookWordInstance : MonoBehaviour
         {
             writingTime = 0.5f;
             word.SetIsFound();
-            if (!noAnim) text.gameObject.GetComponent<FadeWordsEffect>().StartEffect();
+            if (!noAnim)
+            {
+                processManager.RegisterProcess();
+                var fade = text.gameObject.GetComponent<FadeWordsEffect>();
+                fade.OnComplete += OnWritingFinished;
+                fade.StartEffect();
+            }
         }
 
         if (!noAnim)
@@ -41,9 +49,29 @@ public class NotebookWordInstance : MonoBehaviour
 
     }
 
+    void OnWritingFinished()
+    {
+        var fade = text.gameObject.GetComponent<FadeWordsEffect>();
+        fade.OnComplete -= OnWritingFinished;
+
+        processManager.UnregisterProcess();
+        Debug.Log($"writing of {wordReference.GetName()} finished");
+    }
+
     public void EraseAnim()
     {
-        text.gameObject.GetComponent<FadeWordsEffect>().StartEffect(false);
+        processManager.RegisterProcess();
+        var erase = GetComponent<FadeWordsEffect>();
+        erase.OnComplete -= OnEraseFinished;
+        erase.StartEffect(false);
+    }
+    void OnEraseFinished()
+    {
+        var fade = text.gameObject.GetComponent<FadeWordsEffect>();
+        fade.OnComplete -= OnEraseFinished;
+
+        processManager.UnregisterProcess();
+        Debug.Log($"Erase of {wordReference.GetName()} finished");
     }
 
     public void RefreshWord(Component sender, object obj)
@@ -79,8 +107,9 @@ public class NotebookWordInstance : MonoBehaviour
     public void CrossOutWord()
     {
         if (isCross) return;
+        processManager.RegisterProcess();
         RectTransform line = strikethrough.GetComponent<RectTransform>();
-        line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y), 0.3f);
+        line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y), 0.3f).OnComplete(() => processManager.UnregisterProcess());
         OnCrossWordSound?.Invoke(this, null);
         isCross = true;
     }
@@ -88,18 +117,22 @@ public class NotebookWordInstance : MonoBehaviour
 
     public void EraseCrossWord()
     {
+        processManager.RegisterProcess();
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         line.pivot = new Vector2(1, 0);
         line.localPosition = new Vector2(line.sizeDelta.x, line.localPosition.y);
-        line.DOSizeDelta(new Vector2(0, line.sizeDelta.y), 0.3f);
+        line.DOSizeDelta(new Vector2(0, line.sizeDelta.y), 0.3f).OnComplete(() => processManager.UnregisterProcess());
     }
 
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
     {
+        processManager.RegisterProcess();
         first.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent1);
         yield return new WaitForSeconds(0.5f);
         if (first == second) first.text = txt;
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
+        yield return new WaitForSeconds(0.5f);
+        processManager.UnregisterProcess();
     }
 
     bool wasSelectedBefore = false;

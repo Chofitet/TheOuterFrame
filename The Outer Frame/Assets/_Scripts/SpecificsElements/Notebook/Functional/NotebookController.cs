@@ -12,6 +12,7 @@ public class NotebookController : MonoBehaviour
     List<GameObject> WordsInstances = new List<GameObject>();
     [SerializeField] Transform WordAnchors;
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
+    [SerializeField] NotebookProcessManager ProccessManager;
     int i = 0;
     bool once;
     bool isStarting = true;
@@ -19,7 +20,7 @@ public class NotebookController : MonoBehaviour
     List<int> removedIndex = new List<int>();
     private void Start()
     {
-        for(int i = 0; i < WordAnchors.childCount;i++)
+        for (int i = 0; i < WordAnchors.childCount;i++)
         {
             WordSpots.Add(WordAnchors.GetChild(i));
         }
@@ -38,8 +39,6 @@ public class NotebookController : MonoBehaviour
     public void RefreshWords(Component component, object obj)
     {
         WordData LastWordAdded = (WordData)obj;
-
-        
 
         int auxIndex = i;
 
@@ -71,7 +70,7 @@ public class NotebookController : MonoBehaviour
 
         GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
         wordaux.GetComponent<NotebookWordInstance>().GetButton().onClick.AddListener(ClearUnderLine);
-        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded, isStarting);
+        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded, isStarting, ProccessManager);
         WordsInstances.Add(wordaux);
 
         once = false;
