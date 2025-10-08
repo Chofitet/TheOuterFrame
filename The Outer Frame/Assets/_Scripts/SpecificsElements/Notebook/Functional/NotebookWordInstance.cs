@@ -76,6 +76,7 @@ public class NotebookWordInstance : MonoBehaviour
 
     public void RefreshWord(Component sender, object obj)
     {
+        if (wordReference == null) return;
         if (wordReference.GetInactiveState() && !wordReference.GetEraseState())
         {
             btn.enabled = false;

@@ -96,33 +96,33 @@ public class FadeWordsEffect : MonoBehaviour
         }
         else
         {
-            int currentIndex = length - 1;
-            OnEraseSound?.Invoke(this, null);
+                int currentIndex = 0; // empezamos desde la izquierda
+                OnEraseSound?.Invoke(this, null);
 
-            while (currentIndex >= 0)
-            {
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
-
-                for (int i = 0; i < length; i++)
+                while (currentIndex < length)
                 {
-                    if (i == currentIndex) // letra empezando a borrarse
-                        sb.Append($"<alpha=#AA>{text[i]}");
-                    else if (i == currentIndex + 1) // más apagada
-                        sb.Append($"<alpha=#55>{text[i]}");
-                    else if (i > currentIndex + 1) // ya borradas
-                        sb.Append($"<alpha=#00>{text[i]}");
-                    else // todavía visibles
-                        sb.Append($"<alpha=#FF>{text[i]}");
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (i == currentIndex) // letra empezando a borrarse
+                            sb.Append($"<alpha=#AA>{text[i]}");
+                        else if (i == currentIndex - 1) // más apagada
+                            sb.Append($"<alpha=#55>{text[i]}");
+                        else if (i < currentIndex - 1) // ya borradas
+                            sb.Append($"<alpha=#00>{text[i]}");
+                        else // todavía visibles
+                            sb.Append($"<alpha=#FF>{text[i]}");
+                    }
+
+                    m_TextComponent.text = sb.ToString();
+                    currentIndex++;
+                    yield return new WaitForSeconds(stepDuration);
                 }
 
-                m_TextComponent.text = sb.ToString();
-                currentIndex--;
-                yield return new WaitForSeconds(stepDuration);
+                // al final dejamos todo borrado
+                m_TextComponent.text = "";
             }
-
-            // al final dejamos todo borrado
-            m_TextComponent.text = "";
-        }
 
         OnComplete?.Invoke();
     }
