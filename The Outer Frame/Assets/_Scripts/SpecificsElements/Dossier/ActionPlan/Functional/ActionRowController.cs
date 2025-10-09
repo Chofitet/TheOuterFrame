@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static System.Net.Mime.MediaTypeNames;
 
 public class ActionRowController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] GameObject DotsLine;
     [SerializeField] TMP_FontAsset writingFont;
     [SerializeField] GameEvent OnWrittingFormSound;
+    [SerializeField] Transform EraseParticles;
      bool isSpecialAction;
     StateEnum state;
     FadeWordsEffect fade;
@@ -78,7 +80,7 @@ public class ActionRowController : MonoBehaviour
     {
         if(!isInView) return;
         toggle.isOn = true;
-
+        btn.enabled = false;
         if (isSpecialAction) return;
         if (Word)
         {
@@ -97,10 +99,19 @@ public class ActionRowController : MonoBehaviour
 
     public void ResetRow()
     {
+        EraseParticles.GetComponent<ParticleSystem>().Stop();
         if (!toggle.isOn) return;
         toggle.isOn = false;
+        btn.enabled = true;
         fade.StopAllCoroutines();
         fade.StartEffect(false);
+        fade.OnEraseProgress += eraseParticles;
+        fade.OnComplete += Erasefinished;
+    }
+    void Erasefinished()
+    {
+        EraseParticles.GetComponent<ParticleSystem>().Stop();
+        fade.OnEraseProgress -= eraseParticles;
     }
 
     public void DesactiveRow()
@@ -111,11 +122,23 @@ public class ActionRowController : MonoBehaviour
 
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
     {
-        first.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent1);
+        FadeWordsEffect effect = first.gameObject.GetComponent<FadeWordsEffect>();
+        if (!isTransparent1) effect.OnEraseProgress += eraseParticles;
+        effect.StartEffect(isTransparent1);
         yield return new WaitForSeconds(0.2f);
+        EraseParticles.GetComponent<ParticleSystem>().Stop();
+        fade.OnEraseProgress -= eraseParticles;
         if (first == second) first.text = txt;
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
         OnWrittingFormSound?.Invoke(this, null);
+    }
+
+    public void eraseParticles(float progress)
+    {
+        EraseParticles.GetComponent<ParticleSystem>().Play();
+        Debug.Log("erase progress" + progress.ToString());
+        Vector3 initPos = Wordtext.transform.localPosition + new Vector3(2,0,0);
+        EraseParticles.localPosition = Vector3.Lerp(initPos, new Vector3(Wordtext.transform.localPosition.x + Wordtext.preferredWidth, initPos.y, initPos.z), progress);
     }
 
     bool isInView;
