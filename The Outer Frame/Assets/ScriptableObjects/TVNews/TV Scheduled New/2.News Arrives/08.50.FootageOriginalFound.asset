@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
-  m_Name: 08.50.FootageSafeVersionFound
+  m_Name: 08.50.FootageOriginalFound
   m_EditorClassIdentifier: 
-  headline: NOTHING TO SEE HERE?
+  headline: FOOTAGE OF G-MEN AND MISTERYOUS INDIVIDUAL SMEARING <link>FLUORESCENT
+    SUSBTANCE</link> <link>AT ROAD 54</link> CRASH SITE
   headlineTwoLines: 
   text: 
   newType: 0
@@ -20,15 +21,17 @@ MonoBehaviour:
   image: {fileID: 0}
   channel: 1
   Priority: 1
-  alertLevelIncrement: -15
-  Emergency: 0
+  alertLevelIncrement: 25
+  Emergency: 1
   Day: 0
   Hour: 8
   Minute: 50
   MinTransmitionTime: 4
   Conditions:
+  - condition: {fileID: 11400000, guid: 7901cd2ce8ff7d54ab419530d7317159, type: 2}
+    ifNot: 1
   - condition: {fileID: 11400000, guid: a2d85e9445ca5d0468a4a9341febe5c5, type: 2}
-    ifNot: 0
+    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}

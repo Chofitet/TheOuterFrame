@@ -34,7 +34,7 @@ public class AlertLevelManager : MonoBehaviour
         if(data.AclarationText != "") AclarationText.text = data.AclarationText;
         if (level < 0) level = 1;
         DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
-            if (auxIncruise >= 100)
+            if (auxIncruise >= 1000)
             {
                 Invoke("end", 0.2f);
             }
