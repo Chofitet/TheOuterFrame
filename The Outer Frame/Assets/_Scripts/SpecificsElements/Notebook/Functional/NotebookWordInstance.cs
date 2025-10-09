@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 public class NotebookWordInstance : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] GameEvent OnCrossWordSound;
     [SerializeField] GameEvent OnWritingNotebookSound;
     [SerializeField] Button btn;
+    [SerializeField] Transform EraseParticles;
     NotebookProcessManager processManager;
     WordData wordReference;
     bool isCross;
@@ -62,13 +64,22 @@ public class NotebookWordInstance : MonoBehaviour
     {
         processManager.RegisterProcess();
         var erase = GetComponent<FadeWordsEffect>();
-        erase.OnComplete -= OnEraseFinished;
+        erase.OnEraseProgress += eraseParticles;
+        erase.OnComplete += OnEraseFinished;
         erase.StartEffect(false);
+    }
+    public void eraseParticles(float progress)
+    {
+        EraseParticles.GetComponent<ParticleSystem>().Play();
+        Debug.Log("erase progress" + progress.ToString());
+        EraseParticles.localPosition = Vector3.Lerp(Vector3.zero, new Vector3(text.preferredWidth,0,0), progress);
     }
     void OnEraseFinished()
     {
         var fade = text.gameObject.GetComponent<FadeWordsEffect>();
         fade.OnComplete -= OnEraseFinished;
+        EraseParticles.GetComponent<ParticleSystem>().Stop();
+        fade.OnEraseProgress -= eraseParticles;
 
         processManager.UnregisterProcess();
         Debug.Log($"Erase of {wordReference.GetName()} finished");
@@ -128,8 +139,11 @@ public class NotebookWordInstance : MonoBehaviour
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
     {
         processManager.RegisterProcess();
-        first.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent1);
+        FadeWordsEffect effect = first.gameObject.GetComponent<FadeWordsEffect>();
+        effect.StartEffect(isTransparent1);
+        if (!isTransparent1) effect.OnEraseProgress += eraseParticles;
         yield return new WaitForSeconds(0.5f);
+        EraseParticles.GetComponent<ParticleSystem>().Stop();
         if (first == second) first.text = txt;
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
         yield return new WaitForSeconds(0.5f);
@@ -142,6 +156,7 @@ public class NotebookWordInstance : MonoBehaviour
         text.text = "<u>" + wordReference.GetName() + "</u>";
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordReference);
         isActiveInBoard = false;
+        btn.enabled = false;
         if (wasSelectedBefore)
         {
             text.text = wordReference.GetName();
@@ -154,6 +169,7 @@ public class NotebookWordInstance : MonoBehaviour
     public void ClearUnderline()
     {
         if (isActiveInBoard) return;
+        btn.enabled = true;
         text.text = wordReference.GetName();
         Invoke("SetwasSelectedBefore", 0.1f);
     }

@@ -15,6 +15,11 @@ public class FadeWordsEffect : MonoBehaviour
     [SerializeField] GameEvent OnEraseSound;
     Coroutine fadeCoroutine;
     public Action OnComplete;
+    public event Action<float> OnEraseProgress;
+    [SerializeField] float DilateMultiplier = 1;
+
+    [SerializeField] Material[] matLevels;
+
     public void StartEffect(bool isFadeTransparent = true)
     {
         m_TextComponent = GetComponent<TextMeshProUGUI>();
@@ -24,7 +29,6 @@ public class FadeWordsEffect : MonoBehaviour
             m_TextComponent.text = "";
             return;
         }
-
         if (fadeCoroutine != null)
             StopCoroutine(fadeCoroutine);
 
@@ -54,12 +58,7 @@ public class FadeWordsEffect : MonoBehaviour
         float stepDuration = totalDuration / Mathf.Max(1, length);
 
         // Materiales de más claro a más oscuro
-        string[] matLevels = {
-        "NipCensHandwritingLightSDFWriting1", // más claro
-        "NipCensHandwritingLightSDFWriting2",
-        "NipCensHandwritingLightSDFWriting3",
-        "NipCensHandwritingLightSDFWriting4"  // más oscuro
-    };
+       
 
         if (fadeIn)
         {
@@ -74,13 +73,13 @@ public class FadeWordsEffect : MonoBehaviour
                     int diff = currentIndex - i;
 
                     if (diff == 0)
-                        sb.Append($"<material=\"{matLevels[1]}\">{text[i]}</material>"); // letra actual -> mat 2
+                        sb.Append($"<material=\"{matLevels[1].name}\">{text[i]}</material>"); // letra actual -> mat 2
                     else if (diff == 1)
-                        sb.Append($"<material=\"{matLevels[2]}\">{text[i]}</material>"); // inmediata izquierda -> mat 3
+                        sb.Append($"<material=\"{matLevels[2].name}\">{text[i]}</material>"); // inmediata izquierda -> mat 3
                     else if (diff >= 2 && diff <= 3)
-                        sb.Append($"<material=\"{matLevels[3]}\">{text[i]}</material>"); // dos siguientes a la izquierda -> mat 4
+                        sb.Append($"<material=\"{matLevels[3].name}\">{text[i]}</material>"); // dos siguientes a la izquierda -> mat 4
                     else if (diff < 0)
-                        sb.Append($"<material=\"{matLevels[0]}\">{text[i]}</material>"); // aún no dibujadas
+                        sb.Append($"<material=\"{matLevels[0].name}\">{text[i]}</material>"); // aún no dibujadas
                     else
                         sb.Append(text[i]); // resto de letras ya dibujadas -> normal
                 }
@@ -117,6 +116,10 @@ public class FadeWordsEffect : MonoBehaviour
 
                     m_TextComponent.text = sb.ToString();
                     currentIndex++;
+
+                    float progress = (float)currentIndex / (float)length;
+                    OnEraseProgress?.Invoke(progress);
+
                     yield return new WaitForSeconds(stepDuration);
                 }
 
@@ -126,10 +129,6 @@ public class FadeWordsEffect : MonoBehaviour
 
         OnComplete?.Invoke();
     }
-
-
-
-
 
 
     void DefineFadeSpeedAccordingWordLength(float characterCount)
