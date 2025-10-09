@@ -9,6 +9,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
     IPlacedOnBoard conditions = null;
     [SerializeField] GameEvent OnPlaceInBoardSound;
     [SerializeField] bool IsAUpdatedPhoto;
+    [SerializeField] GameEvent OnUpdatingInBoard;
     Vector3 FinalPosition;
     Quaternion FinalRotation;
     GameObject Content;
@@ -103,6 +104,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
             }
             isPlaced = true;
             toReplece = false;
+            OnUpdatingInBoard?.Invoke(this, null);
             StartCoroutine(Delay(InitPos));
         }
         catch (NullReferenceException e)

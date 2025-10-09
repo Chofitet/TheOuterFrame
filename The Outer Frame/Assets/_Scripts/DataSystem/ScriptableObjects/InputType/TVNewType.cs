@@ -261,7 +261,7 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
         get
         {
             if (alertLevelIncrement > 0) return PopUpType.bad;
-            if (alertLevelIncrement < 0) return PopUpType.good;
+            if (alertLevelIncrement < 0) return PopUpType.None;
             return PopUpType.common;
         }
     }

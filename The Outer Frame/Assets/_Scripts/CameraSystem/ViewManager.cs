@@ -186,6 +186,7 @@ public class ViewManager : MonoBehaviour
         // Tiempo mínimo antes de aceptar otra vista
         yield return new WaitForSeconds(delayBetweenViews);
 
+        
         if (nextViewRequest.HasValue)
         {
             ViewStates buffered = nextViewRequest.Value;
@@ -194,6 +195,7 @@ public class ViewManager : MonoBehaviour
         }
         else
         {
+            
             isTransitioning = false;
         }
     }
@@ -206,6 +208,7 @@ public class ViewManager : MonoBehaviour
                 OnGeneralView?.Invoke(this, false);
                 if (currentviewState == ViewStates.PCView) TimeManager.timeManager.NormalizeTime();
                 if (currentviewState == ViewStates.TVView) TimeManager.timeManager.NormalizeTime();
+                if (currentviewState == ViewStates.BoardView) TimeManager.timeManager.NormalizeTime();
                 BackToGeneralViewWhitMoving();
                 break;
             case ViewStates.PinchofonoView:
@@ -353,7 +356,7 @@ public class ViewManager : MonoBehaviour
     IEnumerator DelayForTimeChange(Action callback)
     {
         yield return new WaitForSeconds(0.5f);
-        callback?.Invoke();
+        if (currentviewState == ViewStates.BoardView) callback?.Invoke();
 
     }
 }

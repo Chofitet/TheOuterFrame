@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public class PhoneRowNotebookController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PhoneRowNotebookController : MonoBehaviour
     [SerializeField] TMP_Text Num;
     [SerializeField] GameEvent OnWritingShakeNotebook;
     [SerializeField] GameEvent OnWritingNotebookSound;
+    [SerializeField] Transform EraseParticlesName;
+    [SerializeField] Transform EraseParticlesNum;
     NotebookProcessManager processManager;
     WordData word;
     Button button;
@@ -134,6 +137,8 @@ public class PhoneRowNotebookController : MonoBehaviour
 
     }
 
+
+
     public void ClearUnderline()
     {
         if(word.GetIsAPhoneNumber())
@@ -155,13 +160,31 @@ public class PhoneRowNotebookController : MonoBehaviour
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
     {
         processManager.RegisterProcess();
+        second.gameObject.GetComponent<FadeWordsEffect>().SetBlank(0);
+        first.gameObject.GetComponent<FadeWordsEffect>().SetBlank(0);
         first.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent1);
+        
         yield return new WaitForSeconds(0.5f);
         if(first == second) first.text = txt;
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
         OnWritingNotebookSound?.Invoke(this, null);
         yield return new WaitForSeconds(0.5f);
         processManager.UnregisterProcess();
+    }
+
+    public void eraseParticlesName(float progress)
+    {
+        EraseParticlesName.GetComponent<ParticleSystem>().Play();
+
+        Vector3 initPos = txtName.transform.localPosition;
+        EraseParticlesName.localPosition = Vector3.Lerp(initPos, new Vector3(txtName.preferredWidth, initPos.y, initPos.z), progress);
+    }
+    public void eraseParticlesNum(float progress)
+    {
+        EraseParticlesNum.GetComponent<ParticleSystem>().Play();
+
+        Vector3 initPos = Num.transform.localPosition;
+        EraseParticlesNum.localPosition = Vector3.Lerp(initPos, new Vector3(Num.preferredWidth, initPos.y, initPos.z), progress);
     }
 
     public WordData GetWord() { return word; }

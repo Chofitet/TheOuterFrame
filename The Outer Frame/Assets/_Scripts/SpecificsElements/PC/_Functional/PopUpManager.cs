@@ -8,7 +8,8 @@ public class PopUpManager : MonoBehaviour
     [SerializeField] List<PopUpPrefabs> popUpPrefabList;
     List<GameObject> popUpList;
     RectTransform WindowRect;
-    [SerializeReference] float EdgeMargin = 2;
+    [SerializeField] float EdgeMargin = 2;
+    [SerializeField] RectTransform instantiationArea;
 
     private void Start()
     {
@@ -23,7 +24,7 @@ public class PopUpManager : MonoBehaviour
 
         GameObject popUpPrefab = GetPopUpType(popUpData.PopUpType);
 
-        GameObject Instance = Instantiate(popUpPrefab, transform,false);
+        GameObject Instance = Instantiate(popUpPrefab, instantiationArea.transform, false);
 
         
         PopUpController popUpController = Instance.GetComponent<PopUpController>();
@@ -31,6 +32,8 @@ public class PopUpManager : MonoBehaviour
         Instance.transform.localPosition = GetRandomPositionOnCanvas(popUpController);
 
         popUpController.Initialize(popUpData.PopupText, GetComponentInParent<RectTransform>());
+
+        Instance.transform.SetParent(transform);
     }
 
 
@@ -47,7 +50,7 @@ public class PopUpManager : MonoBehaviour
     Vector3 GetRandomPositionOnCanvas(PopUpController popUp)
     {
         Vector2 popupSize = popUp.GetPopUpSize();
-        Vector2 windowSize = WindowRect.sizeDelta;
+        Vector2 windowSize = instantiationArea.sizeDelta;
 
         float MarginInX = windowSize.x - popupSize.x - EdgeMargin;
         float MarginInY = - windowSize.y + popupSize.y + EdgeMargin;

@@ -11,9 +11,10 @@ public class ZoomSystem : MonoBehaviour
     [SerializeField] Transform initPosition;
     [SerializeField] float followDelay;
     [SerializeField] GameEvent OnButtonElement;
+    [SerializeField] bool startHolding;
     bool isHolding;
     float currentDelay;
-    bool once;
+    bool once = true;
     Sequence ZoomSequence;
 
     [Header("Clamps locales")]
@@ -24,8 +25,11 @@ public class ZoomSystem : MonoBehaviour
 
     public void SetInZoomIn(Component sender, object obj)
     {
-        isHolding = true;
-        StartCoroutine(WaitToZoom());
+        if (!startHolding)
+        {
+            isHolding = true;
+            StartCoroutine(WaitToZoom());
+        }
     }
 
     void SetZoom()
@@ -88,8 +92,10 @@ public class ZoomSystem : MonoBehaviour
 
     IEnumerator WaitToZoom()
     {
-        yield return new WaitForSeconds(0.3f);
-        if(isHolding) SetZoom();
+        startHolding = true;
+        yield return new WaitForSeconds(0.2f);
+        startHolding = false;
+        if (isHolding) SetZoom();
     }
 
 }

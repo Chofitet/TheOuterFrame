@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(TMP_Text))]
 public class FadeWordsEffect : MonoBehaviour
@@ -22,6 +23,7 @@ public class FadeWordsEffect : MonoBehaviour
 
     public void StartEffect(bool isFadeTransparent = true)
     {
+        SetBlank(1);
         m_TextComponent = GetComponent<TextMeshProUGUI>();
         string auxText = m_TextComponent.text;
         if (auxText.Contains("material"))
@@ -38,6 +40,7 @@ public class FadeWordsEffect : MonoBehaviour
     public void OnStartEffect(Component sender, object obj)
     {
         if ((GameObject)obj != gameObject) return;
+        SetBlank(1);
         m_TextComponent = GetComponent<TextMeshProUGUI>();
         string auxText = m_TextComponent.text;
         if (auxText.Contains("material"))
@@ -141,5 +144,13 @@ public class FadeWordsEffect : MonoBehaviour
         }
     }
 
+    public void SetBlank(float i)
+    {
+        m_TextComponent = GetComponent<TextMeshProUGUI>();
 
+        Color color = m_TextComponent.color;
+        color.a = i;
+
+        m_TextComponent.color = color;
+    }
 }

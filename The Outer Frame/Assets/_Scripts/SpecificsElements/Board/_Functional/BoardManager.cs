@@ -16,9 +16,12 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnPlaced4WordsInBoard;
     [SerializeField] MoveBoardElementsToPos[] SetInTutorial;
     [SerializeField] StringConnectionController[] ConnectInTutorial;
+    [SerializeField] GameEvent OnEnableInput;
+    [SerializeField] GameEvent OnDisableInput;
     int WordsCounts;
     bool IsInView;
     bool isInTutorial;
+    bool isInUpdatingTime;
 
 
     public void StateView(Component sender, object obj)
@@ -27,6 +30,7 @@ public class BoardManager : MonoBehaviour
 
         if (view == ViewStates.BoardView)
         {
+            StartCoroutine(TurnOffisInUpdatingTime());
             IsInView = true;
             OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
             OnRefreshInfoInBoard?.Invoke(this, null);
@@ -58,6 +62,7 @@ public class BoardManager : MonoBehaviour
         OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
         OnRefreshInfoInBoard?.Invoke(this, null);
         OnRefreshNotebook?.Invoke(this, null);
+        
     }
 
     public void SetIsInTutorial(Component sender, object obj)
@@ -87,5 +92,25 @@ public class BoardManager : MonoBehaviour
             if (!BoardElement) continue;
             BoardElement.ConnectDirectly();
         }
+    }
+
+    public void UpdatingSomethingInBoard(Component sender, object obj)
+    {
+        //if (!isInUpdatingTime) return;
+        StartCoroutine(WaitUpdating());
+    }
+
+    IEnumerator WaitUpdating()
+    {
+        OnDisableInput.Invoke(this, null);
+        yield return new WaitForSeconds(0.5f);
+        OnEnableInput?.Invoke(this, null);
+    }
+
+    IEnumerator TurnOffisInUpdatingTime()
+    {
+        isInUpdatingTime = true;
+        yield return new WaitForSeconds(0.7f);
+        isInUpdatingTime = false;
     }
 }

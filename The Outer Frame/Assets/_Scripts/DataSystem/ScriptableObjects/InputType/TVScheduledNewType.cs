@@ -186,7 +186,7 @@ public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScripta
         get
         {
             if (alertLevelIncrement > 0) return PopUpType.bad;
-            if (alertLevelIncrement < 0) return PopUpType.good;
+            if (alertLevelIncrement < 0) return PopUpType.None;
             return PopUpType.common;
         }
     }
