@@ -10,8 +10,10 @@ public class ZoomSystem : MonoBehaviour
     [SerializeField] GameObject target;
     [SerializeField] Transform initPosition;
     [SerializeField] float followDelay;
+    [SerializeField] GameEvent OnButtonElement;
+    bool isHolding;
     float currentDelay;
-
+    bool once;
     Sequence ZoomSequence;
 
     [Header("Clamps locales")]
@@ -22,13 +24,22 @@ public class ZoomSystem : MonoBehaviour
 
     public void SetInZoomIn(Component sender, object obj)
     {
+        isHolding = true;
+        StartCoroutine(WaitToZoom());
+    }
+
+    void SetZoom()
+    {
+        OnButtonElement?.Invoke(this, ViewStates.BoardZoomView);
         inZoom = true;
         if (ZoomSequence.IsActive() & ZoomSequence != null) ZoomSequence.Kill();
         currentDelay = 0f;
+        once = false;
     }
 
     public void SetInZoomOut(Component sender, object obj)
     {
+        if (once) return;
         inZoom = false;
 
         if(ZoomSequence.IsActive() & ZoomSequence != null) ZoomSequence.Kill();
@@ -36,11 +47,21 @@ public class ZoomSystem : MonoBehaviour
         ZoomSequence = DOTween.Sequence();
 
         ZoomSequence.Append(target.transform.DOMove(initPosition.position, 0.5f).SetEase(Ease.InOutSine));
+
+        OnButtonElement?.Invoke(null, ViewStates.BoardView);
+
+        once = true;
     }
 
     private void Update()
     {
-        if (inZoom) FollowMouse();
+        if(Input.GetMouseButtonUp(0))
+        {
+            isHolding = false;
+            SetInZoomOut(null, null);
+        }
+        if (inZoom && isHolding) FollowMouse();
+
     }
 
     void FollowMouse()
@@ -63,6 +84,12 @@ public class ZoomSystem : MonoBehaviour
         );
 
         currentDelay = followDelay;
+    }
+
+    IEnumerator WaitToZoom()
+    {
+        yield return new WaitForSeconds(0.3f);
+        if(isHolding) SetZoom();
     }
 
 }

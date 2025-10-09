@@ -18,6 +18,7 @@ public class PaperMoveController : MonoBehaviour
     [SerializeField] Transform PCSpotTranscription2;
     [SerializeField] Transform DescartPos;
     [SerializeField] Transform PaperBoardPos;
+    [SerializeField] Transform PaperOutBoardPos;
     [SerializeField] GameEvent OnPressButtomElement;
     [SerializeField] GameEvent OnSetPaperState;
     [SerializeField] GameEvent OnReportEnterDatabase;
@@ -151,7 +152,7 @@ public class PaperMoveController : MonoBehaviour
         ViewStates view = (ViewStates)obj;
         Transform auxTrans = HoldRigthPos;
         if (view == ViewStates.BoardView || view == ViewStates.OnTakeSomeInBoard) auxTrans = PaperBoardPos;
-
+        if (view == ViewStates.BoardZoomView) auxTrans = PaperOutBoardPos;
         if (view != ViewStates.GeneralView && view!= ViewStates.OnTakenPaperView)
         {
             currentPaper.transform.SetParent(auxTrans);
