@@ -220,7 +220,6 @@ public class DataFromActionPlan
 {
     public WordData word;
     public StateEnum state;
-
     public DataFromActionPlan(WordData _word, StateEnum _state)
     {
         word = _word;

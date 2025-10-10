@@ -160,6 +160,7 @@ public class ViewManager : MonoBehaviour
     {
         //if (delayingView) return;
         ViewStates NewView = (ViewStates)_view;
+        if(sender != null) Debug.Log($"Vista llamada desde: {sender.name}");
         //StopAllCoroutines();
        /* if (NewView == currentviewState)
         {

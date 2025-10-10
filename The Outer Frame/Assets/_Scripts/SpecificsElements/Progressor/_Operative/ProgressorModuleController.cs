@@ -22,6 +22,12 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] Light light;
     [SerializeField] Light light2;
     [SerializeField] GameObject colliderUnused;
+
+    [Header("Candy Parameters")]
+    [SerializeField] GameObject Candy1;
+    [SerializeField] GameObject Candy2;
+    [SerializeField] GameObject messagge;
+
     float InitLigthIntensity;
     float InitLigthIntensity2;
     bool isPrinterFull;
@@ -32,6 +38,7 @@ public class ProgressorModuleController : MonoBehaviour
     private WordData word;
     private StateEnum state;
     private int time;
+    ObjectToPrint objectType;
 
     bool isWaitingForSetSlot;
     float elapsedTime;
@@ -172,7 +179,8 @@ public class ProgressorModuleController : MonoBehaviour
 
             anim.SetTrigger("receiveMessage");
             IsReadyToPrint = true;
-            
+
+            SetCandy();
 
             Invoke("delayLigth", 0.3f);
 
@@ -185,6 +193,23 @@ public class ProgressorModuleController : MonoBehaviour
             TurnOnLight(light, InitLigthIntensity,0.3f);
             TurnOnLight(light2, InitLigthIntensity2,0.3f);
         }
+    }
+
+    void SetCandy()
+    {
+        ReportType reportData = WordsManager.WM.RequestReport(word, state);
+        if(reportData.GetObjectToPrint() == ObjectToPrint.Candy1)
+        {
+            Candy1.SetActive(true);
+            messagge.SetActive(false);
+        }
+        else if(reportData.GetObjectToPrint() == ObjectToPrint.Candy2)
+        {
+            Candy2.SetActive(true);
+            messagge.SetActive(false);
+        }
+
+        
     }
 
     void delayLigth()
@@ -235,6 +260,8 @@ public class ProgressorModuleController : MonoBehaviour
                 if(slot.GetReport().GetKillAgent() && slot.GetIsComplete()) OnDisableAgentOnSlot?.Invoke(this, gameObject);
                 TurnOnLight(light, 0);
                 TurnOnLight(light2, 0);
+                Invoke("DisableCandy", 0.3f);
+
             }
             else
             {
@@ -262,6 +289,7 @@ public class ProgressorModuleController : MonoBehaviour
     {
         slot.CleanSlot();
         resetSlot();
+
     }
 
     bool DisableAbort;
@@ -277,8 +305,15 @@ public class ProgressorModuleController : MonoBehaviour
         anim.SetTrigger("resetProgressor");
         DisableAbort = true;
 
+       
     }
 
+    void DisableCandy()
+    {
+        Candy1.SetActive(false);
+        Candy2.SetActive(false);
+        messagge.SetActive(true);
+    }
 
     public void TryAbortAnim(Component sender, object obj)
     {

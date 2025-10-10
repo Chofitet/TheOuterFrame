@@ -24,6 +24,7 @@ public class PaperMoveController : MonoBehaviour
     [SerializeField] GameEvent OnReportEnterDatabase;
     [SerializeField] GameEvent OnTranscriptionEnterDatabase;
     [SerializeField] AnimationCurve ReportToButtomRigthCurve;
+    bool isACandy = false;
     private bool isMoving;
     GameObject currentPaper;
     bool isHolding;
@@ -31,6 +32,7 @@ public class PaperMoveController : MonoBehaviour
     private Sequence moveToPcSequence;
     private Sequence moveDescart;
     private Sequence swapPapersSequence;
+    private Sequence LeaveInPileOtView;
     PaperState actualPaperState;
     List<GameObject> PapersQueue = new List<GameObject>();
     Vector3 TransformOffset;
@@ -92,7 +94,7 @@ public class PaperMoveController : MonoBehaviour
 
         if (PaperState.HoldingRight == actualPaperState && currentPaper != reportObject)
         {
-            LeavePaperPile(null,null);
+            LeavePaperPileOutView(null,null);
         }
 
         if (auxComesFromRightPos && isMoving) auxComesFromRightPos = true;
@@ -120,13 +122,15 @@ public class PaperMoveController : MonoBehaviour
         {
             if (currentPaper.GetComponent<IndividualReportController>().GetRepoertype().GetDeleteDBRepoert()) return;
         }
-        if(actualPaperState == PaperState.HoldingRight)
+        if(actualPaperState == PaperState.HoldingRight && !isACandy)
         {
             TakeReport(null, currentPaper);
 
             OnPressButtomElement?.Invoke(this, ViewStates.OnTakenPaperView);
             return;
         }
+        isACandy = false;
+
         LeavePaperPile(null,null);
        
     }
@@ -145,6 +149,33 @@ public class PaperMoveController : MonoBehaviour
         SetPaperState(PaperState.Nothing);
 
     }
+
+    public void OnTakeCandy(Component sender, object obj)
+    {
+        isACandy = true;
+        LeavePaperPileOutView(null, null);
+    }
+
+    public void LeavePaperPileOutView(Component sender, object obj)
+    {
+        if (LeaveInPileOtView != null && LeaveInPileOtView.IsActive()) LeaveInPileOtView.Kill();
+
+        LeaveInPileOtView = DOTween.Sequence();
+
+        if (!currentPaper) return;
+        currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
+        currentPaper.transform.SetParent(ReportPilePos);
+        RefreshPaperQueue();
+        LeaveInPileOtView.Append(currentPaper.transform.DOMove(DescartPos.position, takeDuration))
+            .Append(currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration))
+           .Join(currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration));
+        currentPaper.GetComponent<BoxCollider>().enabled = true;
+        currentPaper = null;
+        SetPaperState(PaperState.Nothing);
+
+    }
+
+    
 
     public void OnHoldPaperToButtomRigth(Component sender, object obj)
     {
@@ -338,4 +369,5 @@ public class PaperMoveController : MonoBehaviour
             }
         }
     }
+
 }

@@ -20,7 +20,6 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameEvent OnReactiveIdeaPosit;
     [SerializeField] GameObject TryAbortPanel;
     [SerializeField] GameObject LedPanel;
-    
 
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
@@ -37,6 +36,7 @@ public class SlotController : MonoBehaviour
     bool inFillFast;
     ReportType Report;
     bool isAgentDead;
+    ObjectToPrint objectType;
 
     public void initParameters(WordData word, StateEnum state)
     {
@@ -46,8 +46,8 @@ public class SlotController : MonoBehaviour
         _word = word;
         Report = WordsManager.WM.RequestReport(word, state);
         _state = state;
-        actionDuration = (state.GetTime() + Report.GetChangeTimeOfAction())*60;
-
+        actionDuration = (state.GetTime() + Report.GetChangeTimeOfAction()) * 60;
+        objectType = Report.GetObjectToPrint();
         Wordtxt.text = word.GetProgressorNameVersion();
         if (state.GetSpecialActionWord())
         {
@@ -221,8 +221,8 @@ public class SlotController : MonoBehaviour
         AbortIcon.SetActive(false);
         CheckIcon.SetActive(false);
         AgentIcon.SetActive(true);
-        if(Report !=null) if ((Report.GetKillAgent() && isActionComplete)) DisableAgent();
-        if(isAgentDead) DisableAgent();
+        if (Report != null) if ((Report.GetKillAgent() && isActionComplete)) DisableAgent();
+        if (isAgentDead) DisableAgent();
 
         isActionComplete = false;
         isOtherGroupActionDoing = null;
@@ -259,7 +259,7 @@ public class SlotController : MonoBehaviour
     void DisableAgent()
     {
         AgentIcon.GetComponent<Image>().color = Color.red;
-        if(!isAgentDead) AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 90));
+        if (!isAgentDead) AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 90));
         isAgentDead = true;
 
     }
@@ -273,7 +273,7 @@ public class SlotController : MonoBehaviour
 
         AgentIcon.SetActive(true);
         DisableAgent();
-        if(!aux) AgentIcon.SetActive(false);
+        if (!aux) AgentIcon.SetActive(false);
 
     }
 
@@ -292,9 +292,9 @@ public class SlotController : MonoBehaviour
         TryAbortPanel.SetActive(true);
         LedPanel.SetActive(false);
         StartCoroutine(BlinkTryAbort());
-        foreach(BlinkTMPText child in TryAbortPanel.GetComponentsInChildren<BlinkTMPText>())
+        foreach (BlinkTMPText child in TryAbortPanel.GetComponentsInChildren<BlinkTMPText>())
         {
-            child.ActiveBlink(this,null);
+            child.ActiveBlink(this, null);
             child.gameObject.GetComponent<WarpTextExample>().UpdateText();
         }
     }
@@ -336,10 +336,12 @@ public class SlotController : MonoBehaviour
 
     public bool GetIsTheSameAction() { return isTheSameAction; }
 
-    public StateEnum GetIsOtherGroupActionDoing() {return isOtherGroupActionDoing;}
+    public StateEnum GetIsOtherGroupActionDoing() { return isOtherGroupActionDoing; }
 
-    public TimeData GetTimeComplete() { return timeComplete;}
+    public TimeData GetTimeComplete() { return timeComplete; }
 
     public bool GetIsComplete() { return isActionComplete; }
+
+    public ObjectToPrint GetObjectType() { return objectType; }
 
 }
