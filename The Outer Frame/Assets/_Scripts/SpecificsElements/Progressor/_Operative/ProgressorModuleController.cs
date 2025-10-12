@@ -180,8 +180,6 @@ public class ProgressorModuleController : MonoBehaviour
             anim.SetTrigger("receiveMessage");
             IsReadyToPrint = true;
 
-            SetCandy();
-
             Invoke("delayLigth", 0.3f);
 
             if (isAbortOpen)
@@ -195,22 +193,24 @@ public class ProgressorModuleController : MonoBehaviour
         }
     }
 
-    void SetCandy()
+    public void SetCandy(Component sender, object obj)
     {
-        ReportType reportData = WordsManager.WM.RequestReport(word, state);
-        if(reportData.GetObjectToPrint() == ObjectToPrint.Candy1)
+        if (sender.gameObject == slot.gameObject)
         {
-            Candy1.SetActive(true);
-            messagge.SetActive(false);
+            ObjectToPrint objToPrint = (ObjectToPrint)obj;
+            if (objToPrint == ObjectToPrint.Candy1)
+            {
+                Candy1.SetActive(true);
+                messagge.SetActive(false);
+            }
+            else if (objToPrint == ObjectToPrint.Candy2)
+            {
+                Candy2.SetActive(true);
+                messagge.SetActive(false);
+            }
         }
-        else if(reportData.GetObjectToPrint() == ObjectToPrint.Candy2)
-        {
-            Candy2.SetActive(true);
-            messagge.SetActive(false);
-        }
-
-        
     }
+
 
     void delayLigth()
     {

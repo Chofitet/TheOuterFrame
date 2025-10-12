@@ -20,6 +20,7 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameEvent OnReactiveIdeaPosit;
     [SerializeField] GameObject TryAbortPanel;
     [SerializeField] GameObject LedPanel;
+    [SerializeField] GameEvent OnSetCandy;
 
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
@@ -172,6 +173,7 @@ public class SlotController : MonoBehaviour
         _word.SetDoingAction(_state, false);
         inFillFast = false;
         Report = WordsManager.WM.RequestReport(_word, _state);
+        if(Report.GetObjectToPrint() == ObjectToPrint.Candy1 || Report.GetObjectToPrint() == ObjectToPrint.Candy2) OnSetCandy?.Invoke(this, Report.GetObjectToPrint());
         AgentIcon.SetActive(false);
         if (!Report.GetWasSet())
         {

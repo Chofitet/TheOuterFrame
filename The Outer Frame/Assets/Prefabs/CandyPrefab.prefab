@@ -553,6 +553,8 @@ GameObject:
   - component: {fileID: 5224470055558541620}
   - component: {fileID: 7735629005551036259}
   - component: {fileID: 3403616079257646363}
+  - component: {fileID: 6858580660398577455}
+  - component: {fileID: 6030892138507887793}
   m_Layer: 0
   m_Name: CandyPrefab
   m_TagString: Untagged
@@ -614,6 +616,53 @@ MonoBehaviour:
       - m_Target: {fileID: 7735629005551036259}
         m_TargetAssemblyTypeName: CandyStateController, Assembly-CSharp
         m_MethodName: EateCandy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+--- !u!114 &6858580660398577455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8132997253646533603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd80e43e78151154b813cae3fe37f6e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnReactiveIdeaPosit: {fileID: 11400000, guid: 4e268269c4341f94dbee67a1dd156c0b, type: 2}
+  OnActionRejected: {fileID: 11400000, guid: 4630f82e0153a1d419045237ffb17992, type: 2}
+--- !u!114 &6030892138507887793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8132997253646533603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: faf4a5641cb1a91469577617bf752e37, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6858580660398577455}
+        m_TargetAssemblyTypeName: CandyController, Assembly-CSharp
+        m_MethodName: OnTakeReport
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

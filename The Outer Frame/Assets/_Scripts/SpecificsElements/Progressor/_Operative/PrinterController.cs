@@ -32,7 +32,7 @@ public class PrinterController : MonoBehaviour
     {
         SlotController slotController = slotReference.GetComponent<SlotController>();
         GameObject Object = null;
-        if (slotController.GetObjectType() == ObjectToPrint.report)
+        if (slotController.GetObjectType() == ObjectToPrint.report || slotController.GetIsAborted())
         {
             Object = Instantiate(ReportPrefab, InstanciateSpot.position, InstanciateSpot.rotation, InstanciateSpot);
             Object.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetReport(), slotController.GetIsAborted(), slotController.getisAlreadyDone(), slotController.GetIsTheSameAction(), slotController.GetIsOtherGroupActionDoing(), slotController.GetTimeComplete());
@@ -41,6 +41,7 @@ public class PrinterController : MonoBehaviour
         else if(slotController.GetObjectType() == ObjectToPrint.Candy1 || slotController.GetObjectType() == ObjectToPrint.Candy2)
         {
             Object = Instantiate(CandyPrefab, InstanciateSpot.position, InstanciateSpot.rotation, InstanciateSpot);
+            Object.GetComponent<CandyController>().initCandy(slotController.GetWord(), slotController.GetReport(), slotController.GetIsAborted(), slotController.getisAlreadyDone(), slotController.GetIsTheSameAction());
             Object.transform.DOMove(CandyOutSpot.position, 0.2f).SetEase(Ease.OutSine);
             Object.transform.DORotate(CandyOutSpot.rotation.eulerAngles, 0.2f).SetEase(Ease.InQuart);
         }
