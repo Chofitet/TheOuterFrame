@@ -28,6 +28,7 @@ public class ChannelController : MonoBehaviour
     TimeCheckConditional TimeToRestartRandoms;
     INewType New;
     TVNewPropertiesData NewProperties;
+    [SerializeField] OverlayStyleController StyleController;
 
     private void Start()
     {
@@ -108,6 +109,7 @@ public class ChannelController : MonoBehaviour
         _new.SetWasStreamed();
 
         OverlayAnims.NewsFormatIdle();
+        FilterNewChannel(_new);
 
         if (_new.GetHeadline2() != "")
         {
@@ -149,9 +151,9 @@ public class ChannelController : MonoBehaviour
 
     void BackUI(float time, INewType _new)
     {
-       // yield return new WaitForSeconds(time);
+        // yield return new WaitForSeconds(time);
 
-        
+        FilterNewChannel(_new);
 
         OverlayAnims.NewsIn();
         OverlayAnims.PicsIn();
@@ -238,6 +240,16 @@ public class ChannelController : MonoBehaviour
             Hour = finalHours,
             Minute = finalMinutes
         };
+    }
+
+    void FilterNewChannel(INewType _new)
+    {
+        if (_new.GetNewType() == NewType.Vilify) SetChannelStyle("Fake");
+        else SetChannelStyle();
+    }
+    void SetChannelStyle(string channelStyle = "Normal")
+    {
+        StyleController.ChangeStyleChannel(channelStyle);
     }
 }
 

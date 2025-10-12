@@ -25,7 +25,9 @@ public enum NewType
 {
     Custom, // Con este seleccionado, se toma lo que hay en la caja de texto "Custom Aclaration Alelert"
     RandomNews, // no cambiar ni borrar (hace que por default las randoms no muestren nada)
+    Vilify,
     Evidence,
+    
     //agragar cuantos quieras
 }
 
