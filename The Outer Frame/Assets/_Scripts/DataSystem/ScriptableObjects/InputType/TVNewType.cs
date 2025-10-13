@@ -153,7 +153,7 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
         EndTime = ScriptableObject.CreateInstance<TimeCheckConditional>();
         EndTime.Initialize(true, FixedEndTime.Day, FixedEndTime.Hour, FixedEndTime.Minute);
 
-        Debug.Log("Defined Time to show new: " + FixedEndTime.ToString());
+        //Debug.Log("Defined Time to show new: " + FixedEndTime.ToString());
     }
 
     private TimeData AddMinutesToTime(TimeData time, int minutesToAdd)

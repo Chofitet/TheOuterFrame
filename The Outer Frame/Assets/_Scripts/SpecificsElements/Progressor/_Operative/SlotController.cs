@@ -21,6 +21,9 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameObject TryAbortPanel;
     [SerializeField] GameObject LedPanel;
     [SerializeField] GameEvent OnSetCandy;
+    [SerializeField] GameEvent OnSetVilifyAction;
+    [SerializeField] StateEnum VilifyState;
+    TimeData IsVilifyLocked = new TimeData(0,0,0);
 
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
@@ -32,6 +35,7 @@ public class SlotController : MonoBehaviour
     bool isAlreadyDone;
     bool isAutomaticAction;
     bool isTheSameAction;
+    bool isAVilifyBlockedAction;
     StateEnum isOtherGroupActionDoing;
     TimeData timeComplete;
     bool inFillFast;
@@ -95,6 +99,12 @@ public class SlotController : MonoBehaviour
             isAutomaticAction = true;
             SetLEDState(Color.red);
         }
+        else if(!IsVilifyLocked.isANullTimeData() && _state == VilifyState)
+        {
+            FillFast();
+            isAVilifyBlockedAction = true;
+            SetLEDState(Color.red);
+        }
         // Es una acción válida
         else
         {
@@ -102,6 +112,8 @@ public class SlotController : MonoBehaviour
             TimeManager.OnSecondsChange += UpdateProgress;
             UpdateProgress();
             SetLEDState(Color.green);
+            
+            if(state == VilifyState) OnSetVilifyAction?.Invoke(this, true);
         }
     }
 
@@ -165,6 +177,10 @@ public class SlotController : MonoBehaviour
         {
             AutomaticAction();
         }
+        else if(inFillFast && ProgressBar.value == ProgressBar.maxValue && isAVilifyBlockedAction)
+        {
+            AutomaticAction();
+        }
 
     }
 
@@ -209,7 +225,7 @@ public class SlotController : MonoBehaviour
         OnReactiveIdeaPosit?.Invoke(this, _state);
         TimeManager.OnSecondsChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();
-
+        if (_state == VilifyState) OnSetVilifyAction?.Invoke(this, false);
         AbortIcon.SetActive(true);
     }
 
@@ -226,6 +242,7 @@ public class SlotController : MonoBehaviour
         if (Report != null) if ((Report.GetKillAgent() && isActionComplete)) DisableAgent();
         if (isAgentDead) DisableAgent();
 
+        isAVilifyBlockedAction = false;
         isActionComplete = false;
         isOtherGroupActionDoing = null;
         ProgressBar.value = 0;
@@ -326,6 +343,11 @@ public class SlotController : MonoBehaviour
         Wordtxt.GetComponent<WarpTextExample>().UpdateText();
     }
 
+    public void OnSetVilifyLockedTime(Component sender, object obj)
+    {
+        IsVilifyLocked = (TimeData)obj;
+    }
+
     public WordData GetWord() { return _word; }
 
     public StateEnum GetState() { return _state; }
@@ -345,5 +367,10 @@ public class SlotController : MonoBehaviour
     public bool GetIsComplete() { return isActionComplete; }
 
     public ObjectToPrint GetObjectType() { return objectType; }
+
+    public TimeData GetIsAVilifyBlockedAction() {
+        if (isAVilifyBlockedAction) return IsVilifyLocked;
+        else return new TimeData(0, 0, 0);    
+    }
 
 }

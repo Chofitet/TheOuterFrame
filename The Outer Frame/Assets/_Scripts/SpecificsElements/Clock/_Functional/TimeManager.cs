@@ -233,6 +233,12 @@ public struct TimeData
         int.TryParse(auxString, out auxInt);
         return auxInt;
     }
+
+    public bool isANullTimeData()
+    {
+        if (Day == 0 && Hour == 0 && Minute == 0) return true;
+        else return false;
+    }
 }
 
 

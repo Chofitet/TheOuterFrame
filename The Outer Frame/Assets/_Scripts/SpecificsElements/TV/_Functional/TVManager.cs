@@ -18,6 +18,9 @@ public class TVManager : MonoBehaviour
     [SerializeField] Animator anim;
     TVNewTypeProperties TVNewPropertiesList;
 
+    
+    
+
     private void Start()
     {
         TVNewPropertiesList = GetComponent<TVNewTypeProperties>();
@@ -121,7 +124,6 @@ public class TVManager : MonoBehaviour
         //chequeos de prioridad (siempre salen las programadas primero, despues las reaccionarias en orden de aparicion)
         if (QueueOfNews.Count == 0)
         {
-            Debug.Log("newsQueueFree");
             FillEmptiesChannels();
             return;
         }
@@ -272,5 +274,6 @@ public class TVManager : MonoBehaviour
             ReactiveNews.Add(_new);
         }
     }
+
 
 }

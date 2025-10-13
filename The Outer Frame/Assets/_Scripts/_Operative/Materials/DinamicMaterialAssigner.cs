@@ -43,7 +43,7 @@ public class DinamicMaterialAssigner : MonoBehaviour
         materials[1] = newMaterial;
         meshRenderer.materials = materials;
 
-        Debug.Log($"Material creado para {sprite.name}, transparente: {isTransparent}");
+       // Debug.Log($"Material creado para {sprite.name}, transparente: {isTransparent}");
     }
 
     bool HasTransparency(Sprite sprite)

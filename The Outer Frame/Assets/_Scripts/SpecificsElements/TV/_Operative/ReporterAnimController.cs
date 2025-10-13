@@ -33,6 +33,8 @@ public class ReporterAnimController : MonoBehaviour
 
     void StartTalkLoop()
     {
+        if (!gameObject.activeInHierarchy)
+            return;
         StopAllCoroutines();
         anim.SetBool("isTalk", true);
 
