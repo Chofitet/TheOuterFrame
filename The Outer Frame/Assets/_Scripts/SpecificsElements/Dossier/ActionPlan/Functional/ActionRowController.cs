@@ -136,7 +136,6 @@ public class ActionRowController : MonoBehaviour
     public void eraseParticles(float progress)
     {
         EraseParticles.GetComponent<ParticleSystem>().Play();
-        Debug.Log("erase progress" + progress.ToString());
         Vector3 initPos = Wordtext.transform.localPosition + new Vector3(2,0,0);
         EraseParticles.localPosition = Vector3.Lerp(initPos, new Vector3(Wordtext.transform.localPosition.x + Wordtext.preferredWidth, initPos.y, initPos.z), progress);
     }

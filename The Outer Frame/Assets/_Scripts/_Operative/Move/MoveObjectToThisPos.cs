@@ -60,7 +60,7 @@ public class MoveObjectToThisPos : MonoBehaviour
     {
         if (!LastObj)
         {
-            Debug.Log("Any positsToReturn");
+           // Debug.Log("Any positsToReturn");
             return;
         }
 

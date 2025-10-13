@@ -30,7 +30,7 @@ public class ReportController : MonoBehaviour
     WordData word;
     ReportType report;
 
-    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, TimeData timeComplete)
+    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, TimeData timeComplete,TimeData TimeToUnlockVilify)
     {
         word = _word;
         report = _report;
@@ -88,6 +88,12 @@ public class ReportController : MonoBehaviour
         {
             status = "<color=#AE0000>IMPOSSIBLE</color>";
 
+            btnText.text = "DISPOSE";
+        }
+        else if(!TimeToUnlockVilify.isANullTimeData())
+        {
+            Resulttxt.text = $"There are many vilify news in queue. The action {actionVerb} {Name} can´t be done. You can try again at {TimeToUnlockVilify.ToString()}";
+            isNotCompleted = true;
             btnText.text = "DISPOSE";
         }
 

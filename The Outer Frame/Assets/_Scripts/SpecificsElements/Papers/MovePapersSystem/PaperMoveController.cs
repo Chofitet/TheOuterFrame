@@ -333,16 +333,16 @@ public class PaperMoveController : MonoBehaviour
             if (boxCollider != null)
             {
                 boxCollider.enabled = true;
-                Debug.Log("BoxCollider habilitado en: " + lastChild.name);
+                //Debug.Log("BoxCollider habilitado en: " + lastChild.name);
             }
             else
             {
-                Debug.LogWarning("El último hijo no tiene un BoxCollider.");
+                //Debug.LogWarning("El último hijo no tiene un BoxCollider.");
             }
         }
         else
         {
-            Debug.LogWarning("El GameObject no tiene hijos.");
+           // Debug.LogWarning("El GameObject no tiene hijos.");
         }
     }
 
