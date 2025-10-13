@@ -18,6 +18,11 @@ public class PCWikiController : MonoBehaviour
     DataBaseType input;
     bool once;
 
+    private void Start()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
+
     private void OnEnable()
     {
         if (once) return;

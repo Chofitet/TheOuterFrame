@@ -5,9 +5,9 @@ using UnityEngine.UIElements;
 
 public class VilifyNewLimiter : MonoBehaviour
 {
-    [SerializeField] int MaxVilifyNews;
-    [SerializeField] int TimeBetweenVilifyNewsToIncreaseCounter;
-    [SerializeField] int TimeToWaitToReactiveVilifyAction;
+    [SerializeField] int MaxVilifyCounter;
+    [SerializeField] int AddsToCounterIfVilifyAgainInLessThan;
+    [SerializeField] int TimeToWaitToVilifyAgain;
     [SerializeField] GameEvent LockVilifyNews;
     int VilifyCounter;
     private int minuteProgress;
@@ -27,9 +27,9 @@ public class VilifyNewLimiter : MonoBehaviour
         //Llamado por el progresor cuando se manda a hacer un vilify
         VilifyCounter += 1;
 
-        VilifyCounter = Mathf.Clamp(VilifyCounter, 0, MaxVilifyNews);
+        VilifyCounter = Mathf.Clamp(VilifyCounter, 0, MaxVilifyCounter);
 
-        if (VilifyCounter == MaxVilifyNews)
+        if (VilifyCounter == MaxVilifyCounter)
         {
             SetVilifyLocked();
         }
@@ -40,8 +40,8 @@ public class VilifyNewLimiter : MonoBehaviour
     public void DecreaseCounter()
     {
         VilifyCounter -= 1;
-        VilifyCounter = Mathf.Clamp(VilifyCounter, 0, MaxVilifyNews);
-        SetVilifyUnlocked(false);
+        VilifyCounter = Mathf.Clamp(VilifyCounter, 0, MaxVilifyCounter);
+       // SetVilifyUnlocked(false);
 
     }
 
@@ -55,7 +55,7 @@ public class VilifyNewLimiter : MonoBehaviour
     {
         minuteProgress += 1;
 
-        if (minuteProgress >= TimeBetweenVilifyNewsToIncreaseCounter)
+        if (minuteProgress >= AddsToCounterIfVilifyAgainInLessThan)
         {
             DecreaseCounter();
             TimeManager.OnMinuteChange -= UpdateTimeProgress;
@@ -68,7 +68,7 @@ public class VilifyNewLimiter : MonoBehaviour
         TimeManager.OnMinuteChange += UpdateLockedTimeProgress;
         TimeManager.OnMinuteChange -= UpdateTimeProgress;
         TimeData ActualTime = TimeManager.timeManager.GetTime();
-        TimeData TimeToUnlockVilify = AddMinutesToTime(ActualTime, TimeToWaitToReactiveVilifyAction);
+        TimeData TimeToUnlockVilify = AddMinutesToTime(ActualTime, TimeToWaitToVilifyAgain);
 
         LockVilifyNews?.Invoke(this, TimeToUnlockVilify);
         Debug.Log("Vilify locked");
@@ -78,7 +78,7 @@ public class VilifyNewLimiter : MonoBehaviour
     {
         UnlockMinutePrgress += 1;
 
-        if (UnlockMinutePrgress >= TimeToWaitToReactiveVilifyAction)
+        if (UnlockMinutePrgress >= TimeToWaitToVilifyAgain)
         {
             SetVilifyUnlocked();
         }

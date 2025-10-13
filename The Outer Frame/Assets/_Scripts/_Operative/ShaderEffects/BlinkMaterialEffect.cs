@@ -62,7 +62,6 @@ public class BlinkMaterialEffect : MonoBehaviour
 
         if (TurnOnCoroutine != null) StopCoroutine(TurnOnCoroutine);
         if (TurnOffCoroutine != null) StopCoroutine(TurnOffCoroutine);
-        Debug.Log($"{name} is blinking ");
         if (material.IsKeywordEnabled("_EMISSION"))
         {
             

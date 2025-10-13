@@ -92,8 +92,9 @@ public class ReportController : MonoBehaviour
         }
         else if(!TimeToUnlockVilify.isANullTimeData())
         {
-            Resulttxt.text = $"There are many vilify news in queue. The action {actionVerb} {Name} can´t be done. You can try again at {TimeToUnlockVilify.ToString()}";
+            Resulttxt.text = $"la accion {actionVerb} {Name} se puede volver a hacer en {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}";
             isNotCompleted = true;
+            photo1.Set("perate wacho", WrongResultImg[6]);
             btnText.text = "DISPOSE";
         }
 
