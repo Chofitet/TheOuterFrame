@@ -6,10 +6,12 @@ using UnityEngine;
 public class PopUpManager : MonoBehaviour
 {
     [SerializeField] List<PopUpPrefabs> popUpPrefabList;
-    List<GameObject> popUpList;
+    List<GameObject> popUpInstances = new List<GameObject>();
     RectTransform WindowRect;
+    [SerializeField] int MaxToStack;
+    [SerializeField] Vector3 PopUpOffset;
     [SerializeField] float EdgeMargin = 2;
-    [SerializeField] RectTransform instantiationArea;
+    [SerializeField] RectTransform instantiationPoint;
 
     private void Start()
     {
@@ -18,20 +20,23 @@ public class PopUpManager : MonoBehaviour
 
     public void OnInstanciatePopUp(Component sender, object obj)
     {
+        removeClosedPopUp();
+
         IPopUp popUpData = (IPopUp) obj;
 
         if (popUpData.PopUpType == PopUpType.None) return;
 
         GameObject popUpPrefab = GetPopUpType(popUpData.PopUpType);
 
-        GameObject Instance = Instantiate(popUpPrefab, instantiationArea.transform, false);
+        GameObject Instance = Instantiate(popUpPrefab, instantiationPoint.transform, false);
 
-        
         PopUpController popUpController = Instance.GetComponent<PopUpController>();
 
-        Instance.transform.localPosition = GetRandomPositionOnCanvas(popUpController);
-
         popUpController.Initialize(popUpData.PopupText, GetComponentInParent<RectTransform>());
+
+        Instance.transform.localPosition = GetInstancePosition();
+
+        popUpInstances.Add(Instance);
 
         Instance.transform.SetParent(transform);
     }
@@ -47,23 +52,30 @@ public class PopUpManager : MonoBehaviour
         return null;
     }
 
-    Vector3 GetRandomPositionOnCanvas(PopUpController popUp)
+    Vector3 GetInstancePosition()
     {
-        Vector2 popupSize = popUp.GetPopUpSize();
-        Vector2 windowSize = instantiationArea.sizeDelta;
+        Vector3 instancePos = Vector3.zero;
 
-        float MarginInX = windowSize.x - popupSize.x - EdgeMargin;
-        float MarginInY = - windowSize.y + popupSize.y + EdgeMargin;
+        int count = popUpInstances.Count;
 
-        Vector3 randomPosition = Vector2.zero;
+        if (count < MaxToStack)
+        {
+            instancePos = PopUpOffset * count;
+        }
+        else
+        {
+            instancePos = PopUpOffset * (MaxToStack - 1);
+        }
 
-        randomPosition.x = UnityEngine.Random.Range(EdgeMargin, MarginInX);
-        randomPosition.y = UnityEngine.Random.Range(-EdgeMargin, MarginInY);
-        randomPosition.z = 0;
+        return instancePos;
+    }
 
-        return randomPosition;
+    void removeClosedPopUp()
+    {
+        popUpInstances.RemoveAll(s => s == null);
     }
 }
+
 
 public interface IPopUp
 {
