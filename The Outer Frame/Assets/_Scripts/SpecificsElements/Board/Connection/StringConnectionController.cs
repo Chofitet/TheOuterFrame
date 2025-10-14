@@ -140,7 +140,10 @@ public class StringConnectionController : MonoBehaviour
         StartCoroutine(EnableMesh(true));
 
     }
-
+public void ConnectInStart(Component sender,object obj)
+ {
+     ConnectDirectly();
+ }
     IEnumerator EnableMesh(bool x)
     {
         yield return new WaitForSeconds(0.15f);

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4896362456286868464}
   - component: {fileID: 7089081955231847964}
   - component: {fileID: 8736473763541006851}
+  - component: {fileID: 3115349786716193878}
   m_Layer: 10
   m_Name: BoardStringConnectionNode
   m_TagString: Untagged
@@ -132,6 +133,39 @@ MonoBehaviour:
       - m_Target: {fileID: 4896362456286868464}
         m_TargetAssemblyTypeName: StringConnectionController, Assembly-CSharp
         m_MethodName: UpdatePositionRotation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+--- !u!114 &3115349786716193878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3578476484576585639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 1e9f2a22344b7ca48b3f0d1d25857a95, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4896362456286868464}
+        m_TargetAssemblyTypeName: StringConnectionController, Assembly-CSharp
+        m_MethodName: ConnectInStart
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
