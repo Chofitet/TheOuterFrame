@@ -14,6 +14,7 @@ public class PinchofonoManager : MonoBehaviour
     bool isInterrupted;
     [SerializeField] GameEvent OnCallEndRecording;
     [SerializeField] GameEvent OnCallCatch;
+    [SerializeField] GameEvent OnAddEntryLog;
 
     public void SetRecording(Component sender, object obj)
     {
@@ -80,6 +81,7 @@ public class PinchofonoManager : MonoBehaviour
             Debug.Log("CallRecordingFinish");
             if (isInterrupted) CallToShow.SetIsinterrrupted() ;
             OnCallEndRecording?.Invoke(this, CallToShow);
+            OnAddEntryLog?.Invoke(this, new LogEntryData(word, "WIRETAPPED", null, CallToShow));
             CallToShow = null;
             isInterrupted = false;
         }

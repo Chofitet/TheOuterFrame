@@ -23,6 +23,7 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameEvent OnSetCandy;
     [SerializeField] GameEvent OnSetVilifyAction;
     [SerializeField] StateEnum VilifyState;
+    [SerializeField] GameEvent OnAddEntryLog;
     TimeData IsVilifyLocked = new TimeData(0,0,0);
 
     [SerializeField] Image[] LEDObjects;
@@ -199,6 +200,7 @@ public class SlotController : MonoBehaviour
         }
         else isAlreadyDone = true;
         _state = WordsManager.WM.GetHistory(_word).Last();
+        OnAddEntryLog?.Invoke(this, new LogEntryData(_word, _state.GetActionedVerb(), Report, null));
         Report.SetTimeWhenWasDone();
         timeComplete = TimeManager.timeManager.GetTime();
         OnFinishActionProgress?.Invoke(this, this);
