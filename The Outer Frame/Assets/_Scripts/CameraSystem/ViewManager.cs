@@ -67,7 +67,7 @@ public class ViewManager : MonoBehaviour
     {
         if (isInputDisable)
         {
-            Debug.Log("disable");
+            //Debug.Log("disable");
             return;
         }
 

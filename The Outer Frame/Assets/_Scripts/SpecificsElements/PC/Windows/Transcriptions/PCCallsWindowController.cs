@@ -7,8 +7,6 @@ public class PCCallsWindowController : MonoBehaviour
 {
     [SerializeField] GameObject PrefabBtCall;
     [SerializeField] GameObject Grid;
-    [SerializeField] GameObject panelCall;
-    [SerializeField] TranscriptionCallController CallToFild;
     [SerializeField] GameEvent OnEnableTranscriptionPCBtn;
     bool isDeleted;
     WordData word;
@@ -51,25 +49,6 @@ public class PCCallsWindowController : MonoBehaviour
         {
             OnEnableTranscriptionPCBtn?.Invoke(this, null);
         }
-    }
-
-    public void SetPanelText(Component sender, object obj)
-    {
-        panelCall.SetActive(true);
-
-        CallType call = (CallType)obj;
-
-        CallToFild.Inicialization(call,word);
-    }
-
-    public void QuitPanelReport()
-    {
-        panelCall.SetActive(false);
-    }
-
-    public void OnQuitPanel(Component sender, object obj)
-    {
-        panelCall.SetActive(false);
     }
 
     public void DeleteAllReports(Component sender, object obj)

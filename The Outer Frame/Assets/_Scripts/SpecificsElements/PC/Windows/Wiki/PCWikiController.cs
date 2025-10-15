@@ -83,7 +83,7 @@ public class PCWikiController : MonoBehaviour
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);
         HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
-        WikiInfoContent.SetActive(true);
+        //WikiInfoContent.SetActive(true);
         image.sprite = input.GetImage();
         CompleteFields();
         content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, WikiData.GetComponent<RectTransform>().sizeDelta.y);
@@ -93,7 +93,6 @@ public class PCWikiController : MonoBehaviour
         }
         else PhotoField.gameObject.SetActive(true);
 
-        
         WikiInfoContent.SetActive(CheckFieldsInWikiInfoContent());
         
         //PhoneNumber.text = input.GetPhoneNum();

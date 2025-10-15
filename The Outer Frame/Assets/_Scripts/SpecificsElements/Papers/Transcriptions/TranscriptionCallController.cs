@@ -42,6 +42,8 @@ public class TranscriptionCallController : MonoBehaviour
 
     }
 
+    public void EnterDataBase() => call?.SetWasEnterToDataBase(true); 
+
     public void DestroyTranscription(Component sender, object obj)
     {
         call?.SetWasEnterToDataBase(true);

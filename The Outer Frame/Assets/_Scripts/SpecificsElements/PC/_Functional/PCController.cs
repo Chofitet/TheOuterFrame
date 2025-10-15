@@ -16,6 +16,7 @@ public class PCController : MonoBehaviour
     [SerializeField] List<GameObject> PanelsAppearsOnSearch = new List<GameObject>();
     [SerializeField] WordData IrrelevantDB;
     [SerializeField] GameObject BtnBackToLastEntry;
+    [SerializeField] GameEvent OnLogFilterType;
     GameEvent LastWindow;
     bool isWaitingAWord;
     bool inWordAccessWindow;
@@ -197,7 +198,20 @@ public class PCController : MonoBehaviour
         LastWindow = gameEvent;
     }
 
-    
+    public void FilterAll()
+    {
+        OnLogFilterType?.Invoke(this, new SearchLogData(_LastSearchedWord, LogFilterType.log));
+    }
+
+    public void OnFilterReport()
+    {
+        OnLogFilterType?.Invoke(this, new SearchLogData(_LastSearchedWord, LogFilterType.report));
+    }
+    public void OnFilterCalls()
+    {
+        OnLogFilterType?.Invoke(this, new SearchLogData(_LastSearchedWord, LogFilterType.transcript));
+    }
+
     IEnumerator IdleSearchBarAnim()
     {
         SearchBar.text = " |";
