@@ -75,7 +75,11 @@ public class LogWindowController : MonoBehaviour
     {
         foreach (LogEntryController entry in LogEntries)
         {
-            if (entry.GetWord() != WordsManager.WM.FindWordWithPhoneNum(word)) entry.gameObject.SetActive(false);
+            WordData EntryWord = entry.GetWord();
+            WordData SearchedWord = word;
+            if (!SearchedWord.GetIsAPhoneNumber()) EntryWord = WordsManager.WM.FindWordWithPhoneNum(EntryWord);
+
+            if (EntryWord != SearchedWord) entry.gameObject.SetActive(false);
         }
     }
 
