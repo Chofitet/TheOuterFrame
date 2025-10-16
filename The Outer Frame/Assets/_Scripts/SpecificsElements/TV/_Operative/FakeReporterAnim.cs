@@ -12,6 +12,7 @@ public class FakeReporterAnim : MonoBehaviour
     [SerializeField] float MaxWaitTime;
     [SerializeField] Transform Reporter;
     Sequence rotateSequence;
+    float speedFactor = 1f;
     private void OnEnable()
     {
         RotateRandomly();
@@ -30,16 +31,25 @@ public class FakeReporterAnim : MonoBehaviour
 
         rotateSequence = DOTween.Sequence();
 
-        float targetZ = Random.Range(MinAngle, MaxAngle);
-        float WaitTime = Random.Range(MinWaitTime, MaxWaitTime);
+        float adjustedWait = Random.Range(MinWaitTime, MaxWaitTime) / speedFactor;
+        float adjustedDuration = RotationDuration / speedFactor;
 
-        rotateSequence.AppendInterval(WaitTime) // pequeño delay inicial
+        float targetZ = Random.Range(MinAngle, MaxAngle);
+
+        rotateSequence.AppendInterval(adjustedWait) // pequeño delay inicial
             .AppendCallback(() =>
             {
                 float targetZ = Random.Range(MinAngle, MaxAngle);
-                Reporter.DOLocalRotate(new Vector3(Reporter.localEulerAngles.x, Reporter.localEulerAngles.z, targetZ), RotationDuration)
+                Reporter.DOLocalRotate(new Vector3(Reporter.localEulerAngles.x, Reporter.localEulerAngles.z, targetZ), adjustedDuration)
                     .SetEase(Ease.InOutCubic)
                     .OnComplete(() => RotateRandomly());
             });
+    }
+
+    public void AccelerateAnimator(Component sender, object obj)
+    {
+        speedFactor = (float)obj;
+        RotateRandomly();
+
     }
 }

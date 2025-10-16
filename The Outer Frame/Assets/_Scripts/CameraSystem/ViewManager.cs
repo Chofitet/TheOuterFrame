@@ -32,6 +32,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] GameEvent OnNormalizeTime;
     bool isAPaperHolding;
+    float currentDelay;
     ViewStates currentviewState;
     bool isInputDisable;
     bool isInPause;
@@ -46,6 +47,7 @@ public class ViewManager : MonoBehaviour
 
     private void Start()
     {
+        currentDelay = delayBetweenViews;
         if (!isInTutorial)
         {
             OnDisableInput?.Invoke(this, null);
@@ -153,19 +155,23 @@ public class ViewManager : MonoBehaviour
 
     public void StuckMove(Component sender, object _view)
     {
+        //Se llama con OnViewChange 
         if (currentviewState == ViewStates.PauseView) return;
-        if (IsStuckInView) UpdateViewState(this, StuckView);
+        if (IsStuckInView)
+        {
+            nextViewRequest = StuckView;
+            isTransitioning = false;
+        }
     }
     public void UpdateViewState(Component sender, object _view)
     {
         //if (delayingView) return;
         ViewStates NewView = (ViewStates)_view;
         //StopAllCoroutines();
-       /* if (NewView == currentviewState)
-        {
-            return;
-        }*/
-
+        /* if (NewView == currentviewState)
+         {
+             return;
+         }*/
         if (isTransitioning)
         {
             // Guardamos el último pedido, reemplazando al anterior
@@ -176,6 +182,7 @@ public class ViewManager : MonoBehaviour
         StartCoroutine(HandleViewChange(NewView));
     }
 
+
     private IEnumerator HandleViewChange(ViewStates newView)
     {
         isTransitioning = true;
@@ -184,24 +191,25 @@ public class ViewManager : MonoBehaviour
         ViewSelector(newView);
 
         // Tiempo mínimo antes de aceptar otra vista
-        yield return new WaitForSeconds(delayBetweenViews);
+        yield return new WaitForSeconds(currentDelay);
 
-        
         if (nextViewRequest.HasValue)
         {
             ViewStates buffered = nextViewRequest.Value;
             nextViewRequest = null;
-            StartCoroutine(HandleViewChange(buffered));
+           StartCoroutine(HandleViewChange(buffered));
         }
         else
         {
             
             isTransitioning = false;
         }
+
     }
 
     void ViewSelector(ViewStates NewView)
     {
+        if(IsStuckInView) if (NewView == currentviewState) return;
         switch (NewView)
         {
             case ViewStates.GeneralView:
@@ -303,7 +311,7 @@ public class ViewManager : MonoBehaviour
 
     void BackToGeneralViewWhitMoving()
     {
-        if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView )
+        if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView  && !IsStuckInView)
         {
             OnSitDownSound?.Invoke(this, null);
         }
@@ -346,11 +354,13 @@ public class ViewManager : MonoBehaviour
     {
         IsStuckInView = true;
         StuckView = (ViewStates)obj;
+        currentDelay = delayBetweenViews - 0.2f;
     }
 
     public void UnsetStuck(Component sender, object obj)
     {
         IsStuckInView = false;
+        currentDelay = delayBetweenViews;
     }
 
     IEnumerator DelayForTimeChange(Action callback)
