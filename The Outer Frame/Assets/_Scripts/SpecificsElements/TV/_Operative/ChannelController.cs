@@ -24,11 +24,13 @@ public class ChannelController : MonoBehaviour
     [SerializeField] GameEvent OnChangeReporterAnim;
     [SerializeField] Sprite BreakingImage;
     [SerializeField] GameEvent OnInstanciatePopUp;
+    [SerializeField] GameEvent OnGlitchEvent;
     TimeCheckConditional MinTimeToShowNew;
     TimeCheckConditional TimeToRestartRandoms;
     INewType New;
     TVNewPropertiesData NewProperties;
     [SerializeField] OverlayStyleController StyleController;
+    string ActualChannelStyle = "Normal";
 
     private void Start()
     {
@@ -250,6 +252,10 @@ public class ChannelController : MonoBehaviour
     void SetChannelStyle(string channelStyle = "Normal")
     {
         StyleController.ChangeStyleChannel(channelStyle);
+
+        if (ActualChannelStyle != channelStyle) OnGlitchEvent?.Invoke(null, null);
+
+        ActualChannelStyle = channelStyle;
     }
 }
 
