@@ -27,6 +27,7 @@ public class OverlayAnimation : MonoBehaviour
 
     [SerializeField] TMP_Text NewContentTMPtxt;
     [SerializeField]TMP_Text HeadlineTMPtxt;
+    [SerializeField] TMP_Text Headline2TMPtxt;
     [SerializeField] TMP_Text QuipTMPtxt;
     
     [SerializeField] float moveTimes = 1;
@@ -81,6 +82,7 @@ public class OverlayAnimation : MonoBehaviour
             .Join(newsTextUI.transform.DOMove(textStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
             .AppendCallback(() => fadeUI(NewContentTMPtxt,1, moveTimes))
             .JoinCallback(() => fadeUI(HeadlineTMPtxt, 1, moveTimes))
+            .JoinCallback(() => fadeUI(Headline2TMPtxt,1,moveTimes))
             .JoinCallback(() => fadeUI(QuipTMPtxt, 1, moveTimes));
     }
     [ContextMenu("News In")]
@@ -102,6 +104,7 @@ public class OverlayAnimation : MonoBehaviour
             .AppendCallback(() => fadeUI(NewContentTMPtxt,0,0.1f))
             .JoinCallback(() => fadeUI(HeadlineTMPtxt, 0,0.1f))
             .JoinCallback(() => fadeUI(QuipTMPtxt, 0, 0.1f))
+            .JoinCallback(() => fadeUI(Headline2TMPtxt, 0, 0.1f))
             .PrependInterval(pauseTimes)
             .Append(newsTitleUI.transform.DOMove(titleOffscreenPositionRight.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
             .Join(newsTextUI.transform.DOMove(textOffscreenPositionLeft.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
