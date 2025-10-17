@@ -132,6 +132,9 @@ public class ReportController : MonoBehaviour
         if (photoInfo.Count >= 1) photo1.Set(photoInfo[0]?.text, photoInfo[0]?.photo);
         if (photoInfo.Count >= 2) photo2.Set(photoInfo[1]?.text, photoInfo[1]?.photo);
         if (photoInfo.Count >= 3) photo3.Set(photoInfo[2]?.text, photoInfo[2]?.photo);
+        if (photoInfo.Count >= 4) photo4.Set(photoInfo[3]?.text, photoInfo[3]?.photo);
+        if (photoInfo.Count >= 5) photo5.Set(photoInfo[4]?.text, photoInfo[4]?.photo);
+
     }
 
     string DeleteSpetialCharacter(string txt)
@@ -174,6 +177,8 @@ public class ReportController : MonoBehaviour
         photo1.gameObject.SetActive(false);
         photo2.gameObject.SetActive(false);
         photo3.gameObject.SetActive(false);
+        photo4.gameObject.SetActive(false);
+        photo5.gameObject.SetActive(false);
 
     }
 
