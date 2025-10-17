@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TootsieCall
   m_EditorClassIdentifier: 
   StartHour: 7
-  StartMinute: 15
+  StartMinute: 26
   EndHour: 7
-  EndMinute: 23
+  EndMinute: 45
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
@@ -48,5 +48,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 8655e66a7e432b84f8e498da5f99d1f1, type: 2}
     ifNot: 1
   - condition: {fileID: 11400000, guid: f99d34e23986a5040bca1decfc381a31, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 85211dd3667991d45863f0ca4dcd6fa6, type: 2}
     ifNot: 1
   isOrderMatters: 0
