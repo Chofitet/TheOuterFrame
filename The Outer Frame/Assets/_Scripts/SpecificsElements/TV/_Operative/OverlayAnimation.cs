@@ -5,6 +5,7 @@ using DG.Tweening;
 using Cinemachine.Utility;
 using System.Runtime.InteropServices;
 using TMPro;
+using System;
 
 public class OverlayAnimation : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class OverlayAnimation : MonoBehaviour
 
     [SerializeField] TMP_Text NewContentTMPtxt;
     [SerializeField]TMP_Text HeadlineTMPtxt;
+    [SerializeField] TMP_Text Headline2TMPtxt;
     [SerializeField] TMP_Text QuipTMPtxt;
     
     [SerializeField] float moveTimes = 1;
@@ -78,9 +80,10 @@ public class OverlayAnimation : MonoBehaviour
         newsInAnim.PrependInterval(pauseTimes)
             .Append(newsTitleUI.transform.DOMove(titleStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
             .Join(newsTextUI.transform.DOMove(textStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
-            .AppendCallback(() => fadeUI(NewContentTMPtxt,1))
-            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 1))
-            .JoinCallback(() => fadeUI(QuipTMPtxt, 1));
+            .AppendCallback(() => fadeUI(NewContentTMPtxt,1, moveTimes))
+            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 1, moveTimes))
+            .JoinCallback(() => fadeUI(Headline2TMPtxt,1,moveTimes))
+            .JoinCallback(() => fadeUI(QuipTMPtxt, 1, moveTimes));
     }
     [ContextMenu("News In")]
     private void NewsInTest()
@@ -98,9 +101,10 @@ public class OverlayAnimation : MonoBehaviour
         newsOutAnim = DOTween.Sequence();
         overlayTweens.Add(newsOutAnim);
         newsOutAnim.PrependInterval(pauseTimes)
-            .AppendCallback(() => fadeUI(NewContentTMPtxt,0))
-            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 0))
-            .JoinCallback(() => fadeUI(QuipTMPtxt, 0))
+            .AppendCallback(() => fadeUI(NewContentTMPtxt,0,0.1f))
+            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 0,0.1f))
+            .JoinCallback(() => fadeUI(QuipTMPtxt, 0, 0.1f))
+            .JoinCallback(() => fadeUI(Headline2TMPtxt, 0, 0.1f))
             .PrependInterval(pauseTimes)
             .Append(newsTitleUI.transform.DOMove(titleOffscreenPositionRight.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
             .Join(newsTextUI.transform.DOMove(textOffscreenPositionLeft.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
@@ -220,9 +224,9 @@ public class OverlayAnimation : MonoBehaviour
         }
     }
 
-    void fadeUI( TMP_Text textToFade,float valueToFade)
+    void fadeUI( TMP_Text textToFade,float valueToFade, float fadeTime)
     {
-        textToFade.DOFade(valueToFade, moveTimes * acceleratedFactor);
+        textToFade.DOFade(valueToFade, fadeTime * acceleratedFactor);
     }
 
     public float GetAnimTime() { return newsChangeTime * acceleratedFactor; }

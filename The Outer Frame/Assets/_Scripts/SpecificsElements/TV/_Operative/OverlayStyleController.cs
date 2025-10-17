@@ -29,6 +29,8 @@ public class TVOverlayStyle
     public GameObject Logo;
     public GameObject ImgQuip;
     public GameObject Reporter;
+    public SpriteRenderer ReporterHead;
+    public SpriteRenderer ReporterHands;
 
     public void SetActive(bool x)
     {
@@ -39,6 +41,8 @@ public class TVOverlayStyle
         if (Logo) Logo.SetActive(x);
         if (ImgQuip) ImgQuip.SetActive(x);
         if(Reporter) Reporter.SetActive(x);
+        if(ReporterHead) ReporterHead.enabled = x;
+        if(ReporterHands) ReporterHands.enabled = x;
     }
 
 }
