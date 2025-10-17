@@ -42,6 +42,7 @@ public class PrinterController : MonoBehaviour
         {
             Object = Instantiate(CandyPrefab, InstanciateSpot.position, InstanciateSpot.rotation, InstanciateSpot);
             Object.GetComponent<CandyController>().initCandy(slotController.GetWord(), slotController.GetReport(), slotController.GetIsAborted(), slotController.getisAlreadyDone(), slotController.GetIsTheSameAction());
+            Object.GetComponent<CandyStateController>().InitializeCandy(slotController.GetObjectType());
             Object.transform.DOMove(CandyOutSpot.position, 0.2f).SetEase(Ease.OutSine);
             Object.transform.DORotate(CandyOutSpot.rotation.eulerAngles, 0.2f).SetEase(Ease.InQuart);
         }

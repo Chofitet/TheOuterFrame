@@ -24,8 +24,7 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject colliderUnused;
 
     [Header("Candy Parameters")]
-    [SerializeField] GameObject Candy1;
-    [SerializeField] GameObject Candy2;
+    [SerializeField] GameObject Candy;
     [SerializeField] GameObject messagge;
 
     float InitLigthIntensity;
@@ -198,16 +197,9 @@ public class ProgressorModuleController : MonoBehaviour
         if (sender.gameObject == slot.gameObject)
         {
             ObjectToPrint objToPrint = (ObjectToPrint)obj;
-            if (objToPrint == ObjectToPrint.Candy1)
-            {
-                Candy1.SetActive(true);
-                messagge.SetActive(false);
-            }
-            else if (objToPrint == ObjectToPrint.Candy2)
-            {
-                Candy2.SetActive(true);
-                messagge.SetActive(false);
-            }
+            Candy.SetActive(true);
+            Candy.GetComponent<CandyStateController>().InitializeCandy(objToPrint);
+            messagge.SetActive(false);
         }
     }
 
@@ -310,8 +302,7 @@ public class ProgressorModuleController : MonoBehaviour
 
     void DisableCandy()
     {
-        Candy1.SetActive(false);
-        Candy2.SetActive(false);
+        Candy.SetActive(false);
         messagge.SetActive(true);
     }
 

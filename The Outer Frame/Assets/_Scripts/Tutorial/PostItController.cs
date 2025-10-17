@@ -7,6 +7,7 @@ public class PostItController : MonoBehaviour
 {
     [SerializeField] Transform FinalPosition;
     [SerializeField] Transform TakePosition;
+    [SerializeField] Transform TutorialPosition;
     [SerializeField] float TakeSpeed;
     Sequence MoveSequence;
     BoxCollider _collider;
@@ -95,6 +96,21 @@ public class PostItController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse1) && onceUp)
         {
             OnLeavePosIt(null, null);
+        }
+    }
+
+    public void CheckInTutorial(Component sender,object obj)
+    {
+        bool isInTutorial = (bool)obj;
+
+        if(!isInTutorial)
+        {
+
+            _collider.enabled = false;
+            transform.position = TutorialPosition.position;
+            transform.rotation = TutorialPosition.rotation;
+            transform.SetParent(TutorialPosition);
+            Destroy(this);
         }
     }
 }
