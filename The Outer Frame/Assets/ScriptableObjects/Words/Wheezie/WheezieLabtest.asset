@@ -16,13 +16,15 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 
+  Text: How is this kid even alive? He is just a cold away from the pearly gates!
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
   Photos: []
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 039e116a61c669e498d57d9226eb564f, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
