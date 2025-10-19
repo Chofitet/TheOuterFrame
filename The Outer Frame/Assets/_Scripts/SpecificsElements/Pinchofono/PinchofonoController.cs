@@ -113,7 +113,7 @@ public class PinchofonoController : MonoBehaviour
         foreach (string digit in numbers)
         {
             anim.SetTrigger("dial" + digit);
-            yield return new WaitForSeconds(0.175f);
+            yield return new WaitForSeconds(0.15f);
         }
 
         currentState = PhoneState.waitingRec;

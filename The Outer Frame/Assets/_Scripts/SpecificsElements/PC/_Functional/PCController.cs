@@ -113,6 +113,11 @@ public class PCController : MonoBehaviour
             if (isInPCView) OnShakeNotebook?.Invoke(this, null);
         }
     }
+    public void OnSearWordInWiki(Component sender, object obj)
+    {
+        word = (WordData)obj;
+        SearchWordInWiki((WordData)obj);
+    }
 
     public void SearchWordInWiki(WordData LastSearchedWord = null)
     {
