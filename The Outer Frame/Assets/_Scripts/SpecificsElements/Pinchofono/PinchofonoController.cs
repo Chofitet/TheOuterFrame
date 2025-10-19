@@ -13,6 +13,7 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameObject CallTranscriptionPrefab;
     [SerializeField] Transform InstanciateSpot;
     [SerializeField] TMP_Text txtNumber;
+    [SerializeField] TMP_Text txtPressRECtoStart;
     [SerializeField] TMP_Text txtMessage;
     [SerializeField] TMP_Text txtCountDown;
     [SerializeField] GameObject AbortConfirmationPanel;
@@ -34,6 +35,10 @@ public class PinchofonoController : MonoBehaviour
 
     CallType CallToPrint;
     private Animator anim;
+
+    Coroutine dialingCoroutine;
+    Coroutine refreshScreenCoroutine;
+    Coroutine messagePanelCoroutine;
 
     PhoneState currentState = PhoneState.waitingNumber;
 
@@ -73,7 +78,7 @@ public class PinchofonoController : MonoBehaviour
     //OnSelectedWordInNotebook
     public void EnterName(Component sender, object obj)
     {
-        if (currentState != PhoneState.waitingNumber && currentState != PhoneState.waitingRec) return;
+        if (currentState != PhoneState.waitingNumber && currentState != PhoneState.waitingRec && currentState != PhoneState.dialingNumber) return;
 
         StopAllCoroutines();
         WordData word = (WordData)obj;
@@ -89,14 +94,16 @@ public class PinchofonoController : MonoBehaviour
         ActualWord = word;
 
         //anim.SetTrigger("padDial");
-        StartCoroutine(AnimPadDial(word.GetPhoneNumber()));
+        dialingCoroutine = StartCoroutine(AnimPadDial(word.GetPhoneNumber()));
         OnDialingSound?.Invoke(this, null);
         anim.SetTrigger("recordReady");
         anim.SetTrigger("recordReadyWobble");
     }
     IEnumerator AnimPadDial(string number)
     {
-        StartCoroutine(RefreshScreen());
+        refreshScreenCoroutine = StartCoroutine(RefreshScreen());
+        currentState = PhoneState.dialingNumber;
+        txtPressRECtoStart.text = "DIALING NUMBER";
         yield return new WaitForSeconds(0.2f);
         txtNumber.GetComponent<TypingAnimText>().AnimateTyping();
         number = Regex.Replace(number, @"[()\-\s]", "");
@@ -108,6 +115,9 @@ public class PinchofonoController : MonoBehaviour
             anim.SetTrigger("dial" + digit);
             yield return new WaitForSeconds(0.175f);
         }
+
+        currentState = PhoneState.waitingRec;
+        txtPressRECtoStart.text = "PRESS REC TO START WIRETAPPING";
     }
     #endregion
 
@@ -115,9 +125,15 @@ public class PinchofonoController : MonoBehaviour
     public void RecBTNPressed(Component sender, object obj)
     {
         anim.SetTrigger("recordPush");
-        StopAllCoroutines();
+        if(messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
+        if (refreshScreenCoroutine != null) StopCoroutine(refreshScreenCoroutine);
 
         if (currentState == PhoneState.waitingNumber) ShowPanel(3, "TO START WIRETAPPING \n ENTER A VALID PHONE NUMBER");
+        else if (currentState == PhoneState.dialingNumber)
+        {
+            txtNumber.GetComponent<TypingAnimText>()?.ForceComplete();
+            ShowPanel(3, "ESPERA HASTA QUE \n SE TERMINE DE INGRESAR");
+        }
         else if (currentState == PhoneState.waitingRec)
         {
             anim.SetBool("isCallPossible", true);
@@ -149,9 +165,15 @@ public class PinchofonoController : MonoBehaviour
     public void PrintBTNPressed(Component sender, object obj)
     {
         anim.SetTrigger("printPush");
-        StopAllCoroutines();
+        if (messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
+        if (refreshScreenCoroutine != null) StopCoroutine(refreshScreenCoroutine);
 
         if (currentState == PhoneState.waitingNumber) ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
+        else if (currentState == PhoneState.dialingNumber)
+        {
+            txtNumber.GetComponent<TypingAnimText>()?.ForceComplete();
+            ShowPanel(3, "ESPERA HASTA QUE \n SE TERMINE DE INGRESAR");
+        }
         else if (currentState == PhoneState.waitingRec) ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
         else if (currentState == PhoneState.recording) ShowPanel(3, "NOT YET, \n WIRETAPPING IN PROGRESS");
         else if (currentState == PhoneState.waitingPrinting)
@@ -204,10 +226,16 @@ public class PinchofonoController : MonoBehaviour
     {
         canvas.enabled = true;
         anim.SetTrigger("abortPush");
-        StopAllCoroutines();
+        if (messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
+        if (refreshScreenCoroutine != null) StopCoroutine(refreshScreenCoroutine);
         StartCoroutine(RefreshScreen());
 
         if (currentState == PhoneState.waitingNumber) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
+        else if (currentState == PhoneState.dialingNumber)
+        {
+            txtNumber.GetComponent<TypingAnimText>()?.ForceComplete();
+            ShowPanel(3, "ESPERA HASTA QUE \n SE TERMINE DE INGRESAR");
+        }
         else if (currentState == PhoneState.waitingRec) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
         else if (currentState == PhoneState.recording) ShowPanel(4,"");
         else if (currentState == PhoneState.waitingPrinting)ShowPanel(3, "THERE'S NOTHING TO CANCEL");
@@ -231,8 +259,9 @@ public class PinchofonoController : MonoBehaviour
 
     public void ShowPanel(int panelNum, string message = "")
     {
-        StopAllCoroutines();
-        StartCoroutine(RefreshScreen());
+        if (messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
+        if (refreshScreenCoroutine != null) StopCoroutine(refreshScreenCoroutine);
+        refreshScreenCoroutine = StartCoroutine(RefreshScreen());
 
         foreach (GameObject screen in Screens)
         {
@@ -249,7 +278,7 @@ public class PinchofonoController : MonoBehaviour
 
         Screens[panelNum].GetComponent<CanvasGroup>().alpha = 1;
 
-        if (panelNum == 3 || panelNum == 4) StartCoroutine(ShowErrorMessagePanel(message, lastScreenNum));
+        if (panelNum == 3 || panelNum == 4) messagePanelCoroutine = StartCoroutine(ShowErrorMessagePanel(message, lastScreenNum));
         if (panelNum == 5) OnBlinkPhoneScreen?.Invoke(this, null);
     }
 
@@ -324,5 +353,6 @@ public enum PhoneState
     waitingNumber,
     waitingRec,
     recording,
-    waitingPrinting
+    waitingPrinting,
+    dialingNumber,
 }

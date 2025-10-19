@@ -251,8 +251,6 @@ public class NotebookPhonesController : MonoBehaviour
         }
         else if (actualView == ViewStates.TVView)
         {
-         
-
             DisableWordsOfList(listAllWord);
         }
         else
@@ -281,6 +279,7 @@ public class NotebookPhonesController : MonoBehaviour
         foreach (GameObject instanceBTN in WordsInstances)
         {
             instanceBTN.GetComponent<Button>().enabled = true;
+            instanceBTN.GetComponent<PhoneRowNotebookController>().GetButton().enabled = true;
             instanceBTN.GetComponent<Button>().interactable = true;
 
             foreach (WordData word in list)

@@ -20,6 +20,7 @@ public class NotebookWordInstance : MonoBehaviour
     WordData wordReference;
     bool isCross;
     bool isActiveInBoard;
+    bool isinactive;
     public void Initialization(WordData word, bool noAnim = false, NotebookProcessManager _processManager = null)
     {
         if(_processManager != null) processManager = _processManager;
@@ -153,25 +154,27 @@ public class NotebookWordInstance : MonoBehaviour
     bool wasSelectedBefore = false;
     public void SetSelectedWord()
     {
-        text.text = "<u>" + wordReference.GetName() + "</u>";
+       text.text = "<u>" + wordReference.GetName() + "</u>";
+        if (actualView == ViewStates.BoardView) text.text = wordReference.GetName();
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordReference);
         isActiveInBoard = false;
         btn.enabled = false;
-        if (wasSelectedBefore)
+        /*if (wasSelectedBefore)
         {
             text.text = wordReference.GetName();
             Invoke("ReSelectWord", 0.15f);
         }
 
-        wasSelectedBefore = true;
+        wasSelectedBefore = true;*/
     }
 
     public void ClearUnderline()
     {
         if (isActiveInBoard) return;
+        if (isinactive) return;
         btn.enabled = true;
         text.text = wordReference.GetName();
-        Invoke("SetwasSelectedBefore", 0.1f);
+        //Invoke("SetwasSelectedBefore", 0.1f);
     }
 
     void Alpha1()
@@ -224,6 +227,7 @@ public class NotebookWordInstance : MonoBehaviour
         {
             ThicknessOff();
             isActiveInBoard = false;
+            
         }
     }
 
@@ -261,6 +265,7 @@ public class NotebookWordInstance : MonoBehaviour
                 endValue,
                 duration
             ).SetEase(Ease.InOutSine)
+            
         );
     }
 
@@ -270,5 +275,12 @@ public class NotebookWordInstance : MonoBehaviour
         return text.GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(materialName.Replace("\"", ""));
     }
 
+    ViewStates actualView;
+    public void CheckView(Component sender,object obj)
+    {
+        actualView = (ViewStates)obj;
+    }
+
+    public void SetInactive(bool x) => isinactive = x;
 }
 

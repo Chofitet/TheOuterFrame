@@ -237,15 +237,17 @@ public class NotebookController : MonoBehaviour
         foreach (GameObject instanceBTN in WordsInstances) 
         {
             bool isActive = true;
-            instanceBTN.GetComponent<NotebookWordInstance>().GetButton().enabled = true;
             NotebookWordInstance Wordinstance = instanceBTN.GetComponent<NotebookWordInstance>();
+            Wordinstance.GetButton().enabled = true;
+            Wordinstance.SetInactive(false);
 
             foreach (WordData word in list)
             {
                 if(Wordinstance.GetWord() == word)
                 {
                     isActive = false;
-                    instanceBTN.GetComponent<NotebookWordInstance>().GetButton().enabled = false;
+                    Wordinstance.GetButton().enabled = false;
+                    Wordinstance.SetInactive(true);
                 }
             }
             if (isActive)

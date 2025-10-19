@@ -45,7 +45,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         if (!word.GetIsPhoneNumberFound())
         {
             writingTime = 0.5f + 0.5f;
-            Num.text = "?????"; 
+            Num.text = "?????";
             if (!NoAnim)
             {
                 Num.gameObject.GetComponent<FadeWordsEffect>().StartEffect(true);
@@ -53,26 +53,26 @@ public class PhoneRowNotebookController : MonoBehaviour
             }
         }
 
-        if(!NoAnim)
+        if (!NoAnim)
         {
             OnWritingShakeNotebook?.Invoke(this, writingTime);
             OnWritingNotebookSound?.Invoke(this, null);
         }
-        
+
     }
 
     public void UpdateNumber()
     {
         button.enabled = true;
-        Num.text = "?????"; 
-        StartCoroutine(AnimFade(Num, false, Num, true,word.GetPhoneNumber()));
+        Num.text = "?????";
+        StartCoroutine(AnimFade(Num, false, Num, true, word.GetPhoneNumber()));
     }
 
     public void ReplaceNumberWithWord(WordData _word)
     {
         word = _word;
         txtName.text = "?????"; // volver a los "?????"
-        StartCoroutine(AnimFade(txtName, false, txtName, true,word.GetName()));
+        StartCoroutine(AnimFade(txtName, false, txtName, true, word.GetName()));
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
     }
 
@@ -81,7 +81,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         txtName.text = word.GetName();
         word = _word;
         StartCoroutine(AnimFade(txtName, false, txtName, true, _word.GetName()));
-        
+
         if (_word.GetIsPhoneNumberFound())
         {
             string auxNum = "?????"; // volver a los "?????"
@@ -118,6 +118,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         {
             Num.text = "<u>" + word.GetPhoneNumber() + "</u>";
             WordSelectedInNotebook.Notebook.SetSelectedWord(word);
+            button.enabled = false;
             return;
         }
 
@@ -126,6 +127,7 @@ public class PhoneRowNotebookController : MonoBehaviour
             if (!word.GetIsPhoneNumberFound()) return;
             Num.text = "<u>" + word.GetPhoneNumber() + "</u>";
             WordSelectedInNotebook.Notebook.SetSelectedWord(word);
+            button.enabled = false;
             return;
         }
         else
@@ -133,7 +135,9 @@ public class PhoneRowNotebookController : MonoBehaviour
             txtName.text = "<u>" + word.GetName() + "</u>";
 
             WordSelectedInNotebook.Notebook.SetSelectedWord(word);
+            button.enabled = false;
         }
+
 
     }
 
@@ -141,12 +145,13 @@ public class PhoneRowNotebookController : MonoBehaviour
 
     public void ClearUnderline()
     {
-        if(word.GetIsAPhoneNumber())
+        if (word.GetIsAPhoneNumber())
         {
             Num.text = word.GetName();
+            button.enabled = true;
             return;
         }
-        if(word.GetIsPhoneNumberFound()) Num.text = word.GetPhoneNumber();
+        if (word.GetIsPhoneNumberFound()) Num.text = word.GetPhoneNumber();
         txtName.text = word.GetName();
     }
 
@@ -163,9 +168,9 @@ public class PhoneRowNotebookController : MonoBehaviour
         second.gameObject.GetComponent<FadeWordsEffect>().SetBlank(0);
         first.gameObject.GetComponent<FadeWordsEffect>().SetBlank(0);
         first.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent1);
-        
+
         yield return new WaitForSeconds(0.5f);
-        if(first == second) first.text = txt;
+        if (first == second) first.text = txt;
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
         OnWritingNotebookSound?.Invoke(this, null);
         yield return new WaitForSeconds(0.5f);
@@ -188,4 +193,6 @@ public class PhoneRowNotebookController : MonoBehaviour
     }
 
     public WordData GetWord() { return word; }
+
+    public Button GetButton() { return button; }
 }

@@ -5542,6 +5542,7 @@ GameObject:
   - component: {fileID: 6592215315726425342}
   - component: {fileID: 1800291645160190155}
   - component: {fileID: 5448267931498313990}
+  - component: {fileID: 3081441184715541069}
   m_Layer: 0
   m_Name: NotebookWordPrefab
   m_TagString: Untagged
@@ -5662,6 +5663,39 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0.7
+  _float: 0
+  _string: 
+  viewState: 0
+--- !u!114 &3081441184715541069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8693245384509004982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: de4c2261a9464294dbcdf9529638137f, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6592215315726425342}
+        m_TargetAssemblyTypeName: NotebookWordInstance, Assembly-CSharp
+        m_MethodName: CheckView
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
   _float: 0
   _string: 
   viewState: 0
