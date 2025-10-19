@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,18 +15,21 @@ public class MixerController : MonoBehaviour
 
     private void Start()
     {
-       /* float mixerVolume;
+        /* float mixerVolume;
 
-        if (audiomixer.GetFloat(AudioMixerGroup, out mixerVolume))
-        {
-            VolumeValue = Mathf.Pow(10, mixerVolume / 20);
-        }
-        else
-        {
-            VolumeValue = 1;
-        }
+         if (audiomixer.GetFloat(AudioMixerGroup, out mixerVolume))
+         {
+             VolumeValue = Mathf.Pow(10, mixerVolume / 20);
+         }
+         else
+         {
+             VolumeValue = 1;
+         }
 
-        textFiled.text = Mathf.RoundToInt((VolumeValue * 10)).ToString();*/
+         textFiled.text = Mathf.RoundToInt((VolumeValue * 10)).ToString();*/
+
+        if(!isInverted) SetVolume(null, float.Parse(textFiled.text)/10);
+        else SetVolume(null, float.Parse(textFiled.text)/10);
     }
 
     public void SetVolume(Component sender, object obj)
