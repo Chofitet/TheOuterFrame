@@ -14,6 +14,8 @@ public class PostItController : MonoBehaviour
     [SerializeField] AnimationCurve _animationCurve;
     [SerializeField] GameEvent EnableInput;
     [SerializeField] GameEvent DisableInput;
+    [SerializeField] GameObject TutorialCanvas;
+    [SerializeField] GameObject PauseCanvas;
     bool onceUp;
     private bool pendingLeave;
 
@@ -105,12 +107,18 @@ public class PostItController : MonoBehaviour
 
         if(!isInTutorial)
         {
-
             _collider.enabled = false;
             transform.position = TutorialPosition.position;
             transform.rotation = TutorialPosition.rotation;
             transform.SetParent(TutorialPosition);
             Destroy(this);
+            TutorialCanvas.SetActive(false);
+            PauseCanvas.SetActive(true);
+        }
+        else
+        {
+            TutorialCanvas.SetActive(true);
+            PauseCanvas.SetActive(false);
         }
     }
 }
