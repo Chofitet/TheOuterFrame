@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: PetroStationInterrogated
+  m_Name: IDEA.AskPetroBoyAboutTricycleMike
   m_EditorClassIdentifier: 
-  Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  isAutomatic: 1
+  Action: {fileID: 11400000, guid: 5c7b6706aab1cad44a71fd25ed4994d5, type: 2}
+  state: {fileID: 11400000, guid: 5c7b6706aab1cad44a71fd25ed4994d5, type: 2}
+  isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'We can interrogate a individual, not an entire location.
+  Text: '"Never heard the name, never knew the man."
 
 
-'
-  TextForRepetition: "WE SAID: \n\nWe can interrogate a individual, not an entire
-    location.\n\n\n"
+    We got zit from this guy.'
+  TextForRepetition: 
   Photos:
-  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
-    text: YES?
+  - photo: {fileID: 21300000, guid: 50d54830966e9044d972377d9ffa29e9, type: 3}
+    text: NOTHING
+  - photo: {fileID: 21300000, guid: 3129804f04066484f808ad4120e5811f, type: 3}
+    text: NO NEW LEADS
   Conditionals: []
   ObjectType: 0
   isOrderMatters: 0

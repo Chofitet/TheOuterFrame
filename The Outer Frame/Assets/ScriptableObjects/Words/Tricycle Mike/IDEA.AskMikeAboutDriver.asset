@@ -10,22 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: PetroStationInterrogated
+  m_Name: IDEA.AskMikeAboutDriver
   m_EditorClassIdentifier: 
-  Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  isAutomatic: 1
+  Action: {fileID: 11400000, guid: b271876c5cf3ad5429b01ad54eb79696, type: 2}
+  state: {fileID: 11400000, guid: b271876c5cf3ad5429b01ad54eb79696, type: 2}
+  isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'We can interrogate a individual, not an entire location.
-
-
-'
-  TextForRepetition: "WE SAID: \n\nWe can interrogate a individual, not an entire
-    location.\n\n\n"
+  Text: 
+  TextForRepetition: 
   Photos:
-  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
-    text: YES?
-  Conditionals: []
+  - photo: {fileID: 21300000, guid: 7a82e0efed6c0ef409d5e8d4aa2b80bd, type: 3}
+    text: KNOWS NOTHING
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 7f59ee4df22c1fc4b8a0fb175c927f80, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
