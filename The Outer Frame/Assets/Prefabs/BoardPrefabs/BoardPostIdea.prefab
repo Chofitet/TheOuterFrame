@@ -259,13 +259,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: 7f143592d7fb409418f55a1a3b31360f, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 42271fa33a7fdf44fb66d02775316d26, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4308943302336270615}
         m_TargetAssemblyTypeName: MoveBoardElementsToPos, Assembly-CSharp
         m_MethodName: MoveToPlacedPos
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 9068181064678660897}
+        m_TargetAssemblyTypeName: GeneratorActionController, Assembly-CSharp
+        m_MethodName: markDone
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -310,6 +322,7 @@ MonoBehaviour:
   OnPlaceInBoardSound: {fileID: 11400000, guid: 239b3774ae998464b90f44d0666542e4, type: 2}
   IsAUpdatedPhoto: 0
   OnUpdatingInBoard: {fileID: 11400000, guid: e31034c2e7753a34f9c42528e1a404cc, type: 2}
+  OnUpdatingBoardPlacedFinish: {fileID: 0}
 --- !u!65 &3023675080277653231
 BoxCollider:
   m_ObjectHideFlags: 0

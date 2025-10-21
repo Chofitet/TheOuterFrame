@@ -14,6 +14,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] GameObject PhotoModel;
     [SerializeField] GameObject Canvas;
     bool AwaitingForPlace;
+    GameObject content;
 
     private void Start()
     {
@@ -28,7 +29,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         {
             transform.position = new Vector3(0, 0, 0);
             transform.GetChild(0).gameObject.SetActive(true);
-            ActiveChildPosits();
+            //ActiveChildPosits();
             MarkRetroactiveWordPlaced();
             OnPutPhotoOnBoard?.Invoke(this, word);
             word.SetPlacedInBoard();

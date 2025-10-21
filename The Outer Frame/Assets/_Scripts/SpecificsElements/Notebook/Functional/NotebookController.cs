@@ -223,6 +223,10 @@ public class NotebookController : MonoBehaviour
         {
             DisableWordsOfList(listAllWord);
         }
+        else if (actualView == ViewStates.OnTakeSomeInBoard)
+        {
+            DisableWordsOfList(listAllWord);
+        }
         else
         {
             List<WordData> Empylist = new List<WordData>();
