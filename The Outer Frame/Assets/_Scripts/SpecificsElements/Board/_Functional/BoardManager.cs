@@ -18,11 +18,18 @@ public class BoardManager : MonoBehaviour
     [SerializeField] StringConnectionController[] ConnectInTutorial;
     [SerializeField] GameEvent OnEnableInput;
     [SerializeField] GameEvent OnDisableInput;
+
+    [Header("CallsToUpdate")]
+    [SerializeField] GameEvent OnUpdatePhotoUpdate;
+    [SerializeField] GameEvent OnUpdateConnections;
+    [SerializeField] GameEvent OnUpdatePosits;
+    [SerializeField] GameEvent OnUpdateIdeas;
+
     int WordsCounts;
     bool IsInView;
     bool isInTutorial;
     bool isInUpdatingTime;
-
+    Coroutine updateCorrutine;
 
     public void StateView(Component sender, object obj)
     {
@@ -32,9 +39,10 @@ public class BoardManager : MonoBehaviour
         {
             StartCoroutine(TurnOffisInUpdatingTime());
             IsInView = true;
-            OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
+            if (updateCorrutine != null) StopCoroutine(updateCorrutine);
+            updateCorrutine = StartCoroutine(UpdateCycle(0.5f));
             OnRefreshInfoInBoard?.Invoke(this, null);
-            OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
+            
         }
         else IsInView = false;
     }
@@ -44,7 +52,9 @@ public class BoardManager : MonoBehaviour
         if (!IsInView) return;
         OnBoardPlacedPhotos?.Invoke(null, StartPos.position);
         OnAutoUpdatePreviusPhoto?.Invoke(null, StartPos.position);
-        Invoke("Conections", 0.6f);
+        //Invoke("Conections", 0.6f);
+        if(updateCorrutine != null) StopCoroutine(updateCorrutine);
+        updateCorrutine = StartCoroutine(UpdateCycle(0));
         WordsCounts += 1;
         if (WordsCounts == 4 && isInTutorial) OnPlaced4WordsInBoard?.Invoke(this, null);
     }
@@ -112,5 +122,36 @@ public class BoardManager : MonoBehaviour
         isInUpdatingTime = true;
         yield return new WaitForSeconds(0.7f);
         isInUpdatingTime = false;
+    }
+
+    IEnumerator UpdateCycle(float waitTime)
+    {
+        int cycles = 0;
+
+        yield return new WaitForSeconds(waitTime);
+
+        while (cycles < 3)
+        {
+            yield return StartCoroutine(UpdateElements());
+            OnRefreshNotebook?.Invoke(this, null);
+            cycles++;
+        }
+
+    }
+
+    IEnumerator UpdateElements()
+    {
+        OnUpdatePhotoUpdate?.Invoke(this, StartPos.position);
+        yield return new WaitForSeconds(0.5f);
+        OnUpdatePosits.Invoke(this, StartPos.position);
+        yield return new WaitForSeconds(0.5f);
+        OnUpdateIdeas.Invoke(this, StartPos.position);
+        yield return new WaitForSeconds(0.3f);
+        OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
+    }
+
+    public void MadeConnections(Component sender, object obj)
+    {
+        OnUpdateConnections?.Invoke(this, null);
     }
 }

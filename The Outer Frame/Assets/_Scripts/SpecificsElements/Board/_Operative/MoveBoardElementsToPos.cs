@@ -10,13 +10,20 @@ public class MoveBoardElementsToPos : MonoBehaviour
     [SerializeField] GameEvent OnPlaceInBoardSound;
     [SerializeField] bool IsAUpdatedPhoto;
     [SerializeField] GameEvent OnUpdatingInBoard;
+    [SerializeField] GameEvent OnUpdatingBoardPlacedFinish;
     Vector3 FinalPosition;
     Quaternion FinalRotation;
     GameObject Content;
     bool isPlaced;
+    bool isPlacedFinish;
     bool isTaken;
     bool toReplece;
     bool isOutOfBoard;
+
+    private void OnEnable()
+    {
+        Content = transform.GetChild(0).gameObject;
+    }
     private void Start()
     {
         UpdateFinalPositionRotation(null, null);
@@ -34,7 +41,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
             Debug.Log(transform.parent.parent.parent.gameObject.name);
 
         }
-        Content = transform.GetChild(0).gameObject;
+        
         if (!conditions.ActiveInBegining())
         {
             Invoke("sarasa", 0.1f);
@@ -84,7 +91,6 @@ public class MoveBoardElementsToPos : MonoBehaviour
         if (isOutOfBoard) return;
         if (conditions == null)
         {
-            Debug.Log(transform.parent.parent.parent.gameObject.name);
             return;
         }
         
@@ -138,7 +144,10 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
         Content.SetActive(true);
 
-        transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad);
+        transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad).OnComplete(() => {
+            isPlacedFinish = true;
+            OnUpdatingBoardPlacedFinish?.Invoke(this, null);
+            });
         transform.DORotate(FinalRotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc);
         OnPlaceInBoardSound?.Invoke(this, null);
          
@@ -147,6 +156,11 @@ public class MoveBoardElementsToPos : MonoBehaviour
     public bool  GetIsPlaced()
     {
         return isPlaced;
+    }
+
+    public bool GetIsPlacedFinish()
+    {
+        return isPlacedFinish;
     }
 
     public IPlacedOnBoard GetConditions()
@@ -163,6 +177,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
     public void PlaceDirectly()
     {
         isPlaced = true;
+        isPlacedFinish = true;
         transform.position = FinalPosition;
         transform.rotation = FinalRotation;
         Content.SetActive(true);

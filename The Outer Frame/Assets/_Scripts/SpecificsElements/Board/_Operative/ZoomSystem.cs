@@ -16,6 +16,7 @@ public class ZoomSystem : MonoBehaviour
     float currentDelay;
     bool once = true;
     Sequence ZoomSequence;
+    bool isInBoardView;
 
     [Header("Clamps locales")]
     [SerializeField] Vector2 xLimits = new Vector2(-2f, 2f); 
@@ -25,6 +26,7 @@ public class ZoomSystem : MonoBehaviour
 
     public void SetInZoomIn(Component sender, object obj)
     {
+        if (!isInBoardView) return;
         if (!startHolding)
         {
             isHolding = true;
@@ -59,6 +61,7 @@ public class ZoomSystem : MonoBehaviour
 
     private void Update()
     {
+        
         if(Input.GetMouseButtonUp(0))
         {
             isHolding = false;
@@ -98,4 +101,19 @@ public class ZoomSystem : MonoBehaviour
         if (isHolding) SetZoom();
     }
 
+    public void CkeckView(Component sender,object obj)
+    {
+        ViewStates view = (ViewStates)obj;
+
+        if (view == ViewStates.BoardView || view == ViewStates.BoardZoomView)
+        {
+            isInBoardView = true;
+            Debug.Log("Zoom True");
+        }
+        else
+        {
+            isInBoardView = false;
+            Debug.Log("Zoom false");
+        }
+    }
 }

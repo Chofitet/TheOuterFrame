@@ -26,11 +26,16 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     private bool istaken;
     GameObject IdeaButtom;
 
-    private void Start()
+    private void OnEnable()
+    {
+        Content = transform.GetChild(0).gameObject;
+        Invoke("Inactivate", 0.05f);
+        
+    }
+    void Inactivate()
     {
         Content.SetActive(false);
     }
-
     public bool GetConditionalState()
     {
 
@@ -67,13 +72,14 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public void OnAppearActionIdea()
     {
         if (!CheckForConditionals(Conditionals)) return;
-       
+
         Content.SetActive(true);
         if (Content.activeSelf) GetComponent<BoxCollider>().enabled = true;
 
         BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
         IdeaButtom = BtnGeneratorIdeaPrefab.gameObject;
     }
+
 
     public bool IsOutOfBoard()
     {
@@ -100,6 +106,18 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             else CroosIcon.SetActive(true);
             btn.InactiveIdea();
             isDone = true;
+        }
+    }
+
+    public void markDone(Component sender, object obj)
+    {
+        if (!IdeaButtom) return;
+        BtnGenerateIdeaController btn = IdeaButtom.GetComponent<BtnGenerateIdeaController>();
+
+        if (btn.GetState().GetSpecialActionWord().CheckIfStateSeenWasDone(btn.GetState()))
+        {
+            if (!isAFailedIdea) CheckImage.SetActive(true);
+            else CroosIcon.SetActive(true);
         }
     }
     public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
