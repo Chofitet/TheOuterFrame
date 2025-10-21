@@ -27,7 +27,9 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnBlinkPhoneScreen;
     [SerializeField] Canvas canvas;
     [SerializeField] GameEvent OnRefreshPinchofonoScreen;
+    [SerializeField] GameObject EnterFullNumberFirst;
     [SerializeField] GameObject[] Screens;
+    
     int lastScreenNum = 0;
     WordData ActualWord;
     bool IsInView;
@@ -125,14 +127,13 @@ public class PinchofonoController : MonoBehaviour
     public void RecBTNPressed(Component sender, object obj)
     {
         anim.SetTrigger("recordPush");
-        if(messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
+        if (messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
         if (refreshScreenCoroutine != null) StopCoroutine(refreshScreenCoroutine);
 
         if (currentState == PhoneState.waitingNumber) ShowPanel(3, "TO START WIRETAPPING \n ENTER A VALID PHONE NUMBER");
         else if (currentState == PhoneState.dialingNumber)
         {
-            txtNumber.GetComponent<TypingAnimText>()?.ForceComplete();
-            ShowPanel(3, "ESPERA HASTA QUE \n SE TERMINE DE INGRESAR");
+            StartCoroutine(ShowEnterFullNumberFirst());
         }
         else if (currentState == PhoneState.waitingRec)
         {
@@ -171,14 +172,13 @@ public class PinchofonoController : MonoBehaviour
         if (currentState == PhoneState.waitingNumber) ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
         else if (currentState == PhoneState.dialingNumber)
         {
-            txtNumber.GetComponent<TypingAnimText>()?.ForceComplete();
-            ShowPanel(3, "ESPERA HASTA QUE \n SE TERMINE DE INGRESAR");
+            StartCoroutine(ShowEnterFullNumberFirst());
         }
         else if (currentState == PhoneState.waitingRec) ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
         else if (currentState == PhoneState.recording) ShowPanel(3, "NOT YET, \n WIRETAPPING IN PROGRESS");
         else if (currentState == PhoneState.waitingPrinting)
         {
-            if(transcriptionInQueue)
+            if (transcriptionInQueue)
             {
                 ShowPanel(3, "EMPTY THE PRINTING TRAY \n PLEASE");
                 return;
@@ -233,17 +233,16 @@ public class PinchofonoController : MonoBehaviour
         if (currentState == PhoneState.waitingNumber) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
         else if (currentState == PhoneState.dialingNumber)
         {
-            txtNumber.GetComponent<TypingAnimText>()?.ForceComplete();
-            ShowPanel(3, "ESPERA HASTA QUE \n SE TERMINE DE INGRESAR");
+            StartCoroutine(ShowEnterFullNumberFirst());
         }
         else if (currentState == PhoneState.waitingRec) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
-        else if (currentState == PhoneState.recording) ShowPanel(4,"");
-        else if (currentState == PhoneState.waitingPrinting)ShowPanel(3, "THERE'S NOTHING TO CANCEL");
+        else if (currentState == PhoneState.recording) ShowPanel(4, "");
+        else if (currentState == PhoneState.waitingPrinting) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
     }
 
     public void ConfirmAbort()
     {
-        ResetAll(null,null);
+        ResetAll(null, null);
         OnAbortCallRecording?.Invoke(this, null);
         OnOpenPhonePadSound?.Invoke(this, null);
     }
@@ -308,8 +307,8 @@ public class PinchofonoController : MonoBehaviour
 
         if (view != ViewStates.PinchofonoView && IsInView)
         {
-            if(Recording_WaitingForPrint) anim.SetTrigger("padClose");
-            if(Recording_WaitingForPrint && view != ViewStates.OnTakenPaperView ) OnClosePhonePadSound?.Invoke(this, null);
+            if (Recording_WaitingForPrint) anim.SetTrigger("padClose");
+            if (Recording_WaitingForPrint && view != ViewStates.OnTakenPaperView) OnClosePhonePadSound?.Invoke(this, null);
         }
 
         IsInView = (view == ViewStates.PinchofonoView) ? true : false;
@@ -324,7 +323,7 @@ public class PinchofonoController : MonoBehaviour
         if (view == ViewStates.GeneralView && Recording_WaitingForPrint && PhoneState.waitingNumber != currentState)
         {
             ShowPanel(0);
-            ChangePhoneState(null,PhoneState.waitingNumber);
+            ChangePhoneState(null, PhoneState.waitingNumber);
         }
     }
 
@@ -344,6 +343,13 @@ public class PinchofonoController : MonoBehaviour
     public void TakeTranscriptionFromTray(Component sender, object obj)
     {
         transcriptionInQueue = false;
+    }
+
+    IEnumerator ShowEnterFullNumberFirst()
+    {
+        EnterFullNumberFirst.SetActive(true);
+        yield return new WaitForSeconds(3);
+        EnterFullNumberFirst.SetActive(false);
     }
 
 }
