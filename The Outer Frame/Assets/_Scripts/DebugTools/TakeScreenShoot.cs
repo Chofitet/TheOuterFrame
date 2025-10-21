@@ -11,8 +11,7 @@ public class TakeScreenShoot : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
+            Debug.Log("press P");
                 // Resolución actual de la ventana de juego
                 int width = Screen.width;
                 int height = Screen.height;
@@ -22,7 +21,6 @@ public class TakeScreenShoot : MonoBehaviour
 
                 Debug.Log($"Screenshot guardado: {fileName}");
                 NumOfScreenshot += 1;
-            }
         }
     }
 #endif
