@@ -195,7 +195,7 @@ public class PaperMoveController : MonoBehaviour
 
     Transform currentTarget;
     float lerpTime;
-    void SetPosition(Transform target, Ease easy = Ease.InOutCirc, float speedMove = 1)
+    void SetPosition(Transform target, Ease easy = Ease.InOutCirc, float speedMove = 0.8f)
     {
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
