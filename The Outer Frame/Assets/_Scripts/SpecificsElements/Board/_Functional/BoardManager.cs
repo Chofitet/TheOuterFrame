@@ -142,12 +142,39 @@ public class BoardManager : MonoBehaviour
     IEnumerator UpdateElements()
     {
         OnUpdatePhotoUpdate?.Invoke(this, StartPos.position);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(WaitPhotoUpdate);
         OnUpdatePosits.Invoke(this, StartPos.position);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(WaitPosit);
         OnUpdateIdeas.Invoke(this, StartPos.position);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(WaitIdeas);
         OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
+
+    }
+
+    float WaitPhotoUpdate = 0f;
+    float WaitPosit = 0f;
+    float WaitIdeas = 0f;
+
+    public void ActualTypeOfElementMoving(Component sender, object obj)
+    {
+        BoardType typeOf = (BoardType) obj;
+
+        WaitPhotoUpdate = 0;
+        WaitPosit = 0;
+        WaitIdeas = 0;
+
+        if (typeOf == BoardType.photoUpdate)
+        {
+            WaitPhotoUpdate = 0.3f;
+        }
+        else if(typeOf == BoardType.posit)
+        {
+            WaitPosit = 0.3f;
+        }
+        else if(typeOf == BoardType.posit)
+        {
+            WaitIdeas = 0.3f;
+        }
     }
 
     public void MadeConnections(Component sender, object obj)

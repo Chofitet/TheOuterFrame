@@ -11,6 +11,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
     [SerializeField] bool IsAUpdatedPhoto;
     [SerializeField] GameEvent OnUpdatingInBoard;
     [SerializeField] GameEvent OnUpdatingBoardPlacedFinish;
+    [SerializeField] GameEvent OnMarkAsMoving;
     Vector3 FinalPosition;
     Quaternion FinalRotation;
     GameObject Content;
@@ -100,7 +101,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
             if (!conditions.GetConditionalState() && !toReplece) return;
 
             Vector3 InitPos = (Vector3)obj;
-
+            OnMarkAsMoving?.Invoke(this, GetTypeOfObject());
 
             if (isTaken)
             {
@@ -151,6 +152,11 @@ public class MoveBoardElementsToPos : MonoBehaviour
         transform.DORotate(FinalRotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc);
         OnPlaceInBoardSound?.Invoke(this, null);
          
+    }
+
+    BoardType GetTypeOfObject()
+    {
+        return GetComponent<IPlacedOnBoard>().GetType();
     }
 
     public bool  GetIsPlaced()

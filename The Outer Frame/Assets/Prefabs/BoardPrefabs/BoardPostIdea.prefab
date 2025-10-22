@@ -246,6 +246,7 @@ MonoBehaviour:
   OnMoveToOutOfView: {fileID: 11400000, guid: 01c297db7a04c9c4196cdb9d9657df48, type: 2}
   OnSetTakenPosit: {fileID: 11400000, guid: 284b5299baae3f9428104175a296600e, type: 2}
   CroosIcon: {fileID: 7449861176764267332}
+  TypeElement: 3
 --- !u!114 &5639818513753465012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +324,7 @@ MonoBehaviour:
   IsAUpdatedPhoto: 0
   OnUpdatingInBoard: {fileID: 11400000, guid: e31034c2e7753a34f9c42528e1a404cc, type: 2}
   OnUpdatingBoardPlacedFinish: {fileID: 0}
+  OnMarkAsMoving: {fileID: 11400000, guid: d4e028fc3350af74e9107d98ee16189a, type: 2}
 --- !u!65 &3023675080277653231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -340,7 +342,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.017479688, y: 0.099690825, z: 0.10788073}
   m_Center: {x: -0.0009767252, y: 0.00000001862286, z: -1.6432556e-16}

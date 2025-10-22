@@ -16,6 +16,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] GameEvent OnWritingNotebookSound;
     [SerializeField] Button btn;
     [SerializeField] Transform EraseParticles;
+    [SerializeField] GameEvent OnButtonElement;
     NotebookProcessManager processManager;
     WordData wordReference;
     bool isCross;
@@ -159,6 +160,7 @@ public class NotebookWordInstance : MonoBehaviour
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordReference);
         isActiveInBoard = false;
         btn.enabled = false;
+        if (actualView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
         /*if (wasSelectedBefore)
         {
             text.text = wordReference.GetName();

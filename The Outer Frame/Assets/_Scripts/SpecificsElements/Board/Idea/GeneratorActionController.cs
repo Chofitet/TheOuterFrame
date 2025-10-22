@@ -13,29 +13,19 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] bool isOrderMatters;
     [SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
     [SerializeField] bool isAFailedIdea;
-    [HideInInspector] [SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
-    [HideInInspector][SerializeField] GameObject Content;
-    [HideInInspector] [SerializeField] GameEvent OnMoveObjectToPapersPos;
-    [HideInInspector] [SerializeField] GameObject CheckImage;
-    [HideInInspector] [SerializeField] GameEvent OnMoveToCornerIdea;
-    [HideInInspector] [SerializeField] GameEvent OnMoveToOutOfView;
-    [HideInInspector] [SerializeField] GameEvent OnSetTakenPosit;
-    [HideInInspector] [SerializeField] GameObject CroosIcon;
+    [HideInInspector][SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
+    [SerializeField] GameObject Content;
+    [HideInInspector][SerializeField] GameEvent OnMoveObjectToPapersPos;
+    [HideInInspector][SerializeField] GameObject CheckImage;
+    [HideInInspector][SerializeField] GameEvent OnMoveToCornerIdea;
+    [HideInInspector][SerializeField] GameEvent OnMoveToOutOfView;
+    [HideInInspector][SerializeField] GameEvent OnSetTakenPosit;
+    [HideInInspector][SerializeField] GameObject CroosIcon;
     bool ActionIsDoing;
     bool isDone;
     private bool istaken;
     GameObject IdeaButtom;
 
-    private void OnEnable()
-    {
-        Content = transform.GetChild(0).gameObject;
-        Invoke("Inactivate", 0.05f);
-        
-    }
-    void Inactivate()
-    {
-        Content.SetActive(false);
-    }
     public bool GetConditionalState()
     {
 
@@ -66,14 +56,13 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public void Reset(Component sender, object obj)
     {
         istaken = false;
-        if(Content.activeSelf)GetComponent<BoxCollider>().enabled = true;
+        if (Content.activeSelf) GetComponent<BoxCollider>().enabled = true;
     }
 
     public void OnAppearActionIdea()
     {
         if (!CheckForConditionals(Conditionals)) return;
 
-        Content.SetActive(true);
         if (Content.activeSelf) GetComponent<BoxCollider>().enabled = true;
 
         BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
@@ -98,8 +87,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (!IdeaButtom) return;
 
         BtnGenerateIdeaController btn = IdeaButtom.GetComponent<BtnGenerateIdeaController>();
-        
-        
+
+
         if (btn.GetState().GetSpecialActionWord().CheckIfStateSeenWasDone(btn.GetState()))
         {
             if (!isAFailedIdea) CheckImage.SetActive(true);
@@ -244,8 +233,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
     public void CheckView(Component sender, object obj)
     {
-        
-        if(!Content.activeSelf)
+
+        if (!Content.activeSelf)
         {
             GetComponent<BoxCollider>().enabled = false;
         }
@@ -254,5 +243,11 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public WordData GetWordData()
     {
         return null;
+    }
+
+    [SerializeField] BoardType TypeElement;
+    public BoardType GetType()
+    {
+        return TypeElement;
     }
 }

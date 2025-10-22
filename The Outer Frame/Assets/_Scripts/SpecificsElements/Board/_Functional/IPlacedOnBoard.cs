@@ -14,4 +14,14 @@ public interface IPlacedOnBoard
 
     public WordData GetWordData();
 
+    BoardType GetType();
+}
+
+
+public enum BoardType
+{
+    photo,
+    photoUpdate,
+    posit,
+    Idea,
 }

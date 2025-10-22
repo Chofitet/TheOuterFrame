@@ -13,6 +13,8 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
     
     bool isActiveInBegining;
 
+    [SerializeField] BoardType TypeElement;
+
     private void Start()
     {
         
@@ -21,11 +23,6 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
             isActiveInBegining = true;
         }
     }
-    private void OnEnable()
-    {
-        content = transform.GetChild(0).gameObject;
-        content.SetActive(false);
-    }
     public bool GetConditionalState()
     {
         if (StringConnections.Count != 0)
@@ -33,7 +30,6 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
             foreach (StringConnectionController connection in StringConnections)
             {
                 if(!connection.GetIsConnected()) return false;
-                content.SetActive(true);
             }
         }
 
@@ -117,6 +113,11 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
     public WordData GetWordData()
     {
         return null;
+    }
+
+    public BoardType GetType()
+    {
+        return TypeElement;
     }
 }
 

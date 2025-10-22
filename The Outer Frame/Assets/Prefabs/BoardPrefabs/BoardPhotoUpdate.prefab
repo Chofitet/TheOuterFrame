@@ -158,6 +158,8 @@ MonoBehaviour:
   OnPlaceInBoardSound: {fileID: 11400000, guid: 239b3774ae998464b90f44d0666542e4, type: 2}
   IsAUpdatedPhoto: 1
   OnUpdatingInBoard: {fileID: 11400000, guid: e31034c2e7753a34f9c42528e1a404cc, type: 2}
+  OnUpdatingBoardPlacedFinish: {fileID: 0}
+  OnMarkAsMoving: {fileID: 11400000, guid: d4e028fc3350af74e9107d98ee16189a, type: 2}
 --- !u!114 &7592711892175250257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +176,7 @@ MonoBehaviour:
   Conditionals: []
   ifNot: 
   isOrderMatters: 0
+  TypeElement: 1
 --- !u!114 &8359997375648762852
 MonoBehaviour:
   m_ObjectHideFlags: 0

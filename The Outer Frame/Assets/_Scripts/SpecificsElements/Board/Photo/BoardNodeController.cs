@@ -103,4 +103,10 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         return word;
     }
 
+    [SerializeField] BoardType TypeElement;
+    public BoardType GetType()
+    {
+        return TypeElement;
+    }
+
 }

@@ -225,7 +225,7 @@ public class NotebookController : MonoBehaviour
         }
         else if (actualView == ViewStates.OnTakeSomeInBoard)
         {
-            DisableWordsOfList(listAllWord);
+            DisableWordsOfList(InctiveWordsOnBoard, "Board", true, true);
         }
         else
         {
