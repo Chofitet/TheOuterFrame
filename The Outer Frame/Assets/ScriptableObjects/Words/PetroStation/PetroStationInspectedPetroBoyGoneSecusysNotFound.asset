@@ -29,7 +29,11 @@ MonoBehaviour:
   - photo: {fileID: 21300000, guid: 279d895115123924d88d8124c445733a, type: 3}
     text: THIS PLACE
   - photo: {fileID: 21300000, guid: 040b71834a88bc14089dd0785d07ff41, type: 3}
-    text: HAS A BATHROOM AND CAMERAS
+    text: 'HAS A BATHROOM '
+  - photo: {fileID: 21300000, guid: 88d43ed4eaba0ce458e44a60f4f11153, type: 3}
+    text: AND CAMERAS
+  - photo: {fileID: 21300000, guid: 88d43ed4eaba0ce458e44a60f4f11153, type: 3}
+    text: AND CAMERAS
   - photo: {fileID: 21300000, guid: fa30d45b3265cfe44889fdaa36a3cbe7, type: 3}
     text: AND THIS
   Conditionals:
@@ -37,6 +41,7 @@ MonoBehaviour:
     ifNot: 0
   - condition: {fileID: 11400000, guid: 4fec0d9b987291b4ab045db3ed90b855, type: 2}
     ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0
