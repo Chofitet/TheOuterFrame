@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PetroStationCall 2
   m_EditorClassIdentifier: 
   StartHour: 4
-  StartMinute: 25
-  EndHour: 4
-  EndMinute: 55
+  StartMinute: 46
+  EndHour: 5
+  EndMinute: 13
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
@@ -23,8 +23,8 @@ MonoBehaviour:
   To: 
   Dialogue: LREADY TOLD YOU E - - - - YES - -  EVERYTHING I KNOW - - IM SURE SOMEONE
     WILL PASS BY A SEND YOU PICTURES OR WHATEVER BUT I CANT GO OUTSIDE - - IM ON
-    MY SHIFT - - - - -  I HAVE TO HANG UP - HAVE A PETRO GOOD DAY (END OF CALL)
-  IterruptedDialogue: bla
+    MY SHIFT - - - - -  I HAVE TO HANG UP - HAVE A PETRO GOOD DAY #[END OF THE CALL]
+  IterruptedDialogue: '#[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:
