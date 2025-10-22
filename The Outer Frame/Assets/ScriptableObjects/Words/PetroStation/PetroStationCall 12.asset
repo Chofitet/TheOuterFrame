@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: PetroStationCall 12
   m_EditorClassIdentifier: 
-  StartHour: 9
-  StartMinute: 30
-  EndHour: 10
-  EndMinute: 0
+  StartHour: 8
+  StartMinute: 5
+  EndHour: 8
+  EndMinute: 24
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
@@ -23,10 +23,10 @@ MonoBehaviour:
   To: 
   Dialogue: '- - - - - - - - - - - PETRO STATION - HOW CAN I HELP YOU - - - - - -
     YES -  I GUESS YOU COULD - - BRING IT AROUND AND WELL CHECK WHAT KIND IS IT -
-    - OKAY - - - HAVE A PETRO GOOD DAY - - THANKS (END OF CALL)'
+    - OKAY - - - HAVE A PETRO GOOD DAY - - THANKS #[END OF THE CALL]'
   IterruptedDialogue: '- - - - - - - - - - - PETRO STATION - HOW CAN I HELP YOU -
     - - - - - YES -  I GUESS YOU COULD - - BRING IT AROUND AND WELL CHECK WHAT KIND
-    IS IT - - OKAY - - - HAVE A PETRO GOOD DAY - - THANKS (END OF CALL)'
+    IS IT - - OKAY - - - HAVE A PETRO GOOD DAY - - THANKS #[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:

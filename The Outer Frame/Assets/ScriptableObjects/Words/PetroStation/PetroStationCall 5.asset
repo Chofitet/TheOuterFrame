@@ -15,7 +15,7 @@ MonoBehaviour:
   StartHour: 5
   StartMinute: 59
   EndHour: 6
-  EndMinute: 19
+  EndMinute: 17
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
@@ -24,8 +24,8 @@ MonoBehaviour:
   Dialogue: '- - - PETRO STATION HOW CAN I HEL- - - OH- - - - -  REALLY - I DONT
     HAVE ANYTHING ELSE TO TELL YOU - - - - - - - - - - - - - I  AM NOT LEAVING MY
     POST - - - WELL - - - - SORRY TO - - - SIR - - - WHAT - - MY MOTHER WAS A SAINT
-    - GOOD DAY (END OF CALL)'
-  IterruptedDialogue: bla
+    - GOOD DAY #[END OF THE CALL]'
+  IterruptedDialogue: '#[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:

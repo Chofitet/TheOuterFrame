@@ -12,21 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: PetroStationCall 10
   m_EditorClassIdentifier: 
-  StartHour: 8
-  StartMinute: 25
-  EndHour: 8
-  EndMinute: 50
+  StartHour: 7
+  StartMinute: 30
+  EndHour: 7
+  EndMinute: 47
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: PETRO STATION'S PHONE
   To: 
-  Dialogue: "MOM - - - - NAH  - IM OKAY - - - - - YOU DONT NEED TO WORRY - - - REALLY
+  Dialogue: 'MOM - - - - NAH  - IM OKAY - - - - - YOU DONT NEED TO WORRY - - - REALLY
     - GO BACK TO THE BAR WITH THE GIRLS - - - - - - - - - - - - - - - - - OKAY -
-    BYE - - - - SEE YOU LATER - - (END OF CALL) \r\n"
-  IterruptedDialogue: "MOM - - - - NAH  - IM OKAY - - - - - YOU DONT NEED TO WORRY
+    BYE - - - - SEE YOU LATER - - #[END OF THE CALL]
+
+'
+  IterruptedDialogue: MOM - - - - NAH  - IM OKAY - - - - - YOU DONT NEED TO WORRY
     - - - REALLY - GO BACK TO THE BAR WITH THE GIRLS - - - - - - - - - - - - - -
-    - - - OKAY - BYE - - - - SEE YOU LATER - - (END OF CALL) \r\n"
+    - - - OKAY - BYE - - - - SEE YOU LATER - - #[END OF THE CALL]
   Involved:
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:

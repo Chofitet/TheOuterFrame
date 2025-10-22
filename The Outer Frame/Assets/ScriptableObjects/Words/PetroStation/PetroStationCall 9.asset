@@ -13,22 +13,18 @@ MonoBehaviour:
   m_Name: PetroStationCall 9
   m_EditorClassIdentifier: 
   StartHour: 7
-  StartMinute: 55
-  EndHour: 8
-  EndMinute: 20
+  StartMinute: 12
+  EndHour: 7
+  EndMinute: 30
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: PETRO STATION'S PHONE
   To: 
   Dialogue: ' - - - I AM IN NO OBLIGATION TO TALK TO YOU IF I AM TREATED IN A DISRESPECTFUL
-    MANNER - - - HAVE A PETRO GOOD DAY (END OF CALL)
-
-'
+    MANNER - - - HAVE A PETRO GOOD DAY #[END OF THE CALL]'
   IterruptedDialogue: ' - - - I AM IN NO OBLIGATION TO TALK TO YOU IF I AM TREATED
-    IN A DISRESPECTFUL MANNER - - - HAVE A PETRO GOOD DAY (END OF CALL)
-
-'
+    IN A DISRESPECTFUL MANNER - - - HAVE A PETRO GOOD DAY #[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:
