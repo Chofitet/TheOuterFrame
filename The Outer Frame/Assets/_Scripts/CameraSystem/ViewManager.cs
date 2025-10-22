@@ -84,7 +84,7 @@ public class ViewManager : MonoBehaviour
             }
             else
             {
-                if (currentviewState != ViewStates.TutorialView) CheckForBackToTutorialView();
+                if (currentviewState != ViewStates.TutorialView ) CheckForBackToTutorialView();
             }
 
         }
@@ -137,6 +137,12 @@ public class ViewManager : MonoBehaviour
 
     void CheckForBackToTutorialView()
     {
+
+        if (currentviewState == ViewStates.OnTakeSomeInBoard || currentviewState == ViewStates.BoardZoomView)
+        {
+            UpdateViewState(this, ViewStates.BoardView);
+            return;
+        }
         BackToTutrialView(null, null);
     }
 
@@ -157,6 +163,8 @@ public class ViewManager : MonoBehaviour
     {
         //Se llama con OnViewChange 
         if (currentviewState == ViewStates.PauseView) return;
+        if (currentviewState == ViewStates.OnTakeSomeInBoard) return;
+        if (currentviewState == ViewStates.BoardZoomView) return;
         if (IsStuckInView)
         {
             nextViewRequest = StuckView;

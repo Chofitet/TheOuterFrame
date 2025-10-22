@@ -22,4 +22,9 @@ public class LigthController : MonoBehaviour
     {
         attenuateFactor = (float)obj;
     }
+
+    public void AttenuateLigth(float attenuateFactor)
+    {
+        _light.DOIntensity(attenuateFactor, time);
+    }
 }

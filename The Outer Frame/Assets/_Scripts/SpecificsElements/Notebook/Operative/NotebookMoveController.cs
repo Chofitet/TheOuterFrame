@@ -32,7 +32,7 @@ public class NotebookMoveController : MonoBehaviour
     Transform OriginalTransform;
     bool dontLeaveNotebook;
     bool cancelOutView;
-    ViewStates lastView;
+    ViewStates lastView = ViewStates.GeneralView;
     bool isInUse;
     private bool pendingToGoDown = false;
     private int pendingPosIndex = -1;
@@ -121,7 +121,7 @@ public class NotebookMoveController : MonoBehaviour
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.PCView:
-                SetPos(3);
+                SetPos(3,true,null,false,0.35f);
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.ProgressorView:
@@ -161,7 +161,7 @@ public class NotebookMoveController : MonoBehaviour
                 }
                 break;
             case ViewStates.BoardZoomView:
-                SetPos(7,false);
+                SetPos(7,false,null,false,0.1f,newview);    
                 break;
 
         }
@@ -175,7 +175,7 @@ public class NotebookMoveController : MonoBehaviour
         currentTarget = Positions[num];
     }
 
-    void SetPos(int num, bool _isUp = true , Transform trans = null,  bool isPinchofono= false, float delayToGrab = 0)
+    void SetPos(int num, bool _isUp = true , Transform trans = null,  bool isPinchofono= false, float delayToGrab = 0, ViewStates changingView = ViewStates.GeneralView)
     {
         if (isInUse && !_isUp && !dontLeaveNotebook)
         {
@@ -198,7 +198,8 @@ public class NotebookMoveController : MonoBehaviour
         lerpTime = 0;
 
         float _delayToGrab = 0;
-        if (!isUp) _delayToGrab = delayToGrab;
+        if(!isUp) _delayToGrab = delayToGrab;
+        if(lastView == ViewStates.BoardView && changingView == ViewStates.BoardZoomView) _delayToGrab = delayToGrab;
 
         moveSequence = DOTween.Sequence();
 
@@ -207,7 +208,7 @@ public class NotebookMoveController : MonoBehaviour
             moveSequence.AppendCallback(() => CloseNotebook());
         }
 
-        moveSequence.PrependInterval(_delayToGrab)
+        moveSequence.AppendInterval(_delayToGrab)
             .AppendCallback(()=> { SetTransform(Positions[num]); })
             .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutQuart))
                     .OnComplete(() =>

@@ -22,6 +22,12 @@ public class ZoomSystem : MonoBehaviour
     [SerializeField] Vector2 xLimits = new Vector2(-2f, 2f); 
     [SerializeField] Vector2 yLimits = new Vector2(-1f, 1f);
 
+    [SerializeField] Vector2 xTutorialLimits = new Vector2(-2f, 2f);
+    [SerializeField] Vector2 yTutorialLimits = new Vector2(-1f, 1f);
+
+    Vector2 XLimits;
+    Vector2 YLimits;
+
     bool inZoom = false;
 
     public void SetInZoomIn(Component sender, object obj)
@@ -76,8 +82,8 @@ public class ZoomSystem : MonoBehaviour
         float normX = (Input.mousePosition.x / Screen.width) * 2f - 1f;
         float normY = (Input.mousePosition.y / Screen.height) * 2f - 1f;
 
-        float targetX = Mathf.Lerp(xLimits.x, xLimits.y, (normX + 1f) / 2f);
-        float targetY = Mathf.Lerp(yLimits.x, yLimits.y, (normY + 1f) / 2f);
+        float targetX = Mathf.Lerp(XLimits.x, XLimits.y, (normX + 1f) / 2f);
+        float targetY = Mathf.Lerp(YLimits.x, YLimits.y, (normY + 1f) / 2f);
 
         // 3. Si querés usar Z, podés ligarlo al scroll del mouse o a otra lógica
         float targetZ = 0;
@@ -114,6 +120,22 @@ public class ZoomSystem : MonoBehaviour
         {
             isInBoardView = false;
             Debug.Log("Zoom false");
+        }
+    }
+
+    public void SetTutorial(Component sender, object obj)
+    {
+        bool isInTutorial = (bool)obj;
+
+        if (isInTutorial)
+        {
+            XLimits = xTutorialLimits;
+            YLimits = yTutorialLimits;
+        }
+        else
+        {
+            XLimits = xLimits;
+            YLimits = yLimits;
         }
     }
 }
