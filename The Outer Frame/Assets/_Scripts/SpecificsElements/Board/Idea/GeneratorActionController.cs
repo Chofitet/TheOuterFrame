@@ -63,7 +63,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     {
         if (!CheckForConditionals(Conditionals)) return;
 
-       GetComponent<BoxCollider>().enabled = true;
+        GetComponent<BoxCollider>().enabled = true;
 
         BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
         IdeaButtom = BtnGeneratorIdeaPrefab.gameObject;
@@ -257,4 +257,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     {
         return TypeElement;
     }
+
+    // Copy Pasye to Action
+    public StateEnum GetActionToAdd() { return ActionsToAdd[0]; }
+    public List<ConditionalClass> GetInactiveConditions() { return InactiveConditionals; }
 }

@@ -106,6 +106,13 @@ public class SlotController : MonoBehaviour
             isAVilifyBlockedAction = true;
             SetLEDState(Color.red);
         }
+        else if(state.GetInactiveConditionals())
+        {
+            FillFast();
+            Debug.Log("Inactive Idea");
+            isAutomaticAction = true;
+            SetLEDState(Color.red);
+        }
         // Es una acción válida
         else
         {

@@ -19,6 +19,10 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     [SerializeField] string IdeaWord;
     [NonSerialized] bool isDone;
 
+    [Header("Inactive Condition")]
+    [SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
+
+
     private void OnEnable()
     {
         ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
@@ -51,7 +55,96 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
 
     public bool GetIsDone() { return isDone; }
 
-    public bool GetIfIsActive() {
+    public bool GetIfIsActive()
+    {
         return true;
+    }
+
+    public bool GetInactiveConditionals()
+    {
+        // chequeo si la acción ya no es realizable (solo funcional para las ideas)
+
+        bool x = false;
+
+        if (!GetSpecialActionWord()) return x;
+
+        x = CheckForConditionals(InactiveConditionals);
+
+        return x;
+
+    }
+
+    public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
+    {
+        try
+        {
+            if (ListOfConditionals.Count == 0) return true;
+
+            foreach (ConditionalClass conditional in ListOfConditionals)
+            {
+                try
+                {
+                    IConditionable auxInterface = conditional.condition as IConditionable;
+
+                    if (auxInterface == null)
+                        throw new Exception("La condición no implementa IConditionable.");
+
+                    bool conditionState = auxInterface.GetStateCondition(1);
+
+                    if (conditional.ifNot)
+                    {
+                        conditionState = !conditionState;
+                    }
+
+                    if (!conditionState)
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error en el condicional: {conditional.condition.name}. Detalles: {ex.Message}", ex);
+                }
+            }
+
+            if (false) return CheckIfConditionalAreInOrder(ListOfConditionals);
+            else return true;
+        }
+        catch (Exception ex)
+        {
+            // Mensaje de error general con la excepción específica
+            Debug.LogError($"Error al evaluar los condicionales. Detalles: {ex.Message}");
+            return false;
+        }
+    }
+
+    bool CheckIfConditionalAreInOrder(List<ConditionalClass> ListOfConditionals)
+    {
+        List<int> nums = new List<int>();
+
+        foreach (ConditionalClass conditional in ListOfConditionals)
+        {
+            IConditionable auxInterface = conditional.condition as IConditionable;
+
+            if (auxInterface.CheckIfHaveTime())
+            {
+                nums.Add(auxInterface.GetTimeWhenWasComplete().GetTimeInNum());
+            }
+        }
+        for (int i = 0; i < nums.Count - 1; i++)
+        {
+            if (nums[i] > nums[i + 1])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    public void SetInactiveConditional(List<ConditionalClass> list)
+    {
+        InactiveConditionals = list;
     }
 }
