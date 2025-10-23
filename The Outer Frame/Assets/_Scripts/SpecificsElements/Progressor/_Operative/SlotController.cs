@@ -37,6 +37,7 @@ public class SlotController : MonoBehaviour
     bool isAutomaticAction;
     bool isTheSameAction;
     bool isAVilifyBlockedAction;
+    bool isAlreadyImposible;
     StateEnum isOtherGroupActionDoing;
     TimeData timeComplete;
     bool inFillFast;
@@ -104,6 +105,13 @@ public class SlotController : MonoBehaviour
         {
             FillFast();
             isAVilifyBlockedAction = true;
+            SetLEDState(Color.red);
+        }
+        // Es una accion que ya no es posible 
+        else if(state.GetInactiveConditionals() || word.GetInactiveState())
+        {
+            FillFast();
+            isAlreadyImposible = true;
             SetLEDState(Color.red);
         }
         // Es una acción válida
@@ -179,6 +187,10 @@ public class SlotController : MonoBehaviour
             AutomaticAction();
         }
         else if(inFillFast && ProgressBar.value == ProgressBar.maxValue && isAVilifyBlockedAction)
+        {
+            AutomaticAction();
+        }
+        else if(inFillFast && ProgressBar.value == ProgressBar.maxValue && isAlreadyImposible)
         {
             AutomaticAction();
         }
@@ -363,6 +375,8 @@ public class SlotController : MonoBehaviour
     public bool GetIsTheSameAction() { return isTheSameAction; }
 
     public StateEnum GetIsOtherGroupActionDoing() { return isOtherGroupActionDoing; }
+
+    public bool GetIsAlreadyImposible() { return isAlreadyImposible; }
 
     public TimeData GetTimeComplete() { return timeComplete; }
 

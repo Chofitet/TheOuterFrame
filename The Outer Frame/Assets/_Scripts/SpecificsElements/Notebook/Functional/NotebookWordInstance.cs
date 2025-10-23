@@ -90,7 +90,7 @@ public class NotebookWordInstance : MonoBehaviour
     public void RefreshWord(Component sender, object obj)
     {
         if (wordReference == null) return;
-        if (wordReference.GetInactiveState() && !wordReference.GetEraseState())
+        if (wordReference.GetInactiveStateSeen() && !wordReference.GetEraseState())
         {
             btn.enabled = false;
             strikethrough.SetActive(true);

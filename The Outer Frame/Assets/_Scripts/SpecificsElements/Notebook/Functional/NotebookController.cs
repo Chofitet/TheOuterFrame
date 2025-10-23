@@ -83,7 +83,7 @@ public class NotebookController : MonoBehaviour
         foreach (GameObject w in WordsInstances)
         {
             NotebookWordInstance script = w.GetComponent<NotebookWordInstance>();
-            if (script.GetWord().GetInactiveState())
+            if (script.GetWord().GetInactiveStateSeen())
             {
                 script.ReplaceWord(newword);
                 ClearUnderLine();

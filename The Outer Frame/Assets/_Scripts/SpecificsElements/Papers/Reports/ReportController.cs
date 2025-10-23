@@ -32,7 +32,7 @@ public class ReportController : MonoBehaviour
     WordData word;
     ReportType report;
 
-    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, TimeData timeComplete,TimeData TimeToUnlockVilify)
+    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, bool isAlreadyImposible, TimeData timeComplete,TimeData TimeToUnlockVilify)
     {
         word = _word;
         report = _report;
@@ -92,6 +92,14 @@ public class ReportController : MonoBehaviour
 
             btnText.text = "DISPOSE";
         }
+        else if (isAlreadyImposible)
+        {
+            Resulttxt.text = "We can no longer do that, because of earlier actions.";
+            status = "<color=#AE0000>IMPOSSIBLE</color>";
+            photo1.Set("", WrongResultImg[6]);
+            isNotCompleted = true;
+            btnText.text = "DISPOSE";
+        }
         else if(!TimeToUnlockVilify.isANullTimeData())
         {
             Resulttxt.text = $"la accion {actionVerb} {Name} se puede volver a hacer en {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}";
@@ -99,6 +107,7 @@ public class ReportController : MonoBehaviour
             photo1.Set("perate wacho", WrongResultImg[6]);
             btnText.text = "DISPOSE";
         }
+        
 
         Hourtxt.text = $"OCT 30 - {timeComplete.Hour:00}:{timeComplete.Minute:00}";
         if(Name != "") ActionCalltxt.text = $"{actionVerb} \"{DeleteSpetialCharacter(Name).ToUpper()}\"";
