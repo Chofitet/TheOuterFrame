@@ -121,7 +121,7 @@ public class NotebookMoveController : MonoBehaviour
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.PCView:
-                SetPos(3,true,null,false,0.35f);
+                SetPos(3,true,null,false,0.2f);
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.ProgressorView:
