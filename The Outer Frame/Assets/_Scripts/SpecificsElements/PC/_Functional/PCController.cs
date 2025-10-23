@@ -86,7 +86,13 @@ public class PCController : MonoBehaviour
     }
     public void UpdateDataBase(Component sender, object obj)
     {
+
+        if (OnWikiWindow != LastWindow) return;
+
         word = (WordData)obj;
+
+        if (word != _LastSearchedWord) return;
+
         SearchWordInWiki();
         OnWikiWindow?.Invoke(this, null);
     }
@@ -115,12 +121,24 @@ public class PCController : MonoBehaviour
     }
     public void OnSearWordInWiki(Component sender, object obj)
     {
-        word = (WordData)obj;
-        SearchWordInWiki((WordData)obj);
+            word = (WordData)obj;
+            SearchWordInWiki((WordData)obj);
     }
 
     public void SearchWordInWiki(WordData LastSearchedWord = null)
     {
+        if(LastWindow != OnWikiWindow)
+        { 
+            //OnLogWindow
+            FilterAll(word);
+            isWaitingAWord = true;
+            StopAllCoroutines();
+            StartCoroutine(IdleSearchBarAnim());
+            word = null;
+            return;
+        }
+
+        OnWikiWindow?.Invoke(this, null);
         //BtnBackToLastEntry.SetActive(false);
         if (!word)
         {
@@ -202,19 +220,17 @@ public class PCController : MonoBehaviour
         gameEvent?.Invoke(this, null);
         LastWindow = gameEvent;
     }
-
-    public void FilterAll()
+    public void SetLastWindow(Component sender,object obj)
     {
-        OnLogFilterType?.Invoke(this, new SearchLogData(_LastSearchedWord, LogFilterType.log));
+        LastWindow = (GameEvent)obj;
     }
+    public void FilterAll(WordData specificTag = null)
+    {
+        WordData WordToFilter = _LastSearchedWord;
 
-    public void OnFilterReport()
-    {
-        OnLogFilterType?.Invoke(this, new SearchLogData(_LastSearchedWord, LogFilterType.report));
-    }
-    public void OnFilterCalls()
-    {
-        OnLogFilterType?.Invoke(this, new SearchLogData(_LastSearchedWord, LogFilterType.transcript));
+        if (specificTag) WordToFilter = specificTag;
+
+        OnLogFilterType?.Invoke(this, new SearchLogData(WordToFilter, LogFilterType.report));
     }
 
     IEnumerator IdleSearchBarAnim()

@@ -17,6 +17,7 @@ public class GameEventListener : MonoBehaviour
     [SerializeField] float _float;
     [SerializeField] string _string;
     [SerializeField] ViewStates viewState;
+    [SerializeField] GameEvent gameEvent;
 
     private void OnEnable() => TriggerEvent.registerListener(this);
 
@@ -30,6 +31,7 @@ public class GameEventListener : MonoBehaviour
             if (_float != 0) data = _float;
             if (_string != "") data = _string;
             if (viewState != ViewStates.GeneralView) data = viewState;
+            if(gameEvent) data = gameEvent;
         }
 
         if (IsDesactive) return;

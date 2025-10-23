@@ -15,6 +15,7 @@ public class PCWikiController : MonoBehaviour
     [SerializeField] List<GameObject> DataBaseFields = new List<GameObject>();
     [SerializeField] GameObject WikiInfoContent;
     List<GameObject> FIeldsInWikiInfo = new List<GameObject>();
+    [SerializeField] GameObject subjectFilesBTN;
     DataBaseType input;
     bool once;
 
@@ -180,7 +181,6 @@ public class PCWikiController : MonoBehaviour
         }
         else isInPCView = false;
 
-
     }
 
     bool CheckFieldsInWikiInfoContent()
@@ -197,4 +197,11 @@ public class PCWikiController : MonoBehaviour
         return false;
 
     }
+
+    bool CheckTranscriptOrReportUploaded()
+    {
+        return true;
+    }
+
+
 }

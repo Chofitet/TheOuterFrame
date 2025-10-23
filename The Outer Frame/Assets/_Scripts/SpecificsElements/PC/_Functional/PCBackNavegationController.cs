@@ -8,11 +8,13 @@ public class PCBackNavegationController : MonoBehaviour
 {
     [SerializeField] Button BackBTN;
     [SerializeField] Button FrontBTN;
+    [SerializeField] Button BackToDB;
     [SerializeField] GameEvent BackLastEntry;
     [SerializeField] GameEvent OnWikiWindow;
     List<WordData> SearchedWordsHistory = new List<WordData>();
     GameObject Back;
     GameObject Front;
+    GameObject BackDB;
     bool isInWikiWindow = true;
     int index = -1;
     bool IsUsingBackFrontBTN;
@@ -23,6 +25,7 @@ public class PCBackNavegationController : MonoBehaviour
     {
         Back = BackBTN.gameObject;
         Front = FrontBTN.gameObject;
+        BackDB = BackToDB.gameObject;
         ButtonsAppear();
     }
 
@@ -95,16 +98,21 @@ public class PCBackNavegationController : MonoBehaviour
     {
         if(isInWikiWindow)
         {
-            if (index <= 0) Back.SetActive(false);
-            else Back.SetActive(true);
+            Back.SetActive(true);
+            Front.SetActive(true);
+            BackDB.SetActive(false);
 
-            if (index >= SearchedWordsHistory.Count - 1)  Front.SetActive(false);
-            else Front.SetActive(true);
+            if (index <= 0) BackBTN.interactable = false;
+            else BackBTN.interactable = true; 
+
+            if (index >= SearchedWordsHistory.Count - 1) FrontBTN.interactable = false;
+            else FrontBTN.interactable = true;
         }
         else
         {
-            Back.SetActive(true);
+            Back.SetActive(false);
             Front.SetActive(false);
+            BackDB.SetActive(true);
         }
     }
 
