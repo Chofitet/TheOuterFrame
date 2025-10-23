@@ -379,11 +379,17 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         
         //Debug.Log("reseted " + name);
     }
+
+    public bool GetInactiveStateSeen()
+    {
+        return CheckInactiveConditions(2);
+    }
+
     public bool GetInactiveState() {
 
      return CheckInactiveConditions();
     }
-    bool CheckInactiveConditions()
+    bool CheckInactiveConditions(int NumOfAlternativeConditional = 1)
     {
         if (isInactive) return true;
         if (InactiveConditions.Count == 0) return false;

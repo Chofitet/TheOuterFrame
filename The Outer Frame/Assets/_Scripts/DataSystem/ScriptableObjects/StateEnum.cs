@@ -19,8 +19,7 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     [SerializeField] string IdeaWord;
     [NonSerialized] bool isDone;
 
-    [Header("Inactive Condition")]
-    [SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
+    [HideInInspector][SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
 
 
     private void OnEnable()
