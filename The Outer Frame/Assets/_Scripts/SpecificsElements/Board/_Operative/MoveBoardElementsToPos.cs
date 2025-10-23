@@ -135,7 +135,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
         transform.DOMoveY(finalPos.y, 0.5f * (transform.position.y *2)).SetEase(Ease.InOutSine);
         transform.DORotate(finalRot, 0.5f).SetEase(Ease.InExpo);
-
+        isOutOfBoard = true;
     }
 
     IEnumerator Delay(Vector3 InitPos)

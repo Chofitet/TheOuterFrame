@@ -20,10 +20,12 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnDisableInput;
 
     [Header("CallsToUpdate")]
+    [SerializeField] GameEvent OnInactiveIdeas;
     [SerializeField] GameEvent OnUpdatePhotoUpdate;
     [SerializeField] GameEvent OnUpdateConnections;
     [SerializeField] GameEvent OnUpdatePosits;
     [SerializeField] GameEvent OnUpdateIdeas;
+    
 
     int WordsCounts;
     bool IsInView;
@@ -141,13 +143,14 @@ public class BoardManager : MonoBehaviour
 
     IEnumerator UpdateElements()
     {
+        OnInactiveIdeas?.Invoke(this, null);
         OnUpdatePhotoUpdate?.Invoke(this, StartPos.position);
         yield return new WaitForSeconds(WaitPhotoUpdate);
         OnUpdatePosits.Invoke(this, StartPos.position);
         yield return new WaitForSeconds(WaitPosit);
         OnUpdateIdeas.Invoke(this, StartPos.position);
         yield return new WaitForSeconds(WaitIdeas);
-        OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
+        //OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
 
     }
 
