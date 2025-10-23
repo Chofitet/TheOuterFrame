@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LogWindowController : MonoBehaviour
@@ -8,11 +9,14 @@ public class LogWindowController : MonoBehaviour
     [SerializeField] GameObject PrefabLogReport;
     [SerializeField] GameObject PrefabLogTranscript;
     [SerializeField] GameObject Grid;
-    [SerializeField] GameObject TranscriptBTN;
-    [SerializeField] GameObject ReportBTN;
-    [SerializeField] GameObject LogBTN;
+    [SerializeField] GameObject SubjectFilesBTN;
     List<LogEntryController> LogEntries = new List<LogEntryController>();
-    
+    [SerializeField] GameEvent OnActiveSubjectFilesBTN;
+
+    [SerializeField] TMP_Text filterTag;
+
+    [SerializeField] GameObject LogContent;
+    [SerializeField] RectTransform panel;
 
     public void AddEntry(Component sender, object obj)
     {
@@ -68,7 +72,9 @@ public class LogWindowController : MonoBehaviour
         if (actualFilter == LogFilterType.log) return;
 
         ApplyWordFilter(word);
-        ApplyTypeFilter(actualFilter);
+        filterTag.text = word.GetForm_DatabaseNameVersion();
+        StartCoroutine(RefreshUILog(true));
+        //ApplyTypeFilter(actualFilter);
     }
 
     void ApplyWordFilter(WordData word)
@@ -92,13 +98,49 @@ public class LogWindowController : MonoBehaviour
         }
     }
 
+    public void OnActiveAllEntries(Component sender, object obj)
+    {
+        ActiveAllEntries();
+    }
+
     public void ActiveAllEntries()
     {
         foreach (LogEntryController entry in LogEntries)
         {
             entry.gameObject.SetActive(true);
         }
+        StartCoroutine(RefreshUILog(false));
     }
+
+    IEnumerator RefreshUILog(bool isFilter)
+    { 
+        LogContent.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        LogContent.SetActive(true);
+        if (!isFilter)
+        {
+            Vector2 offsetMax = panel.offsetMax;
+            offsetMax.y = 6.12f; 
+            panel.offsetMax = offsetMax;
+        }
+        else
+        {
+            Vector2 offsetMax = panel.offsetMax;
+            offsetMax.y = 0;
+            panel.offsetMax = offsetMax;
+        }
+    }
+
+    public void ThereAreEntriesForWord(Component sender,object obj)
+    {
+        WordData wordData = (WordData)obj;
+
+        foreach(LogEntryController entry in LogEntries)
+        {
+            if (entry.GetWord() == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
+        }
+    }
+
 }
 
 
