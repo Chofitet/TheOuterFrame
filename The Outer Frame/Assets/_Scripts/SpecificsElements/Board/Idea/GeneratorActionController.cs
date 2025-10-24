@@ -107,7 +107,25 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         {
             if (!isAFailedIdea) CheckImage.SetActive(true);
             else CroosIcon.SetActive(true);
+            btn.InactiveIdea();
+            isDone = true;
         }
+    }
+
+    public void SetIsAfiledIdea(Component sender, object obj)
+    {
+        GameObject GObject = (GameObject)obj;
+
+        ReportController reportController = GObject.GetComponent<ReportController>();
+
+        if (!reportController) return;
+        if (reportController.GetAction() != ActionsToAdd[0]) return;
+        if (!reportController.GetIsAlreadyImposible()) return;
+
+        isAFailedIdea = true;
+        CroosIcon.SetActive(true);
+        IdeaButtom.GetComponent<BtnGenerateIdeaController>().InactiveIdea();
+        isDone = true;
     }
     public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
     {
@@ -223,7 +241,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
     public void TriggerInactiveAnimation(Component sender, object obj)
     {
-        if (!IsOutOfBoard()) return;
+        if (!IsOutOfBoard() || isDone) return;
 
         GetComponent<InactiveIdeaAnimation>().InactiveAnim();
     }

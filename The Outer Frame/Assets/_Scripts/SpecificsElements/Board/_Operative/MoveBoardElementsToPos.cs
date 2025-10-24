@@ -131,10 +131,10 @@ public class MoveBoardElementsToPos : MonoBehaviour
         if (!conditions.IsOutOfBoard()) return;
         Transform _transform = (Transform)obj;
         Vector3 finalPos = _transform.position;
-        Vector3 finalRot = new Vector3(_transform.rotation.x,0,0);
+        Vector3 finalRot = new Vector3(_transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z);
 
-        transform.DOMoveY(finalPos.y, 0.5f * (transform.position.y *2)).SetEase(Ease.InOutSine);
-        transform.DORotate(finalRot, 0.5f).SetEase(Ease.InExpo);
+        transform.DOMove(finalPos, 1.5f).SetEase(Ease.OutSine);
+        transform.DOLocalRotate(finalRot, 0.5f).SetEase(Ease.OutCirc);
         isOutOfBoard = true;
     }
 

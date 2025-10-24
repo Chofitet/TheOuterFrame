@@ -152,7 +152,6 @@ public class NotebookWordInstance : MonoBehaviour
         processManager.UnregisterProcess();
     }
 
-    bool wasSelectedBefore = false;
     public void SetSelectedWord()
     {
        text.text = "<u>" + wordReference.GetName() + "</u>";
@@ -160,14 +159,11 @@ public class NotebookWordInstance : MonoBehaviour
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordReference);
         isActiveInBoard = false;
         btn.enabled = false;
-        if (actualView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
-        /*if (wasSelectedBefore)
+        if (actualView == ViewStates.PCView)
         {
-            text.text = wordReference.GetName();
-            Invoke("ReSelectWord", 0.15f);
+            Invoke("UnSelectWord", 0.3f);
         }
-
-        wasSelectedBefore = true;*/
+        if (actualView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
     }
 
     public void ClearUnderline()
@@ -176,7 +172,6 @@ public class NotebookWordInstance : MonoBehaviour
         if (isinactive) return;
         btn.enabled = true;
         text.text = wordReference.GetName();
-        //Invoke("SetwasSelectedBefore", 0.1f);
     }
 
     void Alpha1()
@@ -186,13 +181,10 @@ public class NotebookWordInstance : MonoBehaviour
 
     public WordData GetWord() { return wordReference; }
 
-    void ReSelectWord()
+    void UnSelectWord()
     {
-        text.text = "<u>" + wordReference.GetName() + "</u>";
-    }
-    void SetwasSelectedBefore()
-    {
-        wasSelectedBefore = false;
+        text.text = wordReference.GetName();
+        btn.enabled = true;
     }
 
     public Button GetButton()

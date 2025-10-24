@@ -10,6 +10,7 @@ public class BtnGenerateIdeaController : MonoBehaviour
     [SerializeField] GameEvent OnAddActionInPlanAction;
     [SerializeField] TMP_Text txtfield;
     StateEnum state;
+    bool isInactive;
 
     public void Inicialization(StateEnum _State)
     {
@@ -20,6 +21,7 @@ public class BtnGenerateIdeaController : MonoBehaviour
 
      public void OnAddAction()
      {
+        if (isInactive) return;
         OnAddActionInPlanAction?.Invoke(this, state);
         GetComponent<Button>().enabled = false;
         Invoke("ActiveBTN", 3f);
@@ -27,6 +29,7 @@ public class BtnGenerateIdeaController : MonoBehaviour
 
     void ActiveBTN()
     {
+        if (isInactive) return;
         GetComponent<Button>().enabled = true;
     }
 
@@ -34,6 +37,7 @@ public class BtnGenerateIdeaController : MonoBehaviour
     {
         txtfield.text = "<s>" + txtfield.text + "</s>";
         GetComponent<Button>().enabled = false;
+        isInactive = true;
     }
 
     public StateEnum GetState() { return state; }
