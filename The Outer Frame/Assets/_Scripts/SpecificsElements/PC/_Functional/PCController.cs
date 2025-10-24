@@ -230,7 +230,7 @@ public class PCController : MonoBehaviour
         WordData WordToFilter = _LastSearchedWord;
 
         if (specificTag) WordToFilter = specificTag;
-
+        if (specificTag == IrrelevantDB) WordToFilter = _LastSearchedWord;
         OnLogFilterType?.Invoke(this, new SearchLogData(WordToFilter, LogFilterType.report));
     }
 

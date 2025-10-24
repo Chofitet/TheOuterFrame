@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
@@ -30,16 +31,13 @@ public class BoardManager : MonoBehaviour
     int WordsCounts;
     bool IsInView;
     bool isInTutorial;
-    bool isInUpdatingTime;
     Coroutine updateCorrutine;
-
     public void StateView(Component sender, object obj)
     {
         ViewStates view = (ViewStates)obj;
 
         if (view == ViewStates.BoardView)
         {
-            StartCoroutine(TurnOffisInUpdatingTime());
             IsInView = true;
             if (updateCorrutine != null) StopCoroutine(updateCorrutine);
             updateCorrutine = StartCoroutine(UpdateCycle(0.5f));
@@ -109,7 +107,7 @@ public class BoardManager : MonoBehaviour
     public void UpdatingSomethingInBoard(Component sender, object obj)
     {
         //if (!isInUpdatingTime) return;
-        StartCoroutine(WaitUpdating());
+       // StartCoroutine(WaitUpdating());
     }
 
     IEnumerator WaitUpdating()
@@ -119,19 +117,13 @@ public class BoardManager : MonoBehaviour
         OnEnableInput?.Invoke(this, null);
     }
 
-    IEnumerator TurnOffisInUpdatingTime()
-    {
-        isInUpdatingTime = true;
-        yield return new WaitForSeconds(0.7f);
-        isInUpdatingTime = false;
-    }
-
     IEnumerator UpdateCycle(float waitTime)
     {
         int cycles = 0;
 
+        
         yield return new WaitForSeconds(waitTime);
-
+       
         while (cycles < 3)
         {
             yield return StartCoroutine(UpdateElements());
@@ -139,10 +131,17 @@ public class BoardManager : MonoBehaviour
             cycles++;
         }
 
+        OnEnableInput.Invoke(this, null);
+        
+        WaitPhotoUpdate = 0;
+        WaitPosit = 0;
+        WaitIdeas = 0;
     }
 
     IEnumerator UpdateElements()
     {
+        if (!IsInView) yield break;
+        OnDisableInput.Invoke(this, null);
         OnInactiveIdeas?.Invoke(this, null);
         OnUpdatePhotoUpdate?.Invoke(this, StartPos.position);
         yield return new WaitForSeconds(WaitPhotoUpdate);
