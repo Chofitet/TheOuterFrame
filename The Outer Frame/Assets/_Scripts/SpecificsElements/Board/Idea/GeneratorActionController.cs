@@ -56,14 +56,14 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public void Reset(Component sender, object obj)
     {
         istaken = false;
-        if (Content.activeSelf) GetComponent<BoxCollider>().enabled = true;
+        //if (Content.activeSelf) GetComponent<BoxCollider>().enabled = true;
     }
 
     public void OnAppearActionIdea()
     {
         if (!CheckForConditionals(Conditionals)) return;
 
-        GetComponent<BoxCollider>().enabled = true;
+       if(!istaken) GetComponent<BoxCollider>().enabled = true;
 
         BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
         IdeaButtom = BtnGeneratorIdeaPrefab.gameObject;
@@ -259,10 +259,10 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public void CheckView(Component sender, object obj)
     {
 
-        if (!Content.activeSelf)
+       /* if ((ViewStates)obj == ViewStates.OnTakeSomeInBoard)
         {
             GetComponent<BoxCollider>().enabled = false;
-        }
+        }*/
     }
 
     public WordData GetWordData()

@@ -38,6 +38,7 @@ public class SlotController : MonoBehaviour
     bool isTheSameAction;
     bool isAVilifyBlockedAction;
     bool isAlreadyImposible;
+    bool noComplete;
     StateEnum isOtherGroupActionDoing;
     TimeData timeComplete;
     bool inFillFast;
@@ -77,6 +78,7 @@ public class SlotController : MonoBehaviour
         if (Report.GetWasSet())
         {
             FillFast();
+            noComplete = true;
             isAlreadyDone = true;
             SetLEDState(Color.red);
         }
@@ -85,6 +87,7 @@ public class SlotController : MonoBehaviour
         {
             FillFast();
             isTheSameAction = true;
+            noComplete = true;
             SetLEDState(Color.red);
         }
         // Se está haciendo uno del mismo ActionGroup
@@ -92,6 +95,7 @@ public class SlotController : MonoBehaviour
         {
             FillFast();
             isOtherGroupActionDoing = _word.GetDoingAction(0);
+            noComplete = true;
             SetLEDState(Color.red);
         }
         // Es una acción automática
@@ -99,12 +103,14 @@ public class SlotController : MonoBehaviour
         {
             FillFast();
             isAutomaticAction = true;
+            noComplete = true;
             SetLEDState(Color.red);
         }
         else if(!IsVilifyLocked.isANullTimeData() && _state == VilifyState)
         {
             FillFast();
             isAVilifyBlockedAction = true;
+            noComplete = true;
             SetLEDState(Color.red);
         }
         // Es una accion que ya no es posible 
@@ -112,6 +118,7 @@ public class SlotController : MonoBehaviour
         {
             FillFast();
             isAlreadyImposible = true;
+            noComplete = true;
             SetLEDState(Color.red);
         }
         // Es una acción válida
@@ -168,29 +175,7 @@ public class SlotController : MonoBehaviour
             ProgressBar.value += Time.deltaTime * TimeManager.timeManager.GetActuaTimeVariationSpeed() * 0.15f;
         }
 
-        if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isAlreadyDone)
-        {
-            AutomaticAction();
-        }
-        else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isAutomaticAction)
-        {
-            //WordsManager.WM.RequestChangeState(_word, _state);
-            // _state = WordsManager.WM.GetHistory(_word).Last();
-            AutomaticAction();
-        }
-        else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isTheSameAction)
-        {
-            AutomaticAction();
-        }
-        else if (inFillFast && ProgressBar.value == ProgressBar.maxValue && isOtherGroupActionDoing != null)
-        {
-            AutomaticAction();
-        }
-        else if(inFillFast && ProgressBar.value == ProgressBar.maxValue && isAVilifyBlockedAction)
-        {
-            AutomaticAction();
-        }
-        else if(inFillFast && ProgressBar.value == ProgressBar.maxValue && isAlreadyImposible)
+        if (inFillFast && ProgressBar.value == ProgressBar.maxValue && noComplete)
         {
             AutomaticAction();
         }
@@ -388,5 +373,6 @@ public class SlotController : MonoBehaviour
         if (isAVilifyBlockedAction) return IsVilifyLocked;
         else return new TimeData(0, 0, 0);    
     }
+    public bool GetNoComplete() { return noComplete; }
 
 }

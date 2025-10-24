@@ -15,6 +15,7 @@ public interface IPlacedOnBoard
     public WordData GetWordData();
 
     BoardType GetType();
+
 }
 
 

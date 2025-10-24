@@ -83,7 +83,7 @@ public class MoveObjectToThisPos : MonoBehaviour
                     .Join(objectToBack.transform.DORotate(initRot, 0.3f).SetEase(Ease.InOutCirc))
                     .OnComplete(()=> 
                     {
-                        LastObj.GetComponent<BoxCollider>().enabled = true;
+                        LastObj.GetComponent<BoxCollider>().enabled = false;
                         objectToBack.GetComponent<BoxCollider>().enabled = true;
                         if (!isReplaced && !inMovingToPosition) LastObj = null;
                         objectToBack = null;
