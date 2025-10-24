@@ -67,6 +67,8 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
 
         if (!GetSpecialActionWord()) return x;
 
+        if(InactiveConditionals.Count == 0) return x;
+
         x = CheckForConditionals(InactiveConditionals);
 
         return x;

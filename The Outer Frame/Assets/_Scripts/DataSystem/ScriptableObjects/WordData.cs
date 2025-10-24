@@ -398,7 +398,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         {
             IConditionable auxInterface = conditional as IConditionable;
 
-            if (!auxInterface.GetStateCondition())
+            if (!auxInterface.GetStateCondition(NumOfAlternativeConditional))
             {
                 return false;
             }

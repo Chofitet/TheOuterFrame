@@ -121,6 +121,7 @@ public class PCController : MonoBehaviour
     }
     public void OnSearWordInWiki(Component sender, object obj)
     {
+        if (sender.GetComponent<ReportsInDetailController>() != null || sender.GetComponent<TranscriptsInDetailController>()) LastWindow = OnWikiWindow;
             word = (WordData)obj;
             SearchWordInWiki((WordData)obj);
     }

@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 8287205149463908253}
   - component: {fileID: 2622402196148753364}
   - component: {fileID: 6009642681632769263}
+  - component: {fileID: 8772820967289064207}
   m_Layer: 10
   m_Name: BoardPostIdea
   m_TagString: Untagged
@@ -706,6 +707,40 @@ MonoBehaviour:
   _string: 
   viewState: 0
   gameEvent: {fileID: 0}
+--- !u!114 &8772820967289064207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698638971177894008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: eb10ab7e1ae495542b21e0a24d99af1d, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9068181064678660897}
+        m_TargetAssemblyTypeName: GeneratorActionController, Assembly-CSharp
+        m_MethodName: SetIsAfiledIdea
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
 --- !u!1 &2257471455691103772
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,13 +985,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3361032996318946255}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.53, z: -5.53}
+  m_LocalRotation: {x: 0.00000017881393, y: -0.6087621, z: 0.7933529, w: -0.000000055879354}
+  m_LocalPosition: {x: 0, y: -15.33, z: -5.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6083879611050457671}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 75, y: 0, z: 180}
 --- !u!1 &3674964693397007206
 GameObject:
   m_ObjectHideFlags: 0

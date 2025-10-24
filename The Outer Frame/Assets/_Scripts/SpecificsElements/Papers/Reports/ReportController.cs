@@ -31,6 +31,7 @@ public class ReportController : MonoBehaviour
     bool isNotCompleted;
     WordData word;
     ReportType report;
+    bool IsAlreadyImposible;
 
     public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, bool isAlreadyImposible, TimeData timeComplete,TimeData TimeToUnlockVilify)
     {
@@ -44,6 +45,7 @@ public class ReportController : MonoBehaviour
         if (state.GetSpecialActionWord()) Name = "";
         string actionVerb = state.GetInfinitiveVerb();
         SetMaterial(materialDispose);
+        IsAlreadyImposible = true;
 
         if (!report)
         {
@@ -99,6 +101,7 @@ public class ReportController : MonoBehaviour
             photo1.Set("", WrongResultImg[6]);
             isNotCompleted = true;
             btnText.text = "DISPOSE";
+           
         }
         else if(!TimeToUnlockVilify.isANullTimeData())
         {
@@ -204,5 +207,12 @@ public class ReportController : MonoBehaviour
         if (renderer == null) return;
 
         renderer.material = material;
+    }
+
+    public StateEnum GetAction()
+    { return report.GetAction(); }
+    public bool GetIsAlreadyImposible()
+    {
+        return IsAlreadyImposible;
     }
 }
