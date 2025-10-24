@@ -15,7 +15,7 @@ public class PCWikiController : MonoBehaviour
     [SerializeField] List<GameObject> DataBaseFields = new List<GameObject>();
     [SerializeField] GameObject WikiInfoContent;
     List<GameObject> FIeldsInWikiInfo = new List<GameObject>();
-    [SerializeField] GameObject subjectFilesBTN;
+    [SerializeField] GameObject LoadScreen;
     DataBaseType input;
     bool once;
 
@@ -77,6 +77,7 @@ public class PCWikiController : MonoBehaviour
 
     IEnumerator Delay(DataBaseType input)
     {
+        LoadScreen.SetActive(true);
         yield return new WaitForSeconds(0.2f);
         WikiInfoContent.SetActive(true);
         if (input.GetText() != null) WikiData.text = input.GetText();
@@ -95,7 +96,9 @@ public class PCWikiController : MonoBehaviour
         else PhotoField.gameObject.SetActive(true);
 
         WikiInfoContent.SetActive(CheckFieldsInWikiInfoContent());
-        
+
+        LoadScreen.SetActive(false);
+
         //PhoneNumber.text = input.GetPhoneNum();
         //FindableWordsManager.FWM.InstanciateFindableWord(PhoneNumber);
     }

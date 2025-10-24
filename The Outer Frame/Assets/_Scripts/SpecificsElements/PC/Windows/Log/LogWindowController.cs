@@ -138,6 +138,8 @@ public class LogWindowController : MonoBehaviour
         foreach(LogEntryController entry in LogEntries)
         {
             if (entry.GetWord() == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
+            
+            if (WordsManager.WM.FindWordWithPhoneNum(entry.GetWord()) == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
         }
     }
 
