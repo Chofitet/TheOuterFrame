@@ -45,7 +45,7 @@ public class ReportController : MonoBehaviour
         if (state.GetSpecialActionWord()) Name = "";
         string actionVerb = state.GetInfinitiveVerb();
         SetMaterial(materialDispose);
-        IsAlreadyImposible = true;
+        IsAlreadyImposible = isAlreadyImposible;
 
         if (!report)
         {
@@ -105,7 +105,7 @@ public class ReportController : MonoBehaviour
         }
         else if(!TimeToUnlockVilify.isANullTimeData())
         {
-            Resulttxt.text = $"la accion {actionVerb} {Name} se puede volver a hacer en {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}";
+            Resulttxt.text = $"People will get suspicious if we put so many of our ‘broadcasts’ up one after the other. Let’s wait and try again after {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}";
             isNotCompleted = true;
             photo1.Set("perate wacho", WrongResultImg[6]);
             btnText.text = "DISPOSE";
