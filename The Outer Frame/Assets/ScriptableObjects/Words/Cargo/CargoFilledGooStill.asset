@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: CargoFilled
+  m_Name: CargoFilledGooStill
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 07fc53cc545b83a47a7d13f9e624fc7a, type: 2}
   state: {fileID: 11400000, guid: 07fc53cc545b83a47a7d13f9e624fc7a, type: 2}
@@ -28,10 +28,15 @@ MonoBehaviour:
   TextForRepetition: 
   Photos:
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
-    text: LET'S GO!
+    text: FOAMED UP!
   - photo: {fileID: 21300000, guid: 811c68bb60bdb9c42ac925061510d703, type: 3}
-    text: ALL FILLED UP
-  Conditionals: []
+    text: THE INSIDE
+  - photo: {fileID: 21300000, guid: bab13c92f8e72be469b2f76925797ceb, type: 3}
+    text: THE OUTSIDE
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
+    ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0
