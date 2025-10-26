@@ -39,6 +39,7 @@ public class ReportController : MonoBehaviour
         report = _report;
         isNotCompleted = false;
         string status = "<color=#006A0D>COMPLETED</color>";
+        if (report.GetCustomStatus() != "") status = report.GetCustomStatus();
         btnText.text = "UPLOAD TO DB";
         StateEnum state = report.GetAction();
         string Name = word.GetForm_DatabaseNameVersion();

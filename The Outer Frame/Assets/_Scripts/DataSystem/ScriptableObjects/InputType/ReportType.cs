@@ -13,6 +13,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     [SerializeField] int ChangeTimeOfAction;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string Text;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string TextForRepetition;
+    [SerializeField] string CustomStatus;
     [SerializeField] List<PhotoInfo> Photos = new List<PhotoInfo>();
     [SerializeField] List<ConditionalClass> Conditionals;
     [SerializeField] ObjectToPrint ObjectType;
@@ -36,6 +37,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     public bool GetKillAgent() { return AgentDown; }
     
     public bool GetSecondToLastReport() { return SecondToLastReport; }
+
+    public string GetCustomStatus() { return CustomStatus; }
 
     private TimeData CompleteTime;
     public void SetTimeWhenWasDone()
