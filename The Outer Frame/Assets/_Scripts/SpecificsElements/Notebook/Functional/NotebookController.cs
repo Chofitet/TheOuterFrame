@@ -198,6 +198,7 @@ public class NotebookController : MonoBehaviour
     {
         InctiveWordsOnBoard.Add((WordData)obj);
         DisableWordsOfList(InctiveWordsOnBoard,"Board",false,true);
+
     }
 
     ViewStates actualView;

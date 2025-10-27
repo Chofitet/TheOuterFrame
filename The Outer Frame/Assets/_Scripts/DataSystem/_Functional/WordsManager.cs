@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WordsManager : MonoBehaviour
@@ -286,6 +287,78 @@ public class WordsManager : MonoBehaviour
             if (word.GetPhoneNumber() == phoneNum) return word;
         }
         return phone;
+    }
+
+    public WordData FindWordWithPhoneNum_NumberFound(WordData phone)
+    {
+        if (!phone.GetIsAPhoneNumber()) return phone;
+
+        string phoneNum = phone.GetPhoneNumber();
+
+        foreach (WordData word in wordsDic)
+        {
+            if (word.GetIsAPhoneNumber()) continue;
+
+            if (!word.GetIsFound()) continue;
+
+            if (word.GetPhoneNumber() == phoneNum)
+            {
+                return FindActualWordRetroactive(word);
+            }
+        }
+        return phone;
+    }
+
+    public WordData FindActualWordRetroactive(WordData currentWord)
+    {
+        List<WordData> FindReplacers(WordData target)
+        {
+            List<WordData> result = new List<WordData>();
+            foreach (var w in wordsDic)
+                if (w.GetWordThatReplaces() == target)
+                    result.Add(w);
+            return result;
+        }
+
+        HashSet<WordData> visited = new HashSet<WordData>();
+        WordData bestCandidate = null;
+
+        WordData DFS(WordData word)
+        {
+            if (word == null || !visited.Add(word))
+                return null;
+
+            List<WordData> replacers = FindReplacers(word);
+
+            if (replacers.Count == 0)
+                return word;
+
+            WordData found = null;
+            foreach (var next in replacers)
+            {
+                var candidate = DFS(next);
+                if (candidate != null && candidate.GetIsFound())
+                    found = candidate;
+            }
+
+            return found ?? replacers.Last();
+        }
+
+        bestCandidate = DFS(currentWord);
+
+        if (bestCandidate != null && !bestCandidate.GetIsFound())
+        {
+            WordData node = bestCandidate;
+            while (node != null)
+            {
+                if (node.GetIsFound())
+                    return node;
+
+                node = node.GetWordThatReplaces();
+            }
+        }
+
+        return bestCandidate;
     }
 
     public void EmpyAllDataBases(Component sender, object obj)

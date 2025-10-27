@@ -203,7 +203,7 @@ public class NotebookMoveController : MonoBehaviour
 
         moveSequence = DOTween.Sequence();
 
-        if (IsPhonesOpen)
+        if (IsPhonesOpen && !isPinchofono)
         {
             moveSequence.AppendCallback(() => CloseNotebook());
         }

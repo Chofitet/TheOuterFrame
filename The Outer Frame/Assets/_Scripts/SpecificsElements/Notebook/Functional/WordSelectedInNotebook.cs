@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Unity.VisualScripting;
 
 public class WordSelectedInNotebook : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class WordSelectedInNotebook : MonoBehaviour
         if (!isDirectly) OnSlidePhones?.Invoke(this, false);
         DeleteOtherWords(word);
         OnShowWordsNotebook?.Invoke(this, word);
-
+        OnShowNumNotebook?.Invoke(this, word);
 
         /*if(word.GetPhoneNumber() != "" ) comentado porque sacamos esta funcionalidad, el numero solo se puede encontrar a si mismo
         {
@@ -77,7 +78,7 @@ public class WordSelectedInNotebook : MonoBehaviour
             OnDelayNotChangeView?.Invoke(this, 1f);
         }*/
 
-        
+
     }
     void AddNumber(WordData num, bool isDirectly = false)
     {
@@ -236,7 +237,11 @@ public class WordSelectedInNotebook : MonoBehaviour
     {
         foreach (WordData w in WordsfromBeginning)
         {
-            if (!w.GetIsAPhoneNumber()) AddWord(w, true);
+            if (!w.GetIsAPhoneNumber())
+            { 
+                AddWord(w, true);
+                w.SetIsFound();
+            }
             else AddNumber(w, true);
 
         }
