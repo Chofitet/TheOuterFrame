@@ -168,6 +168,7 @@ public class NotebookWordInstance : MonoBehaviour
 
     public void ClearUnderline()
     {
+       
         if (isActiveInBoard) return;
         if (isinactive) return;
         btn.enabled = true;
@@ -209,6 +210,13 @@ public class NotebookWordInstance : MonoBehaviour
     private Sequence thicknessSequence;
 
     /// material modificator
+
+    public void ApplyThicknessDirectly(float value)
+    {
+        isActiveInBoard = false;
+        Material mat = GetMat();
+        mat.SetFloat(ShaderUtilities.ID_FaceDilate, value);
+    }
 
     public void ApplyThicknessAnim(bool x)
     {
