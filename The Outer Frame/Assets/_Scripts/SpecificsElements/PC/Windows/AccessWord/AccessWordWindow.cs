@@ -14,6 +14,8 @@ public class AccessWordWindow : MonoBehaviour
     [SerializeField] GameEvent OnAccessWiki;
     [SerializeField] Image SearchBarGameObject;
     [SerializeField] GameEvent OnKeyboardSoundEvent;
+    [SerializeField] Image BlockImage;
+    [SerializeField] Sprite Unlocked;
     WordData SearchedWord;
     WordData TryAccessWord;
     private bool isInPCView;
@@ -80,7 +82,7 @@ public class AccessWordWindow : MonoBehaviour
             SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
             SearchBar.text = "ACCESS GRANTED";
             OnAccessWiki?.Invoke(this, null);
-
+            BlockImage.sprite = Unlocked;
             WordsManager.WM.RequestBDWikiData(SearchedWord).SetisWordAccessFound();
         }
         else
