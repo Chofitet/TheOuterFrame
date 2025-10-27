@@ -24,6 +24,9 @@ public class PaperMoveController : MonoBehaviour
     [SerializeField] GameEvent OnReportEnterDatabase;
     [SerializeField] GameEvent OnTranscriptionEnterDatabase;
     [SerializeField] AnimationCurve ReportToButtomRigthCurve;
+
+    [SerializeField] GameObject TutorialPosIt;
+    bool AtLeastOnePaperSolved;
     bool isACandy = false;
     private bool isMoving;
     GameObject currentPaper;
@@ -141,13 +144,17 @@ public class PaperMoveController : MonoBehaviour
         if (!currentPaper) return;
         currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
         currentPaper.transform.SetParent(ReportPilePos);
-        RefreshPaperQueue();
+        int papersInQueue = RefreshPaperQueue();
         currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration);
         currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration);
         currentPaper.GetComponent<BoxCollider>().enabled = true;
         currentPaper = null;
         SetPaperState(PaperState.Nothing);
 
+        if(!AtLeastOnePaperSolved && papersInQueue >= 3)
+        {
+            TutorialPosIt.SetActive(true);
+        }
     }
 
     public void OnTakeCandy(Component sender, object obj)
@@ -231,7 +238,7 @@ public class PaperMoveController : MonoBehaviour
         }
     }
 
-    private void RefreshPaperQueue()
+    private int RefreshPaperQueue()
     {
         int stakedCount = 0;
 
@@ -247,7 +254,7 @@ public class PaperMoveController : MonoBehaviour
             TransformOffset = stakedCount * new Vector3(0, 0.002f, 0);
             RotationOffset = new Vector3(0, UnityEngine.Random.Range(-5, 5), 0);
             
-       
+       return stakedCount;
     }
 
 
@@ -256,7 +263,8 @@ public class PaperMoveController : MonoBehaviour
         if (moveToPcSequence != null && moveToPcSequence.IsActive()) moveToPcSequence.Kill();
 
         moveToPcSequence = DOTween.Sequence();
-
+        AtLeastOnePaperSolved = true;
+        TutorialPosIt.SetActive(false);
         GameObject paperMove = currentPaper;
         if (!paperMove) return;
         currentPaper = null;
@@ -288,7 +296,8 @@ public class PaperMoveController : MonoBehaviour
     public void DescartPosition(Component sender, object obj)
     {
         if (moveDescart != null && moveDescart.IsActive()) moveDescart.Kill();
-
+        AtLeastOnePaperSolved = true;
+        TutorialPosIt.SetActive(false);
         moveDescart = DOTween.Sequence();
 
         GameObject paperMove = currentPaper;

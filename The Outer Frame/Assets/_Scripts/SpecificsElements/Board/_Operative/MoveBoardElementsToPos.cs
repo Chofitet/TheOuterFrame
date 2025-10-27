@@ -128,7 +128,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
     public void MoveToTakeOutPos(Component sender, object obj)
     {
         if (!isPlaced) return;
-        if (!conditions.IsOutOfBoard()) return;
+        //if (!conditions.IsOutOfBoard()) return;
         Transform _transform = (Transform)obj;
         Vector3 finalPos = _transform.position;
         Vector3 finalRot = new Vector3(_transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z);

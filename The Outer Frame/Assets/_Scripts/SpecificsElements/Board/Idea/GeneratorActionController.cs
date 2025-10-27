@@ -25,6 +25,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     bool isDone;
     private bool istaken;
     GameObject IdeaButtom;
+    bool WasInactivate;
 
     public bool GetConditionalState()
     {
@@ -96,6 +97,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             btn.InactiveIdea();
             isDone = true;
         }
+        if (CheckForConditionals(InactiveConditionals) && !isDone) WasInactivate = true;
     }
 
     public void markDone(Component sender, object obj)
@@ -110,6 +112,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             btn.InactiveIdea();
             isDone = true;
         }
+        if (CheckForConditionals(InactiveConditionals) && !isDone) WasInactivate = true;
     }
 
     public void SetIsAfiledIdea(Component sender, object obj)
@@ -122,10 +125,10 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (reportController.GetAction() != ActionsToAdd[0]) return;
         if (!reportController.GetIsAlreadyImposible()) return;
 
-        isAFailedIdea = true;
-        CroosIcon.SetActive(true);
-        IdeaButtom.GetComponent<BtnGenerateIdeaController>().InactiveIdea();
-        isDone = true;
+        WasInactivate = true;
+        CroosIcon.SetActive(false);
+        CheckImage.SetActive(false);
+        //isDone = true;
     }
     public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
     {
@@ -241,7 +244,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
     public void TriggerInactiveAnimation(Component sender, object obj)
     {
-        if (!IsOutOfBoard() || isDone) return;
+
+        if (!WasInactivate ) return;
 
         GetComponent<InactiveIdeaAnimation>().InactiveAnim();
     }
@@ -259,10 +263,11 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public void CheckView(Component sender, object obj)
     {
 
-       /* if ((ViewStates)obj == ViewStates.OnTakeSomeInBoard)
+       if ((ViewStates)obj == ViewStates.BoardView)
         {
-            GetComponent<BoxCollider>().enabled = false;
-        }*/
+           
+
+        }
     }
 
     public WordData GetWordData()

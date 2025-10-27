@@ -14,6 +14,7 @@ public class InactiveIdeaAnimation : MonoBehaviour
     [SerializeField] Transform TakeOutPosition;
     [SerializeField] GameEvent OnButtonElement;
     [SerializeField] GameEvent OnDiscartIdea;
+    [SerializeField] GameObject TakeIdeaButton;
     bool once;
 
 
@@ -29,7 +30,7 @@ public class InactiveIdeaAnimation : MonoBehaviour
         float angle = 0;
         Vector3 pivotDescentrado = PivotPoint.position;
         TakeOffBoardBTN.SetActive(true);
-
+        TakeIdeaButton.GetComponent<Button>().enabled = false;
         InactiveAnimSequence.Append(DOTween.To(() => angle, x =>
         {
             float delta = x - angle;
@@ -54,9 +55,5 @@ public class InactiveIdeaAnimation : MonoBehaviour
         OnButtonElement?.Invoke(this, ViewStates.BoardView);
     }
 
-    [ContextMenu("InactiveTest")]
-    public void test()
-    {
-        InactiveAnim();
-    }
+   
 }
