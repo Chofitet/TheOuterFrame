@@ -18,10 +18,13 @@ MonoBehaviour:
   ChangeTimeOfAction: 0
   Text: We should have a look first.
   TextForRepetition: We should have a look first.
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
     text: NEIN
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: f00809c131e52854cb2595e3ff84f9e9, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
