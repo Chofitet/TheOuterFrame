@@ -10,27 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64e79fc005c88bf4084b841a22c08b1a, type: 3}
-  m_Name: DriverSentHomeBrainwashed
+  m_Name: SergioFusedTaxi
   m_EditorClassIdentifier: 
   state: {fileID: 0}
-  headline: 
-  headlineTwoLines: '"THEY DID SOMETHING TO MY HUSBAND''S BRAIN AT WORK"'
-  text: '"HE LEFT HOME AS A PICTURE OF A LOVING PARTNER AND CAME BACK AS A SHADOW
-    OF HIMSELF" THE WIFE REVEALED THAT HE WAS DRIVING A TRUCK. THIS IS SURELY ROAD
-    54 RELATED'
+  headline: '"MY HUSBAND IS A TAXI NOW"'
+  headlineTwoLines: 
+  text: LOCAL DRIVER'S SPOUSE CRIES FOR HELP. "HE WENT TO WORK AND THEY SENT HIM
+    BACK LIKE THIS!"
   newType: 0
-  CustomAclarationAlert: YOUR MODUS OPERANDI RAISED SUSPICION
-  image: {fileID: 21300000, guid: 093ef9681617a084eb56ec9bbb7b3691, type: 3}
+  CustomAclarationAlert: EVIDENCE/WITNESS-THING BROADCASTED BY THE MEDIA
+  image: {fileID: 21300000, guid: fffe6466f0a23c74f94f535cabf193c8, type: 3}
   channel: 1
   priority: 1
-  alertLevelIncrement: 17
+  alertLevelIncrement: 49
   Emergency: 0
-  TimeToAppear: 8
-  MinTransmitionTime: 4
+  TimeToAppear: 5
+  MinTransmitionTime: 8
   Conditions:
   - condition: {fileID: 11400000, guid: 42d726425049bfa46a9ba9e10bc67045, type: 2}
     ifNot: 0
-  - condition: {fileID: 11400000, guid: d5a8401ae03a91842a9a2df60ab471db, type: 2}
-    ifNot: 0
   - condition: {fileID: 11400000, guid: 47e46f22bfb56044299bea9ee1a9b6ed, type: 2}
-    ifNot: 0
+    ifNot: 1
