@@ -61,15 +61,17 @@ public class PhoneRowNotebookController : MonoBehaviour
 
     public void TryUpdateWord(WordData _word)
     {
-        word = _word;
+        if (ActualState == NumberStates.WaitingWord) return;
         SetNumState(NumberStates.WaitingWord);
+        lastText = txtName.text;
+        word = _word;
     }
 
     //On
     public void OnSlidePhones(Component sender, object obj)
     {
-        if (WordBtn.interactable) ClearWordUnderline(true);
-        if (NumBtn.interactable) ClearNumdUnderline(true);
+        if (ActualState == NumberStates.FoundWithWord) ClearWordUnderline(true);
+        if (NumBtn.enabled) ClearNumdUnderline(true);
         if (obj is bool)
         {
             if (!(bool)obj) return;
@@ -85,6 +87,7 @@ public class PhoneRowNotebookController : MonoBehaviour
 
     float waitSlidePhoneUp = 0;
 
+    string lastText;
     void UpdateWord()
     {
         //remplazar los ??? por la palabra
@@ -97,8 +100,10 @@ public class PhoneRowNotebookController : MonoBehaviour
     
     public void TryCrossWord()
     {
+        if (ActualState == NumberStates.InactiveWord) return;
         if (word.GetInactiveStateSeen() && !word.GetEraseState())
         {
+            
             crossWord();
         }
     }
@@ -114,11 +119,11 @@ public class PhoneRowNotebookController : MonoBehaviour
     public void ClearUnderline()
     {
 
-        if(WordBtn.interactable)
+        if(ActualState == NumberStates.FoundWithWord)
         {
             ClearWordUnderline();
         }
-        if(NumBtn.interactable && !isMovingToPinchofono)
+        if(NumBtn.enabled && !isMovingToPinchofono)
         {
             ClearNumdUnderline();
         }
@@ -147,12 +152,12 @@ public class PhoneRowNotebookController : MonoBehaviour
             // tocar num en otra vista te lleva al pinchofono
             OnElementBtn?.Invoke(this, ViewStates.PinchofonoView);
             GoToPinchofono = StartCoroutine(PressNumberBehaviour());
-            if (WordBtn.interactable) ClearWordUnderline(true);
+            if (ActualState == NumberStates.FoundWithWord) ClearWordUnderline(true);
              Num.text = $"<u>{wordNum.GetName()}</u>";
             return;
         }
         Num.text = $"<u>{wordNum.GetName()}</u>";
-        if(WordBtn.interactable) ClearWordUnderline(true);
+        if(ActualState == NumberStates.FoundWithWord) ClearWordUnderline(true);
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordNum);
         
     }
@@ -180,6 +185,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         //textFild.gameObject.GetComponent<FadeWordsEffect>().SetBlank(0);
         textFild.GetComponent<FadeWordsEffect>().StartEffect();
         yield return new WaitForSeconds(0.5f);
+        ResolveStateOnFinish();
         processManager.UnregisterProcess();
     }
 
@@ -187,7 +193,7 @@ public class PhoneRowNotebookController : MonoBehaviour
     {
         processManager.RegisterProcess();
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
-
+        txtName.text = lastText;
         var erase = txtName.gameObject.GetComponent<FadeWordsEffect>();
         erase.OnEraseProgress += eraseParticlesName;
         erase.OnComplete += OnEraseFinished;
@@ -213,15 +219,6 @@ public class PhoneRowNotebookController : MonoBehaviour
         fade.OnEraseProgress -= eraseParticlesName;
 
     }
-
-
-    /* public void eraseParticlesNum(float progress)
-     {
-         EraseParticlesNum.GetComponent<ParticleSystem>().Play();
-
-         Vector3 initPos = Num.transform.localPosition;
-         EraseParticlesNum.localPosition = Vector3.Lerp(initPos, new Vector3(Num.preferredWidth, initPos.y, initPos.z), progress);
-     }*/
     bool isCross;
     IEnumerator CrossAnim()
     {
@@ -237,6 +234,24 @@ public class PhoneRowNotebookController : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
+    void ResolveStateOnFinish()
+    {
+        // si hay que tacharla
+        if (word.GetInactiveStateSeen())
+        {
+            crossWord();
+            if(actualView != ViewStates.BoardView && actualView != ViewStates.OnTakeSomeInBoard) return;
+        }
+
+        //si hay que aplicarle bold por estar en el board
+        if (!word.GetPlacedInBoard() & actualView == ViewStates.BoardView || actualView == ViewStates.OnTakeSomeInBoard)
+        {
+            ApplyMaterial("Board");
+            WordBtn.enabled = true;
+        }
+
+    }
+
     void SetNumState(NumberStates newState)
     {
         switch(newState)
@@ -244,24 +259,24 @@ public class PhoneRowNotebookController : MonoBehaviour
             case NumberStates.NoFound:
                 break;
             case NumberStates.NoFoundWithWord:
-                WordBtn.interactable = true;
-                NumBtn.interactable = false;
+                WordBtn.enabled = false;
+                NumBtn.enabled = true;
                 break;
             case NumberStates.FoundWithoutWord:
-                WordBtn.interactable = false;
-                NumBtn.interactable = true;
+                WordBtn.enabled = false;
+                NumBtn.enabled = true;
                 break;
             case NumberStates.WaitingWord:
-                WordBtn.interactable = false;
-                NumBtn.interactable = true;
+                WordBtn.enabled = false;
+                NumBtn.enabled = false;
                 break;
             case NumberStates.FoundWithWord:
-                WordBtn.interactable = true;
-                NumBtn.interactable = true;
+                WordBtn.enabled = true;
+                NumBtn.enabled = true;
                 break;
             case NumberStates.InactiveWord:
-                WordBtn.interactable = false;
-                NumBtn.interactable = true;
+                WordBtn.enabled = false;
+                NumBtn.enabled = true;
                 break;
         }
         ActualState = newState;
@@ -275,7 +290,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         txtName.text = "<u>" + word.GetName() + "</u>";
         if (actualView == ViewStates.BoardView) txtName.text = word.GetName();
         WordSelectedInNotebook.Notebook.SetSelectedWord(word);
-        if (NumBtn.interactable) ClearNumdUnderline(true);
+        if (NumBtn.enabled) ClearNumdUnderline(true);
         isActiveInBoard = false;
         WordBtn.enabled = false;
         if (actualView == ViewStates.PCView)
@@ -283,6 +298,11 @@ public class PhoneRowNotebookController : MonoBehaviour
             Invoke("UnSelectWord", 0.3f);
         }
         if (actualView == ViewStates.OnTakeSomeInBoard) OnElementBtn?.Invoke(this, ViewStates.BoardView);
+    }
+    void UnSelectWord()
+    {
+        txtName.text = word.GetName();
+        WordBtn.enabled = true;
     }
 
     public void ClearWordUnderline(bool clearDirectly = false)
@@ -300,15 +320,20 @@ public class PhoneRowNotebookController : MonoBehaviour
         Num.text = wordNum.GetName();
     }
 
-    void Alpha1()
+   
+    public void TryActiveWord(bool x)
     {
-        txtName.color = new Vector4(txtName.color.r, txtName.color.g, txtName.color.b, 1);
-    }
+        if (ActualState == NumberStates.FoundWithWord)
+        {
+            WordBtn.enabled = x;
+        }
 
-    void UnSelectWord()
-    {
-        txtName.text = word.GetName();
-        WordBtn.enabled = true;
+        if(ActualState == NumberStates.InactiveWord)
+        {
+           WordBtn.enabled = x;
+        }
+
+        NumBtn.enabled = true;
     }
 
     public void SetInactive(bool x) => isinactive = x;
@@ -335,6 +360,15 @@ public class PhoneRowNotebookController : MonoBehaviour
     private Sequence thicknessSequence;
 
     /// material modificator
+
+    public void InactiveDirectly()
+    {
+        thicknessSequence?.Kill();
+
+        txtName.text = word.GetName();
+
+        WordBtn.enabled = false;
+    }
 
     public void ApplyThicknessAnim(bool x)
     {

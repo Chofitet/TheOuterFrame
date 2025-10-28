@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System;
 using static System.Net.Mime.MediaTypeNames;
+using System.Xml.Linq;
 
 public class NotebookWordInstance : MonoBehaviour
 {
@@ -92,6 +93,7 @@ public class NotebookWordInstance : MonoBehaviour
         if (wordReference == null) return;
         if (wordReference.GetInactiveStateSeen() && !wordReference.GetEraseState())
         {
+            if (isCross) return;
             btn.enabled = false;
             strikethrough.SetActive(true);
             CrossOutWord();
@@ -120,7 +122,6 @@ public class NotebookWordInstance : MonoBehaviour
 
     public void CrossOutWord()
     {
-        if (isCross) return;
         processManager.RegisterProcess();
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y), 0.3f).OnComplete(() => processManager.UnregisterProcess());
@@ -165,27 +166,34 @@ public class NotebookWordInstance : MonoBehaviour
         }
         if (actualView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
     }
+    void UnSelectWord()
+    {
+        text.text = wordReference.GetName();
+        btn.enabled = true;
+    }
 
     public void ClearUnderline()
     {
        
         if (isActiveInBoard) return;
         if (isinactive) return;
-        btn.enabled = true;
+        if (!wordReference.GetInactiveStateSeen()) btn.enabled = true;
         text.text = wordReference.GetName();
-    }
-
-    void Alpha1()
-    {
-        text.color = new Vector4(text.color.r, text.color.g, text.color.b, 1);
     }
 
     public WordData GetWord() { return wordReference; }
 
-    void UnSelectWord()
+   public void TryActiveWord(bool x)
     {
-        text.text = wordReference.GetName();
-        btn.enabled = true;
+        if (!wordReference.GetInactiveStateSeen()) btn.enabled = x;
+
+        if (actualView != ViewStates.BoardView && actualView != ViewStates.OnTakeSomeInBoard) return;
+
+        if (wordReference.GetInactiveStateSeen())
+        {
+            btn.enabled = x;
+        }
+
     }
 
     public Button GetButton()
@@ -232,7 +240,14 @@ public class NotebookWordInstance : MonoBehaviour
             
         }
     }
+    public void InactiveDirectly()
+    {
+        thicknessSequence?.Kill();
 
+        text.text = wordReference.GetName();
+
+        btn.enabled = false;
+    }
     public void ThicknessOn(float targetValue = 0.3f, float duration = 0.3f)
     {
         Material mat = GetMat();
