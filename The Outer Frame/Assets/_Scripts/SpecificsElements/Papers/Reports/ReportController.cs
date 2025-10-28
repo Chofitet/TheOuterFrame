@@ -83,7 +83,7 @@ public class ReportController : MonoBehaviour
         }
         else if (isAborted)
         {
-            Resulttxt.text = "The action \"" + actionVerb + " " + Name + "\" was aborted succesfully";
+            Resulttxt.text = "The action " + actionVerb + " " + Name + " was aborted succesfully";
             status = "<color=#AE0000>ABORTED</color>";
             photo1.Set("", WrongResultImg[7]);
             isNotCompleted = true;

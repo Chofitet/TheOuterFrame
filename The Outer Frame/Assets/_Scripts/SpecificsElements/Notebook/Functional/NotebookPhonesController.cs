@@ -220,7 +220,7 @@ public class NotebookPhonesController : MonoBehaviour
         //if (!IsPhoneSlideOut) return;
         InctiveWordsOnBoard.Add((WordData)obj);
 
-       DisableWordsOfList(InctiveWordsOnBoard, "Board", false, true);
+        InactiveWordInBoard((WordData)obj);
 
     }
 
@@ -243,6 +243,10 @@ public class NotebookPhonesController : MonoBehaviour
         else if (actualView == ViewStates.TVView)
         {
             DisableWordsOfList(listAllWord);
+        }
+        else if (actualView == ViewStates.OnTakeSomeInBoard)
+        {
+            DisableWordsOfList(InctiveWordsOnBoard, "Board", true, true);
         }
         else
         {
@@ -271,21 +275,16 @@ public class NotebookPhonesController : MonoBehaviour
         {
             bool isActive = true;
             PhoneRowNotebookController Wordinstance = instanceBTN.GetComponent<PhoneRowNotebookController>();
-            instanceBTN.GetComponent<Button>().enabled = true;
-            Wordinstance.GetNumButton().enabled = true;
-            Wordinstance.GetWordButton().enabled = true;
-            instanceBTN.GetComponent<Button>().interactable = true;
+            Wordinstance.TryActiveWord(true);
             Wordinstance.SetInactive(false);
 
             foreach (WordData word in list)
             {
-                
                 if (Wordinstance.GetWord() == word)
                 {
                     isActive = false;
                     Wordinstance.SetInactive(true);
-                    Wordinstance.GetNumButton().enabled = false;
-                    Wordinstance.GetWordButton().enabled = false;
+                    Wordinstance.TryActiveWord(false);
                 }
             }
             if (isActive)
@@ -297,6 +296,20 @@ public class NotebookPhonesController : MonoBehaviour
         }
     }
 
+    void InactiveWordInBoard(WordData word)
+    {
+        foreach(GameObject instanceBTN in WordsInstances)
+        {
+            PhoneRowNotebookController script = instanceBTN.GetComponent<PhoneRowNotebookController>();
+
+            if (script == null) return;
+
+            if(script.GetWord() == word)
+            {
+                script.InactiveDirectly();
+            }
+        }
+    }
 
 
     public float waitSlidePhoneUp = 0;

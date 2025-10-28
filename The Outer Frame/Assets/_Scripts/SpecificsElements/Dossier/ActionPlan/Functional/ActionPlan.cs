@@ -149,7 +149,7 @@ public class ActionPlan : MonoBehaviour
 
     public void ShakeBtn()
     {
-        if (!isOneToggleSelected) return;
+        //if (!isOneToggleSelected) return;
         OnShakeNotebook?.Invoke(this, null);
     }
 

@@ -197,7 +197,7 @@ public class NotebookController : MonoBehaviour
     public void PutingWordOnBoard(Component sender, object obj)
     {
         InctiveWordsOnBoard.Add((WordData)obj);
-        DisableWordsOfList(InctiveWordsOnBoard,"Board",false,true);
+        InactiveWordInBoard((WordData)obj);
 
     }
 
@@ -243,7 +243,7 @@ public class NotebookController : MonoBehaviour
         {
             bool isActive = true;
             NotebookWordInstance Wordinstance = instanceBTN.GetComponent<NotebookWordInstance>();
-            Wordinstance.GetButton().enabled = true;
+            Wordinstance.TryActiveWord(true);
             Wordinstance.SetInactive(false);
 
             foreach (WordData word in list)
@@ -251,7 +251,7 @@ public class NotebookController : MonoBehaviour
                 if(Wordinstance.GetWord() == word)
                 {
                     isActive = false;
-                    Wordinstance.GetButton().enabled = false;
+                    Wordinstance.TryActiveWord(false);
                     Wordinstance.SetInactive(true);
                 }
             }
@@ -260,6 +260,21 @@ public class NotebookController : MonoBehaviour
                 //palabra que sigue activa
                 Wordinstance.ApplyMaterial(material);
                 if(changes) Wordinstance.ApplyThicknessAnim(thickness);
+            }
+        }
+    }
+
+    void InactiveWordInBoard(WordData word)
+    {
+        foreach (GameObject instanceBTN in WordsInstances)
+        {
+            NotebookWordInstance script = instanceBTN.GetComponent<NotebookWordInstance>();
+
+            if (script == null) return;
+
+            if (script.GetWord() == word)
+            {
+                script.InactiveDirectly();
             }
         }
     }
