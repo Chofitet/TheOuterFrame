@@ -19,6 +19,7 @@ public class AlertLevelManager : MonoBehaviour
     float timeFactor = 1;
     int level;
     bool isStoped;
+    int maxLevel = 100;
 
     private void OnEnable()
     {
@@ -34,7 +35,7 @@ public class AlertLevelManager : MonoBehaviour
         if(data.AclarationText != "") AclarationText.text = data.AclarationText;
         if (level < 0) level = 1;
         DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
-            if (auxIncruise >= 1000)
+            if (auxIncruise >= maxLevel)
             {
                 Invoke("end", 0.2f);
             }
@@ -71,12 +72,19 @@ public class AlertLevelManager : MonoBehaviour
     private void Update()
     {
         NumLevel.text = level + "%";
+
+
     }
 
     public void AccelerateAnims(Component sender, object obj)
     {
         timeFactor = (float)obj;
+
+        if (Input.GetKeyDown(KeyCode.G))
+            maxLevel = 1000;
     }
+
+
 }
 
 

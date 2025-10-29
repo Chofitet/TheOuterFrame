@@ -63,6 +63,7 @@ public class LogWindowController : MonoBehaviour
     // Llamado desde los botones de la palabra
     public void AddFilters(Component sender, object obj)
     {
+        if (isDeleting) return;
         SearchLogData data = (SearchLogData)obj;
 
         WordData word = data.word;
@@ -100,6 +101,7 @@ public class LogWindowController : MonoBehaviour
 
     public void OnActiveAllEntries(Component sender, object obj)
     {
+        if (isDeleting) return;
         ActiveAllEntries();
     }
 
@@ -141,6 +143,15 @@ public class LogWindowController : MonoBehaviour
             
             if (WordsManager.WM.FindWordWithPhoneNum(entry.GetWord()) == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
         }
+    }
+    bool isDeleting;
+    public void DeleteLog(Component Sender, object obj)
+    {
+        foreach(LogEntryController entry in LogEntries)
+        {
+           entry.gameObject.SetActive(false);
+        }
+        isDeleting = true;
     }
 
 }

@@ -31,6 +31,11 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnEnableInput;
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] GameEvent OnNormalizeTime;
+
+    [Header("Game Overs")]
+    [SerializeField] GameEvent OnTimeGameOver;
+    [SerializeField] GameEvent OnAlertLevelGameOver;
+    [SerializeField] GameEvent OnNotAgentsGameOver;
     bool isAPaperHolding;
     float currentDelay;
     ViewStates currentviewState;
@@ -107,6 +112,15 @@ public class ViewManager : MonoBehaviour
                 OnBackToPause?.Invoke(this, null);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            TimeGameOver();
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            AlertGameOver();
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            AnyAgentGameOver();
     }
 
     void CheckForBackToGeneralView()
@@ -376,6 +390,24 @@ public class ViewManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (currentviewState == ViewStates.BoardView) callback?.Invoke();
 
+    }
+    [ContextMenu("Trigger Time GameOver")]
+    public void TimeGameOver()
+    {
+        OnTimeGameOver?.Invoke(this, null);
+        UpdateViewState(this, ViewStates.GameOverView);
+    }
+    [ContextMenu("Trigger Alert GameOver")]
+    public void AlertGameOver()
+    {
+        OnAlertLevelGameOver?.Invoke(this, null);
+        UpdateViewState(this, ViewStates.GameOverView);
+    }
+    [ContextMenu("Trigger Any Agent GameOver")]
+    public void AnyAgentGameOver()
+    {
+        OnNotAgentsGameOver?.Invoke(this, null);
+        UpdateViewState(this, ViewStates.GameOverView);
     }
 }
 

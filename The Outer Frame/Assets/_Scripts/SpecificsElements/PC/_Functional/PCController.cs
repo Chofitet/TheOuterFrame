@@ -87,19 +87,28 @@ public class PCController : MonoBehaviour
         word = _word;
         SearchWordInWiki(_LastSearchedWord);
     }
+
+    public void ForceUpdateWindow(Component sender, object obj)
+    {
+        Update(_LastSearchedWord, true);
+    }
+
     public void UpdateDataBase(Component sender, object obj)
     {
-
-        if (OnWikiWindow != LastWindow) return;
-
         word = (WordData)obj;
+        Update(word, false);
+    }
+
+    void Update(WordData word, bool forceUpdate)
+    {
+        if (OnWikiWindow != LastWindow && !forceUpdate) return;
 
         if (word != _LastSearchedWord) return;
 
         SearchWordInWiki();
         OnWikiWindow?.Invoke(this, null);
     }
-    
+
     public void BackLastEntry(Component sender, object obj)
     {
         if (!isInPCView) return;
