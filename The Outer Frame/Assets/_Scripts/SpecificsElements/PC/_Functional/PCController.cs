@@ -90,16 +90,16 @@ public class PCController : MonoBehaviour
 
     public void ForceUpdateWindow(Component sender, object obj)
     {
-        Update(_LastSearchedWord, true);
+        UpdateWK(_LastSearchedWord, true);
     }
 
     public void UpdateDataBase(Component sender, object obj)
     {
         word = (WordData)obj;
-        Update(word, false);
+        UpdateWK(word, false);
     }
 
-    void Update(WordData word, bool forceUpdate)
+    void UpdateWK(WordData word, bool forceUpdate)
     {
         if (OnWikiWindow != LastWindow && !forceUpdate) return;
 

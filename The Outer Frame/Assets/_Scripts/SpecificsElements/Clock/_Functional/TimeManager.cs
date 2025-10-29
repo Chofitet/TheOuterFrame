@@ -223,7 +223,7 @@ public struct TimeData
         string _min = $"{Minute:00}";
         string _hour = $"{Hour:00}";
 
-        return $"{_hour} : {_min}";
+        return $"{_hour}:{_min}";
     }
 
     public  int GetTimeInNum()
@@ -239,6 +239,8 @@ public struct TimeData
         if (Day == 0 && Hour == 0 && Minute == 0) return true;
         else return false;
     }
+
+   
 }
 
 

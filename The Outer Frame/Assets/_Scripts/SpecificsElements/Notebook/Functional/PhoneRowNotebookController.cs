@@ -249,7 +249,18 @@ public class PhoneRowNotebookController : MonoBehaviour
             ApplyMaterial("Board");
             WordBtn.enabled = true;
         }
+    }
 
+    public void ReplaceWordInstantly(WordData _word)
+    {
+        word = _word;
+        txtName.text = word.GetName();
+    }
+
+    public void ReplaceNumInstantly(WordData _word)
+    {
+        wordNum = _word;
+        Num.text = word.GetName();
     }
 
     void SetNumState(NumberStates newState)

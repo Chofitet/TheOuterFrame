@@ -207,6 +207,13 @@ public class SlotController : MonoBehaviour
         OnFinishActionProgress?.Invoke(this, this);
         if (_state.GetSpecialActionWord()) _state.SetIsDone(true);
         CheckIcon.SetActive(true);
+
+        if (Report.GetAction().name == "TheCabinInspectedFullState")
+        {
+            AgentIcon.GetComponent<Image>().color = Color.green;
+            AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, -90));
+            isAgentDead = false;
+        }
     }
 
 
@@ -314,7 +321,7 @@ public class SlotController : MonoBehaviour
         bool aux = (AgentIcon.activeSelf);
 
         AgentIcon.SetActive(true);
-        DisableAgent();
+         DisableAgent();
         if (!aux) AgentIcon.SetActive(false);
 
     }

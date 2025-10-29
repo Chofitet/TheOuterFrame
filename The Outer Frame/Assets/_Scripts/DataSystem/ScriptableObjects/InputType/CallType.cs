@@ -38,6 +38,8 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
     [NonSerialized] private bool isInterrupted;
     [NonSerialized] WordData word;
     [NonSerialized] private bool wasEnterToDataBase;
+    [NonSerialized] TimeData CachedStartTime;
+    [NonSerialized] TimeData CachedFinishTime;
 
 
     public string GetDialogue() {
@@ -62,6 +64,12 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
 
     public void SetIsinterrrupted() { isInterrupted = true; }
     public StateEnum GetState() { return state; }
+
+    public void SetCachedStartTime(TimeData time) { CachedStartTime = time; }
+    public void SetCachedFinishTime(TimeData time) { CachedFinishTime = time; }
+
+    public TimeData GetCachedStartTime() { return CachedStartTime; }
+    public TimeData GetCachedFinishTime() {  return CachedFinishTime; }
 
     private void OnEnable()
     {
