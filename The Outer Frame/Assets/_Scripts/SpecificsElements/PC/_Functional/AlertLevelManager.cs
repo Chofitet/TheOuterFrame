@@ -73,15 +73,20 @@ public class AlertLevelManager : MonoBehaviour
     {
         NumLevel.text = level + "%";
 
-
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            maxLevel = 1000;
+            NumLevel.text = "1000%";
+        }
     }
+
+
 
     public void AccelerateAnims(Component sender, object obj)
     {
         timeFactor = (float)obj;
 
-        if (Input.GetKeyDown(KeyCode.G))
-            maxLevel = 1000;
+        
     }
 
 
