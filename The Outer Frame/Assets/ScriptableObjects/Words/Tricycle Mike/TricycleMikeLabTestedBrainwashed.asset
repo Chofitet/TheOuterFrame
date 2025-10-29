@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: TricycleMikeLabTestedBrainwashed
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
+  state: {fileID: 11400000, guid: eccc8518d1f0e8e4dac4bc256a20a7b5, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: 'Nothing out of the ordinary on this guy.
+
+    Guess that wathever weirdness
+    it has resides in the mind.'
+  TextForRepetition: 'We already tried that, remember?
+
+    The report is probably
+    on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 505d0f4b1e958c34fa96173523c8599e, type: 3}
+    text: '"NORMAL FELLOW"'
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 485ee194adf47e84f948016cae7459cf, type: 2}
+    ifNot: 0
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
