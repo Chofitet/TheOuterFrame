@@ -488,6 +488,7 @@ GameObject:
   - component: {fileID: 3194480239522758045}
   - component: {fileID: 6889509828216512992}
   - component: {fileID: 6818304626552952359}
+  - component: {fileID: 5777676380974878465}
   m_Layer: 5
   m_Name: Word
   m_TagString: Untagged
@@ -552,7 +553,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4279172864
-  m_fontColor: {r: 0, g: 1, b: 0.052975178, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -676,6 +677,21 @@ MonoBehaviour:
   maxFontSize: 2
   minFontSize: 1.4
   updateEveryFrame: 0
+--- !u!114 &5777676380974878465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670872956601787114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bd1518865b9874eb1ee0fb6f0a8705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material:
+  - {fileID: 2100000, guid: 54c80852cdbc98348bb768a0dc305114, type: 2}
+  - {fileID: 9216519384190871315, guid: a7beff17a0824354bb3190476b156314, type: 2}
 --- !u!1 &5368664256226230757
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,6 +1147,8 @@ GameObject:
   - component: {fileID: 4613847748127004601}
   - component: {fileID: 4348606448315040182}
   - component: {fileID: 4592849919416894460}
+  - component: {fileID: 7559372677770529040}
+  - component: {fileID: 3127436553890411999}
   m_Layer: 5
   m_Name: Action
   m_TagString: Untagged
@@ -1185,7 +1203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: <material="digital-7 SDF Material Red"> </material>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a7beff17a0824354bb3190476b156314, type: 2}
   m_sharedMaterial: {fileID: 9216519384190871315, guid: a7beff17a0824354bb3190476b156314, type: 2}
@@ -1195,7 +1213,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278255389
-  m_fontColor: {r: 0.112813234, g: 1, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1304,6 +1322,36 @@ MonoBehaviour:
   CurveScale: 100
   boundsMax: 8
   boundsMin: -8
+--- !u!114 &7559372677770529040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028132110396431481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bd1518865b9874eb1ee0fb6f0a8705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material:
+  - {fileID: 2100000, guid: 54c80852cdbc98348bb768a0dc305114, type: 2}
+  - {fileID: 9216519384190871315, guid: a7beff17a0824354bb3190476b156314, type: 2}
+--- !u!114 &3127436553890411999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028132110396431481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fc60f6af20ce54ca126de514ee2579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFontSize: 2
+  minFontSize: 1.4
+  updateEveryFrame: 0
 --- !u!1 &8099415316523088295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,6 +1571,7 @@ MonoBehaviour:
   _float: 0
   _string: 
   viewState: 0
+  gameEvent: {fileID: 0}
 --- !u!114 &5034508899316332759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1556,6 +1605,7 @@ MonoBehaviour:
   _float: 0
   _string: 
   viewState: 0
+  gameEvent: {fileID: 0}
 --- !u!114 &6897876388820856394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1589,6 +1639,7 @@ MonoBehaviour:
   _float: 0
   _string: 
   viewState: 0
+  gameEvent: {fileID: 0}
 --- !u!114 &8667979012157981682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1622,6 +1673,7 @@ MonoBehaviour:
   _float: 0
   _string: 
   viewState: 0
+  gameEvent: {fileID: 0}
 --- !u!1 &8925784204368040431
 GameObject:
   m_ObjectHideFlags: 0

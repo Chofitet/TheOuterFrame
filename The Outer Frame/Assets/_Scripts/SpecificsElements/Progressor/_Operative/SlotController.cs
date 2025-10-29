@@ -7,6 +7,7 @@ using System;
 using TMPro.Examples;
 using DG.Tweening;
 using System.Linq;
+using System.Xml.Linq;
 
 public class SlotController : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class SlotController : MonoBehaviour
     ReportType Report;
     bool isAgentDead;
     ObjectToPrint objectType;
-
+    Color OriginalTxtColor;
     public void initParameters(WordData word, StateEnum state)
     {
         gameObject.SetActive(true);
@@ -62,10 +63,11 @@ public class SlotController : MonoBehaviour
             Wordtxt.text = state.GetSpeticialActionWordName();
         }
         Wordtxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
+        Actiontxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
         StartCoroutine(DelayedWarp());
         Actiontxt.text = state.GetActioningVerb();
         if (state.GetSpecialActionWord()) Actiontxt.text = state.GetIdeaVerb();
-        Actiontxt.GetComponent<WarpTextExample>().UpdateText();
+        
         isAborted = false;
         isAlreadyDone = false;
 
@@ -73,6 +75,7 @@ public class SlotController : MonoBehaviour
         ProgressBar.maxValue = actionDuration;
         ProgressBar.value = 0;
 
+        OriginalTxtColor = Wordtxt.color;
 
         //ya fue hecho
         if (Report.GetWasSet())
@@ -80,7 +83,7 @@ public class SlotController : MonoBehaviour
             FillFast();
             noComplete = true;
             isAlreadyDone = true;
-            SetLEDState(Color.red);
+            SetLEDState(Color.red, "Red");
         }
         //Se está haciendo el mismo en este momento
         else if (word.CheckIfActionIsDoing(state))
@@ -88,7 +91,7 @@ public class SlotController : MonoBehaviour
             FillFast();
             isTheSameAction = true;
             noComplete = true;
-            SetLEDState(Color.red);
+            SetLEDState(Color.red, "Red");
         }
         // Se está haciendo uno del mismo ActionGroup
         else if (ActionGroupManager.AGM.ChekAreInTheSameGroup(word, state))
@@ -96,7 +99,7 @@ public class SlotController : MonoBehaviour
             FillFast();
             isOtherGroupActionDoing = _word.GetDoingAction(0);
             noComplete = true;
-            SetLEDState(Color.red);
+            SetLEDState(Color.red, "Red");
         }
         // Es una acción automática
         else if (Report.GetIsAutomatic())
@@ -104,14 +107,14 @@ public class SlotController : MonoBehaviour
             FillFast();
             isAutomaticAction = true;
             noComplete = true;
-            SetLEDState(Color.red);
+            SetLEDState(Color.red, "Red");
         }
         else if(!IsVilifyLocked.isANullTimeData() && _state == VilifyState)
         {
             FillFast();
             isAVilifyBlockedAction = true;
             noComplete = true;
-            SetLEDState(Color.red);
+            SetLEDState(Color.red, "Red");
         }
         // Es una accion que ya no es posible 
         else if(state.GetInactiveConditionals() || word.GetInactiveState())
@@ -119,7 +122,7 @@ public class SlotController : MonoBehaviour
             FillFast();
             isAlreadyImposible = true;
             noComplete = true;
-            SetLEDState(Color.red);
+            SetLEDState(Color.red,"Red");
         }
         // Es una acción válida
         else
@@ -127,7 +130,7 @@ public class SlotController : MonoBehaviour
             word.SetDoingAction(state, true);
             TimeManager.OnSecondsChange += UpdateProgress;
             UpdateProgress();
-            SetLEDState(Color.green);
+            SetLEDState(Color.green, "Green");
             
             if(state == VilifyState) OnSetVilifyAction?.Invoke(this, true);
         }
@@ -142,6 +145,7 @@ public class SlotController : MonoBehaviour
     {
         inFillFast = true;
         ProgressBar.maxValue = 1.5f;
+
     }
 
     private Tween progressTween;
@@ -246,19 +250,39 @@ public class SlotController : MonoBehaviour
         isOtherGroupActionDoing = null;
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
-        SetLEDState(Color.green);
+        SetLEDState(Color.green,"Green");
 
         inFillFast = false;
         Report = null;
         transform.GetChild(0).gameObject.SetActive(false);
+        noComplete = false;
     }
 
-    void SetLEDState(Color _color)
+    void SetLEDState(Color _color, string colortxt)
     {
         foreach (Image O in LEDObjects)
         {
             O.color = _color;
         }
+
+        ApplyMaterial(Wordtxt, colortxt);
+        ApplyMaterial(Actiontxt, colortxt);
+    }
+
+
+    string materialName;
+    public void ApplyMaterial(TMP_Text textField, string materialLabel = "")
+    {
+        if (textField.text.Contains("<material=")) return;
+
+        materialName = "\"" + textField.font.name + "Material" + materialLabel;
+
+        materialName = materialName.Replace(" ", "");
+
+        string newWord = "<material=" + materialName + ">" + textField.text + "</material>";
+
+        textField.text = newWord;
+
     }
 
     public void TurnOffProgressor(Component sender, object obj)
@@ -270,7 +294,7 @@ public class SlotController : MonoBehaviour
         TimeManager.OnSecondsChange -= UpdateProgress;
         Wordtxt.text = "";
         Actiontxt.text = "";
-        SetLEDState(Color.black);
+        SetLEDState(Color.black, "Green");
         AgentIcon.SetActive(false);
     }
 
@@ -340,6 +364,7 @@ public class SlotController : MonoBehaviour
     {
         yield return null; // espera 1 frame
         Wordtxt.GetComponent<WarpTextExample>().UpdateText();
+        Actiontxt.GetComponent<WarpTextExample>().UpdateText();
     }
 
     public void OnSetVilifyLockedTime(Component sender, object obj)
