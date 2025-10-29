@@ -155,6 +155,7 @@ public class PaperMoveController : MonoBehaviour
         {
             TutorialPosIt.SetActive(true);
         }
+        EnableLastBoxCollider();
     }
 
     public void OnTakeCandy(Component sender, object obj)
@@ -179,7 +180,7 @@ public class PaperMoveController : MonoBehaviour
         currentPaper.GetComponent<BoxCollider>().enabled = true;
         currentPaper = null;
         SetPaperState(PaperState.Nothing);
-
+        EnableLastBoxCollider();
     }
 
     
@@ -268,8 +269,8 @@ public class PaperMoveController : MonoBehaviour
         GameObject paperMove = currentPaper;
         if (!paperMove) return;
         currentPaper = null;
-
-        if(paperMove.GetComponent<IndividualReportController>())
+        paperMove.transform.SetParent(transform);
+        if (paperMove.GetComponent<IndividualReportController>())
         {
             MoToRigthSlotOnPC(paperMove, PCSpotReport1, PCSpotReport2, OnReportEnterDatabase);
         }
@@ -277,19 +278,21 @@ public class PaperMoveController : MonoBehaviour
         {
             MoToRigthSlotOnPC(paperMove, PCSpotTranscription1, PCSpotTranscription2, OnTranscriptionEnterDatabase);
         }
+        EnableLastBoxCollider();
     }
 
     void MoToRigthSlotOnPC(GameObject paperMove, Transform PCSpot1, Transform PCSpot2, GameEvent OnEvent)
     {
+        
         moveToPcSequence.Append(paperMove.transform.DOMove(PCSpot1.position, 0.7f).SetEase(Ease.InOutQuad))
                        .Join(paperMove.transform.DORotate(PCSpot1.rotation.eulerAngles, 0.5f)
                        .OnComplete(() =>
                        {
-                           paperMove.transform.SetParent(ReportPilePos);
+                           paperMove.transform.SetParent(transform);
                            OnEvent?.Invoke(this, null);
                            moveToPcSequence.PrependInterval(0.5f)
                            .Append(paperMove.transform.DOMove(PCSpot2.position, 0.3f).SetEase(Ease.InOutQuad));
-                           EnableLastBoxCollider();
+                           
                        }));
     }
 
@@ -303,7 +306,7 @@ public class PaperMoveController : MonoBehaviour
         GameObject paperMove = currentPaper;
         if (!paperMove) return;
         currentPaper = null;
-
+        paperMove.transform.SetParent(transform);
         moveDescart.Append(paperMove.transform.DOMove(DescartPos.transform.position, 0.5f).SetEase(Ease.InBack));
         EnableLastBoxCollider();
     }
@@ -327,31 +330,34 @@ public class PaperMoveController : MonoBehaviour
                 oldPaper.GetComponent<BoxCollider>().enabled = true;
                 
                 isChangingPapers = false;
+                EnableLastBoxCollider();
             });
        
     }
 
     void EnableLastBoxCollider()
     {
-        if (ReportPilePos.transform.childCount > 0)
+        int childCount = ReportPilePos.transform.childCount;
+
+        if (childCount == 0)
+            return;
+
+        // Desactiva todos los BoxColliders primero
+        for (int i = 0; i < childCount; i++)
         {
-            Transform lastChild = ReportPilePos.transform.GetChild(ReportPilePos.transform.childCount - 1);
-
-            BoxCollider boxCollider = lastChild.GetComponent<BoxCollider>();
-
-            if (boxCollider != null)
-            {
-                boxCollider.enabled = true;
-                //Debug.Log("BoxCollider habilitado en: " + lastChild.name);
-            }
-            else
-            {
-                //Debug.LogWarning("El último hijo no tiene un BoxCollider.");
-            }
+            Transform child = ReportPilePos.transform.GetChild(i);
+            BoxCollider collider = child.GetComponent<BoxCollider>();
+            if (collider != null)
+                collider.enabled = false;
         }
-        else
+
+        // Activa solo el último
+        Transform lastChild = ReportPilePos.transform.GetChild(childCount - 1);
+        BoxCollider lastCollider = lastChild.GetComponent<BoxCollider>();
+        if (lastCollider != null)
         {
-           // Debug.LogWarning("El GameObject no tiene hijos.");
+            lastCollider.enabled = true;
+            // Debug.Log("BoxCollider habilitado en: " + lastChild.name);
         }
     }
 

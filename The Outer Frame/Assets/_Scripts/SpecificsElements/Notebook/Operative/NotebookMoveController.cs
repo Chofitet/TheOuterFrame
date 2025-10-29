@@ -90,7 +90,6 @@ public class NotebookMoveController : MonoBehaviour
         pendingToGoDown = false;
 
     }
-
     public void OnChangeView(Component sender, object obj)
     {
         //anim.Play("notebook armature|idle");
@@ -165,6 +164,7 @@ public class NotebookMoveController : MonoBehaviour
                 break;
 
         }
+        
         lastView = newview;
     }
 
@@ -210,7 +210,7 @@ public class NotebookMoveController : MonoBehaviour
 
         moveSequence.AppendInterval(_delayToGrab)
             .AppendCallback(()=> { SetTransform(Positions[num]); })
-            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutQuart))
+            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutSine))
                     .OnComplete(() =>
                     {
                         isMoving = false;
@@ -220,14 +220,21 @@ public class NotebookMoveController : MonoBehaviour
                         }
                         child.transform.DOLocalRotate(Vector3.zero, 0.2f);
                         SetTransform(OriginalTransform);
+                        OnceLeave = false;
                     });
         
         isUp = _isUp;
 
         if (dontLeaveNotebook) return;
-        if (isUp) OnTakeNotebookSound?.Invoke(this, null);
+        if (isUp)
+        {
+            OnTakeNotebookSound?.Invoke(this, null);
+            OnceLeave = true;
+        }
         else OnLeaveNotebookSound?.Invoke(this, null);
     }
+
+    bool OnceLeave;
 
     private void Update()
     {
@@ -238,12 +245,12 @@ public class NotebookMoveController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, currentTarget.rotation, lerpTime);
         }
 
-        if(Input.GetKeyDown(KeyCode.Mouse1) && !dontLeaveNotebook && isUp && !inputDisable)
+        if(Input.GetKeyDown(KeyCode.Mouse1) && !dontLeaveNotebook && isUp && !inputDisable && !OnceLeave)
         {
             SetPos(0, false);
+            
         }
     }
-
     void SetTransform(Transform trans)
     {
         if (trans == null) return;
