@@ -97,7 +97,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             btn.InactiveIdea();
             isDone = true;
         }
-        if (CheckForConditionals(InactiveConditionals) && !isDone) WasInactivate = true;
+        if (InactiveConditionals.Count != 0 && CheckForConditionals(InactiveConditionals) && !isDone) WasInactivate = true;
     }
 
     public void markDone(Component sender, object obj)
@@ -112,7 +112,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             btn.InactiveIdea();
             isDone = true;
         }
-        if (CheckForConditionals(InactiveConditionals) && !isDone) WasInactivate = true;
+        if (InactiveConditionals.Count != 0 && CheckForConditionals(InactiveConditionals) && !isDone) WasInactivate = true;
     }
 
     public void SetIsAfiledIdea(Component sender, object obj)

@@ -22,6 +22,7 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] Light light;
     [SerializeField] Light light2;
     [SerializeField] GameObject colliderUnused;
+    [ColorUsage(true, true)][SerializeField] Color LedRed;
 
     [Header("Candy Parameters")]
     [SerializeField] GameObject Candy;
@@ -187,6 +188,15 @@ public class ProgressorModuleController : MonoBehaviour
                 isAbortOpen = false;
             }
 
+            if (slot.GetNoComplete())
+            {
+                ReadyToPrintLED.SetSpecificColor(LedRed);
+            }
+            else
+            {
+                ReadyToPrintLED.SetOtherColor(this, null);
+            }
+
             TurnOnLight(light, InitLigthIntensity,0.3f);
             TurnOnLight(light2, InitLigthIntensity2,0.3f);
         }
@@ -252,7 +262,7 @@ public class ProgressorModuleController : MonoBehaviour
                 if(slot.GetReport().GetKillAgent() && slot.GetIsComplete()) OnDisableAgentOnSlot?.Invoke(this, gameObject);
                 TurnOnLight(light, 0);
                 TurnOnLight(light2, 0);
-                Invoke("DisableCandy", 0.3f);
+                Invoke("ResetDelay", 0.3f);
 
             }
             else
@@ -296,11 +306,12 @@ public class ProgressorModuleController : MonoBehaviour
         blinkmaterialAbort.TurnOffLight(null, null);
         anim.SetTrigger("resetProgressor");
         DisableAbort = true;
+        
 
-       
+
     }
 
-    void DisableCandy()
+    void ResetDelay()
     {
         Candy.SetActive(false);
         messagge.SetActive(true);

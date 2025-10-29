@@ -21,6 +21,9 @@ public class PCController : MonoBehaviour
     bool isWaitingAWord;
     bool inWordAccessWindow;
 
+    [SerializeField] WordData Vessel;
+    [SerializeField] WordData A15;
+
     WordData _LastSearchedWord;
     WordData word;
     bool isInPCView;
@@ -151,6 +154,7 @@ public class PCController : MonoBehaviour
             return;
         }
 
+        if (word == Vessel) word = A15;
         if(word == IrrelevantDB) foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
         else foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(true);
         DataBaseType db = WordsManager.WM.RequestBDWikiData(word);
