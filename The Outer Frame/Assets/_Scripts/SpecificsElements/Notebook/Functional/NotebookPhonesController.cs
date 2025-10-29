@@ -157,7 +157,8 @@ public class NotebookPhonesController : MonoBehaviour
         {
             PhoneRowNotebookController script = w.GetComponent<PhoneRowNotebookController>();
 
-           // script.ReplaceWordInstantly(CabinWord);
+            script.ReplaceWordInstantly(CabinWord);
+            script.ReplaceNumInstantly(CabinWord);
         }
     }
 
