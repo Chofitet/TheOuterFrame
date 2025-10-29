@@ -26,7 +26,9 @@ MonoBehaviour:
     text: SPEAKS FOR BOTH
   - photo: {fileID: 21300000, guid: 7c1a5ae82d168e54088b8bb4d98e0bbb, type: 3}
     text: . . .
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 485ee194adf47e84f948016cae7459cf, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
