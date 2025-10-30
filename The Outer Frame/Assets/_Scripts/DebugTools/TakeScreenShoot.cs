@@ -5,10 +5,10 @@ using UnityEngine;
 public class TakeScreenShoot : MonoBehaviour
 {
     int NumOfScreenshot = 0;
-
+#if UNITY_EDITOR
     void Update()
     {
-#if UNITY_EDITOR
+
         if (Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log("press P");
