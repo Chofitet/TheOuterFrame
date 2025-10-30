@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75cd8a0f1fed7a747adc9ae31f7f430a, type: 3}
   m_Name: CargoUnlockedInspected State
   m_EditorClassIdentifier: 
-  InfinitiveVerb: 
-  Actioning: 
+  InfinitiveVerb: Inspect Cargo
+  Actioning: InspectingCargo
   Actioned: Inspected
-  TimeToComplete: 0
+  TimeToComplete: 1
   TimeToShowNew: 0
   observationtxt: 
-  IdeaWordData: {fileID: 0}
-  IdeaVerb: 
-  IdeaWord: 
+  IdeaWordData: {fileID: 11400000, guid: da8db6adad26af14294934ced09f306f, type: 2}
+  IdeaVerb: Inspecting
+  IdeaWord: Cargo
+  InactiveConditionals: []
