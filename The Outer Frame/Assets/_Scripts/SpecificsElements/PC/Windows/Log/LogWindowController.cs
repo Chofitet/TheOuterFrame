@@ -72,6 +72,7 @@ public class LogWindowController : MonoBehaviour
         SearchLogData data = (SearchLogData)obj;
 
         WordData word = data.word;
+        if(word == null) return;
         LogFilterType actualFilter = data.filterType;
         ActiveAllEntries();
 
