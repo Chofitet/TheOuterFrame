@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class AccessWordWindow : MonoBehaviour
 {
-    [SerializeField] GameEvent OnPCSearchWord;
+    [SerializeField] GameEvent OnGoToSubject;
     [SerializeField] GameObject Conteiner;
     [SerializeField] TMP_Text SearchBar;
     [SerializeField] GameEvent OnCloseWoredAccessWindow;
@@ -99,7 +99,7 @@ public class AccessWordWindow : MonoBehaviour
     void UnlockPage()
     {
         isUnlockingPage = false;
-        OnPCSearchWord?.Invoke(this, SearchedWord);
+        OnGoToSubject?.Invoke(this, SearchedWord);
         ClosePanel(null,null);
     }
 
