@@ -9,7 +9,6 @@ public class LogWindowController : MonoBehaviour
     [SerializeField] GameObject PrefabLogReport;
     [SerializeField] GameObject PrefabLogTranscript;
     [SerializeField] GameObject Grid;
-    [SerializeField] GameObject SubjectFilesBTN;
     List<LogEntryController> LogEntries = new List<LogEntryController>();
     [SerializeField] GameEvent OnActiveSubjectFilesBTN;
 
@@ -49,6 +48,11 @@ public class LogWindowController : MonoBehaviour
         LogEntries.Add(log.GetComponent<LogEntryController>());
         log.transform.SetParent(Grid.transform, false);
         log.transform.SetSiblingIndex(0);
+
+        if(FilterWith != null)
+        {
+            if(FilterWith != data.word) log.gameObject.SetActive(false);
+        }
     }
 
     public void OnPcUpdate(Component sender, object obj)
@@ -60,6 +64,7 @@ public class LogWindowController : MonoBehaviour
         }
     }
 
+    WordData FilterWith;
     // Llamado desde los botones de la palabra
     public void AddFilters(Component sender, object obj)
     {
@@ -80,6 +85,7 @@ public class LogWindowController : MonoBehaviour
 
     void ApplyWordFilter(WordData word)
     {
+        FilterWith = word;
         foreach (LogEntryController entry in LogEntries)
         {
             WordData EntryWord = entry.GetWord();
@@ -107,6 +113,7 @@ public class LogWindowController : MonoBehaviour
 
     public void ActiveAllEntries()
     {
+        FilterWith = null;
         foreach (LogEntryController entry in LogEntries)
         {
             entry.gameObject.SetActive(true);
