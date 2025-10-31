@@ -10,17 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: GooComponentInspected
+  m_Name: TricycleTracksInspected
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
-  isAutomatic: 1
-  ChangeTimeOfAction: 0
-  Text: You should read that initial report again. That's all we got.
-  TextForRepetition: You should read that initial report again. That's all we got.
+  isAutomatic: 0
+  ChangeTimeOfAction: -2
+  Text: "Those tracks do go on for long distance.\n\nMaybe we should send someone
+    to follow the trail. \n\nBut, hey, that's just my idea."
+  TextForRepetition: "WE SAID:\n\nThose tracks do go on into the horizon.\n\nMaybe
+    we should send someone to follow the trail. \n\nBut, hey, that's just my idea."
   CustomStatus: 
-  Photos: []
-  Conditionals: []
+  Photos:
+  - photo: {fileID: 21300000, guid: a21473e66381ecb4f94e1128b63c5081, type: 3}
+    text: THAT WOULD BE QUITE THE WALK
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 00aeffdb0efc8714184fb5f8fb9701c8, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
