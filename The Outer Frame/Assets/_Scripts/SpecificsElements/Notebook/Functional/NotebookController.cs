@@ -16,7 +16,6 @@ public class NotebookController : MonoBehaviour
     int i = 0;
     bool once;
     bool isStarting = true;
-
     List<int> removedIndex = new List<int>();
     private void Start()
     {
@@ -112,6 +111,7 @@ public class NotebookController : MonoBehaviour
             {
                 ClearUnderLine();
                 script.ReplaceWord(newword);
+                
                 aux = true;
             }
             

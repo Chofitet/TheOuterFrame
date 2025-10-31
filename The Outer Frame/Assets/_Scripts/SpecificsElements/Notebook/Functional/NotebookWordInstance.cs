@@ -23,6 +23,7 @@ public class NotebookWordInstance : MonoBehaviour
     bool isCross;
     bool isActiveInBoard;
     bool isinactive;
+    bool PendingToAddBoard;
     public void Initialization(WordData word, bool noAnim = false, NotebookProcessManager _processManager = null)
     {
         if(_processManager != null) processManager = _processManager;
@@ -110,7 +111,16 @@ public class NotebookWordInstance : MonoBehaviour
         word.SetIsFound();
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
         btn.enabled = true;
+
+        foreach (WordData ascendat in word.SearchForWordsThatReplaceRetroactive())
+        {
+            // si alguna de las palabras anterior fue puesta en el board, activa el placed automático al remplasarce
+            if(ascendat.GetPlacedInBoard()) PendingToAddBoard = true;
+        }
+        
     }
+
+
 
     public void ReplaceWordInstantly(WordData word)
     {
@@ -228,6 +238,7 @@ public class NotebookWordInstance : MonoBehaviour
 
     public void ApplyThicknessAnim(bool x)
     {
+        if (PendingToAddBoard) return;
         if (x)
         {
             ThicknessOn();
@@ -296,6 +307,16 @@ public class NotebookWordInstance : MonoBehaviour
     public void CheckView(Component sender,object obj)
     {
         actualView = (ViewStates)obj;
+
+    }
+
+    public void OnBoardUpdate(Component sender,object obj)
+    {
+        if (PendingToAddBoard)
+        {
+            btn.onClick.Invoke();
+            PendingToAddBoard = false;
+        }
     }
 
     public void SetInactive(bool x) => isinactive = x;

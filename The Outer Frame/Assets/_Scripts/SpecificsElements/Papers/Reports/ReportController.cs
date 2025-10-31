@@ -22,6 +22,8 @@ public class ReportController : MonoBehaviour
     [SerializeField] Sprite ThumbUp;
     [SerializeField] Transform OutPos;
     [SerializeField] List<Sprite> WrongResultImg = new List<Sprite>();
+    [SerializeField] GameObject UploadBTN;
+    [SerializeField] GameObject DisposeBTN;
 
     [Header("MaterialSettings")]
     [SerializeField] GameObject pageModel;
@@ -40,7 +42,7 @@ public class ReportController : MonoBehaviour
         isNotCompleted = false;
         string status = "<color=#006A0D>COMPLETED</color>";
         if (report.GetCustomStatus() != "") status = report.GetCustomStatus();
-        btnText.text = "UPLOAD TO DB";
+        UploadBTN.SetActive(true);
         StateEnum state = report.GetAction();
         string Name = word.GetForm_DatabaseNameVersion();
         if (state.GetSpecialActionWord()) Name = "";
@@ -53,7 +55,8 @@ public class ReportController : MonoBehaviour
             Resulttxt.text = "No report not assigned in " + Name;
             status = "a";
             isNotCompleted = true;
-            btnText.text = "DISPOSE";
+            UploadBTN.SetActive(false);
+            DisposeBTN.SetActive(true);
         }
         else if (isAlreadyDone)
         {
@@ -63,7 +66,8 @@ public class ReportController : MonoBehaviour
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
             status = "<color=#AE0000>REDUNDANT</color>";
             isNotCompleted = true;
-            btnText.text = "DISPOSE";
+            UploadBTN.SetActive(false);
+            DisposeBTN.SetActive(true);
         }
         else if (isTheSameAction)
         {
@@ -71,7 +75,8 @@ public class ReportController : MonoBehaviour
             status = "<color=#AE0000>REDUNDANT</color>";
             photo1.Set("JUST HAVE TO WAIT", WrongResultImg[new System.Random().Next(2) == 0 ? 6 : 8]);
             isNotCompleted = true;
-            btnText.text = "DISPOSE";
+            UploadBTN.SetActive(false);
+            DisposeBTN.SetActive(true);
         }
         else if (isOtherActionInGroupDoing != null)
         {
@@ -79,7 +84,8 @@ public class ReportController : MonoBehaviour
             status = "<color=#AE0000>CONFLICTED</color>";
             photo1.Set("", WrongResultImg[6]);
             isNotCompleted = true;
-            btnText.text = "DISPOSE";
+            UploadBTN.SetActive(false);
+            DisposeBTN.SetActive(true);
         }
         else if (isAborted)
         {
@@ -87,13 +93,15 @@ public class ReportController : MonoBehaviour
             status = "<color=#AE0000>ABORTED</color>";
             photo1.Set("", WrongResultImg[7]);
             isNotCompleted = true;
-            btnText.text = "DISPOSE";
+            UploadBTN.SetActive(false);
+            DisposeBTN.SetActive(true);
         }
         else if (report.GetIsAutomatic())
         {
             status = "<color=#AE0000>IMPOSSIBLE</color>";
 
-            btnText.text = "DISPOSE";
+            UploadBTN.SetActive(false);
+            DisposeBTN.SetActive(true);
         }
         else if (isAlreadyImposible)
         {
@@ -101,15 +109,17 @@ public class ReportController : MonoBehaviour
             status = "<color=#AE0000>IMPOSSIBLE</color>";
             photo1.Set("", WrongResultImg[6]);
             isNotCompleted = true;
-            btnText.text = "DISPOSE";
-           
+            UploadBTN.SetActive(false);
+            DisposeBTN.SetActive(true);
+
         }
         else if(!TimeToUnlockVilify.isANullTimeData())
         {
             Resulttxt.text = $"People will get suspicious if we put so many of our ‘broadcasts’ up one after the other. Let’s wait and try again after {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}";
             isNotCompleted = true;
-            photo1.Set("perate wacho", WrongResultImg[6]);
-            btnText.text = "DISPOSE";
+            photo1.Set("LET'S NOT ABUSE IT", WrongResultImg[6]);
+            UploadBTN.SetActive(false);
+            DisposeBTN.SetActive(true);
         }
         
 

@@ -10,9 +10,10 @@ public class TranscriptionCallController : MonoBehaviour
     [SerializeField] TMP_Text txtFrom;
     [SerializeField] TMP_Text txtTo;
     [SerializeField] TMP_Text txtAt;
-    [SerializeField] TMP_Text txtBTN;
     [SerializeField] GameObject InterseptedInfoPanel;
     [SerializeField] TMP_Text txtFromNoIntercepted;
+    [SerializeField] GameObject UploadBTN;
+    [SerializeField] GameObject DisposeBTN;
 
     CallType call;
 
@@ -21,7 +22,8 @@ public class TranscriptionCallController : MonoBehaviour
         if(!_call)
         {
             txtCall.text = "#[NO LINE ACTIVITY DETECTED]";
-            txtBTN.text = "DISPOSE";
+            DisposeBTN.SetActive(true);
+            UploadBTN.SetActive(false);
             InterseptedInfoPanel.SetActive(true);
             InfoPanel.SetActive(false);
             txtFromNoIntercepted.text = word.GetPhoneNumber();
@@ -31,7 +33,7 @@ public class TranscriptionCallController : MonoBehaviour
         call = _call;
 
         txtCall.text = call.GetDialogue();
-        txtFrom.text = call.GetFrom();
+        txtFrom.text = word.GetPhoneNumber();
         FindableWordsManager.FWM.InstanciateFindableWord(txtFrom,FindableBtnType.FindableBTN);
         //txtTo.text = call.GetTo();
         //FindableWordsManager.FWM.InstanciateFindableWord(txtTo,FindableBtnType.FindableBTN);
@@ -39,7 +41,8 @@ public class TranscriptionCallController : MonoBehaviour
         txtAt.text = $"{_call.GetCachedStartTime().ToString()} to {_call.GetCachedFinishTime().ToString()}";
         GetComponent<IndividualCallController>().SetType(true, call);
         FindableWordsManager.FWM.InstanciateFindableWord(txtCall,FindableBtnType.FindableBTN);
-        txtBTN.text = "UPDATE DB";
+        DisposeBTN.SetActive(false);
+        UploadBTN.SetActive(true);
 
     }
 
@@ -56,37 +59,5 @@ public class TranscriptionCallController : MonoBehaviour
         Destroy(gameObject);
     }
 
-     TimeData SubtractMinutesFromTime(TimeData time, int minutesToSubtract)
-    {
-        int totalMinutes = time.Minute - minutesToSubtract;
-
-        // Si los minutos son negativos, calculamos las horas que hay que restar
-        int extraHours = 0;
-        while (totalMinutes < 0)
-        {
-            totalMinutes += 60;
-            extraHours++;
-        }
-
-        int finalMinutes = totalMinutes;
-
-        int totalHours = time.Hour - extraHours;
-        int extraDays = 0;
-        while (totalHours < 0)
-        {
-            totalHours += 24;
-            extraDays++;
-        }
-
-        int finalHours = totalHours;
-        int finalDays = time.Day - extraDays;
-
-        // No hacemos wrap-around de días negativos (depende de tu lógica de tiempo)
-        return new TimeData
-        {
-            Day = finalDays,
-            Hour = finalHours,
-            Minute = finalMinutes
-        };
-    }
+     
 }

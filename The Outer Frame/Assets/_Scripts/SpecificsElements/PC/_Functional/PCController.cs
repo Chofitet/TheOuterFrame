@@ -211,6 +211,7 @@ public class PCController : MonoBehaviour
 
         WordData searchedWord = (WordData)obj;
         string newWord = WordsManager.WM.FindWordWithPhoneNum(searchedWord).GetForm_DatabaseNameVersion();
+        
         string existingText = WikiTitleSearchedWord.text;
 
         // Verificar si el texto existente contiene etiquetas <material>
@@ -222,6 +223,7 @@ public class PCController : MonoBehaviour
 
         // Si no tiene etiquetas <material>, actualiza el texto
         WikiTitleSearchedWord.text = newWord;
+        
     }
 
     public void CloseWordAccessWindow(Component sender, object obj)

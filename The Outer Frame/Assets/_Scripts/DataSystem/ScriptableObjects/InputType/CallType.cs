@@ -41,7 +41,6 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
     [NonSerialized] TimeData CachedStartTime;
     [NonSerialized] TimeData CachedFinishTime;
 
-
     public string GetDialogue() {
         if (!isInterrupted) return Dialogue;
         else return IterruptedDialogue;
@@ -59,6 +58,7 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
 
     public string GetFrom() { return From; }
     public string GetTo() { return To; }
+
 
     public List<WordData> GetInvolved() { return Involved; }
 
