@@ -488,6 +488,8 @@ GameObject:
   - component: {fileID: 7943965153216304880}
   - component: {fileID: 1153459453562377904}
   - component: {fileID: 4440954320649875543}
+  - component: {fileID: 5720414465546749925}
+  - component: {fileID: 5189293483364905845}
   m_Layer: 0
   m_Name: PhoneNotebookPrefab
   m_TagString: Untagged
@@ -625,7 +627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: ff94ce3ef8272e24e919f7501659beac, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 80a76ae0f7bc9e647a5b530b841e69fd, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -642,6 +644,74 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+--- !u!114 &5720414465546749925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7512470459200994368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: c6fd252417d5e614aa0d7cf94c3234a5, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7943965153216304880}
+        m_TargetAssemblyTypeName: PhoneRowNotebookController, Assembly-CSharp
+        m_MethodName: OnSlidePhones
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+--- !u!114 &5189293483364905845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7512470459200994368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 80a76ae0f7bc9e647a5b530b841e69fd, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7943965153216304880}
+        m_TargetAssemblyTypeName: PhoneRowNotebookController, Assembly-CSharp
+        m_MethodName: OnSlidePhonesUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0.01
   _float: 0
   _string: 
   viewState: 0

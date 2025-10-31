@@ -18,7 +18,7 @@ public class Briefing2AppearAnimController : MonoBehaviour
     [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     bool once;
     GameObject GO;
-    [SerializeField] InstanceFindableWordsInTMPText BrieffingText2;
+    [SerializeField] List<InstanceFindableWordsInTMPText> BrieffingText2;
 
     Sequence BriefingOnTVSequence;
     Sequence BriefingOnDossier;
@@ -42,7 +42,7 @@ public class Briefing2AppearAnimController : MonoBehaviour
         {
             once = true;
             GO.SetActive(true);
-            BrieffingText2.InstanciateWords();
+            foreach(InstanceFindableWordsInTMPText instance in BrieffingText2) instance.InstanciateWords();
             BriefingOnTV();
         }
     }

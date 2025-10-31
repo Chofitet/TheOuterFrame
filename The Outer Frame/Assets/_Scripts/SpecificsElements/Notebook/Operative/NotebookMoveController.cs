@@ -18,6 +18,7 @@ public class NotebookMoveController : MonoBehaviour
     [SerializeField] Transform PosBackDossier;
     [SerializeField] AnimationCurve OutOfBackDossierCurve;
     [SerializeField] NotebookProcessManager processManager;
+    
     Animator anim;
     private Sequence moveSequence;
     private Sequence moveWithDossierSequence;

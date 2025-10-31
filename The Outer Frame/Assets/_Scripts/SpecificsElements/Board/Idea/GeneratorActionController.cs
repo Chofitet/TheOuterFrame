@@ -265,8 +265,11 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
        if ((ViewStates)obj == ViewStates.BoardView)
         {
-           
-
+            BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(false);
+        }
+       else if((ViewStates)obj == ViewStates.OnTakeSomeInBoard)
+        {
+            BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(true);
         }
     }
 

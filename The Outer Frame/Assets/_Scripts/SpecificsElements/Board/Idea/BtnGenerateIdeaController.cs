@@ -40,5 +40,11 @@ public class BtnGenerateIdeaController : MonoBehaviour
         isInactive = true;
     }
 
+    public void ActivedDesactiveIdeaBTN(bool x)
+    {
+        if (isInactive) return;
+        GetComponent<Button>().enabled = x;
+    }
+
     public StateEnum GetState() { return state; }
 }

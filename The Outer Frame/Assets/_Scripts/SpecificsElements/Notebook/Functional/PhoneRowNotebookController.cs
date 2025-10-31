@@ -72,12 +72,11 @@ public class PhoneRowNotebookController : MonoBehaviour
     {
         if (ActualState == NumberStates.FoundWithWord) ClearWordUnderline(true);
         if (NumBtn.enabled) ClearNumdUnderline(true);
-        if (obj is bool)
-        {
-            if (!(bool)obj) return;
+       
+    }
 
-        }
-
+    public void OnSlidePhonesUp(Component sender, object obj)
+    {
         phonesController.waitSlidePhoneUp = 0.3f;
 
         if (ActualState == NumberStates.WaitingWord) UpdateWord();
