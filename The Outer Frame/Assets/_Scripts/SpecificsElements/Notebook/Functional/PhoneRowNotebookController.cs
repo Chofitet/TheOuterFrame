@@ -224,13 +224,14 @@ public class PhoneRowNotebookController : MonoBehaviour
         if (isCross) yield return null;
         processManager.RegisterProcess();
 
-        processManager.RegisterProcess();
+        
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         line.DOSizeDelta(new Vector2(txtName.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y), 0.3f).OnComplete(() => processManager.UnregisterProcess());
         OnCrossWordSound?.Invoke(this, null);
         isCross = true;
 
         yield return new WaitForSeconds(0.5f);
+        processManager.UnregisterProcess();
     }
 
     void ResolveStateOnFinish()
@@ -436,6 +437,7 @@ public class PhoneRowNotebookController : MonoBehaviour
     private Material GetMat()
     {
         // Igual que en tu ejemplo, usás tu propio manager de materiales
+        if (materialName == null) return txtName.GetComponent<ShaderMaterialManager>().GetFirstMat();
         return txtName.GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(materialName.Replace("\"", ""));
     }
 

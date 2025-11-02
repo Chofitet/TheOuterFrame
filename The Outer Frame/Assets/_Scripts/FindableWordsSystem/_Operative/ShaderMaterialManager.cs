@@ -20,5 +20,8 @@ public class ShaderMaterialManager : MonoBehaviour
         return null;
     }
 
-
+    public Material GetFirstMat()
+    {
+        return material[0];
+    }
 }

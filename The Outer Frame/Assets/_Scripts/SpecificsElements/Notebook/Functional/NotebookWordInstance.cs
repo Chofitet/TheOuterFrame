@@ -300,6 +300,7 @@ public class NotebookWordInstance : MonoBehaviour
     private Material GetMat()
     {
         // Igual que en tu ejemplo, usás tu propio manager de materiales
+        if (materialName == null) return text.GetComponent<ShaderMaterialManager>().GetFirstMat();
         return text.GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(materialName.Replace("\"", ""));
     }
 
