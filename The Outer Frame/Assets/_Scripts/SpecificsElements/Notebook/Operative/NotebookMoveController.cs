@@ -132,15 +132,19 @@ public class NotebookMoveController : MonoBehaviour
                 }
                 break;
             case ViewStates.OnTakenPaperView:
-                SetPos(6);
                 dontLeaveNotebook = true;
+                SetPos(6);
                 break;
             case ViewStates.TVView:
                 SetPos(5,true,null,false,0.35f);
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.PauseView:
-                SetPos(0, false);
+                dontLeaveNotebook = false;
+                if (isUp)
+                {
+                    SetPos(0, false);
+                }
                 cancelOutView = true;
                 break;
             case ViewStates.GameOverView:
@@ -176,7 +180,7 @@ public class NotebookMoveController : MonoBehaviour
         currentTarget = Positions[num];
     }
 
-    void SetPos(int num, bool _isUp = true , Transform trans = null,  bool isPinchofono= false, float delayToGrab = 0, ViewStates changingView = ViewStates.GeneralView)
+    void SetPos(int num, bool _isUp = true, Transform trans = null, bool isPinchofono = false, float delayToGrab = 0, ViewStates changingView = ViewStates.GeneralView)
     {
         if (isInUse && !_isUp && !dontLeaveNotebook)
         {
@@ -199,8 +203,8 @@ public class NotebookMoveController : MonoBehaviour
         lerpTime = 0;
 
         float _delayToGrab = 0;
-        if(!isUp) _delayToGrab = delayToGrab;
-        if(lastView == ViewStates.BoardView && changingView == ViewStates.BoardZoomView) _delayToGrab = delayToGrab;
+        if (!isUp) _delayToGrab = delayToGrab;
+        if (lastView == ViewStates.BoardView && changingView == ViewStates.BoardZoomView) _delayToGrab = delayToGrab;
 
         moveSequence = DOTween.Sequence();
 
@@ -210,7 +214,13 @@ public class NotebookMoveController : MonoBehaviour
         }
 
         moveSequence.AppendInterval(_delayToGrab)
-            .AppendCallback(()=> { SetTransform(Positions[num]); })
+            .AppendCallback(() => {
+                if (OnceLeave)
+                {
+                    OnTakeNotebookSound?.Invoke(this, null);
+                }
+                SetTransform(Positions[num]);
+            })
             .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutSine))
                     .OnComplete(() =>
                     {
@@ -223,13 +233,13 @@ public class NotebookMoveController : MonoBehaviour
                         SetTransform(OriginalTransform);
                         OnceLeave = false;
                     });
-        
+
+
         isUp = _isUp;
 
         if (dontLeaveNotebook) return;
         if (isUp)
         {
-            OnTakeNotebookSound?.Invoke(this, null);
             OnceLeave = true;
         }
         else OnLeaveNotebookSound?.Invoke(this, null);

@@ -114,12 +114,10 @@ public class ZoomSystem : MonoBehaviour
         if (view == ViewStates.BoardView || view == ViewStates.BoardZoomView)
         {
             isInBoardView = true;
-            Debug.Log("Zoom True");
         }
         else
         {
             isInBoardView = false;
-            Debug.Log("Zoom false");
         }
     }
 

@@ -27,6 +27,8 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameEvent OnAddEntryLog;
     TimeData IsVilifyLocked = new TimeData(0,0,0);
 
+    public Action<bool> OnSetAction;
+
     [SerializeField] Image[] LEDObjects;
     int actionDuration;
     int secondProgress;
@@ -134,6 +136,8 @@ public class SlotController : MonoBehaviour
             
             if(state == VilifyState) OnSetVilifyAction?.Invoke(this, true);
         }
+
+        OnSetAction?.Invoke(noComplete);
     }
 
     private void OnDisable()

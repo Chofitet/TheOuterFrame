@@ -13,6 +13,7 @@ public class NotebookController : MonoBehaviour
     [SerializeField] Transform WordAnchors;
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
     [SerializeField] NotebookProcessManager ProccessManager;
+    [SerializeField] GameEvent OnPendingWordsToPutInBoard;
     int i = 0;
     bool once;
     bool isStarting = true;
@@ -198,6 +199,8 @@ public class NotebookController : MonoBehaviour
     {
         InctiveWordsOnBoard.Add((WordData)obj);
         InactiveWordInBoard((WordData)obj);
+        if (InctiveWordsOnBoard.Count == WordsInstances.Count) OnPendingWordsToPutInBoard?.Invoke(this, false);
+        else OnPendingWordsToPutInBoard?.Invoke(this, true);
 
     }
 
@@ -215,6 +218,8 @@ public class NotebookController : MonoBehaviour
         if (actualView == ViewStates.BoardView)
         {
             DisableWordsOfList(InctiveWordsOnBoard,"Board",true,true);
+            if (InctiveWordsOnBoard.Count == WordsInstances.Count) OnPendingWordsToPutInBoard?.Invoke(this, false);
+            else OnPendingWordsToPutInBoard?.Invoke(this, true);
         }
         else if (actualView == ViewStates.TVView)
         {

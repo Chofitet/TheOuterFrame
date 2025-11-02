@@ -25,8 +25,8 @@ namespace TMPro.Examples
 
         public void UpdateText()
         {
-            m_TextComponent.havePropertiesChanged = true;
-            StartCoroutine(WarpText());
+            if(m_TextComponent != null) m_TextComponent.havePropertiesChanged = true;
+            if(gameObject.activeSelf) StartCoroutine(WarpText());
         }
 
 

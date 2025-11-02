@@ -141,8 +141,16 @@ public class PCController : MonoBehaviour
     public void SearchWordInWiki(WordData LastSearchedWord = null)
     {
         if(LastWindow != OnWikiWindow)
-        { 
+        {
             //OnLogWindow
+
+            if (!word)
+            {
+                SearchBar.text = " |";
+                if (isInPCView) OnShakeNotebook?.Invoke(this, null);
+                return;
+            }
+
             FilterAll(word);
             isWaitingAWord = true;
             StopAllCoroutines();

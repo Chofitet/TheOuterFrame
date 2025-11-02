@@ -94,7 +94,7 @@ public class ViewManager : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(2))
         {
             if (!isInPause)
             {

@@ -83,17 +83,17 @@ public class ProgressorModuleController : MonoBehaviour
         adjustedDurationForSetSlot = animationDuration / TimeVariation;
         elapsedTime = 0f;
         isWaitingForSetSlot = true;
-        ActiveAbortCorutine = StartCoroutine(activeAbortButton());
+        slot.OnSetAction += activeAbortButton;
     }
 
-    Coroutine ActiveAbortCorutine;
-    IEnumerator activeAbortButton()
+    void activeAbortButton(bool x)
     {
         // espera para que no sea posible activarlo en una automática
-        yield return new WaitForSeconds(3f);
-        TryAbortBTN.GetComponent<BoxCollider>().enabled = false;
-        SwitchAbortBTN.GetComponent<BoxCollider>().enabled = true;
-        
+
+        TryAbortBTN.GetComponent<BoxCollider>().enabled = x;
+        SwitchAbortBTN.GetComponent<BoxCollider>().enabled = !x;
+
+        slot.OnSetAction -= activeAbortButton;
     }
 
     void AdjustTimeToSetSlot()
@@ -182,7 +182,6 @@ public class ProgressorModuleController : MonoBehaviour
     {
         if(sender.gameObject == slot.gameObject)
         {
-            if(ActiveAbortCorutine != null) StopCoroutine(ActiveAbortCorutine);
             TryAbortBTN.GetComponent<BoxCollider>().enabled = true;
             SwitchAbortBTN.GetComponent<BoxCollider>().enabled = false;
             slot.cancelTryAbortBlink();

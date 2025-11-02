@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class LogWindowController : MonoBehaviour
     [SerializeField] GameObject Grid;
     List<LogEntryController> LogEntries = new List<LogEntryController>();
     [SerializeField] GameEvent OnActiveSubjectFilesBTN;
-
+    [SerializeField] TMP_Text NoEntriesText;
     [SerializeField] TMP_Text filterTag;
 
     [SerializeField] GameObject LogContent;
@@ -21,7 +22,9 @@ public class LogWindowController : MonoBehaviour
     {
         LogEntryData data = (LogEntryData)obj;
 
-        if(data.reportType)
+        NoEntriesText.text = "";
+
+        if (data.reportType)
         {
             AddReportLog(data);
         }
@@ -76,6 +79,8 @@ public class LogWindowController : MonoBehaviour
         LogFilterType actualFilter = data.filterType;
         ActiveAllEntries();
 
+        NoEntriesText.text = "";
+
         if (actualFilter == LogFilterType.log) return;
 
         ApplyWordFilter(word);
@@ -87,14 +92,22 @@ public class LogWindowController : MonoBehaviour
     void ApplyWordFilter(WordData word)
     {
         FilterWith = word;
+        List<LogEntryController> FilterEntries = new List<LogEntryController>(LogEntries);
+
         foreach (LogEntryController entry in LogEntries)
         {
             WordData EntryWord = entry.GetWord();
             WordData SearchedWord = word;
             if (!SearchedWord.GetIsAPhoneNumber()) EntryWord = WordsManager.WM.FindWordWithPhoneNum(EntryWord);
 
-            if (EntryWord != SearchedWord) entry.gameObject.SetActive(false);
+            if (EntryWord != SearchedWord)
+            {
+                FilterEntries.Remove(entry);
+                entry.gameObject.SetActive(false);
+            }
         }
+
+        if(FilterEntries.Count == 0) NoEntriesText.text = "SUBJECT UNAPPROACHED YET. FIX THAT BY DOING SOMETHING ALREADY!";
     }
 
     void ApplyTypeFilter(LogFilterType filterType)
@@ -109,12 +122,15 @@ public class LogWindowController : MonoBehaviour
     public void OnActiveAllEntries(Component sender, object obj)
     {
         if (isDeleting) return;
+        
         ActiveAllEntries();
     }
 
     public void ActiveAllEntries()
     {
         FilterWith = null;
+        if (LogEntries.Count != 0) NoEntriesText.text = "";
+        else NoEntriesText.text = "THE LOG IS EMPTY. DO SOMETHING ALREADY!";
         foreach (LogEntryController entry in LogEntries)
         {
             entry.gameObject.SetActive(true);
@@ -151,6 +167,8 @@ public class LogWindowController : MonoBehaviour
             
             if (WordsManager.WM.FindWordWithPhoneNum(entry.GetWord()) == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
         }
+
+
     }
     bool isDeleting;
     public void DeleteLog(Component Sender, object obj)
