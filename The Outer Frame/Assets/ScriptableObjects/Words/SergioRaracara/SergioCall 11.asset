@@ -10,19 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
-  m_Name: SergioCall 7
+  m_Name: SergioCall 11
   m_EditorClassIdentifier: 
-  StartHour: 6
+  StartHour: 7
   StartMinute: 11
-  EndHour: 6
+  EndHour: 7
   EndMinute: 26
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: SERGIO RARACARA'S PHONE
   To: 
-  Dialogue: llamada que falta 1
-  IterruptedDialogue: interrupcion
+  Dialogue: '- - - THINGS ARE GETTING MORE AND MORE AGITADED OUTSIDE - - - - - -
+    - - - - - - - - - - - - - - - - - - - - - - MAYBE I SHOULD GO OUTSIDE OF <link>THE
+    STATION BRATHROOM</link> - - - - NO - - I AM SAFER HERE - - I THINK - - #[END
+    OF THE CALL]'
+  IterruptedDialogue: '- - - THINGS ARE GETTING MORE AND MORE AGITADED OUTSIDE -
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - MAYBE I SHOULD GO OUTSIDE
+    OF <link>THE STATION BRATHROOM</link> - - - - NO - SOMEONES GETTING IN#[END OF
+    THE CALL]'
   Involved:
   - {fileID: 11400000, guid: d7e0ff8badff61546818ab28ba2ce877, type: 2}
   Conditions:
