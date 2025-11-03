@@ -21,12 +21,16 @@ MonoBehaviour:
   CatchWindowInMinutes: 30
   From: PETRO STATION'S PHONE
   To: 
-  Dialogue: '- - - - - PETRO STATION - - -  YEAH WE STILL OPEN - - - TWENTYFOURSEVEN
-    MAAM - - - OKAY - - - - - - - - - A PETRO GOOD DAY TO YOU TOO - - - - - WHAT
-    A NICE LADY #[END OF THE CALL]
+  Dialogue: '- - - - - <link>PETRO STATION</link> - - -  YEAH WE STILL OPEN - - -
+    TWENTYFOURSEVEN MAAM - - - OKAY - - - - - - - - - A PETRO GOOD DAY TO YOU TOO
+    - - - - - WHAT A NICE LADY #[END OF THE CALL]
 
 '
-  IterruptedDialogue: '#[END OF THE CALL]'
+  IterruptedDialogue: '- - - - - <link>PETRO STATION</link> - - -  YEAH WE STILL
+    OPEN - - - TWENTYFOURSEVEN MAAM - - - OKAY - - - - - - - - - A PETRO GOOD DAY
+    TO YOU TOO - - - - - WHAT A NICE LADY - UH - WHO#[END OF THE CALL]
+
+'
   Involved:
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:

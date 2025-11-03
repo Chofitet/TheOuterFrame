@@ -21,11 +21,14 @@ MonoBehaviour:
   CatchWindowInMinutes: 30
   From: PETRO STATION'S PHONE
   To: 
-  Dialogue: '- - - PETRO STATION HOW CAN I HEL- - - OH- - - - -  REALLY - I DONT
-    HAVE ANYTHING ELSE TO TELL YOU - - - - - - - - - - - - - I  AM NOT LEAVING MY
-    POST - - - WELL - - - - SORRY TO - - - SIR - - - WHAT - - MY MOTHER WAS A SAINT
-    - GOOD DAY #[END OF THE CALL]'
-  IterruptedDialogue: '#[END OF THE CALL]'
+  Dialogue: '- - - <link>PETRO STATION</link> HOW CAN I HEL- - - OH- - - - -  REALLY
+    - I DONT HAVE ANYTHING ELSE TO TELL YOU - - - - - - - - - - - - - I  AM NOT LEAVING
+    MY POST - - - WELL - - - - SORRY TO - - - SIR - - - WHAT - - MY MOTHER WAS A
+    SAINT - GOOD DAY #[END OF THE CALL]'
+  IterruptedDialogue: '- - - <link>PETRO STATION</link> HOW CAN I HEL- - - OH- -
+    - - -  REALLY - I DONT HAVE ANYTHING ELSE TO TELL YOU - - - - - - - - - - - -
+    - I  AM NOT LEAVING MY POST - - - WELL - - - - SORRY TO - - - SIR - -SOMEONE
+    IS HERE I HAVE TO HANG UP#[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:
