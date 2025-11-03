@@ -10,6 +10,8 @@ public class VolumeController : MonoBehaviour
 
     private float originalVolume;
 
+    Sequence VolumeFadeSequence;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -24,19 +26,25 @@ public class VolumeController : MonoBehaviour
     // Función para bajar el volumen a cero
     public void FadeOutVolume(Component sender, object obj)
     {
-        if (audioSource != null)
-        {
-            audioSource.DOFade(0f, fadeDuration);
-        }
+        if (audioSource == null) return;
+
+        VolumeFadeSequence?.Kill();
+
+        VolumeFadeSequence = DOTween.Sequence()
+            .Append(audioSource.DOFade(0f, fadeDuration))
+            .SetUpdate(true);
     }
 
     // Función para restaurar el volumen original
     public void FadeInVolume(Component sender, object obj)
     {
-        if (audioSource != null)
-        {
-            audioSource.DOFade(originalVolume, fadeDuration);
-        }
+        if (audioSource == null) return;
+
+        VolumeFadeSequence?.Kill();
+
+        VolumeFadeSequence = DOTween.Sequence()
+            .Append(audioSource.DOFade(originalVolume, fadeDuration))
+            .SetUpdate(true);
     }
 
     public void ChangeFadeOut(Component sender, object obj)

@@ -43,11 +43,11 @@ public class GameObjectMouseClickDetecter : MonoBehaviour
             {
                 uiObjectNames.Add(result.gameObject.name);
             }
-            //Debug.Log("UI objects clicked on World Canvas: " + string.Join(", ", uiObjectNames));
+            Debug.Log("UI objects clicked on World Canvas: " + string.Join(", ", uiObjectNames));
         }
         else
         {
-            //Debug.Log("Clicked on empty UI space in World Canvas.");
+            Debug.Log("Clicked on empty UI space in World Canvas.");
         }
     }
 }

@@ -6,12 +6,8 @@ using UnityEngine;
 public class TranscriptionCallController : MonoBehaviour
 {
     [SerializeField] TMP_Text txtCall;
-    [SerializeField] GameObject InfoPanel;
     [SerializeField] TMP_Text txtFrom;
-    [SerializeField] TMP_Text txtTo;
     [SerializeField] TMP_Text txtAt;
-    [SerializeField] GameObject InterseptedInfoPanel;
-    [SerializeField] TMP_Text txtFromNoIntercepted;
     [SerializeField] GameObject UploadBTN;
     [SerializeField] GameObject DisposeBTN;
 
@@ -24,9 +20,8 @@ public class TranscriptionCallController : MonoBehaviour
             txtCall.text = "#[NO LINE ACTIVITY DETECTED]";
             DisposeBTN.SetActive(true);
             UploadBTN.SetActive(false);
-            InterseptedInfoPanel.SetActive(true);
-            InfoPanel.SetActive(false);
-            txtFromNoIntercepted.text = word.GetPhoneNumber();
+            txtAt.text = $"{TimeManager.timeManager.SubtractMinutesFromTime(TimeManager.timeManager.GetTime(),8).ToString()} to {TimeManager.timeManager.GetTime().ToString()}"; // por el momento, la ventana se crea al momento de imprimirla
+            txtFrom.text = word.GetPhoneNumber();
             return;
         }
 
@@ -35,8 +30,6 @@ public class TranscriptionCallController : MonoBehaviour
         txtCall.text = call.GetDialogue();
         txtFrom.text = word.GetPhoneNumber();
         FindableWordsManager.FWM.InstanciateFindableWord(txtFrom,FindableBtnType.FindableBTN);
-        //txtTo.text = call.GetTo();
-        //FindableWordsManager.FWM.InstanciateFindableWord(txtTo,FindableBtnType.FindableBTN);
 
         txtAt.text = $"{_call.GetCachedStartTime().ToString()} to {_call.GetCachedFinishTime().ToString()}";
         GetComponent<IndividualCallController>().SetType(true, call);
