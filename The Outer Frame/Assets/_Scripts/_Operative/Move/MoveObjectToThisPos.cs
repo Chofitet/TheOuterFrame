@@ -68,7 +68,7 @@ public class MoveObjectToThisPos : MonoBehaviour
         GameObject objectToBack;
         bool isReplaced = false;
 
-        if (obj == null) objectToBack = LastObj;
+        if (obj == null || obj is not GameObject) objectToBack = LastObj;
         else
         {
             objectToBack = (GameObject)obj;
@@ -76,6 +76,8 @@ public class MoveObjectToThisPos : MonoBehaviour
         }
 
         if (MoveSequence != null && MoveSequence.IsActive()) MoveSequence.Kill();
+
+        if (objectToBack == null) return;
 
         Sequence BackSequence = DOTween.Sequence();
 

@@ -24,6 +24,7 @@ public class PaperMoveController : MonoBehaviour
     [SerializeField] GameEvent OnReportEnterDatabase;
     [SerializeField] GameEvent OnTranscriptionEnterDatabase;
     [SerializeField] AnimationCurve ReportToButtomRigthCurve;
+    [SerializeField] GameEvent OnLeavePaperSound;
 
     [SerializeField] GameObject TutorialPosIt;
     bool AtLeastOnePaperSolved;
@@ -145,6 +146,7 @@ public class PaperMoveController : MonoBehaviour
         currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
         currentPaper.transform.SetParent(ReportPilePos);
         int papersInQueue = RefreshPaperQueue();
+        OnLeavePaperSound?.Invoke(this, null);
         currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration);
         currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration);
         currentPaper.GetComponent<BoxCollider>().enabled = true;
@@ -174,6 +176,7 @@ public class PaperMoveController : MonoBehaviour
         currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
         currentPaper.transform.SetParent(ReportPilePos);
         RefreshPaperQueue();
+        OnLeavePaperSound?.Invoke(this, null);
         LeaveInPileOtView.Append(currentPaper.transform.DOMove(DescartPos.position, takeDuration))
             .Append(currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration))
            .Join(currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration));
@@ -322,9 +325,13 @@ public class PaperMoveController : MonoBehaviour
         oldPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
         RefreshPaperQueue();
         swapPapersSequence = DOTween.Sequence();
-        swapPapersSequence.Append(oldPaper.transform.DOMove(ReportPilePos2.transform.position, 0.3f))
+        
+        swapPapersSequence
+            /// que suene a los 0.1, sin modificar el tiempo de lo que ya está hecho
+            .Append(oldPaper.transform.DOMove(ReportPilePos2.transform.position, 0.3f))
             .Append(oldPaper.transform.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration))
             .Join(oldPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration))
+            .InsertCallback(0.3f, () => OnLeavePaperSound?.Invoke(this, null))
             .OnComplete(() =>
             {
                 oldPaper.GetComponent<BoxCollider>().enabled = true;

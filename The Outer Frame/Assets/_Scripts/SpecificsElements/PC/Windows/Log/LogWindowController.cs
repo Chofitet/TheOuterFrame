@@ -107,7 +107,7 @@ public class LogWindowController : MonoBehaviour
             }
         }
 
-        if(FilterEntries.Count == 0) NoEntriesText.text = "SUBJECT UNAPPROACHED YET. FIX THAT BY DOING SOMETHING ALREADY!";
+        if(FilterEntries.Count == 0) NoEntriesText.text = "SUBJECT UNAPPROACHED YET.\nFIX THAT BY DOING SOMETHING ALREADY!";
     }
 
     void ApplyTypeFilter(LogFilterType filterType)
@@ -130,7 +130,7 @@ public class LogWindowController : MonoBehaviour
     {
         FilterWith = null;
         if (LogEntries.Count != 0) NoEntriesText.text = "";
-        else NoEntriesText.text = "THE LOG IS EMPTY. DO SOMETHING ALREADY!";
+        else NoEntriesText.text = "THE LOG IS EMPTY.\nDO SOMETHING ALREADY!";
         foreach (LogEntryController entry in LogEntries)
         {
             entry.gameObject.SetActive(true);

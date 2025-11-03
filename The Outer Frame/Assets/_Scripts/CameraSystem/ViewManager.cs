@@ -335,6 +335,7 @@ public class ViewManager : MonoBehaviour
     {
         if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView  && !IsStuckInView)
         {
+            if (isGameOver) return;
             OnSitDownSound?.Invoke(this, null);
         }
     }

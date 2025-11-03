@@ -337,6 +337,7 @@ public class SlotController : MonoBehaviour
         LedPanel.SetActive(true);
         StopCoroutine("BlinkTryAbort");
         inBlinkAbortPanel = false;
+        StartCoroutine(DelayedWarp());
     }
 
     public void ActiveTryAbortPanel()
@@ -366,16 +367,15 @@ public class SlotController : MonoBehaviour
         inBlinkAbortPanel = false;
         TryAbortPanel.SetActive(false);
         LedPanel.SetActive(true);
-        if (Wordtxt.IsActive()) Wordtxt.GetComponent<WarpTextExample>().UpdateText();
-        if (Actiontxt.IsActive()) Actiontxt.GetComponent<WarpTextExample>().UpdateText();
+        StartCoroutine(DelayedWarp());
 
     }
 
     IEnumerator DelayedWarp()
     {
         yield return null; // espera 1 frame
-        Wordtxt.GetComponent<WarpTextExample>().UpdateText();
-        Actiontxt.GetComponent<WarpTextExample>().UpdateText();
+        if(Wordtxt.IsActive())Wordtxt.GetComponent<WarpTextExample>().UpdateText();
+        if(Actiontxt.IsActive()) Actiontxt.GetComponent<WarpTextExample>().UpdateText();
     }
 
     public void OnSetVilifyLockedTime(Component sender, object obj)
