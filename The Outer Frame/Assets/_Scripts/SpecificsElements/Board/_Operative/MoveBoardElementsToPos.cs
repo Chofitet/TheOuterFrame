@@ -105,14 +105,14 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
             if (isTaken)
             {
-                StartCoroutine(Delay(InitPos));
+                MoveToPlace(InitPos);
                 isTaken = false;
                 return;
             }
             isPlaced = true;
             toReplece = false;
             OnUpdatingInBoard?.Invoke(this, null);
-            StartCoroutine(Delay(InitPos));
+            MoveToPlace(InitPos);
         }
         catch (NullReferenceException e)
         {
@@ -138,9 +138,8 @@ public class MoveBoardElementsToPos : MonoBehaviour
         isOutOfBoard = true;
     }
 
-    IEnumerator Delay(Vector3 InitPos)
+    void MoveToPlace(Vector3 InitPos)
     {
-        yield return new WaitForSeconds(0f);
         transform.position = InitPos;
 
         Content.SetActive(true);
