@@ -14,7 +14,7 @@ public class LogWindowController : MonoBehaviour
     [SerializeField] GameEvent OnActiveSubjectFilesBTN;
     [SerializeField] TMP_Text NoEntriesText;
     [SerializeField] TMP_Text filterTag;
-
+    WordData LastSearchedWord;
     [SerializeField] GameObject LogContent;
     [SerializeField] RectTransform panel;
 
@@ -161,15 +161,30 @@ public class LogWindowController : MonoBehaviour
     {
         WordData wordData = (WordData)obj;
 
-        foreach(LogEntryController entry in LogEntries)
+        LastSearchedWord = wordData;
+
+        foreach (LogEntryController entry in LogEntries)
         {
             if (entry.GetWord() == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
             
             if (WordsManager.WM.FindWordWithPhoneNum(entry.GetWord()) == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
         }
 
-
     }
+
+    public void RefreshSubjectFilesButton(Component sender, object obj)
+    {
+        if (LastSearchedWord == null) return;
+
+        foreach (LogEntryController entry in LogEntries)
+        {
+            if (entry.GetWord() == LastSearchedWord) OnActiveSubjectFilesBTN?.Invoke(this, null);
+
+            if (WordsManager.WM.FindWordWithPhoneNum(entry.GetWord()) == LastSearchedWord) OnActiveSubjectFilesBTN?.Invoke(this, null);
+        }
+    }
+
+
     bool isDeleting;
     public void DeleteLog(Component Sender, object obj)
     {
