@@ -68,12 +68,22 @@ public class NotebookController : MonoBehaviour
 
         if (LastWordAdded.GetIsAPhoneNumber()) return;
 
+        float delayTime = 0;
+        if (actualView == ViewStates.TVView) delayTime = 0.3f;
+
+
+        StartCoroutine(DelayInstanciate(delayTime, auxIndex, LastWordAdded));
+
+        once = false;
+    }
+
+    IEnumerator DelayInstanciate(float delayTime, int auxIndex, WordData LastWordAdded)
+    {
+        yield return new WaitForSeconds(delayTime);
         GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
         wordaux.GetComponent<NotebookWordInstance>().GetButton().onClick.AddListener(ClearUnderLine);
         wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded, isStarting, ProccessManager);
         WordsInstances.Add(wordaux);
-
-        once = false;
     }
 
     int SearchIndexOfCrossWord(WordData newword)

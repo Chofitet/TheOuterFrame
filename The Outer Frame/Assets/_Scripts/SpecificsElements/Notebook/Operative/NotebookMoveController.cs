@@ -136,8 +136,11 @@ public class NotebookMoveController : MonoBehaviour
                 SetPos(6);
                 break;
             case ViewStates.TVView:
-                SetPos(5,true,null,false,0.35f);
-                dontLeaveNotebook = true;
+                dontLeaveNotebook = false;
+                if (isUp)
+                {
+                    SetPos(0, false);
+                }
                 break;
             case ViewStates.PauseView:
                 dontLeaveNotebook = false;
@@ -178,6 +181,12 @@ public class NotebookMoveController : MonoBehaviour
         SetTransform(Positions[num]);
         isMoving = x;
         currentTarget = Positions[num];
+    }
+
+    public void CallToSetPositionWritingOnTV(Component sender, object obj)
+    {
+        if (lastView != ViewStates.TVView) return;
+        SetPos(5,true);
     }
 
     void SetPos(int num, bool _isUp = true, Transform trans = null, bool isPinchofono = false, float delayToGrab = 0, ViewStates changingView = ViewStates.GeneralView)
@@ -317,7 +326,7 @@ public class NotebookMoveController : MonoBehaviour
     bool isShaking = false;
     public void ShakeNotebook(Component sender, object obj)
     {
-        if (!isUp || isShaking) return;
+        if (!isUp || isShaking || isMoving) return;
         isShaking = true;
 
         shakeSequence = DOTween.Sequence();
