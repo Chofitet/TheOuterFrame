@@ -10,20 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: P.S. BathroomInterrogated
+  m_Name: P.S. BathroomInterrogatedOpen
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: "Someone, clearly doing a falsetto voice, answered from behind the door:
-    \u201Cocupado\u201D...\n\nThat's all we could get."
-  TextForRepetition: "WE SAID:\n\nSomeone, clearly doing a falsetto voice, answered
-    from behind the door: \u201Cocupado\u201D...\n\nThat's all we could get."
+  Text: We do not interrogate places we interrogate sentient beings. So let's find
+    one to that.
+  TextForRepetition: We do not interrogate places we interrogate beings.
+  CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
-    text: ...
-  Conditionals: []
+  - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
+    text: NOPE
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 4db02c4d0e13c29419c319ccd8a753ec, type: 2}
+    ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0

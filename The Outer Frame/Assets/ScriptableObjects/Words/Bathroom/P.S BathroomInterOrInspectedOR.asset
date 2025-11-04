@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21787a5276d74c24e9e60eb8d3299788, type: 3}
+  m_Name: P.S BathroomInterOrInspectedOR
+  m_EditorClassIdentifier: 
+  Conditions:
+  - condition: {fileID: 11400000, guid: 7b1e800768e3b514aa0cd47b25282c8b, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: bbc05f7588f46864387bd528b094ee77, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 20a85c20978553245bc675350e230d45, type: 2}
+    ifNot: 0
