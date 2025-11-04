@@ -579,6 +579,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
             CheckedStateHistory.Add(state);
         }
 
+        if (oldword.GetIsPhoneNumberFound()) SetIsPhoneNumberFound();
+
         ActionsStates = oldword.GetActionStatesList();
     }
 

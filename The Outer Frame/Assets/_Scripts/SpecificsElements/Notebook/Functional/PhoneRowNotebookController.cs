@@ -332,7 +332,7 @@ public class PhoneRowNotebookController : MonoBehaviour
     }
 
    
-    public void TryActiveWord(bool x)
+    public void TryActiveWord(bool x,string isBoard = "")
     {
         if (ActualState == NumberStates.FoundWithWord)
         {
@@ -344,7 +344,18 @@ public class PhoneRowNotebookController : MonoBehaviour
            WordBtn.enabled = x;
         }
 
+        if(ActualState == NumberStates.InactiveWord && isBoard != "Board")
+        {
+            WordBtn.enabled = false;
+        }
+        
         NumBtn.enabled = true;
+
+        if (word.GetPhoneNumber() == "UNLISTED")
+        {
+            WordBtn.enabled = false;
+            NumBtn.enabled = false;
+        }
     }
 
     public void SetInactive(bool x) => isinactive = x;

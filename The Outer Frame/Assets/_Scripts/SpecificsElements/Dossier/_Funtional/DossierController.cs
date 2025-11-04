@@ -99,7 +99,7 @@ public class DossierController : MonoBehaviour
 
         currentState = (ViewStates)obj;
 
-        if (currentState == ViewStates.DossierView) isInDossierView = true;
+        if (currentState == ViewStates.DossierView || currentState == ViewStates.TutorialView) isInDossierView = true;
         else isInDossierView = false;
 
         if (currentState == ViewStates.BoardView)

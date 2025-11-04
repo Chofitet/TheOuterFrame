@@ -276,7 +276,7 @@ public class NotebookPhonesController : MonoBehaviour
         {
             bool isActive = true;
             PhoneRowNotebookController Wordinstance = instanceBTN.GetComponent<PhoneRowNotebookController>();
-            Wordinstance.TryActiveWord(true);
+            Wordinstance.TryActiveWord(true, material);
             Wordinstance.SetInactive(false);
 
             foreach (WordData word in list)
@@ -285,7 +285,7 @@ public class NotebookPhonesController : MonoBehaviour
                 {
                     isActive = false;
                     Wordinstance.SetInactive(true);
-                    Wordinstance.TryActiveWord(false);
+                    Wordinstance.TryActiveWord(false, material);
                 }
             }
             if (isActive)

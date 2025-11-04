@@ -21,7 +21,9 @@ public class TranscriptionCallController : MonoBehaviour
             DisposeBTN.SetActive(true);
             UploadBTN.SetActive(false);
             txtAt.text = $"{TimeManager.timeManager.SubtractMinutesFromTime(TimeManager.timeManager.GetTime(),8).ToString()} to {TimeManager.timeManager.GetTime().ToString()}"; // por el momento, la ventana se crea al momento de imprimirla
-            txtFrom.text = word.GetPhoneNumber();
+
+            if (word) txtFrom.text = word.GetPhoneNumber();
+            else txtFrom.text = "(864) 955-2236";
             return;
         }
 
