@@ -15,6 +15,7 @@ public class PinchofonoManager : MonoBehaviour
     [SerializeField] GameEvent OnCallEndRecording;
     [SerializeField] GameEvent OnCallCatch;
     [SerializeField] GameEvent OnAddEntryLog;
+    [SerializeField] GameEvent OnCallLineInterrupted;
 
     public void SetRecording(Component sender, object obj)
     {
@@ -25,6 +26,8 @@ public class PinchofonoManager : MonoBehaviour
         CountDown.text = minutesToRecording + "00";
         word = WordSelectedInNotebook.Notebook.GetSelectedWord();
     }
+
+    bool triggerInterruptedOnce;
 
     void CounterPassTime()
     {
@@ -68,6 +71,12 @@ public class PinchofonoManager : MonoBehaviour
                     isInterrupted = true;
                 }
             }
+        }
+
+        if(isInterrupted && !triggerInterruptedOnce)
+        {
+            OnCallLineInterrupted?.Invoke(this, null);
+            triggerInterruptedOnce = true;
         }
 
         //Paso de info de la llamada cacheada
