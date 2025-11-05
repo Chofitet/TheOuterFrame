@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: CatatonicLabtested
+  m_Name: HalfACarLabtestedDeandraNotFoundNotGone
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: -5
-  Text: "The results are in! \nThis is a tricky one, she is not just any lady, she
+  ChangeTimeOfAction: -4
+  Text: "The results are in! \nNothing new from the car, whatever halved and flew
+    it up here was very clean, only a slight green descoloration was left where the
+    thing parted with its missing half, but the lab gave us nothing about that. 
+    \n \nAbout the woman... \nThis is a tricky one, she is not just any lady, she
     is the  <link>President of Wankchester, Deandra Monfay</link>.\nWe got the president.
     \nWe got the president on the roof. \n(That sounded so cool) "
   TextForRepetition: 'We already did that, remember?
@@ -25,16 +28,14 @@ MonoBehaviour:
     on your desk or in the DB if you uploaded it.'
   CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: 7428f9f26f7ad644799c9ddcc33e3d1b, type: 3}
-    text: THIS ONE IS IMPORTANT
-  - photo: {fileID: 21300000, guid: 7c6609f8dc3138d4a913b8b79986bd92, type: 3}
-    text: LOOKS LIKE THIS TONIGHT
-  - photo: {fileID: 21300000, guid: 505d0f4b1e958c34fa96173523c8599e, type: 3}
-    text: WE LEARNT THIS WITH SCIENCE
+  - photo: {fileID: 21300000, guid: 88c08bc72691d1142b407096885569f3, type: 3}
+    text: THE PRESIDENT!
+  - photo: {fileID: 21300000, guid: b8c5cfcba522c2f40b083cfc6a3bbef8, type: 3}
+    text: ON A CAR ON A ROOF
   Conditionals:
-  - condition: {fileID: 11400000, guid: badc88481efd1af4ab91797455729431, type: 2}
+  - condition: {fileID: 11400000, guid: c6b94d6ccede2d6458579ed373b30609, type: 2}
     ifNot: 1
-  - condition: {fileID: 11400000, guid: 5dc560e6ed802c149ab3953838b4896f, type: 2}
+  - condition: {fileID: 11400000, guid: 30d9efe40c6d99c419d2bcbfab06ecb9, type: 2}
     ifNot: 1
   ObjectType: 0
   isOrderMatters: 0

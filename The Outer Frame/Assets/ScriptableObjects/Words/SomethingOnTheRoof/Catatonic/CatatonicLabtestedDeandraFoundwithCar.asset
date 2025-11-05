@@ -10,18 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: HalfACarLabtested
+  m_Name: CatatonicLabtestedDeandraFoundwithCar
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
-  isAutomatic: 0
+  isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: <link>Deandra</link>
-  TextForRepetition: 
+  Text: 'We already lab tested her with the car, remember?
+
+    Read our reports.'
+  TextForRepetition: 'We already lab tested her with the car, remember?
+
+    Read
+    our reports.'
+  CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
-    text: SORRY
-  Conditionals: []
+  - photo: {fileID: 21300000, guid: c8abecef37052b34c8728966c818fbb3, type: 3}
+    text: REMEMBER TO READ
+  Conditionals:
+  - condition: {fileID: 11400000, guid: badc88481efd1af4ab91797455729431, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 5dc560e6ed802c149ab3953838b4896f, type: 2}
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: 0
+  ChangeTimeOfAction: -5
   Text: "The results are in! \nThis is a tricky one, she is not just any lady, she
     is the  <link>President of Wankchester, Deandra Monfay</link>.\nWe got the president.
     \nWe got the president on the roof. \n(That sounded so cool)  "
@@ -34,6 +34,8 @@ MonoBehaviour:
   Conditionals:
   - condition: {fileID: 11400000, guid: badc88481efd1af4ab91797455729431, type: 2}
     ifNot: 0
+  - condition: {fileID: 11400000, guid: 5dc560e6ed802c149ab3953838b4896f, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
