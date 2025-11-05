@@ -314,7 +314,7 @@ public class PinchofonoController : MonoBehaviour
         if (view != ViewStates.PinchofonoView && IsInView)
         {
             if (Recording_WaitingForPrint) anim.SetTrigger("padClose");
-            if (Recording_WaitingForPrint && view != ViewStates.OnTakenPaperView) OnClosePhonePadSound?.Invoke(this, null);
+            if (Recording_WaitingForPrint) OnClosePhonePadSound?.Invoke(this, null);
             if (dialingCoroutine != null) StopCoroutine(dialingCoroutine);
         }
 
