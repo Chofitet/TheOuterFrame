@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: LarsInterrogated
+  m_Name: LarsInspectedbEATEN
   m_EditorClassIdentifier: 
-  Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
+  Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: -3
-  Text: "WHAT THE...?\n\nHe spat on my favorite shoe!\n\nWe just wanted to ask him
-    some questions!\n \nWhat a jerk!"
-  TextForRepetition: 'We already tried that, remember?
+  Text: 'He''s not worth it, bro.
 
-    The report is probably
-    on your desk, or in the DB if you uploaded it.'
-  CustomStatus: ATTEMPTED
+    He''s not worth it.'
+  TextForRepetition: 'He''s not worth it, bro.
+
+    He''s not worth it.'
+  CustomStatus: BRO...
   Photos:
-  - photo: {fileID: 21300000, guid: c10862d46987e0544adb3867b03a8fdd, type: 3}
-    text: I REALLY LIKED THAT SHOE . . .
+  - photo: {fileID: 21300000, guid: effdd7e7466579d418f01f69f2c19190, type: 3}
+    text: WE'RE DONE HERE
   Conditionals:
   - condition: {fileID: 11400000, guid: ac625b74a683c6f45ba3d28bb8280594, type: 2}
-    ifNot: 1
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0

@@ -10,24 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: LarsHackedAfterPicFound
+  m_Name: LarsHackedBefore
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
-  state: {fileID: 11400000, guid: ae0892713d245034ab08c250774b4a08, type: 2}
+  state: {fileID: 11400000, guid: 6652aa02f9d4bd448923cfc07fed5879, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: 0
-  Text: "Oh, boy, do we got some dirt on him.\nBut we are OK for now. \nHe learned
-    enough lessons today."
+  ChangeTimeOfAction: -2
+  Text: 'Oh, boy, do we got some dirt on him.
+
+
+    Maybe we can extort him into
+    give us the pictures, or we''ll make his dirty laundry public. '
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: e06a638f6a0c6b145a751b4532918535, type: 3}
-    text: ENOUGH FOR TODAY
+  - photo: {fileID: 21300000, guid: a21473e66381ecb4f94e1128b63c5081, type: 3}
+    text: MMMH
+  - photo: {fileID: 21300000, guid: 2dd7fde01fe193844a6e994f56257338, type: 3}
+    text: HACKED!
   Conditionals:
-  - condition: {fileID: 11400000, guid: 030762016c963a54a98175f01d4b4506, type: 2}
-    ifNot: 0
+  - condition: {fileID: 11400000, guid: ac625b74a683c6f45ba3d28bb8280594, type: 2}
+    ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0

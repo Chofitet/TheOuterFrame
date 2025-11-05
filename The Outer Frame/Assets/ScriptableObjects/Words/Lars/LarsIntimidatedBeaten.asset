@@ -10,19 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: HalfACarCommited
+  m_Name: LarsIntimidatedBeaten
   m_EditorClassIdentifier: 
-  Action: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
-  state: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
+  Action: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
+  state: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: We can't institutionalize half a car. It would look bad on us.
-  TextForRepetition: It's half a normal car. Boss, we need you to get real.
-  CustomStatus: 
+  Text: 'He''s not worth it, bro.
+
+    He''s not worth it.'
+  TextForRepetition: 'He''s not worth it, bro.
+
+    He''s not worth it.'
+  CustomStatus: BRO...
   Photos:
-  - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
-    text: NIET
-  Conditionals: []
+  - photo: {fileID: 21300000, guid: effdd7e7466579d418f01f69f2c19190, type: 3}
+    text: WE'RE DONE HERE
+  Conditionals:
+  - condition: {fileID: 11400000, guid: ac625b74a683c6f45ba3d28bb8280594, type: 2}
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
