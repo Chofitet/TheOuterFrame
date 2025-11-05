@@ -10,24 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: CatatonicGetRidOF
+  m_Name: CatatonicInspectedBrainwashed
   m_EditorClassIdentifier: 
-  Action: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
-  state: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
+  Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: 0
-  Text: 'She is gone.
+  ChangeTimeOfAction: -2
+  Text: 'Whatever she experienced sent her into deep shell-shocked state. and then
+    we came along and wiped her mind clean.
 
-    It''s a nice  farm, she''ll like it.'
+
+    Her pockets are empty, she carries
+    no possessions with her whatsoever. Who travels like that?'
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
     on your desk or in the DB if you uploaded it.'
   CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
-    text: GOOD RIDDANCE!
-  Conditionals: []
+  - photo: {fileID: 21300000, guid: 68750a6ee9ebd9c4087734702596ebb9, type: 3}
+    text: WHO IS SHE?
+  Conditionals:
+  - condition: {fileID: 11400000, guid: badc88481efd1af4ab91797455729431, type: 2}
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
