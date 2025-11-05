@@ -18,10 +18,13 @@ MonoBehaviour:
   ChangeTimeOfAction: 0
   Text: 
   TextForRepetition: 
+  CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
-    text: VOID
-  Conditionals: []
+  - photo: {fileID: 21300000, guid: 7c6609f8dc3138d4a913b8b79986bd92, type: 3}
+    text: 
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 5d29826a0ce168243a814ce8cf5cfdf6, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
