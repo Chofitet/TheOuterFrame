@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 0}
   headline: 
-  headlineTwoLines: 'FIRST ANONYMOUS TIPPER
+  headlineTwoLines: 'FIRST "ANONYMOUS" TIPPER
 
     TURNED INSANE'
   text: ORIGINAL WITNESS OF <link>ROAD 54</link> CRASH WAS DECLARED NOT COMPOS MENTIS
     AND LOCKED IN AN INSTITUTION FOR PEOPLE LIKE THAT. WHAT DOES IT MEAN TO OUR BELIEFS?
+  newType: 0
+  CustomAclarationAlert: 
   image: {fileID: 21300000, guid: 50d54830966e9044d972377d9ffa29e9, type: 3}
   channel: 1
   priority: 5
@@ -29,3 +31,9 @@ MonoBehaviour:
   Conditions:
   - condition: {fileID: 11400000, guid: a2bcd5b78c01c6245ad1d5a06afabf42, type: 2}
     ifNot: 0
+  - condition: {fileID: 11400000, guid: 382c6c9e4921afd4395a695cd3856137, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 61f535fbe31f5874dac08a506420d314, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: c3a15873311c6484fa6cb4c69d6a02b2, type: 2}
+    ifNot: 1

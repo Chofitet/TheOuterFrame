@@ -10,28 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: P.S. BathroomInspected
+  m_Name: P.S. BathroomInspectedAlreadyOpen
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
-  isAutomatic: 0
-  ChangeTimeOfAction: -4
-  Text: 'The bathroom door is closed.
-
-    Its frame goes over the door, so you can''t
-    unlock it by slipping a card inside the gap and jiggling it.
-
-    We need a key
-    to access it.'
-  TextForRepetition: 'We already tried that, remember?
-
-    The report is probably
-    on your desk, or in the DB if you uploaded it.'
-  CustomStatus: ATTEMPTED
+  isAutomatic: 1
+  ChangeTimeOfAction: 0
+  Text: "We already did that, remember? We went in and described it to you. \nThe
+    report is probably on your desk, or in the DB if you uploaded it."
+  TextForRepetition: "We already did that, remember? We went in and described it
+    to you. \nThe report is probably on your desk, or in the DB if you uploaded it."
+  CustomStatus: REDUNDANT
   Photos:
-  - photo: {fileID: 21300000, guid: 040b71834a88bc14089dd0785d07ff41, type: 3}
-    text: SHUT
-  Conditionals: []
+  - photo: {fileID: 21300000, guid: c8abecef37052b34c8728966c818fbb3, type: 3}
+    text: READ THE REPORTS
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 4db02c4d0e13c29419c319ccd8a753ec, type: 2}
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
