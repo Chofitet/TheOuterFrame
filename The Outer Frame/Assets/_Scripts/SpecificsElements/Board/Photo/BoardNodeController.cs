@@ -42,7 +42,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         else return false;
     }
 
-        void ActiveChildPosits()
+        /*void ActiveChildPosits()
     {
         foreach(MoveBoardElementsToPos posit in PostIts)
         {
@@ -55,7 +55,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
                 Canvas.SetActive(false);
             }
         }
-    }
+    }*/
 
     bool CheckRetroactiveWordWasPlaced() 
     {
