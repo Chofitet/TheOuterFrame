@@ -149,6 +149,8 @@ public class ReportController : MonoBehaviour
         if (report.GetDeleteDBRepoert())
         {
             photoQR.Set(photoInfo[0]?.text, photoInfo[0]?.photo);
+            UploadBTN.gameObject.SetActive(false);
+            DisposeBTN.gameObject.SetActive(false);
             return;
         }
 
