@@ -120,14 +120,14 @@ public class ViewManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+       /* if (Input.GetKeyDown(KeyCode.Alpha1))
             TimeGameOver();
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
             AlertGameOver();
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
-            AnyAgentGameOver();
+            AnyAgentGameOver();*/
     }
 
     void CheckForBackToGeneralView()
@@ -399,6 +399,7 @@ public class ViewManager : MonoBehaviour
         if (currentviewState == ViewStates.BoardView) callback?.Invoke();
 
     }
+   
     [ContextMenu("Trigger Time GameOver")]
     public void TimeGameOver()
     {
