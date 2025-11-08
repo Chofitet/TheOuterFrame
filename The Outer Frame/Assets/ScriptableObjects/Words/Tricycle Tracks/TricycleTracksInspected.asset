@@ -15,17 +15,19 @@ MonoBehaviour:
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: -2
-  Text: "Those tracks do go on for long distance.\n\nMaybe we should send someone
-    to follow the trail. \n\nBut, hey, that's just my idea."
-  TextForRepetition: "WE SAID:\n\nThose tracks do go on into the horizon.\n\nMaybe
-    we should send someone to follow the trail. \n\nBut, hey, that's just my idea."
+  ChangeTimeOfAction: 9
+  Text: "That was quite the walk!\nThose tracks did go on for a long distance but
+    they faded near a crossroads, there's no way of knowing where the tricyclist
+    went from there. \n \nWe found a <link>cellphone</link> dropped on the side of
+    the road. Maybe it belong to the tricyclist?"
+  TextForRepetition: "We already did that, remember? \nThe report is probably on
+    your desk or in the DB if you uploaded it."
   CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: a21473e66381ecb4f94e1128b63c5081, type: 3}
-    text: THAT WOULD BE QUITE THE WALK
+  - photo: {fileID: 21300000, guid: 64b1c85ac6bd31b41a942622f610dc72, type: 3}
+    text: BUT WHOSE?
   Conditionals:
-  - condition: {fileID: 11400000, guid: 00aeffdb0efc8714184fb5f8fb9701c8, type: 2}
+  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
     ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
