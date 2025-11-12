@@ -41,6 +41,16 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
     [NonSerialized] TimeData CachedStartTime;
     [NonSerialized] TimeData CachedFinishTime;
 
+    public void ResetScriptableObject()
+    {
+        isCatch = false;
+        isInterrupted = false;
+        word = null;
+        wasEnterToDataBase = false;
+        CachedStartTime = new TimeData(0, 0, 0);
+        CachedFinishTime = new TimeData(0, 0, 0);
+    }
+
     public string GetDialogue() {
         if (!isInterrupted) return Dialogue;
         else return IterruptedDialogue;
@@ -76,13 +86,7 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
         ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
     }
 
-    public void ResetScriptableObject()
-    {
-        isCatch = false;
-        isInterrupted = false;
-        word = null;
-        wasEnterToDataBase = false;
-    }
+   
 
     public void SetWord(WordData _word)
     {

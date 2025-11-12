@@ -251,6 +251,7 @@ public class ViewManager : MonoBehaviour
             case ViewStates.PinchofonoView:
                 if (isGameOver) return;
                 if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
+                TimeManager.timeManager.NormalizeTime();
                 OnNotebookTake.Invoke(this, true);
                 OnPinchofonoView?.Invoke(this, null);
                 break;
