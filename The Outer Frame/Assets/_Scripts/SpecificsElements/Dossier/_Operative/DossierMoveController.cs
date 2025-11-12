@@ -85,6 +85,7 @@ public class DossierMoveController : MonoBehaviour
             })
             .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, 0.5f)
                 .SetEase(Ease.InQuart))
+            .InsertCallback(0.3f, () => OnEnableInput?.Invoke(this, null))
             .OnComplete(() =>
             {
                 // Detenemos el seguimiento al finalizar el movimiento
@@ -92,7 +93,6 @@ public class DossierMoveController : MonoBehaviour
                 isAddingIdea = false;
                 AddIdeaSequence.Kill();
                 DossierAnim.ResetTrigger("open");
-                OnEnableInput?.Invoke(this, null);
             })
             .AppendInterval(0.2f)
             .AppendCallback(() => isFollowingTarget = false);

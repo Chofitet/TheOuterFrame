@@ -82,7 +82,7 @@ public class HyperlinksManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogError("Error instantiating findable words: " + ex.Message);
+            Debug.LogWarning("Error instantiating findable words: " + ex.Message);
         }
 
         foreach (var obj in deactivatedParents)

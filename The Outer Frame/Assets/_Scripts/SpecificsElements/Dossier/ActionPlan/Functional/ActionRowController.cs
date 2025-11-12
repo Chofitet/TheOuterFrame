@@ -73,15 +73,30 @@ public class ActionRowController : MonoBehaviour
 
     void ClickButton()
     {
+        if (btn == null) return;
         btn.onClick.Invoke();
     }
 
     public void OnButtonClick()
     {
         if(!isInView) return;
-        toggle.isOn = true;
-        btn.enabled = false;
-        if (isSpecialAction) return;
+
+        //btn.enabled = false;
+        if (isSpecialAction)
+        {
+            if (!toggle.isOn) Invoke("CheckToggle", 0.01f);
+            else Invoke("UnCheckToggle", 0.01f);
+            return;
+        }
+
+        if (!toggle.isOn) buttonCheck();
+        else buttonUncheck();
+
+    }
+
+    void buttonCheck()
+    {
+        Invoke("CheckToggle", 0.01f);
         if (Word)
         {
             Wordtext.text = Word.GetForm_DatabaseNameVersion();
@@ -93,16 +108,20 @@ public class ActionRowController : MonoBehaviour
         if (isSpecialAction) Wordtext.text = "";
     }
 
+    void buttonUncheck()
+    {
+        Invoke("UnCheckToggle", 0.01f);
+    }
+
     public Button GetButton() { return btn; }
 
     public StateEnum GetState() { return state; }
 
     public void ResetRow()
     {
-        EraseParticles.GetComponent<ParticleSystem>().Stop();
-        if (!toggle.isOn) return;
         toggle.isOn = false;
-        btn.enabled = true;
+        if (!fade.GetisVisible()) return;
+        EraseParticles.GetComponent<ParticleSystem>().Stop();
         fade.StopAllCoroutines();
         fade.StartEffect(false);
         fade.OnEraseProgress += eraseParticles;
@@ -153,6 +172,10 @@ public class ActionRowController : MonoBehaviour
     public void CheckToggle()
     {
         toggle.isOn = true;
+    }
+    public void UnCheckToggle()
+    {
+        toggle.isOn = false;
     }
 
     public bool GetIsOn() { return toggle.isOn; }

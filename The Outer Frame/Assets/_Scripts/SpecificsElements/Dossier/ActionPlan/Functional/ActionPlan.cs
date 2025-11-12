@@ -70,10 +70,27 @@ public class ActionPlan : MonoBehaviour
         }
 
         isOneToggleSelected = true;
+        bool exit = false;
         foreach (ActionRowController actions in Actions)
         {
             if (script != actions) actions.ResetRow();
-            else state = script.GetState();
+            else
+            {
+                state = script.GetState();
+                if (script.GetIsOn())
+                {
+                    actions.ResetRow();
+                    shakeBtn.SetActive(true);
+                    ApproveBtn.enabled = false;
+                    exit = true;
+                    isOneToggleSelected = false;
+                    
+                    continue;
+                }
+
+            }
+            if (exit) return;
+            
         }
 
         if (state.GetSpecialActionWord())
