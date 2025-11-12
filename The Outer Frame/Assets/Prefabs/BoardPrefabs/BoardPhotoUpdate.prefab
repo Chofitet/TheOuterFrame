@@ -119,7 +119,6 @@ GameObject:
   - component: {fileID: 2026840213866759353}
   - component: {fileID: 7592711892175250257}
   - component: {fileID: 8359997375648762852}
-  - component: {fileID: 7255674150207087579}
   m_Layer: 10
   m_Name: BoardPhotoUpdate
   m_TagString: Untagged
@@ -157,6 +156,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnPlaceInBoardSound: {fileID: 11400000, guid: 239b3774ae998464b90f44d0666542e4, type: 2}
   IsAUpdatedPhoto: 1
+  OnUpdatingInBoard: {fileID: 11400000, guid: e31034c2e7753a34f9c42528e1a404cc, type: 2}
+  OnUpdatingBoardPlacedFinish: {fileID: 0}
+  OnMarkAsMoving: {fileID: 11400000, guid: d4e028fc3350af74e9107d98ee16189a, type: 2}
 --- !u!114 &7592711892175250257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +175,7 @@ MonoBehaviour:
   Conditionals: []
   ifNot: 
   isOrderMatters: 0
+  TypeElement: 1
 --- !u!114 &8359997375648762852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: 7f143592d7fb409418f55a1a3b31360f, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 369ecb43b40bb464eb8a84d890c21e4a, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
@@ -202,41 +205,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  DelayCall: 0.5
-  _float: 0
-  _string: 
---- !u!114 &7255674150207087579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2909088921274980068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: d499567c621b84a419ae5c2254689050, type: 2}
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2026840213866759353}
-        m_TargetAssemblyTypeName: MoveBoardElementsToPos, Assembly-CSharp
-        m_MethodName: UpdateFinalPositionRotation
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
 --- !u!1 &5353314535868234696
 GameObject:
   m_ObjectHideFlags: 0

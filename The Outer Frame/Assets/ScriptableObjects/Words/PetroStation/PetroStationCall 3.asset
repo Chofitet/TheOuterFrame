@@ -13,24 +13,23 @@ MonoBehaviour:
   m_Name: PetroStationCall 3
   m_EditorClassIdentifier: 
   StartHour: 5
-  StartMinute: 5
+  StartMinute: 13
   EndHour: 5
-  EndMinute: 25
+  EndMinute: 42
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: PETRO STATION'S PHONE
   To: 
-  Dialogue: 'BOY - ARE YOU A PERSISTENT KIND OF FELLA - - - - - - MY BOSS WOULD TOTALLY
-    KILL ME - - IM NOT MAKING IT UP - I THINK HE''S CONNECT - - - SORRY - FORGET
-    ABOUT IT - - - - - - - - - - - WELL YEAH - - IM SORRY - - IF THATS ALL - - HAVE
-    A PETRO GOOD DAY (END OF CALL)
+  Dialogue: 'BOY - ARE YOU A PERSISTENT KIND OF FELLA - - - - - - IM NOT MAKING IT
+    UP - IT WAS <link>SOMETHING BIG</link> I TELL YOU - - SORRY - FORGET ABOUT IT
+    - - - - - - - - - - - WELL YEAH - - IM SORRY - - IF THATS ALL - - HAVE A PETRO
+    GOOD DAY #[END OF THE CALL]
 
 '
-  IterruptedDialogue: 'BOY - ARE YOU A PERSISTENT KIND OF FELLA - - - - - - MY BOSS
-    WOULD TOTALLY KILL ME - - IM NOT MAKING IT UP - I THINK HE''S CONNECT - - - SORRY
-    - FORGET ABOUT IT - - - - - - - - - - - WELL YEAH - - IM SORRY - - IF THATS ALL
-    - - HAVE A PETRO GOOD DAY (END OF CALL)
+  IterruptedDialogue: 'BOY - ARE YOU A PERSISTENT KIND OF FELLA - - - - - - IM NOT
+    MAKING IT UP - IT WAS <link>SOMETHING BIG</link> I TELL - - - SORRY  I HAVE TO
+    HANG UP SOMEONES H#[END OF THE CALL]
 
 '
   Involved:

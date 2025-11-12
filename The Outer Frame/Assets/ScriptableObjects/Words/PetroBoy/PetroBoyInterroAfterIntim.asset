@@ -16,25 +16,35 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 0b1149f4527d0e548b66028eff91b4db, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "The boy swears he saw nothing.  \r\n\r\n\"Leave the register alone? My boss
-    would kill me!\"  \r\n\r\nBut he HEARD it all. \r\n\rIn short: around 5 to 4
-    AM there were some weird mooing sounds, \u201Csome special cow must have escaped\u201D,
-    followed by a sudden screech of tires, and then <link>something BIG</link> crashed.
-    \u201CIt sounded like a boulder struck something kinda crash\". \r\n\r\nThere
-    was a long silence after that. Interrupted by screaming and a deafening roar.\r\n\"Something
-    was mean angry out there.\" \r\nIt sounded like a small stampede passed by. \r\nAnd
-    then nothing. \r\n\r\nAlso: he is the one who called the news... \n\r\nBut after
-    that talk we already had there\u2019s no need to worry about him spilling the
-    beans. \r\n"
-  TextForRepetition: We already did that, please refer to the corresponding report.
+  Text: "The boy saw nothing. \n\"Leave the register alone?My boss would kill me!\"\r\n\rBut
+    he heard it all. \r\n\rAround 4 AM there were some weird mooing sounds, \u201CI
+    thought maybe some <link>special cow</link> escaped or something, but then there
+    were this loud screeching, and <link>something BIG</link> like mostly big crashed.\"
+    \n\"I don't know what I heard later... it sounded like people, animals, cars,
+    everything all at once, like a slow explosion. And then <link>something got on
+    the roof</link>.\" \n\"You guys seem to know... How screwed are we?\"\r"
+  TextForRepetition: 'We already did that, remember?
+
+    The report is probably
+    on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: 50d54830966e9044d972377d9ffa29e9, type: 3}
+  - photo: {fileID: 21300000, guid: 5dfe1970298c9b746b852d7351293d9c, type: 3}
     text: HE SWEARS TO IT
+  - photo: {fileID: 21300000, guid: be6bcbbf15ffe4849aa97f348f1c5b52, type: 3}
+    text: HOW SPECIAL?
+  - photo: {fileID: 21300000, guid: af9bfbc22f7c3de47a5c5f442b74c1dd, type: 3}
+    text: 
+  - photo: {fileID: 21300000, guid: 8096278ea5e1c524e95cd5cb58d9df55, type: 3}
+    text: HOW BIG?
+  - photo: {fileID: 21300000, guid: af9bfbc22f7c3de47a5c5f442b74c1dd, type: 3}
+    text: UP THERE?
   Conditionals:
   - condition: {fileID: 11400000, guid: 2fc580847f09a9a4cb77028e0cd372d7, type: 2}
     ifNot: 0
   - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
     ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0

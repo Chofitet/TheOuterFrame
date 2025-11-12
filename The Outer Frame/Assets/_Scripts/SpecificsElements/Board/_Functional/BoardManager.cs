@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
@@ -16,11 +17,21 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnPlaced4WordsInBoard;
     [SerializeField] MoveBoardElementsToPos[] SetInTutorial;
     [SerializeField] StringConnectionController[] ConnectInTutorial;
+    [SerializeField] GameEvent OnEnableInput;
+    [SerializeField] GameEvent OnDisableInput;
+
+    [Header("CallsToUpdate")]
+    [SerializeField] GameEvent OnInactiveIdeas;
+    [SerializeField] GameEvent OnUpdatePhotoUpdate;
+    [SerializeField] GameEvent OnUpdateConnections;
+    [SerializeField] GameEvent OnUpdatePosits;
+    [SerializeField] GameEvent OnUpdateIdeas;
+    
+
     int WordsCounts;
     bool IsInView;
     bool isInTutorial;
-
-
+    Coroutine updateCorrutine;
     public void StateView(Component sender, object obj)
     {
         ViewStates view = (ViewStates)obj;
@@ -28,9 +39,10 @@ public class BoardManager : MonoBehaviour
         if (view == ViewStates.BoardView)
         {
             IsInView = true;
-            OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
+            if (updateCorrutine != null) StopCoroutine(updateCorrutine);
+            updateCorrutine = StartCoroutine(UpdateCycle(0.5f));
             OnRefreshInfoInBoard?.Invoke(this, null);
-            OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
+            
         }
         else IsInView = false;
     }
@@ -40,7 +52,9 @@ public class BoardManager : MonoBehaviour
         if (!IsInView) return;
         OnBoardPlacedPhotos?.Invoke(null, StartPos.position);
         OnAutoUpdatePreviusPhoto?.Invoke(null, StartPos.position);
-        Invoke("Conections", 0.6f);
+        //Invoke("Conections", 0.6f);
+        if(updateCorrutine != null) StopCoroutine(updateCorrutine);
+        updateCorrutine = StartCoroutine(UpdateCycle(0));
         WordsCounts += 1;
         if (WordsCounts == 4 && isInTutorial) OnPlaced4WordsInBoard?.Invoke(this, null);
     }
@@ -58,6 +72,7 @@ public class BoardManager : MonoBehaviour
         OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
         OnRefreshInfoInBoard?.Invoke(this, null);
         OnRefreshNotebook?.Invoke(this, null);
+        
     }
 
     public void SetIsInTutorial(Component sender, object obj)
@@ -87,5 +102,85 @@ public class BoardManager : MonoBehaviour
             if (!BoardElement) continue;
             BoardElement.ConnectDirectly();
         }
+    }
+
+    public void UpdatingSomethingInBoard(Component sender, object obj)
+    {
+        //if (!isInUpdatingTime) return;
+       // StartCoroutine(WaitUpdating());
+    }
+
+    IEnumerator WaitUpdating()
+    {
+        OnDisableInput.Invoke(this, null);
+        yield return new WaitForSeconds(0.5f);
+        OnEnableInput?.Invoke(this, null);
+    }
+
+    IEnumerator UpdateCycle(float waitTime)
+    {
+        int cycles = 0;
+
+        
+        yield return new WaitForSeconds(waitTime);
+       
+        while (cycles < 3)
+        {
+            yield return StartCoroutine(UpdateElements());
+            OnRefreshNotebook?.Invoke(this, null);
+            cycles++;
+        }
+
+        OnEnableInput.Invoke(this, null);
+        
+        WaitPhotoUpdate = 0;
+        WaitPosit = 0;
+        WaitIdeas = 0;
+    }
+
+    IEnumerator UpdateElements()
+    {
+        if (!IsInView) yield break;
+        OnDisableInput.Invoke(this, null);
+        OnInactiveIdeas?.Invoke(this, null);
+        OnUpdatePhotoUpdate?.Invoke(this, StartPos.position);
+        yield return new WaitForSeconds(WaitPhotoUpdate);
+        OnUpdatePosits.Invoke(this, StartPos.position);
+        yield return new WaitForSeconds(WaitPosit);
+        OnUpdateIdeas.Invoke(this, StartPos.position);
+        yield return new WaitForSeconds(WaitIdeas);
+        //OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
+
+    }
+
+    float WaitPhotoUpdate = 0f;
+    float WaitPosit = 0f;
+    float WaitIdeas = 0f;
+
+    public void ActualTypeOfElementMoving(Component sender, object obj)
+    {
+        BoardType typeOf = (BoardType) obj;
+
+        WaitPhotoUpdate = 0;
+        WaitPosit = 0;
+        WaitIdeas = 0;
+
+        if (typeOf == BoardType.photoUpdate)
+        {
+            WaitPhotoUpdate = 0.3f;
+        }
+        else if(typeOf == BoardType.posit)
+        {
+            WaitPosit = 0.3f;
+        }
+        else if(typeOf == BoardType.posit)
+        {
+            WaitIdeas = 0.3f;
+        }
+    }
+
+    public void MadeConnections(Component sender, object obj)
+    {
+        OnUpdateConnections?.Invoke(this, null);
     }
 }

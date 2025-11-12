@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75cd8a0f1fed7a747adc9ae31f7f430a, type: 3}
   m_Name: IDEA.ConfrontBenAboutBombState
   m_EditorClassIdentifier: 
-  InfinitiveVerb: Confront Ben about bomb-related suspicions
-  Actioning: Confronting Ben about bomb-related suspicions
-  Actioned: Confronted Ben about bomb-related suspicions
+  InfinitiveVerb: Confront Ben about bomb-related findings
+  Actioning: Confronting Ben about bomb-related findings
+  Actioned: Confronted Ben about bomb-related findings
   TimeToComplete: 1
   TimeToShowNew: 0
   observationtxt: 
-  Agent: {fileID: 0}
   IdeaWordData: {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
   IdeaVerb: Confronting
   IdeaWord: Ben about bomb
+  InactiveConditionals:
+  - condition: {fileID: 11400000, guid: 75c5b87041f09a343ab1d2a919a96305, type: 2}
+    ifNot: 0

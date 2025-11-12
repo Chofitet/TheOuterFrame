@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BenBenjiCall 1
   m_EditorClassIdentifier: 
   StartHour: 7
-  StartMinute: 36
-  EndHour: 7
-  EndMinute: 50
+  StartMinute: 45
+  EndHour: 8
+  EndMinute: 4
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
@@ -24,10 +24,10 @@ MonoBehaviour:
   Dialogue: ' I DIDNT TELL ANYONE - - - - - -  YOU KNOW THAT <link>TOOTSIE</link>
     - - - - - - - - - - ITS OBVIOUS - - - YEAH- - - - - -WE CAN KEEP QUIET - - -
     - - -  YOU SURE - - - - - BUT WE CANT GET THEM BACK - - - - - - - - IF THEY 
-    SHOW THEM (END OF RECORDING)'
+    SHOW THEM #[END OF RECORDING]'
   IterruptedDialogue: ' I DIDNT TELL ANYONE - - - - - -  YOU KNOW THAT <link>TOOTSIE</link>
     - - - - - - - - - - ITS OBVIOUS - - - YEAH- - - - - -WE CAN - - EH - - - - -
-    -  - SOMEONE IS HERE - - I HAVE TO GO (END OF CALL)'
+    -  - SOMEONE IS HERE - - I HAVE TO GO #[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: 754487f661e18d9449ce2c8061cb18e5, type: 2}
   - {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
@@ -43,5 +43,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 8655e66a7e432b84f8e498da5f99d1f1, type: 2}
     ifNot: 1
   - condition: {fileID: 11400000, guid: f99d34e23986a5040bca1decfc381a31, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 85211dd3667991d45863f0ca4dcd6fa6, type: 2}
     ifNot: 1
   isOrderMatters: 0

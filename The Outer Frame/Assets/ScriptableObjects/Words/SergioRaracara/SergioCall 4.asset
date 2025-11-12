@@ -12,24 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: SergioCall 4
   m_EditorClassIdentifier: 
-  StartHour: 6
-  StartMinute: 49
-  EndHour: 7
-  EndMinute: 15
+  StartHour: 5
+  StartMinute: 26
+  EndHour: 5
+  EndMinute: 41
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: SERGIO RARACARA'S PHONE
   To: 
-  Dialogue: '- - - THINGS ARE GETTING MORE AND MORE AGITADED OUTSIDE - - - - - -
-    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    - - - - - - - - - - - - - - - MAYBE I SHOULD GO OUTSIDE OF <link>THE STATION
-    BRATHROOM</link> - - - (END OF THE CALL)'
-  IterruptedDialogue: '- - - THINGS ARE GETTING MORE AND MORE AGITADED OUTSIDE -
-    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    - - - - - - - - WHAT THE  (END OF CALL)'
+  Dialogue: '- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    - - - - - - - - - - - - - - -  YUP ITS ME - - - - - - - - - STILL OKAY - - -
+    BUT -  THERE''S A LOT OF NOISE OUTSIDE - - - - SO ILL KEEP QUIET FOR A LIL WHILE
+    - - - - - - - - HOPE THEY DONT GET INSIDE - - - - - - - - - - - - WHERE ARE YOU
+    - -  - - - - - - - #[END OF THE CALL]'
+  IterruptedDialogue: '- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    - - - - - - - - - - - - - - - - - - - -  YUP ITS ME - - - - - - - - - STILL OKAY
+    - - - BUT -  THERE''S A LOT OF NOISE OUTSIDE - - - - SO ILL KEEP QUIET FOR A
+    LIL WHILE - - - - - - - - HOPE THEY DONT GET INSIDE - - - - - - - - - - - - WHERE
+    - SOMEONES IS GETTING IN#[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: d7e0ff8badff61546818ab28ba2ce877, type: 2}
+  - {fileID: 11400000, guid: 6c8d83f53ba650e4b914c1a546741c7f, type: 2}
   Conditions:
   - condition: {fileID: 11400000, guid: 4db02c4d0e13c29419c319ccd8a753ec, type: 2}
     ifNot: 1

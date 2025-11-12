@@ -52,8 +52,9 @@ public class StringConnectionController : MonoBehaviour
     public void CheckConnection(Component sender, object obj)
     {
        if (isConnected) return;
-       if (Node1.GetIsPlaced() && Node2.GetIsPlaced() && CheckForConditionals())
+       if (Node1.GetIsPlacedFinish() && Node2.GetIsPlacedFinish() && CheckForConditionals())
         {
+            if (GetComponentInParent<BoardStringsGroup>().CheckIfOtherStringArePlaced(this.gameObject)) return;
             if (!once)
             {
                 AnimPin2.transform.position = startPosPin1;

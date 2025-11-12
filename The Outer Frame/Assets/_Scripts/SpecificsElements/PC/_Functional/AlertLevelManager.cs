@@ -8,6 +8,7 @@ public class AlertLevelManager : MonoBehaviour
 {
     [SerializeField] int InitAlertLevel;
     [SerializeField] TMP_Text NumLevel;
+    [SerializeField] TMP_Text AclarationText;
     [SerializeField] BlinkMaterialEffect Led;
     [ColorUsage(true, true)] [SerializeField] Color IncreaseColor;
     [ColorUsage(true, true)] [SerializeField] Color DecreaseColor;
@@ -18,6 +19,7 @@ public class AlertLevelManager : MonoBehaviour
     float timeFactor = 1;
     int level;
     bool isStoped;
+    int maxLevel = 100;
 
     private void OnEnable()
     {
@@ -28,11 +30,12 @@ public class AlertLevelManager : MonoBehaviour
     public void UpdateNum(Component sender, object obj)
     {
         if (isStoped) return;
-        int incruseNum = (int)obj;
-        int auxIncruise = level + incruseNum;
+        AlertData data = (AlertData)obj;
+        int auxIncruise = level + data.IncruseNum;
+        if(data.AclarationText != "") AclarationText.text = data.AclarationText;
         if (level < 0) level = 1;
         DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
-            if (auxIncruise >= 100)
+            if (auxIncruise >= maxLevel)
             {
                 Invoke("end", 0.2f);
             }
@@ -43,12 +46,12 @@ public class AlertLevelManager : MonoBehaviour
             return;
         }
 
-        if (incruseNum > 0)
+        if (data.IncruseNum > 0)
         {
             Led.SetSpecificColor(IncreaseColor);
             OnUpAlertLevel?.Invoke(this, null);
         }
-        else if (incruseNum < 0)
+        else if (data.IncruseNum < 0)
         {
             Led.SetSpecificColor(DecreaseColor);
             OnDownAlertLevel?.Invoke(this, null);
@@ -69,10 +72,35 @@ public class AlertLevelManager : MonoBehaviour
     private void Update()
     {
         NumLevel.text = level + "%";
+
+       /* if (Input.GetKeyDown(KeyCode.G))
+        {
+            maxLevel = 1000;
+            NumLevel.text = "1000%";
+        }*/
     }
+
+
 
     public void AccelerateAnims(Component sender, object obj)
     {
         timeFactor = (float)obj;
+
+        
+    }
+
+
+}
+
+
+public class AlertData
+{
+    public int IncruseNum;
+    public string AclarationText;
+
+    public AlertData(int incruseNum, string aclarationText)
+    {
+        IncruseNum = incruseNum;
+        AclarationText = aclarationText;
     }
 }

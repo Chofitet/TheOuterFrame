@@ -15,8 +15,14 @@ public class PCWikiController : MonoBehaviour
     [SerializeField] List<GameObject> DataBaseFields = new List<GameObject>();
     [SerializeField] GameObject WikiInfoContent;
     List<GameObject> FIeldsInWikiInfo = new List<GameObject>();
+    [SerializeField] GameObject LoadScreen;
     DataBaseType input;
     bool once;
+
+    private void Start()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
 
     private void OnEnable()
     {
@@ -71,16 +77,15 @@ public class PCWikiController : MonoBehaviour
 
     IEnumerator Delay(DataBaseType input)
     {
+        LoadScreen.SetActive(true);
         yield return new WaitForSeconds(0.2f);
         WikiInfoContent.SetActive(true);
         if (input.GetText() != null) WikiData.text = input.GetText();
         
         FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);
-
         HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
-
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
-        WikiInfoContent.SetActive(true);
+        //WikiInfoContent.SetActive(true);
         image.sprite = input.GetImage();
         CompleteFields();
         content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, WikiData.GetComponent<RectTransform>().sizeDelta.y);
@@ -89,9 +94,11 @@ public class PCWikiController : MonoBehaviour
             PhotoField.SetActive(false);
         }
         else PhotoField.gameObject.SetActive(true);
-    
+
         WikiInfoContent.SetActive(CheckFieldsInWikiInfoContent());
-        
+
+        LoadScreen.SetActive(false);
+
         //PhoneNumber.text = input.GetPhoneNum();
         //FindableWordsManager.FWM.InstanciateFindableWord(PhoneNumber);
     }
@@ -161,6 +168,7 @@ public class PCWikiController : MonoBehaviour
             auxText.text = auxDictionary[i];
             InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(auxText);
             FindableWordsManager.FWM.InstanciateFindableWord(DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>(),FindableBtnType.FindableBTN);
+            HyperlinksManager.HLM.InstanciateHyperLink(DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>(), FindableBtnType.HyperLink);
         }
     }
 
@@ -176,7 +184,6 @@ public class PCWikiController : MonoBehaviour
             if(input) input.SetWasSearched();
         }
         else isInPCView = false;
-
 
     }
 
@@ -194,4 +201,11 @@ public class PCWikiController : MonoBehaviour
         return false;
 
     }
+
+    bool CheckTranscriptOrReportUploaded()
+    {
+        return true;
+    }
+
+
 }

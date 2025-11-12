@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: SomethingOnTheRoofHacked
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
+  state: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
+  isAutomatic: 1
+  ChangeTimeOfAction: 0
+  Text: We should have a look first.
+  TextForRepetition: We should have a look first.
+  CustomStatus: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
+    text: NOT YET
+  Conditionals:
+  - condition: {fileID: 11400000, guid: f00809c131e52854cb2595e3ff84f9e9, type: 2}
+    ifNot: 1
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

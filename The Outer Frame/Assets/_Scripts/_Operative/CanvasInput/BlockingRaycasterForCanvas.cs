@@ -29,12 +29,13 @@ public class BlockingRaycasterForCanvas : MonoBehaviour
         {
             // Si hay un objeto delante, deshabilitar el raycaster
             raycaster.enabled = false;
+            //Debug.Log($"{name}: Blocking cast");
         }
         else
         {
             // Si no hay nada, permitir la interacción con el Canvas
             raycaster.enabled = true;
-            
+            //Debug.Log($"{name}: NO Blocking cast");
         }
 
     }

@@ -69,6 +69,10 @@ public class CamController : MonoBehaviour
                 SetPriority(10);
                 delayTime = 0;
                 break;
+            case ViewStates.BoardZoomView:
+                SetPriority(12);
+                delayTime = 0;
+                break;
         }
     }
 

@@ -16,28 +16,25 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'That three wheeled weirdo won''t be speeding down the road anytime soon.
+  Text: "MAN DOWN! \n \nThat crazy three wheeled son of a gun ran over one of our
+    agents with a homebrew tricycle and escaped!  \n \nHe's gone! <link>Mike</link>
+    and <link>Mora</link> are gone. "
+  TextForRepetition: 'We already tried that, remember?
 
-
-    He''s
-    been institutionalized as a crazy person and sent to a crazy people home.
-
-
-    Along
-    with his partner obviously.'
-  TextForRepetition: 'That three wheeled weirdo won''t be speeding down the road
-    anytime soon.
-
-    He''s been institutionalized as a crazy person and sent to
-    a crazy people home.
-
-    With his partner obviously.'
+    The report is probably
+    on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
+  - photo: {fileID: 21300000, guid: 607d46a844397184d90ae4cd3f3513e9, type: 3}
     text: WOOPS
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 485ee194adf47e84f948016cae7459cf, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 174c4b2d43f3760458cfbf32a4450ce4, type: 2}
+    ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
-  AgentDown: 0
+  AgentDown: 1
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

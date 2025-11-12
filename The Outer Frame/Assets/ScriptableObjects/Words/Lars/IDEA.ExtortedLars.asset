@@ -22,12 +22,19 @@ MonoBehaviour:
 
 
     Now
-    this is ridiculous.'
+    this is getting ridiculous.'
   TextForRepetition: 
+  CustomStatus: ATTEMPTED
   Photos:
   - photo: {fileID: 21300000, guid: 46930c464f80c00489025e8ac84091e6, type: 3}
     text: WHAT A JERK!
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: ac625b74a683c6f45ba3d28bb8280594, type: 2}
+    ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

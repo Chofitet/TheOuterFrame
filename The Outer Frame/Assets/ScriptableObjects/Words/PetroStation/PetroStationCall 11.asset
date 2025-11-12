@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: PetroStationCall 11
   m_EditorClassIdentifier: 
-  StartHour: 9
-  StartMinute: 0
-  EndHour: 9
-  EndMinute: 30
+  StartHour: 7
+  StartMinute: 47
+  EndHour: 8
+  EndMinute: 5
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: PETRO STATION'S PHONE
   To: 
-  Dialogue: '- - - - - PETRO STATION - - -  YEAH WE STILL OPEN - - - TWENTYFOURSEVEN
-    MAAM - - - OKAY - - - - - - - - - A PETRO GOOD DAY TO YOU TOO - - - - - WHAT
-    A NICE LADY - -  (END OF CALL)
-
-'
-  IterruptedDialogue: 
+  Dialogue: '- - - - - <link>PETRO STATION</link> - - -  YEAH WE STILL OPEN - - -
+    TWENTYFOURSEVEN MAAM - - - OKAY - - - - - - - - - A PETRO GOOD DAY TO YOU TOO
+    - - - - - WHAT A NICE LADY - -  #[END OF THE CALL]'
+  IterruptedDialogue: '- - - - - <link>PETRO STATION</link> - - -  YEAH WE STILL
+    OPEN - - - TWENTYFOURSEVEN MAAM - - - OKAY - - - - - - - - - A PETRO GOOD DAY
+    TO YOU TOO #[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:

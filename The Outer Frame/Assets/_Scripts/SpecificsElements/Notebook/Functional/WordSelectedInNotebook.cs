@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Unity.VisualScripting;
 
 public class WordSelectedInNotebook : MonoBehaviour
 {
@@ -69,15 +70,15 @@ public class WordSelectedInNotebook : MonoBehaviour
         if (!isDirectly) OnSlidePhones?.Invoke(this, false);
         DeleteOtherWords(word);
         OnShowWordsNotebook?.Invoke(this, word);
+        OnShowNumNotebook?.Invoke(this, word);
 
-
-        if(word.GetPhoneNumber() != "" )
+        /*if(word.GetPhoneNumber() != "" ) comentado porque sacamos esta funcionalidad, el numero solo se puede encontrar a si mismo
         {
             StartCoroutine(SlideDelay(IsNumAlreadyInList(word), word, isDirectly));
             OnDelayNotChangeView?.Invoke(this, 1f);
-        }
+        }*/
 
-        
+
     }
     void AddNumber(WordData num, bool isDirectly = false)
     {
@@ -206,7 +207,7 @@ public class WordSelectedInNotebook : MonoBehaviour
     public void SetSelectedWord(WordData word)
     {
         SelectedWord = word;
-        if (actualView == ViewStates.OnTakenPaperView || actualView == ViewStates.GeneralView) OnButtonElementClick?.Invoke(this, ViewStates.DossierView);
+        if (actualView == ViewStates.OnTakenPaperView || actualView == ViewStates.GeneralView || actualView == ViewStates.TutorialView) OnButtonElementClick?.Invoke(this, ViewStates.DossierView);
         OnSelectedWordInNotebook?.Invoke(this, SelectedWord);
         
     }
@@ -236,7 +237,11 @@ public class WordSelectedInNotebook : MonoBehaviour
     {
         foreach (WordData w in WordsfromBeginning)
         {
-            if (!w.GetIsAPhoneNumber()) AddWord(w, true);
+            if (!w.GetIsAPhoneNumber())
+            { 
+                AddWord(w, true);
+                w.SetIsFound();
+            }
             else AddNumber(w, true);
 
         }

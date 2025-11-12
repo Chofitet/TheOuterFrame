@@ -92,6 +92,29 @@ public class DataPersistenceManager : MonoBehaviour
         LoadGame();
     }
 
+    public void ResetSpecificFields(string profile, bool keepVolumeSettings = false,bool keepTutorial = false)
+    {
+        if (gameData == null) return;
+
+        bool oldTutorial = gameData.TutorialComplete;
+        float oldMusic = gameData.MusicVolume;
+        float oldSound = gameData.SoundVolume;
+
+        DeleteProfileData(profile); // esto reemplaza gameData
+
+        NewGame();
+
+        if (!keepTutorial) gameData.TutorialComplete = oldTutorial;
+        if (!keepVolumeSettings)
+        {
+            gameData.MusicVolume = oldMusic;
+            gameData.SoundVolume = oldSound;
+        }
+
+        SaveGame();
+
+    }
+
     private void InitializeSelectedProfileId() 
     {
         this.selectedProfileId = dataHandler.GetMostRecentlyUpdatedProfileId();

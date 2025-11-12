@@ -149,7 +149,7 @@ public class ActionPlan : MonoBehaviour
 
     public void ShakeBtn()
     {
-        if (!isOneToggleSelected) return;
+        //if (!isOneToggleSelected) return;
         OnShakeNotebook?.Invoke(this, null);
     }
 
@@ -220,7 +220,6 @@ public class DataFromActionPlan
 {
     public WordData word;
     public StateEnum state;
-
     public DataFromActionPlan(WordData _word, StateEnum _state)
     {
         word = _word;

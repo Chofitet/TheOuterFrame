@@ -15,7 +15,7 @@ public class RequestOptionsController : MonoBehaviour
     {
         if (RetryOption.isOn)
         {
-            StartCoroutine(DelayChangeScene("Level1"));
+            StartCoroutine(DelayChangeScene("LoadingScreen"));
         }
         else if (LeaveOption.isOn)
         {

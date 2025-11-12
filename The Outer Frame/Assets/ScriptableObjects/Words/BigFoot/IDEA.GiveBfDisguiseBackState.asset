@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InfinitiveVerb: Give cow disguise back
   Actioning: Giving cow disguise back
-  Actioned: Gave cow disguise back
+  Actioned: Tried to give cow disguise back
   TimeToComplete: 1
   TimeToShowNew: 0
   observationtxt: 
-  Agent: {fileID: 0}
   IdeaWordData: {fileID: 11400000, guid: 7aca535a8c26c9248accbda3e37997e6, type: 2}
   IdeaVerb: Giving
   IdeaWord: cow disguise back
+  InactiveConditionals:
+  - condition: {fileID: 11400000, guid: 9d3868f9be3b32144b9a50ec27839ac6, type: 2}
+    ifNot: 0

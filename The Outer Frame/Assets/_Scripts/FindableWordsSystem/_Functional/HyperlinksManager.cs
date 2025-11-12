@@ -74,7 +74,7 @@ public class HyperlinksManager : MonoBehaviour
 
             foreach (FindableWordData w in PositionsWord)
             {
-                Debug.Log("HyperLink found: " + w.GetWordData().GetName());
+               // Debug.Log("HyperLink found: " + w.GetWordData().GetName());
                 GameObject auxObj = Instantiate(ButtonHyperLinkPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
                 auxObj.GetComponent<HyperlinksBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton());
                 HyperLinkBTNs.Add(auxObj);

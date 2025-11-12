@@ -7,13 +7,15 @@ using UnityEngine.UI;
 
 public class AccessWordWindow : MonoBehaviour
 {
-    [SerializeField] GameEvent OnPCSearchWord;
+    [SerializeField] GameEvent OnGoToSubject;
     [SerializeField] GameObject Conteiner;
     [SerializeField] TMP_Text SearchBar;
     [SerializeField] GameEvent OnCloseWoredAccessWindow;
     [SerializeField] GameEvent OnAccessWiki;
     [SerializeField] Image SearchBarGameObject;
     [SerializeField] GameEvent OnKeyboardSoundEvent;
+    [SerializeField] Image BlockImage;
+    [SerializeField] Sprite Unlocked;
     WordData SearchedWord;
     WordData TryAccessWord;
     private bool isInPCView;
@@ -80,7 +82,7 @@ public class AccessWordWindow : MonoBehaviour
             SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
             SearchBar.text = "ACCESS GRANTED";
             OnAccessWiki?.Invoke(this, null);
-
+            BlockImage.sprite = Unlocked;
             WordsManager.WM.RequestBDWikiData(SearchedWord).SetisWordAccessFound();
         }
         else
@@ -97,7 +99,7 @@ public class AccessWordWindow : MonoBehaviour
     void UnlockPage()
     {
         isUnlockingPage = false;
-        OnPCSearchWord?.Invoke(this, SearchedWord);
+        OnGoToSubject?.Invoke(this, SearchedWord);
         ClosePanel(null,null);
     }
 

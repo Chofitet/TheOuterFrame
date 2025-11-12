@@ -37,7 +37,9 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
     [NonSerialized] private bool isCatch;
     [NonSerialized] private bool isInterrupted;
     [NonSerialized] WordData word;
-
+    [NonSerialized] private bool wasEnterToDataBase;
+    [NonSerialized] TimeData CachedStartTime;
+    [NonSerialized] TimeData CachedFinishTime;
 
     public string GetDialogue() {
         if (!isInterrupted) return Dialogue;
@@ -51,13 +53,23 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
     }
     public bool GetIsCatch() { return isCatch; }
 
+    public void SetWasEnterToDataBase(bool x) => wasEnterToDataBase = x;
+    public bool GetWasEnterToDataBase() { return wasEnterToDataBase; }
+
     public string GetFrom() { return From; }
     public string GetTo() { return To; }
+
 
     public List<WordData> GetInvolved() { return Involved; }
 
     public void SetIsinterrrupted() { isInterrupted = true; }
     public StateEnum GetState() { return state; }
+
+    public void SetCachedStartTime(TimeData time) { CachedStartTime = time; }
+    public void SetCachedFinishTime(TimeData time) { CachedFinishTime = time; }
+
+    public TimeData GetCachedStartTime() { return CachedStartTime; }
+    public TimeData GetCachedFinishTime() {  return CachedFinishTime; }
 
     private void OnEnable()
     {
@@ -69,6 +81,7 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
         isCatch = false;
         isInterrupted = false;
         word = null;
+        wasEnterToDataBase = false;
     }
 
     public void SetWord(WordData _word)

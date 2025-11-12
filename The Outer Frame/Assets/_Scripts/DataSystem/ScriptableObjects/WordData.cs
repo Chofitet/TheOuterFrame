@@ -222,7 +222,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
         List<CallType> auxList = new List<CallType>();
 
-        foreach(CallType call in CallTypes)
+        foreach (CallType call in CallTypes)
         {
             if (call.GetIsCatch())
             {
@@ -233,7 +233,21 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         return auxList;
     }
 
-    T  FindInputInList<T>(List<T> list, StateEnum state) where T : IStateComparable
+    public List<CallType> GetAllinDBCalls()
+    {
+        List<CallType> auxList = new List<CallType>();
+
+        foreach (CallType call in CallTypes)
+        {
+            if (call.GetWasEnterToDataBase())
+            {
+                auxList.Add(call);
+            }
+        }
+        return auxList;
+    }
+
+    T FindInputInList<T>(List<T> list, StateEnum state) where T : IStateComparable
     {
         T aux = default;
 
@@ -350,7 +364,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
     }
 
-    void IReseteableScriptableObject.ResetScriptableObject()
+    public void ResetScriptableObject()
     {
         stateHistory.Clear();
         CheckedStateHistory.Clear();
@@ -365,11 +379,17 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         
         //Debug.Log("reseted " + name);
     }
+
+    public bool GetInactiveStateSeen()
+    {
+        return CheckInactiveConditions(2);
+    }
+
     public bool GetInactiveState() {
 
      return CheckInactiveConditions();
     }
-    bool CheckInactiveConditions()
+    bool CheckInactiveConditions(int NumOfAlternativeConditional = 1)
     {
         if (isInactive) return true;
         if (InactiveConditions.Count == 0) return false;
@@ -378,7 +398,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         {
             IConditionable auxInterface = conditional as IConditionable;
 
-            if (!auxInterface.GetStateCondition())
+            if (!auxInterface.GetStateCondition(NumOfAlternativeConditional))
             {
                 return false;
             }
@@ -559,6 +579,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
             CheckedStateHistory.Add(state);
         }
 
+        if (oldword.GetIsPhoneNumberFound()) SetIsPhoneNumberFound();
+
         ActionsStates = oldword.GetActionStatesList();
     }
 
@@ -665,6 +687,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
         return words;
     }
+
+   
 
 }
 

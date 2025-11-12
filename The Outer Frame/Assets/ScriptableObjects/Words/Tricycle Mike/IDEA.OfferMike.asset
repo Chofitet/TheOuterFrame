@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: IDEA.OfferMike
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 753df31ef07ffaf47adadc6626322adb, type: 2}
+  state: {fileID: 11400000, guid: 753df31ef07ffaf47adadc6626322adb, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: "\r\"At 03.46 we received an S.O.S MIKE, so me and the missus went to help
+    but when we arrived there were no car nor tricycle. \n<link>A huge cow-thing</link>
+    was taking <link>a driver</link> out of a <link>truck</link>. There was this
+    glow at the back, see? We tried to get a better look but it started flushing
+    green stuff everywhere! \nThat\u2019s when we heard the roar. My <link>Mora</link>
+    still has the heebie-jeebies. She saw. There were two. \r\nEver been chased by
+    a <link>9-foot tall cow</link> and its <link>intergalactic friend</link> down
+    the <link>road</link> in the middle of the night? Excuse us for not stopping
+    to take pictures! \r\nIt took South... Maybe it was looking to rest after it
+    ate the cow. Like in <link>those woods</link> near <link>Whoopla</link> .\" "
+  TextForRepetition: 
+  CustomStatus: 
+  Photos:
+  - photo: {fileID: 21300000, guid: bbff3c79757da324192bd19ad3de3dcc, type: 3}
+    text: HAPPY TO HELP NOW!
+  - photo: {fileID: 21300000, guid: 0a7b6bd54caa0a149a1f7282b8f59d45, type: 3}
+    text: HOW HUGE?
+  - photo: {fileID: 21300000, guid: 43bab6e8c71baef40846146816b91057, type: 3}
+    text: WHAT?
+  - photo: {fileID: 21300000, guid: 43bab6e8c71baef40846146816b91057, type: 3}
+    text: WHAT?
+  - photo: {fileID: 21300000, guid: 4aff1f86f7ae8694ba9252a066c51904, type: 3}
+    text: WHICH?
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 485ee194adf47e84f948016cae7459cf, type: 2}
+    ifNot: 1
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

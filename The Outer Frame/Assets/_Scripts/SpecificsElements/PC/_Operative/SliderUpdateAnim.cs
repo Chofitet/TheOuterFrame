@@ -14,7 +14,8 @@ public class SliderUpdateAnim : MonoBehaviour
     public void AnimSlider(Component sender, object obj)
     {
 
-        if (sequence.IsActive()) sequence.Kill();
+        if (sequence != null && sequence.IsActive())
+            sequence.Kill();
 
         slider = GetComponent<Slider>();
         slider.value = 0;
@@ -24,14 +25,9 @@ public class SliderUpdateAnim : MonoBehaviour
         float randomcharge = Random.Range(0.3f, 0.8f);
 
         sequence.AppendInterval(0.2f)
-                .Append(slider.DOValue(randomcharge, duration)).SetEase(Ease.Linear)
+                .Append(slider.DOValue(randomcharge, duration).SetEase(Ease.Linear))
                 .Append(slider.DOValue(1, duration/2)).SetEase(Ease.Linear);
     }
 
-    [ContextMenu("test Anim Slider")]
-    void test()
-    {
-        AnimSlider(null, null);
-    }
 
 }

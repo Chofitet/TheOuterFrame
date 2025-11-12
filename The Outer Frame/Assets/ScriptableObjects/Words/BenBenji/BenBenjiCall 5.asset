@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: BenBenjiCall 5
   m_EditorClassIdentifier: 
-  StartHour: 10
-  StartMinute: 15
-  EndHour: 10
-  EndMinute: 29
+  StartHour: 9
+  StartMinute: 20
+  EndHour: 9
+  EndMinute: 39
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
@@ -29,8 +29,8 @@ MonoBehaviour:
 '
   IterruptedDialogue: '- THEY SAY SOME PEOPLE FROM OUTSIDE ARE IN TOWN - - - - - 
     DONT BE SCARED - - - - - NOTHING IS GOING TO HAPPEN - - -  THEY CANT KNOW - -
-    - - - - - - - - <link>TOOTSIE</link> -  SOMEONE IS HERE - - I HAVE TO GO (END
-    OF CALL)
+    - - - - - - - - <link>TOOTSIE</link> -  SOMEONE IS HERE - - I HAVE TO GO #[END
+    OF THE CALL]
 
 '
   Involved:
@@ -48,5 +48,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 8655e66a7e432b84f8e498da5f99d1f1, type: 2}
     ifNot: 1
   - condition: {fileID: 11400000, guid: f99d34e23986a5040bca1decfc381a31, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 85211dd3667991d45863f0ca4dcd6fa6, type: 2}
     ifNot: 1
   isOrderMatters: 0

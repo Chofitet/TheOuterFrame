@@ -42,8 +42,11 @@ public class ButtonElement : MonoBehaviour
     {
         ViewStates newState = (ViewStates)obj;
 
-        if(newState != view)
+        if (!NotInactiveBTN) GetComponent<BoxCollider>().enabled = false;
+
+        if (newState != view)
         {
+            Debug.Log(gameObject.name);
             GetComponent<BoxCollider>().enabled = true;
         }
 

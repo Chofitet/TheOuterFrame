@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
+
 public class BlinkMaterialEffect : MonoBehaviour
 {
     Material material; 
@@ -28,6 +30,11 @@ public class BlinkMaterialEffect : MonoBehaviour
             material = GetComponent<Renderer>().material;
             originalEmissionColor = material.GetColor("_EmissionColor");
         }
+        else if (!GetComponent<Renderer>() && GetComponent<Image>())
+        {
+            material = GetComponent<Image>().material;
+            originalEmissionColor = material.GetColor("_EmissionColor");
+        }
         else return;
         
         _color = originalEmissionColor;
@@ -51,7 +58,10 @@ public class BlinkMaterialEffect : MonoBehaviour
     }
     public void ActiveBlink(Component sender, object obj)
     {
-        StopAllCoroutines();
+        if (BlinkSequence != null && BlinkSequence.IsActive()) BlinkSequence.Kill();
+
+        if (TurnOnCoroutine != null) StopCoroutine(TurnOnCoroutine);
+        if (TurnOffCoroutine != null) StopCoroutine(TurnOffCoroutine);
         if (material.IsKeywordEnabled("_EMISSION"))
         {
             
@@ -120,15 +130,24 @@ public class BlinkMaterialEffect : MonoBehaviour
     {
         _color = originalEmissionColor;
     }
+    private Coroutine TurnOnCoroutine;
+    private Coroutine TurnOffCoroutine;
+    private Coroutine blinkCoroutine;
 
     public void TurnForXSeconds(Component sender, object obj)
     {
-        StartCoroutine(turnLigthDelay());
+        if (TurnOnCoroutine != null)
+            StopCoroutine(TurnOnCoroutine);
+
+        TurnOnCoroutine = StartCoroutine(turnLigthDelay());
     }
 
     public void TurnOffForXSeconds(Component sender, object obj)
     {
-        StartCoroutine(turnOffLigthDelay());
+        if (TurnOffCoroutine != null)
+            StopCoroutine(TurnOffCoroutine);
+
+        TurnOffCoroutine = StartCoroutine(turnOffLigthDelay());
     }
 
     IEnumerator turnOffLigthDelay()
@@ -136,6 +155,8 @@ public class BlinkMaterialEffect : MonoBehaviour
         TurnOffLight(null, null);
         yield return new WaitForSeconds(TurnLightDuration);
         TurnOnLigth(null, null);
+
+        TurnOffCoroutine = null;
     }
 
     IEnumerator turnLigthDelay()
@@ -143,11 +164,27 @@ public class BlinkMaterialEffect : MonoBehaviour
         TurnOnLigth(null, null);
         yield return new WaitForSeconds(TurnLightDuration);
         TurnOffLight(null, null);
+
+        TurnOnCoroutine = null;
     }
 
-    [ContextMenu("TestBlink")]
-    private void TestBlink()
+    public void TurnBlinkForXSeconds(Component sender, object obj)
+    {
+        if (blinkCoroutine != null)
+        {
+            StopCoroutine(blinkCoroutine);
+        }
+        blinkCoroutine = StartCoroutine(TurnBlinkDelay());
+    }
+
+    IEnumerator TurnBlinkDelay()
     {
         ActiveBlink(null, null);
+        yield return new WaitForSeconds(TurnLightDuration);
+        TurnOffLight(null, null);
+
+        blinkCoroutine = null;
     }
+
+
 }

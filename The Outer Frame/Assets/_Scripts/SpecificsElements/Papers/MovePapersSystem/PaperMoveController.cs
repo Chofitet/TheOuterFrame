@@ -18,11 +18,17 @@ public class PaperMoveController : MonoBehaviour
     [SerializeField] Transform PCSpotTranscription2;
     [SerializeField] Transform DescartPos;
     [SerializeField] Transform PaperBoardPos;
+    [SerializeField] Transform PaperOutBoardPos;
     [SerializeField] GameEvent OnPressButtomElement;
     [SerializeField] GameEvent OnSetPaperState;
     [SerializeField] GameEvent OnReportEnterDatabase;
     [SerializeField] GameEvent OnTranscriptionEnterDatabase;
     [SerializeField] AnimationCurve ReportToButtomRigthCurve;
+    [SerializeField] GameEvent OnLeavePaperSound;
+
+    [SerializeField] GameObject TutorialPosIt;
+    bool AtLeastOnePaperSolved;
+    bool isACandy = false;
     private bool isMoving;
     GameObject currentPaper;
     bool isHolding;
@@ -30,6 +36,7 @@ public class PaperMoveController : MonoBehaviour
     private Sequence moveToPcSequence;
     private Sequence moveDescart;
     private Sequence swapPapersSequence;
+    private Sequence LeaveInPileOtView;
     PaperState actualPaperState;
     List<GameObject> PapersQueue = new List<GameObject>();
     Vector3 TransformOffset;
@@ -91,7 +98,7 @@ public class PaperMoveController : MonoBehaviour
 
         if (PaperState.HoldingRight == actualPaperState && currentPaper != reportObject)
         {
-            LeavePaperPile(null,null);
+            LeavePaperPileOutView(null,null);
         }
 
         if (auxComesFromRightPos && isMoving) auxComesFromRightPos = true;
@@ -119,13 +126,15 @@ public class PaperMoveController : MonoBehaviour
         {
             if (currentPaper.GetComponent<IndividualReportController>().GetRepoertype().GetDeleteDBRepoert()) return;
         }
-        if(actualPaperState == PaperState.HoldingRight)
+        if(actualPaperState == PaperState.HoldingRight && !isACandy)
         {
             TakeReport(null, currentPaper);
 
             OnPressButtomElement?.Invoke(this, ViewStates.OnTakenPaperView);
             return;
         }
+        isACandy = false;
+
         LeavePaperPile(null,null);
        
     }
@@ -136,14 +145,48 @@ public class PaperMoveController : MonoBehaviour
         if (!currentPaper) return;
         currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
         currentPaper.transform.SetParent(ReportPilePos);
-        RefreshPaperQueue();
+        int papersInQueue = RefreshPaperQueue();
+        OnLeavePaperSound?.Invoke(this, null);
         currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration);
         currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration);
         currentPaper.GetComponent<BoxCollider>().enabled = true;
         currentPaper = null;
         SetPaperState(PaperState.Nothing);
 
+        if(!AtLeastOnePaperSolved && papersInQueue >= 3)
+        {
+            TutorialPosIt.SetActive(true);
+        }
+        EnableLastBoxCollider();
     }
+
+    public void OnTakeCandy(Component sender, object obj)
+    {
+        isACandy = true;
+        LeavePaperPileOutView(null, null);
+    }
+
+    public void LeavePaperPileOutView(Component sender, object obj)
+    {
+        if (LeaveInPileOtView != null && LeaveInPileOtView.IsActive()) LeaveInPileOtView.Kill();
+
+        LeaveInPileOtView = DOTween.Sequence();
+
+        if (!currentPaper) return;
+        currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
+        currentPaper.transform.SetParent(ReportPilePos);
+        RefreshPaperQueue();
+        OnLeavePaperSound?.Invoke(this, null);
+        LeaveInPileOtView.Append(currentPaper.transform.DOMove(DescartPos.position, takeDuration))
+            .Append(currentPaper.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration))
+           .Join(currentPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration));
+        currentPaper.GetComponent<BoxCollider>().enabled = true;
+        currentPaper = null;
+        SetPaperState(PaperState.Nothing);
+        EnableLastBoxCollider();
+    }
+
+    
 
     public void OnHoldPaperToButtomRigth(Component sender, object obj)
     {
@@ -151,7 +194,7 @@ public class PaperMoveController : MonoBehaviour
         ViewStates view = (ViewStates)obj;
         Transform auxTrans = HoldRigthPos;
         if (view == ViewStates.BoardView || view == ViewStates.OnTakeSomeInBoard) auxTrans = PaperBoardPos;
-
+        if (view == ViewStates.BoardZoomView) auxTrans = PaperOutBoardPos;
         if (view != ViewStates.GeneralView && view!= ViewStates.OnTakenPaperView)
         {
             currentPaper.transform.SetParent(auxTrans);
@@ -163,7 +206,7 @@ public class PaperMoveController : MonoBehaviour
 
     Transform currentTarget;
     float lerpTime;
-    void SetPosition(Transform target, Ease easy = Ease.InOutCirc, float speedMove = 1)
+    void SetPosition(Transform target, Ease easy = Ease.InOutCirc, float speedMove = 0.8f)
     {
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
@@ -199,7 +242,7 @@ public class PaperMoveController : MonoBehaviour
         }
     }
 
-    private void RefreshPaperQueue()
+    private int RefreshPaperQueue()
     {
         int stakedCount = 0;
 
@@ -213,9 +256,9 @@ public class PaperMoveController : MonoBehaviour
         }
 
             TransformOffset = stakedCount * new Vector3(0, 0.002f, 0);
-            RotationOffset = new Vector3(0, UnityEngine.Random.Range(-10, 10), 0);
+            RotationOffset = new Vector3(0, UnityEngine.Random.Range(-5, 5), 0);
             
-       
+       return stakedCount;
     }
 
 
@@ -224,12 +267,13 @@ public class PaperMoveController : MonoBehaviour
         if (moveToPcSequence != null && moveToPcSequence.IsActive()) moveToPcSequence.Kill();
 
         moveToPcSequence = DOTween.Sequence();
-
+        AtLeastOnePaperSolved = true;
+        TutorialPosIt.SetActive(false);
         GameObject paperMove = currentPaper;
         if (!paperMove) return;
         currentPaper = null;
-
-        if(paperMove.GetComponent<IndividualReportController>())
+        paperMove.transform.SetParent(transform);
+        if (paperMove.GetComponent<IndividualReportController>())
         {
             MoToRigthSlotOnPC(paperMove, PCSpotReport1, PCSpotReport2, OnReportEnterDatabase);
         }
@@ -237,32 +281,35 @@ public class PaperMoveController : MonoBehaviour
         {
             MoToRigthSlotOnPC(paperMove, PCSpotTranscription1, PCSpotTranscription2, OnTranscriptionEnterDatabase);
         }
+        EnableLastBoxCollider();
     }
 
     void MoToRigthSlotOnPC(GameObject paperMove, Transform PCSpot1, Transform PCSpot2, GameEvent OnEvent)
     {
+        
         moveToPcSequence.Append(paperMove.transform.DOMove(PCSpot1.position, 0.7f).SetEase(Ease.InOutQuad))
                        .Join(paperMove.transform.DORotate(PCSpot1.rotation.eulerAngles, 0.5f)
                        .OnComplete(() =>
                        {
-                           paperMove.transform.SetParent(ReportPilePos);
+                           paperMove.transform.SetParent(transform);
                            OnEvent?.Invoke(this, null);
                            moveToPcSequence.PrependInterval(0.5f)
                            .Append(paperMove.transform.DOMove(PCSpot2.position, 0.3f).SetEase(Ease.InOutQuad));
-                           EnableLastBoxCollider();
+                           
                        }));
     }
 
     public void DescartPosition(Component sender, object obj)
     {
         if (moveDescart != null && moveDescart.IsActive()) moveDescart.Kill();
-
+        AtLeastOnePaperSolved = true;
+        TutorialPosIt.SetActive(false);
         moveDescart = DOTween.Sequence();
 
         GameObject paperMove = currentPaper;
         if (!paperMove) return;
         currentPaper = null;
-
+        paperMove.transform.SetParent(transform);
         moveDescart.Append(paperMove.transform.DOMove(DescartPos.transform.position, 0.5f).SetEase(Ease.InBack));
         EnableLastBoxCollider();
     }
@@ -278,39 +325,46 @@ public class PaperMoveController : MonoBehaviour
         oldPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.Staked);
         RefreshPaperQueue();
         swapPapersSequence = DOTween.Sequence();
-        swapPapersSequence.Append(oldPaper.transform.DOMove(ReportPilePos2.transform.position, 0.3f))
+        
+        swapPapersSequence
+            /// que suene a los 0.1, sin modificar el tiempo de lo que ya está hecho
+            .Append(oldPaper.transform.DOMove(ReportPilePos2.transform.position, 0.3f))
             .Append(oldPaper.transform.transform.DOMove(ReportPilePos.position + TransformOffset, takeDuration))
             .Join(oldPaper.transform.DORotate(ReportPilePos.rotation.eulerAngles + RotationOffset, takeDuration))
+            .InsertCallback(0.3f, () => OnLeavePaperSound?.Invoke(this, null))
             .OnComplete(() =>
             {
                 oldPaper.GetComponent<BoxCollider>().enabled = true;
                 
                 isChangingPapers = false;
+                EnableLastBoxCollider();
             });
        
     }
 
     void EnableLastBoxCollider()
     {
-        if (ReportPilePos.transform.childCount > 0)
+        int childCount = ReportPilePos.transform.childCount;
+
+        if (childCount == 0)
+            return;
+
+        // Desactiva todos los BoxColliders primero
+        for (int i = 0; i < childCount; i++)
         {
-            Transform lastChild = ReportPilePos.transform.GetChild(ReportPilePos.transform.childCount - 1);
-
-            BoxCollider boxCollider = lastChild.GetComponent<BoxCollider>();
-
-            if (boxCollider != null)
-            {
-                boxCollider.enabled = true;
-                Debug.Log("BoxCollider habilitado en: " + lastChild.name);
-            }
-            else
-            {
-                Debug.LogWarning("El último hijo no tiene un BoxCollider.");
-            }
+            Transform child = ReportPilePos.transform.GetChild(i);
+            BoxCollider collider = child.GetComponent<BoxCollider>();
+            if (collider != null)
+                collider.enabled = false;
         }
-        else
+
+        // Activa solo el último
+        Transform lastChild = ReportPilePos.transform.GetChild(childCount - 1);
+        BoxCollider lastCollider = lastChild.GetComponent<BoxCollider>();
+        if (lastCollider != null)
         {
-            Debug.LogWarning("El GameObject no tiene hijos.");
+            lastCollider.enabled = true;
+            // Debug.Log("BoxCollider habilitado en: " + lastChild.name);
         }
     }
 
@@ -337,4 +391,5 @@ public class PaperMoveController : MonoBehaviour
             }
         }
     }
+
 }

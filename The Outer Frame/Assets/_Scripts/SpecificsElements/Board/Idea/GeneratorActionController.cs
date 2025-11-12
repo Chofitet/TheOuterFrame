@@ -13,23 +13,19 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] bool isOrderMatters;
     [SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
     [SerializeField] bool isAFailedIdea;
-    [HideInInspector] [SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
-    [HideInInspector][SerializeField] GameObject Content;
-    [HideInInspector] [SerializeField] GameEvent OnMoveObjectToPapersPos;
-    [HideInInspector] [SerializeField] GameObject CheckImage;
-    [HideInInspector] [SerializeField] GameEvent OnMoveToCornerIdea;
-    [HideInInspector] [SerializeField] GameEvent OnMoveToOutOfView;
-    [HideInInspector] [SerializeField] GameEvent OnSetTakenPosit;
-    [HideInInspector] [SerializeField] GameObject CroosIcon;
+    [HideInInspector][SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
+    [SerializeField] GameObject Content;
+    [HideInInspector][SerializeField] GameEvent OnMoveObjectToPapersPos;
+    [HideInInspector][SerializeField] GameObject CheckImage;
+    [HideInInspector][SerializeField] GameEvent OnMoveToCornerIdea;
+    [HideInInspector][SerializeField] GameEvent OnMoveToOutOfView;
+    [HideInInspector][SerializeField] GameEvent OnSetTakenPosit;
+    [HideInInspector][SerializeField] GameObject CroosIcon;
     bool ActionIsDoing;
     bool isDone;
     private bool istaken;
     GameObject IdeaButtom;
-
-    private void Start()
-    {
-        Content.SetActive(false);
-    }
+    bool WasInactivate;
 
     public bool GetConditionalState()
     {
@@ -61,19 +57,19 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public void Reset(Component sender, object obj)
     {
         istaken = false;
-        if(Content.activeSelf)GetComponent<BoxCollider>().enabled = true;
+        //if (Content.activeSelf) GetComponent<BoxCollider>().enabled = true;
     }
 
     public void OnAppearActionIdea()
     {
         if (!CheckForConditionals(Conditionals)) return;
-       
-        Content.SetActive(true);
-        if (Content.activeSelf) GetComponent<BoxCollider>().enabled = true;
+
+       if(!istaken) GetComponent<BoxCollider>().enabled = true;
 
         BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
         IdeaButtom = BtnGeneratorIdeaPrefab.gameObject;
     }
+
 
     public bool IsOutOfBoard()
     {
@@ -82,7 +78,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (InactiveConditionals.Count == 0) return false;
         if (!CheckForConditionals(InactiveConditionals)) return false;
 
-        GetComponent<BoxCollider>().enabled = false;
+        //GetComponent<BoxCollider>().enabled = false;
         return true;
     }
 
@@ -92,8 +88,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (!IdeaButtom) return;
 
         BtnGenerateIdeaController btn = IdeaButtom.GetComponent<BtnGenerateIdeaController>();
-        
-        
+
+
         if (btn.GetState().GetSpecialActionWord().CheckIfStateSeenWasDone(btn.GetState()))
         {
             if (!isAFailedIdea) CheckImage.SetActive(true);
@@ -101,6 +97,38 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
             btn.InactiveIdea();
             isDone = true;
         }
+        if (InactiveConditionals.Count != 0 && CheckForConditionals(InactiveConditionals) && !isDone) WasInactivate = true;
+    }
+
+    public void markDone(Component sender, object obj)
+    {
+        if (!IdeaButtom) return;
+        BtnGenerateIdeaController btn = IdeaButtom.GetComponent<BtnGenerateIdeaController>();
+
+        if (btn.GetState().GetSpecialActionWord().CheckIfStateSeenWasDone(btn.GetState()))
+        {
+            if (!isAFailedIdea) CheckImage.SetActive(true);
+            else CroosIcon.SetActive(true);
+            btn.InactiveIdea();
+            isDone = true;
+        }
+        if (InactiveConditionals.Count != 0 && CheckForConditionals(InactiveConditionals) && !isDone) WasInactivate = true;
+    }
+
+    public void SetIsAfiledIdea(Component sender, object obj)
+    {
+        GameObject GObject = (GameObject)obj;
+
+        ReportController reportController = GObject.GetComponent<ReportController>();
+
+        if (!reportController) return;
+        if (reportController.GetAction() != ActionsToAdd[0]) return;
+        if (!reportController.GetIsAlreadyImposible()) return;
+
+        WasInactivate = true;
+        CroosIcon.SetActive(false);
+        CheckImage.SetActive(false);
+        //isDone = true;
     }
     public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
     {
@@ -214,6 +242,14 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (ActionsToAdd[0] == action) ActionIsDoing = true;
     }
 
+    public void TriggerInactiveAnimation(Component sender, object obj)
+    {
+
+        if (!WasInactivate ) return;
+
+        GetComponent<InactiveIdeaAnimation>().InactiveAnim();
+    }
+
     public bool ActiveInBegining()
     {
         return false;
@@ -226,10 +262,29 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
     public void CheckView(Component sender, object obj)
     {
-        
-        if(!Content.activeSelf)
+
+       if ((ViewStates)obj == ViewStates.BoardView)
         {
-            GetComponent<BoxCollider>().enabled = false;
+            BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(false);
+        }
+       else if((ViewStates)obj == ViewStates.OnTakeSomeInBoard)
+        {
+            BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(true);
         }
     }
+
+    public WordData GetWordData()
+    {
+        return null;
+    }
+
+    [SerializeField] BoardType TypeElement;
+    public BoardType GetType()
+    {
+        return TypeElement;
+    }
+
+    // Copy Pasye to Action
+    public StateEnum GetActionToAdd() { return ActionsToAdd[0]; }
+    public List<ConditionalClass> GetInactiveConditions() { return InactiveConditionals; }
 }

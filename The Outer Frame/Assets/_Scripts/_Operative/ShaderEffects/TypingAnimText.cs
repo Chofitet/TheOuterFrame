@@ -50,4 +50,10 @@ public class TypingAnimText : MonoBehaviour
         if(x == 0) delay = new WaitForSeconds(1 / CharactersPerSecond);
     }
 
+    public void ForceComplete()
+    {
+        StopCoroutine(TypeCoroutine);
+        TextField.maxVisibleCharacters = TextField.textInfo.characterCount;
+    }
+
 }

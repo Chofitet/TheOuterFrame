@@ -12,9 +12,21 @@ public class ColliderButtonCallEvent : MonoBehaviour
     [SerializeField] float delayDisableInTouch;
     [SerializeField] GameObject SomethingToPass;
     [SerializeField] float FloatToPass;
+    [SerializeField] bool TriggerWithMouseDown;
     bool isInactive;
 
     private void OnMouseUpAsButton()
+    {
+        if (TriggerWithMouseDown) return;
+        TriggerActions();
+    }
+
+    private void OnMouseDown()
+    {
+        if (TriggerWithMouseDown) TriggerActions();
+    }
+
+    void TriggerActions()
     {
         if (delay != 0)
         {
@@ -23,7 +35,6 @@ public class ColliderButtonCallEvent : MonoBehaviour
         }
         triggerEvents();
     }
-
 
     void triggerEvents()
     {

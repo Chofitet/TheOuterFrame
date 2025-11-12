@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: HalfACarLabtestedDeandraNotFoundGone
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
+  state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: -4
+  Text: "The results are in! \nNothing new from the car, whatever halved and flew
+    it up here was very clean, only a slight green descoloration was left where the
+    thing parted with its missing half, but the lab gave us nothing about that. 
+    \n \nAbout the woman... \nThis is a tricky one, she was not just any lady, she
+    was the  <link>President of Wankchester, Deandra Monfay</link>!\nWe had the President.
+    \nWe had the President on the roof. "
+  TextForRepetition: 'We already did that, remember?
+
+    The report is probably
+    on your desk or in the DB if you uploaded it.'
+  CustomStatus: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 88c08bc72691d1142b407096885569f3, type: 3}
+    text: SHE IS!
+  - photo: {fileID: 21300000, guid: 47cd753495a8637409626101a7fe2e2a, type: 3}
+    text: BUT GONE NOW
+  Conditionals:
+  - condition: {fileID: 11400000, guid: c6b94d6ccede2d6458579ed373b30609, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 30d9efe40c6d99c419d2bcbfab06ecb9, type: 2}
+    ifNot: 0
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

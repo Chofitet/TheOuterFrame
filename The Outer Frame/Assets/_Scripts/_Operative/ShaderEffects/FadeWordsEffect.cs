@@ -1,117 +1,138 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(TMP_Text))]
 public class FadeWordsEffect : MonoBehaviour
 {
     private TextMeshProUGUI m_TextComponent;
-    [SerializeField] private float FadeSpeed = 20.0f;
+    [SerializeField] private float FadeSpeed = 0.1f;
     private float auxfadespeed;
     [SerializeField] private int RolloverCharacterSpread = 10;
     [SerializeField] GameEvent OnEraseSound;
-    public void StartEffect(bool IsFadeTransparent = true)
+    Coroutine fadeCoroutine;
+    public Action OnComplete;
+    public event Action<float> OnEraseProgress;
+    [SerializeField] float DilateMultiplier = 1;
+
+    [SerializeField] Material[] matLevels;
+
+    public void StartEffect(bool isFadeTransparent = true)
     {
+        SetBlank(1);
         m_TextComponent = GetComponent<TextMeshProUGUI>();
-        StopAllCoroutines();
-        StartCoroutine(FadeInText(IsFadeTransparent));
+        string auxText = m_TextComponent.text;
+        if (auxText.Contains("material"))
+        {
+            m_TextComponent.text = "";
+            return;
+        }
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(FadeInText(isFadeTransparent, auxText));
     }
 
     public void OnStartEffect(Component sender, object obj)
     {
         if ((GameObject)obj != gameObject) return;
+        SetBlank(1);
         m_TextComponent = GetComponent<TextMeshProUGUI>();
-        StopAllCoroutines();
-        StartCoroutine(FadeInText(true));
+        string auxText = m_TextComponent.text;
+        if (auxText.Contains("material"))
+        {
+            m_TextComponent.text = "";
+            return;
+        }
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(FadeInText(true, auxText));
     }
 
-    IEnumerator FadeInText(bool IsFadeTransparent)
+    IEnumerator FadeInText(bool fadeIn, string text)
     {
-        float StartAlpha = IsFadeTransparent ? 0 : 255;
-        float EndAlpha = IsFadeTransparent ? 255 : 0;
+        int length = text.Length;
+        float totalDuration = FadeSpeed;
+        float stepDuration = totalDuration / Mathf.Max(1, length);
 
-        if (!IsFadeTransparent)
-        { 
-            OnEraseSound?.Invoke(this, null);
-        }
+        // Materiales de más claro a más oscuro
+       
 
-        Color originalColor = m_TextComponent.color;
-        m_TextComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, StartAlpha / 255f);
-
-        // Forzar la actualizaci�n del texto para tener datos v�lidos desde el principio.
-        m_TextComponent.ForceMeshUpdate();
-
-        TMP_TextInfo textInfo = m_TextComponent.textInfo;
-        Color32[] newVertexColors;
-
-        int currentCharacter = 0;
-        int startingCharacterRange = currentCharacter;
-        bool isRangeMax = false;
-
-        DefineFadeSpeedAccordingWordLength(textInfo.characterCount);
-
-        while (!isRangeMax)
+        if (fadeIn)
         {
-            int characterCount = textInfo.characterCount;
+            int currentIndex = 0;
 
-            // Spread should not exceed the number of characters.
-            byte fadeSteps = (byte)Mathf.Max(1, 255 / RolloverCharacterSpread);
-
-            for (int i = startingCharacterRange; i < currentCharacter + 1; i++)
+            while (currentIndex < length)
             {
-                // Skip characters that are not visible (like white spaces)
-                if (!textInfo.characterInfo[i].isVisible) continue;
+                System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
-                // Get the index of the material used by the current character.
-                int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
-
-                // Get the vertex colors of the mesh used by this text element (character or sprite).
-                newVertexColors = textInfo.meshInfo[materialIndex].colors32;
-
-                // Get the index of the first vertex used by this text element.
-                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
-
-                // Calculate the new alpha value based on the fade direction.
-                byte alpha = (byte)Mathf.Clamp(newVertexColors[vertexIndex + 0].a + fadeSteps * (IsFadeTransparent ? 1 : -1), 0, 255);
-
-                // Set new alpha values.
-                newVertexColors[vertexIndex + 0].a = alpha;
-                newVertexColors[vertexIndex + 1].a = alpha;
-                newVertexColors[vertexIndex + 2].a = alpha;
-                newVertexColors[vertexIndex + 3].a = alpha;
-
-                if (alpha == EndAlpha)
+                for (int i = 0; i < length; i++)
                 {
-                    startingCharacterRange += 1;
+                    int diff = currentIndex - i;
 
-                    if (startingCharacterRange == characterCount)
-                    {
-                        // Update mesh vertex data one last time.
-                        m_TextComponent.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
-
-                        m_TextComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, EndAlpha / 255f);
-
-                        m_TextComponent.ForceMeshUpdate();
-
-                        yield return new WaitForSeconds(1.0f);
-
-                        // Reset our counters.
-                        currentCharacter = 0;
-                        startingCharacterRange = 0;
-                        isRangeMax = true;
-                    }
+                    if (diff == 0)
+                        sb.Append($"<material=\"{matLevels[1].name}\">{text[i]}</material>"); // letra actual -> mat 2
+                    else if (diff == 1)
+                        sb.Append($"<material=\"{matLevels[2].name}\">{text[i]}</material>"); // inmediata izquierda -> mat 3
+                    else if (diff >= 2 && diff <= 3)
+                        sb.Append($"<material=\"{matLevels[3].name}\">{text[i]}</material>"); // dos siguientes a la izquierda -> mat 4
+                    else if (diff < 0)
+                        sb.Append($"<material=\"{matLevels[0].name}\">{text[i]}</material>"); // aún no dibujadas
+                    else
+                        sb.Append(text[i]); // resto de letras ya dibujadas -> normal
                 }
+
+                m_TextComponent.text = sb.ToString();
+                m_TextComponent.ForceMeshUpdate();
+
+                currentIndex++;
+                yield return new WaitForSeconds(stepDuration);
             }
 
-            // Upload the changed vertex colors to the Mesh.
-            m_TextComponent.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
-
-            if (currentCharacter + 1 < characterCount) currentCharacter += 1;
-
-            yield return new WaitForSeconds(0.25f - auxfadespeed * 0.01f);
+            m_TextComponent.text = text; // al final todo normal
         }
+        else
+        {
+                int currentIndex = 0; // empezamos desde la izquierda
+                OnEraseSound?.Invoke(this, null);
+
+                while (currentIndex < length)
+                {
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (i == currentIndex) // letra empezando a borrarse
+                            sb.Append($"<alpha=#AA>{text[i]}");
+                        else if (i == currentIndex - 1) // más apagada
+                            sb.Append($"<alpha=#55>{text[i]}");
+                        else if (i < currentIndex - 1) // ya borradas
+                            sb.Append($"<alpha=#00>{text[i]}");
+                        else // todavía visibles
+                            sb.Append($"<alpha=#FF>{text[i]}");
+                    }
+
+                    m_TextComponent.text = sb.ToString();
+                    currentIndex++;
+
+                    float progress = (float)currentIndex / (float)length;
+                    OnEraseProgress?.Invoke(progress);
+
+                    yield return new WaitForSeconds(stepDuration);
+                }
+
+                // al final dejamos todo borrado
+                m_TextComponent.text = "";
+            }
+
+        OnComplete?.Invoke();
     }
+
 
     void DefineFadeSpeedAccordingWordLength(float characterCount)
     {
@@ -123,5 +144,13 @@ public class FadeWordsEffect : MonoBehaviour
         }
     }
 
+    public void SetBlank(float i)
+    {
+        m_TextComponent = GetComponent<TextMeshProUGUI>();
 
+        Color color = m_TextComponent.color;
+        color.a = i;
+
+        m_TextComponent.color = color;
+    }
 }

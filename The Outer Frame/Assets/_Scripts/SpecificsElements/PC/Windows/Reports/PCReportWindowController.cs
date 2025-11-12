@@ -7,8 +7,6 @@ public class PCReportWindowController : MonoBehaviour
 {
     [SerializeField] GameObject PrefabBtneport;
     [SerializeField] GameObject Grid;
-    [SerializeField] GameObject panelReporte;
-    [SerializeField] ReportController ReportToFill;
     [SerializeField] GameEvent OnEnableReportPCBtn;
     bool isDeleted;
     WordData word;
@@ -70,25 +68,7 @@ public class PCReportWindowController : MonoBehaviour
         }
     }
 
-    //OnPressReportBTN
-    public void SetPanelText(Component sender, object obj)
-    {
-        panelReporte.SetActive(true);
-
-        ReportType report = (ReportType) obj;
-        ReportToFill._Reset();
-        ReportToFill.initReport(word, report, false, false, false, null, report.GetTimeWhenWasDone());
-    }
-
-    public void QuitPanelReport()
-    {
-        panelReporte.SetActive(false);
-    }
-
-    public void OnQuitPanelReport(Component sender, object obj)
-    {
-        panelReporte.SetActive(false);
-    }
+   
     public void DeleteAllReports(Component sender, object obj)
     {
         isDeleted = true;

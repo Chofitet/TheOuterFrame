@@ -22,6 +22,12 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] Light light;
     [SerializeField] Light light2;
     [SerializeField] GameObject colliderUnused;
+    [ColorUsage(true, true)][SerializeField] Color LedRed;
+
+    [Header("Candy Parameters")]
+    [SerializeField] GameObject Candy;
+    [SerializeField] GameObject messagge;
+
     float InitLigthIntensity;
     float InitLigthIntensity2;
     bool isPrinterFull;
@@ -32,6 +38,7 @@ public class ProgressorModuleController : MonoBehaviour
     private WordData word;
     private StateEnum state;
     private int time;
+    ObjectToPrint objectType;
 
     bool isWaitingForSetSlot;
     float elapsedTime;
@@ -70,14 +77,23 @@ public class ProgressorModuleController : MonoBehaviour
     {
         if (!isReady) return;
         anim.SetTrigger("sendMessage");
-        TryAbortBTN.GetComponent<BoxCollider>().enabled = false;
-        SwitchAbortBTN.GetComponent<BoxCollider>().enabled = true;
         TurnOnLightXTime(0.8f, light, InitLigthIntensity);
-        TurnOnLightXTime(0.8f, light2,InitLigthIntensity2);
+        TurnOnLightXTime(0.8f, light2, InitLigthIntensity2);
         float animationDuration = 1.3f;
         adjustedDurationForSetSlot = animationDuration / TimeVariation;
         elapsedTime = 0f;
         isWaitingForSetSlot = true;
+        slot.OnSetAction += activeAbortButton;
+    }
+
+    void activeAbortButton(bool x)
+    {
+        // espera para que no sea posible activarlo en una automática
+
+        TryAbortBTN.GetComponent<BoxCollider>().enabled = x;
+        SwitchAbortBTN.GetComponent<BoxCollider>().enabled = !x;
+
+        slot.OnSetAction -= activeAbortButton;
     }
 
     void AdjustTimeToSetSlot()
@@ -172,7 +188,6 @@ public class ProgressorModuleController : MonoBehaviour
 
             anim.SetTrigger("receiveMessage");
             IsReadyToPrint = true;
-            
 
             Invoke("delayLigth", 0.3f);
 
@@ -182,10 +197,31 @@ public class ProgressorModuleController : MonoBehaviour
                 isAbortOpen = false;
             }
 
+            if (slot.GetNoComplete())
+            {
+                ReadyToPrintLED.SetSpecificColor(LedRed);
+            }
+            else
+            {
+                ReadyToPrintLED.SetOtherColor(this, null);
+            }
+
             TurnOnLight(light, InitLigthIntensity,0.3f);
             TurnOnLight(light2, InitLigthIntensity2,0.3f);
         }
     }
+
+    public void SetCandy(Component sender, object obj)
+    {
+        if (sender.gameObject == slot.gameObject)
+        {
+            ObjectToPrint objToPrint = (ObjectToPrint)obj;
+            Candy.SetActive(true);
+            Candy.GetComponent<CandyStateController>().InitializeCandy(objToPrint);
+            messagge.SetActive(false);
+        }
+    }
+
 
     void delayLigth()
     {
@@ -235,6 +271,8 @@ public class ProgressorModuleController : MonoBehaviour
                 if(slot.GetReport().GetKillAgent() && slot.GetIsComplete()) OnDisableAgentOnSlot?.Invoke(this, gameObject);
                 TurnOnLight(light, 0);
                 TurnOnLight(light2, 0);
+                Invoke("ResetDelay", 0.3f);
+
             }
             else
             {
@@ -262,6 +300,7 @@ public class ProgressorModuleController : MonoBehaviour
     {
         slot.CleanSlot();
         resetSlot();
+
     }
 
     bool DisableAbort;
@@ -276,9 +315,16 @@ public class ProgressorModuleController : MonoBehaviour
         blinkmaterialAbort.TurnOffLight(null, null);
         anim.SetTrigger("resetProgressor");
         DisableAbort = true;
+        
+
 
     }
 
+    void ResetDelay()
+    {
+        Candy.SetActive(false);
+        messagge.SetActive(true);
+    }
 
     public void TryAbortAnim(Component sender, object obj)
     {

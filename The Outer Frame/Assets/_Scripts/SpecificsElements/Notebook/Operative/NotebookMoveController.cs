@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Threading.Tasks;
 
 public class NotebookMoveController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class NotebookMoveController : MonoBehaviour
     [SerializeField] Transform initPosBackDossier;
     [SerializeField] Transform PosBackDossier;
     [SerializeField] AnimationCurve OutOfBackDossierCurve;
+    [SerializeField] NotebookProcessManager processManager;
+    
     Animator anim;
     private Sequence moveSequence;
     private Sequence moveWithDossierSequence;
@@ -30,26 +33,74 @@ public class NotebookMoveController : MonoBehaviour
     Transform OriginalTransform;
     bool dontLeaveNotebook;
     bool cancelOutView;
-    ViewStates lastView;
+    ViewStates lastView = ViewStates.GeneralView;
+    bool isInUse;
+    private bool pendingToGoDown = false;
+    private int pendingPosIndex = -1;
+    private bool pendingIsUp = false;
+    private bool pendingPhoneAction = false;
+    private bool pendingOpenPhones = false;
 
     private void Start()
     {
         child = transform.GetChild(0).gameObject;
         anim = child.GetComponent<Animator>();
         OriginalTransform = transform.parent;
+        processManager.OnProcessStarted += OnStartWordProcess;
+        processManager.OnAllProcessesFinished += OnFinishAlltWordsProcess;
+        
     }
 
+    private void OnDisable()
+    {
+        processManager.OnProcessStarted -= OnStartWordProcess;
+        processManager.OnAllProcessesFinished -= OnFinishAlltWordsProcess;
+    }
 
+    void OnStartWordProcess()
+    {
+        isInUse = true;
+    }
 
+    async void OnFinishAlltWordsProcess()
+    {
+        isInUse = false;
+
+        if(isMoving)
+        {
+            await Task.Delay(200);
+        }
+
+        if (pendingToGoDown)
+        {
+            
+            int target = pendingPosIndex;
+            bool targetUp = pendingIsUp;
+
+            
+
+            ForcePosition(target, false);
+            pendingToGoDown = false;
+            SetPos(target, targetUp);
+
+           
+        }
+
+        pendingPosIndex = -1;
+        pendingIsUp = false;
+        pendingToGoDown = false;
+
+    }
     public void OnChangeView(Component sender, object obj)
     {
         //anim.Play("notebook armature|idle");
         if (isGameOver) return;
         ViewStates newview = (ViewStates)obj;
+        pendingToGoDown = false;
         switch (newview)
         {
             case ViewStates.GeneralView:
-                if(IsPhonesOpen) anim.SetTrigger("close");
+                //if(IsPhonesOpen) anim.SetTrigger("close");
                 if (isUp) SetPos(0, false);
                 if (dontLeaveNotebook) SetPos(6);
                 dontLeaveNotebook = false;
@@ -70,22 +121,33 @@ public class NotebookMoveController : MonoBehaviour
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.PCView:
-                SetPos(3);
+                SetPos(3,true,null,false,0.2f);
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.ProgressorView:
-                if(isUp) SetPos(0,false);
+                dontLeaveNotebook = false;
+                if (isUp)
+                {
+                    SetPos(0, false);
+                }
                 break;
             case ViewStates.OnTakenPaperView:
-                SetPos(6);
                 dontLeaveNotebook = true;
+                SetPos(6);
                 break;
             case ViewStates.TVView:
-                SetPos(5,true,null,false,0.35f);
-                dontLeaveNotebook = true;
+                dontLeaveNotebook = false;
+                if (isUp)
+                {
+                    SetPos(0, false);
+                }
                 break;
             case ViewStates.PauseView:
-                SetPos(0, false);
+                dontLeaveNotebook = false;
+                if (isUp)
+                {
+                    SetPos(0, false);
+                }
                 cancelOutView = true;
                 break;
             case ViewStates.GameOverView:
@@ -105,12 +167,39 @@ public class NotebookMoveController : MonoBehaviour
                     dontLeaveNotebook = false;
                 }
                 break;
+            case ViewStates.BoardZoomView:
+                SetPos(7,false,null,false,0.1f,newview);    
+                break;
+
         }
+        
         lastView = newview;
     }
 
-    void SetPos(int num, bool _isUp = true , Transform trans = null,  bool isPinchofono= false, float delayToGrab = 0)
+    void ForcePosition(int num, bool x)
     {
+        SetTransform(Positions[num]);
+        isMoving = x;
+        currentTarget = Positions[num];
+    }
+
+    public void CallToSetPositionWritingOnTV(Component sender, object obj)
+    {
+        if (lastView != ViewStates.TVView) return;
+        SetPos(5,true);
+    }
+
+    void SetPos(int num, bool _isUp = true, Transform trans = null, bool isPinchofono = false, float delayToGrab = 0, ViewStates changingView = ViewStates.GeneralView)
+    {
+        if (isInUse && !_isUp && !dontLeaveNotebook)
+        {
+            pendingToGoDown = true;
+            pendingPosIndex = num;
+            pendingIsUp = _isUp;
+            ForcePosition(6, true);
+            return;
+        }
+
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
         if (shakeSequence != null && shakeSequence.IsActive())
@@ -124,17 +213,24 @@ public class NotebookMoveController : MonoBehaviour
 
         float _delayToGrab = 0;
         if (!isUp) _delayToGrab = delayToGrab;
+        if (lastView == ViewStates.BoardView && changingView == ViewStates.BoardZoomView) _delayToGrab = delayToGrab;
 
         moveSequence = DOTween.Sequence();
 
-        if (IsPhonesOpen)
+        if (IsPhonesOpen && !isPinchofono)
         {
             moveSequence.AppendCallback(() => CloseNotebook());
         }
 
-        moveSequence.PrependInterval(_delayToGrab)
-            .AppendCallback(()=> { SetTransform(Positions[num]); })
-            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutQuart))
+        moveSequence.AppendInterval(_delayToGrab)
+            .AppendCallback(() => {
+                if (OnceLeave)
+                {
+                    OnTakeNotebookSound?.Invoke(this, null);
+                }
+                SetTransform(Positions[num]);
+            })
+            .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, MoveDuration).SetEase(Ease.InOutSine))
                     .OnComplete(() =>
                     {
                         isMoving = false;
@@ -144,29 +240,37 @@ public class NotebookMoveController : MonoBehaviour
                         }
                         child.transform.DOLocalRotate(Vector3.zero, 0.2f);
                         SetTransform(OriginalTransform);
+                        OnceLeave = false;
                     });
-        
+
+
         isUp = _isUp;
 
         if (dontLeaveNotebook) return;
-        if (isUp) OnTakeNotebookSound?.Invoke(this, null);
+        if (isUp)
+        {
+            OnceLeave = true;
+        }
         else OnLeaveNotebookSound?.Invoke(this, null);
     }
 
+    bool OnceLeave;
+
     private void Update()
     {
+       
         if (isMoving && currentTarget != null)
         {
             transform.position = Vector3.Lerp(transform.position, currentTarget.position, lerpTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, currentTarget.rotation, lerpTime);
         }
 
-        if(Input.GetKeyDown(KeyCode.Mouse1) && !dontLeaveNotebook && isUp && !inputDisable)
+        if(Input.GetKeyDown(KeyCode.Mouse1) && !dontLeaveNotebook && isUp && !inputDisable && !OnceLeave)
         {
             SetPos(0, false);
+            
         }
     }
-
     void SetTransform(Transform trans)
     {
         if (trans == null) return;
@@ -204,25 +308,25 @@ public class NotebookMoveController : MonoBehaviour
         {
             
             bool toOpenPhones = (bool)obj;
-            if (!IsPhonesOpen && toOpenPhones) OpenPhoneNums();
+            if (!IsPhonesOpen && toOpenPhones) OpenPhoneNums(true);
             else if(IsPhonesOpen && !toOpenPhones)
             {
-                CloseNotebook();
+                CloseNotebook(true);
             }
             return;
         }
         OnManualSlidePhonePage?.Invoke(this, null);
-        if (!IsPhonesOpen) OpenPhoneNums();
+        if (!IsPhonesOpen) OpenPhoneNums(true);
         else
         {
-            CloseNotebook();
+            CloseNotebook(true);
         }
     }
 
     bool isShaking = false;
     public void ShakeNotebook(Component sender, object obj)
     {
-        if (!isUp || isShaking) return;
+        if (!isUp || isShaking || isMoving) return;
         isShaking = true;
 
         shakeSequence = DOTween.Sequence();
@@ -232,18 +336,26 @@ public class NotebookMoveController : MonoBehaviour
             .Join(transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic));
     }
 
-    void OpenPhoneNums()
+    void OpenPhoneNums(bool isSlidingForWrite = false)
     {
         if (IsPhonesOpen) return;
+        if(!isSlidingForWrite)
+        {
+            if (isInUse) return;
+        }
         anim.SetTrigger("open");
         anim.ResetTrigger("close");
         IsPhonesOpen = true;
         OnSlidePhoneUpSound?.Invoke(this, null);
     }
 
-    void CloseNotebook()
+    void CloseNotebook(bool isSlidingForWrite = false)
     {
         if (!IsPhonesOpen) return;
+        if (!isSlidingForWrite)
+        {
+            if (isInUse) return;
+        }
         anim.SetTrigger("close");
         anim.ResetTrigger("open");
         IsPhonesOpen = false;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ViewManager : MonoBehaviour
@@ -23,13 +24,20 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnPauseView;
     [SerializeField] GameEvent OnDrawerView;
     [SerializeField] GameEvent OnTutorialView;
+    [SerializeField] GameEvent OnZoomView;
     [SerializeField] GameEvent OnBackToPause;
     [SerializeField] GameEvent OnSitDownSound;
     [SerializeField] GameEvent OnSendReportAutomatically;
     [SerializeField] GameEvent OnEnableInput;
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] GameEvent OnNormalizeTime;
+
+    [Header("Game Overs")]
+    [SerializeField] GameEvent OnTimeGameOver;
+    [SerializeField] GameEvent OnAlertLevelGameOver;
+    [SerializeField] GameEvent OnNotAgentsGameOver;
     bool isAPaperHolding;
+    float currentDelay;
     ViewStates currentviewState;
     bool isInputDisable;
     bool isInPause;
@@ -38,10 +46,15 @@ public class ViewManager : MonoBehaviour
     bool isInTutorial = false;
     bool delayingView;
     bool IsStuckInView;
+    bool isTransitioning;
     ViewStates StuckView;
+    ViewStates? nextViewRequest;
 
     private void Start()
     {
+        DisableInput(null, null);
+        Invoke("EnableInputInStart", 0.6f);
+        currentDelay = delayBetweenViews;
         if (!isInTutorial)
         {
             OnDisableInput?.Invoke(this, null);
@@ -59,15 +72,20 @@ public class ViewManager : MonoBehaviour
         UpdateViewState(null, StartView);
     }
 
+    void EnableInputInStart()
+    {
+        EnableInput(null, null);
+    }
+
     void Update()
     {
         if (isInputDisable)
         {
-            Debug.Log("disable");
+            //Debug.Log("disable");
             return;
         }
 
-        if (delayingView) return;
+        //if (delayingView) return;
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
@@ -78,12 +96,12 @@ public class ViewManager : MonoBehaviour
             }
             else
             {
-                if (currentviewState != ViewStates.TutorialView) CheckForBackToTutorialView();
+                if (currentviewState != ViewStates.TutorialView ) CheckForBackToTutorialView();
             }
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(2))
         {
             if (!isInPause)
             {
@@ -101,13 +119,22 @@ public class ViewManager : MonoBehaviour
                 OnBackToPause?.Invoke(this, null);
             }
         }
+
+       /* if (Input.GetKeyDown(KeyCode.Alpha1))
+            TimeGameOver();
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            AlertGameOver();
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            AnyAgentGameOver();*/
     }
 
     void CheckForBackToGeneralView()
     {
         if (inOnFinalReport) OnSendReportAutomatically?.Invoke(this, null);
 
-        if (currentviewState == ViewStates.OnTakeSomeInBoard)
+        if (currentviewState == ViewStates.OnTakeSomeInBoard || currentviewState == ViewStates.BoardZoomView)
         {
             UpdateViewState(this, ViewStates.BoardView);
             return;
@@ -131,6 +158,12 @@ public class ViewManager : MonoBehaviour
 
     void CheckForBackToTutorialView()
     {
+
+        if (currentviewState == ViewStates.OnTakeSomeInBoard || currentviewState == ViewStates.BoardZoomView)
+        {
+            UpdateViewState(this, ViewStates.BoardView);
+            return;
+        }
         BackToTutrialView(null, null);
     }
 
@@ -149,21 +182,70 @@ public class ViewManager : MonoBehaviour
 
     public void StuckMove(Component sender, object _view)
     {
+        //Se llama con OnViewChange 
         if (currentviewState == ViewStates.PauseView) return;
-        if (IsStuckInView) UpdateViewState(this, StuckView);
+        if (currentviewState == ViewStates.OnTakeSomeInBoard) return;
+        if (currentviewState == ViewStates.BoardZoomView) return;
+        if (IsStuckInView)
+        {
+            nextViewRequest = StuckView;
+            isTransitioning = false;
+        }
     }
     public void UpdateViewState(Component sender, object _view)
     {
-        if (delayingView) return;
+        //if (delayingView) return;
         ViewStates NewView = (ViewStates)_view;
-        StopAllCoroutines();
-        if (NewView == currentviewState) return;
+        //StopAllCoroutines();
+        /* if (NewView == currentviewState)
+         {
+             return;
+         }*/
+        if (isTransitioning)
+        {
+            // Guardamos el último pedido, reemplazando al anterior
+            nextViewRequest = NewView;
+            return;
+        }
+
+        StartCoroutine(HandleViewChange(NewView));
+    }
+
+
+    private IEnumerator HandleViewChange(ViewStates newView)
+    {
+        isTransitioning = true;
+
+        // Llamamos al método original que hace la lógica completa
+        ViewSelector(newView);
+
+        // Tiempo mínimo antes de aceptar otra vista
+        yield return new WaitForSeconds(currentDelay);
+
+        if (nextViewRequest.HasValue)
+        {
+            ViewStates buffered = nextViewRequest.Value;
+            nextViewRequest = null;
+           StartCoroutine(HandleViewChange(buffered));
+        }
+        else
+        {
+            
+            isTransitioning = false;
+        }
+
+    }
+
+    void ViewSelector(ViewStates NewView)
+    {
+        if(IsStuckInView) if (NewView == currentviewState) return;
         switch (NewView)
         {
             case ViewStates.GeneralView:
                 OnGeneralView?.Invoke(this, false);
-                if(currentviewState == ViewStates.PCView ) TimeManager.timeManager.NormalizeTime();
+                if (currentviewState == ViewStates.PCView) TimeManager.timeManager.NormalizeTime();
                 if (currentviewState == ViewStates.TVView) TimeManager.timeManager.NormalizeTime();
+                if (currentviewState == ViewStates.BoardView) TimeManager.timeManager.NormalizeTime();
                 BackToGeneralViewWhitMoving();
                 break;
             case ViewStates.PinchofonoView:
@@ -188,13 +270,13 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.ProgressorView:
                 if (isGameOver) return;
-                if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null);}
+                if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); }
                 OnProgressorView?.Invoke(this, null);
                 break;
             case ViewStates.TVView:
                 if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
                 TimeManager.timeManager.SetAnotherSpeed(0.75f);
-               OnTVView?.Invoke(this, null);
+                OnTVView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 break;
             case ViewStates.DossierView:
@@ -232,12 +314,16 @@ public class ViewManager : MonoBehaviour
                 OnTutorialView?.Invoke(this, null);
                 TimeManager.timeManager.PauseTime();
                 break;
+            case ViewStates.BoardZoomView:
+                OnZoomView?.Invoke(this, null);
+                OnNotebookTake.Invoke(this, false);
+                break;
+
         }
         OnViewStateChange?.Invoke(this, NewView);
         currentviewState = NewView;
         StartCoroutine(DelayBetweenViews());
-        if(currentviewState != ViewStates.PauseView) if (isInPause) isInPause = false;
-        //Debug.Log(currentviewState);
+        if (currentviewState != ViewStates.PauseView) if (isInPause) isInPause = false;
     }
 
     public ViewStates GiveCurrentViewState()
@@ -254,8 +340,9 @@ public class ViewManager : MonoBehaviour
 
     void BackToGeneralViewWhitMoving()
     {
-        if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView )
+        if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView  && !IsStuckInView)
         {
+            if (isGameOver) return;
             OnSitDownSound?.Invoke(this, null);
         }
     }
@@ -297,18 +384,39 @@ public class ViewManager : MonoBehaviour
     {
         IsStuckInView = true;
         StuckView = (ViewStates)obj;
+        currentDelay = delayBetweenViews - 0.2f;
     }
 
     public void UnsetStuck(Component sender, object obj)
     {
         IsStuckInView = false;
+        currentDelay = delayBetweenViews;
     }
 
     IEnumerator DelayForTimeChange(Action callback)
     {
         yield return new WaitForSeconds(0.5f);
-        callback?.Invoke();
+        if (currentviewState == ViewStates.BoardView) callback?.Invoke();
 
+    }
+   
+    [ContextMenu("Trigger Time GameOver")]
+    public void TimeGameOver()
+    {
+        OnTimeGameOver?.Invoke(this, null);
+        UpdateViewState(this, ViewStates.GameOverView);
+    }
+    [ContextMenu("Trigger Alert GameOver")]
+    public void AlertGameOver()
+    {
+        OnAlertLevelGameOver?.Invoke(this, null);
+        UpdateViewState(this, ViewStates.GameOverView);
+    }
+    [ContextMenu("Trigger Any Agent GameOver")]
+    public void AnyAgentGameOver()
+    {
+        OnNotAgentsGameOver?.Invoke(this, null);
+        UpdateViewState(this, ViewStates.GameOverView);
     }
 }
 
@@ -326,5 +434,6 @@ public enum ViewStates
     GameOverView,
     PauseView,
     DrawerView,
-    TutorialView
+    TutorialView,
+    BoardZoomView
 }

@@ -18,17 +18,18 @@ MonoBehaviour:
   ChangeTimeOfAction: -4
   Text: "That's one old eighth grader. \n\nNo wonder he t... HEY!\n\nHe put gum in
     my hair!\n\nWe were just looking around..."
-  TextForRepetition: 'We already tried that!
+  TextForRepetition: 'We already tried that, remember?
 
-
-    It did not work...
-
-
-    Remember?'
+    The report is probably
+    on your desk, or in the DB if you uploaded it.'
+  CustomStatus: ATTEMPTED
   Photos:
-  - photo: {fileID: 21300000, guid: 46930c464f80c00489025e8ac84091e6, type: 3}
+  - photo: {fileID: 21300000, guid: 4d4e0087292ebd040a4243fc2b4fd774, type: 3}
     text: WHAT A JERK
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: ac625b74a683c6f45ba3d28bb8280594, type: 2}
+    ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0

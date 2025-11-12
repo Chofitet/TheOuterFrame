@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class NotebookPhonesController : MonoBehaviour
     List<GameObject> WordsInstances = new List<GameObject>();
     List<int> removedIndex = new List<int>(); // Lista para almacenar los índices eliminados
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
+    [SerializeField] NotebookProcessManager proccessManager;
     int i = 0;
     bool once = false;
     bool IsPhoneSlideOut;
@@ -53,7 +55,7 @@ public class NotebookPhonesController : MonoBehaviour
 
         if (replaceBool) return;
 
-        if (LastPhoneAdded.GetIsPhoneNumberFound() && LastPhoneAdded.GetIsAPhoneNumber())
+       /*if (LastPhoneAdded.GetIsPhoneNumberFound() && LastPhoneAdded.GetIsAPhoneNumber()) comentado porque ahora encontrár un numero automáticamente agrega su palabra.
         {
             // Entra si la palabra está agregada pero le falta el número
             foreach (GameObject phone in WordsInstances)
@@ -65,14 +67,17 @@ public class NotebookPhonesController : MonoBehaviour
                     return;
                 }
             }
-        }
+        }*/
 
         //Entra si hay un número agregado y falta su palabra
         if (SearchForAnExistingPhoneNum(LastPhoneAdded)) return;
 
+        if (!LastPhoneAdded.GetIsAPhoneNumber()) return;
+
         GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
-        wordaux.GetComponent<Button>().onClick.AddListener(ClearUnderLine);
-        wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded, isStarting);
+        wordaux.GetComponent<PhoneRowNotebookController>().GetWordButton().onClick.AddListener(ClearUnderLine);
+        wordaux.GetComponent<PhoneRowNotebookController>().GetNumButton().onClick.AddListener(ClearUnderLine);
+        wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded, this, proccessManager);
         WordsInstances.Add(wordaux);
 
         once = false;
@@ -91,7 +96,7 @@ public class NotebookPhonesController : MonoBehaviour
             PhoneRowNotebookController script = instancePhone.GetComponent<PhoneRowNotebookController>();
             if (script.GetWord() == phoneToRemove)
             {
-                script.EraseAnim();
+               // script.EraseAnim();
                 PhonesToRemove.Add(instancePhone);
 
                 int index = WordsInstances.FindIndex(phone => phone == instancePhone);
@@ -135,7 +140,7 @@ public class NotebookPhonesController : MonoBehaviour
             PhoneRowNotebookController script = w.GetComponent<PhoneRowNotebookController>();
             if (SearchForWordThatReplaceRetroactive(script.GetWord(),newword))
             {
-                script.ReplaceNumber(newword);
+                script.TryUpdateWord(newword);
                 ClearUnderLine();
                 aux = true;
             }
@@ -153,6 +158,7 @@ public class NotebookPhonesController : MonoBehaviour
             PhoneRowNotebookController script = w.GetComponent<PhoneRowNotebookController>();
 
             script.ReplaceWordInstantly(CabinWord);
+            script.ReplaceNumInstantly(CabinWord);
         }
     }
 
@@ -181,34 +187,18 @@ public class NotebookPhonesController : MonoBehaviour
         {
             PhoneRowNotebookController script = w.GetComponent<PhoneRowNotebookController>();
 
-            if (script.GetWord().GetPhoneNumber() == word.GetPhoneNumber())
+            if (script.GetWord() == word)
             {
-                if (!script.GetWord().GetIsPhoneNumberFound()) continue;
-
-                script.ReplaceNumberWithWord(word);
+                script.TryUpdateWord(word);
                 word.SetIsPhoneNumberFound();
-                return true;
+                return false;
             }
 
         }
 
-        return false;
+        return true;
     }
 
-
-    WordData FindWordToReplaceNum(WordData Num)
-    {
-        List<WordData> words = WordSelectedInNotebook.Notebook.GetWordsList();
-        foreach (WordData word in words)
-        {
-            if(Num.GetName() == word.GetPhoneNumber())
-            {
-                return word;
-            }
-        }
-
-        return null;
-    }
 
     public void ClearUnderLine()
     {
@@ -228,9 +218,11 @@ public class NotebookPhonesController : MonoBehaviour
 
     public void PutingWordOnBoard(Component sender, object obj)
     {
-        if (!IsPhoneSlideOut) return;
+        //if (!IsPhoneSlideOut) return;
         InctiveWordsOnBoard.Add((WordData)obj);
-        DisableWordsOfList(InctiveWordsOnBoard);
+
+        InactiveWordInBoard((WordData)obj);
+
     }
 
     ViewStates actualView;
@@ -239,6 +231,7 @@ public class NotebookPhonesController : MonoBehaviour
         actualView = (ViewStates)obj;
         List<WordData> Empylist = new List<WordData>();
         List<WordData> listAllWord = new List<WordData>();
+        ClearUnderLine();
         foreach (GameObject instance in WordsInstances)
         {
             listAllWord.Add(instance.GetComponent<PhoneRowNotebookController>().GetWord());
@@ -246,13 +239,15 @@ public class NotebookPhonesController : MonoBehaviour
 
         if (actualView == ViewStates.BoardView)
         {
-            DisableWordsOfList(listAllWord);
+            DisableWordsOfList(InctiveWordsOnBoard, "Board", true, true);
         }
         else if (actualView == ViewStates.TVView)
         {
-         
-
             DisableWordsOfList(listAllWord);
+        }
+        else if (actualView == ViewStates.OnTakeSomeInBoard)
+        {
+            DisableWordsOfList(InctiveWordsOnBoard, "Board", true, true);
         }
         else
         {
@@ -275,24 +270,71 @@ public class NotebookPhonesController : MonoBehaviour
     }
 
     
-    void DisableWordsOfList(List<WordData> list)
+    void DisableWordsOfList(List<WordData> list, string material = "", bool changes = true, bool thickness = false)
     {
         foreach (GameObject instanceBTN in WordsInstances)
         {
-            instanceBTN.GetComponent<Button>().enabled = true;
-            instanceBTN.GetComponent<Button>().interactable = true;
+            bool isActive = true;
+            PhoneRowNotebookController Wordinstance = instanceBTN.GetComponent<PhoneRowNotebookController>();
+            Wordinstance.TryActiveWord(true, material);
+            Wordinstance.SetInactive(false);
 
             foreach (WordData word in list)
             {
-                PhoneRowNotebookController Wordinstance = instanceBTN.GetComponent<PhoneRowNotebookController>();
                 if (Wordinstance.GetWord() == word)
                 {
-                    instanceBTN.GetComponent<Button>().enabled = false;
-                    instanceBTN.GetComponent<Button>().interactable = false;
+                    isActive = false;
+                    Wordinstance.SetInactive(true);
+                    Wordinstance.TryActiveWord(false, material);
                 }
+            }
+            if (isActive)
+            {
+                //palabra que sigue activa
+                Wordinstance.ApplyMaterial(material);
+                if (changes) Wordinstance.ApplyThicknessAnim(thickness);
             }
         }
     }
 
+    void InactiveWordInBoard(WordData word)
+    {
+        foreach(GameObject instanceBTN in WordsInstances)
+        {
+            PhoneRowNotebookController script = instanceBTN.GetComponent<PhoneRowNotebookController>();
+
+            if (script == null) return;
+
+            if(script.GetWord() == word)
+            {
+                script.InactiveDirectly();
+            }
+        }
+    }
+
+
+    public float waitSlidePhoneUp = 0;
+    private Queue<IEnumerator> actionQueue = new Queue<IEnumerator>();
+    private bool isRunning = false;
+
+    public void AddAction(IEnumerator action)
+    {
+        actionQueue.Enqueue(action);
+        if (!isRunning)
+            StartCoroutine(ProcessQueue());
+    }
+
+    private IEnumerator ProcessQueue()
+    {
+        isRunning = true;
+
+        yield return new WaitForSeconds(waitSlidePhoneUp);
+        waitSlidePhoneUp = 0;
+        while (actionQueue.Count > 0)
+        {
+            yield return StartCoroutine(actionQueue.Dequeue());
+        }
+        isRunning = false;
+    }
 
 }

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e79fc005c88bf4084b841a22c08b1a, type: 3}
+  m_Name: SergioFusedTaxi
+  m_EditorClassIdentifier: 
+  state: {fileID: 0}
+  headline: '"MY HUSBAND IS A TAXI NOW"'
+  headlineTwoLines: 
+  text: LOCAL DRIVER'S SPOUSE CRIES FOR HELP. "HE WENT TO WORK AND THEY SENT HIM
+    BACK LIKE THIS!"
+  newType: 0
+  CustomAclarationAlert: EVIDENCE/WITNESS-THING BROADCASTED BY THE MEDIA
+  image: {fileID: 21300000, guid: fffe6466f0a23c74f94f535cabf193c8, type: 3}
+  channel: 1
+  priority: 1
+  alertLevelIncrement: 89
+  Emergency: 0
+  TimeToAppear: 5
+  MinTransmitionTime: 8
+  Conditions:
+  - condition: {fileID: 11400000, guid: 42d726425049bfa46a9ba9e10bc67045, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 47e46f22bfb56044299bea9ee1a9b6ed, type: 2}
+    ifNot: 1

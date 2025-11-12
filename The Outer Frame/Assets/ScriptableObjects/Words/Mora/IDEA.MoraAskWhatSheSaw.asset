@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: IDEA.MoraAskWhatSheSaw
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: b501dbc9ac09a6f4da9406d934d38f7e, type: 2}
+  state: {fileID: 11400000, guid: b501dbc9ac09a6f4da9406d934d38f7e, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: 'Mike won''t let us get near her.
+
+    "Don''t you see she''s been through
+    enough already?
+
+    Now let her rest!"'
+  TextForRepetition: 
+  CustomStatus: ATTEMPTED
+  Photos:
+  - photo: {fileID: 21300000, guid: 7a82e0efed6c0ef409d5e8d4aa2b80bd, type: 3}
+    text: OVERPROTECTIVE!
+  - photo: {fileID: 21300000, guid: 7c1a5ae82d168e54088b8bb4d98e0bbb, type: 3}
+    text: KEEPER OF SECRETS
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 7f59ee4df22c1fc4b8a0fb175c927f80, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 485ee194adf47e84f948016cae7459cf, type: 2}
+    ifNot: 1
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

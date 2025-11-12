@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: VTTTurnedGoo
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 7db26028fed738e4bbcfc08caf9ad561, type: 2}
+  state: {fileID: 11400000, guid: 7db26028fed738e4bbcfc08caf9ad561, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: '"DON''T TEXT MOM AND DRIVE"
+
+
+    Nobody will suspect a thing.
+
+    And
+    It gives a sound message too.
+
+
+    We also took down the isolating fence.'
+  TextForRepetition: "WE SAID: \n\n\"DON'T TEXT MOM AND DRIVE\"\n\nThe team should
+    be really proud of this one.\nNobody will suspect a thing.\nAnd It gives a sound
+    message too.\n\nWe also took down the isolating fence."
+  Photos:
+  - photo: {fileID: 21300000, guid: 1681d7263cfcb37459132166b560aa3f, type: 3}
+    text: IT'S EDUCATIONAL!
+  - photo: {fileID: 21300000, guid: 879843f3cfccea543bb2ce01c2b7064d, type: 3}
+    text: DOME FREE
+  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
+    text: DID GOOD?
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
+    ifNot: 1
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

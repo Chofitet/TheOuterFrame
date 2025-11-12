@@ -13,18 +13,20 @@ MonoBehaviour:
   m_Name: PetroStationCall 6
   m_EditorClassIdentifier: 
   StartHour: 6
-  StartMinute: 29
+  StartMinute: 17
   EndHour: 6
-  EndMinute: 50
+  EndMinute: 36
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: PETRO STATION'S PHONE
   To: 
-  Dialogue: "- PETRO STATION- - HOW - - - - - - - - - NO - SIR - - - - IM SORRY -
-    BUT YOU CROSSED THE LINE - - - HANGING UP NOW - - (END OF CALL) \r\n"
-  IterruptedDialogue: "- PETRO STATION- - HOW - - - - - - - - - NO - SIR - - - -
-    IM SORRY - BUT YOU CROSSED THE LINE - - - HANGING UP NOW - - (END OF CALL) \r\n"
+  Dialogue: '- <link>PETRO STATION</link> - - HOW - - - - - - - - - NO - SIR - -
+    - - IM SORRY - BUT YOU CROSSED THE LINE - - - HANGING UP NOW - - #[END OF THE
+    CALL]'
+  IterruptedDialogue: '- <link>PETRO STATION</link> - - HOW - - - - - - - - - NO
+    - SIR - - - - IM SORRY - BUT YOU CROSSED THE LINE - - - HANGING UP NOW - AND
+    SOMEONES HERE ANYWAY - SO#[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: aedbccc7e1deac84fbda0c8b40512f0a, type: 2}
   Conditions:

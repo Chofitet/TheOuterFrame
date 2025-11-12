@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TootsieCall
   m_EditorClassIdentifier: 
   StartHour: 7
-  StartMinute: 15
+  StartMinute: 26
   EndHour: 7
-  EndMinute: 23
+  EndMinute: 45
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
@@ -24,13 +24,13 @@ MonoBehaviour:
   Dialogue: 'DO - - - - - - - - - - - - - - - - - - - - LIKE YOU TOLD ME - - - -
     - - - - - -  - YES BUT - - - - - - - - - - - - - - - - - IT HAPPENED REALLY FAST
     - I AM NOT THAT STRONG  - - - - - - - - - - - - MAYBE WE COULD ASK REALLY NICE
-    - - - - - - - - - - IF THE GROWNUPS HELP US - - - - - I DON(END OF RECORDING)
+    - - - - - - - - - - IF THE GROWNUPS HELP US - - - - - I DON#[END OF RECORDING]
 
 '
   IterruptedDialogue: 'DO - - - - - - - - - - - - - - - - - - - - LIKE YOU TOLD ME
     - - - - - - - - - -  - YES BUT - - - - - - - - - - - - - - - - - IT HAPPENED
     REALLY FAST - I AM NOT THAT STRONG  - - - - - - - - - - - - MAYBE WE COULD  -
-    - - HI SIR - - BEN THERE IS SOMEONE HE (END OF CALL)
+    - - HI SIR - - BEN THERE IS SOMEONE HE#[END OF THE RECORDING]
 
 '
   Involved:
@@ -48,5 +48,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 8655e66a7e432b84f8e498da5f99d1f1, type: 2}
     ifNot: 1
   - condition: {fileID: 11400000, guid: f99d34e23986a5040bca1decfc381a31, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 85211dd3667991d45863f0ca4dcd6fa6, type: 2}
     ifNot: 1
   isOrderMatters: 0

@@ -14,6 +14,8 @@ public class PinchofonoManager : MonoBehaviour
     bool isInterrupted;
     [SerializeField] GameEvent OnCallEndRecording;
     [SerializeField] GameEvent OnCallCatch;
+    [SerializeField] GameEvent OnAddEntryLog;
+    [SerializeField] GameEvent OnCallLineInterrupted;
 
     public void SetRecording(Component sender, object obj)
     {
@@ -24,6 +26,8 @@ public class PinchofonoManager : MonoBehaviour
         CountDown.text = minutesToRecording + "00";
         word = WordSelectedInNotebook.Notebook.GetSelectedWord();
     }
+
+    bool triggerInterruptedOnce;
 
     void CounterPassTime()
     {
@@ -69,6 +73,12 @@ public class PinchofonoManager : MonoBehaviour
             }
         }
 
+        if(isInterrupted && !triggerInterruptedOnce)
+        {
+            OnCallLineInterrupted?.Invoke(this, null);
+            triggerInterruptedOnce = true;
+        }
+
         //Paso de info de la llamada cacheada
         if (minutePassCounter - 1 >= minutesToRecording)
         {
@@ -80,6 +90,7 @@ public class PinchofonoManager : MonoBehaviour
             Debug.Log("CallRecordingFinish");
             if (isInterrupted) CallToShow.SetIsinterrrupted() ;
             OnCallEndRecording?.Invoke(this, CallToShow);
+            OnAddEntryLog?.Invoke(this, new LogEntryData(word, "WIRETAPPED", null, CallToShow));
             CallToShow = null;
             isInterrupted = false;
         }

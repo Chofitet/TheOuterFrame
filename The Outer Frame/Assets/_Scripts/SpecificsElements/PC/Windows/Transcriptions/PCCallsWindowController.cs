@@ -7,8 +7,6 @@ public class PCCallsWindowController : MonoBehaviour
 {
     [SerializeField] GameObject PrefabBtCall;
     [SerializeField] GameObject Grid;
-    [SerializeField] GameObject panelCall;
-    [SerializeField] TranscriptionCallController CallToFild;
     [SerializeField] GameEvent OnEnableTranscriptionPCBtn;
     bool isDeleted;
     WordData word;
@@ -34,7 +32,7 @@ public class PCCallsWindowController : MonoBehaviour
         }
         
         if (isDeleted) return;
-        List<CallType> CallsHistory = WordsManager.WM.GetAllCathedCalls(word);
+        List<CallType> CallsHistory = WordsManager.WM.GetAllinDBCalls(word);
 
         foreach (var call in CallsHistory)
         {
@@ -45,31 +43,12 @@ public class PCCallsWindowController : MonoBehaviour
 
     void checkHaveCallsToShow()
     {
-        List<CallType> CallsHistory = WordsManager.WM.GetAllCathedCalls(word);
+        List<CallType> CallsHistory = WordsManager.WM.GetAllinDBCalls(word);
 
         foreach (var call in CallsHistory)
         {
             OnEnableTranscriptionPCBtn?.Invoke(this, null);
         }
-    }
-
-    public void SetPanelText(Component sender, object obj)
-    {
-        panelCall.SetActive(true);
-
-        CallType call = (CallType)obj;
-
-        CallToFild.Inicialization(call,word);
-    }
-
-    public void QuitPanelReport()
-    {
-        panelCall.SetActive(false);
-    }
-
-    public void OnQuitPanel(Component sender, object obj)
-    {
-        panelCall.SetActive(false);
     }
 
     public void DeleteAllReports(Component sender, object obj)

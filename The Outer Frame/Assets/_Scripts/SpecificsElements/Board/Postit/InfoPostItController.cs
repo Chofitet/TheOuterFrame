@@ -9,17 +9,20 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
     [SerializeField] List<bool> ifNot = new List<bool>();
     [SerializeField] bool isOrderMatters;
+    GameObject content;
     
     bool isActiveInBegining;
 
+    [SerializeField] BoardType TypeElement;
+
     private void Start()
     {
-        if(Conditionals.Count == 0 && StringConnections.Count == 0)
+        
+        if (Conditionals.Count == 0 && StringConnections.Count == 0)
         {
             isActiveInBegining = true;
         }
     }
-
     public bool GetConditionalState()
     {
         if (StringConnections.Count != 0)
@@ -105,6 +108,16 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
     public bool IsOutOfBoard()
     {
         return false;
+    }
+
+    public WordData GetWordData()
+    {
+        return null;
+    }
+
+    public BoardType GetType()
+    {
+        return TypeElement;
     }
 }
 

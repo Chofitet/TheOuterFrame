@@ -16,13 +16,20 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: -4
-  Text: "We tried and he gave us a wet willy! \n\nWe can't get near him.\n\nThat
+  Text: "We tried but he gave us a wet willy! \n\nWe can't get near him.\n\nThat
     kid is a piece of work, I tell you!"
-  TextForRepetition: "We tried that alredy! \n\nIt did not work!"
+  TextForRepetition: 'We already tried that, remember?
+
+    The report is probably
+    on your desk, or in the DB if you uploaded it.'
+  CustomStatus: ATTEMPTED
   Photos:
-  - photo: {fileID: 21300000, guid: 46930c464f80c00489025e8ac84091e6, type: 3}
+  - photo: {fileID: 21300000, guid: 7d891c55489d94d418b112a11715b9a7, type: 3}
     text: RIDICULOUS
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: ac625b74a683c6f45ba3d28bb8280594, type: 2}
+    ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0

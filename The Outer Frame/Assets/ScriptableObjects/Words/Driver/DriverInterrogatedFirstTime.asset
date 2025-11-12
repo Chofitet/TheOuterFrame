@@ -16,29 +16,30 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "The guy is really scared. \n \nHis name is <link>Sergio Raracara</link>.
-    \n \nHe knows he works for us so no need to worry about squealing. \n \nHe might
-    be suffering from a concussion, but swears that out of nowhere, while he was
-    \"driving his own business\", <link>the BIGGEST cow he has ever seen</link> jumped
-    at full cow-speed in front of the truck. \n \nWhen he woke up, the cow was no
-    more but the <link>cargo</link> doors were open. So he closed them without looking
-    inside as he's not allowed to interact with whatever's in there. "
-  TextForRepetition: "WE SAID:\n\nThe guy is really scared. \n \nHis name is <link>Sergio
-    Raracara</link>. \n \nHe knows he works for us so no need to worry about squealing.
-    \n \nHe might be suffering from a concussion, but swears that out of nowhere,
-    while he was \"driving his own business\", <link>the BIGGEST cow he has ever
-    seen</link> jumped at full cow-speed in front of the truck. \n \nWhen he woke
-    up, the cow was no more but the <link>cargo</link> doors were open. So he closed
-    them without looking inside as he's not allowed to interact with whatever's in
-    there. "
+  Text: "The guy is really scared. \nHis name is <link>Sergio Raracara</link>. \nHe
+    knows he works for us so no need to worry about squealing. \nHe might be suffering
+    from a concussion, but swears that out of nowhere, while he was \"driving his
+    own business\", <link>the BIGGEST cow he has ever seen</link> jumped at full
+    cow-speed in front of the truck. \nWhen he woke up, the cow was no more but the
+    <link>cargo</link> doors were open. So he closed them without looking inside
+    as he's not allowed to interact with whatever's in there. He gave us this code:
+    <link>285-P9AQ</link>. "
+  TextForRepetition: 'We already did that, remember?
+
+    The report is probably
+    on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: c4ba1584f9396984baff6ad9ed1c761b, type: 3}
+  - photo: {fileID: 21300000, guid: 13078b94e51af1b44a40bea06374d207, type: 3}
     text: MMH
   - photo: {fileID: 21300000, guid: 0a7b6bd54caa0a149a1f7282b8f59d45, type: 3}
     text: A BIG ONE
+  - photo: {fileID: 21300000, guid: e1e6545efd0782040aa14e393fbf505c, type: 3}
+    text: THIS
   Conditionals:
   - condition: {fileID: 11400000, guid: 49a789323cc43d8498e19b0bfe3c7f92, type: 2}
     ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0

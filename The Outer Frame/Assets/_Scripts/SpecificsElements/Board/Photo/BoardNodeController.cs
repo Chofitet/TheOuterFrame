@@ -14,6 +14,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] GameObject PhotoModel;
     [SerializeField] GameObject Canvas;
     bool AwaitingForPlace;
+    GameObject content;
 
     private void Start()
     {
@@ -24,11 +25,13 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
 
     public bool GetConditionalState()
     {
-        if (word.GetIsFound() && WordSelectedInNotebook.Notebook.GetSelectedWord() == word || CheckRetroactiveWordWasPlaced() || (!AwaitingForPlace && word.GetPlacedInBoard()))
+        WordData wordSelected = WordSelectedInNotebook.Notebook.GetSelectedWord();
+
+        if (word.GetIsFound() && wordSelected == word || CheckRetroactiveWordWasPlaced() || (!AwaitingForPlace && word.GetPlacedInBoard()))
         {
             transform.position = new Vector3(0, 0, 0);
             transform.GetChild(0).gameObject.SetActive(true);
-            ActiveChildPosits();
+            //ActiveChildPosits();
             MarkRetroactiveWordPlaced();
             OnPutPhotoOnBoard?.Invoke(this, word);
             word.SetPlacedInBoard();
@@ -39,7 +42,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         else return false;
     }
 
-        void ActiveChildPosits()
+        /*void ActiveChildPosits()
     {
         foreach(MoveBoardElementsToPos posit in PostIts)
         {
@@ -52,7 +55,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
                 Canvas.SetActive(false);
             }
         }
-    }
+    }*/
 
     bool CheckRetroactiveWordWasPlaced() 
     {
@@ -95,6 +98,17 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
     public bool IsOutOfBoard()
     {
         return false;
+    }
+
+    public WordData GetWordData()
+    {
+        return word;
+    }
+
+    [SerializeField] BoardType TypeElement;
+    public BoardType GetType()
+    {
+        return TypeElement;
     }
 
 }

@@ -16,9 +16,13 @@ public class PCController : MonoBehaviour
     [SerializeField] List<GameObject> PanelsAppearsOnSearch = new List<GameObject>();
     [SerializeField] WordData IrrelevantDB;
     [SerializeField] GameObject BtnBackToLastEntry;
+    [SerializeField] GameEvent OnLogFilterType;
     GameEvent LastWindow;
     bool isWaitingAWord;
     bool inWordAccessWindow;
+
+    [SerializeField] WordData Vessel;
+    [SerializeField] WordData A15;
 
     WordData _LastSearchedWord;
     WordData word;
@@ -83,13 +87,28 @@ public class PCController : MonoBehaviour
         word = _word;
         SearchWordInWiki(_LastSearchedWord);
     }
+
+    public void ForceUpdateWindow(Component sender, object obj)
+    {
+        UpdateWK(_LastSearchedWord, true);
+    }
+
     public void UpdateDataBase(Component sender, object obj)
     {
         word = (WordData)obj;
+        UpdateWK(word, false);
+    }
+
+    void UpdateWK(WordData word, bool forceUpdate)
+    {
+        if (OnWikiWindow != LastWindow && !forceUpdate) return;
+
+        if (word != _LastSearchedWord) return;
+
         SearchWordInWiki();
         OnWikiWindow?.Invoke(this, null);
     }
-    
+
     public void BackLastEntry(Component sender, object obj)
     {
         if (!isInPCView) return;
@@ -112,9 +131,35 @@ public class PCController : MonoBehaviour
             if (isInPCView) OnShakeNotebook?.Invoke(this, null);
         }
     }
+    public void OnSearWordInWiki(Component sender, object obj)
+    {
+        if (sender.GetComponent<ReportsInDetailController>() != null || sender.GetComponent<TranscriptsInDetailController>()) LastWindow = OnWikiWindow;
+            word = (WordData)obj;
+            SearchWordInWiki((WordData)obj);
+    }
 
     public void SearchWordInWiki(WordData LastSearchedWord = null)
     {
+        if(LastWindow != OnWikiWindow)
+        {
+            //OnLogWindow
+
+            if (!word)
+            {
+                SearchBar.text = " |";
+                if (isInPCView) OnShakeNotebook?.Invoke(this, null);
+                return;
+            }
+
+            FilterAll(word);
+            isWaitingAWord = true;
+            StopAllCoroutines();
+            StartCoroutine(IdleSearchBarAnim());
+            word = null;
+            return;
+        }
+
+        OnWikiWindow?.Invoke(this, null);
         //BtnBackToLastEntry.SetActive(false);
         if (!word)
         {
@@ -126,6 +171,7 @@ public class PCController : MonoBehaviour
             return;
         }
 
+        if (word == Vessel) word = A15;
         if(word == IrrelevantDB) foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
         else foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(true);
         DataBaseType db = WordsManager.WM.RequestBDWikiData(word);
@@ -137,8 +183,8 @@ public class PCController : MonoBehaviour
             StartCoroutine(DelayBTNBackLatEntryAppear());
             BtnBackToLastEntry.GetComponent<BackToLastEntryBTNController>().SetWordToBack(LastSearchedWord);
         }*/
-            
 
+        if (db == null) return;
         if (db.GetAccessWord() && !db.GetisWordAccessFound())
         {
             OnWordAccessScreen?.Invoke(this, word);
@@ -154,9 +200,9 @@ public class PCController : MonoBehaviour
         {
             WikiTitleSearchedWord.text = "<link>" + TitleName + "</link>";
             WikiTitleSearchedWord.ForceMeshUpdate();
-            FindableWordsManager.FWM.InstanciateFindableWord(WikiTitleSearchedWord, FindableBtnType.FindableBTN, true);
+            
         }
-
+        FindableWordsManager.FWM.InstanciateFindableWord(WikiTitleSearchedWord, FindableBtnType.FindableBTN, true);
         isWaitingAWord = true;
        
         StartCoroutine(IdleSearchBarAnim());
@@ -173,6 +219,7 @@ public class PCController : MonoBehaviour
 
         WordData searchedWord = (WordData)obj;
         string newWord = WordsManager.WM.FindWordWithPhoneNum(searchedWord).GetForm_DatabaseNameVersion();
+        
         string existingText = WikiTitleSearchedWord.text;
 
         // Verificar si el texto existente contiene etiquetas <material>
@@ -184,6 +231,7 @@ public class PCController : MonoBehaviour
 
         // Si no tiene etiquetas <material>, actualiza el texto
         WikiTitleSearchedWord.text = newWord;
+        
     }
 
     public void CloseWordAccessWindow(Component sender, object obj)
@@ -196,8 +244,19 @@ public class PCController : MonoBehaviour
         gameEvent?.Invoke(this, null);
         LastWindow = gameEvent;
     }
+    public void SetLastWindow(Component sender,object obj)
+    {
+        LastWindow = (GameEvent)obj;
+    }
+    public void FilterAll(WordData specificTag = null)
+    {
+        WordData WordToFilter = _LastSearchedWord;
 
-    
+        if (specificTag) WordToFilter = specificTag;
+        if (specificTag == IrrelevantDB) WordToFilter = _LastSearchedWord;
+        OnLogFilterType?.Invoke(this, new SearchLogData(WordToFilter, LogFilterType.report));
+    }
+
     IEnumerator IdleSearchBarAnim()
     {
         SearchBar.text = " |";

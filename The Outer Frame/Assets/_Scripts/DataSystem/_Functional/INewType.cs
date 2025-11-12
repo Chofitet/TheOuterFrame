@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface INewType 
+public interface INewType
 {
+    NewType GetNewType();
     string GetHeadline();
 
     string GetHeadline2();

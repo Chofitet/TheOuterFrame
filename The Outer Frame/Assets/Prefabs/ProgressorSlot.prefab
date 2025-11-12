@@ -487,6 +487,8 @@ GameObject:
   - component: {fileID: 6502155324649856846}
   - component: {fileID: 3194480239522758045}
   - component: {fileID: 6889509828216512992}
+  - component: {fileID: 6818304626552952359}
+  - component: {fileID: 5777676380974878465}
   m_Layer: 5
   m_Name: Word
   m_TagString: Untagged
@@ -502,16 +504,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4670872956601787114}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.2}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4094602191742050583}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.3, y: -3.55}
-  m_SizeDelta: {x: -4.736, y: -21.221}
+  m_AnchorMin: {x: 0.16935709, y: 0.11051537}
+  m_AnchorMax: {x: 0.83689845, y: 0.7841792}
+  m_AnchoredPosition: {x: 0, y: -0.44000053}
+  m_SizeDelta: {x: 0.6581563, y: -13.448}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6502155324649856846
 CanvasRenderer:
@@ -551,7 +553,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4279172864
-  m_fontColor: {r: 0, g: 1, b: 0.052975178, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -578,7 +580,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 5.5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -628,12 +630,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: -0.19268408
-      outSlope: -0.19268408
+      inSlope: -0.23953398
+      outSlope: -0.23953398
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.30235124
+      outWeight: 0.049980953
     - serializedVersion: 3
       time: 0.501666
       value: -0.053
@@ -646,20 +648,50 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: -0.0006713867
-      inSlope: 0.20592207
-      outSlope: 0.20592207
+      inSlope: 0.26600474
+      outSlope: 0.26600474
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.15775363
+      inWeight: 0.050315186
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   AngleMultiplier: 1
   SpeedMultiplier: 1
-  CurveScale: 100
+  CurveScale: 140
   boundsMax: 10
   boundsMin: -10
+--- !u!114 &6818304626552952359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670872956601787114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fc60f6af20ce54ca126de514ee2579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFontSize: 2
+  minFontSize: 1.4
+  updateEveryFrame: 0
+--- !u!114 &5777676380974878465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670872956601787114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bd1518865b9874eb1ee0fb6f0a8705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material:
+  - {fileID: 2100000, guid: 54c80852cdbc98348bb768a0dc305114, type: 2}
+  - {fileID: 9216519384190871315, guid: a7beff17a0824354bb3190476b156314, type: 2}
 --- !u!1 &5368664256226230757
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,6 +1147,8 @@ GameObject:
   - component: {fileID: 4613847748127004601}
   - component: {fileID: 4348606448315040182}
   - component: {fileID: 4592849919416894460}
+  - component: {fileID: 7559372677770529040}
+  - component: {fileID: 3127436553890411999}
   m_Layer: 5
   m_Name: Action
   m_TagString: Untagged
@@ -1169,7 +1203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: <material="digital-7 SDF Material Red"> </material>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a7beff17a0824354bb3190476b156314, type: 2}
   m_sharedMaterial: {fileID: 9216519384190871315, guid: a7beff17a0824354bb3190476b156314, type: 2}
@@ -1179,7 +1213,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278255389
-  m_fontColor: {r: 0.112813234, g: 1, b: 0, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1288,6 +1322,36 @@ MonoBehaviour:
   CurveScale: 100
   boundsMax: 8
   boundsMin: -8
+--- !u!114 &7559372677770529040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028132110396431481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bd1518865b9874eb1ee0fb6f0a8705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material:
+  - {fileID: 2100000, guid: 54c80852cdbc98348bb768a0dc305114, type: 2}
+  - {fileID: 9216519384190871315, guid: a7beff17a0824354bb3190476b156314, type: 2}
+--- !u!114 &3127436553890411999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8028132110396431481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fc60f6af20ce54ca126de514ee2579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxFontSize: 2
+  minFontSize: 1.4
+  updateEveryFrame: 0
 --- !u!1 &8099415316523088295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,6 +1442,7 @@ GameObject:
   - component: {fileID: 6812119733848411997}
   - component: {fileID: 5034508899316332759}
   - component: {fileID: 6897876388820856394}
+  - component: {fileID: 8667979012157981682}
   m_Layer: 5
   m_Name: ProgressorSlot
   m_TagString: Untagged
@@ -1467,6 +1532,10 @@ MonoBehaviour:
   OnReactiveIdeaPosit: {fileID: 11400000, guid: 4e268269c4341f94dbee67a1dd156c0b, type: 2}
   TryAbortPanel: {fileID: 1693748110438358401}
   LedPanel: {fileID: 937647024035742146}
+  OnSetCandy: {fileID: 11400000, guid: 6e13f206d42b7be47bd6b10eced1e37d, type: 2}
+  OnSetVilifyAction: {fileID: 11400000, guid: 6c678b5f049df1d48adfb345a4612a38, type: 2}
+  VilifyState: {fileID: 11400000, guid: 2edaf02b335d23c4da8d61a1fc9f5681, type: 2}
+  OnAddEntryLog: {fileID: 11400000, guid: a3982219237943745849dbc225d0a306, type: 2}
   LEDObjects:
   - {fileID: 6222713149554729638}
 --- !u!114 &6812119733848411997
@@ -1501,6 +1570,8 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
 --- !u!114 &5034508899316332759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1533,6 +1604,8 @@ MonoBehaviour:
   DelayCall: 3.2
   _float: 0
   _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
 --- !u!114 &6897876388820856394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1565,6 +1638,42 @@ MonoBehaviour:
   DelayCall: 0
   _float: 0
   _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+--- !u!114 &8667979012157981682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8714913143489131072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 50a351b18599d1543a9ccc23fdf7d5b3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6766850930327235409}
+        m_TargetAssemblyTypeName: SlotController, Assembly-CSharp
+        m_MethodName: OnSetVilifyLockedTime
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
 --- !u!1 &8925784204368040431
 GameObject:
   m_ObjectHideFlags: 0

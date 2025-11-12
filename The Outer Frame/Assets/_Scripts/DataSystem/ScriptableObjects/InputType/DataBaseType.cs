@@ -120,8 +120,6 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
         aux.Add(24, Consualties);
         aux.Add(25, DeclaredCasualties);
 
-        Debug.Log(aux);
-
         return aux;
     }
 

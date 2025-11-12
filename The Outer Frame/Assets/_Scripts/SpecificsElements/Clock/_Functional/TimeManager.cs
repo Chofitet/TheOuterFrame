@@ -203,6 +203,40 @@ public class TimeManager : MonoBehaviour
         isDisableToLoose = true;
     }
 
+    public TimeData SubtractMinutesFromTime(TimeData time, int minutesToSubtract)
+    {
+        int totalMinutes = time.Minute - minutesToSubtract;
+
+        // Si los minutos son negativos, calculamos las horas que hay que restar
+        int extraHours = 0;
+        while (totalMinutes < 0)
+        {
+            totalMinutes += 60;
+            extraHours++;
+        }
+
+        int finalMinutes = totalMinutes;
+
+        int totalHours = time.Hour - extraHours;
+        int extraDays = 0;
+        while (totalHours < 0)
+        {
+            totalHours += 24;
+            extraDays++;
+        }
+
+        int finalHours = totalHours;
+        int finalDays = time.Day - extraDays;
+
+        // No hacemos wrap-around de días negativos (depende de tu lógica de tiempo)
+        return new TimeData
+        {
+            Day = finalDays,
+            Hour = finalHours,
+            Minute = finalMinutes
+        };
+    }
+
 }
 
 public struct TimeData
@@ -223,7 +257,7 @@ public struct TimeData
         string _min = $"{Minute:00}";
         string _hour = $"{Hour:00}";
 
-        return $"{_hour} : {_min}";
+        return $"{_hour}:{_min}";
     }
 
     public  int GetTimeInNum()
@@ -233,6 +267,14 @@ public struct TimeData
         int.TryParse(auxString, out auxInt);
         return auxInt;
     }
+
+    public bool isANullTimeData()
+    {
+        if (Day == 0 && Hour == 0 && Minute == 0) return true;
+        else return false;
+    }
+
+   
 }
 
 

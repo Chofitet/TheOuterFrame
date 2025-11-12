@@ -12,14 +12,15 @@ public class NotebookController : MonoBehaviour
     List<GameObject> WordsInstances = new List<GameObject>();
     [SerializeField] Transform WordAnchors;
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
+    [SerializeField] NotebookProcessManager ProccessManager;
+    [SerializeField] GameEvent OnPendingWordsToPutInBoard;
     int i = 0;
     bool once;
     bool isStarting = true;
-
     List<int> removedIndex = new List<int>();
     private void Start()
     {
-        for(int i = 0; i < WordAnchors.childCount;i++)
+        for (int i = 0; i < WordAnchors.childCount;i++)
         {
             WordSpots.Add(WordAnchors.GetChild(i));
         }
@@ -38,8 +39,6 @@ public class NotebookController : MonoBehaviour
     public void RefreshWords(Component component, object obj)
     {
         WordData LastWordAdded = (WordData)obj;
-
-        
 
         int auxIndex = i;
 
@@ -69,12 +68,22 @@ public class NotebookController : MonoBehaviour
 
         if (LastWordAdded.GetIsAPhoneNumber()) return;
 
-        GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
-        wordaux.GetComponent<NotebookWordInstance>().GetButton().onClick.AddListener(ClearUnderLine);
-        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded, isStarting);
-        WordsInstances.Add(wordaux);
+        float delayTime = 0;
+        if (actualView == ViewStates.TVView) delayTime = 0.3f;
+
+
+        StartCoroutine(DelayInstanciate(delayTime, auxIndex, LastWordAdded));
 
         once = false;
+    }
+
+    IEnumerator DelayInstanciate(float delayTime, int auxIndex, WordData LastWordAdded)
+    {
+        yield return new WaitForSeconds(delayTime);
+        GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
+        wordaux.GetComponent<NotebookWordInstance>().GetButton().onClick.AddListener(ClearUnderLine);
+        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded, isStarting, ProccessManager);
+        WordsInstances.Add(wordaux);
     }
 
     int SearchIndexOfCrossWord(WordData newword)
@@ -84,7 +93,7 @@ public class NotebookController : MonoBehaviour
         foreach (GameObject w in WordsInstances)
         {
             NotebookWordInstance script = w.GetComponent<NotebookWordInstance>();
-            if (script.GetWord().GetInactiveState())
+            if (script.GetWord().GetInactiveStateSeen())
             {
                 script.ReplaceWord(newword);
                 ClearUnderLine();
@@ -113,6 +122,7 @@ public class NotebookController : MonoBehaviour
             {
                 ClearUnderLine();
                 script.ReplaceWord(newword);
+                
                 aux = true;
             }
             
@@ -198,7 +208,10 @@ public class NotebookController : MonoBehaviour
     public void PutingWordOnBoard(Component sender, object obj)
     {
         InctiveWordsOnBoard.Add((WordData)obj);
-        DisableWordsOfList(InctiveWordsOnBoard);
+        InactiveWordInBoard((WordData)obj);
+        if (InctiveWordsOnBoard.Count == WordsInstances.Count) OnPendingWordsToPutInBoard?.Invoke(this, false);
+        else OnPendingWordsToPutInBoard?.Invoke(this, true);
+
     }
 
     ViewStates actualView;
@@ -214,7 +227,9 @@ public class NotebookController : MonoBehaviour
 
         if (actualView == ViewStates.BoardView)
         {
-            DisableWordsOfList(InctiveWordsOnBoard);
+            DisableWordsOfList(InctiveWordsOnBoard,"Board",true,true);
+            if (InctiveWordsOnBoard.Count == WordsInstances.Count) OnPendingWordsToPutInBoard?.Invoke(this, false);
+            else OnPendingWordsToPutInBoard?.Invoke(this, true);
         }
         else if (actualView == ViewStates.TVView)
         {
@@ -224,6 +239,10 @@ public class NotebookController : MonoBehaviour
         {
             DisableWordsOfList(listAllWord);
         }
+        else if (actualView == ViewStates.OnTakeSomeInBoard)
+        {
+            DisableWordsOfList(InctiveWordsOnBoard, "Board", true, true);
+        }
         else
         {
             List<WordData> Empylist = new List<WordData>();
@@ -231,19 +250,46 @@ public class NotebookController : MonoBehaviour
         }
     }
 
-    void DisableWordsOfList(List<WordData> list)
+    void DisableWordsOfList(List<WordData> list, string material = "",bool changes = true, bool thickness = false)
     {
+        List<NotebookWordInstance> activeWords = new List<NotebookWordInstance>();
+
         foreach (GameObject instanceBTN in WordsInstances) 
         {
-            instanceBTN.GetComponent<NotebookWordInstance>().GetButton().enabled = true;
+            bool isActive = true;
+            NotebookWordInstance Wordinstance = instanceBTN.GetComponent<NotebookWordInstance>();
+            Wordinstance.TryActiveWord(true);
+            Wordinstance.SetInactive(false);
 
             foreach (WordData word in list)
             {
-                NotebookWordInstance Wordinstance = instanceBTN.GetComponent<NotebookWordInstance>();
                 if(Wordinstance.GetWord() == word)
                 {
-                    instanceBTN.GetComponent<NotebookWordInstance>().GetButton().enabled = false;
+                    isActive = false;
+                    Wordinstance.TryActiveWord(false);
+                    Wordinstance.SetInactive(true);
                 }
+            }
+            if (isActive)
+            {
+                //palabra que sigue activa
+                Wordinstance.ApplyMaterial(material);
+                if(changes) Wordinstance.ApplyThicknessAnim(thickness);
+            }
+        }
+    }
+
+    void InactiveWordInBoard(WordData word)
+    {
+        foreach (GameObject instanceBTN in WordsInstances)
+        {
+            NotebookWordInstance script = instanceBTN.GetComponent<NotebookWordInstance>();
+
+            if (script == null) return;
+
+            if (script.GetWord() == word)
+            {
+                script.InactiveDirectly();
             }
         }
     }
@@ -264,4 +310,5 @@ public class NotebookController : MonoBehaviour
         }
     }
     
+
 }

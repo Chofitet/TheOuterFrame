@@ -16,15 +16,24 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 978fd1b3f2b54f04dad1b8d1c77bf880, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "We powerwashed that green stuff right into oblivion! \nAnd everything else
-    was left as dirty as it was before, so to no raise suspicion."
+  Text: "We mopped that green stuff right into oblivion! \nAnd everything else was
+    left a little dirty as it was before, so to no raise suspicion."
   TextForRepetition: 
+  CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: b1e2be96e1b2d154ea50b41fea45c9c1, type: 3}
+  - photo: {fileID: 21300000, guid: f81bec9d5a6708c41a96acda93cfb74c, type: 3}
     text: GONE!
+  - photo: {fileID: 21300000, guid: b1e2be96e1b2d154ea50b41fea45c9c1, type: 3}
+    text: CLEAN ALL THE WAY
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
     text: BEYOND REPROACH
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
+    ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
+  AgentDown: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: CatatonicLabtestedDeandraFoundwithCar
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
+  state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
+  isAutomatic: 1
+  ChangeTimeOfAction: 0
+  Text: 'We already lab tested her with the car, remember?
+
+    Read our reports.'
+  TextForRepetition: 'We already lab tested her with the car, remember?
+
+    Read
+    our reports.'
+  CustomStatus: 
+  Photos:
+  - photo: {fileID: 21300000, guid: c8abecef37052b34c8728966c818fbb3, type: 3}
+    text: REMEMBER TO READ
+  Conditionals:
+  - condition: {fileID: 11400000, guid: badc88481efd1af4ab91797455729431, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 5dc560e6ed802c149ab3953838b4896f, type: 2}
+    ifNot: 0
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

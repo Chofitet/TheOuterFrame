@@ -13,24 +13,23 @@ MonoBehaviour:
   m_Name: BenBenjiCall
   m_EditorClassIdentifier: 
   StartHour: 7
-  StartMinute: 15
+  StartMinute: 26
   EndHour: 7
-  EndMinute: 23
+  EndMinute: 45
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: BEN BENJI'S PHONE
   To: 
   Dialogue: '- BUT HOW COULD HE KNOW- - - - - - -  YOU JUST GOT THEM - - - HOW COULD
-    HE HAVE KNOWN - - - - - - - - - - - - - - - - - - - - - - - - - - - - SHE SAID
-    TO NOT LOOSE THEM - - - - - - - - - - - - - - - - - WHAT ARE WE GOING TO DO?
-    - - - - - - - - - - <link>TOOTSIE</link> - - - WHAT ARE WE GOING TO D(END OF
-    RECORDING)
-
-'
+    HE HAVE KNOWN - - - - - - - - - - - - - - - - - - - - - - - - - - - - <link>SHE</link>
+    SAID TO NOT LOOSE THEM - - - - - - - - - - - - - - - - - WHAT ARE WE GOING TO
+    DO? - - - - - - - - - - <link>TOOTSIE</link> - - - WHAT ARE WE GOING TO D#[END
+    OF THE RECORDING]'
   IterruptedDialogue: '- BUT HOW COULD HE KNOW- - - - - - -  YOU JUST GOT THEM -
     - - HOW COULD HE HAVE KNOWN - - - - - - - - - - - - - - - - - - - - - - - - -
-    - - - SHE SAID TO NOT - UH - - - SOMEONE IS HERE - - I HAVE TO GO (END OF CALL)
+    - - - <link>SHE</link> SAID TO NOT - UH - - - SOMEONE IS HERE - - I HAVE TO GO
+    #[END OF THE CALL]
 
 '
   Involved:
@@ -48,5 +47,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 8655e66a7e432b84f8e498da5f99d1f1, type: 2}
     ifNot: 1
   - condition: {fileID: 11400000, guid: f99d34e23986a5040bca1decfc381a31, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 85211dd3667991d45863f0ca4dcd6fa6, type: 2}
     ifNot: 1
   isOrderMatters: 0

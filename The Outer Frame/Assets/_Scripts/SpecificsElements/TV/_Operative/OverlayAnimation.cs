@@ -5,28 +5,30 @@ using DG.Tweening;
 using Cinemachine.Utility;
 using System.Runtime.InteropServices;
 using TMPro;
+using System;
 
 public class OverlayAnimation : MonoBehaviour
 {
-    [HideInInspector] [SerializeField] GameObject newsTextUI;
+     [SerializeField] GameObject newsTextUI;
     Vector3 textStartingPosition;
-    [HideInInspector] [SerializeField] Transform textOffscreenPositionLeft;
-    [HideInInspector] [SerializeField] Transform textOffscreenPositionRight;
-    [HideInInspector] [SerializeField] GameObject newsTitleUI;
+     [SerializeField] Transform textOffscreenPositionLeft;
+     [SerializeField] Transform textOffscreenPositionRight;
+     [SerializeField] GameObject newsTitleUI;
     Vector3 titleStartingPosition;
-    [HideInInspector] [SerializeField] Transform titleOffscreenPositionLeft;
-    [HideInInspector] [SerializeField] Transform titleOffscreenPositionRight;
-    [HideInInspector] [SerializeField] GameObject newsQuipUI;
+     [SerializeField] Transform titleOffscreenPositionLeft;
+     [SerializeField] Transform titleOffscreenPositionRight;
+     [SerializeField] GameObject newsQuipUI;
     Vector3 quipStartingPosition;
-    [HideInInspector] [SerializeField] Transform quipOffscreenPosition;
-    [HideInInspector] [SerializeField] GameObject picsUI;
+     [SerializeField] Transform quipOffscreenPosition;
+     [SerializeField] GameObject picsUI;
     Vector3 picsStartingPosition;
-   [HideInInspector] [SerializeField] Transform picsOffscreenPosition;
+    [SerializeField] Transform picsOffscreenPosition;
     [SerializeField] GameEvent OnAnimLayoutFinish;
 
-    TMP_Text NewContentTMPtxt;
-    TMP_Text HeadlineTMPtxt;
-    TMP_Text QuipTMPtxt;
+    [SerializeField] TMP_Text NewContentTMPtxt;
+    [SerializeField]TMP_Text HeadlineTMPtxt;
+    [SerializeField] TMP_Text Headline2TMPtxt;
+    [SerializeField] TMP_Text QuipTMPtxt;
     
     [SerializeField] float moveTimes = 1;
     float acceleratedFactor = 1;
@@ -39,6 +41,7 @@ public class OverlayAnimation : MonoBehaviour
     Sequence quipAnim;
     bool first;
     private List<Tween> overlayTweens = new List<Tween>();
+
 
     private void Start()
     {
@@ -55,9 +58,9 @@ public class OverlayAnimation : MonoBehaviour
         picsStartingPosition = picsUI.transform.position;
         //picsUI.transform.position = picsOffscreenPosition.position;
 
-        NewContentTMPtxt = newsTextUI.transform.GetChild(0).GetComponent<TMP_Text>();
+        /*NewContentTMPtxt = newsTextUI.transform.GetChild(0).GetComponent<TMP_Text>();
         HeadlineTMPtxt = newsTitleUI.transform.GetChild(0).GetComponent<TMP_Text>();
-        QuipTMPtxt = newsQuipUI.transform.GetChild(0).GetComponent<TMP_Text>();
+        QuipTMPtxt = newsQuipUI.transform.GetChild(0).GetComponent<TMP_Text>();*/
         first = true;
 
     }
@@ -77,9 +80,10 @@ public class OverlayAnimation : MonoBehaviour
         newsInAnim.PrependInterval(pauseTimes)
             .Append(newsTitleUI.transform.DOMove(titleStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
             .Join(newsTextUI.transform.DOMove(textStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
-            .AppendCallback(() => fadeUI(NewContentTMPtxt,1))
-            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 1))
-            .JoinCallback(() => fadeUI(QuipTMPtxt, 1));
+            .AppendCallback(() => fadeUI(NewContentTMPtxt,1, moveTimes))
+            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 1, moveTimes))
+            .JoinCallback(() => fadeUI(Headline2TMPtxt,1,moveTimes))
+            .JoinCallback(() => fadeUI(QuipTMPtxt, 1, moveTimes));
     }
     [ContextMenu("News In")]
     private void NewsInTest()
@@ -97,9 +101,10 @@ public class OverlayAnimation : MonoBehaviour
         newsOutAnim = DOTween.Sequence();
         overlayTweens.Add(newsOutAnim);
         newsOutAnim.PrependInterval(pauseTimes)
-            .AppendCallback(() => fadeUI(NewContentTMPtxt,0))
-            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 0))
-            .JoinCallback(() => fadeUI(QuipTMPtxt, 0))
+            .AppendCallback(() => fadeUI(NewContentTMPtxt,0,0.1f))
+            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 0,0.1f))
+            .JoinCallback(() => fadeUI(QuipTMPtxt, 0, 0.1f))
+            .JoinCallback(() => fadeUI(Headline2TMPtxt, 0, 0.1f))
             .PrependInterval(pauseTimes)
             .Append(newsTitleUI.transform.DOMove(titleOffscreenPositionRight.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
             .Join(newsTextUI.transform.DOMove(textOffscreenPositionLeft.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
@@ -219,9 +224,9 @@ public class OverlayAnimation : MonoBehaviour
         }
     }
 
-    void fadeUI( TMP_Text textToFade,float valueToFade)
+    void fadeUI( TMP_Text textToFade,float valueToFade, float fadeTime)
     {
-        textToFade.DOFade(valueToFade, moveTimes * acceleratedFactor);
+        textToFade.DOFade(valueToFade, fadeTime * acceleratedFactor);
     }
 
     public float GetAnimTime() { return newsChangeTime * acceleratedFactor; }

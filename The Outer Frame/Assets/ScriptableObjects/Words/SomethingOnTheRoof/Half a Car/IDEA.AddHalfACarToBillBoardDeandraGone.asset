@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: IDEA.AddHalfACarToBillBoardDeandraGone
+  m_EditorClassIdentifier: 
+  Action: {fileID: 11400000, guid: e633069e171a69a42a4064e6154a7ea5, type: 2}
+  state: {fileID: 11400000, guid: e633069e171a69a42a4064e6154a7ea5, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: We keep outdoing ourselves on this one.
+  TextForRepetition: 
+  CustomStatus: 
+  Photos:
+  - photo: {fileID: 21300000, guid: dc72ee116554de047820047dbecea6d2, type: 3}
+    text: UPPED THE DRAMA
+  - photo: {fileID: 21300000, guid: 9ccc246c1db8126409b3f2f693fe022e, type: 3}
+    text: NOTHING LEFT BEHIND
+  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
+    text: A FINE JOB!
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 30d9efe40c6d99c419d2bcbfab06ecb9, type: 2}
+    ifNot: 0
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

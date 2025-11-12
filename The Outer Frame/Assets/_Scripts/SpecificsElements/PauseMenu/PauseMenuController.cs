@@ -7,6 +7,7 @@ public class PauseMenuController : MonoBehaviour
 {
     [SerializeField] Transform OutPos;
     [SerializeField] Transform InPos;
+    [SerializeField] GameEvent OnPauseMenuOutCompletely;
     Sequence PaperMoveSequence;
 
     public void InPause(Component sender, object obj)
@@ -16,6 +17,7 @@ public class PauseMenuController : MonoBehaviour
         PaperMoveSequence = DOTween.Sequence();
 
         PaperMoveSequence.PrependInterval(0.6f)
+                          .AppendCallback(() => OnPauseMenuOutCompletely?.Invoke(this, null))
                          .Append(transform.DOMove(InPos.position, 0.3f)).SetEase(Ease.InOutQuad);
     }
 

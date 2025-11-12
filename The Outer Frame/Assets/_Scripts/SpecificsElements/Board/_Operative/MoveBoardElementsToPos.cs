@@ -9,13 +9,22 @@ public class MoveBoardElementsToPos : MonoBehaviour
     IPlacedOnBoard conditions = null;
     [SerializeField] GameEvent OnPlaceInBoardSound;
     [SerializeField] bool IsAUpdatedPhoto;
+    [SerializeField] GameEvent OnUpdatingInBoard;
+    [SerializeField] GameEvent OnUpdatingBoardPlacedFinish;
+    [SerializeField] GameEvent OnMarkAsMoving;
     Vector3 FinalPosition;
     Quaternion FinalRotation;
     GameObject Content;
     bool isPlaced;
+    bool isPlacedFinish;
     bool isTaken;
     bool toReplece;
     bool isOutOfBoard;
+
+    private void OnEnable()
+    {
+        Content = transform.GetChild(0).gameObject;
+    }
     private void Start()
     {
         UpdateFinalPositionRotation(null, null);
@@ -33,7 +42,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
             Debug.Log(transform.parent.parent.parent.gameObject.name);
 
         }
-        Content = transform.GetChild(0).gameObject;
+        
         if (!conditions.ActiveInBegining())
         {
             Invoke("sarasa", 0.1f);
@@ -83,7 +92,6 @@ public class MoveBoardElementsToPos : MonoBehaviour
         if (isOutOfBoard) return;
         if (conditions == null)
         {
-            Debug.Log(transform.parent.parent.parent.gameObject.name);
             return;
         }
         
@@ -93,17 +101,18 @@ public class MoveBoardElementsToPos : MonoBehaviour
             if (!conditions.GetConditionalState() && !toReplece) return;
 
             Vector3 InitPos = (Vector3)obj;
-
+            OnMarkAsMoving?.Invoke(this, GetTypeOfObject());
 
             if (isTaken)
             {
-                StartCoroutine(Delay(InitPos));
+                MoveToPlace(InitPos);
                 isTaken = false;
                 return;
             }
             isPlaced = true;
             toReplece = false;
-            StartCoroutine(Delay(InitPos));
+            OnUpdatingInBoard?.Invoke(this, null);
+            MoveToPlace(InitPos);
         }
         catch (NullReferenceException e)
         {
@@ -119,32 +128,44 @@ public class MoveBoardElementsToPos : MonoBehaviour
     public void MoveToTakeOutPos(Component sender, object obj)
     {
         if (!isPlaced) return;
-        if (!conditions.IsOutOfBoard()) return;
+        //if (!conditions.IsOutOfBoard()) return;
         Transform _transform = (Transform)obj;
         Vector3 finalPos = _transform.position;
-        Vector3 finalRot = new Vector3(_transform.rotation.x,0,0);
+        Vector3 finalRot = new Vector3(_transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y, transform.localRotation.eulerAngles.z);
 
-        transform.DOMoveY(finalPos.y, 0.5f * (transform.position.y *2)).SetEase(Ease.InOutSine);
-        transform.DORotate(finalRot, 0.5f).SetEase(Ease.InExpo);
-
+        transform.DOMove(finalPos, 1.5f).SetEase(Ease.OutSine);
+        transform.DOLocalRotate(finalRot, 0.5f).SetEase(Ease.OutCirc);
+        isOutOfBoard = true;
     }
 
-    IEnumerator Delay(Vector3 InitPos)
+    void MoveToPlace(Vector3 InitPos)
     {
-        yield return new WaitForSeconds(0f);
         transform.position = InitPos;
 
         Content.SetActive(true);
 
-        transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad);
+        transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad).OnComplete(() => {
+            isPlacedFinish = true;
+            OnUpdatingBoardPlacedFinish?.Invoke(this, null);
+            });
         transform.DORotate(FinalRotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc);
         OnPlaceInBoardSound?.Invoke(this, null);
          
     }
 
+    BoardType GetTypeOfObject()
+    {
+        return GetComponent<IPlacedOnBoard>().GetType();
+    }
+
     public bool  GetIsPlaced()
     {
         return isPlaced;
+    }
+
+    public bool GetIsPlacedFinish()
+    {
+        return isPlacedFinish;
     }
 
     public IPlacedOnBoard GetConditions()
@@ -161,10 +182,11 @@ public class MoveBoardElementsToPos : MonoBehaviour
     public void PlaceDirectly()
     {
         isPlaced = true;
+        isPlacedFinish = true;
         transform.position = FinalPosition;
         transform.rotation = FinalRotation;
         Content.SetActive(true);
-
+        if (conditions.GetWordData() != null) conditions.GetWordData().SetPlacedInBoard();
     }
 
 }

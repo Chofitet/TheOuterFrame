@@ -1,0 +1,234 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using TMPro;
+using UnityEngine;
+
+public class LogWindowController : MonoBehaviour
+{
+    [SerializeField] GameObject PrefabLogReport;
+    [SerializeField] GameObject PrefabLogTranscript;
+    [SerializeField] GameObject Grid;
+    List<LogEntryController> LogEntries = new List<LogEntryController>();
+    [SerializeField] GameEvent OnActiveSubjectFilesBTN;
+    [SerializeField] TMP_Text NoEntriesText;
+    [SerializeField] TMP_Text filterTag;
+    WordData LastSearchedWord;
+    [SerializeField] GameObject LogContent;
+    [SerializeField] RectTransform panel;
+
+    public void AddEntry(Component sender, object obj)
+    {
+        LogEntryData data = (LogEntryData)obj;
+
+        NoEntriesText.text = "";
+
+        if (data.reportType)
+        {
+            AddReportLog(data);
+        }
+        else if(data.callType)
+        {
+            AddTranscriptionLog(data);
+        }
+    }
+
+    void AddReportLog(LogEntryData data)
+    {
+         instanciateEntry(PrefabLogReport,data);
+    }
+
+    void AddTranscriptionLog(LogEntryData data)
+    {
+        instanciateEntry(PrefabLogTranscript,data);
+    }
+
+    void instanciateEntry(GameObject prefab, LogEntryData data)
+    {
+        GameObject log = Instantiate(prefab);
+        log.GetComponent<LogEntryController>().Initialize(data);
+        LogEntries.Add(log.GetComponent<LogEntryController>());
+        log.transform.SetParent(Grid.transform, false);
+        log.transform.SetSiblingIndex(0);
+
+        if(FilterWith != null)
+        {
+            if(FilterWith != data.word) log.gameObject.SetActive(false);
+        }
+    }
+
+    public void OnPcUpdate(Component sender, object obj)
+    {
+        WordData word = (WordData)obj;
+        foreach(LogEntryController entry in LogEntries)
+        {
+            entry.OnUpdatePC(word);
+        }
+    }
+
+    WordData FilterWith;
+    // Llamado desde los botones de la palabra
+    public void AddFilters(Component sender, object obj)
+    {
+        if (isDeleting) return;
+        SearchLogData data = (SearchLogData)obj;
+
+        WordData word = data.word;
+        if(word == null) return;
+        LogFilterType actualFilter = data.filterType;
+        ActiveAllEntries();
+
+        NoEntriesText.text = "";
+
+        if (actualFilter == LogFilterType.log) return;
+
+        ApplyWordFilter(word);
+        filterTag.text = word.GetForm_DatabaseNameVersion();
+        StartCoroutine(RefreshUILog(true));
+        //ApplyTypeFilter(actualFilter);
+    }
+
+    void ApplyWordFilter(WordData word)
+    {
+        FilterWith = word;
+        List<LogEntryController> FilterEntries = new List<LogEntryController>(LogEntries);
+
+        foreach (LogEntryController entry in LogEntries)
+        {
+            WordData EntryWord = entry.GetWord();
+            WordData SearchedWord = word;
+            if (!SearchedWord.GetIsAPhoneNumber()) EntryWord = WordsManager.WM.FindWordWithPhoneNum(EntryWord);
+
+            if (EntryWord != SearchedWord)
+            {
+                FilterEntries.Remove(entry);
+                entry.gameObject.SetActive(false);
+            }
+        }
+
+        if(FilterEntries.Count == 0) NoEntriesText.text = "SUBJECT UNAPPROACHED YET.\nFIX THAT BY DOING SOMETHING ALREADY!";
+    }
+
+    void ApplyTypeFilter(LogFilterType filterType)
+    {
+        foreach (LogEntryController entry in LogEntries)
+        {
+            if (filterType == LogFilterType.report && !entry.GetReportType()) entry.gameObject.SetActive(false);
+            if (filterType == LogFilterType.transcript && !entry.GetCallType()) entry.gameObject.SetActive(false);
+        }
+    }
+
+    public void OnActiveAllEntries(Component sender, object obj)
+    {
+        if (isDeleting) return;
+        
+        ActiveAllEntries();
+    }
+
+    public void ActiveAllEntries()
+    {
+        FilterWith = null;
+        if (LogEntries.Count != 0) NoEntriesText.text = "";
+        else NoEntriesText.text = "THE LOG IS EMPTY.\nDO SOMETHING ALREADY!";
+        foreach (LogEntryController entry in LogEntries)
+        {
+            entry.gameObject.SetActive(true);
+        }
+        StartCoroutine(RefreshUILog(false));
+    }
+
+    IEnumerator RefreshUILog(bool isFilter)
+    { 
+        LogContent.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+        LogContent.SetActive(true);
+        if (!isFilter)
+        {
+            Vector2 offsetMax = panel.offsetMax;
+            offsetMax.y = 6.12f; 
+            panel.offsetMax = offsetMax;
+        }
+        else
+        {
+            Vector2 offsetMax = panel.offsetMax;
+            offsetMax.y = 0;
+            panel.offsetMax = offsetMax;
+        }
+    }
+
+    public void ThereAreEntriesForWord(Component sender,object obj)
+    {
+        WordData wordData = (WordData)obj;
+
+        LastSearchedWord = wordData;
+
+        foreach (LogEntryController entry in LogEntries)
+        {
+            if (entry.GetWord() == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
+            
+            if (WordsManager.WM.FindWordWithPhoneNum(entry.GetWord()) == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
+        }
+
+    }
+
+    public void RefreshSubjectFilesButton(Component sender, object obj)
+    {
+        if (LastSearchedWord == null) return;
+
+        foreach (LogEntryController entry in LogEntries)
+        {
+            if (entry.GetWord() == LastSearchedWord) OnActiveSubjectFilesBTN?.Invoke(this, null);
+
+            if (WordsManager.WM.FindWordWithPhoneNum(entry.GetWord()) == LastSearchedWord) OnActiveSubjectFilesBTN?.Invoke(this, null);
+        }
+    }
+
+
+    bool isDeleting;
+    public void DeleteLog(Component Sender, object obj)
+    {
+        foreach(LogEntryController entry in LogEntries)
+        {
+           entry.gameObject.SetActive(false);
+        }
+        isDeleting = true;
+    }
+
+}
+
+
+public class LogEntryData
+{
+    public WordData word;
+    public string action;
+    public ReportType reportType;
+    public CallType callType;
+
+    public LogEntryData(WordData _word, string _action, ReportType _reportType = null, CallType _callType = null)
+    {
+        word = _word;
+        action = _action;
+        reportType = _reportType;
+        callType = _callType;
+    }
+}
+
+public class SearchLogData
+{
+    public WordData word;
+    public LogFilterType filterType;
+
+    public SearchLogData(WordData _word, LogFilterType _filter)
+    {
+        word = _word;
+        filterType = _filter;
+    }
+}
+[Serializable]
+public enum LogFilterType
+{
+    log,
+    report,
+    transcript
+}

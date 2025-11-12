@@ -60,7 +60,7 @@ public class MoveObjectToThisPos : MonoBehaviour
     {
         if (!LastObj)
         {
-            Debug.Log("Any positsToReturn");
+           // Debug.Log("Any positsToReturn");
             return;
         }
 
@@ -68,7 +68,7 @@ public class MoveObjectToThisPos : MonoBehaviour
         GameObject objectToBack;
         bool isReplaced = false;
 
-        if (obj == null) objectToBack = LastObj;
+        if (obj == null || obj is not GameObject) objectToBack = LastObj;
         else
         {
             objectToBack = (GameObject)obj;
@@ -77,13 +77,15 @@ public class MoveObjectToThisPos : MonoBehaviour
 
         if (MoveSequence != null && MoveSequence.IsActive()) MoveSequence.Kill();
 
+        if (objectToBack == null) return;
+
         Sequence BackSequence = DOTween.Sequence();
 
         BackSequence.Append(objectToBack.transform.DOMove(initPos, 0.5f).SetEase(Ease.InOutCirc))
                     .Join(objectToBack.transform.DORotate(initRot, 0.3f).SetEase(Ease.InOutCirc))
                     .OnComplete(()=> 
                     {
-                        LastObj.GetComponent<BoxCollider>().enabled = true;
+                        LastObj.GetComponent<BoxCollider>().enabled = false;
                         objectToBack.GetComponent<BoxCollider>().enabled = true;
                         if (!isReplaced && !inMovingToPosition) LastObj = null;
                         objectToBack = null;

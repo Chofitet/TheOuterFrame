@@ -63,8 +63,8 @@ public class CursorManager : MonoBehaviour
         {
             if (IsPointerOverCanvas() && isInPcView) Cursor.SetCursor(PCClickCursor, Vector2.zero, CursorMode.Auto);
             else Cursor.SetCursor(ClickCursor, new Vector2(ClickCursor.width / 2, ClickCursor.height / 2), CursorMode.Auto);
-            StopAllCoroutines();
-            StartCoroutine(BackToDefault());
+            if(BackToDefaultCoroutine != null) StopCoroutine(BackToDefaultCoroutine);
+            BackToDefaultCoroutine = StartCoroutine(BackToDefault());
             isClicking = true;
         }
 
@@ -81,7 +81,7 @@ public class CursorManager : MonoBehaviour
             onceEnter = false;
         }
     }
-
+    private Coroutine BackToDefaultCoroutine;
     IEnumerator BackToDefault()
     {
         yield return new WaitForSeconds(0.1f);

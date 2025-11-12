@@ -12,4 +12,17 @@ public interface IPlacedOnBoard
 
     public bool IsOutOfBoard();
 
+    public WordData GetWordData();
+
+    BoardType GetType();
+
+}
+
+
+public enum BoardType
+{
+    photo,
+    photoUpdate,
+    posit,
+    Idea,
 }

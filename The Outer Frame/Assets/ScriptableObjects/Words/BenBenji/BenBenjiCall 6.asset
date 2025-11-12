@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: BenBenjiCall 6
   m_EditorClassIdentifier: 
-  StartHour: 10
-  StartMinute: 46
-  EndHour: 10
+  StartHour: 9
+  StartMinute: 39
+  EndHour: 9
   EndMinute: 58
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
@@ -23,10 +23,10 @@ MonoBehaviour:
   To: 
   Dialogue: '- HEY - - - - -  <link>TOOTSIE</link> - DO YOU THINK - THAT THE <link>PICTURES</link>
     WERE TRUE - - YEAH - - - - - ME NEITHER - - - - ANYWAY - - - GUESS WELL NEVER
-    KNOW  (END OF RECORDING)'
+    KNOW  #[END OF THE CALL]'
   IterruptedDialogue: '- HEY - - - - -  <link>TOOTSIE</link> - DO YOU THINK - THAT
     THE <link>PICTURES</link> WERE TRUE - - YEAH - - - - - ME N - HELLO - -  IM ON
-    THE PH (END OF CALL)'
+    THE PH #[END OF THE CALL]'
   Involved:
   - {fileID: 11400000, guid: 754487f661e18d9449ce2c8061cb18e5, type: 2}
   - {fileID: 11400000, guid: 5f0433766c6149f47a29e90178b7a16f, type: 2}
@@ -42,5 +42,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 8655e66a7e432b84f8e498da5f99d1f1, type: 2}
     ifNot: 1
   - condition: {fileID: 11400000, guid: f99d34e23986a5040bca1decfc381a31, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 85211dd3667991d45863f0ca4dcd6fa6, type: 2}
     ifNot: 1
   isOrderMatters: 0

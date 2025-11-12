@@ -55,21 +55,32 @@ public class MaterialAssignerEditor : Editor
         }
         else
         {
-            // Si el material no existe, crea uno nuevo
-            newMaterial = new Material(Shader.Find("Sprites/Default"));
-            newMaterial.mainTexture = materialAssigner.photo.texture;
+            // Si el material no existe, crea uno nuevo con Standard Shader
+            newMaterial = new Material(Shader.Find("Standard"));
+
+            // Albedo
+            newMaterial.SetTexture("_MainTex", materialAssigner.photo.texture);
+
+            // Emission (activar keyword antes de asignar)
+            newMaterial.EnableKeyword("_EMISSION");
+            newMaterial.SetTexture("_EmissionMap", materialAssigner.photo.texture);
+            newMaterial.SetColor("_EmissionColor", Color.white);
+
+            // Propiedades físicas
+            newMaterial.SetFloat("_Metallic", 1f);
+            newMaterial.SetFloat("_Glossiness", 0.5f); // opcional: podés ajustar smoothness acá
 
             // Guarda el nuevo material como un asset
             AssetDatabase.CreateAsset(newMaterial, materialPath);
             AssetDatabase.SaveAssets();
 
-            Debug.Log("New material created and assigned.");
+            Debug.Log("New Standard material created and assigned.");
         }
 
         // Asigna los materiales al MeshRenderer
         Material[] materials = new Material[2];
         materials[0] = meshRenderer.materials[0]; // Conserva el primer material actual
-        materials[1] = newMaterial; // Asigna el nuevo o existente material en el segundo slot
+        materials[1] = newMaterial;               // Asigna el nuevo o existente material en el segundo slot
         meshRenderer.materials = materials;
     }
 }

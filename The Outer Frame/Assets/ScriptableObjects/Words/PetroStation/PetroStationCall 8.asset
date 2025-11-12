@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8758150e96ac14c8a13dc85cff8363, type: 3}
   m_Name: PetroStationCall 8
   m_EditorClassIdentifier: 
-  StartHour: 7
-  StartMinute: 25
+  StartHour: 6
+  StartMinute: 54
   EndHour: 7
-  EndMinute: 50
+  EndMinute: 12
   state: {fileID: 0}
   DelayToShowCallInMinutes: 30
   CatchWindowInMinutes: 30
   From: PETRO STATION'S PHONE
   To: 
-  Dialogue: '- - - -PETRO S - - - - - - HAVE A PETRO GOOD DAY - - - (END OF CALL)
+  Dialogue: '- - - -PETRO S - - - - CANT BELIEVE IT - HAVE A PETRO GOOD DAY - - -
+    #[END OF THE CALL]
 
 '
-  IterruptedDialogue: '- - - -PETRO S - - - - - - HAVE A PETRO GOOD DAY - - - (END
-    OF CALL)
+  IterruptedDialogue: '- - - -PETRO S - - - - CANT BELIEVE IT - HAVE A PETRO GOOD
+    DAY - - - #[END OF THE CALL]
 
 '
   Involved:

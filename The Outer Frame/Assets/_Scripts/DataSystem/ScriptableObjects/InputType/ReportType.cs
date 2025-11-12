@@ -13,8 +13,10 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     [SerializeField] int ChangeTimeOfAction;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string Text;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string TextForRepetition;
+    [SerializeField] string CustomStatus;
     [SerializeField] List<PhotoInfo> Photos = new List<PhotoInfo>();
     [SerializeField] List<ConditionalClass> Conditionals;
+    [SerializeField] ObjectToPrint ObjectType;
     [SerializeField] bool isOrderMatters;
     [SerializeField] bool AgentDown;
     [SerializeField] bool TriggerDrawerAnim;
@@ -35,6 +37,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     public bool GetKillAgent() { return AgentDown; }
     
     public bool GetSecondToLastReport() { return SecondToLastReport; }
+
+    public string GetCustomStatus() { return CustomStatus; }
 
     private TimeData CompleteTime;
     public void SetTimeWhenWasDone()
@@ -60,7 +64,6 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
         wasSet = false;
         doing = false;
         wasRegisteredInDB = false;
-
     }
 
     public TimeData GetTimeWhenWasDone() { return CompleteTime; }
@@ -81,6 +84,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     public bool GetwasRegisteredInDB() { return wasRegisteredInDB; }
 
     public bool GetTriggerDrawerAnim() { return TriggerDrawerAnim; }
+
+    public ObjectToPrint GetObjectToPrint() { return ObjectType; }
 
     public bool GetDeleteDBRepoert() { return DeleteDBReport; }
 
@@ -182,4 +187,11 @@ public class PhotoInfo
 {
     public Sprite photo;
     public string text;
+}
+
+public enum ObjectToPrint
+{
+    report,
+    Candy1,
+    Candy2
 }
