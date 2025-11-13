@@ -185,9 +185,14 @@ public class ActionPlan : MonoBehaviour
         shakeBtn.SetActive(true);
         DataFromActionPlan data = new DataFromActionPlan(FinalActionWord, FinalActionIdea);
         OnApprovedActionPlan.Invoke(this, data);
-        if(Actions.Count >= 9) Actions[9].CheckToggle();
+        Invoke("delayCheckButton", 0.02f);
         OnSetGeneralView?.Invoke(this, null);
        
+    }
+
+    void delayCheckButton()
+    {
+        if (Actions.Count >= 9) Actions[9].CheckToggle();
     }
 
     public void DestroyActionPlan(Component sender, object obj)

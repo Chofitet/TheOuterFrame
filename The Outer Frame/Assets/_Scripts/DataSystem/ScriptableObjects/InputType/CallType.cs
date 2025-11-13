@@ -14,8 +14,8 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
     [SerializeField] int EndHour;
     [SerializeField] int EndMinute;
 
-    TimeCheckConditional StartTime;
-    TimeCheckConditional EndTime;
+    [NonSerialized] TimeCheckConditional StartTime;
+    [NonSerialized] TimeCheckConditional EndTime;
 
 
     [Header("Reaction Call")]
@@ -49,6 +49,9 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
         wasEnterToDataBase = false;
         CachedStartTime = new TimeData(0, 0, 0);
         CachedFinishTime = new TimeData(0, 0, 0);
+        StartTime = new TimeCheckConditional();
+        EndTime = new TimeCheckConditional();
+
     }
 
     public string GetDialogue() {

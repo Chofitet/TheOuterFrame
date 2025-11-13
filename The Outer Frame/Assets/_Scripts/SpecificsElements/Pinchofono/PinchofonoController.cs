@@ -48,6 +48,12 @@ public class PinchofonoController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         anim.SetFloat("tapeSpinSpeed", 0);
+        ChangePhoneState(null, PhoneState.waitingNumber);
+        CallToPrint = null;
+        ActualWord = null;
+        lastScreenNum = 0;
+        IsInView = false;
+        transcriptionInQueue = false;
     }
 
     public void ChangePhoneState(Component sender, object obj)

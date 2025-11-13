@@ -96,4 +96,5 @@ public class ProgressorManager : MonoBehaviour
         Slots.RemoveAll(slot => RemoveList.Contains(slot));
         OnProgressorSetSlot?.Invoke(this, true);
     }
+
 }

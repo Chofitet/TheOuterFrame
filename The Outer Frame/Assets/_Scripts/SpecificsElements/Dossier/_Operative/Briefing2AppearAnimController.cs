@@ -44,6 +44,7 @@ public class Briefing2AppearAnimController : MonoBehaviour
             GO.SetActive(true);
             foreach(InstanceFindableWordsInTMPText instance in BrieffingText2) instance.InstanciateWords();
             BriefingOnTV();
+            GetComponent<BoxCollider>().enabled = true;
         }
     }
 

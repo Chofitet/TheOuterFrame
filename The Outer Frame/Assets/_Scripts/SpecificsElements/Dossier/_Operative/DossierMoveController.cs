@@ -85,10 +85,10 @@ public class DossierMoveController : MonoBehaviour
             })
             .Append(DOTween.To(() => lerpTime, x => lerpTime = x, 1, 0.5f)
                 .SetEase(Ease.InQuart))
-            .InsertCallback(0.3f, () => OnEnableInput?.Invoke(this, null))
             .OnComplete(() =>
             {
                 // Detenemos el seguimiento al finalizar el movimiento
+                OnEnableInput?.Invoke(this, null);
                 transform.SetParent(InitCameraPivot);
                 isAddingIdea = false;
                 AddIdeaSequence.Kill();
