@@ -16,7 +16,6 @@ public class ProfilesController : MonoBehaviour
             buttonNewGame.SetActive(true);
             buttonRetry.GetComponent<RectTransform>().localPosition = new Vector3(0, 26.6f, 0);
             buttonRetry.transform.GetChild(0).GetComponent<TMP_Text>().text = "RETRY";
-            buttonRetry.transform.GetChild(0).gameObject.SetActive(false); // puesto para la EVA 
             buttonRetry.transform.GetComponent<TriggerArrayOfEvents>().ChangeSomeStringToPass("LoadingScreen");
             buttonNewGame.GetComponent<Button>().onClick.AddListener(() => DataPersistenceManager.instance.ResetSpecificFields("0",false,true));
             //buttonNewGame.GetComponent<Button>().onClick.AddListener(DataPersistenceManager.instance.NewGame);

@@ -1,12 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
 
 public class NotebookWordInstance : MonoBehaviour
 {
@@ -24,7 +21,7 @@ public class NotebookWordInstance : MonoBehaviour
     bool isActiveInBoard;
     bool isinactive;
     bool PendingToAddBoard;
-    public void Initialization(WordData word, bool noAnim = false, NotebookProcessManager _processManager = null)
+    public void Initialization(WordData word, bool noAnim = false, NotebookProcessManager _processManager = null, float height = 0)
     {
         if(_processManager != null) processManager = _processManager;
         wordReference = word;
@@ -53,6 +50,16 @@ public class NotebookWordInstance : MonoBehaviour
             Invoke("Alpha1", 1);
         }
 
+        if(height != 0)
+        {
+            RectTransform rt = transform.GetChild(0).GetComponent<RectTransform>();
+            Vector2 size = rt.sizeDelta;
+            size.y = height;
+            rt.sizeDelta = size;
+        }
+
+       //btn.GetComponent<Image>().enabled = true;
+       //btn.GetComponent<Image>().color = new Color(UnityEngine.Random.Range(0f,1f), UnityEngine.Random.Range(0f, 1f), 1);
     }
 
     void OnWritingFinished()
