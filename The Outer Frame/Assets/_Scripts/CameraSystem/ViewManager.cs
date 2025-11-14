@@ -89,6 +89,8 @@ public class ViewManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
+            if (IsStuckInView && nextViewRequest != null) return;
+
             if (!isInTutorial)
             {
                 if (currentviewState != ViewStates.GeneralView) CheckForBackToGeneralView();

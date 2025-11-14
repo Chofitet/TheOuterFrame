@@ -41,19 +41,21 @@ public class CursorManager : MonoBehaviour
     private GraphicRaycaster raycaster;
     private PointerEventData pointerEventData;
     private EventSystem eventSystem;
-
+    bool isOverInteractive;
 
 
     public void SetInteractCursor()
     {
         if (isClicking) return;
+        isOverInteractive = true;
         if (IsPointerOverCanvas() && isInPcView) Cursor.SetCursor(PCInteractiveCursor, Vector2.zero, CursorMode.Auto);
         else Cursor.SetCursor(InteractiveCursor, new Vector2(InteractiveCursor.width / 2, InteractiveCursor.height / 2), CursorMode.Auto);
     }
 
     public void SetDefaultCursor()
     {
-        if(IsPointerOverCanvas() && isInPcView) Cursor.SetCursor(PCDefaultCursor, Vector2.zero, CursorMode.Auto);
+        isOverInteractive = false;
+        if (IsPointerOverCanvas() && isInPcView) Cursor.SetCursor(PCDefaultCursor, Vector2.zero, CursorMode.Auto);
         else Cursor.SetCursor(DefaultCursor, new Vector2(DefaultCursor.width / 2, DefaultCursor.height / 2), CursorMode.Auto);
     }
 
@@ -61,6 +63,7 @@ public class CursorManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (!isOverInteractive) return;
             if (IsPointerOverCanvas() && isInPcView) Cursor.SetCursor(PCClickCursor, Vector2.zero, CursorMode.Auto);
             else Cursor.SetCursor(ClickCursor, new Vector2(ClickCursor.width / 2, ClickCursor.height / 2), CursorMode.Auto);
             if(BackToDefaultCoroutine != null) StopCoroutine(BackToDefaultCoroutine);

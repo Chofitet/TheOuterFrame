@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class HyperlinksManager : MonoBehaviour
 {
     [SerializeField] GameObject ButtonHyperLinkPrefab;
+    [SerializeField] ButtonsPoolController pool;
     public static HyperlinksManager HLM { get; private set; }
     List<GameObject> HyperLinkBTNs = new List<GameObject>();
 
@@ -75,7 +76,10 @@ public class HyperlinksManager : MonoBehaviour
             foreach (FindableWordData w in PositionsWord)
             {
                // Debug.Log("HyperLink found: " + w.GetWordData().GetName());
-                GameObject auxObj = Instantiate(ButtonHyperLinkPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
+
+                GameObject auxObj = pool.GetFromPool(textField.transform);
+                auxObj.transform.SetPositionAndRotation(w.GetPosition(), textField.transform.rotation);
+                auxObj.transform.SetParent(textField.transform);
                 auxObj.GetComponent<HyperlinksBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton());
                 HyperLinkBTNs.Add(auxObj);
             }

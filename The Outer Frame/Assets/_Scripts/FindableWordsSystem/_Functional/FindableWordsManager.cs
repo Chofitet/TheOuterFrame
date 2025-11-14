@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class FindableWordsManager : MonoBehaviour
 {
     [SerializeField] GameObject ButtonFindableWordPrefab;
-    [SerializeField] GameObject ButtonHyperLink;
+    [SerializeField] ButtonsPoolController pool;
     List<GameObject> FindableWordsBTNs = new List<GameObject>();
     [SerializeField] GameEvent OnFindableWordInstance;
     [SerializeField] WordData Irrelevant;
@@ -70,8 +70,11 @@ public class FindableWordsManager : MonoBehaviour
                 if (isInLastWord && w.GetWordData() != LastWord) continue;
                 if (w.GetWordData().GetIsFound()) continue;
                 if (w.GetWordData().GetInactiveState()) continue;
-                GameObject auxObj = Instantiate(ButtonFindableWordPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
+                GameObject auxObj = pool.GetFromPool(textField.transform);
+                auxObj.transform.SetPositionAndRotation(w.GetPosition(), textField.transform.rotation);
+                auxObj.transform.SetParent(textField.transform);
                 auxObj.name = "FindableBTN_" + w.GetWordData().GetName();
+                auxObj.GetComponent<FindableWordBTNController>().enabled = true;
                 auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle);
                 FindableWordsBTNs.Add(auxObj);
                 OnFindableWordInstance?.Invoke(this, auxObj);

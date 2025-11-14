@@ -20,7 +20,6 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     [SerializeField] GameEvent OnFindableWordButtonUnHover;
     [SerializeField] WordData TheCabin;
     bool isInactive;
-
     TMP_Text textField;
     WordData word;
     WordData wordToPass;
