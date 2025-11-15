@@ -40,7 +40,7 @@ public class ClockController : MonoBehaviour
         MinuteInamovibleFlipBack.text = Minute;
         MinuteMovibleFlipBack.text = Minute;
 
-        Hour = $"{TM.GetActualHour():00}";
+        Hour = $"{TM.GetActualHour() + 16:00}";
 
         HourMovibleFlipFront.text = Hour;
         HourInamovibleFlipFront.text = Hour;

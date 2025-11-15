@@ -123,7 +123,7 @@ public class ReportController : MonoBehaviour
         }
         
 
-        Hourtxt.text = $"OCT 30 - {timeComplete.Hour:00}:{timeComplete.Minute:00}";
+        Hourtxt.text = $"OCT 30 - {timeComplete.Hour + 16:00}:{timeComplete.Minute:00}";
         if(Name != "") ActionCalltxt.text = $"{actionVerb} \"{DeleteSpetialCharacter(Name).ToUpper()}\"";
         else { ActionCalltxt.text = $"{actionVerb}";}
         CheckTextOverflow();
@@ -139,6 +139,8 @@ public class ReportController : MonoBehaviour
         if(!report.GetIsAutomatic()) SetMaterial(materialUploadDB);
 
         SetPhotos(report);
+        UploadBTN.SetActive(false);
+        DisposeBTN.SetActive(true);
 
     }
 

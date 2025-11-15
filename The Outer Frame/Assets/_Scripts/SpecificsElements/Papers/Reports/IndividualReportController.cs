@@ -30,6 +30,8 @@ public class IndividualReportController : MonoBehaviour
 
     public void FinishReport()
     {
+        OnDescartReport?.Invoke(this, null);
+        return;
         if (report.GetIsTheLastReport()) return;
         if (report.GetDeleteDBRepoert())
         {

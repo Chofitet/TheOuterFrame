@@ -31,7 +31,7 @@ public class TimePanelController : MonoBehaviour
 
     private void UpdateTime()
     {
-        textField.text = $"{TimeManager.timeManager.GetActualHour():00}:{TimeManager.timeManager.GetActualMinute():00}";
+        textField.text = $"{TimeManager.timeManager.GetActualHour()+ 16:00}:{TimeManager.timeManager.GetActualMinute():00}";
     }
 
 }
