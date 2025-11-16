@@ -47,6 +47,7 @@ public class ZoomSystem : MonoBehaviour
         if (ZoomSequence.IsActive() & ZoomSequence != null) ZoomSequence.Kill();
         currentDelay = 0f;
         once = false;
+        
     }
 
     public void SetInZoomOut(Component sender, object obj)

@@ -1,22 +1,25 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+public class CursorInteractToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    Button btn;
+    Toggle toggle;
     bool inside = false;
 
     void Awake()
     {
-        btn = GetComponent<Button>();
+        toggle = GetComponent<Toggle>();
     }
 
     bool IsValid()
     {
-        return gameObject.activeInHierarchy && btn != null && btn.enabled;
+        return gameObject.activeInHierarchy &&
+               toggle != null &&
+               toggle.enabled &&
+               toggle.interactable;
     }
 
     void Update()
@@ -24,8 +27,8 @@ public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointe
         if (inside && !IsValid())
         {
             inside = false;
-            CursorManager.CM.ExitInteractive(); 
-            CursorManager.CM.ForceDefault();   
+            CursorManager.CM.ExitInteractive();
+            CursorManager.CM.ForceDefault();
         }
     }
 
@@ -61,5 +64,4 @@ public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointe
         if (IsValid())
             CursorManager.CM.ClickInteractive();
     }
-
 }

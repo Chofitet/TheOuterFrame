@@ -5,26 +5,29 @@ using UnityEngine;
 
 public class CursorInteractCollider : MonoBehaviour
 {
-    bool isStillOverInteractive;
+    bool inside = false;
+
     private void OnMouseOver()
     {
-        CursorManager.CM.SetInteractCursor();
-        isStillOverInteractive = true;
-    }
-
-    private void OnMouseEnter()
-    {
-        
+        if (!inside)
+        {
+            inside = true;
+            CursorManager.CM.EnterInteractive();
+        }
     }
 
     private void OnMouseExit()
     {
-        CursorManager.CM.SetDefaultCursor();
-        isStillOverInteractive = false;
+        if (inside)
+        {
+            inside = false;
+            CursorManager.CM.ExitInteractive();
+        }
     }
 
-    void OnMouseDown()
+    private void OnMouseDown()
     {
-        if(isStillOverInteractive) CursorManager.CM.SetInteractCursor();
+        if (inside)
+            CursorManager.CM.ClickInteractive();
     }
 }
