@@ -73,11 +73,11 @@ public class AlertLevelManager : MonoBehaviour
     {
         NumLevel.text = level + "%";
 
-       if (Input.GetKeyDown(KeyCode.G))
+      /* if (Input.GetKeyDown(KeyCode.G))
         {
             maxLevel = 1000;
             NumLevel.text = "1000%";
-        }
+        }*/
     }
 
 

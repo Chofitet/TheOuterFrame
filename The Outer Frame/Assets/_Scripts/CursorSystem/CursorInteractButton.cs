@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointe
 
     bool IsValid()
     {
-        return gameObject.activeInHierarchy && btn != null && btn.enabled;
+        return gameObject.activeInHierarchy && btn != null && btn.enabled && btn.interactable;
     }
 
     void Update()
@@ -60,6 +61,16 @@ public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         if (IsValid())
             CursorManager.CM.ClickInteractive();
+    }
+
+    void OnDisable()
+    {
+        if (inside)
+        {
+            inside = false;
+            CursorManager.CM.ExitInteractive();
+            CursorManager.CM.ForceDefault();
+        }
     }
 
 }

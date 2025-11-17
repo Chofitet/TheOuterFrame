@@ -130,7 +130,7 @@ public class ActionPlanManager : MonoBehaviour
     void SendEndActionPlan()
     {
         OnEnableInput?.Invoke(this, null);
-        OnSendEndActionPlan?.Invoke(null, "QRScreen");
+        OnSendEndActionPlan?.Invoke(null, "Credits");
     }
 
     public void SetisSecodToLastActionDoit(Component sender, object obj)
