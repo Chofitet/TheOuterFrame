@@ -1,7 +1,8 @@
-using System;
+Ôªøusing System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -152,7 +153,7 @@ public class HyperlinksManager : MonoBehaviour
         textField.text = originalText;
         if (textField.IsActive()) textField.ForceMeshUpdate();
 
-        // Recorrer el diccionario y calcular la informaciÛn de FindableWordData
+        // Recorrer el diccionario y calcular la informaci√≥n de FindableWordData
         foreach (var entry in wordRanges)
         {
             int startIndex = entry.Key;
@@ -222,10 +223,88 @@ public class HyperlinksManager : MonoBehaviour
 
     string AddCustomTagsToLinks(string originalText)
     {
-        string normalizedText = Regex.Replace(originalText, @"[ìî\""\']", string.Empty);
-        normalizedText = Regex.Replace(normalizedText, @"\s+", " ");
+        if (string.IsNullOrEmpty(originalText))
+            return originalText;
 
-        return Regex.Replace(normalizedText, @"<u>(.*?)<\/u>", "ii$1ij");
+        // 1. Remover comillas
+        string cleaned = RemoveQuotes(originalText);
+
+        // 2. Normalizar espacios
+        cleaned = NormalizeSpaces(cleaned);
+
+        // 3. Reemplazar <u>...</u> ‚Üí ii...ij
+        cleaned = ReplaceUnderlineTags(cleaned);
+
+        return cleaned;
+    }
+
+    string RemoveQuotes(string input)
+    {
+        Span<char> buffer = stackalloc char[input.Length];
+        int count = 0;
+
+        foreach (char c in input)
+        {
+            if (c != '‚Äú' && c != '‚Äù' && c != '"' && c != '\'')
+                buffer[count++] = c;
+        }
+
+        return new string(buffer[..count]);
+    }
+
+    string NormalizeSpaces(string input)
+    {
+        StringBuilder sb = new StringBuilder(input.Length);
+        bool lastWasSpace = false;
+
+        foreach (char c in input)
+        {
+            if (char.IsWhiteSpace(c))
+            {
+                if (!lastWasSpace)
+                {
+                    sb.Append(' ');
+                    lastWasSpace = true;
+                }
+            }
+            else
+            {
+                sb.Append(c);
+                lastWasSpace = false;
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    string ReplaceUnderlineTags(string input)
+    {
+        StringBuilder sb = new StringBuilder(input.Length);
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            if (i + 3 < input.Length && input[i] == '<' && input[i + 1] == 'u' && input[i + 2] == '>')
+            {
+                sb.Append("ii");
+                i += 3;
+
+                while (i + 4 < input.Length &&
+                       !(input[i] == '<' && input[i + 1] == '/' && input[i + 2] == 'u' && input[i + 3] == '>'))
+                {
+                    sb.Append(input[i]);
+                    i++;
+                }
+
+                sb.Append("ij");
+                i += 3;
+            }
+            else
+            {
+                sb.Append(input[i]);
+            }
+        }
+
+        return sb.ToString();
     }
 
     string CleanUpAfterTag(string word)
@@ -249,12 +328,12 @@ public class HyperlinksManager : MonoBehaviour
         // Dividimos la palabra en un array por los espacios
         string[] words = word.Split(' ');
 
-        // Buscamos en la lista si alguna palabra coincide con la ˙ltima palabra de 'words'
+        // Buscamos en la lista si alguna palabra coincide con la √∫ltima palabra de 'words'
         for (int i = 0; i < list.Count; i++)
         {
             if (words[words.Length - 1].Contains(list[i]))
             {
-                // Reemplazar la ˙ltima palabra por la coincidencia encontrada
+                // Reemplazar la √∫ltima palabra por la coincidencia encontrada
                 words[words.Length - 1] = list[i];
                 break;
             }

@@ -214,10 +214,101 @@ public class FindableWordsManager : MonoBehaviour
 
     string AddCustomTagsToLinks(string originalText)
     {
-        string normalizedText = Regex.Replace(originalText, @"[“”\""\']", string.Empty);
-        normalizedText = Regex.Replace(normalizedText, @"\s+", " ");
+        string noSpecialChars = RemoveSpecialCharacters(originalText);
+        string normalizedSpaces = NormalizeSpaces(noSpecialChars);
+        string replacedLinks = ReplaceLinkTags(normalizedSpaces);
 
-        return Regex.Replace(normalizedText, @"<link>(.*?)<\/link>", "ii$1ij");
+        return replacedLinks;
+    }
+
+    // 1) Remover “ ” ' "
+    static readonly char[] specialChars = { '“', '”', '"', '\'' };
+
+    string RemoveSpecialCharacters(string input)
+    {
+        StringBuilder sb = new StringBuilder(input.Length);
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+            bool remove = false;
+
+            for (int j = 0; j < specialChars.Length; j++)
+            {
+                if (c == specialChars[j])
+                {
+                    remove = true;
+                    break;
+                }
+            }
+
+            if (!remove)
+                sb.Append(c);
+        }
+
+        return sb.ToString();
+    }
+
+    // 2) Normalizar espacios (equivalente a Regex "\s+")
+    string NormalizeSpaces(string input)
+    {
+        StringBuilder sb = new StringBuilder(input.Length);
+        bool previousWasSpace = false;
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+
+            if (char.IsWhiteSpace(c))
+            {
+                if (!previousWasSpace)
+                    sb.Append(' ');
+
+                previousWasSpace = true;
+            }
+            else
+            {
+                previousWasSpace = false;
+                sb.Append(c);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    // 3) Reemplazar <link>...</link> por ii...ij
+    string ReplaceLinkTags(string text)
+    {
+        StringBuilder sb = new StringBuilder(text.Length);
+        int i = 0;
+
+        while (i < text.Length)
+        {
+            // Detectar <link>
+            if (i + 6 <= text.Length && text.Substring(i, 6) == "<link>")
+            {
+                i += 6;           // saltar "<link>"
+                sb.Append("ii");  // abrir tag personalizado
+
+                // Copiar contenido interno hasta </link>
+                while (i + 7 <= text.Length && text.Substring(i, 7) != "</link>")
+                {
+                    sb.Append(text[i]);
+                    i++;
+                }
+
+                sb.Append("ij");  // cerrar tag personalizado
+
+                i += 7;           // saltar "</link>"
+            }
+            else
+            {
+                sb.Append(text[i]);
+                i++;
+            }
+        }
+
+        return sb.ToString();
     }
 
     void OnButtonClick(GameObject obj)

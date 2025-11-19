@@ -37,7 +37,7 @@ public class HyperlinksBTNController : MonoBehaviour
 
     public void ApplyHover()
     {
-        ApplyEffectOnHover("#1F9168");
+        ApplyEffectOnHover("#00A3AB");
     }
 
 
@@ -67,12 +67,12 @@ public class HyperlinksBTNController : MonoBehaviour
                 extraIndex++;
             }
 
-            string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
-            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)))).ToLower();
+            string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(combinedWord))).ToLower();
+            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(combinedWord))))).ToLower();
 
             combinedWordClean = Regex.Replace(combinedWordClean.Trim(), @"[^\w]", "");
 
-            if ((combinedWordClean == FoundAs) && combinedWord.Contains("<u>"))
+            if ((combinedWordClean == FoundAs) && combinedWord.Contains("<u>")) 
             {
                 if (combinedWord.StartsWith("<color")) combinedWord = RemoveMaterialTags(combinedWord);
 
@@ -94,29 +94,10 @@ public class HyperlinksBTNController : MonoBehaviour
         textField.ForceMeshUpdate();
     }
 
-    string RemoveMaterialTags(string word)
-    {
-        return Regex.Replace(word, @"<\/?color.*?>", "");
-    }
-
-    string GetExtraCharacters(string word)
-    {
-        int endIndex = word.IndexOf("</u>", StringComparison.OrdinalIgnoreCase);
-        if (endIndex != -1)
-        {
-            endIndex += "</u>".Length;
-            if (endIndex < word.Length)
-            {
-                return word.Substring(endIndex);
-            }
-        }
-        return "";
-    }
-
-    string NormalizeWord(string word)
-    {
-        return Regex.Replace(word, @"<\/?u>|[\?\.,\n\r]", "");
-    }
+    string RemoveMaterialTags(string word) { return Regex.Replace(word, @"<\/?color.*?>", ""); }
+    string GetExtraCharacters(string word) { int endIndex = word.IndexOf("</u>", StringComparison.OrdinalIgnoreCase); if (endIndex != -1) { endIndex += "</u>".Length; if (endIndex < word.Length) { return word.Substring(endIndex); } } return ""; }
+    string NormalizeWord(string word) { return Regex.Replace(word, @"<\/?u>|[\?\.,\n\r]", ""); }
+    
 
     string CleanUnnecessaryCharacter(string word)
     {
@@ -129,6 +110,8 @@ public class HyperlinksBTNController : MonoBehaviour
 
         return word;
     }
+
+    
 
     public void UnapplyEffect()
     {

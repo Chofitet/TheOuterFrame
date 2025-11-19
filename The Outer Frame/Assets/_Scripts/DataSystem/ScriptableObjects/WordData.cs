@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -503,22 +504,38 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public string GetName() { return wordName; }
 
-    public string FindFindableName(string wordCompere, bool comesFromDBTitle = false){
+    public string FindFindableName(string wordCompere, bool comesFromDBTitle = false)
+    {
         string aux = "";
-        string normalizedWord = Regex.Replace(wordCompere.Trim(), @"[^\w]", "");
+        string normalizedWord = RemoveNonWordChars(wordCompere.Trim());
 
-        if (comesFromDBTitle) return Regex.Replace(GetForm_DatabaseNameVersion().Trim(), @"[^\w]", "");
-
+        if (comesFromDBTitle)
+            return RemoveNonWordChars(GetForm_DatabaseNameVersion().Trim());
 
         foreach (string s in FindableAs)
         {
-            string normalizedFindable = Regex.Replace(s.Trim(), @"[^\w]", "");
+            string normalizedFindable = RemoveNonWordChars(s.Trim());
+
             if (normalizedWord == normalizedFindable)
-            {
                 aux = normalizedFindable;
-            }
         }
+
         return aux;
+    }
+
+    string RemoveNonWordChars(string input)
+    {
+        StringBuilder sb = new StringBuilder(input.Length);
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+
+            if (char.IsLetterOrDigit(c) || c == '_')
+                sb.Append(c);
+        }
+
+        return sb.ToString();
     }
 
     public string GetForm_DatabaseNameVersion() 
