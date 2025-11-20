@@ -81,7 +81,7 @@ public class HyperlinksManager : MonoBehaviour
                 GameObject auxObj = pool.GetFromPool(textField.transform);
                 auxObj.transform.SetPositionAndRotation(w.GetPosition(), textField.transform.rotation);
                 auxObj.transform.SetParent(textField.transform);
-                auxObj.GetComponent<HyperlinksBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton());
+                auxObj.GetComponent<HyperlinksBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(),w.GetWordIndex());
                 HyperLinkBTNs.Add(auxObj);
             }
         }
@@ -123,6 +123,10 @@ public class HyperlinksManager : MonoBehaviour
                 int startIndex = currentIndex;
                 int wordCount = 0;
 
+                if (currentWord.GetWord().Contains("Km"))
+                {
+                    Debug.Log("a");
+                }
 
                 while (currentIndex < textField.textInfo.wordCount)
                 {
@@ -169,6 +173,8 @@ public class HyperlinksManager : MonoBehaviour
             float heightInfo = 0;
             string word = "";
 
+            
+
             for (int i = 0; i < wordCount; i++)
             {
                 TMP_WordInfo wordInfo = textField.textInfo.wordInfo[startIndex + i];
@@ -177,14 +183,15 @@ public class HyperlinksManager : MonoBehaviour
 
             word = word.TrimEnd();
 
-            /* (registeredWords.Contains(word))
-            {
-                continue;
-            }
+            
+                /* (registeredWords.Contains(word))
+                {
+                    continue;
+                }
 
-            registeredWords.Add(word);*/
+                registeredWords.Add(word);*/
 
-            for (int i = 0; i < wordCount; i++)
+                for (int i = 0; i < wordCount; i++)
             {
                 TMP_WordInfo wordInfo = textField.textInfo.wordInfo[startIndex + i];
                 var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
@@ -195,19 +202,24 @@ public class HyperlinksManager : MonoBehaviour
                 // heightInfo of btn
                 heightInfo = Math.Max(heightInfo, Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y));
 
-                //  check to slice btn in differents text lines
-                if (textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i].firstCharacterIndex].lineNumber != textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].lineNumber && i + 1 != wordCount)
+                if (i + 1 != wordCount) //no estoy en la última palabra
                 {
+                    int actualWordLineNumber = textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i].firstCharacterIndex].lineNumber;
+                    int nextWordLineNumber = textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].lineNumber;
+                    //  check to slice btn in differents text lines
+                    if (actualWordLineNumber != nextWordLineNumber)
+                    {
 
-                    combinedWordLength = combinedWordLength + spaceToAdd;
-                    heightInfo += heightInfo / 4;
-                    checkSlicebtn = true;
-                    findableWords.Add(new FindableWordData(SearchCleanedWord(CleanWords, word), wordLocation, combinedWordLength, heightInfo, checkSlicebtn));
-                    wordLocation = textField.transform.TransformPoint(
-                    textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].topLeft);
-                    combinedWordLength = 0;
-                    spaceToAdd = 0;
-                    heightInfo = 0;
+                        combinedWordLength = combinedWordLength + spaceToAdd;
+                        heightInfo += heightInfo / 4;
+                        checkSlicebtn = true;
+                        findableWords.Add(new FindableWordData(SearchCleanedWord(CleanWords, word), wordLocation, combinedWordLength, heightInfo, checkSlicebtn, startIndex));
+                        wordLocation = textField.transform.TransformPoint(
+                        textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].topLeft);
+                        combinedWordLength = 0;
+                        spaceToAdd = 0;
+                        heightInfo = 0;
+                    }
                 }
 
             }
@@ -215,7 +227,7 @@ public class HyperlinksManager : MonoBehaviour
             combinedWordLength = combinedWordLength + spaceToAdd;
             heightInfo += heightInfo / 4;
 
-            findableWords.Add(new FindableWordData(SearchCleanedWord(CleanWords,word), wordLocation, combinedWordLength, heightInfo, checkSlicebtn));
+            findableWords.Add(new FindableWordData(SearchCleanedWord(CleanWords,word), wordLocation, combinedWordLength, heightInfo, checkSlicebtn, startIndex));
         }
 
         return findableWords;

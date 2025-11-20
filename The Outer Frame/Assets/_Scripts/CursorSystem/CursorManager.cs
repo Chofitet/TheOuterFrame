@@ -106,7 +106,6 @@ public class CursorManager : MonoBehaviour
     private void ApplyCursor(CursorState state)
     {
         bool pc = IsPointerOverCanvas() && isInPCView;
-        Debug.Log(pc);
         switch (state)
         {
             case CursorState.Default:
