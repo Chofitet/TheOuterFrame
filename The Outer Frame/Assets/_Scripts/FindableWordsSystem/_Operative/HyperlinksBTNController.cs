@@ -27,7 +27,8 @@ public class HyperlinksBTNController : MonoBehaviour
         word = Word;
         OriginalText = textField.text;
         _isRepitedButton = isRepitedButton;
-        ApplyEffectOnHover("#00F3FF");
+        ApplyEffectOnHover("#00C3CC");
+       
         wordIndex = _wordIndex;
     }
 
@@ -39,7 +40,7 @@ public class HyperlinksBTNController : MonoBehaviour
 
     public void ApplyHover()
     {
-        ApplyEffectOnHover("#00A3AB");
+        ApplyEffectOnHover("#00F3FF");
     }
 
 
@@ -146,7 +147,7 @@ public class HyperlinksBTNController : MonoBehaviour
 
     public void UnapplyEffect()
     {
-        ApplyEffectOnHover("#00F3FF");
+        ApplyEffectOnHover("#00C3CC");
     }
 
     public WordData Getword()

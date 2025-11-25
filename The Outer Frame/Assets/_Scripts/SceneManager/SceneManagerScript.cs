@@ -9,6 +9,12 @@ public class SceneManagerScript : MonoBehaviour
     [SerializeField] float OtherDuration;
     private void Start()
     {
+        if(fadeScenePrefab == null)
+        {
+            OnStartGame?.Invoke(this, null);
+            return;
+        }
+
         fadeObject = Instantiate(fadeScenePrefab, transform);
         if(OtherBeginDuration !=0) fadeObject.GetComponent<FadeSceneController>().fadeDuration(OtherBeginDuration);
         OnStartGame?.Invoke(this, null);
