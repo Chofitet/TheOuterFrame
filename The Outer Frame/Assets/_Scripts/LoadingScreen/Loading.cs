@@ -25,7 +25,7 @@ public class Loading : MonoBehaviour
 
     public void UpdateProgress(float v)
         {
-            v = Mathf.Clamp(v,0,0.99f);
+            v = Mathf.Clamp(v,0,0.98f);
             progressBar.fillAmount = v;
         }
 
