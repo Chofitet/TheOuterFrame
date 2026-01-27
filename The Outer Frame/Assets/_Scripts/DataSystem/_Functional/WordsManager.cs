@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using TMPro;
 using Unity.VisualScripting;
@@ -211,7 +212,18 @@ public class WordsManager : MonoBehaviour
 
     string NormalizeWord(string word)
     {
-        return Regex.Replace(word.Trim().ToLower(), @"[^\w]", "");
+        string w = word.Trim().ToLower();
+        StringBuilder sb = new StringBuilder(w.Length);
+
+        for (int i = 0; i < w.Length; i++)
+        {
+            char c = w[i];
+
+            if (char.IsLetterOrDigit(c) || c == '_')
+                sb.Append(c);
+        }
+
+        return sb.ToString();
     }
 
     public void CheckEraseWordContitions(Component sender, object obj)

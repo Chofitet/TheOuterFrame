@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TranscriptsInDetailController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class TranscriptsInDetailController : MonoBehaviour
     [SerializeField] TranscriptionCallController CallToFild;
     [SerializeField] GameEvent OnSearchWord;
     [SerializeField] GameEvent OnWikiWindow;
+    [SerializeField] Scrollbar scrollbar;
     LogEntryData call;
     public void SetPanelText(Component sender, object obj)
     {
@@ -16,6 +18,7 @@ public class TranscriptsInDetailController : MonoBehaviour
         call = (LogEntryData)obj;
 
         CallToFild.Inicialization(call.callType, call.word);
+        scrollbar.value = 1;
     }
 
     public void QuitPanelReport()

@@ -18,7 +18,7 @@ public class FadeWordsEffect : MonoBehaviour
     public Action OnComplete;
     public event Action<float> OnEraseProgress;
     [SerializeField] float DilateMultiplier = 1;
-
+    bool isVisible;
     [SerializeField] Material[] matLevels;
 
     public void StartEffect(bool isFadeTransparent = true)
@@ -66,7 +66,7 @@ public class FadeWordsEffect : MonoBehaviour
         if (fadeIn)
         {
             int currentIndex = 0;
-
+            isVisible = true;
             while (currentIndex < length)
             {
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
@@ -98,7 +98,8 @@ public class FadeWordsEffect : MonoBehaviour
         }
         else
         {
-                int currentIndex = 0; // empezamos desde la izquierda
+            isVisible = false;
+            int currentIndex = 0; // empezamos desde la izquierda
                 OnEraseSound?.Invoke(this, null);
 
                 while (currentIndex < length)
@@ -152,5 +153,10 @@ public class FadeWordsEffect : MonoBehaviour
         color.a = i;
 
         m_TextComponent.color = color;
+    }
+
+    public bool GetisVisible()
+    {
+        return isVisible;
     }
 }

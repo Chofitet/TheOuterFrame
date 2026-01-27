@@ -18,7 +18,7 @@ public class SoundEventListener : MonoBehaviour
     AudioSource audioSource;
     Vector2 PitchVariation;
     SoundInfo _soundInfo;
-
+    [SerializeField] bool isInactive;
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -32,6 +32,7 @@ public class SoundEventListener : MonoBehaviour
 
     public void PlaySound(Component sender, object obj)
     {
+        if (isInactive) return;
         if (!audioSource.clip && Clips.Count == 0) return;
         _soundInfo = new SoundInfo(audioSource, SoundDuration, PitchVariation, Clips, transform, name, isDestroyable, SoundFadeOut, madeDontDestroyInLoad);
        OnPlaySound?.Invoke(this, _soundInfo);
@@ -48,7 +49,15 @@ public class SoundEventListener : MonoBehaviour
         StopSoundEvent?.Invoke(null, _soundInfo);
     }
 
+    public void ChangeIsDestroyable(Component sender, object obj)
+    {
+        isDestroyable = !isDestroyable;
+    }
 
+    public void InactiveSound(Component sender, object obj)
+    {
+        isInactive = true;
+    }
 
 }
 

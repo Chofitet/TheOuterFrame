@@ -88,11 +88,11 @@ public class DossierMoveController : MonoBehaviour
             .OnComplete(() =>
             {
                 // Detenemos el seguimiento al finalizar el movimiento
+                OnEnableInput?.Invoke(this, null);
                 transform.SetParent(InitCameraPivot);
                 isAddingIdea = false;
                 AddIdeaSequence.Kill();
                 DossierAnim.ResetTrigger("open");
-                OnEnableInput?.Invoke(this, null);
             })
             .AppendInterval(0.2f)
             .AppendCallback(() => isFollowingTarget = false);

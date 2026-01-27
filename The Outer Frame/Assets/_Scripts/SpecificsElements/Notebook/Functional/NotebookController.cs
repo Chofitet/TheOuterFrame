@@ -80,11 +80,14 @@ public class NotebookController : MonoBehaviour
     IEnumerator DelayInstanciate(float delayTime, int auxIndex, WordData LastWordAdded)
     {
         yield return new WaitForSeconds(delayTime);
+        float specialHeight = 0;
+        if (WordSpots[auxIndex].GetComponent<CopyWordNotebookProperties>()) specialHeight = WordSpots[auxIndex].GetComponent<CopyWordNotebookProperties>().height;
         GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
         wordaux.GetComponent<NotebookWordInstance>().GetButton().onClick.AddListener(ClearUnderLine);
-        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded, isStarting, ProccessManager);
+        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded, isStarting, ProccessManager, specialHeight);
         WordsInstances.Add(wordaux);
     }
+
 
     int SearchIndexOfCrossWord(WordData newword)
     {

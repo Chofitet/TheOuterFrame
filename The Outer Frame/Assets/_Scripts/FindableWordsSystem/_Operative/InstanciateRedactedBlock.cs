@@ -9,6 +9,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
 {
     [SerializeField] GameObject redactedBlockPrefab;
     List<GameObject> RedactedBlockList = new List<GameObject>();
+    [SerializeField] ButtonsPoolController pool;
 
     public static InstanciateRedactedBlock IRM { get; private set; }
 
@@ -59,7 +60,10 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
             foreach (RedactedBlockData w in PositionsWord)
             {
-                GameObject auxObj = Instantiate(redactedBlockPrefab, w.position, textField.transform.rotation, textField.transform);
+
+                GameObject auxObj = pool.GetFromPool(textField.transform);
+                auxObj.transform.SetPositionAndRotation(w.position, textField.transform.rotation);
+                auxObj.transform.SetParent(textField.transform);
                 auxObj.GetComponent<RedactedBlock>().Initialization(w.redactedText);
                 RedactedBlockList.Add(auxObj);
             }

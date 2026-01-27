@@ -16,6 +16,7 @@ public class DossierController : MonoBehaviour
     bool isInBrifing2;
     bool isInActionPlan;
     bool wasBrieffing2Taked;
+    bool B1andB2Disanabled;
     [SerializeField] GameObject RunOutAPNote;
     [SerializeField] GameEvent OnWritingShakeDossier;
     [SerializeField] GameEvent OnShakeDossierSound;
@@ -49,6 +50,7 @@ public class DossierController : MonoBehaviour
 
     public void ChangeToBrifing(Component sender, object obj)
     {
+        if (B1andB2Disanabled) return;
         if (isInBrifing) return;
 
         //changetobrifing
@@ -67,7 +69,7 @@ public class DossierController : MonoBehaviour
 
     public void ChangeBrifing2(Component sender, object obj)
     {
-        
+        if (B1andB2Disanabled) return;
         if (isInBrifing2 || !wasBrieffing2Taked) return;
 
         //changetobrifing
@@ -176,5 +178,10 @@ public class DossierController : MonoBehaviour
         {
             OnActionPlanDossier?.Invoke(this, null);
         }
+    }
+    
+    public void OnSendLastReport(Component sender, object obj)
+    {
+        B1andB2Disanabled = true;
     }
 }

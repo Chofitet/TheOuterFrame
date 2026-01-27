@@ -21,6 +21,8 @@ public class PinchofonoManager : MonoBehaviour
     {
         if (!WordSelectedInNotebook.Notebook.GetSelectedWord()) return;
         CallToShow = null;
+        isInterrupted = false;
+        triggerInterruptedOnce = false;
         TimeManager.OnMinuteChange += CounterPassTime;
         TimeManager.OnSecondsChange += SecondPass;
         CountDown.text = minutesToRecording + "00";
@@ -108,6 +110,7 @@ public class PinchofonoManager : MonoBehaviour
         TimeManager.OnMinuteChange -= CounterPassTime;
         TimeManager.OnSecondsChange -= SecondPass;
         minutePassCounter = 0;
+        SecondPassCounter = 0;
         CountDown.text = "00:00:00";
         if(CallToShow) CallToShow.SetCached(false);
         CallToShow = null;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RedactedBlock : MonoBehaviour
 {
-
+    [SerializeField] TMP_Text m_Text;
     public void Initialization(string redactedText)
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
@@ -15,18 +15,21 @@ public class RedactedBlock : MonoBehaviour
         if (redactedText == "RE")
         {
             rectTransform.sizeDelta = new Vector2(4.49f, rectTransform.sizeDelta.y);
+            m_Text.text = "XXX";
         }
         else if (redactedText == "REDA")
         {
             rectTransform.sizeDelta = new Vector2(7.64f, rectTransform.sizeDelta.y);
+            m_Text.text = "XXXXX";
         }
         else if (redactedText == "REDACTED")
         {
-           
+            m_Text.text = "XXXXXXXXX";
         }
         else if (redactedText == "REDACTEDTO")
         {
             rectTransform.sizeDelta = new Vector2(15.86f, rectTransform.sizeDelta.y);
+            m_Text.text = "XXXXXXXXXX";
         }
 
         //Invoke("CheckIfInsideRect", 0.1f);

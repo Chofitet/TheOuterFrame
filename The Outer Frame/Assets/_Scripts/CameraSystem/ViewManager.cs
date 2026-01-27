@@ -89,6 +89,8 @@ public class ViewManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
+            if (IsStuckInView && nextViewRequest != null) return;
+
             if (!isInTutorial)
             {
                 if (currentviewState != ViewStates.GeneralView) CheckForBackToGeneralView();
@@ -251,6 +253,7 @@ public class ViewManager : MonoBehaviour
             case ViewStates.PinchofonoView:
                 if (isGameOver) return;
                 if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
+                TimeManager.timeManager.NormalizeTime();
                 OnNotebookTake.Invoke(this, true);
                 OnPinchofonoView?.Invoke(this, null);
                 break;

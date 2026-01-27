@@ -70,10 +70,27 @@ public class ActionPlan : MonoBehaviour
         }
 
         isOneToggleSelected = true;
+        bool exit = false;
         foreach (ActionRowController actions in Actions)
         {
             if (script != actions) actions.ResetRow();
-            else state = script.GetState();
+            else
+            {
+                state = script.GetState();
+                if (script.GetIsOn())
+                {
+                    actions.ResetRow();
+                    shakeBtn.SetActive(true);
+                    ApproveBtn.enabled = false;
+                    exit = true;
+                    isOneToggleSelected = false;
+                    
+                    continue;
+                }
+
+            }
+            if (exit) return;
+            
         }
 
         if (state.GetSpecialActionWord())
@@ -168,9 +185,14 @@ public class ActionPlan : MonoBehaviour
         shakeBtn.SetActive(true);
         DataFromActionPlan data = new DataFromActionPlan(FinalActionWord, FinalActionIdea);
         OnApprovedActionPlan.Invoke(this, data);
-        if(Actions.Count >= 9) Actions[9].CheckToggle();
+        Invoke("delayCheckButton", 0.02f);
         OnSetGeneralView?.Invoke(this, null);
        
+    }
+
+    void delayCheckButton()
+    {
+        if (Actions.Count >= 9) Actions[9].CheckToggle();
     }
 
     public void DestroyActionPlan(Component sender, object obj)

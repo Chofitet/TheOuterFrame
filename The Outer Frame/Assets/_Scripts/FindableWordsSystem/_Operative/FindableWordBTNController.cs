@@ -20,7 +20,6 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     [SerializeField] GameEvent OnFindableWordButtonUnHover;
     [SerializeField] WordData TheCabin;
     bool isInactive;
-
     TMP_Text textField;
     WordData word;
     WordData wordToPass;
@@ -108,7 +107,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
             string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
             string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)), _comesFromDBTitle)).ToLower();
 
-            combinedWordClean = Regex.Replace(combinedWordClean.Trim(), @"[^\w]", "");
+            combinedWordClean = RemoveNonWordChars(combinedWordClean.Trim());
 
             if ((combinedWordClean == FoundAs) && combinedWord.Contains("link"))
             {
@@ -149,10 +148,9 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
 
         textField.text = auxText;
     }
-    string RemoveMaterialTags(string word)
-    {
-        return Regex.Replace(word, @"<\/?material.*?>", "");
-    }
+
+    #region ClearWord
+    
     string GetExtraCharacters(string word)
     {
         int endIndex = word.IndexOf("</link>", StringComparison.OrdinalIgnoreCase);
@@ -167,13 +165,6 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         return "";
     }
 
-
-    string NormalizeWord(string word)
-    {
-        string _word;
-        _word = Regex.Replace(word, @"<\/?link>|[\?\.,\n\r\s-]", "");
-        return RemoveMaterialTags(_word);
-    }
     string CleanUnnecessaryCharacter(string word)
     {
 
@@ -185,7 +176,120 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         }
         return word;
     }
+    string RemoveNonWordChars(string input)
+    {
+        StringBuilder sb = new StringBuilder(input.Length);
 
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+
+            // \w = [A-Za-z0-9_]
+            if (char.IsLetterOrDigit(c) || c == '_')
+                sb.Append(c);
+        }
+
+        return sb.ToString();
+    }
+
+    string RemoveMaterialTags(string input)
+{
+    StringBuilder sb = new StringBuilder(input.Length);
+    bool insideMaterialTag = false;
+
+    for (int i = 0; i < input.Length; i++)
+    {
+        char c = input[i];
+
+        // Detectar "<material"
+        if (!insideMaterialTag &&
+            c == '<' &&
+            i + 8 < input.Length &&
+            input.Substring(i, 8).StartsWith("<materi")) // robusto ante <material...  y <material>
+        {
+            insideMaterialTag = true;
+            continue;
+        }
+
+        // Detectar "</material"
+        if (!insideMaterialTag &&
+            c == '<' &&
+            i + 9 < input.Length &&
+            input.Substring(i, 9).StartsWith("</materi"))
+        {
+            insideMaterialTag = true;
+            continue;
+        }
+
+        // Si estamos dentro de un tag <material ...>
+        if (insideMaterialTag)
+        {
+            if (c == '>')
+            {
+                // se cierra el tag
+                insideMaterialTag = false;
+            }
+            continue; // saltar todo lo que está dentro
+        }
+
+        // Copiar caracteres normales
+        sb.Append(c);
+    }
+
+    return sb.ToString();
+}
+    string NormalizeWord(string input)
+    {
+        StringBuilder sb = new StringBuilder(input.Length);
+        bool insideLinkTag = false;
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+
+            // Detectar <link>
+            if (!insideLinkTag &&
+                c == '<' &&
+                i + 5 < input.Length &&
+                input.Substring(i, 5).StartsWith("<link"))
+            {
+                insideLinkTag = true;
+                continue;
+            }
+
+            // Detectar </link>
+            if (!insideLinkTag &&
+                c == '<' &&
+                i + 6 < input.Length &&
+                input.Substring(i, 6).StartsWith("</link"))
+            {
+                insideLinkTag = true;
+                continue;
+            }
+
+            // Si estamos dentro de un <link>...</link>
+            if (insideLinkTag)
+            {
+                if (c == '>')
+                {
+                    insideLinkTag = false;
+                }
+                continue;
+            }
+
+            // Eliminar símbolos: ? . , saltos, espacios, guiones
+            if (c == '?' || c == '.' || c == ',' || c == '-' ||
+                c == '\n' || c == '\r' || char.IsWhiteSpace(c))
+                continue;
+
+            // Copiar el resto
+            sb.Append(c);
+        }
+
+        // Al final, remover tags <material> también
+        return RemoveMaterialTags(sb.ToString());
+    }
+    #endregion
     public void RegisterWord()
     {
         OnFindableWordButtonPress?.Invoke(this, wordToPass);

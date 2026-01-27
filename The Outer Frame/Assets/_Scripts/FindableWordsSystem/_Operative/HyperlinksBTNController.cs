@@ -14,19 +14,22 @@ public class HyperlinksBTNController : MonoBehaviour
     string OriginalText;
     [SerializeField] GameEvent OnPressHyperLink;
     bool _isRepitedButton;
+    int wordIndex;
 
     private void OnEnable()
     {
         rectTransform = GetComponent<RectTransform>();
     }
-    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton)
+    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton, int _wordIndex)
     {
         rectTransform.sizeDelta = new Vector2(Width, Heigth);
         textField = TextField;
         word = Word;
         OriginalText = textField.text;
         _isRepitedButton = isRepitedButton;
-        ApplyEffectOnHover("#00F3FF");
+        ApplyEffectOnHover("#00C3CC");
+       
+        wordIndex = _wordIndex;
     }
 
     public void PressButton()
@@ -37,7 +40,7 @@ public class HyperlinksBTNController : MonoBehaviour
 
     public void ApplyHover()
     {
-        ApplyEffectOnHover("#1F9168");
+        ApplyEffectOnHover("#00F3FF");
     }
 
 
@@ -66,13 +69,42 @@ public class HyperlinksBTNController : MonoBehaviour
                 combinedWord += " " + words[iaux];
                 extraIndex++;
             }
-
-            string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
-            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)))).ToLower();
+            string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(combinedWord))).ToLower();
+            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(combinedWord))))).ToLower();
 
             combinedWordClean = Regex.Replace(combinedWordClean.Trim(), @"[^\w]", "");
 
+            bool areClose = false;
+
             if ((combinedWordClean == FoundAs) && combinedWord.Contains("<u>"))
+            {
+                // probar si esta cerca del boton
+                int currentIndex = 0;
+                while (currentIndex < textField.textInfo.wordCount)
+                {
+
+                    int actualWordIndex = -1;
+                    TMP_WordInfo currentWord = textField.textInfo.wordInfo[currentIndex];
+                    string firstword = (NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(currentWord.GetWord())))).ToLower();
+                    string secondword = NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(combinedWord))).ToLower();
+
+                    if (secondword.Contains(firstword))
+                    {
+                        Vector3 wordLocation = textField.transform.TransformPoint(textField.textInfo.characterInfo[textField.textInfo.wordInfo[currentIndex].firstCharacterIndex].topLeft);
+                        Vector3 btnLocation = transform.position;
+                        float distanceBtnWord = Vector3.Distance(wordLocation, btnLocation);
+                        float threshold = 0.00001f;
+
+                        if (distanceBtnWord < threshold)
+                        {
+                            areClose = true;
+                        }
+                    }
+                    currentIndex++;
+                }
+            }
+
+            if (areClose) 
             {
                 if (combinedWord.StartsWith("<color")) combinedWord = RemoveMaterialTags(combinedWord);
 
@@ -94,29 +126,10 @@ public class HyperlinksBTNController : MonoBehaviour
         textField.ForceMeshUpdate();
     }
 
-    string RemoveMaterialTags(string word)
-    {
-        return Regex.Replace(word, @"<\/?color.*?>", "");
-    }
-
-    string GetExtraCharacters(string word)
-    {
-        int endIndex = word.IndexOf("</u>", StringComparison.OrdinalIgnoreCase);
-        if (endIndex != -1)
-        {
-            endIndex += "</u>".Length;
-            if (endIndex < word.Length)
-            {
-                return word.Substring(endIndex);
-            }
-        }
-        return "";
-    }
-
-    string NormalizeWord(string word)
-    {
-        return Regex.Replace(word, @"<\/?u>|[\?\.,\n\r]", "");
-    }
+    string RemoveMaterialTags(string word) { return Regex.Replace(word, @"<\/?color.*?>", ""); }
+    string GetExtraCharacters(string word) { int endIndex = word.IndexOf("</u>", StringComparison.OrdinalIgnoreCase); if (endIndex != -1) { endIndex += "</u>".Length; if (endIndex < word.Length) { return word.Substring(endIndex); } } return ""; }
+    string NormalizeWord(string word) { return Regex.Replace(word, @"<\/?u>|[\?\.,\n\r]", ""); }
+    
 
     string CleanUnnecessaryCharacter(string word)
     {
@@ -130,9 +143,11 @@ public class HyperlinksBTNController : MonoBehaviour
         return word;
     }
 
+    
+
     public void UnapplyEffect()
     {
-        ApplyEffectOnHover("#00F3FF");
+        ApplyEffectOnHover("#00C3CC");
     }
 
     public WordData Getword()

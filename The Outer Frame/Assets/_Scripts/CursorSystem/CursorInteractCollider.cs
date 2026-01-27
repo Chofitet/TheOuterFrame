@@ -1,23 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CursorInteractCollider : MonoBehaviour
 {
+    bool inside = false;
+
     private void OnMouseOver()
     {
-        CursorManager.CM.SetInteractCursor();
-    }
-
-    private void OnMouseEnter()
-    {
-        
+        if (!inside)
+        {
+            inside = true;
+            CursorManager.CM.EnterInteractive();
+        }
     }
 
     private void OnMouseExit()
     {
-        CursorManager.CM.SetDefaultCursor();
+        if (inside)
+        {
+            inside = false;
+            CursorManager.CM.ExitInteractive();
+        }
     }
 
-
+    private void OnMouseDown()
+    {
+        if (inside)
+            CursorManager.CM.ClickInteractive();
+    }
 }

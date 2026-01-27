@@ -20,115 +20,165 @@ public class CursorManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        Cursor.SetCursor(DefaultCursor, new Vector2(DefaultCursor.width / 2, DefaultCursor.height / 2), CursorMode.Auto);
-        if(targetCanvas != null)  raycaster = targetCanvas.GetComponent<GraphicRaycaster>();
-        eventSystem = EventSystem.current;
-    }
-
+    [Header("Normal Cursors")]
     [SerializeField] Texture2D DefaultCursor;
     [SerializeField] Texture2D ClickCursor;
     [SerializeField] Texture2D InteractiveCursor;
-
+    [Header("PC View Cursors")]
     [SerializeField] Texture2D PCDefaultCursor;
     [SerializeField] Texture2D PCClickCursor;
     [SerializeField] Texture2D PCInteractiveCursor;
-    bool isClicking;
-    bool onceEnter;
 
-    public Canvas targetCanvas; // Asigna tu Canvas en el Inspector
+
+    private enum CursorState { Default, Hover, Click }
+    private CursorState currentState = CursorState.Default;
+    private bool isInPCView;
+
+    int hoverCount = 0;
+
+    public Canvas targetCanvas;
     private GraphicRaycaster raycaster;
-    private PointerEventData pointerEventData;
     private EventSystem eventSystem;
+    private PointerEventData pointerEventData;
+    bool zoomView;
 
-
-
-    public void SetInteractCursor()
+    private void Start()
     {
-        if (isClicking) return;
-        if (IsPointerOverCanvas() && isInPcView) Cursor.SetCursor(PCInteractiveCursor, Vector2.zero, CursorMode.Auto);
-        else Cursor.SetCursor(InteractiveCursor, new Vector2(InteractiveCursor.width / 2, InteractiveCursor.height / 2), CursorMode.Auto);
+        if (targetCanvas) raycaster = targetCanvas.GetComponent<GraphicRaycaster>();
+        eventSystem = EventSystem.current;
+        ApplyCursor(CursorState.Default);
+    }
+    public void EnterInteractive()
+    {
+        hoverCount++;
+        if (hoverCount > 0) ChangeState(CursorState.Hover);
     }
 
-    public void SetDefaultCursor()
+    public void ExitInteractive()
     {
-        if(IsPointerOverCanvas() && isInPcView) Cursor.SetCursor(PCDefaultCursor, Vector2.zero, CursorMode.Auto);
-        else Cursor.SetCursor(DefaultCursor, new Vector2(DefaultCursor.width / 2, DefaultCursor.height / 2), CursorMode.Auto);
+        hoverCount = Mathf.Max(hoverCount - 1, 0);
+        if (hoverCount == 0) ChangeState(CursorState.Default);
     }
 
-    void Update()
+    public void ClickInteractive()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (IsPointerOverCanvas() && isInPcView) Cursor.SetCursor(PCClickCursor, Vector2.zero, CursorMode.Auto);
-            else Cursor.SetCursor(ClickCursor, new Vector2(ClickCursor.width / 2, ClickCursor.height / 2), CursorMode.Auto);
-            if(BackToDefaultCoroutine != null) StopCoroutine(BackToDefaultCoroutine);
-            BackToDefaultCoroutine = StartCoroutine(BackToDefault());
-            isClicking = true;
-        }
-
-        if (!isInPcView) return;
-        if(IsPointerOverCanvas())
-        {
-            if (onceEnter) return;
-            SetDefaultCursor();
-            onceEnter = true;
-        }
-        else
-        {
-            if(onceEnter) SetDefaultCursor();
-            onceEnter = false;
-        }
+        StartCoroutine(ClickRoutine());
     }
-    private Coroutine BackToDefaultCoroutine;
-    IEnumerator BackToDefault()
+
+    private IEnumerator ClickRoutine()
     {
+        ChangeState(CursorState.Click);
         yield return new WaitForSeconds(0.1f);
-        if (IsPointerOverCanvas() && isInPcView) Cursor.SetCursor(PCDefaultCursor, Vector2.zero, CursorMode.Auto);
-        else Cursor.SetCursor(DefaultCursor, new Vector2(DefaultCursor.width / 2, DefaultCursor.height / 2), CursorMode.Auto);
-        isClicking = false;
+
+        if (hoverCount > 0)
+            ChangeState(CursorState.Hover);
+        else
+            ChangeState(CursorState.Default);
     }
 
-    bool isInPcView;
+    private void ChangeState(CursorState newState)
+    {
+        currentState = newState;
+        ApplyCursor(newState);
+    }
 
-    private Coroutine cursorCoroutine;
     public void CheckView(Component sender, object obj)
     {
-        if ((ViewStates)obj == ViewStates.PCView)
+        ViewStates view = (ViewStates)obj;
+        zoomView = false;
+
+        if (view == ViewStates.PCView)
         {
-            cursorCoroutine = StartCoroutine(ChangeCursorInPC());
+            PCcursorCoroutine = StartCoroutine(EnterPCView());
         }
-        else
+        else if(view == ViewStates.BoardZoomView)
         {
-            if (cursorCoroutine != null)
-            {
-                StopCoroutine(cursorCoroutine);
-                cursorCoroutine = null;
-            }
-            isInPcView = false;
-            isClicking = false;
+            zoomView = true;
+            ForceDefault();
+        }
+        else 
+        {
+           if(PCcursorCoroutine != null) StopCoroutine(PCcursorCoroutine);
+            ExitPCView();
         }
     }
 
-    IEnumerator ChangeCursorInPC()
+    private void ApplyCursor(CursorState state)
+    {
+        bool pc = IsPointerOverCanvas() && isInPCView;
+        switch (state)
+        {
+            case CursorState.Default:
+                Cursor.SetCursor(
+                    pc ? PCDefaultCursor : DefaultCursor,
+                    pc ? Vector2.zero : Hotspot(DefaultCursor, true),
+                    CursorMode.Auto
+                );
+                break;
+
+            case CursorState.Hover:
+                Cursor.SetCursor(
+                    pc ? PCInteractiveCursor : InteractiveCursor,
+                    pc ? Vector2.zero : Hotspot(InteractiveCursor, true),
+                    CursorMode.Auto
+                );
+                break;
+
+            case CursorState.Click:
+                Cursor.SetCursor(
+                    pc ? PCClickCursor : ClickCursor,
+                    pc ? Vector2.zero : Hotspot(ClickCursor, true),
+                    CursorMode.Auto
+                );
+                break;
+        }
+    }
+
+    private void Update()
+    {
+        if (zoomView)
+        {
+            ForceDefault();
+        }
+        ApplyCursor(currentState);
+    }
+    public void ForceDefault()
+    {
+        hoverCount = 0;
+        ChangeState(CursorState.Default);
+    }
+    Coroutine PCcursorCoroutine;
+    IEnumerator EnterPCView()
     {
         yield return new WaitForSeconds(0.5f);
-        isInPcView = true;
-        SetDefaultCursor();
+        isInPCView = true;
+        ApplyCursor(currentState);
+    }
+
+    public void ExitPCView()
+    {
+        isInPCView = false;
+        ApplyCursor(currentState);
     }
 
     private bool IsPointerOverCanvas()
     {
-        if(!raycaster) return false;
-        pointerEventData = new PointerEventData(eventSystem);
-        pointerEventData.position = Input.mousePosition;
+        if (!raycaster) return false;
 
-        var results = new System.Collections.Generic.List<RaycastResult>();
+        pointerEventData = new PointerEventData(eventSystem)
+        {
+            position = Input.mousePosition
+        };
 
+        List<RaycastResult> results = new List<RaycastResult>();
         raycaster.Raycast(pointerEventData, results);
 
         return results.Count > 0;
     }
 
+    private Vector2 Hotspot(Texture2D tex, bool centered)
+    {
+        return centered ? new Vector2(tex.width / 2, tex.height / 2) : Vector2.zero;
+    }
 }
+

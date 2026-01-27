@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class FindableWordsManager : MonoBehaviour
 {
     [SerializeField] GameObject ButtonFindableWordPrefab;
-    [SerializeField] GameObject ButtonHyperLink;
+    [SerializeField] ButtonsPoolController pool;
     List<GameObject> FindableWordsBTNs = new List<GameObject>();
     [SerializeField] GameEvent OnFindableWordInstance;
     [SerializeField] WordData Irrelevant;
@@ -70,8 +70,11 @@ public class FindableWordsManager : MonoBehaviour
                 if (isInLastWord && w.GetWordData() != LastWord) continue;
                 if (w.GetWordData().GetIsFound()) continue;
                 if (w.GetWordData().GetInactiveState()) continue;
-                GameObject auxObj = Instantiate(ButtonFindableWordPrefab, w.GetPosition(), textField.transform.rotation, textField.transform);
+                GameObject auxObj = pool.GetFromPool(textField.transform);
+                auxObj.transform.SetPositionAndRotation(w.GetPosition(), textField.transform.rotation);
+                auxObj.transform.SetParent(textField.transform);
                 auxObj.name = "FindableBTN_" + w.GetWordData().GetName();
+                auxObj.GetComponent<FindableWordBTNController>().enabled = true;
                 auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle);
                 FindableWordsBTNs.Add(auxObj);
                 OnFindableWordInstance?.Invoke(this, auxObj);
@@ -190,7 +193,7 @@ public class FindableWordsManager : MonoBehaviour
                         combinedWordLength = combinedWordLength + spaceToAdd;
                         heightInfo += heightInfo / 4;
                         checkSlicebtn = true;
-                        findableWords.Add(new FindableWordData( word,wordLocation, combinedWordLength,heightInfo, checkSlicebtn, Irrelevant));
+                        findableWords.Add(new FindableWordData( word,wordLocation, combinedWordLength,heightInfo, checkSlicebtn, startIndex, Irrelevant));
                         wordLocation = textField.transform.TransformPoint(
                         textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].topLeft);
                         combinedWordLength = 0;
@@ -203,7 +206,7 @@ public class FindableWordsManager : MonoBehaviour
                 combinedWordLength = combinedWordLength + spaceToAdd;
                 heightInfo += heightInfo / 4;
 
-                findableWords.Add(new FindableWordData(word,wordLocation,combinedWordLength,heightInfo,checkSlicebtn, Irrelevant));
+                findableWords.Add(new FindableWordData(word,wordLocation,combinedWordLength,heightInfo,checkSlicebtn, startIndex, Irrelevant));
             }
 
         return findableWords;
@@ -211,10 +214,101 @@ public class FindableWordsManager : MonoBehaviour
 
     string AddCustomTagsToLinks(string originalText)
     {
-        string normalizedText = Regex.Replace(originalText, @"[“”\""\']", string.Empty);
-        normalizedText = Regex.Replace(normalizedText, @"\s+", " ");
+        string noSpecialChars = RemoveSpecialCharacters(originalText);
+        string normalizedSpaces = NormalizeSpaces(noSpecialChars);
+        string replacedLinks = ReplaceLinkTags(normalizedSpaces);
 
-        return Regex.Replace(normalizedText, @"<link>(.*?)<\/link>", "ii$1ij");
+        return replacedLinks;
+    }
+
+    // 1) Remover “ ” ' "
+    static readonly char[] specialChars = { '“', '”', '"', '\'' };
+
+    string RemoveSpecialCharacters(string input)
+    {
+        StringBuilder sb = new StringBuilder(input.Length);
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+            bool remove = false;
+
+            for (int j = 0; j < specialChars.Length; j++)
+            {
+                if (c == specialChars[j])
+                {
+                    remove = true;
+                    break;
+                }
+            }
+
+            if (!remove)
+                sb.Append(c);
+        }
+
+        return sb.ToString();
+    }
+
+    // 2) Normalizar espacios (equivalente a Regex "\s+")
+    string NormalizeSpaces(string input)
+    {
+        StringBuilder sb = new StringBuilder(input.Length);
+        bool previousWasSpace = false;
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+
+            if (char.IsWhiteSpace(c))
+            {
+                if (!previousWasSpace)
+                    sb.Append(' ');
+
+                previousWasSpace = true;
+            }
+            else
+            {
+                previousWasSpace = false;
+                sb.Append(c);
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    // 3) Reemplazar <link>...</link> por ii...ij
+    string ReplaceLinkTags(string text)
+    {
+        StringBuilder sb = new StringBuilder(text.Length);
+        int i = 0;
+
+        while (i < text.Length)
+        {
+            // Detectar <link>
+            if (i + 6 <= text.Length && text.Substring(i, 6) == "<link>")
+            {
+                i += 6;           // saltar "<link>"
+                sb.Append("ii");  // abrir tag personalizado
+
+                // Copiar contenido interno hasta </link>
+                while (i + 7 <= text.Length && text.Substring(i, 7) != "</link>")
+                {
+                    sb.Append(text[i]);
+                    i++;
+                }
+
+                sb.Append("ij");  // cerrar tag personalizado
+
+                i += 7;           // saltar "</link>"
+            }
+            else
+            {
+                sb.Append(text[i]);
+                i++;
+            }
+        }
+
+        return sb.ToString();
     }
 
     void OnButtonClick(GameObject obj)
@@ -283,14 +377,15 @@ public struct FindableWordData
     float width;
     float heigth;
     bool isRepitedButton;
-
-    public FindableWordData(string _name, Vector3 _position, float _with, float _heigth, bool _isRepitedButton, WordData _WordIgnore = null)
+    int wordIndex;
+    public FindableWordData(string _name, Vector3 _position, float _with, float _heigth, bool _isRepitedButton, int _wordIndex, WordData _WordIgnore = null)
     {
         name = WordsManager.WM.FindWordDataWithString(_name, _WordIgnore);
         position = _position;
         width = _with;
         heigth = _heigth;
         isRepitedButton = _isRepitedButton;
+        wordIndex = _wordIndex;
     }
     public WordData GetWordData() { return name; }
     public string GetName() {
@@ -303,5 +398,6 @@ public struct FindableWordData
     public float GetHeigth() { return heigth; }
 
     public bool GeisRepitedButton() { return isRepitedButton; }
+    public int GetWordIndex() { return wordIndex; }
 
 }

@@ -14,8 +14,8 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
     [SerializeField] int EndHour;
     [SerializeField] int EndMinute;
 
-    TimeCheckConditional StartTime;
-    TimeCheckConditional EndTime;
+    [NonSerialized] TimeCheckConditional StartTime;
+    [NonSerialized] TimeCheckConditional EndTime;
 
 
     [Header("Reaction Call")]
@@ -40,6 +40,19 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
     [NonSerialized] private bool wasEnterToDataBase;
     [NonSerialized] TimeData CachedStartTime;
     [NonSerialized] TimeData CachedFinishTime;
+
+    public void ResetScriptableObject()
+    {
+        isCatch = false;
+        isInterrupted = false;
+        word = null;
+        wasEnterToDataBase = false;
+        CachedStartTime = new TimeData(0, 0, 0);
+        CachedFinishTime = new TimeData(0, 0, 0);
+        StartTime = new TimeCheckConditional();
+        EndTime = new TimeCheckConditional();
+
+    }
 
     public string GetDialogue() {
         if (!isInterrupted) return Dialogue;
@@ -76,13 +89,7 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
         ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
     }
 
-    public void ResetScriptableObject()
-    {
-        isCatch = false;
-        isInterrupted = false;
-        word = null;
-        wasEnterToDataBase = false;
-    }
+   
 
     public void SetWord(WordData _word)
     {
