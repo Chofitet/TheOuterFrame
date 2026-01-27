@@ -34,6 +34,7 @@ public class SoundEventListener : MonoBehaviour
     {
         if (isInactive) return;
         if (!audioSource.clip && Clips.Count == 0) return;
+        //Debug.Log("play " + audioSource.clip.name);
         _soundInfo = new SoundInfo(audioSource, SoundDuration, PitchVariation, Clips, transform, name, isDestroyable, SoundFadeOut, madeDontDestroyInLoad);
        OnPlaySound?.Invoke(this, _soundInfo);
     }

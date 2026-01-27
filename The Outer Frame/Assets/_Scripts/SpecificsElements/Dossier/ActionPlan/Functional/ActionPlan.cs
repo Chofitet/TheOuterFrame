@@ -16,6 +16,8 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameEvent OnFinalActionSend;
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] GameObject shakeBtn;
+    [SerializeField] GameEvent OnGoToCredits;
+    List<ReportType> GoToCreditsReports = new List<ReportType>();
     WordData FinalActionWord;
     StateEnum FinalActionState;
     StateEnum FinalActionIdea;
@@ -28,7 +30,7 @@ public class ActionPlan : MonoBehaviour
     bool isSecodToLastActionDoit;
     IConditionable condition;
 
-    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded, WordData _FinalActionWord, StateEnum _FinalActionState, StateEnum _FinalActionIdea,ScriptableObject _condition, bool _isSecodToLastActionDoit)
+    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded, WordData _FinalActionWord, StateEnum _FinalActionState, StateEnum _FinalActionIdea,ScriptableObject _condition, bool _isSecodToLastActionDoit, List<ReportType> _goToCreditsReports)
     {
         isFirstTimeIdeaAdded = _isFirstTimeIdeaAdded;
         InstantiateActionRows(ActionList);
@@ -39,11 +41,11 @@ public class ActionPlan : MonoBehaviour
         FinalActionIdea = _FinalActionIdea;
         isSecodToLastActionDoit = _isSecodToLastActionDoit;
         condition = _condition as IConditionable;
+        GoToCreditsReports = _goToCreditsReports;
     }
 
     void InstantiateActionRows(List<StateEnum> listActions)
     {
-        
         foreach(StateEnum actions in listActions)
         {
             GameObject ActionInstantiate = Instantiate(ActionRowPrefab, ActionsContainer, false);
@@ -190,6 +192,27 @@ public class ActionPlan : MonoBehaviour
        
     }
 
+    void CheckForGoToCredits()
+    {
+        foreach(ReportType data in GoToCreditsReports)
+        {
+            WordData _word = word;
+
+            if (state.GetSpecialActionWord()) _word = state.GetSpecialActionWord();
+
+            ReportType reportToShow = WordsManager.WM.RequestReport(_word, state);
+
+            Debug.Log("report: " + reportToShow.GetState().name);
+            Debug.Log("report To show: "+ data.GetState().name);
+            
+            if (reportToShow == data)
+            {
+                Debug.Log("go to credits");
+                OnGoToCredits?.Invoke(this, "Credits");
+            }
+        }
+    }
+
     void delayCheckButton()
     {
         if (Actions.Count >= 9) Actions[9].CheckToggle();
@@ -204,11 +227,13 @@ public class ActionPlan : MonoBehaviour
     {
         ApproveBtn.transform.GetChild(0).gameObject.SetActive(true);
         Invoke("OnStampAP", 0.4f);
+        CheckForGoToCredits();
     }
 
     void OnStampAP()
     {
         ApproveBtn.transform.GetChild(0).gameObject.SetActive(false);
+        
     }
 
     bool isInDossier;

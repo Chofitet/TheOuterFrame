@@ -28,6 +28,9 @@ public class ActionPlanManager : MonoBehaviour
     [Header("Final Action of the Game")]
     [SerializeField] List<FinalActionsToInActionPlan> FinalActionsToAddInActionPLan = new List<FinalActionsToInActionPlan>();
 
+    [Header("Report to Go to Credits")]
+    [SerializeField] List<ReportType> GoToCreditsReports = new List<ReportType>();
+
     bool IsProgressorFull;
     bool isFirstTimeIdeaAdded;
 
@@ -62,7 +65,7 @@ public class ActionPlanManager : MonoBehaviour
         if (transform.childCount != 0) Destroy(transform.GetChild(0).gameObject);
         
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
-        AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull, isFirstTimeIdeaAdded, SecondToLastWord, SecondToLastAction, SecondToLastIdea, condition, isSecodToLastActionDoit);
+        AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull, isFirstTimeIdeaAdded, SecondToLastWord, SecondToLastAction, SecondToLastIdea, condition, isSecodToLastActionDoit, GoToCreditsReports);
         transform.Rotate(Vector3.zero);
         isFirstTimeIdeaAdded = false;
       }
