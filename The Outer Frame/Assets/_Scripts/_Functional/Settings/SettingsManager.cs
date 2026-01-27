@@ -6,7 +6,12 @@ using UnityEngine.UIElements;
 public class SettingsManager : MonoBehaviour
 {
     [SerializeField] DropdownField qualityDropdown;
-    int quality;
+    int quality = 5;
+
+    private void Start()
+    {
+        QualitySettings.SetQualityLevel(quality, true);
+    }
 
     public void ShowMenu()
     {
