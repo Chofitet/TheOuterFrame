@@ -78,7 +78,7 @@ public class FindableWordsManager : MonoBehaviour
                 auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle);
                 FindableWordsBTNs.Add(auxObj);
                 OnFindableWordInstance?.Invoke(this, auxObj);
-                auxObj.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(auxObj));
+               // auxObj.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(auxObj));
             }
         } catch (Exception ex)
         {
@@ -311,7 +311,7 @@ public class FindableWordsManager : MonoBehaviour
         return sb.ToString();
     }
 
-    void OnButtonClick(GameObject obj)
+   /* void OnButtonClick(GameObject obj)
     {
         DeleteBtnAlreadyFound(obj.GetComponent<FindableWordBTNController>().Getword());
     }
@@ -325,7 +325,7 @@ public class FindableWordsManager : MonoBehaviour
                 Destroy(btn);
             }
         }
-    }
+    }*/
 
 
     int index;
