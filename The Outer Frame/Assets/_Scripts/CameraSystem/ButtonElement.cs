@@ -46,7 +46,6 @@ public class ButtonElement : MonoBehaviour
 
         if (newState != view)
         {
-            Debug.Log(gameObject.name);
             GetComponent<BoxCollider>().enabled = true;
         }
 

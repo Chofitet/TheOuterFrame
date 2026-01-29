@@ -31,7 +31,6 @@ public class DossierController : MonoBehaviour
     public void ChangeToActionPlan(Component sender, object obj)
     {
         if (isInActionPlan) return;
-        Debug.Log("sender AP: " + sender.gameObject.name);
         if (postItSeenInTutorial) RunOutAPNote.SetActive(true);
         //changetoActionPlan
         if (!isInDossierView && !IsTakingIdea) return;

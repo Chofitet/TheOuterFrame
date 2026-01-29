@@ -212,6 +212,9 @@ public class NotebookController : MonoBehaviour
     {
         InctiveWordsOnBoard.Add((WordData)obj);
         InactiveWordInBoard((WordData)obj);
+        Debug.Log($"Inactive words on board: {InctiveWordsOnBoard.Count}");
+        Debug.Log($"words instance on board: {WordsInstances.Count}");
+
         if (InctiveWordsOnBoard.Count == WordsInstances.Count) OnPendingWordsToPutInBoard?.Invoke(this, false);
         else OnPendingWordsToPutInBoard?.Invoke(this, true);
 

@@ -53,6 +53,5 @@ public class ShakeNotebookBoardBTN : MonoBehaviour
     public void SetAreWordsToPut(Component sender, object obj)
     {
         AreWordsToPut = (bool)obj;
-        Debug.Log($"Pendig words to put: {AreWordsToPut}");
     }
 }

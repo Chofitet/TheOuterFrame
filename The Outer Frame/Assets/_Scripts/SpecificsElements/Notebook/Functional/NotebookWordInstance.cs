@@ -68,7 +68,6 @@ public class NotebookWordInstance : MonoBehaviour
         fade.OnComplete -= OnWritingFinished;
 
         processManager.UnregisterProcess();
-        Debug.Log($"writing of {wordReference.GetName()} finished");
     }
 
     public void EraseAnim()
@@ -82,7 +81,6 @@ public class NotebookWordInstance : MonoBehaviour
     public void eraseParticles(float progress)
     {
         EraseParticles.GetComponent<ParticleSystem>().Play();
-        Debug.Log("erase progress" + progress.ToString());
         EraseParticles.localPosition = Vector3.Lerp(Vector3.zero, new Vector3(text.preferredWidth,0,0), progress);
     }
     void OnEraseFinished()
@@ -93,7 +91,6 @@ public class NotebookWordInstance : MonoBehaviour
         fade.OnEraseProgress -= eraseParticles;
 
         processManager.UnregisterProcess();
-        Debug.Log($"Erase of {wordReference.GetName()} finished");
     }
 
     public void RefreshWord(Component sender, object obj)
@@ -110,7 +107,6 @@ public class NotebookWordInstance : MonoBehaviour
     }
     public void ReplaceWord(WordData word)
     {
-        Debug.Log(wordReference.GetName());
         text.text = wordReference.GetName();
         if (isCross) EraseCrossWord();
         StartCoroutine(AnimFade(text, false, text, true, word.GetName()));
