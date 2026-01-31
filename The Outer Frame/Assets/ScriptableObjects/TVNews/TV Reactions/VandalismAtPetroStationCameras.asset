@@ -10,21 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64e79fc005c88bf4084b841a22c08b1a, type: 3}
-  m_Name: UnrulyMobGetRidAttempNEWS
+  m_Name: VandalismAtPetroStationCameras
   m_EditorClassIdentifier: 
   state: {fileID: 0}
-  headline: "INDESCRIBABLY GRAPHIC CARNAGE ENSUES \nAT WHOOPLA TOWN"
+  headline: VANDALISM TAKING PLACE AT ROAD 54 PETRO STATION
   headlineTwoLines: 
   text: 
-  newType: 3
-  CustomAclarationAlert: ALL IS LOST
-  image: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
+  newType: 0
+  CustomAclarationAlert: YOUR INCREDIBLE TACTLESS MO WAS REPORTED TO THE MEDIA
+  image: {fileID: 0}
   channel: 1
   priority: 1
-  alertLevelIncrement: 34
+  alertLevelIncrement: 11
   Emergency: 1
-  TimeToAppear: 1
+  TimeToAppear: 5
   MinTransmitionTime: 4
   Conditions:
-  - condition: {fileID: 11400000, guid: e4e43298f267b13429ffd8f958319682, type: 2}
+  - condition: {fileID: 11400000, guid: 12782b8c8ac58dc47b8b5afab5e7e81a, type: 2}
     ifNot: 0
+  - condition: {fileID: 11400000, guid: 3c7e1717090ae8e47ba470f415120e5f, type: 2}
+    ifNot: 1

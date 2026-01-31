@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
-  m_Name: 05.31.CrashVanGoing
+  m_Name: 07.00.TracksCauseBadness
   m_EditorClassIdentifier: 
   headline: 
-  headlineTwoLines: "I5 NEWS VAN ON ITS WAY TO <link>ROAD 54</link> \nAN UPDATE COMING
-    SOON \n"
-  text: TAKING MATTERS INTO OUR OWN HANDS. WE WILL DELIVER YOU THE GOODS AT ANY COST.
-    THAT'S WHAT WE ARE ALL ABOUT
+  headlineTwoLines: <link>GLOWING TRICYCLE TRAIL</link> FOUND <link>AT ROAD 54</link>
+    BUT WHY?
+  text: WHERE DOES IT LEAD TO AND WHAT DOES IT MEAN FOR YOUR WEEKEND. STAY TUNED!
   newType: 0
-  CustomAclarationAlert: THE MEDIA IS ON ITS WAY TO THE CRASH SITE
-  image: {fileID: 0}
+  CustomAclarationAlert: EVIDENCE WAS BROADCASTED TO THE PUBLIC
+  image: {fileID: 21300000, guid: dcd963a4e9f713b4ea19cb8b50fa039c, type: 3}
   channel: 1
   Priority: 1
-  alertLevelIncrement: 27
+  alertLevelIncrement: 30
   Emergency: 0
   Day: 0
-  Hour: 5
-  Minute: 31
+  Hour: 7
+  Minute: 0
   MinTransmitionTime: 4
-  Conditions: []
+  Conditions:
+  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
+    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}

@@ -10,19 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: IDEA.StrangeGooIDontCareMopItUp
+  m_Name: IDEA.StrangeGooIDontCareMopItUpbutAfterCargoAttempt
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 1eff6739516e69c46bd039085b5d2c32, type: 2}
   state: {fileID: 11400000, guid: 1eff6739516e69c46bd039085b5d2c32, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'We lost a guy.
+  Text: 'That &$%! thing!
 
-    Not completely, we still have one of his hands, but
-    that''s pretty much all that it''s left of him.
+    We lost another guy to that glowing stuff.
 
-    That green stuff reacted
-    in bad way when we attempted to clean it.'
+    Well,
+    that''s not entirely true, we still have one of his hands, but that''s all that''s
+    left of him.
+
+    That green stuff reacted in bad way when we attempted to clean
+    it.'
   TextForRepetition: 
   CustomStatus: ATTEMPTED
   Photos:
@@ -32,7 +35,7 @@ MonoBehaviour:
     text: ONE DOWN!
   Conditionals:
   - condition: {fileID: 11400000, guid: 9f1ef4a120e818447830da9103de384d, type: 2}
-    ifNot: 1
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 1

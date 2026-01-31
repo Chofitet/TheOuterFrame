@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: StrangeGooMopUp
+  m_Name: StrangeGooMopUpCargoOrVTTInspected
   m_EditorClassIdentifier: 
   Action: {fileID: 11400000, guid: 978fd1b3f2b54f04dad1b8d1c77bf880, type: 2}
   state: {fileID: 11400000, guid: 978fd1b3f2b54f04dad1b8d1c77bf880, type: 2}
@@ -27,9 +27,15 @@ MonoBehaviour:
     text: CLEAN ALL THE WAY
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
     text: BEYOND REPROACH
+  - photo: {fileID: 21300000, guid: efc5ac221b2481d4486fe30ef012e955, type: 3}
+    text: IT JUST GLOWS NOW
+  - photo: {fileID: 21300000, guid: efc5ac221b2481d4486fe30ef012e955, type: 3}
+    text: IT JUST GLOWS NOW
   Conditionals:
   - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
     ifNot: 1
+  - condition: {fileID: 11400000, guid: cdd3674130adc94489ae934889791486, type: 2}
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
