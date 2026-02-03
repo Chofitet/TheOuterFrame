@@ -41,7 +41,10 @@ public class ActionGroupManager : MonoBehaviour
             List<StateEnum> actions = AG.Actions;
             foreach(StateEnum action in actions)
             {
-                if (word.CheckIfActionIsDoing(action)) return true;
+                if (word.CheckIfActionIsDoing(action))
+                {
+                    if(actions.Contains(newAction)) return true;
+                }
             }
         }
 
