@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class NotebookController : MonoBehaviour
 {
@@ -210,13 +212,27 @@ public class NotebookController : MonoBehaviour
 
     public void PutingWordOnBoard(Component sender, object obj)
     {
+        WordData word = (WordData)obj;
+       
+
+       
         InctiveWordsOnBoard.Add((WordData)obj);
         InactiveWordInBoard((WordData)obj);
-        Debug.Log($"Inactive words on board: {InctiveWordsOnBoard.Count}");
-        Debug.Log($"words instance on board: {WordsInstances.Count}");
 
-        if (InctiveWordsOnBoard.Count == WordsInstances.Count) OnPendingWordsToPutInBoard?.Invoke(this, false);
-        else OnPendingWordsToPutInBoard?.Invoke(this, true);
+        checkWordsToPut();
+
+    }
+
+    void checkWordsToPut()
+    {
+        bool areWordsToPut = false;
+         foreach (GameObject w in WordsInstances)
+        {
+            if (w.GetComponent<NotebookWordInstance>().GetButton().enabled) areWordsToPut = true;
+        }
+
+        if (areWordsToPut) OnPendingWordsToPutInBoard?.Invoke(this, true);
+        else OnPendingWordsToPutInBoard?.Invoke(this, false);
 
     }
 
@@ -234,8 +250,8 @@ public class NotebookController : MonoBehaviour
         if (actualView == ViewStates.BoardView)
         {
             DisableWordsOfList(InctiveWordsOnBoard,"Board",true,true);
-            if (InctiveWordsOnBoard.Count == WordsInstances.Count) OnPendingWordsToPutInBoard?.Invoke(this, false);
-            else OnPendingWordsToPutInBoard?.Invoke(this, true);
+
+            checkWordsToPut();
         }
         else if (actualView == ViewStates.TVView)
         {
@@ -255,6 +271,7 @@ public class NotebookController : MonoBehaviour
             DisableWordsOfList(Empylist);
         }
     }
+
 
     void DisableWordsOfList(List<WordData> list, string material = "",bool changes = true, bool thickness = false)
     {
