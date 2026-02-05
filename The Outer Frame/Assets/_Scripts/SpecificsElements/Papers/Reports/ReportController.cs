@@ -35,7 +35,7 @@ public class ReportController : MonoBehaviour
     ReportType report;
     bool IsAlreadyImposible;
 
-    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, bool isAlreadyImposible, TimeData timeComplete,TimeData TimeToUnlockVilify)
+    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, bool isAlreadyImposible, TimeData timeComplete,TimeData TimeToUnlockVilify, bool AreNotEnoughAgents)
     {
         word = _word;
         report = _report;
@@ -118,6 +118,15 @@ public class ReportController : MonoBehaviour
             Resulttxt.text = $"People will get suspicious if we put so many of our ‘broadcasts’ up one after the other. Let’s wait and try again after {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}";
             isNotCompleted = true;
             photo1.Set("LET'S NOT ABUSE IT", WrongResultImg[6]);
+            UploadBTN.SetActive(false);
+            DisposeBTN.SetActive(true);
+        }
+        else if(!AreNotEnoughAgents)
+        {
+            Resulttxt.text = "Faltan pibes pa la joda";
+            status = "<color=#AE0000>INSUFICIENTE</color>";
+            photo1.Set("", WrongResultImg[6]);
+            isNotCompleted = true;
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ProgressorManager : MonoBehaviour
@@ -12,15 +13,19 @@ public class ProgressorManager : MonoBehaviour
     [SerializeField] GameEvent OnAnyAgenEnableGameOver;
     [SerializeField] GameEvent OnDisableInput;
 
+    List<ProgressorModuleController> multipleAgentAction1 = new List<ProgressorModuleController>();
+    List<ProgressorModuleController> multipleAgentAction2 = new List<ProgressorModuleController>();
+
     public void SetActionInCourse(Component c, object _data)
     {
         DataFromActionPlan data = (DataFromActionPlan)_data;
         StateEnum state = data.state;
         WordData _word = data.word;
+        int agentsAmount = state.GetAgentsNeeded();
         if (state == null) return;
         if (state.GetSpecialActionWord()) _word = state.GetSpecialActionWord();
 
-        if (!GetUnusedSlot())
+        if (GetUnusedSlot(1).Count == 0)
         {
             OnProgressorSetSlot?.Invoke(this, true);
             return;
@@ -31,26 +36,73 @@ public class ProgressorManager : MonoBehaviour
             Debug.LogWarning("No " + state.GetInfinitiveVerb() + " reports to show in " + _word.GetName());
             return;
         }
+
+
         int timeAction = Mathf.Abs(state.GetTime() + WordsManager.WM.RequestReport(_word, state).GetChangeTimeOfAction());
-        GetUnusedSlot().SetAction(_word, state, timeAction);
+        int auxMultiActionNum = 1;
+        bool multipleAgentAction1Used = false;
+        bool multipleAgentAction2Used = false;
+        int agentsAvaible = GetUnusedSlot(4).Count;
+
+        List<ProgressorModuleController> SlotList = GetUnusedSlot(agentsAmount);
+
+        SlotList.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
+
+
+        foreach (ProgressorModuleController slot in SlotList)
+        {
+            bool EnoughAgents = true;
+
+      
+            if (agentsAvaible < agentsAmount) EnoughAgents = false;
+
+
+            string a = slot.name;
+            Debug.Log(slot.name);
+
+            slot.SetAction(_word, state, timeAction, auxMultiActionNum, EnoughAgents);
+
+            auxMultiActionNum += 1;
+
+            if (agentsAmount > 1)
+            {
+                if (!multipleAgentAction1Used)
+                {
+                    multipleAgentAction1.Add(slot);
+                }
+                else
+                {
+                    multipleAgentAction2.Add(slot);
+                }
+            }
+        }
+
+        if (multipleAgentAction1.Count != 0) multipleAgentAction1Used = true;
+        if (multipleAgentAction2.Count != 0) multipleAgentAction2Used = true;
+
         OnProgressorSetSlot?.Invoke(this, false);
 
-        if (!GetUnusedSlot())
+        if (GetUnusedSlot(1).Count == 0)
         {
             OnProgressorSetSlot?.Invoke(this, true);
         }
     }
 
 
-    ProgressorModuleController GetUnusedSlot()
+    List<ProgressorModuleController> GetUnusedSlot(int amount)
     {
-        ProgressorModuleController AuxSlot = null;
+        List<ProgressorModuleController> AuxSlot = new List<ProgressorModuleController>();
+        int auxAmount = 0;
+
         foreach (ProgressorModuleController slot in Slots)
         {
             if(!slot.GetIsFull())
             {
-                return slot;
+                AuxSlot.Add(slot);
+                auxAmount += 1;
             }
+
+            if (auxAmount == amount) break;
         }
 
         return AuxSlot;
@@ -96,5 +148,31 @@ public class ProgressorManager : MonoBehaviour
         Slots.RemoveAll(slot => RemoveList.Contains(slot));
         OnProgressorSetSlot?.Invoke(this, true);
     }
+
+    //onAbortReport
+    public void AbortMultiActionSlots(Component sender,object obj)
+    {
+        ProgressorModuleController slot = (ProgressorModuleController)obj;
+
+        if(multipleAgentAction1.Contains(slot))
+        {
+            foreach(ProgressorModuleController s in multipleAgentAction1)
+            {
+                if(s != slot)
+                {
+                    s.PrintMultiAction();
+                    s.GetSlot().CompleteMultiAction();
+                }
+            }
+            multipleAgentAction1.Clear();
+        }
+        else if (multipleAgentAction2.Contains(slot))
+        {
+
+            multipleAgentAction2.Clear();
+        }
+
+    }
+
 
 }

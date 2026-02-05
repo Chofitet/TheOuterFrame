@@ -21,7 +21,7 @@ public class ReportsInDetailController : MonoBehaviour
 
         ReportType report = data.reportType;
         ReportToFill._Reset();
-        ReportToFill.initReport(data.word, report, false, false, false, null,false, report.GetTimeWhenWasDone(), new TimeData(0, 0, 0));
+        ReportToFill.initReport(data.word, report, false, false, false, null,false, report.GetTimeWhenWasDone(), new TimeData(0, 0, 0),false);
         scrollbar.value = 1;
     }
 
