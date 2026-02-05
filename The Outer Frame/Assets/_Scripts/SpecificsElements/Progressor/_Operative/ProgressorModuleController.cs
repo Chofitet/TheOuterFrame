@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Rendering;
 
 public class ProgressorModuleController : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] Light light;
     [SerializeField] Light light2;
     [SerializeField] GameObject colliderUnused;
+    [SerializeField] GameEvent OnAbortMultiAction;
     [ColorUsage(true, true)][SerializeField] Color LedRed;
 
     [Header("Candy Parameters")]
@@ -44,6 +46,10 @@ public class ProgressorModuleController : MonoBehaviour
     float elapsedTime;
     float adjustedDurationForSetSlot;
 
+    int multiAgentNum = 1;
+    private bool isMultiActionPosible;
+    bool isAborted;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -62,11 +68,13 @@ public class ProgressorModuleController : MonoBehaviour
         AdjustTimeToSetSlot();
     }
 
-    public void SetAction(WordData _word,StateEnum _state,int _time)
+    public void SetAction(WordData _word,StateEnum _state,int _time, int _multiAgentNum, bool _isMultiActionPosible = true)
     {
         word = _word;
         state = _state;
         time = _time;
+        multiAgentNum = _multiAgentNum;
+        isMultiActionPosible = _isMultiActionPosible;
 
         isReady = true;
         isFull = true;
@@ -139,7 +147,7 @@ public class ProgressorModuleController : MonoBehaviour
     public void InitSlot(Component sender, object obj)
     {
         if (!isReady) return;
-        slot.initParameters(word, state);
+        slot.initParameters(word, state, multiAgentNum, isMultiActionPosible);
         isReady = false;
         blinkmaterialAbort.TurnOnLigth(null, null);
         colliderUnused.GetComponent<BoxCollider>().enabled = false;
@@ -186,10 +194,18 @@ public class ProgressorModuleController : MonoBehaviour
             SwitchAbortBTN.GetComponent<BoxCollider>().enabled = false;
             slot.cancelTryAbortBlink();
 
-            anim.SetTrigger("receiveMessage");
-            IsReadyToPrint = true;
+            if (slot.GetisAMultiAction())
+            {
+                
+               if(!isAborted) PrintMultiAction();
+            }
+            else
+            {
+                anim.SetTrigger("receiveMessage");
+                Invoke("delayLigth", 0.3f);
+                IsReadyToPrint = true;
+            }
 
-            Invoke("delayLigth", 0.3f);
 
             if (isAbortOpen)
             {
@@ -236,23 +252,32 @@ public class ProgressorModuleController : MonoBehaviour
         
         if (report == slot.gameObject)
         {
-            slot.cancelTryAbortBlink();
-            colliderUnused.GetComponent<BoxCollider>().enabled = true;
-            slot.CleanSlot();
-            isFull = false;
-            IsReadyToPrint = true;
+            reportTaked();
         }
+    }
+
+    void reportTaked()
+    {
+        slot.cancelTryAbortBlink();
+        colliderUnused.GetComponent<BoxCollider>().enabled = true;
+        slot.CleanSlot();
+        isFull = false;
+        IsReadyToPrint = true;
     }
 
     public bool GetIsFull() { return isFull; }
     
     void AbortAction()
     {
-        if (DisableAbort) return;
+       // if (DisableAbort) return;
+        isAborted = true;
         slot.AbortAction();
         anim.SetTrigger("receiveMessage");
+        
 
         blinkmaterialAbort.TurnOffLight(null, null);
+        OnAbortMultiAction?.Invoke(this, this);
+        PrintBTN.GetComponent<BoxCollider>().enabled = true;
     }
 
     //OnPressProgressorPrintBTN
@@ -260,6 +285,7 @@ public class ProgressorModuleController : MonoBehaviour
     {
         TimeManager.timeManager.NormalizeTime();
         slot.cancelTryAbortBlink();
+      
         if (sender.gameObject == PrintBTN)
         {
             if (!isPrinterFull)
@@ -281,6 +307,21 @@ public class ProgressorModuleController : MonoBehaviour
             }
 
         }
+    }
+
+    public void PrintMultiAction()
+    {
+        messagge.SetActive(false);
+        anim.SetTrigger("printMultiAction");
+        PrintBTN.GetComponent<BoxCollider>().enabled = false;
+        ReadyToPrintLED.TurnOffLight(this, null);
+        PrintBTN.GetComponent<BoxCollider>().enabled = false;
+        if(sequenceLigth != null && sequenceLigth.IsActive()) sequenceLigth.Kill();
+        TurnOnLight(light, 0);
+        TurnOnLight(light2, 0);
+        anim.ResetTrigger("sendMessage");
+        Invoke("resetSlot", 0.5f);
+        reportTaked();
     }
 
     public void SetIsPrinterFull(Component sender, object obj)
@@ -307,17 +348,23 @@ public class ProgressorModuleController : MonoBehaviour
     void resetSlot()
     {
         isFull = false;
+        messagge.SetActive(true);
         anim.ResetTrigger("printMessage");
         anim.ResetTrigger("receiveMessage");
+        anim.ResetTrigger("printMultiAction");
+        anim.ResetTrigger("sendMessage");
         ReadyToPrintLED.TurnOffLight(null, null);
         PrintBTN.GetComponent<BoxCollider>().enabled = false;
         colliderUnused.GetComponent<BoxCollider>().enabled = true;
         blinkmaterialAbort.TurnOffLight(null, null);
         anim.SetTrigger("resetProgressor");
         DisableAbort = true;
-        
+        multiAgentNum = 0;
+        isAborted = false;
+        isAbortOpen = false;
 
-
+        TryAbortBTN.GetComponent<BoxCollider>().enabled = true;
+        SwitchAbortBTN.GetComponent<BoxCollider>().enabled = false;
     }
 
     void ResetDelay()
@@ -357,5 +404,7 @@ public class ProgressorModuleController : MonoBehaviour
             adjustedDurationForSetSlot = remainingTime / TimeVariation + elapsedTime;
         }
     }
+
+    public SlotController GetSlot() { return slot; }
 
 }

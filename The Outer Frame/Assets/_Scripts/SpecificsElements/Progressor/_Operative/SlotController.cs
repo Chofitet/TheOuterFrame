@@ -25,6 +25,7 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameEvent OnSetVilifyAction;
     [SerializeField] StateEnum VilifyState;
     [SerializeField] GameEvent OnAddEntryLog;
+    [SerializeField] GameEvent OnResetProgressorSlots;
     TimeData IsVilifyLocked = new TimeData(0,0,0);
 
     public Action<bool> OnSetAction;
@@ -42,14 +43,17 @@ public class SlotController : MonoBehaviour
     bool isAVilifyBlockedAction;
     bool isAlreadyImposible;
     bool noComplete;
+    bool AreNotEnoughAgents = true;
+    bool isAMultiAction;
     StateEnum isOtherGroupActionDoing;
+
     TimeData timeComplete;
     bool inFillFast;
     ReportType Report;
     bool isAgentDead;
     ObjectToPrint objectType;
     Color OriginalTxtColor;
-    public void initParameters(WordData word, StateEnum state)
+    public void initParameters(WordData word, StateEnum state, int multiActionNum, bool isMultiActionPosible = true)
     {
         gameObject.SetActive(true);
         transform.GetChild(0).gameObject.SetActive(true);
@@ -64,12 +68,14 @@ public class SlotController : MonoBehaviour
         {
             Wordtxt.text = state.GetSpeticialActionWordName();
         }
+        Actiontxt.text = state.GetActioningVerb();
+        if (state.GetSpecialActionWord()) Actiontxt.text = state.GetIdeaVerb();
+        if (multiActionNum != 1) Actiontxt.text = "Helping " + state.GetIdeaInfinitiveVerb();
         Wordtxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
         Actiontxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
         StartCoroutine(DelayedWarp());
-        Actiontxt.text = state.GetActioningVerb();
-        if (state.GetSpecialActionWord()) Actiontxt.text = state.GetIdeaVerb();
-        
+
+        isActionComplete = false;
         isAborted = false;
         isAlreadyDone = false;
 
@@ -79,8 +85,34 @@ public class SlotController : MonoBehaviour
 
         OriginalTxtColor = Wordtxt.color;
 
+        if (multiActionNum != 1)
+        {
+            isAMultiAction = true;
+        }
+
+        if (multiActionNum != 1 && isMultiActionPosible)
+        {
+            TimeManager.OnSecondsChange += UpdateProgress;
+            UpdateProgress();
+            SetLEDState(Color.green, "Green");
+        }
+        else if (multiActionNum != 1 && !isMultiActionPosible)
+        {
+            FillFast();
+            noComplete = true;
+            AreNotEnoughAgents = false;
+            SetLEDState(Color.red, "Red");
+        }
+        //no hay agentes suficientes
+        else if(_state.GetAgentsNeeded() != 1 && multiActionNum == 1 && !isMultiActionPosible)
+        {
+            FillFast();
+            noComplete = true;
+            AreNotEnoughAgents = false;
+            SetLEDState(Color.red, "Red");
+        }
         //ya fue hecho
-        if (Report.GetWasSet())
+        else if (Report.GetWasSet())
         {
             FillFast();
             noComplete = true;
@@ -164,13 +196,19 @@ public class SlotController : MonoBehaviour
 
         if (secondProgress > actionDuration)
         {
+
             if (isAlreadyDone)
             {
-                AutomaticAction();
+                if (!isAMultiAction) AutomaticAction();
             }
             else
             {
-                CompleteAction();
+                if(!isAMultiAction) CompleteAction();
+            }
+
+            if (isAMultiAction)
+            {
+                CompleteMultiAction();
             }
             isActionComplete = true;
         }
@@ -185,15 +223,18 @@ public class SlotController : MonoBehaviour
 
         if (inFillFast && ProgressBar.value == ProgressBar.maxValue && noComplete)
         {
-            AutomaticAction();
+            if (!isAMultiAction) AutomaticAction();
+            else CompleteMultiAction();
         }
 
     }
 
     private void CompleteAction()
     {
+        
         _word.SetDoingAction(_state, false);
         inFillFast = false;
+       
         Report = WordsManager.WM.RequestReport(_word, _state);
         if(Report.GetObjectToPrint() == ObjectToPrint.Candy1 || Report.GetObjectToPrint() == ObjectToPrint.Candy2) OnSetCandy?.Invoke(this, Report.GetObjectToPrint());
         AgentIcon.SetActive(false);
@@ -218,6 +259,17 @@ public class SlotController : MonoBehaviour
             AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, -90));
             isAgentDead = false;
         }
+    }
+
+    public void CompleteMultiAction()
+    {
+        inFillFast = false;
+        AgentIcon.SetActive(false);
+        OnFinishActionProgress?.Invoke(this, this);
+        //timeComplete = TimeManager.timeManager.GetTime();
+        CheckIcon.SetActive(true);
+        OnResetProgressorSlots?.Invoke(this, this.gameObject);
+        ResetSlot();
     }
 
 
@@ -250,6 +302,7 @@ public class SlotController : MonoBehaviour
 
     void ResetSlot()
     {
+        
         AbortIcon.SetActive(false);
         CheckIcon.SetActive(false);
         AgentIcon.SetActive(true);
@@ -267,6 +320,8 @@ public class SlotController : MonoBehaviour
         Report = null;
         transform.GetChild(0).gameObject.SetActive(false);
         noComplete = false;
+        isAMultiAction = false;
+        
     }
 
     void SetLEDState(Color _color, string colortxt)
@@ -404,6 +459,10 @@ public class SlotController : MonoBehaviour
     public bool GetIsComplete() { return isActionComplete; }
 
     public ObjectToPrint GetObjectType() { return objectType; }
+
+    public bool GetisAMultiAction() { return isAMultiAction; }
+
+    public bool GetAreNotEnoughAgents() { return AreNotEnoughAgents; }
 
     public TimeData GetIsAVilifyBlockedAction() {
         if (isAVilifyBlockedAction) return IsVilifyLocked;

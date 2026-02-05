@@ -10,15 +10,20 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     [SerializeField] string InfinitiveVerb;
     [SerializeField] string Actioning;
     [SerializeField] string Actioned;
+    [SerializeField] int AgentsNeeded = 1;
     [SerializeField] int TimeToComplete;
     [SerializeField] int TimeToShowNew;
     [SerializeField] string observationtxt = "";
-    [Header("IdeaInProgressor")]
+    [Header("Idea In Progressor")]
     [SerializeField] WordData IdeaWordData;
     [SerializeField] string IdeaVerb;
+    [SerializeField] string IdeaInfinitiveVerb;
     [SerializeField] string IdeaWord;
-    [NonSerialized] bool isDone;
 
+
+    
+    
+    [NonSerialized] bool isDone;
     [HideInInspector][SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
 
 
@@ -37,6 +42,8 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     public string GetInfinitiveVerb() { return InfinitiveVerb; }
     public string GetActioningVerb() { return Actioning; }
     public string GetActionedVerb() { return Actioned; }
+
+    public string GetIdeaInfinitiveVerb() { return IdeaInfinitiveVerb; }
 
     public WordData GetSpecialActionWord() { return IdeaWordData; }
 
@@ -57,6 +64,11 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     public bool GetIfIsActive()
     {
         return true;
+    }
+
+    public int GetAgentsNeeded()
+    {
+        return AgentsNeeded;
     }
 
     public bool GetInactiveConditionals()
@@ -148,4 +160,7 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     {
         InactiveConditionals = list;
     }
+
 }
+
+
