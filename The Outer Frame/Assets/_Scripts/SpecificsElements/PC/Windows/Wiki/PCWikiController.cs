@@ -10,10 +10,12 @@ public class PCWikiController : MonoBehaviour
     [SerializeField] Image image;
     [SerializeField] GameObject PhotoField;
     [SerializeField] GameObject LockBTN;
+    [SerializeField] GameObject GooIdentificatorBTN; 
     [SerializeField] TMP_Text LockField;
     [SerializeField] RectTransform content;
     [SerializeField] List<GameObject> DataBaseFields = new List<GameObject>();
     [SerializeField] GameObject WikiInfoContent;
+    [SerializeField] GameEvent OnPressGooIdentificatorBTN;
     List<GameObject> FIeldsInWikiInfo = new List<GameObject>();
     [SerializeField] GameObject LoadScreen;
     DataBaseType input;
@@ -116,8 +118,16 @@ public class PCWikiController : MonoBehaviour
             LockBTN.SetActive(true);
             return true;
         }
+        else if(DB.GetIsGooIdentificator())
+        {
+            GooIdentificatorBTN.SetActive(true);
+            LockField.gameObject.SetActive(false);
+            LockBTN.SetActive(false);
+            return true;
+        }
         else
         {
+            GooIdentificatorBTN.SetActive(false);
             LockField.gameObject.SetActive(false);
             LockBTN.SetActive(false);
             //LockField.text = "Unlock Cargo Doors";
@@ -135,6 +145,11 @@ public class PCWikiController : MonoBehaviour
             WordsManager.WM.AddStateOnHistory(input.GetwordToUnlock(), input.GetUnlockState());
             WordsManager.WM.AddStateOnSeenHistory(input.GetwordToUnlock(), input.GetUnlockState());
         }
+    }
+
+    public void PressGooIdentificatorBTN()
+    {
+        OnPressGooIdentificatorBTN?.Invoke(this, null);
     }
 
     bool CheckAreLocked()

@@ -17,9 +17,11 @@ public class PCController : MonoBehaviour
     [SerializeField] WordData IrrelevantDB;
     [SerializeField] GameObject BtnBackToLastEntry;
     [SerializeField] GameEvent OnLogFilterType;
+    
     GameEvent LastWindow;
     bool isWaitingAWord;
     bool inWordAccessWindow;
+
 
     [SerializeField] WordData Vessel;
     [SerializeField] WordData A15;
@@ -192,6 +194,13 @@ public class PCController : MonoBehaviour
             return;
         }
 
+        if (db.GetAccessWord() && !db.GetisWordAccessFound())
+        {
+            OnWordAccessScreen?.Invoke(this, word);
+            inWordAccessWindow = true;
+            return;
+        }
+
         string TitleName = WordsManager.WM.FindWordWithPhoneNum(word).GetForm_DatabaseNameVersion();
 
         WikiTitleSearchedWord.text = TitleName;
@@ -255,6 +264,11 @@ public class PCController : MonoBehaviour
         if (specificTag) WordToFilter = specificTag;
         if (specificTag == IrrelevantDB) WordToFilter = _LastSearchedWord;
         OnLogFilterType?.Invoke(this, new SearchLogData(WordToFilter, LogFilterType.report));
+    }
+
+    public void SetInWordAccessWindow(Component sender, object obj)
+    {
+        inWordAccessWindow = (bool)obj;
     }
 
     IEnumerator IdleSearchBarAnim()
