@@ -10,6 +10,7 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
     [SerializeField] WordData AccessWord;
     [Header("Unlock Button")]
     [SerializeField] bool hasLockedBTN;
+    [SerializeField] bool hasGooIdentificatorBTN;
     [SerializeField] WordData wordToUnlock;
     [SerializeField] StateEnum UnlockState;
     [Header("Extra data")]
@@ -71,6 +72,8 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
     public bool GetisWordAccessFound() { return isWordAccessFound; }
 
     public bool GetIsLocked() { return hasLockedBTN; }
+
+    public bool GetIsGooIdentificator() { return hasGooIdentificatorBTN; }
 
     public WordData GetwordToUnlock() { return wordToUnlock; }
 
