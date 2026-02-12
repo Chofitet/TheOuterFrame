@@ -66,17 +66,19 @@ public class ComponentEnterWindow : MonoBehaviour
 
     public void TryAccess()
     {
+        Invoke("UnlockPage", 2f);
+        isUnlockingPage = true;
+        SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
+        SearchBar.text = "PROCESSING INFO";
+
         if (TryAccessWord == ComponentWord)
         {
-            Invoke("UnlockPage", 2f);
-            isUnlockingPage = true;
-            SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
-            SearchBar.text = "ACCESS GRANTED";
-            OnGooIdentificatorComponentAccessGranted?.Invoke(this, null);
+            OnGooIdentificatorComponentAccessGranted?.Invoke(this, true);
         }
         else
         {
-            SearchBar.text = "ACCESS DENIED";
+            OnGooIdentificatorComponentAccessGranted?.Invoke(this, false);
+
         }
 
         if (TryAccessWord == null)
