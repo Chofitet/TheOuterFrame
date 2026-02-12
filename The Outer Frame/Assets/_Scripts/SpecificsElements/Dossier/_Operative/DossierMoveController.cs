@@ -9,6 +9,8 @@ public class DossierMoveController : MonoBehaviour
     [SerializeField] Transform LeavePosition;
     [SerializeField] Transform InitShowInBoardPosition;
     [SerializeField] Transform InitShowInGeneralViewPosition;
+    [SerializeField] Transform InitShowInDefaultPosition;
+    [SerializeField] Transform FinalShowInDefaultPosition;
     [SerializeField] Transform FinalShowInBoardPosition;
     [SerializeField] GameEvent OnBackToGeneralView;
     [SerializeField] GameEvent OnChangeView;
@@ -22,10 +24,14 @@ public class DossierMoveController : MonoBehaviour
     [SerializeField] GameEvent OnBackPositToBoardPos;
     [SerializeField] Transform cameraPivot;
     [SerializeField] Transform InitCameraPivot;
+    Transform InitShowInPalcePos;
+    Transform FinalShowInPlacePos;
     Animator DossierAnim;
     Sequence AddIdeaSequence;
     Sequence AddAPpileSequence;
     Sequence MoveDossierSequence;
+
+
     bool isAddingIdea;
     bool isUp;
 
@@ -42,14 +48,26 @@ public class DossierMoveController : MonoBehaviour
         }
     }
 
+    public void ChangeToDefaultAnim()
+    {
+        InitShowInPalcePos = InitShowInDefaultPosition;
+        FinalShowInPlacePos = FinalShowInDefaultPosition;
+    }
+
+    public void ChangeToBoardAnim()
+    {
+        InitShowInPalcePos = InitShowInBoardPosition;
+        FinalShowInPlacePos = FinalShowInBoardPosition;
+    }
+
     public void ShowInBoard(Component sender, object obj)
     {
         if (AddIdeaSequence != null && AddIdeaSequence.IsActive()) AddIdeaSequence.Kill();
         DossierAnim = transform.GetChild(0).GetComponent<Animator>();
         AddIdeaSequence = DOTween.Sequence();
         GetComponent<Animator>().enabled = false;
-        transform.position = InitShowInBoardPosition.position;
-        transform.rotation = InitShowInBoardPosition.rotation;
+        transform.position = InitShowInPalcePos.position;
+        transform.rotation = InitShowInPalcePos.rotation;
         OnActionPlanDossier?.Invoke(this, null);
         isAddingIdea = true;
         // Reseteamos el tiempo de Lerp y activamos el seguimiento del target
@@ -60,7 +78,7 @@ public class DossierMoveController : MonoBehaviour
         OnDisableInput?.Invoke(this, null);
 
         AddIdeaSequence
-            .Append(transform.DOMove(FinalShowInBoardPosition.position, 0.8f).SetEase(Ease.OutSine))
+            .Append(transform.DOMove(FinalShowInPlacePos.position, 0.8f).SetEase(Ease.OutSine))
             .AppendInterval(0.4f)
             .AppendCallback(() =>
             {
@@ -133,6 +151,12 @@ public class DossierMoveController : MonoBehaviour
     public void CheckView(Component sender, object obj)
     {
         actualView = (ViewStates)obj;
+
+        if (actualView == ViewStates.BoardView || actualView == ViewStates.OnTakeSomeInBoard)
+        {
+            ChangeToBoardAnim();
+        }
+        else ChangeToDefaultAnim();
     }
 
     bool isReturningFromProgressor;

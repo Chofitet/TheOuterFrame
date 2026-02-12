@@ -17,6 +17,10 @@ public class GooIdentificatorController : MonoBehaviour
 
     [SerializeField] GameObject RightAnswerePanel;
     [SerializeField] GameObject WrongAnswerePanel;
+
+    [SerializeField] ProtocolIdeaBTNController ProtocolIdea;
+
+    bool isAccessComponentRight = false;
  
     int[] RightAnsweres = { -1, -1, -1, -1, -1 };
 
@@ -144,9 +148,11 @@ public class GooIdentificatorController : MonoBehaviour
 
     public void CheckFinalAnsweres(Component sender, object obj)
     {
+        isAccessComponentRight = (bool)obj;
+
         bool areEqual = RightAnsweres.SequenceEqual(playerCode);
 
-        if(areEqual)
+        if(areEqual && isAccessComponentRight)
         {
             RightAnswerePanel.SetActive(true);
         }
@@ -154,6 +160,21 @@ public class GooIdentificatorController : MonoBehaviour
         {
             WrongAnswerePanel.SetActive(true);
         }
+    }
+
+    public void ReactiveProtocolIdea(Component sender, object obj)
+    {
+        ProtocolIdea.ReactiveIdea((StateEnum)obj);
+    }
+
+    public void RejectProtocolIdea(Component sender, object obj)
+    {
+        ProtocolIdea.RejectIdea((StateEnum)obj);
+    }
+
+    public void AddProtocolIdeaFromBoard(Component sender, object obj)
+    {
+        ProtocolIdea.DesactiveButton((StateEnum)obj);
     }
 
     public void Reset()
