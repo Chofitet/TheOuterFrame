@@ -17,18 +17,20 @@ public class ProtocolIdeaBTNController : MonoBehaviour
     [SerializeField] GameEvent OnCompleteGooProtocol;
     [SerializeField] GameEvent OnReactiveGooIdea;
     [SerializeField] GameObject OutOfBoardPosition;
-    private bool isInactive;
+    private bool isInactive = true;
     Sequence glowSequence;
     TMP_Text textField;
 
     private void OnEnable()
     {
         textField = transform.GetChild(0).GetComponent<TMP_Text>();
+        isInactive = false;
         ApplyShader("bold");
     }
 
     private void OnDisable()
     {
+        isInactive = true;
         ApplyShader("");
     }
 
@@ -77,14 +79,15 @@ public class ProtocolIdeaBTNController : MonoBehaviour
 
     public void ChangeToColorToHighligth()
     {
-        if (isInactive) return;
+
+        if (isInactive || !isActiveAndEnabled) return;
         ApplyShader("Red");
         GlowOn();
     }
 
     public void ChangeToColorToNormal()
     {
-        if (isInactive) return;
+        if (isInactive || !isActiveAndEnabled) return;
         GlowOff();
     }
 
