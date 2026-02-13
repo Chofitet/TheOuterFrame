@@ -18,7 +18,7 @@ public class UpdateWindowController : MonoBehaviour
     {
         WordData word = (WordData)obj;
 
-        Datatxt.text = WordsManager.WM.FindWordWithPhoneNum(word).GetForm_DatabaseNameVersion();
+        Datatxt.text = WordsManager.WM.FindWordWithPhoneNum(word).GetDatabaseNameVersion();
 
         Sprite _image = WordsManager.WM.RequestBDWikiData(word).GetImage();
         if (_image == null) DatabaseImage.sprite = NoImage;

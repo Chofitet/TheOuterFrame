@@ -44,7 +44,7 @@ public class ReportController : MonoBehaviour
         if (report.GetCustomStatus() != "") status = report.GetCustomStatus();
         UploadBTN.SetActive(true);
         StateEnum state = report.GetAction();
-        string Name = word.GetForm_DatabaseNameVersion();
+        string Name = word.GetFormNameVersion();
         if (state.GetSpecialActionWord()) Name = "";
         string actionVerb = state.GetInfinitiveVerb();
         SetMaterial(materialDispose);

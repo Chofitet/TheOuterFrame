@@ -114,6 +114,7 @@ public class PCWikiController : MonoBehaviour
     {
         if(DB.GetIsLocked())
         {
+            GooIdentificatorBTN.SetActive(false);
             LockField.gameObject.SetActive(true);
             LockBTN.SetActive(true);
             return true;
