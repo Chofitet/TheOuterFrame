@@ -16,18 +16,20 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "It's green, it glows, it's gooey, it's coming out of the <link>trucks behind</link>.
-    \r\nIt\u2019s quite the paranormal clich\xE9! \n\r \nIt's EVIDENCE. \n\r \nAnd
-    someone rode all over it with a small vehicle leaving glowing <link>tricycle
+  Text: "It's green, it glows, it's gooey and it's coming out of a <link>trucks behind</link>.
+    It\u2019s quite the paranormal clich\xE9! \n\nWe have to get rid of it.\n\r \nAlso,
+    someone rode all over it with <link>a small vehicle</link>  leaving glowing <link>tricycle
     tracks</link> that go south down <link>the road</link>. \n \nWe might want to
     check that out. \r"
   TextForRepetition: 'We already did that, remember?
 
+
     The report is probably
     on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: eeb759d3e82c0704e9a0cceefa696b90, type: 3}
-    text: GREEN
+    text: THERE'S A LOT OF THIS STUFF
   - photo: {fileID: 21300000, guid: dcd963a4e9f713b4ea19cb8b50fa039c, type: 3}
     text: WHERE DO THEY LEAD?
   - photo: {fileID: 21300000, guid: 45eb73e361fa9d94e8926e30ffae07b6, type: 3}
@@ -35,6 +37,7 @@ MonoBehaviour:
   Conditionals:
   - condition: {fileID: 11400000, guid: 43994936b8273bc459ee021cd42e7d4e, type: 2}
     ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
   TriggerDrawerAnim: 0
