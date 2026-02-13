@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "New Word", menuName ="Word")]
+[CreateAssetMenu(fileName = "New Word", menuName = "Word")]
 public class WordData : ScriptableObject, IReseteableScriptableObject
 {
     [Header("Word General Data")]
     [SerializeField] string wordName;
     [SerializeField] List<string> FindableAs = new List<string>();
-    [SerializeField] string Form_DatabaseNameVersion;
+    [SerializeField] string FormNameVersion;
+    [FormerlySerializedAs("Form_DatabaseNameVersion")]
+    [SerializeField] string DatabaseNameVersion;
     [SerializeField] string ProgressorNameVersion;
     [SerializeField] string PhoneNumber;
     [SerializeField] bool isAPhoneNumber;
@@ -29,7 +32,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     [Header("Calls")]
     [SerializeField] List<CallType> CallTypes = new List<CallType>();
-    
+
     /*[Header("Availability call Window:")]
     [SerializeField] TimeCheckConditional StartTime;
     [SerializeField] TimeCheckConditional EndTime;*/
@@ -89,7 +92,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         {
             if (!report) continue;
             if (report.GetAction() == null) continue;
-            if(report.GetAction() == state)
+            if (report.GetAction() == state)
             {
                 ListFilteredByState.Add(report);
             }
@@ -98,9 +101,9 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         //Filtrado por cumplimiento de condicional
         foreach (ReportType report in ListFilteredByState)
         {
-            if(report.CheckConditionals())
+            if (report.CheckConditionals())
             {
-                if(report.CheckIfIsDefault() && GetLastReportOfAnAction(state) != null) continue;
+                if (report.CheckIfIsDefault() && GetLastReportOfAnAction(state) != null) continue;
 
                 return report;
             }
@@ -137,7 +140,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
 
         ReportType aux = null;
-        foreach(ActionState AS in ActionsStates)
+        foreach (ActionState AS in ActionsStates)
         {
             if (AS.GetState() == state) aux = AS.GetLastReport();
         }
@@ -146,7 +149,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public void SetDoingAction(StateEnum action, bool isDoing)
     {
-        if(isDoing)
+        if (isDoing)
         {
             if (CurrentDoingActions.Contains(action)) return;
             CurrentDoingActions.Add(action);
@@ -160,7 +163,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public bool CheckIfActionIsDoing(StateEnum action)
     {
-        foreach(StateEnum currentaction in CurrentDoingActions)
+        foreach (StateEnum currentaction in CurrentDoingActions)
         {
             if (action == currentaction) return true;
         }
@@ -197,7 +200,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
         foreach (CallType call in CallTypes)
         {
-            if(call.CheckForTimeZone())
+            if (call.CheckForTimeZone())
             {
                 auxList.Add(call);
             }
@@ -210,7 +213,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
         foreach (CallType call in CallTypes)
         {
-            if(!call)
+            if (!call)
             {
                 Debug.LogWarning("The word " + GetName() + "have a empy call");
                 return;
@@ -252,13 +255,13 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
         T aux = default;
 
-        foreach(T input in list)
+        foreach (T input in list)
         {
             if (input == null) continue;
             if (state == input.GetState())
-           {
+            {
                 aux = input;
-           }
+            }
         }
         return aux;
     }
@@ -284,9 +287,9 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
         Debug.Log(estados);
 
-        foreach(ActionState AS in ActionsStates)
+        foreach (ActionState AS in ActionsStates)
         {
-            if(AS.GetState() == report.GetAction())
+            if (AS.GetState() == report.GetAction())
             {
                 AS.SetReport(report);
             }
@@ -343,12 +346,12 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
         if (stateHistory.Contains(newState)) return;
         stateHistory.Add(newState);
-    
+
     }
 
     public void CleanStateFromHistory(StateEnum state)
     {
-        if(stateHistory.Contains(state))
+        if (stateHistory.Contains(state))
         {
             stateHistory.Remove(state);
         }
@@ -377,7 +380,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         isInactive = false;
         CurrentDoingActions.Clear();
         isPlacedInBoad = false;
-        
+
         //Debug.Log("reseted " + name);
     }
 
@@ -388,7 +391,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public bool GetInactiveState() {
 
-     return CheckInactiveConditions();
+        return CheckInactiveConditions();
     }
     bool CheckInactiveConditions(int NumOfAlternativeConditional = 1)
     {
@@ -432,7 +435,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
             }
             conditional.SetDoit(true);
         }
-        
+
         return true;
     }
 
@@ -449,7 +452,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     {
         if (WordsThatDeletes.Count == 0) return null;
 
-        foreach(DeleteCrossoutWorsd dw in WordsThatDeletes)
+        foreach (DeleteCrossoutWorsd dw in WordsThatDeletes)
         {
             dw.SetFound();
             if (dw.GetWord() == word) return dw;
@@ -463,14 +466,14 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     public void GetDataUpdate()
     {
         if (UpdatedDataBase.Count == 0) return;
-        foreach(DataBaseType DB in UpdatedDataBase)
+        foreach (DataBaseType DB in UpdatedDataBase)
         {
             if (DB == null)
             {
                 Debug.Log("The word " + GetName() + " have a null update database");
                 continue;
             }
-            if(DB.CheckConditionals() && !DataBaseEmpy)
+            if (DB.CheckConditionals() && !DataBaseEmpy)
             {
                 CurrentDB = DB;
                 //DB.SetWasSetted();
@@ -487,10 +490,10 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     public TVNewType GetVilifiedNew() {
         TVNewType VilifiedNew = null;
-       // if(TVNewTypes.Count == 0 && !GetIsAPhoneNumber()) Debug.LogWarning("the word " + GetName() + " dont have a vilified new assigned");
+        // if(TVNewTypes.Count == 0 && !GetIsAPhoneNumber()) Debug.LogWarning("the word " + GetName() + " dont have a vilified new assigned");
         foreach (TVNewType _new in TVNewTypes)
         {
-            if(_new.name.ToLower().Contains("vili"))
+            if (_new.name.ToLower().Contains("vili"))
             {
                 VilifiedNew = _new;
                 VilifiedNew.removeCondition();
@@ -510,7 +513,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         string normalizedWord = RemoveNonWordChars(wordCompere.Trim());
 
         if (comesFromDBTitle)
-            return RemoveNonWordChars(GetForm_DatabaseNameVersion().Trim());
+            return RemoveNonWordChars(GetDatabaseNameVersion().Trim());
 
         foreach (string s in FindableAs)
         {
@@ -538,14 +541,20 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
         return sb.ToString();
     }
 
-    public string GetForm_DatabaseNameVersion() 
+    public string GetFormNameVersion()
     {
-        if (Form_DatabaseNameVersion == "") return wordName;
-        else return Form_DatabaseNameVersion; 
+        if (FormNameVersion == "") return wordName;
+        else return FormNameVersion;
+    }
+
+    public string GetDatabaseNameVersion()
+    {
+        if (DatabaseNameVersion == "") return GetFormNameVersion();
+        else return DatabaseNameVersion;
     }
     public string GetProgressorNameVersion() 
     {
-        if (ProgressorNameVersion == "") return GetForm_DatabaseNameVersion();
+        if (ProgressorNameVersion == "") return GetFormNameVersion();
         else return ProgressorNameVersion; 
     }
     public string GetPhoneNumber() { return PhoneNumber; }
@@ -620,7 +629,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     void SaveFindableAs()
     {
         InitFindableAs = new List<string>(FindableAs);
-        //AddFormDataBaseOnFindableAs();
+        AddFormDataBaseOnFindableAs();
     }
 
     void RestartFindableAs()
@@ -632,8 +641,8 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
 
     void AddFormDataBaseOnFindableAs()
     {
-        if (Form_DatabaseNameVersion == "") return;
-        FindableAs.Add(Form_DatabaseNameVersion);
+        if (DatabaseNameVersion == "") GetFormNameVersion();
+        FindableAs.Add(DatabaseNameVersion);
     }
 
     public TimeData GetTimeOfState(StateEnum state)

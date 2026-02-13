@@ -49,14 +49,12 @@ public class PCController : MonoBehaviour
         WordData _word = (WordData)obj;
         
         word = _word;
-        SearchBar.text = " " + word.GetForm_DatabaseNameVersion();
+        SearchBar.text = " " + word.GetName().Replace("?", "").Replace("!", "");
         StopCoroutine(IdleSearchBarAnim());
         textAnim.SetCharacterPerSecond();
         isWaitingAWord = false;
         SearchBar.GetComponent<TypingAnimText>().AnimateTyping();
         OnKeyBoardSound?.Invoke(this, null);
-
-        
 
     }
 
@@ -201,7 +199,7 @@ public class PCController : MonoBehaviour
             return;
         }
 
-        string TitleName = WordsManager.WM.FindWordWithPhoneNum(word).GetForm_DatabaseNameVersion();
+        string TitleName = WordsManager.WM.FindWordWithPhoneNum(word).GetDatabaseNameVersion();
 
         WikiTitleSearchedWord.text = TitleName;
         
@@ -227,7 +225,7 @@ public class PCController : MonoBehaviour
         if (obj == null) return;
 
         WordData searchedWord = (WordData)obj;
-        string newWord = WordsManager.WM.FindWordWithPhoneNum(searchedWord).GetForm_DatabaseNameVersion();
+        string newWord = WordsManager.WM.FindWordWithPhoneNum(searchedWord).GetDatabaseNameVersion();
         
         string existingText = WikiTitleSearchedWord.text;
 

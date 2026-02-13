@@ -26,7 +26,7 @@ public class LogEntryController : MonoBehaviour
 
         if (reportType) 
         {
-            SubjectTxt.text = data.word.GetForm_DatabaseNameVersion();
+            SubjectTxt.text = data.word.GetDatabaseNameVersion();
         }
         else
         {

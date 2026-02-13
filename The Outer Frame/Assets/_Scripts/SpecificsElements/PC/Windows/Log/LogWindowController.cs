@@ -84,7 +84,7 @@ public class LogWindowController : MonoBehaviour
         if (actualFilter == LogFilterType.log) return;
 
         ApplyWordFilter(word);
-        filterTag.text = word.GetForm_DatabaseNameVersion();
+        filterTag.text = word.GetDatabaseNameVersion();
         StartCoroutine(RefreshUILog(true));
         //ApplyTypeFilter(actualFilter);
     }
