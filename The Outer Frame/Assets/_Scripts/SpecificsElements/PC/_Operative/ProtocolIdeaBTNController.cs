@@ -16,13 +16,14 @@ public class ProtocolIdeaBTNController : MonoBehaviour
     [SerializeField] GooProtocolCompleteConditional gooConditional;
     [SerializeField] GameEvent OnCompleteGooProtocol;
     [SerializeField] GameEvent OnReactiveGooIdea;
-    [SerializeField] GameObject OutOfBoardPosition;
     private bool isInactive = true;
+    bool isForeverInactive = false;
     Sequence glowSequence;
     TMP_Text textField;
 
     private void OnEnable()
     {
+        if (isForeverInactive) return;
         textField = transform.GetChild(0).GetComponent<TMP_Text>();
         isInactive = false;
         ApplyShader("bold");
@@ -30,6 +31,7 @@ public class ProtocolIdeaBTNController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (isForeverInactive) return;
         isInactive = true;
         ApplyShader("");
     }
@@ -42,7 +44,7 @@ public class ProtocolIdeaBTNController : MonoBehaviour
         isInactive = true;
         GetComponent<Button>().interactable = false;
         gooConditional.SetConditionalState();
-        OnCompleteGooProtocol?.Invoke(this, OutOfBoardPosition.transform);
+        OnCompleteGooProtocol?.Invoke(this, null);
     }
 
     public void ReactiveIdea(StateEnum actualIdea)
@@ -77,9 +79,16 @@ public class ProtocolIdeaBTNController : MonoBehaviour
         }
     }
 
+    public void InactiveButton()
+    {
+        ApplyShader("");
+        GetComponent<Button>().interactable = false;
+        isForeverInactive = true;
+    }
+
     public void ChangeToColorToHighligth()
     {
-
+        if (isForeverInactive) return;
         if (isInactive || !isActiveAndEnabled) return;
         ApplyShader("Red");
         GlowOn();
@@ -87,6 +96,7 @@ public class ProtocolIdeaBTNController : MonoBehaviour
 
     public void ChangeToColorToNormal()
     {
+        if (isForeverInactive) return;
         if (isInactive || !isActiveAndEnabled) return;
         GlowOff();
     }

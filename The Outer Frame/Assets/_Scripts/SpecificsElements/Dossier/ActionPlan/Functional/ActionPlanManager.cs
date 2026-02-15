@@ -76,8 +76,10 @@ public class ActionPlanManager : MonoBehaviour
          isFirstTimeIdeaAdded = true;
          StateEnum NewAction = (StateEnum)obj;
          if (NewAction.GetIsDone()) return;
+        if(SpecialAction) SpecialAction.SetisWrittenOnAP(false);
         SpecialAction = NewAction;
         Actions.Add(NewAction);
+        NewAction.SetisWrittenOnAP(true);
     }
 
     public void RemoveAction(Component sender, object obj)

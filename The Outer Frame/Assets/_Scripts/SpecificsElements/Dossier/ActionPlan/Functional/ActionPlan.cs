@@ -177,6 +177,7 @@ public class ActionPlan : MonoBehaviour
         ApproveBtn.enabled = false;
         shakeBtn.SetActive(true);
         DataFromActionPlan data = new DataFromActionPlan(word, state);
+        if (state.GetSpecialActionWord()) state.SetisWrittenOnAP(false);
         OnApprovedActionPlan.Invoke(this, data);
         OnSetGeneralView?.Invoke(this, null);
     }

@@ -20,6 +20,8 @@ public class GooIdentificatorController : MonoBehaviour
 
     [SerializeField] ProtocolIdeaBTNController ProtocolIdea;
 
+    [SerializeField] List<ConditionalClass> InactiveGooIdea;
+
     bool isAccessComponentRight = false;
  
     int[] RightAnsweres = { -1, -1, -1, -1, -1 };
@@ -31,6 +33,7 @@ public class GooIdentificatorController : MonoBehaviour
    
 
     int[] playerCode= {-1,-1,-1,-1,-1};
+    private bool isOrderMatters;
 
     private void Start()
     {
@@ -177,6 +180,16 @@ public class GooIdentificatorController : MonoBehaviour
         ProtocolIdea.DesactiveButton((StateEnum)obj);
     }
 
+    public void OnCheckView(Component sender, object obj)
+    {
+        ViewStates actualView = (ViewStates)obj;
+
+        if(CheckForConditionals(InactiveGooIdea))
+        {
+            ProtocolIdea.InactiveButton();
+        }
+    }
+
     public void Reset()
     {
         playerCode = new int[]{ -1,-1,-1,-1,-1};
@@ -190,6 +203,74 @@ public class GooIdentificatorController : MonoBehaviour
         }
 
         setActualPage();
+    }
+
+    public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
+    {
+        try
+        {
+            if (ListOfConditionals.Count == 0) return true;
+
+            foreach (ConditionalClass conditional in ListOfConditionals)
+            {
+                try
+                {
+                    IConditionable auxInterface = conditional.condition as IConditionable;
+
+                    if (auxInterface == null)
+                        throw new Exception("La condición no implementa IConditionable.");
+
+                    bool conditionState = auxInterface.GetStateCondition(2);
+
+                    if (conditional.ifNot)
+                    {
+                        conditionState = !conditionState;
+                    }
+
+                    if (!conditionState)
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error en el condicional: {conditional.condition.name}. Detalles: {ex.Message}", ex);
+                }
+            }
+
+            if (isOrderMatters) return CheckIfConditionalAreInOrder(ListOfConditionals);
+            else return true;
+        }
+        catch (Exception ex)
+        {
+            // Mensaje de error general con la excepción específica
+            Debug.LogError($"Error al evaluar los condicionales. Detalles: {ex.Message}");
+            return false;
+        }
+    }
+
+    bool CheckIfConditionalAreInOrder(List<ConditionalClass> ListOfConditionals)
+    {
+        List<int> nums = new List<int>();
+
+        foreach (ConditionalClass conditional in ListOfConditionals)
+        {
+            IConditionable auxInterface = conditional.condition as IConditionable;
+
+            if (auxInterface.CheckIfHaveTime())
+            {
+                nums.Add(auxInterface.GetTimeWhenWasComplete().GetTimeInNum());
+            }
+        }
+        for (int i = 0; i < nums.Count - 1; i++)
+        {
+            if (nums[i] > nums[i + 1])
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 

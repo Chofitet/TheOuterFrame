@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using System;
+using Unity.VisualScripting;
 
 public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 {
@@ -65,6 +66,9 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (!CheckForConditionals(Conditionals)) return;
 
        if(!istaken) GetComponent<BoxCollider>().enabled = true;
+
+
+        if (ActionIsDoing) return;
 
         BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
         IdeaButtom = BtnGeneratorIdeaPrefab.gameObject;
@@ -130,10 +134,13 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         CheckImage.SetActive(false);
         //isDone = true;
     }
+
+
     public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
     {
         try
         {
+            if (ActionsToAdd[0].GetisWrittenOnAP()) return false;
             if (ListOfConditionals.Count == 0) return true;
 
             foreach (ConditionalClass conditional in ListOfConditionals)
@@ -241,6 +248,13 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         StateEnum action = data.state;
         if (ActionsToAdd[0] == action) ActionIsDoing = true;
     }
+
+    public void SetIsOutOfBoardFalse(Component sender, object obj)
+    {
+        StateEnum action = (StateEnum)obj;
+        if (ActionsToAdd[0] != action) GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(false);
+    }
+
 
     public void TriggerInactiveAnimation(Component sender, object obj)
     {

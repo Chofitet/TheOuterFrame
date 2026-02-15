@@ -24,6 +24,7 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     
     
     [NonSerialized] bool isDone;
+    [NonSerialized] bool isWrittenOnAP;
     [HideInInspector][SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
 
 
@@ -35,6 +36,7 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     public void ResetScriptableObject()
     {
         isDone = false;
+        isWrittenOnAP = false;
     }
 
     public int GetTime() { return TimeToComplete; }
@@ -70,6 +72,10 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     {
         return AgentsNeeded;
     }
+
+    public void SetisWrittenOnAP(bool x) => isWrittenOnAP = x;
+
+    public bool GetisWrittenOnAP() { return isWrittenOnAP; }
 
     public bool GetInactiveConditionals()
     {
