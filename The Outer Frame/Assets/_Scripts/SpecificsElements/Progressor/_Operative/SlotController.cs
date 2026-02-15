@@ -309,9 +309,21 @@ public class SlotController : MonoBehaviour
         if (Report != null) if ((Report.GetKillAgent() && isActionComplete)) DisableAgent();
         if (isAgentDead) DisableAgent();
 
-        isAVilifyBlockedAction = false;
         isActionComplete = false;
         isOtherGroupActionDoing = null;
+        isTheSameAction = false;
+
+        
+        isAborted = false;
+        isAlreadyDone = false;
+        isAutomaticAction = false;
+        isTheSameAction = false;
+        isAVilifyBlockedAction =false;
+        isAlreadyImposible = false;
+        noComplete = false;
+        AreNotEnoughAgents = true;
+        isAMultiAction = false;
+
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
         SetLEDState(Color.green,"Green");
@@ -319,8 +331,6 @@ public class SlotController : MonoBehaviour
         inFillFast = false;
         Report = null;
         transform.GetChild(0).gameObject.SetActive(false);
-        noComplete = false;
-        isAMultiAction = false;
         
     }
 
