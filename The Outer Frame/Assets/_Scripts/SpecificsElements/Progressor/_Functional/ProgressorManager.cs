@@ -16,6 +16,9 @@ public class ProgressorManager : MonoBehaviour
     List<ProgressorModuleController> multipleAgentAction1 = new List<ProgressorModuleController>();
     List<ProgressorModuleController> multipleAgentAction2 = new List<ProgressorModuleController>();
 
+    bool multipleAgentAction1Used = false;
+    bool multipleAgentAction2Used = false;
+
     public void SetActionInCourse(Component c, object _data)
     {
         DataFromActionPlan data = (DataFromActionPlan)_data;
@@ -40,14 +43,15 @@ public class ProgressorManager : MonoBehaviour
 
         int timeAction = Mathf.Abs(state.GetTime() + WordsManager.WM.RequestReport(_word, state).GetChangeTimeOfAction());
         int auxMultiActionNum = 1;
-        bool multipleAgentAction1Used = false;
-        bool multipleAgentAction2Used = false;
+        
         int agentsAvaible = GetUnusedSlot(4).Count;
 
         List<ProgressorModuleController> SlotList = GetUnusedSlot(agentsAmount);
 
         SlotList.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
 
+        ResetMultiAgentGroups(multipleAgentAction1);
+        ResetMultiAgentGroups(multipleAgentAction2);
 
         foreach (ProgressorModuleController slot in SlotList)
         {
@@ -168,11 +172,26 @@ public class ProgressorManager : MonoBehaviour
         }
         else if (multipleAgentAction2.Contains(slot))
         {
-
+            foreach (ProgressorModuleController s in multipleAgentAction2)
+            {
+                if (s != slot)
+                {
+                    s.PrintMultiAction();
+                    s.GetSlot().CompleteMultiAction();
+                }
+            }
             multipleAgentAction2.Clear();
         }
-
     }
 
+    void ResetMultiAgentGroups(List<ProgressorModuleController> multiActionGroup)
+    {
+        if (multiActionGroup.Count != 0 && !multiActionGroup[0].GetIsFull())
+        {
+            multiActionGroup.Clear();
+        }
 
+        if (multipleAgentAction1.Count == 0) multipleAgentAction1Used = false;
+        if (multipleAgentAction2.Count == 0) multipleAgentAction2Used = false;
+    }
 }

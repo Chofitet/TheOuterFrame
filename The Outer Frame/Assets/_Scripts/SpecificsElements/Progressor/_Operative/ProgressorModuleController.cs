@@ -263,6 +263,7 @@ public class ProgressorModuleController : MonoBehaviour
         slot.CleanSlot();
         isFull = false;
         IsReadyToPrint = true;
+        resetSlot();
     }
 
     public bool GetIsFull() { return isFull; }
@@ -362,6 +363,8 @@ public class ProgressorModuleController : MonoBehaviour
         multiAgentNum = 0;
         isAborted = false;
         isAbortOpen = false;
+        TurnOnLight(light, 0);
+        TurnOnLight(light2, 0);
 
         TryAbortBTN.GetComponent<BoxCollider>().enabled = true;
         SwitchAbortBTN.GetComponent<BoxCollider>().enabled = false;

@@ -49,6 +49,7 @@ public class ComponentEnterWindow : MonoBehaviour
         if (isUnlockingPage) return;
         SearchBar.text = " |";
         if (!isInPCView) return;
+        if (!content.activeSelf) return;
         WordData _word = (WordData)obj;
         TryAccessWord = _word;
         SearchBar.text = DeleteSpetialCharacter(TryAccessWord.GetName());
