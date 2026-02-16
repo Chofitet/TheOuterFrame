@@ -35,7 +35,7 @@ public class ReportController : MonoBehaviour
     ReportType report;
     bool IsAlreadyImposible;
 
-    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, bool isAlreadyImposible, TimeData timeComplete,TimeData TimeToUnlockVilify, bool AreNotEnoughAgents)
+    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, bool isAlreadyImposible, TimeData timeComplete,TimeData TimeToUnlockVilify, int AgentsUsed)
     {
         word = _word;
         report = _report;
@@ -80,7 +80,7 @@ public class ReportController : MonoBehaviour
         }
         else if (isOtherActionInGroupDoing != null)
         {
-            Resulttxt.text = "We are currently " + isOtherActionInGroupDoing.GetActioningVerb() + " " + Name + ".\n\rWe'll have to be done with THAT first.";
+            Resulttxt.text = "We are currently " + isOtherActionInGroupDoing.GetActioningVerb() + " " + word.GetFormNameVersion() + ".\n\rWe'll have to be done with THAT first.";
             status = "<color=#AE0000>CONFLICTED</color>";
             photo1.Set("", WrongResultImg[6]);
             isNotCompleted = true;
@@ -121,9 +121,9 @@ public class ReportController : MonoBehaviour
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
         }
-        else if(!AreNotEnoughAgents)
+        else if(AgentsUsed < state.GetAgentsNeeded())
         {
-            Resulttxt.text = "Faltan pibes pa la joda";
+            Resulttxt.text = $"There are not enough agents available.\r\nWe need {state.GetAgentsNeeded()} to carry that one out.";
             status = "<color=#AE0000>INSUFICIENTE</color>";
             photo1.Set("", WrongResultImg[6]);
             isNotCompleted = true;

@@ -55,16 +55,11 @@ public class ProgressorManager : MonoBehaviour
 
         foreach (ProgressorModuleController slot in SlotList)
         {
-            bool EnoughAgents = true;
-
-      
-            if (agentsAvaible < agentsAmount) EnoughAgents = false;
-
-
+            
             string a = slot.name;
             Debug.Log(slot.name);
 
-            slot.SetAction(_word, state, timeAction, auxMultiActionNum, EnoughAgents);
+            slot.SetAction(_word, state, timeAction, auxMultiActionNum, agentsAvaible);
 
             auxMultiActionNum += 1;
 

@@ -43,7 +43,7 @@ public class SlotController : MonoBehaviour
     bool isAVilifyBlockedAction;
     bool isAlreadyImposible;
     bool noComplete;
-    bool AreNotEnoughAgents = true;
+    int AgentsUsed = 1;
     bool isAMultiAction;
     StateEnum isOtherGroupActionDoing;
 
@@ -53,7 +53,7 @@ public class SlotController : MonoBehaviour
     bool isAgentDead;
     ObjectToPrint objectType;
     Color OriginalTxtColor;
-    public void initParameters(WordData word, StateEnum state, int multiActionNum, bool isMultiActionPosible = true)
+    public void initParameters(WordData word, StateEnum state, int multiActionNum, int _AgentsUsed = 1)
     {
         gameObject.SetActive(true);
         transform.GetChild(0).gameObject.SetActive(true);
@@ -84,13 +84,68 @@ public class SlotController : MonoBehaviour
         ProgressBar.value = 0;
 
         OriginalTxtColor = Wordtxt.color;
+        AgentsUsed = _AgentsUsed;
+        bool isMultiActionPosible = true;
+        
+        if (AgentsUsed < state.GetAgentsNeeded())
+        {
+            isMultiActionPosible = false;
+        }
 
         if (multiActionNum != 1)
         {
             isAMultiAction = true;
         }
 
-        if (multiActionNum != 1 && isMultiActionPosible)
+        
+        //ya fue hecho
+        if (Report.GetWasSet())
+        {
+            FillFast();
+            noComplete = true;
+            isAlreadyDone = true;
+            SetLEDState(Color.red, "Red");
+        }
+        //Se está haciendo el mismo en este momento
+        else if (word.CheckIfActionIsDoing(state) && !isAMultiAction)
+        {
+            FillFast();
+            isTheSameAction = true;
+            noComplete = true;
+            SetLEDState(Color.red, "Red");
+        }
+        // Se está haciendo uno del mismo ActionGroup
+        else if (ActionGroupManager.AGM.ChekAreInTheSameGroup(word, state) )
+        {
+            FillFast();
+            isOtherGroupActionDoing = _word.GetDoingAction(0);
+            noComplete = true;
+            SetLEDState(Color.red, "Red");
+        }
+        // Es una acción automática
+        else if (Report.GetIsAutomatic() && !isAMultiAction)
+        {
+            FillFast();
+            isAutomaticAction = true;
+            noComplete = true;
+            SetLEDState(Color.red, "Red");
+        }
+        else if(!IsVilifyLocked.isANullTimeData() && _state == VilifyState )
+        {
+            FillFast();
+            isAVilifyBlockedAction = true;
+            noComplete = true;
+            SetLEDState(Color.red, "Red");
+        }
+        // Es una accion que ya no es posible 
+        else if(state.GetInactiveConditionals() || word.GetInactiveState() )
+        {
+            FillFast();
+            isAlreadyImposible = true;
+            noComplete = true;
+            SetLEDState(Color.red,"Red");
+        }
+        else if (multiActionNum != 1 && isMultiActionPosible)
         {
             TimeManager.OnSecondsChange += UpdateProgress;
             UpdateProgress();
@@ -100,63 +155,14 @@ public class SlotController : MonoBehaviour
         {
             FillFast();
             noComplete = true;
-            AreNotEnoughAgents = false;
             SetLEDState(Color.red, "Red");
         }
         //no hay agentes suficientes
-        else if(_state.GetAgentsNeeded() != 1 && multiActionNum == 1 && !isMultiActionPosible)
+        else if (_state.GetAgentsNeeded() != 1 && multiActionNum == 1 && !isMultiActionPosible)
         {
             FillFast();
-            noComplete = true;
-            AreNotEnoughAgents = false;
-            SetLEDState(Color.red, "Red");
-        }
-        //ya fue hecho
-        else if (Report.GetWasSet())
-        {
-            FillFast();
-            noComplete = true;
-            isAlreadyDone = true;
-            SetLEDState(Color.red, "Red");
-        }
-        //Se está haciendo el mismo en este momento
-        else if (word.CheckIfActionIsDoing(state))
-        {
-            FillFast();
-            isTheSameAction = true;
             noComplete = true;
             SetLEDState(Color.red, "Red");
-        }
-        // Se está haciendo uno del mismo ActionGroup
-        else if (ActionGroupManager.AGM.ChekAreInTheSameGroup(word, state))
-        {
-            FillFast();
-            isOtherGroupActionDoing = _word.GetDoingAction(0);
-            noComplete = true;
-            SetLEDState(Color.red, "Red");
-        }
-        // Es una acción automática
-        else if (Report.GetIsAutomatic())
-        {
-            FillFast();
-            isAutomaticAction = true;
-            noComplete = true;
-            SetLEDState(Color.red, "Red");
-        }
-        else if(!IsVilifyLocked.isANullTimeData() && _state == VilifyState)
-        {
-            FillFast();
-            isAVilifyBlockedAction = true;
-            noComplete = true;
-            SetLEDState(Color.red, "Red");
-        }
-        // Es una accion que ya no es posible 
-        else if(state.GetInactiveConditionals() || word.GetInactiveState())
-        {
-            FillFast();
-            isAlreadyImposible = true;
-            noComplete = true;
-            SetLEDState(Color.red,"Red");
         }
         // Es una acción válida
         else
@@ -168,6 +174,7 @@ public class SlotController : MonoBehaviour
             
             if(state == VilifyState) OnSetVilifyAction?.Invoke(this, true);
         }
+       
 
         OnSetAction?.Invoke(noComplete);
     }
@@ -321,7 +328,7 @@ public class SlotController : MonoBehaviour
         isAVilifyBlockedAction =false;
         isAlreadyImposible = false;
         noComplete = false;
-        AreNotEnoughAgents = true;
+        AgentsUsed = 1;
         isAMultiAction = false;
 
         ProgressBar.value = 0;
@@ -472,7 +479,7 @@ public class SlotController : MonoBehaviour
 
     public bool GetisAMultiAction() { return isAMultiAction; }
 
-    public bool GetAreNotEnoughAgents() { return AreNotEnoughAgents; }
+    public int GetUsedAgents() { return AgentsUsed; }
 
     public TimeData GetIsAVilifyBlockedAction() {
         if (isAVilifyBlockedAction) return IsVilifyLocked;

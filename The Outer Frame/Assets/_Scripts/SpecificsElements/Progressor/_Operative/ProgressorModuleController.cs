@@ -47,7 +47,7 @@ public class ProgressorModuleController : MonoBehaviour
     float adjustedDurationForSetSlot;
 
     int multiAgentNum = 1;
-    private bool isMultiActionPosible;
+    int AgentsUsed = 1;
     bool isAborted;
 
     private void Start()
@@ -68,13 +68,13 @@ public class ProgressorModuleController : MonoBehaviour
         AdjustTimeToSetSlot();
     }
 
-    public void SetAction(WordData _word,StateEnum _state,int _time, int _multiAgentNum, bool _isMultiActionPosible = true)
+    public void SetAction(WordData _word,StateEnum _state,int _time, int _multiAgentNum, int _agentsUsed = 1)
     {
         word = _word;
         state = _state;
         time = _time;
         multiAgentNum = _multiAgentNum;
-        isMultiActionPosible = _isMultiActionPosible;
+        AgentsUsed = _agentsUsed;
 
         isReady = true;
         isFull = true;
@@ -147,7 +147,7 @@ public class ProgressorModuleController : MonoBehaviour
     public void InitSlot(Component sender, object obj)
     {
         if (!isReady) return;
-        slot.initParameters(word, state, multiAgentNum, isMultiActionPosible);
+        slot.initParameters(word, state, multiAgentNum, AgentsUsed);
         isReady = false;
         blinkmaterialAbort.TurnOnLigth(null, null);
         colliderUnused.GetComponent<BoxCollider>().enabled = false;

@@ -43,6 +43,7 @@ public class ActionGroupManager : MonoBehaviour
             {
                 if (word.CheckIfActionIsDoing(action))
                 {
+                    if (action == newAction) return false;
                     if(actions.Contains(newAction)) return true;
                 }
             }

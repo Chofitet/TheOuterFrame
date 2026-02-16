@@ -189,6 +189,13 @@ public class GooIdentificatorController : MonoBehaviour
             ProtocolIdea.InactiveButton();
         }
     }
+    public void ActionIsDoing(Component sender, object obj)
+    {
+        DataFromActionPlan data = (DataFromActionPlan)obj;
+        StateEnum action = data.state;
+
+        ProtocolIdea.DesactiveButton(action);
+    }
 
     public void Reset()
     {
