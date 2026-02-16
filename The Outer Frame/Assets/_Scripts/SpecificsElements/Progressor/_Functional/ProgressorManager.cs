@@ -19,6 +19,15 @@ public class ProgressorManager : MonoBehaviour
     bool multipleAgentAction1Used = false;
     bool multipleAgentAction2Used = false;
 
+    private void Start()
+    {
+        int index = 0;
+        foreach (ProgressorModuleController s in Slots)
+        {
+            s.init(index);
+            index++;
+        }
+    }
     public void SetActionInCourse(Component c, object _data)
     {
         DataFromActionPlan data = (DataFromActionPlan)_data;
@@ -112,6 +121,12 @@ public class ProgressorManager : MonoBehaviour
         GameObject slot = (GameObject)obj;
         ProgressorModuleController SlotToRemove = slot.GetComponent<ProgressorModuleController>();
         Slots.Remove(SlotToRemove);
+    }
+
+    public void EnableSlot(Component sender, object obj)
+    {
+        ProgressorModuleController slot = (ProgressorModuleController)obj;
+        Slots.Insert(slot.GetModuleNumber(),slot);
     }
 
     public void CheckAllAgentsDown(Component sender, object obj)

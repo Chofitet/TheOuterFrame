@@ -10,11 +10,13 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameEvent OnPrintReport;
     [SerializeField] GameEvent OnTryPrintFullPrinter;
     [SerializeField] GameEvent OnDisableAgentOnSlot;
+    [SerializeField] GameEvent OnRecoveryModule;
     bool isFull;
     bool IsReadyToPrint;
     bool isAbortOpen;
     Animator anim;
     bool isReady;
+    int ModuleNumber;
     [SerializeField] GameObject PrintBTN;
     [SerializeField] GameObject SwitchAbortBTN;
     [SerializeField] GameObject AbortBTN;
@@ -61,6 +63,11 @@ public class ProgressorModuleController : MonoBehaviour
         light2.enabled = true;
         light2.intensity = 0;
 
+    }
+
+    public void init(int _ModuleNumber)
+    {
+        ModuleNumber = _ModuleNumber;
     }
 
     private void Update()
@@ -369,6 +376,13 @@ public class ProgressorModuleController : MonoBehaviour
         TryAbortBTN.GetComponent<BoxCollider>().enabled = true;
         SwitchAbortBTN.GetComponent<BoxCollider>().enabled = false;
     }
+    public void OnRecoveryAgent(Component sender, object obj)
+    {
+        if((SlotController) obj == slot)
+        {
+            OnRecoveryModule?.Invoke(this, this);
+        }
+    }
 
     void ResetDelay()
     {
@@ -408,6 +422,7 @@ public class ProgressorModuleController : MonoBehaviour
         }
     }
 
+    public int GetModuleNumber() { return ModuleNumber; }
     public SlotController GetSlot() { return slot; }
 
 }

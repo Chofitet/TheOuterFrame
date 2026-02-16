@@ -26,6 +26,7 @@ public class SlotController : MonoBehaviour
     [SerializeField] StateEnum VilifyState;
     [SerializeField] GameEvent OnAddEntryLog;
     [SerializeField] GameEvent OnResetProgressorSlots;
+    [SerializeField] GameEvent OnRecoveryAgent;
     TimeData IsVilifyLocked = new TimeData(0,0,0);
 
     public Action<bool> OnSetAction;
@@ -45,6 +46,8 @@ public class SlotController : MonoBehaviour
     bool noComplete;
     int AgentsUsed = 1;
     bool isAMultiAction;
+
+    bool isRecoveryAgent;
     StateEnum isOtherGroupActionDoing;
 
     TimeData timeComplete;
@@ -203,7 +206,14 @@ public class SlotController : MonoBehaviour
 
         if (secondProgress > actionDuration)
         {
-
+            if(isRecoveryAgent)
+            {
+                isRecoveryAgent = false;
+                EnableAgent();
+                OnRecoveryAgent?.Invoke(this, this);
+                ResetSlot();
+                return;
+            }
             if (isAlreadyDone)
             {
                 if (!isAMultiAction) AutomaticAction();
@@ -262,9 +272,7 @@ public class SlotController : MonoBehaviour
 
         if (Report.GetAction().name == "TheCabinInspectedFullState")
         {
-            AgentIcon.GetComponent<Image>().color = Color.green;
-            AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, -90));
-            isAgentDead = false;
+            EnableAgent();
         }
     }
 
@@ -309,36 +317,74 @@ public class SlotController : MonoBehaviour
 
     void ResetSlot()
     {
-        
-        AbortIcon.SetActive(false);
-        CheckIcon.SetActive(false);
-        AgentIcon.SetActive(true);
-        if (Report != null) if ((Report.GetKillAgent() && isActionComplete)) DisableAgent();
-        if (isAgentDead) DisableAgent();
-
-        isActionComplete = false;
+        if (isRecoveryAgent) return;
         isOtherGroupActionDoing = null;
         isTheSameAction = false;
 
-        
+
         isAborted = false;
         isAlreadyDone = false;
         isAutomaticAction = false;
         isTheSameAction = false;
-        isAVilifyBlockedAction =false;
+        isAVilifyBlockedAction = false;
         isAlreadyImposible = false;
         noComplete = false;
         AgentsUsed = 1;
-        isAMultiAction = false;
+        
+
+        AbortIcon.SetActive(false);
+        CheckIcon.SetActive(false);
+        AgentIcon.SetActive(true);
+
 
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
+
+        if (Report != null) if (Report.GetKillAgent() && isActionComplete) DisableAgent();
+        if (isAgentDead) DisableAgent();
+        if (Report != null) if (Report.GetKillAgent() && Report.GetAgentRecoveryTime() != 0 && isActionComplete)
+        {
+            SetRecovery(Report.GetAgentRecoveryTime());
+            return;
+        }
+
+
+        isAMultiAction = false;
+        Report = null;
+        isActionComplete = false;
+        inFillFast = false;
+
         SetLEDState(Color.green,"Green");
 
-        inFillFast = false;
-        Report = null;
         transform.GetChild(0).gameObject.SetActive(false);
         
+    }
+
+    void SetRecovery(int agentRecoveryTime)
+    {
+        Wordtxt.text = "Agent";
+        Actiontxt.text = "Rehabilitating";
+        Wordtxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
+        Actiontxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
+
+        actionDuration = agentRecoveryTime * 60;
+        secondProgress = 0;
+        ProgressBar.maxValue = actionDuration;
+        ProgressBar.value = 0;
+        isRecoveryAgent = true;
+        isActionComplete = false;
+        Report = null;
+        inFillFast = false;
+
+        AbortIcon.SetActive(false);
+        CheckIcon.SetActive(false);
+        AgentIcon.SetActive(true);
+
+        TimeManager.OnSecondsChange += UpdateProgress;
+        UpdateProgress();
+
+
+        SetLEDState(Color.white, "Red");
     }
 
     void SetLEDState(Color _color, string colortxt)
@@ -386,8 +432,16 @@ public class SlotController : MonoBehaviour
         AgentIcon.GetComponent<Image>().color = Color.red;
         if (!isAgentDead) AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, 90));
         isAgentDead = true;
-
     }
+
+    void EnableAgent()
+    {
+        AgentIcon.GetComponent<Image>().color = Color.green;
+        AgentIcon.GetComponent<RectTransform>().Rotate(new Vector3(0, 0, -90));
+        isAgentDead = false;
+    }
+
+   
 
     public void DisanableWithFinalReport(Component sender, object obj)
     {
