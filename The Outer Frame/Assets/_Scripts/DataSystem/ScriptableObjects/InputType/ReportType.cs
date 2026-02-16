@@ -19,6 +19,7 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     [SerializeField] ObjectToPrint ObjectType;
     [SerializeField] bool isOrderMatters;
     [SerializeField] bool AgentDown;
+    [SerializeField] int AgentRecoveryTime = 0;
     [SerializeField] bool TriggerDrawerAnim;
     [SerializeField] bool DeleteDBReport;
     [SerializeField] bool SecondToLastReport;
@@ -35,7 +36,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
 
     public List<PhotoInfo> GetReportImage() { return Photos; }
     public bool GetKillAgent() { return AgentDown; }
-    
+    public int GetAgentRecoveryTime() { return AgentRecoveryTime; }
+
     public bool GetSecondToLastReport() { return SecondToLastReport; }
 
     public string GetCustomStatus() { return CustomStatus; }

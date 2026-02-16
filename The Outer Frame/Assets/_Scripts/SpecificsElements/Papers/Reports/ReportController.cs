@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 
 public class ReportController : MonoBehaviour
 {
@@ -121,11 +122,12 @@ public class ReportController : MonoBehaviour
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
         }
-        else if(AgentsUsed < state.GetAgentsNeeded())
+        else if(AgentsUsed < state.GetAgentsNeeded() && AgentsUsed != -1)
         {
             Resulttxt.text = $"There are not enough agents available.\r\nWe need {state.GetAgentsNeeded()} to carry that one out.";
             status = "<color=#AE0000>INSUFICIENTE</color>";
-            photo1.Set("", WrongResultImg[6]);
+            int photoIndex = 7 + state.GetAgentsNeeded();
+            photo1.Set("", WrongResultImg[photoIndex]);
             isNotCompleted = true;
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
