@@ -74,25 +74,25 @@ public class ReportController : MonoBehaviour
         {
             Resulttxt.text = "We are already doing that exact same thing.";
             status = "<color=#AE0000>REDUNDANT</color>";
-            photo1.Set("JUST HAVE TO WAIT", WrongResultImg[new System.Random().Next(2) == 0 ? 6 : 8]);
+            photo1.Set("REMEMBER?", WrongResultImg[8]);
             isNotCompleted = true;
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
         }
         else if (isOtherActionInGroupDoing != null)
         {
-            Resulttxt.text = "We are currently " + isOtherActionInGroupDoing.GetActioningVerb() + " " + word.GetFormNameVersion() + ".\n\rWe'll have to be done with THAT first.";
-            status = "<color=#AE0000>CONFLICTED</color>";
-            photo1.Set("", WrongResultImg[6]);
+            Resulttxt.text = "We are currently " + isOtherActionInGroupDoing.GetActioningVerb() + " " + word.GetFormNameVersion() + ".\n\r\n\rWe'll have to be done with THAT first.";
+            status = "<color=#AE0000>NOT RIGHT NOW</color>";
+            photo1.Set("JUST A MOMENT", WrongResultImg[6]);
             isNotCompleted = true;
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
         }
         else if (isAborted)
         {
-            Resulttxt.text = "The action " + actionVerb + " " + Name + " was aborted succesfully";
+            Resulttxt.text = "The action " + actionVerb + " " + Name + " was aborted successfully.";
             status = "<color=#AE0000>ABORTED</color>";
-            photo1.Set("", WrongResultImg[7]);
+            photo1.Set("AS YOU SAID", WrongResultImg[7]);
             isNotCompleted = true;
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
@@ -106,9 +106,9 @@ public class ReportController : MonoBehaviour
         }
         else if (isAlreadyImposible)
         {
-            Resulttxt.text = "We can no longer do that, because of earlier actions.";
-            status = "<color=#AE0000>IMPOSSIBLE</color>";
-            photo1.Set("", WrongResultImg[6]);
+            Resulttxt.text = "We could have done that earlier, but the target’s state has changed.";
+            status = "<color=#AE0000>NO LONGER POSSIBLE</color>";
+            photo1.Set("MAYBE IN ANOTHER LIFE", WrongResultImg[new System.Random().Next(3, 5)]);
             isNotCompleted = true;
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
@@ -116,7 +116,7 @@ public class ReportController : MonoBehaviour
         }
         else if(!TimeToUnlockVilify.isANullTimeData())
         {
-            Resulttxt.text = $"People will get suspicious if we put so many of our ‘broadcasts’ up one after the other. Let’s wait and try again after {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}";
+            Resulttxt.text = $"People will get suspicious if we put so many of our ‘broadcasts’ up one after the other. Let’s wait and try again after {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}.";
             isNotCompleted = true;
             photo1.Set("LET'S NOT ABUSE IT", WrongResultImg[6]);
             UploadBTN.SetActive(false);
@@ -125,9 +125,9 @@ public class ReportController : MonoBehaviour
         else if(AgentsUsed < state.GetAgentsNeeded() && AgentsUsed != -1)
         {
             Resulttxt.text = $"There are not enough agents available.\r\nWe need {state.GetAgentsNeeded()} to carry that one out.";
-            status = "<color=#AE0000>INSUFICIENTE</color>";
+            status = "<color=#AE0000>UNDERSTAFFED</color>";
             int photoIndex = 7 + state.GetAgentsNeeded();
-            photo1.Set("", WrongResultImg[photoIndex]);
+            photo1.Set("A LIL' TEAM\n\rLIKE THIS", WrongResultImg[photoIndex]);
             isNotCompleted = true;
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
