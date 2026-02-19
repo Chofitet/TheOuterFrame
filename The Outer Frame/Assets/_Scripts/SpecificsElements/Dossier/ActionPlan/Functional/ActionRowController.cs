@@ -54,12 +54,12 @@ public class ActionRowController : MonoBehaviour
 
         if (toggle.isOn && once)
         {
-            StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, Word.GetFormNameVersion()));
+            StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, GetStringWord()));
             
         }
         if(toggle.isOn && !once)
         {
-            Wordtext.text = Word.GetFormNameVersion();
+            Wordtext.text = GetStringWord();
             fade.StartEffect();
             OnWrittingFormSound?.Invoke(this, null);
         }
@@ -99,7 +99,7 @@ public class ActionRowController : MonoBehaviour
         Invoke("CheckToggle", 0.01f);
         if (Word)
         {
-            Wordtext.text = Word.GetFormNameVersion();
+            Wordtext.text = GetStringWord();
             fade.StartEffect();
             OnWrittingFormSound?.Invoke(this, null);
         }
@@ -176,6 +176,14 @@ public class ActionRowController : MonoBehaviour
     public void UnCheckToggle()
     {
         toggle.isOn = false;
+    }
+
+    string GetStringWord()
+    {
+        string AuxString = string.Empty;
+        if(Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation()) AuxString = $"{Word.GetWordFirstLocationAppear()}";
+
+        return $"{Word.GetFormNameVersion()} {AuxString}";
     }
 
     public bool GetIsOn() { return toggle.isOn; }

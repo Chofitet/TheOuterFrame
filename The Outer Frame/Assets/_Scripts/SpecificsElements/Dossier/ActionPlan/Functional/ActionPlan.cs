@@ -180,6 +180,7 @@ public class ActionPlan : MonoBehaviour
         if (state.GetSpecialActionWord()) state.SetisWrittenOnAP(false);
         OnApprovedActionPlan.Invoke(this, data);
         OnSetGeneralView?.Invoke(this, null);
+        if(state.GetNeedWordLocation())word.SetIsPendingToShowLocation(false);
     }
 
     public void SendFinalActionToProgressor(Component sender, object obj)

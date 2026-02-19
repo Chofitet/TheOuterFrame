@@ -14,6 +14,7 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     [SerializeField] int TimeToComplete;
     [SerializeField] int TimeToShowNew;
     [SerializeField] string observationtxt = "";
+    [SerializeField] bool NeedWordLocation;
     [Header("Idea In Progressor")]
     [SerializeField] WordData IdeaWordData;
     [SerializeField] string IdeaVerb;
@@ -76,6 +77,8 @@ public class StateEnum : ScriptableObject, IReseteableScriptableObject
     public void SetisWrittenOnAP(bool x) => isWrittenOnAP = x;
 
     public bool GetisWrittenOnAP() { return isWrittenOnAP; }
+
+    public bool GetNeedWordLocation() { return NeedWordLocation; }
 
     public bool GetInactiveConditionals()
     {
