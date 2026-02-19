@@ -206,7 +206,8 @@ public class SlotController : MonoBehaviour
 
         if (secondProgress > actionDuration)
         {
-            if(isRecoveryAgent)
+            isActionComplete = true;
+            if (isRecoveryAgent)
             {
                 isRecoveryAgent = false;
                 EnableAgent();
@@ -227,7 +228,7 @@ public class SlotController : MonoBehaviour
             {
                 CompleteMultiAction();
             }
-            isActionComplete = true;
+            
         }
     }
 
@@ -348,6 +349,14 @@ public class SlotController : MonoBehaviour
             return;
         }
 
+        if(isAMultiAction && isActionComplete)
+        {
+            CheckIcon.SetActive(true);
+            AgentIcon.SetActive(false);
+            ProgressBar.value = ProgressBar.maxValue;
+            Invoke("ResetLedMultiAction", 2);
+            return;
+        }
 
         isAMultiAction = false;
         Report = null;
@@ -357,7 +366,6 @@ public class SlotController : MonoBehaviour
         SetLEDState(Color.green,"Green");
 
         transform.GetChild(0).gameObject.SetActive(false);
-        
     }
 
     void SetRecovery(int agentRecoveryTime)
@@ -396,6 +404,23 @@ public class SlotController : MonoBehaviour
 
         ApplyMaterial(Wordtxt, colortxt);
         ApplyMaterial(Actiontxt, colortxt);
+    }
+
+    void ResetLedMultiAction()
+    {
+        ProgressBar.value = 0;
+        isAMultiAction = false;
+        Report = null;
+        isActionComplete = false;
+        inFillFast = false;
+
+        AbortIcon.SetActive(false);
+        CheckIcon.SetActive(false);
+        AgentIcon.SetActive(true);
+
+        SetLEDState(Color.green, "Green");
+
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
 
