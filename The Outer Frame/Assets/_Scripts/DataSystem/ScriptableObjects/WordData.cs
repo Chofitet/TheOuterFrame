@@ -18,6 +18,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     [SerializeField] string PhoneNumber;
     [SerializeField] bool isAPhoneNumber;
     [SerializeField] ActionGoupType Type;
+    [SerializeField] string ApInformLocation;
 
     [Header("Reports")]
     [SerializeField] List<ReportType> reportTypes = new List<ReportType>();
@@ -58,6 +59,7 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     [NonSerialized] bool isInactive;
     [NonSerialized] List<StateEnum> CurrentDoingActions = new List<StateEnum>();
     [NonSerialized] bool isPlacedInBoad;
+    [NonSerialized] bool isPendingToShowLocation = false;
     #region GetInputLogic
 
     public void InitSet()
@@ -573,6 +575,10 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     public List<StateEnum> GetHistorySeen() { return CheckedStateHistory; }
     public List<StateEnum> GetHistory() { return stateHistory; }
     public List<ActionState> GetActionStatesList() { return ActionsStates; }
+    public string GetApInformLocation() { return ApInformLocation; }
+    public bool SetIsPendingToShowLocation(bool x) => isPendingToShowLocation = x; 
+    public bool GetIsPendingToShowLocation() { return isPendingToShowLocation; }
+
     public void SetListOfActions(List<StateEnum> actions)
     {
         ActionsStates.Clear();
@@ -660,6 +666,17 @@ public class WordData : ScriptableObject, IReseteableScriptableObject
     public void SetIsFound(bool x = true)
     {
         isFound = x;
+
+        if(ApInformLocation != "")
+        {
+            isPendingToShowLocation = true;
+        }
+    }
+
+    public string GetWordFirstLocationAppear()
+    {
+        if (!isPendingToShowLocation) return string.Empty;
+        else return ApInformLocation;
     }
 
     public bool GetIsFound() { return isFound;}
