@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using static System.Net.Mime.MediaTypeNames;
+using static UnityEngine.ParticleSystem;
 
 public class ActionRowController : MonoBehaviour
 {
@@ -14,14 +15,18 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] Button btn;
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] TMP_Text observationTxt;
+    [SerializeField] TMP_Text AclarationTxt;
     [SerializeField] GameObject DotsLine;
     [SerializeField] TMP_FontAsset writingFont;
     [SerializeField] GameEvent OnWrittingFormSound;
     [SerializeField] Transform EraseParticles;
+    [SerializeField] Transform EraseParticlesAclaration;
+    
      bool isSpecialAction;
     StateEnum state;
     FadeWordsEffect fade;
     FadeWordsEffect fadeAction;
+    FadeWordsEffect fadeAclaration;
     bool once;
     WordData Word;
 
@@ -32,6 +37,7 @@ public class ActionRowController : MonoBehaviour
         btn.onClick.AddListener(OnButtonClick);
         fade = Wordtext.GetComponent<FadeWordsEffect>();
         fadeAction = ActionText.GetComponent<FadeWordsEffect>();
+        fadeAclaration = AclarationTxt.GetComponent<FadeWordsEffect>();
         observationTxt.text = state.GetObservationTxt();
 
         if (_state.GetSpecialActionWord())
@@ -42,7 +48,6 @@ public class ActionRowController : MonoBehaviour
             Invoke("ClickButton", 2f);
             if (!_isFirstTimeIdeaAdded) return;
             fadeAction.StartEffect();
-           
         }
     }
 
@@ -54,14 +59,13 @@ public class ActionRowController : MonoBehaviour
 
         if (toggle.isOn && once)
         {
-            StartCoroutine(AnimFade(Wordtext, false, Wordtext, true, GetStringWord()));
+            StartCoroutine(AnimEraseWriting(Wordtext, false, Wordtext, true, Word.GetFormNameVersion()));
             
         }
         if(toggle.isOn && !once)
         {
-            Wordtext.text = GetStringWord();
-            fade.StartEffect();
-            OnWrittingFormSound?.Invoke(this, null);
+            Wordtext.text = Word.GetFormNameVersion();
+            StartCoroutine(AnimOnlyWriting(Wordtext, true));
         }
 
         if (isSpecialAction || !toggle.isOn || !once)
@@ -81,7 +85,8 @@ public class ActionRowController : MonoBehaviour
     {
         if(!isInView) return;
 
-        //btn.enabled = false;
+        btn.enabled = false;
+        Invoke("ReacticeBTN",0.07f);
         if (isSpecialAction)
         {
             if (!toggle.isOn) Invoke("CheckToggle", 0.01f);
@@ -94,14 +99,18 @@ public class ActionRowController : MonoBehaviour
 
     }
 
+    void ReacticeBTN()
+    {
+        btn.enabled = true;
+    }
+
     void buttonCheck()
     {
         Invoke("CheckToggle", 0.01f);
         if (Word)
         {
-            Wordtext.text = GetStringWord();
-            fade.StartEffect();
-            OnWrittingFormSound?.Invoke(this, null);
+            Wordtext.text = Word.GetFormNameVersion();
+            StartCoroutine(AnimOnlyWriting(Wordtext, true));
         }
         else if (!isSpecialAction) OnShakeNotebook?.Invoke(this, null);
 
@@ -121,11 +130,8 @@ public class ActionRowController : MonoBehaviour
     {
         toggle.isOn = false;
         if (!fade.GetisVisible()) return;
-        EraseParticles.GetComponent<ParticleSystem>().Stop();
-        fade.StopAllCoroutines();
-        fade.StartEffect(false);
-        fade.OnEraseProgress += eraseParticles;
-        fade.OnComplete += Erasefinished;
+        StartCoroutine(AnimOnlyErase());
+        
     }
     void Erasefinished()
     {
@@ -139,7 +145,7 @@ public class ActionRowController : MonoBehaviour
         strikethrough.SetActive(true);
     }
 
-    IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
+    IEnumerator AnimEraseWriting(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
     {
         FadeWordsEffect effect = first.gameObject.GetComponent<FadeWordsEffect>();
         if (!isTransparent1) effect.OnEraseProgress += eraseParticles;
@@ -147,9 +153,59 @@ public class ActionRowController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         EraseParticles.GetComponent<ParticleSystem>().Stop();
         fade.OnEraseProgress -= eraseParticles;
+
+        if (AclarationTxt.text != string.Empty)
+        {
+            fadeAclaration.OnEraseProgress += eraseParticlesAclatarion;
+            fadeAclaration.StartEffect(false);
+            yield return new WaitForSeconds(0.2f);
+            EraseParticlesAclaration.GetComponent<ParticleSystem>().Stop();
+            fadeAclaration.OnEraseProgress -= eraseParticlesAclatarion;
+            AclarationTxt.text = "";
+        }
+
         if (first == second) first.text = txt;
+
         second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
         OnWrittingFormSound?.Invoke(this, null);
+        yield return new WaitForSeconds(0.2f);
+        if (Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation())
+        {
+            AnimAclarationText(Word.GetWordFirstLocationAppear());
+            OnWrittingFormSound?.Invoke(this, null);
+        }
+    }
+
+    IEnumerator AnimOnlyWriting(TMP_Text text, bool isTransparent1)
+    {
+        FadeWordsEffect effect = text.gameObject.GetComponent<FadeWordsEffect>();
+        effect.StartEffect(isTransparent1);
+        OnWrittingFormSound?.Invoke(this, null);
+        yield return new WaitForSeconds(0.2f);
+        if (Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation())
+        {
+            AnimAclarationText(Word.GetWordFirstLocationAppear());
+            OnWrittingFormSound?.Invoke(this, null);
+        }
+    }
+
+    IEnumerator AnimOnlyErase()
+    {
+        EraseParticles.GetComponent<ParticleSystem>().Stop();
+        fade.StopAllCoroutines();
+        fade.StartEffect(false);
+        fade.OnEraseProgress += eraseParticles;
+        fade.OnComplete += Erasefinished;
+        if (Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation())
+        {
+            yield return new WaitForSeconds(0.2f);
+            fadeAclaration.OnEraseProgress += eraseParticlesAclatarion;
+            fadeAclaration.StartEffect(false);
+            yield return new WaitForSeconds(0.2f);
+            EraseParticlesAclaration.GetComponent<ParticleSystem>().Stop();
+            fadeAclaration.OnEraseProgress -= eraseParticlesAclatarion;
+            AclarationTxt.text = "";
+        }
     }
 
     public void eraseParticles(float progress)
@@ -157,6 +213,13 @@ public class ActionRowController : MonoBehaviour
         EraseParticles.GetComponent<ParticleSystem>().Play();
         Vector3 initPos = Wordtext.transform.localPosition + new Vector3(2,0,0);
         EraseParticles.localPosition = Vector3.Lerp(initPos, new Vector3(Wordtext.transform.localPosition.x + Wordtext.preferredWidth, initPos.y, initPos.z), progress);
+    }
+
+    public void eraseParticlesAclatarion(float progress)
+    {
+        EraseParticlesAclaration.GetComponent<ParticleSystem>().Play();
+        Vector3 initPos = AclarationTxt.transform.localPosition;
+        EraseParticlesAclaration.localPosition = Vector3.Lerp(initPos, new Vector3(0, initPos.y, initPos.z), progress);
     }
 
     bool isInView;
@@ -178,13 +241,17 @@ public class ActionRowController : MonoBehaviour
         toggle.isOn = false;
     }
 
-    string GetStringWord()
+    void AnimAclarationText(string text)
     {
-        string AuxString = string.Empty;
-        if(Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation()) AuxString = $"{Word.GetWordFirstLocationAppear()}";
+        AclarationTxt.transform.localPosition = Vector3.zero;
+        AclarationTxt.text = text;
+        AclarationTxt.ForceMeshUpdate();
+        float textleght = AclarationTxt.textBounds.size.x;
+        AclarationTxt.transform.localPosition = new Vector3(-textleght, 0, 0);
 
-        return $"{Word.GetFormNameVersion()} {AuxString}";
+        fadeAclaration.StartEffect();
     }
+
 
     public bool GetIsOn() { return toggle.isOn; }
 }
