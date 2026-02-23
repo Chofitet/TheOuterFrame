@@ -126,6 +126,7 @@ public class GooIdentificatorController : MonoBehaviour
 
     public void SetIdentificatorCode(Component sender, object obj)
     {
+
         int[] coordinate = (int[])obj;
 
         playerCode[coordinate[0]]= coordinate[1];
@@ -135,6 +136,8 @@ public class GooIdentificatorController : MonoBehaviour
             string finalCode = string.Join(", ", playerCode);
             Debug.Log($"All Answers have been Answered. Final Code: {finalCode}");
         }
+
+        pressNext();
     }
 
     public void ActiveGooPanel(Component sender, object obj)
@@ -194,7 +197,7 @@ public class GooIdentificatorController : MonoBehaviour
         DataFromActionPlan data = (DataFromActionPlan)obj;
         StateEnum action = data.state;
 
-        ProtocolIdea.DesactiveButton(action);
+        ProtocolIdea.DesactiveButton(action,true);
     }
 
     public void Reset()

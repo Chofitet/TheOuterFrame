@@ -140,6 +140,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     {
         try
         {
+            if (ActionIsDoing) return false;
             if (ActionsToAdd[0].GetisWrittenOnAP()) return false;
             if (ListOfConditionals.Count == 0) return true;
 
@@ -208,6 +209,12 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     public void MoveToCorner()
     {
         OnMoveToCornerIdea?.Invoke(null, gameObject);
+        GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(true);
+    }
+
+    public void MoveOutOfBoard(Component sender, object obj)
+    {
+        GetComponent<MoveBoardElementsToPos>().MoveToTakeOutPos(this,obj);
         GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(true);
     }
 

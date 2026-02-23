@@ -16,8 +16,9 @@ public class ProtocolIdeaBTNController : MonoBehaviour
     [SerializeField] GooProtocolCompleteConditional gooConditional;
     [SerializeField] GameEvent OnCompleteGooProtocol;
     [SerializeField] GameEvent OnReactiveGooIdea;
-    private bool isInactive = true;
+    private bool isInactive = false;
     bool isForeverInactive = false;
+    bool isActionDoing;
     Sequence glowSequence;
     TMP_Text textField;
 
@@ -25,14 +26,12 @@ public class ProtocolIdeaBTNController : MonoBehaviour
     {
         if (isForeverInactive) return;
         textField = transform.GetChild(0).GetComponent<TMP_Text>();
-        isInactive = false;
-        ApplyShader("bold");
+        if(!isInactive) ApplyShader("bold");
     }
 
     private void OnDisable()
     {
         if (isForeverInactive) return;
-        isInactive = true;
         ApplyShader("");
     }
 
@@ -49,9 +48,10 @@ public class ProtocolIdeaBTNController : MonoBehaviour
 
     public void ReactiveIdea(StateEnum actualIdea)
     {
-        if(actualIdea != idea)
+        if(actualIdea != idea && isActionDoing != true)
         {
             isInactive = false;
+            isActionDoing = false;
             ChangeToColorToNormal();
             GetComponent<Button>().interactable = true;
             OnReactiveGooIdea?.Invoke(this, null);
@@ -62,6 +62,7 @@ public class ProtocolIdeaBTNController : MonoBehaviour
     {
         if (actualIdea == idea)
         {
+            isActionDoing = false;
             isInactive = false;
             ChangeToColorToNormal();
             GetComponent<Button>().interactable = true;
@@ -69,10 +70,11 @@ public class ProtocolIdeaBTNController : MonoBehaviour
         }
     }
 
-    public void DesactiveButton(StateEnum actualIdea)
+    public void DesactiveButton(StateEnum actualIdea, bool isDoing = false)
     {
         if (actualIdea == idea)
         {
+            isActionDoing = isDoing;
             ApplyShader("");
             isInactive = true;
             GetComponent<Button>().interactable = false;

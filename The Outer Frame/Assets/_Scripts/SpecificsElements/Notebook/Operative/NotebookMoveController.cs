@@ -18,7 +18,7 @@ public class NotebookMoveController : MonoBehaviour
     [SerializeField] Transform PosBackDossier;
     [SerializeField] AnimationCurve OutOfBackDossierCurve;
     [SerializeField] NotebookProcessManager processManager;
-    
+
     Animator anim;
     private Sequence moveSequence;
     private Sequence moveWithDossierSequence;
@@ -48,7 +48,7 @@ public class NotebookMoveController : MonoBehaviour
         OriginalTransform = transform.parent;
         processManager.OnProcessStarted += OnStartWordProcess;
         processManager.OnAllProcessesFinished += OnFinishAlltWordsProcess;
-        
+
     }
 
     private void OnDisable()
@@ -66,24 +66,24 @@ public class NotebookMoveController : MonoBehaviour
     {
         isInUse = false;
 
-        if(isMoving)
+        if (isMoving)
         {
             await Task.Delay(200);
         }
 
         if (pendingToGoDown)
         {
-            
+
             int target = pendingPosIndex;
             bool targetUp = pendingIsUp;
 
-            
+
 
             ForcePosition(target, false);
             pendingToGoDown = false;
             SetPos(target, targetUp);
 
-           
+
         }
 
         pendingPosIndex = -1;
@@ -121,7 +121,7 @@ public class NotebookMoveController : MonoBehaviour
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.PCView:
-                SetPos(3,true,null,false,0.2f);
+                SetPos(3, true, null, false, 0.2f);
                 dontLeaveNotebook = true;
                 break;
             case ViewStates.ProgressorView:
@@ -168,11 +168,11 @@ public class NotebookMoveController : MonoBehaviour
                 }
                 break;
             case ViewStates.BoardZoomView:
-                SetPos(7,false,null,false,0.1f,newview);    
+                SetPos(7, false, null, false, 0.1f, newview);
                 break;
 
         }
-        
+
         lastView = newview;
     }
 
@@ -186,7 +186,7 @@ public class NotebookMoveController : MonoBehaviour
     public void CallToSetPositionWritingOnTV(Component sender, object obj)
     {
         if (lastView != ViewStates.TVView) return;
-        SetPos(5,true);
+        SetPos(5, true);
     }
 
     void SetPos(int num, bool _isUp = true, Transform trans = null, bool isPinchofono = false, float delayToGrab = 0, ViewStates changingView = ViewStates.GeneralView)
@@ -258,17 +258,17 @@ public class NotebookMoveController : MonoBehaviour
 
     private void Update()
     {
-       
+
         if (isMoving && currentTarget != null)
         {
             transform.position = Vector3.Lerp(transform.position, currentTarget.position, lerpTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, currentTarget.rotation, lerpTime);
         }
 
-        if(Input.GetKeyDown(KeyCode.Mouse1) && !dontLeaveNotebook && isUp && !inputDisable && !OnceLeave)
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !dontLeaveNotebook && isUp && !inputDisable && !OnceLeave)
         {
             SetPos(0, false);
-            
+
         }
     }
     void SetTransform(Transform trans)
@@ -276,7 +276,7 @@ public class NotebookMoveController : MonoBehaviour
         if (trans == null) return;
         transform.SetParent(trans);
     }
-    
+
     public void WriteWord(Component sender, object obj)
     {
         WordData word = (WordData)obj;
@@ -306,10 +306,10 @@ public class NotebookMoveController : MonoBehaviour
 
         if (obj is bool)
         {
-            
+
             bool toOpenPhones = (bool)obj;
             if (!IsPhonesOpen && toOpenPhones) OpenPhoneNums(true);
-            else if(IsPhonesOpen && !toOpenPhones)
+            else if (IsPhonesOpen && !toOpenPhones)
             {
                 CloseNotebook(true);
             }
@@ -326,14 +326,50 @@ public class NotebookMoveController : MonoBehaviour
     bool isShaking = false;
     public void ShakeNotebook(Component sender, object obj)
     {
+        if (shakeSequence != null && shakeSequence.IsActive())
+        {
+            shakeSequence.Kill();
+            isShaking = false;
+        }
+
         if (!isUp || isShaking || isMoving) return;
         isShaking = true;
 
+        Quaternion startRotation = transform.localRotation;
+
+        float duration = 0.8f;
+        int vibrato = 6;
+        float maxAngle = 6f;
+
+        float singleDuration = duration / vibrato;
+
         shakeSequence = DOTween.Sequence();
 
-        shakeSequence
-            .Append(transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic).OnComplete(() => isShaking = false))
-            .Join(transform.DOShakeRotation(0.4f, new Vector3(0, 5, 0), 8, 90, true, ShakeRandomnessMode.Harmonic));
+        shakeSequence.Append(
+        DOVirtual.Float(0f, duration, duration, t =>
+        {
+            float progress = t / duration;
+
+            float angle = Mathf.Sin(progress * Mathf.PI * vibrato)
+                          * maxAngle
+                          * (1f - progress);
+
+            transform.localRotation = startRotation * Quaternion.Euler(0, angle, 0);
+        })
+        .SetEase(Ease.OutSine));
+
+        shakeSequence.OnComplete(() =>
+        {
+            transform.localRotation = startRotation;
+            isShaking = false;
+        });
+
+        shakeSequence.OnKill(() =>
+        {
+            transform.localRotation = startRotation;
+            isShaking = false;
+        });
+
     }
 
     void OpenPhoneNums(bool isSlidingForWrite = false)
