@@ -11,11 +11,41 @@ public class ProccessFindableWordsEditor : Editor
 
         Pre_ProccessFindableWords script = (Pre_ProccessFindableWords)target;
 
+        GUILayout.Space(15);
+        EditorGUILayout.LabelField("Findable Processing", EditorStyles.boldLabel);
+
+        GUILayout.Space(5);
+
         GUILayout.Space(10);
 
-        if (GUILayout.Button("Process Findable Words"))
+        if (GUILayout.Button("Process All Reports"))
         {
-            script.ProcessInEditor();
+            script.ProcessAllReports();
         }
+
+        if (GUILayout.Button("Process All Transcripts"))
+        {
+            script.ProcessAllTranscripts();
+        }
+
+        if (GUILayout.Button("Process All Database Entries"))
+        {
+            script.ProcessAllDatabaseEntries();
+        }
+
+        GUILayout.Space(10);
+
+        GUI.backgroundColor = new Color(0.8f, 0.9f, 1f);
+
+        if (GUILayout.Button("PROCESS EVERYTHING"))
+        {
+            script.ProcessAllReports();
+            script.ProcessAllTranscripts();
+            script.ProcessAllDatabaseEntries();
+
+            Debug.Log("All content processed.");
+        }
+
+        GUI.backgroundColor = Color.white;
     }
 }

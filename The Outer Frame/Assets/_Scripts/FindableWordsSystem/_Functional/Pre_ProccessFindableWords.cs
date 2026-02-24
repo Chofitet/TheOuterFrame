@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class Pre_ProccessFindableWords : MonoBehaviour
 {
     [SerializeField] ContentType contentTypeTest;
     [SerializeField] FindableWordsManager findableWordsManager;
     [SerializeField] WordData Irrelevant;
+    [SerializeField] DataDirectory directory;
 
     [Header("Report Type")]
     [SerializeField] TMP_Text reportField;
@@ -18,39 +22,132 @@ public class Pre_ProccessFindableWords : MonoBehaviour
     [Header("DB Type")]
     [SerializeField] TMP_Text DBField;
 
-    [Header("TV Type")]
+    [Header("TV Type")] // Por ahora me voy a ahorrar hacer el pre-proccess de las noticias, son livianas y a su vez son un lio
     [SerializeField] TMP_Text TVTitleField;
     [SerializeField] TMP_Text TV2LinesTitleField;
     [SerializeField] TMP_Text TVTextField;
 
-    public void ProcessInEditor()
+    private void ProcessContent(ContentType content, TMP_Text tmpField)
     {
-        Debug.Log("Processing Findable Words in Editor...");
+        List<FindableWordData> combined = new();
 
-        if (contentTypeTest == null)
+        void Process(string text)
         {
-            Debug.LogWarning("No ContentType assigned.");
-            return;
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            tmpField.text = text;
+            tmpField.ForceMeshUpdate();
+
+            var result = ProccessFindableWord.SearchForFindableWord(tmpField, Irrelevant);
+
+            if (result != null && result.Count > 0)
+                combined.AddRange(result);
         }
 
-        // Acá después podés llamar a tu sistema real
-        Debug.Log($"Processing content of type: {contentTypeTest.GetType().Name}");
+        Process(content.GetText());
+        Process(content.GetTextSecundary());
 
-        if(contentTypeTest.GetType().Name == "ReportType")
-        {
-            proccessContent(reportField);
-        }
+        // eliminar duplicados por ID (mucho mejor que por nombre)
+       /*- combined = combined
+            .GroupBy(x => x.GetName())
+            .Select(g => g.First())
+            .ToList();*/
+
+        content.SetFindableWords(combined);
+        EditorUtility.SetDirty(content);
     }
 
-    public void proccessContent(TMP_Text textField)
+    public void ProcessAllReports()
     {
-        textField.text = contentTypeTest.GetText();
+        var reports = directory.GetAllReportTypes();
 
-        textField.ForceMeshUpdate();
+        for (int i = 0; i < reports.Count; i++)
+        {
+            var report = reports[i];
 
-        contentTypeTest.SetFindableWords(ProccessFindableWord.SearchForFindableWord(textField, Irrelevant));
+            EditorUtility.DisplayProgressBar(
+                "Processing Reports",
+                report.name,
+                (float)i / reports.Count
+            );
 
+            ProcessContent(report, reportField);
+        }
 
+        EditorUtility.ClearProgressBar();
+        AssetDatabase.SaveAssets();
+
+        Debug.Log("Reports processed.");
+    }
+
+    public void ProcessAllTranscripts()
+    {
+        var calls = directory.GetAllTranscriptType();
+
+        for (int i = 0; i < calls.Count; i++)
+        {
+            var call = calls[i];
+
+            EditorUtility.DisplayProgressBar(
+                "Processing Transcripts",
+                call.name,
+                (float)i / calls.Count
+            );
+
+            ProcessContent(call, transcriptionField);
+        }
+
+        EditorUtility.ClearProgressBar();
+        AssetDatabase.SaveAssets();
+
+        Debug.Log("Transcripts processed.");
+    }
+
+    public void ProcessAllDatabaseEntries()
+    {
+        var dbEntries = directory.GetAllDBType();
+
+        for (int i = 0; i < dbEntries.Count; i++)
+        {
+            var db = dbEntries[i];
+
+            EditorUtility.DisplayProgressBar(
+                "Processing Database",
+                db.name,
+                (float)i / dbEntries.Count
+            );
+
+            ProcessContent(db, DBField);
+            ProccessHyperlink(db,DBField);
+        }
+
+        EditorUtility.ClearProgressBar();
+        AssetDatabase.SaveAssets();
+
+        Debug.Log("Database entries processed.");
+    }
+
+    void ProccessHyperlink(DataBaseType content, TMP_Text tmpField)
+    {
+        var result = new List<FindableWordData>();
+
+        void Process(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            tmpField.text = text;
+            tmpField.ForceMeshUpdate();
+
+            var result = ProccessHyperLinks.SearchForHyperLinkWord(tmpField, Irrelevant);
+
+        }
+
+        Process(content.GetText());
+
+        content.SetFindableWords(result);
+        EditorUtility.SetDirty(content);
     }
 
 }

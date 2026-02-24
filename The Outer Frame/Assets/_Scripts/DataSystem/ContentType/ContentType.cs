@@ -21,4 +21,6 @@ abstract public class ContentType : DataType
     }
 
     public abstract string GetText();
+
+    public abstract string GetTextSecundary();
 }

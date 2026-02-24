@@ -31,6 +31,7 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
     public StateEnum GetState() { return state; }
     public StateEnum GetAction() { return Action; }
     public override string GetText() { return Text; }
+    public override string GetTextSecundary(){ return TextForRepetition;}
     public string GetTextForRepetition() { return TextForRepetition; }
     public int GetChangeTimeOfAction() { return ChangeTimeOfAction; }
 

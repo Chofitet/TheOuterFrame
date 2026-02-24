@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Data/Asset Directory")]
@@ -23,6 +24,32 @@ public class DataDirectory : ScriptableObject
     public bool Contains(DataType data) => allData.Contains(data);
 
     public bool Contains(Guid id) => datasById.ContainsKey(id);
+
+    public List<T> GetAllOfType<T>() where T : ScriptableObject
+    {
+        return allData.OfType<T>().ToList();
+    }
+    public List<ContentType> GetAllContentTypes()
+    {
+        return allData.OfType<ContentType>().ToList();
+    }
+    public List<ReportType> GetAllReportTypes()
+    {
+        return allData.OfType<ReportType>().ToList();
+    }
+    public List<TVNewType> GetAllTVNewType()
+    {
+        return allData.OfType<TVNewType>().ToList();
+    }
+    public List<CallType> GetAllTranscriptType()
+    {
+        return allData.OfType<CallType>().ToList();
+    }
+    public List<DataBaseType> GetAllDBType()
+    {
+        return allData.OfType<DataBaseType>().ToList();
+    }
+
 
     public void Add(DataType data)
     {

@@ -82,8 +82,9 @@ public class FindableWordsManager : MonoBehaviour
                 if (w.GetWordData().GetIsFound()) continue;
                 if (w.GetWordData().GetInactiveState()) continue;
                 GameObject auxObj = pool.GetFromPool(textField.transform);
-                auxObj.transform.SetPositionAndRotation(w.GetPosition(), textField.transform.rotation);
-                auxObj.transform.SetParent(textField.transform);
+                auxObj.transform.SetParent(textField.transform, false);
+                auxObj.transform.localPosition = w.GetPosition();
+                auxObj.transform.localRotation = Quaternion.identity;
                 auxObj.name = "FindableBTN_" + w.GetWordData().GetName();
                 auxObj.GetComponent<FindableWordBTNController>().enabled = true;
                 auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle);

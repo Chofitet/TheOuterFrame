@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New Call", menuName ="Calls")]
-public class CallType : ScriptableObject, IStateComparable, IReseteableScriptableObject
+public class CallType : ContentType, IStateComparable, IReseteableScriptableObject
 {
     
     [Header("StartTime")]
@@ -58,6 +58,8 @@ public class CallType : ScriptableObject, IStateComparable, IReseteableScriptabl
         if (!isInterrupted) return Dialogue;
         else return IterruptedDialogue;
     }
+    public override string GetText() { return Dialogue; }
+    public override string GetTextSecundary(){return IterruptedDialogue;}
     public void SetCached(bool x)
     {
         isCatch = x;

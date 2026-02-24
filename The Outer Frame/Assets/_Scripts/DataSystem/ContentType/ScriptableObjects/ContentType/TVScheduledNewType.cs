@@ -59,9 +59,11 @@ public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableOb
         else return this;
     }
 
-    public override string GetText()
+    public override string GetText() { return text; }
+    public override string GetTextSecundary()
     {
-        return text;
+        if (headline != "") return headline;
+        else return headlineTwoLines;
     }
 
     public bool CheckForConditionals(List<ConditionalClass> list)

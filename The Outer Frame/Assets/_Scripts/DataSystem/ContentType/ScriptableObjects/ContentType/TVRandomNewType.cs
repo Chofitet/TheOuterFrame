@@ -32,9 +32,11 @@ public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObjec
 
     public string GetHeadline() { return headline; }
 
-    public override string GetText()
+    public override string GetText() { return text; }
+    public override string GetTextSecundary()
     {
-        return text;
+        if (headline != "") return headline;
+        else return headlineTwoLines;
     }
 
     public bool GetIfIsAEmergency() { return false; }

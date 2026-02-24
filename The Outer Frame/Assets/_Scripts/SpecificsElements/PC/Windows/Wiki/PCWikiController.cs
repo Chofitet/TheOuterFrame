@@ -84,8 +84,8 @@ public class PCWikiController : MonoBehaviour
         WikiInfoContent.SetActive(true);
         if (input.GetText() != null) WikiData.text = input.GetText();
         
-        FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);
-        HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
+        FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN,input.FindableWords);
+        HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink, input.HyperLinks);
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
         //WikiInfoContent.SetActive(true);
         image.sprite = input.GetImage();
