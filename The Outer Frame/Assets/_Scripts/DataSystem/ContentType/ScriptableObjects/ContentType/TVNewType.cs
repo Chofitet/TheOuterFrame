@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNew", menuName = "News/ReactiveNew")]
-public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteableScriptableObject, IPopUp
+public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScriptableObject, IPopUp
 {
     [HideInInspector][SerializeField] StateEnum state;
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
@@ -67,6 +67,10 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
         return alertLevelIncrement;
     }
 
+    public override string GetText()
+    {
+        return text;
+    }
     public string GetNewText()
     {
         return text;
