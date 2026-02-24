@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: UnrulyMobHacked
   m_EditorClassIdentifier: 
+  id: 786e2ef7-d345-4b89-87fe-af2a180c30a7
   Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   state: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   isAutomatic: 1
@@ -22,15 +23,19 @@ MonoBehaviour:
 
     There is no scenario in which we go to confront
     them and we come out alive.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 349a3a10f44025848a769d5cbb952c35, type: 3}
     text: 'NO '
   - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
     text: WAY
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: PetroBoyAskforKeysExtorted
   m_EditorClassIdentifier: 
+  id: bf14913d-f356-4cfa-bbaa-d9fc19dd9478
   Action: {fileID: 11400000, guid: 0e9d32ed67c697445a06c9c06a57038e, type: 2}
   state: {fileID: 11400000, guid: 15f2ec4ce7d820c44b0ca8f6e46c0722, type: 2}
   isAutomatic: 0
@@ -21,6 +22,7 @@ MonoBehaviour:
     Raracara</link>.  \n \nHe got scared when we came in and dropped his phone in
     the jon. No need to worry about intel getting out now. \n"
   TextForRepetition: 
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: e3d84cf22884c6b479ecca3be47e406a, type: 3}
     text: OBEDIENT
@@ -36,7 +38,9 @@ MonoBehaviour:
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

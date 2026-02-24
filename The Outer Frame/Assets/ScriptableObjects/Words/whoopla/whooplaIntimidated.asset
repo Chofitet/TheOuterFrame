@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: whooplaIntimidated
   m_EditorClassIdentifier: 
+  id: 0e89f478-0aaf-4003-8d76-8dcd0eb85fe0
   Action: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   state: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   isAutomatic: 1
@@ -23,13 +24,17 @@ MonoBehaviour:
 
     It''s just a word we heard without context,
     so there''s not much we can do with it.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 9ffdc79406e82a542b917ac902b567c1, type: 3}
     text: WHAT TO DO?
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

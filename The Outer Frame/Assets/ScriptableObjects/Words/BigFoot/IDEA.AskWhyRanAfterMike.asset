@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.AskWhyRanAfterMike
   m_EditorClassIdentifier: 
+  id: fab70572-d30c-451d-b954-7058bc9780da
   Action: {fileID: 11400000, guid: c678f89a0fa3bfe47a1d672bf457c720, type: 2}
   state: {fileID: 11400000, guid: c678f89a0fa3bfe47a1d672bf457c720, type: 2}
   isAutomatic: 0
@@ -20,6 +21,7 @@ MonoBehaviour:
 
     "The other not good"'
   TextForRepetition: 
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 9bb3476d93f10c54298669228efb7cdd, type: 3}
     text: 
@@ -27,7 +29,9 @@ MonoBehaviour:
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

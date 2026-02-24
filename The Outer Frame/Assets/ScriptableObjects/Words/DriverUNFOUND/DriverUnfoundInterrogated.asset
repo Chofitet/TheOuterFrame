@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: DriverUnfoundInterrogated
   m_EditorClassIdentifier: 
+  id: 6607ce30-38ef-4081-8d31-9d45b0b80bc6
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 1
@@ -20,15 +21,19 @@ MonoBehaviour:
     we find the driver.\r\n"
   TextForRepetition: "WE SAID: \n\nOk. \n\nMaybe we could try that.\n\nBUT we\u2019d
     have to save it for after we find the driver.\r\n"
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: STILL MISSING
   Conditionals:
   - condition: {fileID: 11400000, guid: 75c399ba044115b498551401a398df2e, type: 2}
     ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

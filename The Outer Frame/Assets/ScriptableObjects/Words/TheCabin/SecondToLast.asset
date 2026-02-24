@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: SecondToLast
   m_EditorClassIdentifier: 
+  id: 40e3b1a9-e8ac-4c95-ad6d-2a12b12b2cad
   Action: {fileID: 11400000, guid: 5472d372b50458c498e702d075d84ea4, type: 2}
   state: {fileID: 11400000, guid: 5472d372b50458c498e702d075d84ea4, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
   Text: THIS IS SECOND TO LAST
   TextForRepetition: 
+  CustomStatus: 
   Photos: []
   Conditionals:
   - condition: {fileID: 11400000, guid: 3eb6b319a9051e14da82e153fea6b178, type: 2}
     ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 1
+  LastReport: 0
+  findableWords: []

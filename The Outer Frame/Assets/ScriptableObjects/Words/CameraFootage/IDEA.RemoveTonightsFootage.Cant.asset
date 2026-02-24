@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.RemoveTonightsFootage.Cant
   m_EditorClassIdentifier: 
+  id: a9aa0db1-127e-4b6e-97af-64fcc9652598
   Action: {fileID: 11400000, guid: 8188049cde094484597b0ff4d29a4629, type: 2}
   state: {fileID: 11400000, guid: 8188049cde094484597b0ff4d29a4629, type: 2}
   isAutomatic: 1
@@ -20,6 +21,7 @@ MonoBehaviour:
 
     PICKLE BUTT'
   TextForRepetition: 
+  CustomStatus: 
   Photos: []
   Conditionals:
   - condition: {fileID: 11400000, guid: cb9eab3faab9cc54da2982f9b433b9d4, type: 2}
@@ -27,7 +29,9 @@ MonoBehaviour:
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

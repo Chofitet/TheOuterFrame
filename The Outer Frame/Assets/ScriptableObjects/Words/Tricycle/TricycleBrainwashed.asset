@@ -12,19 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: TricycleBrainwashed
   m_EditorClassIdentifier: 
+  id: be7018a7-75c6-4983-a85e-056735e37eb6
   Action: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
   Text: "Let's find it first.\n \nThen we are up for whatever."
   TextForRepetition: "Let's find it first.\n \nThen we are up for whatever."
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
     text: NOT YET
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

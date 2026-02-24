@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: TricycleMikeHackedCellPhoneLabtested
   m_EditorClassIdentifier: 
+  id: 5aab61a9-e358-47a7-8b7a-bbe1590e761e
   Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   state: {fileID: 11400000, guid: 10f58a2925d46844d811482201b34152, type: 2}
   isAutomatic: 1
@@ -22,13 +23,19 @@ MonoBehaviour:
 
     Except for that busted cellphone, Mike does
     not own any technological devices.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: SORRY
   Conditionals:
   - condition: {fileID: 11400000, guid: c575cce0db2714c45800761281bb99f6, type: 2}
     ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
+  findableWords: []

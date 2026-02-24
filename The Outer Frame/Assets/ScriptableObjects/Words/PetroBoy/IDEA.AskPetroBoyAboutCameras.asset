@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.AskPetroBoyAboutCameras
   m_EditorClassIdentifier: 
+  id: 7d6a3a22-2638-4b4d-a1f3-76e07df94505
   Action: {fileID: 11400000, guid: 0b87f38c2d6d31245962f89ba9a7bde6, type: 2}
   state: {fileID: 11400000, guid: 0b87f38c2d6d31245962f89ba9a7bde6, type: 2}
   isAutomatic: 0
@@ -21,6 +22,7 @@ MonoBehaviour:
     (which they cleverly hid under the cash counter). \n \nThey upload all the footage
     to the NuBe at the end of the week."
   TextForRepetition: We already did that, check the report or the DB.
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: d07206e9a8578d241a968021398780f3, type: 3}
     text: SHOW-OFF
@@ -32,7 +34,9 @@ MonoBehaviour:
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

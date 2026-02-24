@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: TricycleTracksInterrogated
   m_EditorClassIdentifier: 
+  id: a9318efc-b257-4b56-8072-75aed445d17d
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 1
@@ -19,13 +20,17 @@ MonoBehaviour:
   Text: "They are not sentient.\n\r\nThey won\u2019t answer any of our questions.\r\n"
   TextForRepetition: "WE SAID:\n\nThey are not sentient.\n\r\nSo they won\u2019t
     answer any of our questions.\r\n"
+  CustomStatus: 
   Photos:
   - photo: {fileID: 0}
     text: 
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

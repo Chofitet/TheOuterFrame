@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: CaveInspected
   m_EditorClassIdentifier: 
+  id: 9fa3c62e-b510-4dcf-9703-c0ed5bfc1ec0
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
@@ -25,15 +26,19 @@ MonoBehaviour:
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 094a5a7485c4fd741a850c0012120766, type: 3}
     text: BIG FOOT'S CRIB
   - photo: {fileID: 21300000, guid: a22fc489668c2e24e8dc7c6312dea1c4, type: 3}
     text: FRIEND?
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: TricycleTracksIsolated
   m_EditorClassIdentifier: 
+  id: 04e609ff-b5f2-438e-93d5-ced91db2f632
   Action: {fileID: 11400000, guid: a425687d884e5cd46bb5c49136fcea67, type: 2}
   state: {fileID: 11400000, guid: a425687d884e5cd46bb5c49136fcea67, type: 2}
   isAutomatic: 1
@@ -21,13 +22,17 @@ MonoBehaviour:
 
 
     Can''t be done.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 0}
     text: 
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

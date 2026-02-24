@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: BigSignInspected
   m_EditorClassIdentifier: 
+  id: 09b61ca1-5257-44ca-bcdc-1d0233178fd1
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
@@ -22,13 +23,17 @@ MonoBehaviour:
   TextForRepetition: "WE SAID:\n\nThe thing reads \"Don't forget to text Mom on her
     day\".\n\nIt offers sound advice on a questionable moment. \n\nIt has been unceremoniously
     penetrated by <link>the truck</link>. \n"
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: cf6e63028c42f5a4a996ee31157a490a, type: 3}
     text: TEXT AND DRIVE?
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

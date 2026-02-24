@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: TheCabinIntimidated
   m_EditorClassIdentifier: 
+  id: a76f1c56-0ffd-4b82-99b0-ad13b9f2457b
   Action: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   state: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   isAutomatic: 1
@@ -22,13 +23,17 @@ MonoBehaviour:
 
     This place inspires and deserves respect and
     understanding.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 71fe533b02bcdc44eb118b10495b5d4c, type: 3}
     text: A PLACE TO CHERISH
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

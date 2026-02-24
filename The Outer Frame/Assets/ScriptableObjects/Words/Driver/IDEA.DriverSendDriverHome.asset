@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.DriverSendDriverHome
   m_EditorClassIdentifier: 
+  id: d2510533-1f7a-4d4f-8519-80532533cb75
   Action: {fileID: 11400000, guid: a0490116523ab53489deaef205841191, type: 2}
   state: {fileID: 11400000, guid: a0490116523ab53489deaef205841191, type: 2}
   isAutomatic: 0
@@ -19,6 +20,7 @@ MonoBehaviour:
   Text: "Safe and away from any pesky reporters. \n\nHe'll keep his word. \n\nHe'll
     keep his mouth shut."
   TextForRepetition: 
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: cbb1e7fba7001d04f9402df9b33496ab, type: 3}
     text: THERE'S NO PLACE LIKE HOME
@@ -28,7 +30,9 @@ MonoBehaviour:
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

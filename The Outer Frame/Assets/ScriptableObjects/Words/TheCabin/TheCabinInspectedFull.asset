@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: TheCabinInspectedFull
   m_EditorClassIdentifier: 
+  id: 3b3210f4-483e-48ba-8f1e-cb00c5f4b4d2
   Action: {fileID: 11400000, guid: b9d1df25dbbb7d9448b6d5d99c72593e, type: 2}
   state: {fileID: 11400000, guid: b9d1df25dbbb7d9448b6d5d99c72593e, type: 2}
   isAutomatic: 0
@@ -26,13 +27,17 @@ MonoBehaviour:
     \nI don\u2019t remember picking it up. \r\n\r \n<link>She is not standing.</link>
     </b>  \r"
   TextForRepetition: 
+  CustomStatus: 
   Photos: []
   Conditionals:
   - condition: {fileID: 11400000, guid: 3eb6b319a9051e14da82e153fea6b178, type: 2}
     ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 1
   LastReport: 1
+  findableWords: []

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: Vessel2EmergencyCodeBrainwashed
   m_EditorClassIdentifier: 
+  id: dc8ec02e-884d-40c6-8bd9-ee6672f15f32
   Action: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   isAutomatic: 1
@@ -20,13 +21,17 @@ MonoBehaviour:
     full of <link>fluorescent goo</link>. '
   TextForRepetition: "WE SAID:   \n  \nThat's not how you use a secret code found
     in weird tube inside a <link>truck</link> full of <link>fluorescent goo</link>.  "
+  CustomStatus: 
   Photos:
   - photo: {fileID: 0}
     text: 
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

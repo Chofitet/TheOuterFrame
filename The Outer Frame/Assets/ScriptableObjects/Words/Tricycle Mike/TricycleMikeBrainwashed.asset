@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: TricycleMikeBrainwashed
   m_EditorClassIdentifier: 
+  id: e16192da-6db8-4e34-ab82-e57b820b1a56
   Action: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   isAutomatic: 0
@@ -22,6 +23,7 @@ MonoBehaviour:
 
     A
     forehead once dissapeared because of that.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 44673cb025a7257459dd1ce9af371ecf, type: 3}
     text: DONE!
@@ -31,7 +33,9 @@ MonoBehaviour:
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

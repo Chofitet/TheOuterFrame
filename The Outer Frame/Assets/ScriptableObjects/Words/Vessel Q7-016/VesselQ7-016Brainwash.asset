@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: VesselQ7-016Brainwash
   m_EditorClassIdentifier: 
+  id: 21956fc0-c2c2-44c3-893a-5e80c59b9d81
   Action: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   isAutomatic: 1
@@ -27,10 +28,17 @@ MonoBehaviour:
     meaningful approaches for this and future situations.
 
 '
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: OKAY?
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
+  AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
+  findableWords: []

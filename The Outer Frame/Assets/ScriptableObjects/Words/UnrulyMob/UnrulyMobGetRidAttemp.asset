@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: UnrulyMobGetRidAttemp
   m_EditorClassIdentifier: 
+  id: 4cae9ee9-be2c-4a67-9658-6185d94b44f4
   Action: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   state: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   isAutomatic: 0
@@ -22,13 +23,17 @@ MonoBehaviour:
 
     There is no scenario in which we go to confront
     them and we come out alive.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: WISH US GOOD LUCK
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 1
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

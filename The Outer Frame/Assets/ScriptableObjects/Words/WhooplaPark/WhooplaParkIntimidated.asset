@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: WhooplaParkIntimidated
   m_EditorClassIdentifier: 
+  id: 728a5e11-7cbd-4542-87b2-f03ec1e02a25
   Action: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   state: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   isAutomatic: 1
@@ -25,10 +26,17 @@ MonoBehaviour:
 
     We don''t think we should
     . . .'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
     text: NOT TODAY
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
+  AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
+  findableWords: []

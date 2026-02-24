@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.AskToEnter
   m_EditorClassIdentifier: 
+  id: 0ab04c11-b9a0-4d6c-a9c9-90adc8dc2608
   Action: {fileID: 11400000, guid: dce67a97469bcad49a169ca76a100e16, type: 2}
   state: {fileID: 11400000, guid: dce67a97469bcad49a169ca76a100e16, type: 2}
   isAutomatic: 0
@@ -22,13 +23,17 @@ MonoBehaviour:
     N\n\n\n\n\n\n                                                                  
     W            "
   TextForRepetition: 
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 8544a2f758ec07d4abc5ce7d4d35f1f6, type: 3}
     text: 
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 1
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

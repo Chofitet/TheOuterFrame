@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: CreatureHacked
   m_EditorClassIdentifier: 
+  id: 034460de-20cb-447b-a9bb-697a99703a2a
   Action: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   state: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   isAutomatic: 1
@@ -21,13 +22,17 @@ MonoBehaviour:
 
 
     Its location and nature remain unknown.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 9ffdc79406e82a542b917ac902b567c1, type: 3}
     text: SORRY
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []

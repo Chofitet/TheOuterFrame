@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: CameraFootageInspected 1
   m_EditorClassIdentifier: 
+  id: 7a271746-065d-4fd1-82d8-4c54f456ceec
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
@@ -24,6 +25,7 @@ MonoBehaviour:
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 1f61f0f5791f607408d0e80f8aecf2fa, type: 3}
     text: MIKE?
@@ -34,9 +36,12 @@ MonoBehaviour:
     ifNot: 1
   - condition: {fileID: 11400000, guid: 43994936b8273bc459ee021cd42e7d4e, type: 2}
     ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
   LastReport: 0
+  findableWords: []
