@@ -25,7 +25,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
         }
     }
 
-    public void InstanciateRedactedBlocks(TMP_Text textField)
+    public void InstanciateRedactedBlocks(TMP_Text textField, IReadOnlyList<RedactedBlockData> pre_proccess_PositioBlock = null)
     {
         if (textField == null)
         {
@@ -56,14 +56,20 @@ public class InstanciateRedactedBlock : MonoBehaviour
             }
             RedactedBlockList.Clear();
 
-            List<RedactedBlockData> PositionsWord = SearchForRedactedBlocks(textField, false);
+            IReadOnlyList<RedactedBlockData> PositionBlock;
 
-            foreach (RedactedBlockData w in PositionsWord)
+            Debug.LogWarning("Using PreProccess redacted Data");
+            PositionBlock = pre_proccess_PositioBlock;
+
+            if (pre_proccess_PositioBlock == null || pre_proccess_PositioBlock.Count == 0) return;
+             
+
+            foreach (RedactedBlockData w in PositionBlock)
             {
 
                 GameObject auxObj = pool.GetFromPool(textField.transform);
-                auxObj.transform.SetPositionAndRotation(w.position, textField.transform.rotation);
-                auxObj.transform.SetParent(textField.transform);
+                auxObj.transform.localPosition = w.position;
+                auxObj.transform.localRotation = Quaternion.identity;
                 auxObj.GetComponent<RedactedBlock>().Initialization(w.redactedText);
                 RedactedBlockList.Add(auxObj);
             }
@@ -81,53 +87,4 @@ public class InstanciateRedactedBlock : MonoBehaviour
     }
 
 
-    List<RedactedBlockData> SearchForRedactedBlocks(TMP_Text textField, bool applyXCorrection)
-    {
-        List<RedactedBlockData> aux = new List<RedactedBlockData>();
-
-        textField.textInfo.Clear();
-
-        string[] words = textField.text.Split(' ');
-        int WordsCount = words.Length;
-
-
-        if (textField.IsActive())
-        {
-            textField.ForceMeshUpdate();
-        }
-        var wordLocation = Vector3.zero;
-            int e = 0;
-            int i = 0;
-
-       foreach (TMP_WordInfo wordInfo in textField.textInfo.wordInfo)
-       {
-            int wordDiference = textField.textInfo.wordCount;
-            if (i >= WordsCount - (WordsCount - wordDiference)) break;
-            if (wordInfo.characterCount == 0 || string.IsNullOrEmpty(wordInfo.GetWord())) continue;
-            string actualWord = wordInfo.GetWord();
-            if (wordInfo.GetWord() == "REDACTED" || wordInfo.GetWord() == "RE" || wordInfo.GetWord() == "REDACTEDTO" || wordInfo.GetWord() == "REDA")
-            {
-                var firstCharInfo = textField.textInfo.characterInfo[wordInfo.firstCharacterIndex];
-                var lastCharInfo = textField.textInfo.characterInfo[wordInfo.lastCharacterIndex];
-                wordLocation = textField.transform.TransformPoint(firstCharInfo.topLeft);
-                aux.Add(new RedactedBlockData(wordLocation, wordInfo.GetWord()));
-                    
-                e++;
-            }
-            i++;
-        }
-        return aux;
-    }
-}
-
-class RedactedBlockData
-{
-    public Vector3 position;
-    public string redactedText;
-
-    public RedactedBlockData(Vector3 _position, string _redactedText)
-    {
-        position = _position;
-        redactedText = _redactedText;
-    }
 }

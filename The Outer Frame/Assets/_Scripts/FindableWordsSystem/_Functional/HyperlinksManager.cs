@@ -72,26 +72,31 @@ public class HyperlinksManager : MonoBehaviour
                 }
             }
 
-            IReadOnlyList<FindableWordData> PositionsWord;
+            IReadOnlyList<FindableWordData> PositionsWord = null;
 
             if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count != 0)
             {
                 Debug.LogWarning("Using PreProccess hyperlink Data");
                 PositionsWord = pre_proccess_PositioWords;
             }
-            else
+            else if(pre_proccess_PositioWords == null)
             {
                 Debug.LogWarning("Using runtime hyperlink Data");
                 PositionsWord = ProccessHyperLinks.SearchForHyperLinkWord(textField, Irrelevant);
             }
+            else if(pre_proccess_PositioWords.Count == 0)
+            {
+                return;
+            }   
 
             foreach (FindableWordData w in PositionsWord)
             {
                // Debug.Log("HyperLink found: " + w.GetWordData().GetName());
 
                 GameObject auxObj = pool.GetFromPool(textField.transform);
-                auxObj.transform.SetPositionAndRotation(w.GetPosition(), textField.transform.rotation);
-                auxObj.transform.SetParent(textField.transform);
+                auxObj.transform.SetParent(textField.transform, false);
+                auxObj.transform.localPosition = w.GetPosition();
+                auxObj.transform.localRotation = Quaternion.identity;
                 auxObj.GetComponent<HyperlinksBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(),w.GetWordIndex());
                 HyperLinkBTNs.Add(auxObj);
             }

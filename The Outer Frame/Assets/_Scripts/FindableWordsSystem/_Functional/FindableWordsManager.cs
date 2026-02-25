@@ -63,17 +63,21 @@ public class FindableWordsManager : MonoBehaviour
                 }
             }
 
-            IReadOnlyList<FindableWordData> PositionsWord;
+            IReadOnlyList<FindableWordData> PositionsWord = null;
 
             if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count != 0)
             {
                 Debug.LogWarning("Using PreProccess findable Data");
                 PositionsWord = pre_proccess_PositioWords;
             }
-            else
+            else if (pre_proccess_PositioWords == null)
             {
                 Debug.LogWarning("Using runtime findable Data");
                 PositionsWord = ProccessFindableWord.SearchForFindableWord(textField, Irrelevant);
+            }
+             else if (pre_proccess_PositioWords.Count == 0)
+            {
+                return;
             }
 
             foreach (FindableWordData w in PositionsWord)

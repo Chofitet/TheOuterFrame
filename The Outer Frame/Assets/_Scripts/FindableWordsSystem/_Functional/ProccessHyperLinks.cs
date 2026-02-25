@@ -76,8 +76,7 @@ public static class ProccessHyperLinks
             bool checkSlicebtn = false;
 
             // Position of btn
-            Vector3 wordLocation = textField.transform.TransformPoint(
-            textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex].firstCharacterIndex].topLeft);
+            Vector3 wordLocation = textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex].firstCharacterIndex].topLeft;
             float combinedWordLength = 0;
             float heightInfo = 0;
             string word = "";
@@ -123,8 +122,7 @@ public static class ProccessHyperLinks
                         heightInfo += heightInfo / 4;
                         checkSlicebtn = true;
                         findableWords.Add(new FindableWordData(SearchCleanedWord(CleanWords, word), wordLocation, combinedWordLength, heightInfo, checkSlicebtn, startIndex));
-                        wordLocation = textField.transform.TransformPoint(
-                        textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].topLeft);
+                        wordLocation = textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].topLeft;
                         combinedWordLength = 0;
                         spaceToAdd = 0;
                         heightInfo = 0;

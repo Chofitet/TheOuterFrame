@@ -120,6 +120,7 @@ public class Pre_ProccessFindableWords : MonoBehaviour
 
             ProcessContent(db, DBField);
             ProccessHyperlink(db,DBField);
+            ProccessRedactedBlock(db, DBField);
         }
 
         EditorUtility.ClearProgressBar();
@@ -140,13 +141,35 @@ public class Pre_ProccessFindableWords : MonoBehaviour
             tmpField.text = text;
             tmpField.ForceMeshUpdate();
 
-            var result = ProccessHyperLinks.SearchForHyperLinkWord(tmpField, Irrelevant);
+            result = ProccessHyperLinks.SearchForHyperLinkWord(tmpField, Irrelevant);
 
         }
 
         Process(content.GetText());
 
-        content.SetFindableWords(result);
+        content.SetHyperLinks(result);
+        EditorUtility.SetDirty(content);
+    }
+
+    void ProccessRedactedBlock(DataBaseType content, TMP_Text tmpField)
+    {
+        var result = new List<RedactedBlockData>();
+
+        void Process(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            tmpField.text = text;
+            tmpField.ForceMeshUpdate();
+
+            result = ProcessRedactedBlock.SearchForRedactedBlocks(tmpField, false);
+
+        }
+
+        Process(content.GetText());
+
+        content.SetRedactedBlocks(result);
         EditorUtility.SetDirty(content);
     }
 
