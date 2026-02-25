@@ -82,6 +82,10 @@ public class GooIdentificatorController : MonoBehaviour
             IdentficatorPage = IdentificatorQuestions.Count - 1; //lopone automaticamente en la ultima
             ComponentAccessWindow.GetComponent<ComponentEnterWindow>().ShowPanel(false);
         }
+        else
+        {
+            SetASlotAnswered(IdentficatorPage +1 , -1); //resetSlot
+        }
         setActualPage();
     }
 
@@ -114,11 +118,11 @@ public class GooIdentificatorController : MonoBehaviour
             BackButton.SetActive(true);
         }
 
-        if (playerCode[IdentficatorPage] != -1 && !ComponentAccessWindow.transform.GetChild(0).gameObject.activeSelf)
+        /*if (playerCode[IdentficatorPage] != -1 && !ComponentAccessWindow.transform.GetChild(0).gameObject.activeSelf)
         {
             //next button se muestra si ya se respondió la pregunta
             NextButton.SetActive(true);
-        }
+        }*/
 
     }
 
@@ -129,7 +133,7 @@ public class GooIdentificatorController : MonoBehaviour
 
         int[] coordinate = (int[])obj;
 
-        playerCode[coordinate[0]]= coordinate[1];
+        SetASlotAnswered(coordinate[0], coordinate[1]);
 
         if(playerCode.Length == IdentificatorQuestions.Count)
         {
@@ -138,6 +142,11 @@ public class GooIdentificatorController : MonoBehaviour
         }
 
         pressNext();
+    }
+
+    void SetASlotAnswered(int x, int y)
+    {
+        playerCode[x] = y;
     }
 
     public void ActiveGooPanel(Component sender, object obj)

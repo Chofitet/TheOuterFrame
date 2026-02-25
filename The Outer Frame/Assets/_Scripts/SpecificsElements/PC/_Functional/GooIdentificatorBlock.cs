@@ -50,16 +50,17 @@ public class GooIdentificatorBlock : MonoBehaviour
 
     public void PressButton(GameObject pressedAnswere)
     {
-        Debug.Log(pressedAnswere.transform.GetChild(1).GetComponent<TMP_Text>().text);
+        //Debug.Log(pressedAnswere.transform.GetChild(1).GetComponent<TMP_Text>().text);
 
         Button btn = pressedAnswere.transform.GetChild(0).GetComponent<Button>();
-        btn.interactable = false;
+
+        //btn.interactable = false;
 
         foreach(GameObject A in AnswereBlocks)
         {
             if(A != pressedAnswere)
             {
-                A.transform.GetChild(0).GetComponent<Button>().interactable = true;
+                //A.transform.GetChild(0).GetComponent<Button>().interactable = true;
             }
             else
             {
@@ -75,7 +76,7 @@ public class GooIdentificatorBlock : MonoBehaviour
     {
         foreach (GameObject A in AnswereBlocks)
         {
-            A.transform.GetChild(0).GetComponent<Button>().interactable = true;
+            //A.transform.GetChild(0).GetComponent<Button>().interactable = true;
         }
     }
 
