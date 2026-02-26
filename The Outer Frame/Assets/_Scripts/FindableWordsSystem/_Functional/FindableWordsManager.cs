@@ -31,7 +31,7 @@ public class FindableWordsManager : MonoBehaviour
         }
     }
 
-    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, IReadOnlyList<FindableWordData> pre_proccess_PositioWords = null , bool _comesFromDBTitle = false)
+    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, IReadOnlyList<FindableWordData> pre_proccess_PositioWords = null, bool _comesFromDBTitle = false)
     {
         // btnType para cuando quiera refactorizar este script para que funcione con links tambien
 
@@ -65,19 +65,15 @@ public class FindableWordsManager : MonoBehaviour
 
             IReadOnlyList<FindableWordData> PositionsWord = null;
 
-            if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count != 0)
+            if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count > 0)
             {
                 Debug.LogWarning("Using PreProccess findable Data");
                 PositionsWord = pre_proccess_PositioWords;
             }
-            else if (pre_proccess_PositioWords == null)
+            else
             {
                 Debug.LogWarning("Using runtime findable Data");
                 PositionsWord = ProccessFindableWord.SearchForFindableWord(textField, Irrelevant);
-            }
-             else if (pre_proccess_PositioWords.Count == 0)
-            {
-                return;
             }
 
             foreach (FindableWordData w in PositionsWord)

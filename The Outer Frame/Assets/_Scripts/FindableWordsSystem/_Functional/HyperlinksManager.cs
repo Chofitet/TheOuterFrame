@@ -74,20 +74,16 @@ public class HyperlinksManager : MonoBehaviour
 
             IReadOnlyList<FindableWordData> PositionsWord = null;
 
-            if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count != 0)
+            if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count > 0)
             {
                 Debug.LogWarning("Using PreProccess hyperlink Data");
                 PositionsWord = pre_proccess_PositioWords;
             }
-            else if(pre_proccess_PositioWords == null)
+            else
             {
                 Debug.LogWarning("Using runtime hyperlink Data");
                 PositionsWord = ProccessHyperLinks.SearchForHyperLinkWord(textField, Irrelevant);
             }
-            else if(pre_proccess_PositioWords.Count == 0)
-            {
-                return;
-            }   
 
             foreach (FindableWordData w in PositionsWord)
             {

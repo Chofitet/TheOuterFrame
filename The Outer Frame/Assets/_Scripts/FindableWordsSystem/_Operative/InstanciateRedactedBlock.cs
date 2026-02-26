@@ -58,12 +58,17 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
             IReadOnlyList<RedactedBlockData> PositionBlock;
 
-            Debug.LogWarning("Using PreProccess redacted Data");
-            PositionBlock = pre_proccess_PositioBlock;
-
-            if (pre_proccess_PositioBlock == null || pre_proccess_PositioBlock.Count == 0) return;
+            if (pre_proccess_PositioBlock != null && pre_proccess_PositioBlock.Count > 0)
+            {
+                Debug.LogWarning("Using PreProccess findable Data");
+                PositionBlock = pre_proccess_PositioBlock;
+            }
+            else
+            {
+                Debug.LogWarning("Using runtime findable Data");
+                PositionBlock = ProcessRedactedBlock.SearchForRedactedBlocks(textField, false);
+            }
              
-
             foreach (RedactedBlockData w in PositionBlock)
             {
 

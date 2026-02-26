@@ -6,7 +6,7 @@ abstract public class ContentType : DataType
 {
     public Guid ID;
 
-    private List<FindableWordData> findableWords = new();
+    private List<FindableWordData> findableWords;
 
     public IReadOnlyList<FindableWordData> FindableWords => findableWords;
 
@@ -14,12 +14,6 @@ abstract public class ContentType : DataType
     {
         findableWords = words;
     }
-
-    public bool HasPreProcessedWords()
-    {
-        return findableWords != null && findableWords.Count > 0;
-    }
-
     public abstract string GetText();
 
     public abstract string GetTextSecundary();
