@@ -10,6 +10,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
     [SerializeField] GameObject redactedBlockPrefab;
     List<GameObject> RedactedBlockList = new List<GameObject>();
     [SerializeField] ButtonsPoolController pool;
+    [SerializeField] GameObject RedactedComnteiner;
 
     public static InstanciateRedactedBlock IRM { get; private set; }
 
@@ -25,7 +26,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
         }
     }
 
-    public void InstanciateRedactedBlocks(TMP_Text textField, IReadOnlyList<RedactedBlockData> pre_proccess_PositioBlock = null)
+    public void InstanciateRedactedBlocks(TMP_Text textField, IReadOnlyList<RedactedBlockData> pre_proccess_PositioBlock = null, bool CleanPool = false)
     {
         if (textField == null)
         {
@@ -47,14 +48,14 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
         try
         {
-            foreach (Transform child in textField.transform)
+            if (CleanPool)
             {
-                if (child.GetComponent<RedactedBlock>() != null)
+                foreach (GameObject child in RedactedBlockList)
                 {
-                    Destroy(child.gameObject);
+                    pool.ReturnToPool(child);
                 }
+                RedactedBlockList.Clear();
             }
-            RedactedBlockList.Clear();
 
             IReadOnlyList<RedactedBlockData> PositionBlock;
 
@@ -66,8 +67,8 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
             foreach (RedactedBlockData w in PositionBlock)
             {
-
-                GameObject auxObj = pool.GetFromPool(textField.transform);
+                // pool.GetFromPool(textField.transform.GetComponentInParent<Transform>().GetChild(1)); // toma el RedactedConteiner
+                GameObject auxObj = pool.GetFromPool(RedactedComnteiner.transform); // toma el RedactedConteiner
                 auxObj.transform.localPosition = w.position;
                 auxObj.transform.localRotation = Quaternion.identity;
                 auxObj.GetComponent<RedactedBlock>().Initialization(w.redactedText);

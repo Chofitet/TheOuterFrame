@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Windows;
 
+
 public class Pre_ProccessFindableWords : MonoBehaviour
 {
     [SerializeField] ContentType contentTypeTest;
@@ -27,6 +28,7 @@ public class Pre_ProccessFindableWords : MonoBehaviour
     [SerializeField] TMP_Text TV2LinesTitleField;
     [SerializeField] TMP_Text TVTextField;
 
+#if UNITY_EDITOR
     private void ProcessContent(ContentType content, TMP_Text tmpField)
     {
         List<FindableWordData> combined = new();
@@ -172,5 +174,6 @@ public class Pre_ProccessFindableWords : MonoBehaviour
         content.SetRedactedBlocks(result);
         EditorUtility.SetDirty(content);
     }
+#endif
 
 }

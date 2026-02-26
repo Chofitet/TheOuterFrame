@@ -4,12 +4,12 @@ using System.Linq;
 using System;
 
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
+using UnityEditor;
+#if UNITY_EDITOR
 
 [InitializeOnLoad]
+#endif
 public static class DataServiceEditor 
 {
 
@@ -20,11 +20,24 @@ public static class DataServiceEditor
 
     static DataServiceEditor()
     {
-        directory = LoadOrCreateDirectory();
+        directory = LoadRuntime();
+#if UNITY_EDITOR
+        directory = LoadOrCreateDirectoryEditor();
+#endif
         directory.Initialize();
     }
 
-    private static DataDirectory LoadOrCreateDirectory()
+    private static DataDirectory LoadRuntime()
+    {
+        if (directory != null)
+            return directory;
+
+        directory = Resources.Load<DataDirectory>(directoryPath);
+
+        return directory;
+    }
+#if UNITY_EDITOR
+    private static DataDirectory LoadOrCreateDirectoryEditor()
     {
         var dir = AssetDatabase.LoadAssetAtPath<DataDirectory>(directoryPath);
 
@@ -105,7 +118,7 @@ public static class DataServiceEditor
         directory.Remove(data);
         EditorUtility.SetDirty(directory);
     }
-
+#endif
     public static DataType Get(Guid id)
     {
         return directory.GetDictionary().TryGetValue(id, out var data)
