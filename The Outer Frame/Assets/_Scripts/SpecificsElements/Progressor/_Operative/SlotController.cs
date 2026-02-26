@@ -210,9 +210,7 @@ public class SlotController : MonoBehaviour
             if (isRecoveryAgent)
             {
                 isRecoveryAgent = false;
-                EnableAgent();
-                OnRecoveryAgent?.Invoke(this, this);
-                ResetSlot();
+                ResetRecovery();
                 return;
             }
             if (isAlreadyDone)
@@ -423,6 +421,24 @@ public class SlotController : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
+    void ResetRecovery()
+    {
+        AbortIcon.SetActive(false);
+        CheckIcon.SetActive(true);
+        AgentIcon.SetActive(false);
+
+        SetLEDState(Color.white, "Green");
+
+        Invoke("DelayRecoveryReset", 2f);
+
+    }
+
+    void DelayRecoveryReset()
+    {
+        EnableAgent();
+        OnRecoveryAgent?.Invoke(this, this);
+        ResetSlot();
+    }
 
     string materialName;
     public void ApplyMaterial(TMP_Text textField, string materialLabel = "")

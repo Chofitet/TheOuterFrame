@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 
-public class ClockController : MonoBehaviour
+public class ClockController : MonoBehaviour 
 {
     [SerializeField] TMP_Text datetxt;
     [SerializeField] GameObject ClockBTN;
@@ -23,7 +23,9 @@ public class ClockController : MonoBehaviour
 
     [SerializeField] Transform SpeedClockPos;
     [SerializeField] Transform NormalClockPoas;
-   
+
+    [SerializeField] BlinkMaterialEffect DialLight;
+    [SerializeField] BlinkMaterialEffect ClockX2Light;
 
     TimeManager TM;
     Animator anim;
@@ -136,6 +138,7 @@ public class ClockController : MonoBehaviour
     public void OnNormalizeTime(Component sender, object obj)
     {
         if (isSpeedUp) anim.SetTrigger("speedDown");
+        if (!isDoingClockDialAnim) { DialLight.TurnOffLight(null, null); ClockX2Light.TurnOffLight(null, null); }
         isSpeedUp = false;
         ClockBTN.GetComponent<Collider>().enabled = false;
         ClockBTN.transform.DOMove(NormalClockPoas.position, 0.3f).OnComplete(()=> ClockBTN.GetComponent<Collider>().enabled = true);
@@ -143,12 +146,16 @@ public class ClockController : MonoBehaviour
 
     public void OnSpeedUpTime(Component sender, object obj)
     {
-        if(!isSpeedUp)anim.SetTrigger("speedUp");
+        if (!isSpeedUp) anim.SetTrigger("speedUp");
+        
         isSpeedUp = true;
-         OnViewChange?.Invoke(this, null);
+        DialLight.TurnOnLigth(null, null);
+        ClockX2Light.TurnOnLigth(null, null);
+        OnViewChange?.Invoke(this, null);
         ClockBTN.GetComponent<Collider>().enabled = false;
         ClockBTN.transform.DOMove(SpeedClockPos.position, 0.3f).OnComplete(() => ClockBTN.GetComponent<Collider>().enabled = true);
-       
+        Invoke("CheckClockState", 0.1f);
+        isDoingClockDialAnim = true;
     }
 
     float _TimeVariation;
@@ -158,5 +165,26 @@ public class ClockController : MonoBehaviour
         _TimeVariation = 1/TimeVariation;
         anim.SetFloat("clockSpeed", TimeVariation);
     }
+
+    void CheckClockState()
+    {
+        if (anim.GetBool("speedUp") && !isSpeedUp)
+        {
+            anim.SetBool("speedDown",false);
+            anim.ResetTrigger("speedUp");
+        }
+    }
+
+    bool isDoingClockDialAnim;
+    public void TriggerClockDialX2()
+    {
+        isDoingClockDialAnim = false;
+
+        if (!isSpeedUp) { DialLight.TurnOffLight(null, null); ClockX2Light.TurnOffLight(null, null); }
+
+    }
+
+
+
 
 }
