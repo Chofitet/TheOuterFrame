@@ -49,7 +49,7 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
         CompleteTime = TimeManager.timeManager.GetTime();
     }
 
-    public List<FindableWordData> findableWords;
+    //public List<FindableWordData> findableWords;
 
     private void OnEnable()
     {
