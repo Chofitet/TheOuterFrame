@@ -38,6 +38,7 @@ public class ProgressorModuleController : MonoBehaviour
     BlinkMaterialEffect blinkmaterialAbort;
     Color OriginalColor;
     bool isEndOfGame;
+    bool isChargingAction;
 
     private WordData word;
     private StateEnum state;
@@ -99,6 +100,7 @@ public class ProgressorModuleController : MonoBehaviour
         elapsedTime = 0f;
         isWaitingForSetSlot = true;
         slot.OnSetAction += activeAbortButton;
+        isChargingAction = true;
     }
 
     void activeAbortButton(bool x)
@@ -200,6 +202,7 @@ public class ProgressorModuleController : MonoBehaviour
             TryAbortBTN.GetComponent<BoxCollider>().enabled = true;
             SwitchAbortBTN.GetComponent<BoxCollider>().enabled = false;
             slot.cancelTryAbortBlink();
+            isChargingAction = false;
 
             if (slot.GetisAMultiAction())
             {
@@ -226,7 +229,11 @@ public class ProgressorModuleController : MonoBehaviour
             }
             else
             {
-                ReadyToPrintLED.SetOtherColor(this, null);
+                if(slot.GetIsAborted())
+                {
+                    ReadyToPrintLED.SetSpecificColor(LedRed);
+                } 
+                else ReadyToPrintLED.SetOtherColor(this, null);
             }
 
             TurnOnLight(light, InitLigthIntensity,0.3f);
@@ -370,8 +377,10 @@ public class ProgressorModuleController : MonoBehaviour
         multiAgentNum = 0;
         isAborted = false;
         isAbortOpen = false;
+        isChargingAction = false;
         TurnOnLight(light, 0);
         TurnOnLight(light2, 0);
+
 
         TryAbortBTN.GetComponent<BoxCollider>().enabled = true;
         SwitchAbortBTN.GetComponent<BoxCollider>().enabled = false;
@@ -397,6 +406,7 @@ public class ProgressorModuleController : MonoBehaviour
         if (btn == TryAbortBTN)
         {
             anim.SetTrigger("tryAbortSwitch");
+            if (isChargingAction) return;
             slot.ActiveTryAbortPanel();
         }
             

@@ -7,7 +7,7 @@ using System;
 using TMPro.Examples;
 using DG.Tweening;
 using System.Linq;
-using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 public class SlotController : MonoBehaviour
 {
@@ -17,6 +17,8 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameObject AbortIcon;
     [SerializeField] GameObject CheckIcon;
     [SerializeField] GameObject AgentIcon;
+    [SerializeField] GameObject AutomaticIcon;
+    [SerializeField] Color DarkLedPanelColor;
     [SerializeField] GameEvent OnFinishActionProgress;
     [SerializeField] GameEvent OnReactiveIdeaPosit;
     [SerializeField] GameObject TryAbortPanel;
@@ -56,6 +58,7 @@ public class SlotController : MonoBehaviour
     bool isAgentDead;
     ObjectToPrint objectType;
     Color OriginalTxtColor;
+    Sequence DarkenLedPanelSequence;
     public void initParameters(WordData word, StateEnum state, int multiActionNum, int _AgentsUsed = 1)
     {
         gameObject.SetActive(true);
@@ -292,6 +295,7 @@ public class SlotController : MonoBehaviour
         inFillFast = false;
         OnFinishActionProgress?.Invoke(this, this);
         AgentIcon.SetActive(false);
+        AutomaticIcon.SetActive(true);
         TimeManager.OnMinuteChange -= UpdateProgress;
         timeComplete = TimeManager.timeManager.GetTime();
     }
@@ -307,6 +311,8 @@ public class SlotController : MonoBehaviour
         timeComplete = TimeManager.timeManager.GetTime();
         if (_state == VilifyState) OnSetVilifyAction?.Invoke(this, false);
         AbortIcon.SetActive(true);
+
+        SetLEDState(DarkLedPanelColor, "Red", true);
     }
 
     public void CleanSlot()
@@ -334,7 +340,7 @@ public class SlotController : MonoBehaviour
         AbortIcon.SetActive(false);
         CheckIcon.SetActive(false);
         AgentIcon.SetActive(true);
-
+        AutomaticIcon.SetActive(false);
 
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
@@ -385,6 +391,7 @@ public class SlotController : MonoBehaviour
         AbortIcon.SetActive(false);
         CheckIcon.SetActive(false);
         AgentIcon.SetActive(true);
+        AutomaticIcon.SetActive(false);
 
         TimeManager.OnSecondsChange += UpdateProgress;
         UpdateProgress();
@@ -393,15 +400,23 @@ public class SlotController : MonoBehaviour
         SetLEDState(Color.white, "Red");
     }
 
-    void SetLEDState(Color _color, string colortxt)
+    void SetLEDState(Color _color, string colortxt, bool doFadeLedPanel = false)
     {
-        foreach (Image O in LEDObjects)
+        if (doFadeLedPanel)
         {
-            O.color = _color;
+            DarkenLedPanel(_color);
+        }
+        else
+        {
+            foreach (Image O in LEDObjects)
+            {
+                O.color = _color;
+            }
         }
 
         ApplyMaterial(Wordtxt, colortxt);
         ApplyMaterial(Actiontxt, colortxt);
+
     }
 
     void ResetLedMultiAction()
@@ -415,6 +430,7 @@ public class SlotController : MonoBehaviour
         AbortIcon.SetActive(false);
         CheckIcon.SetActive(false);
         AgentIcon.SetActive(true);
+        AutomaticIcon.SetActive(false);
 
         SetLEDState(Color.green, "Green");
 
@@ -426,11 +442,23 @@ public class SlotController : MonoBehaviour
         AbortIcon.SetActive(false);
         CheckIcon.SetActive(true);
         AgentIcon.SetActive(false);
+        AutomaticIcon.SetActive(false);
 
         SetLEDState(Color.white, "Green");
 
         Invoke("DelayRecoveryReset", 2f);
 
+    }
+
+    void DarkenLedPanel(Color color)
+    {
+        if(DarkenLedPanelSequence != null && DarkenLedPanelSequence.IsActive()) DarkenLedPanelSequence.Kill();
+
+        DarkenLedPanelSequence = DOTween.Sequence();
+
+        Image LedPanel = LEDObjects[0].GetComponent<Image>();
+
+        DarkenLedPanelSequence.Append(LedPanel.DOColor(color, 1f).SetEase(Ease.OutCirc));
     }
 
     void DelayRecoveryReset()
@@ -443,15 +471,17 @@ public class SlotController : MonoBehaviour
     string materialName;
     public void ApplyMaterial(TMP_Text textField, string materialLabel = "")
     {
-        if (textField.text.Contains("<material=")) return;
+        string currentText = textField.text;
 
-        materialName = "\"" + textField.font.name + "Material" + materialLabel;
+        currentText = Regex.Replace(currentText, @"<material=.*?>", "");
+        currentText = currentText.Replace("</material>", "");
 
+        materialName = "\"" + textField.font.name + "Material" + materialLabel + "\"";
         materialName = materialName.Replace(" ", "");
 
-        string newWord = "<material=" + materialName + ">" + textField.text + "</material>";
+        string newText = $"<material={materialName}>{currentText}</material>";
 
-        textField.text = newWord;
+        textField.text = newText;
 
     }
 
@@ -459,6 +489,7 @@ public class SlotController : MonoBehaviour
     {
         AbortIcon.SetActive(false);
         CheckIcon.SetActive(false);
+        AutomaticIcon.SetActive(false);
         Report = null;
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
@@ -581,5 +612,7 @@ public class SlotController : MonoBehaviour
         else return new TimeData(0, 0, 0);    
     }
     public bool GetNoComplete() { return noComplete; }
+
+
 
 }
