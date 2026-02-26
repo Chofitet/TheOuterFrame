@@ -76,12 +76,12 @@ public class HyperlinksManager : MonoBehaviour
 
             if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count > 0)
             {
-                Debug.LogWarning("Using PreProccess hyperlink Data");
+                Debug.LogWarning("Using PreProccess HYPERLINK Data");
                 PositionsWord = pre_proccess_PositioWords;
             }
             else
             {
-                Debug.LogWarning("Using runtime hyperlink Data");
+                Debug.LogWarning("Using runtime HYPERLINK Data");
                 PositionsWord = ProccessHyperLinks.SearchForHyperLinkWord(textField, Irrelevant);
             }
 

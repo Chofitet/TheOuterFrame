@@ -67,12 +67,12 @@ public class FindableWordsManager : MonoBehaviour
 
             if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count > 0)
             {
-                Debug.LogWarning("Using PreProccess findable Data");
+                Debug.LogWarning("Using PreProccess FINDABLEWORD Data");
                 PositionsWord = pre_proccess_PositioWords;
             }
             else
             {
-                Debug.LogWarning("Using runtime findable Data");
+                Debug.LogWarning("Using runtime FINDABLEWORD Data");
                 PositionsWord = ProccessFindableWord.SearchForFindableWord(textField, Irrelevant);
             }
 

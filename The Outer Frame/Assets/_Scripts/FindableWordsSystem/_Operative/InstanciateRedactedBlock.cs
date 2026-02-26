@@ -61,12 +61,12 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
             if (pre_proccess_PositioBlock != null && pre_proccess_PositioBlock.Count > 0)
             {
-                Debug.LogWarning("Using PreProccess findable Data");
+                Debug.LogWarning("Using PreProccess REDACTED Data");
                 PositionBlock = pre_proccess_PositioBlock;
             }
             else
             {
-                Debug.LogWarning("Using runtime findable Data");
+                Debug.LogWarning("Using runtime REDACTED Data");
                 PositionBlock = ProcessRedactedBlock.SearchForRedactedBlocks(textField, false);
             }
              

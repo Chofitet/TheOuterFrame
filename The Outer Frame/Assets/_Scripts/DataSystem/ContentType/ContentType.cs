@@ -6,7 +6,7 @@ abstract public class ContentType : DataType
 {
     public Guid ID;
 
-    private List<FindableWordData> findableWords;
+    [SerializeField] private List<FindableWordData> findableWords;
 
     public IReadOnlyList<FindableWordData> FindableWords => findableWords;
 
