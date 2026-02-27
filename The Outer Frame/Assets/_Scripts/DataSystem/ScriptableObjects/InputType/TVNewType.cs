@@ -260,7 +260,7 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
     {
         get
         {
-            if (newType != NewType.Custom) return PopUpType.None;
+            if (newType != NewType.Custom && newType != NewType.Vilify) return PopUpType.None;
             if (alertLevelIncrement > 0) return PopUpType.bad;
             if (alertLevelIncrement < 0) return PopUpType.None;
             return PopUpType.common;

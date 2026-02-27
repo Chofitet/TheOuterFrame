@@ -42,6 +42,7 @@ public class GooIdentificatorController : MonoBehaviour
         {
             id.SetPage(index);
             GameObject questionBlock = Instantiate(QuestionBlock, QuestionBlockPivot.transform);
+            questionBlock.transform.SetSiblingIndex(0);
             questionBlock.GetComponent<GooIdentificatorBlock>().Init(IdentificatorQuestions[index]);
             questionBlock.gameObject.SetActive(false);
             Pages.Add(questionBlock);
