@@ -116,4 +116,12 @@ public class CamController : MonoBehaviour
     {
         CameraDossierDefault = true;
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            SetPriority(13); 
+        }
+    }
 }

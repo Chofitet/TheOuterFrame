@@ -16,6 +16,7 @@ public class AlertLevelManager : MonoBehaviour
     [SerializeField] GameEvent OnGameOverAlert;
     [SerializeField] GameEvent OnUpAlertLevel;
     [SerializeField] GameEvent OnDownAlertLevel;
+    [SerializeField] GameEvent OnIncruiseAletLevel;
     float timeFactor = 1;
     int level;
     bool isStoped;
@@ -76,8 +77,12 @@ public class AlertLevelManager : MonoBehaviour
        if (Input.GetKeyDown(KeyCode.G))
         {
             maxLevel = 1000;
-            NumLevel.text = "1000%";
+            level = 89;
+            OnIncruiseAletLevel?.Invoke(null, new AlertData(10,""));
+            //NumLevel.text = "1000%";
         }
+
+        
     }
 
 

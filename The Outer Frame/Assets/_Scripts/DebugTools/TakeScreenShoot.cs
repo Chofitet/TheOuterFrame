@@ -5,7 +5,7 @@ using UnityEngine;
 public class TakeScreenShoot : MonoBehaviour
 {
     int NumOfScreenshot = 0;
-#if UNITY_EDITOR
+
     void Update()
     {
 
@@ -23,5 +23,4 @@ public class TakeScreenShoot : MonoBehaviour
                 NumOfScreenshot += 1;
         }
     }
-#endif
 }
