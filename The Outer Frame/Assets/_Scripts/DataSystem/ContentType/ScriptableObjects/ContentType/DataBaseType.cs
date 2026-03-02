@@ -4,8 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New BDEnter", menuName = "DB")]
-public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
+public class DataBaseType : ContentType,  IReseteableScriptableObject
 {
+    List<FindableWordData> hyperLinks = new();
+    public IReadOnlyList<FindableWordData> HyperLinks => hyperLinks;
+    public void SetHyperLinks(List<FindableWordData> _hyperlinks) { hyperLinks = _hyperlinks; }
+
+    List<RedactedBlockData> redactedBlocks = new();
+    public IReadOnlyList<RedactedBlockData> RedactedBlocks => redactedBlocks;
+    public void SetRedactedBlocks(List<RedactedBlockData> _RedactedBlocks) { redactedBlocks = _RedactedBlocks; }
+    
+
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string text;
     [SerializeField] WordData AccessWord;
     [Header("Unlock Button")]
@@ -42,6 +51,7 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
     [SerializeField] string Technology;
     [SerializeField] string Type;
 
+
     [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     [NonSerialized] bool isWordAccessFound;
     [NonSerialized] bool wasSearched;
@@ -61,8 +71,8 @@ public class DataBaseType : ScriptableObject,  IReseteableScriptableObject
 
 
     public WordData GetAccessWord() { return AccessWord; }
-    public string GetText() { return text; }
-
+    override public string GetText() { return text; }
+    public override string GetTextSecundary(){ return text; }
     public Sprite GetImage() { return image; }
 
     public string GetPhoneNum() { return phoneNum; }

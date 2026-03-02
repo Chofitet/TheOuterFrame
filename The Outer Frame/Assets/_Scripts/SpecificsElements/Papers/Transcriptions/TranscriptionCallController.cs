@@ -35,7 +35,7 @@ public class TranscriptionCallController : MonoBehaviour
 
         txtAt.text = $"{_call.GetCachedStartTime().ToString()} to {_call.GetCachedFinishTime().ToString()}";
         GetComponent<IndividualCallController>().SetType(true, call);
-        FindableWordsManager.FWM.InstanciateFindableWord(txtCall,FindableBtnType.FindableBTN);
+        FindableWordsManager.FWM.InstanciateFindableWord(txtCall,FindableBtnType.FindableBTN,_call.FindableWords);
         DisposeBTN.SetActive(false);
         UploadBTN.SetActive(true);
 

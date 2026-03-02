@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New ScheduledNew", menuName = "News/ScheduledNew")]
-public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScriptableObject, IPopUp
+public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp
 {
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headline;
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
@@ -57,6 +57,13 @@ public class TVScheduledNewType : ScriptableObject, INewType, IReseteableScripta
             return ReplacedBy;
         }
         else return this;
+    }
+
+    public override string GetText() { return text; }
+    public override string GetTextSecundary()
+    {
+        if (headline != "") return headline;
+        else return headlineTwoLines;
     }
 
     public bool CheckForConditionals(List<ConditionalClass> list)

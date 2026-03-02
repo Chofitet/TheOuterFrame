@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNewRandom", menuName = "News/RandomNew")]
-public class TVRandomNewType : ScriptableObject, INewType, IReseteableScriptableObject, IPopUp
+public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp
 {
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
@@ -15,10 +15,10 @@ public class TVRandomNewType : ScriptableObject, INewType, IReseteableScriptable
     [NonSerialized] bool wasStremed;
 
 
-    private void OnEnable()
+   /* private void OnEnable()
     {
         ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }
+    }*/
 
     public void ResetScriptableObject()
     {
@@ -31,6 +31,13 @@ public class TVRandomNewType : ScriptableObject, INewType, IReseteableScriptable
     }
 
     public string GetHeadline() { return headline; }
+
+    public override string GetText() { return text; }
+    public override string GetTextSecundary()
+    {
+        if (headline != "") return headline;
+        else return headlineTwoLines;
+    }
 
     public bool GetIfIsAEmergency() { return false; }
 

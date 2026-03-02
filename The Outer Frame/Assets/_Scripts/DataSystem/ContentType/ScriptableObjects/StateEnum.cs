@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New State", menuName = "State")]
-public class StateEnum : ScriptableObject, IReseteableScriptableObject
+public class StateEnum : DataType, IReseteableScriptableObject
 {
     [Header("Action Fields")]
     [SerializeField] string InfinitiveVerb;

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "New Word", menuName = "Word")]
-public class WordData : ScriptableObject, IReseteableScriptableObject
+public class WordData : DataType, IReseteableScriptableObject
 {
     [Header("Word General Data")]
     [SerializeField] string wordName;

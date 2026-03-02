@@ -209,7 +209,7 @@ public class PCController : MonoBehaviour
             WikiTitleSearchedWord.ForceMeshUpdate();
             
         }
-        FindableWordsManager.FWM.InstanciateFindableWord(WikiTitleSearchedWord, FindableBtnType.FindableBTN, true);
+        FindableWordsManager.FWM.InstanciateFindableWord(WikiTitleSearchedWord, FindableBtnType.FindableBTN,null, true);
         isWaitingAWord = true;
        
         StartCoroutine(IdleSearchBarAnim());

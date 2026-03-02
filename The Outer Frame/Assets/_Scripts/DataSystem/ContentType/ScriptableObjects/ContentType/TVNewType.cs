@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNew", menuName = "News/ReactiveNew")]
-public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteableScriptableObject, IPopUp
+public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScriptableObject, IPopUp
 {
     [HideInInspector][SerializeField] StateEnum state;
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
@@ -62,15 +62,13 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
         if (Conditions.Count == 0) return;
         Conditions.RemoveAt(0);
     }
-    public int GetIncreaseAlertLevel()
-    {
-        return alertLevelIncrement;
+    public int GetIncreaseAlertLevel(){ return alertLevelIncrement;}
+    public override string GetText(){ return text;}
+    public override string GetTextSecundary(){ 
+       if(headline != "") return headline;
+       else return headlineTwoLines;
     }
-
-    public string GetNewText()
-    {
-        return text;
-    }
+    public string GetNewText() {return text;}
 
     public bool GetStateConditionalToAppear()
     {
@@ -79,14 +77,11 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
             DefineTimeZone();
             return false;
         }
-
         if (!EndTime) { return false; }
 
         if (EndTime.GetStateCondition()) return true;
 
         return false;
-
-
     }
 
     public bool CheckConditionals()
@@ -214,40 +209,19 @@ public class TVNewType : ScriptableObject, IStateComparable, INewType, IReseteab
         return lastCompleteConditional.GetTimeToShowNews();
     }
 
-    public int GetChannelNum()
-    {
-        return channel;
-    }
+    public int GetChannelNum() {  return channel;}
 
-    int INewType.GetMinTransmitionTime()
-    {
-        return MinTransmitionTime;
-    }
+    int INewType.GetMinTransmitionTime() {  return MinTransmitionTime; }
 
-    public int GetPriority()
-    {
-        return priority;
-    }
+    public int GetPriority(){  return priority;}
 
-    public void SetWasStreamed()
-    {
-        wasStremed = true;
-    }
+    public void SetWasStreamed() { wasStremed = true;}
 
-    public bool GetWasStreamed()
-    {
-        return wasStremed;
-    }
+    public bool GetWasStreamed(){ return wasStremed;}
 
-    public string GetHeadline2()
-    {
-        return headlineTwoLines;
-    }
+    public string GetHeadline2(){ return headlineTwoLines; }
 
-    public NewType GetNewType()
-    {
-        return newType;
-    }
+    public NewType GetNewType() { return newType; }
 
     //POPUP implementation
 

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "New Report", menuName = "Report")]
-public class ReportType : ScriptableObject, IStateComparable, IReseteableScriptableObject
+public class ReportType : ContentType, IStateComparable, IReseteableScriptableObject
 {
     [SerializeField] StateEnum Action;
     [SerializeField] StateEnum state;
@@ -30,7 +30,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
 
     public StateEnum GetState() { return state; }
     public StateEnum GetAction() { return Action; }
-    public string GetText() { return Text; }
+    public override string GetText() { return Text; }
+    public override string GetTextSecundary(){ return TextForRepetition;}
     public string GetTextForRepetition() { return TextForRepetition; }
     public int GetChangeTimeOfAction() { return ChangeTimeOfAction; }
 
@@ -47,6 +48,8 @@ public class ReportType : ScriptableObject, IStateComparable, IReseteableScripta
     {
         CompleteTime = TimeManager.timeManager.GetTime();
     }
+
+    //public List<FindableWordData> findableWords;
 
     private void OnEnable()
     {
