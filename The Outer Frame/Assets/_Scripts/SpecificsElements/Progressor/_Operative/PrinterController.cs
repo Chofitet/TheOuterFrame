@@ -32,7 +32,7 @@ public class PrinterController : MonoBehaviour
     {
         SlotController slotController = slotReference.GetComponent<SlotController>();
         GameObject Object = null;
-        if (slotController.GetObjectType() == ObjectToPrint.report || slotController.GetNoComplete())
+        if (slotController.GetObjectType() == ObjectToPrint.report || slotController.GetNoComplete() || slotController.GetIsAborted())
         {
             Object = Instantiate(ReportPrefab, InstanciateSpot.position, InstanciateSpot.rotation, InstanciateSpot);
             Object.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetReport(), slotController.GetIsAborted(), slotController.getisAlreadyDone(), slotController.GetIsTheSameAction(), slotController.GetIsOtherGroupActionDoing(), slotController.GetIsAlreadyImposible(), slotController.GetTimeComplete(), slotController.GetIsAVilifyBlockedAction(), slotController.GetUsedAgents());

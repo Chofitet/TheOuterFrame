@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class SoundManager : MonoBehaviour
 {
+
     /*public static SoundManager instance{ get; private set; }
 
 
@@ -23,6 +24,8 @@ public class SoundManager : MonoBehaviour
     }*/
 
     List<GameObject> LoopingSounds = new List<GameObject>();
+
+    List<AudioSource> ClippingSounds = new List<AudioSource>();
     public void InstantiateAndPlaySound(Component sender, object obj)
     {
         SoundInfo soundInfo = (SoundInfo)obj;
@@ -34,10 +37,12 @@ public class SoundManager : MonoBehaviour
 
         AudioSource audioSource = SoundInstance.AddComponent<AudioSource>();
 
+        
         audioSource.clip = soundInfo.audioSource.clip;
         if (soundInfo.clips.Count != 0) PlayRandomClip(audioSource, soundInfo.clips);
         audioSource.outputAudioMixerGroup = soundInfo.audioSource.outputAudioMixerGroup;
-        audioSource.volume = soundInfo.audioSource.volume;
+        audioSource.volume = soundInfo.audioSource.volume / GetVolumeDecrementFactorClippingAudio(audioSource);
+
         audioSource.pitch = soundInfo.audioSource.pitch;
         if (soundInfo.pitchVariation != Vector2.one) PlayRandomPitch(audioSource,soundInfo.pitchVariation);
         audioSource.loop = soundInfo.audioSource.loop;
@@ -47,6 +52,9 @@ public class SoundManager : MonoBehaviour
         audioSource.maxDistance = soundInfo.audioSource.maxDistance;  
         audioSource.rolloffMode = soundInfo.audioSource.rolloffMode;
 
+        ClippingSounds.RemoveAll(x => !x);
+        ClippingSounds.Add(audioSource);
+        StartCoroutine(CheckForClippingSounds(audioSource));
 
         audioSource.Play();
 
@@ -86,6 +94,26 @@ public class SoundManager : MonoBehaviour
     {
         float randomPitch = Random.Range(variationPitch.x, variationPitch.y);
         audioSource.pitch = randomPitch;
+    }
+
+    IEnumerator CheckForClippingSounds(AudioSource sound)
+    {
+        yield return new WaitForSeconds(0.3f);
+        ClippingSounds.Remove(sound);
+    }
+
+    float GetVolumeDecrementFactorClippingAudio(AudioSource sound)
+    {
+        float decrementFactor = 1.0f;
+       foreach(AudioSource clip in ClippingSounds)
+        {
+            if(clip.clip == sound.clip)
+            {
+                decrementFactor += 0.5f;
+            }
+        }
+
+       return decrementFactor;
     }
 }
 
