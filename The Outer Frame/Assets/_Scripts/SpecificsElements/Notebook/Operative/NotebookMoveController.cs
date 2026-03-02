@@ -338,8 +338,8 @@ public class NotebookMoveController : MonoBehaviour
         Quaternion startRotation = transform.localRotation;
 
         float duration = 0.8f;
-        int vibrato = 6;
-        float maxAngle = 6f;
+        int vibrato = 4;
+        float maxAngle = 5f;
 
         float singleDuration = duration / vibrato;
 
@@ -448,8 +448,8 @@ public class NotebookMoveController : MonoBehaviour
         if (moveWithDossierSequence != null && moveWithDossierSequence.IsActive()) moveWithDossierSequence.Kill();
 
         moveWithDossierSequence = DOTween.Sequence();
-       // transform.position = initPosBackDossier.position;
-       // transform.rotation = initPosBackDossier.rotation;
+        //transform.position = initPosBackDossier.position;
+        //transform.rotation = initPosBackDossier.rotation;
         isOutOfView = false;
         //.Append(transform.DOMove(PosBackDossier.position, 1.2f))
         moveWithDossierSequence
