@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: DriverUNFOUNDCommit
   m_EditorClassIdentifier: 
+  id: 8cd69a39-7dd5-4644-9871-b77fd5f1432a
   Action: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
   state: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
   isAutomatic: 1
@@ -21,14 +22,17 @@ MonoBehaviour:
 '
   TextForRepetition: "WE SAID:\n\nWe should find the driver first, then we\u2019ll
     get to decide what to do.\r\n"
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: STILL MISSING
   Conditionals:
   - condition: {fileID: 11400000, guid: 75c399ba044115b498551401a398df2e, type: 2}
     ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

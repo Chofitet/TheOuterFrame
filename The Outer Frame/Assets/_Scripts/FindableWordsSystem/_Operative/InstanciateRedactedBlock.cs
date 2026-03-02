@@ -26,7 +26,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
         }
     }
 
-    public void InstanciateRedactedBlocks(TMP_Text textField, IReadOnlyList<RedactedBlockData> pre_proccess_PositioBlock = null, bool CleanPool = false)
+    public void InstanciateRedactedBlocks(TMP_Text textField, IReadOnlyList<RedactedBlockData> pre_proccess_PositioBlock = null, bool CleanPool = false, bool useTXTAsParent = false)
     {
         if (textField == null)
         {
@@ -69,11 +69,13 @@ public class InstanciateRedactedBlock : MonoBehaviour
                 Debug.LogWarning("Using runtime REDACTED Data");
                 PositionBlock = ProcessRedactedBlock.SearchForRedactedBlocks(textField, false);
             }
-             
+
+            Transform parent = RedactedComnteiner.transform;
+            if (useTXTAsParent) parent = textField.transform;
+
             foreach (RedactedBlockData w in PositionBlock)
             {
-                // pool.GetFromPool(textField.transform.GetComponentInParent<Transform>().GetChild(1)); // toma el RedactedConteiner
-                GameObject auxObj = pool.GetFromPool(RedactedComnteiner.transform); // toma el RedactedConteiner
+                GameObject auxObj = pool.GetFromPool(parent); 
                 auxObj.transform.localPosition = w.position;
                 auxObj.transform.localRotation = Quaternion.identity;
                 auxObj.GetComponent<RedactedBlock>().Initialization(w.redactedText);

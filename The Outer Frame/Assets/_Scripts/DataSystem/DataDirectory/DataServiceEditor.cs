@@ -118,6 +118,12 @@ public static class DataServiceEditor
         directory.Remove(data);
         EditorUtility.SetDirty(directory);
     }
+
+    public static void AddToNeedsReprocess(DataType data)
+    {
+        directory.AddNeedPreprocess(data);
+    }
+
 #endif
     public static DataType Get(Guid id)
     {

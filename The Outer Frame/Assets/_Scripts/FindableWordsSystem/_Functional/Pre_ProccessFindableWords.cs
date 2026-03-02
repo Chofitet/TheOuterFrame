@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using TMPro;
 using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 using UnityEngine.Windows;
 
-
-public class Pre_ProccessFindableWords : MonoBehaviour
+public class Pre_ProccessFindableWords : MonoBehaviour, IPreprocessBuildWithReport
 {
     [SerializeField] ContentType contentTypeTest;
     [SerializeField] FindableWordsManager findableWordsManager;
@@ -28,7 +30,25 @@ public class Pre_ProccessFindableWords : MonoBehaviour
     [SerializeField] TMP_Text TV2LinesTitleField;
     [SerializeField] TMP_Text TVTextField;
 
+    public int callbackOrder => 0;
+
 #if UNITY_EDITOR
+
+    /*[InitializeOnLoadMethod]
+    private static void RegisterPlayModeCallback()
+    {
+        EditorApplication.playModeStateChanged += OnPlayModeChanged;
+    }
+
+    private static void OnPlayModeChanged(PlayModeStateChange state)
+    {
+        if (state == PlayModeStateChange.ExitingEditMode)
+        {
+            ProcessPendingData();
+        }
+    }*/
+
+
     private void ProcessContent(ContentType content, TMP_Text tmpField)
     {
         List<FindableWordData> combined = new();
@@ -62,7 +82,12 @@ public class Pre_ProccessFindableWords : MonoBehaviour
 
     public void ProcessAllReports()
     {
-        var reports = directory.GetAllReportTypes();
+        ProcessReports(directory.GetAllReportTypes());
+    }
+
+    public void ProcessReports(List<ReportType> list)
+    {
+        var reports = list;
 
         for (int i = 0; i < reports.Count; i++)
         {
@@ -85,7 +110,12 @@ public class Pre_ProccessFindableWords : MonoBehaviour
 
     public void ProcessAllTranscripts()
     {
-        var calls = directory.GetAllTranscriptType();
+        ProcessTranscripts(directory.GetAllTranscriptType());
+    }
+
+    public void ProcessTranscripts(List<CallType> list)
+    {
+        var calls = list;
 
         for (int i = 0; i < calls.Count; i++)
         {
@@ -108,7 +138,11 @@ public class Pre_ProccessFindableWords : MonoBehaviour
 
     public void ProcessAllDatabaseEntries()
     {
-        var dbEntries = directory.GetAllDBType();
+        ProcessDatabaseEntries(directory.GetAllDBType());
+    }
+    public void ProcessDatabaseEntries(List<DataBaseType> list)
+    {
+        var dbEntries = list;
 
         for (int i = 0; i < dbEntries.Count; i++)
         {
@@ -174,6 +208,31 @@ public class Pre_ProccessFindableWords : MonoBehaviour
         content.SetRedactedBlocks(result);
         EditorUtility.SetDirty(content);
     }
+
+    public void ProcessAllPendingData()
+    {
+        ProcessPendingData();
+    }
+
+    public void OnPreprocessBuild(BuildReport report)
+    {
+        ProcessPendingData();
+    }
+
+    public void ProcessPendingData()
+    {
+       List<ReportType> reports = directory.GetNeedReprocess().OfType<ReportType>().ToList();
+        List<DataBaseType> dbs = directory.GetNeedReprocess().OfType<DataBaseType>().ToList();
+        List<CallType> transcripts = directory.GetNeedReprocess().OfType<CallType>().ToList();
+
+        ProcessReports(reports);
+        ProcessDatabaseEntries(dbs);
+        ProcessTranscripts(transcripts);
+
+        directory.ClearPreprocess();
+    }
+
 #endif
 
 }
+

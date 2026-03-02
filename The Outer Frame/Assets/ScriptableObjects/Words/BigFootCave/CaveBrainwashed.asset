@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: CaveBrainwashed
   m_EditorClassIdentifier: 
+  id: fe146559-f4eb-4617-a270-4ce48582478b
   Action: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   isAutomatic: 1
@@ -25,12 +26,15 @@ MonoBehaviour:
 
 
     The cave is not sentient enough to try that.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
     text: UNPOSSIBLE
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

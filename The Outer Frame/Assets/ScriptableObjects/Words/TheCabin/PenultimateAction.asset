@@ -12,18 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: PenultimateAction
   m_EditorClassIdentifier: 
+  id: 31c917ab-83a2-4e72-aa30-5bb0ac386496
   Action: {fileID: 11400000, guid: 1cdb3e61d4e45334389f976480c39067, type: 2}
   state: {fileID: 11400000, guid: 1cdb3e61d4e45334389f976480c39067, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
   Text: 
   TextForRepetition: 
+  CustomStatus: 
   Photos: []
   Conditionals:
   - condition: {fileID: 11400000, guid: f4f23b1913f233d468e58670c4ab24fe, type: 2}
     ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
+  LastReport: 0

@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 abstract public class ContentType : DataType
 {
     public Guid ID;
+
+    string primaryText;
+    string secondaryText;
+    private bool needsReprocess;
 
     private List<FindableWordData> findableWords;
 
@@ -17,4 +22,15 @@ abstract public class ContentType : DataType
     public abstract string GetText();
 
     public abstract string GetTextSecundary();
+
+    private void OnValidate()
+    {
+        if (GetText() != primaryText || GetTextSecundary() != secondaryText) 
+        {
+            DataServiceEditor.AddToNeedsReprocess(this);
+        }
+
+        primaryText = GetText();
+        secondaryText = GetTextSecundary();
+    }
 }

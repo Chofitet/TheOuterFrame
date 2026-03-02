@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: DriverUnfoundInterrogatedSergioUnfoundFound
   m_EditorClassIdentifier: 
+  id: c11c3a96-bb92-4e46-8d70-32e3bac3745e
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 1
@@ -20,14 +21,17 @@ MonoBehaviour:
     we find him.\r\n"
   TextForRepetition: "WE SAID:\n\nOk.\n\nMaybe we could try that BUT we\u2019d have
     to save it for after we find him.\r\n"
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: STILL MISSING
   Conditionals:
   - condition: {fileID: 11400000, guid: 75c399ba044115b498551401a398df2e, type: 2}
     ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

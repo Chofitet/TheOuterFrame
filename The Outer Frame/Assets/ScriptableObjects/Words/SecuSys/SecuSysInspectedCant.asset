@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: SecuSysInspectedCant
   m_EditorClassIdentifier: 
+  id: 6c50dd04-7f1f-4117-bcb0-7a5454588b97
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 2c677775adf65ae4b89270a531626d46, type: 2}
   isAutomatic: 1
@@ -22,6 +23,7 @@ MonoBehaviour:
     He''s quite the territorial fellow.'
   TextForRepetition: "WE SAID: \n\nThat kid won't let us near it.\n\nHe's quite te
     territorial fellow."
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
     text: DANG
@@ -30,8 +32,10 @@ MonoBehaviour:
   Conditionals:
   - condition: {fileID: 11400000, guid: 7f661753ff6be2e4da5e7e5e777c969d, type: 2}
     ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

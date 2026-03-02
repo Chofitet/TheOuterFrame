@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: IDEA.AskMikeAboutDriver
   m_EditorClassIdentifier: 
+  id: d4d4c10a-ccbb-4df4-9cf3-a3303146f299
   Action: {fileID: 11400000, guid: b271876c5cf3ad5429b01ad54eb79696, type: 2}
   state: {fileID: 11400000, guid: b271876c5cf3ad5429b01ad54eb79696, type: 2}
   isAutomatic: 0
@@ -19,6 +20,7 @@ MonoBehaviour:
   Text: '"That <link>huge cow-thing</link> was taking him out of the truck, but we
     don''t know what happened to him after."'
   TextForRepetition: 
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 7a82e0efed6c0ef409d5e8d4aa2b80bd, type: 3}
     text: KNOWS ALMOST NEXT TO NOTHING
@@ -28,6 +30,7 @@ MonoBehaviour:
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

@@ -12,15 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a393ea94a24bbf44fb37c63068bfcfd7, type: 3}
   m_Name: NewsAnchor
   m_EditorClassIdentifier: 
+  id: 695cf50f-6cc5-4404-8938-8a25b6843799
   wordName: Anchorman
   FindableAs:
   - Anchorman
   - anchorman
-  Form_DatabaseNameVersion: Anchorman
+  FormNameVersion: 
+  DatabaseNameVersion: Anchorman
   ProgressorNameVersion: Anchorman
   PhoneNumber: 
   isAPhoneNumber: 0
   Type: 1
+  ApInformLocation: 
   reportTypes:
   - {fileID: 11400000, guid: 72b1e539170e00f43b6e5a39e37a4538, type: 2}
   - {fileID: 11400000, guid: 3470352339d1b17418f655b4cdcc4ab7, type: 2}
@@ -34,8 +37,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 25efad6261d6ee54491b3a6b885c7bbd, type: 2}
   TVNewTypes: []
   DBTypes: {fileID: 11400000, guid: cef6d649f56572344a46e3856ddb2c67, type: 2}
+  UpdatedDataBase: []
   CallTypes: []
   InactiveConditions: []
+  EraseConditions: []
   WordThatReplaces: {fileID: 0}
   CopyHistory: 0
   WordsThatDeletes: []

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: Vessel2EmergencyCodeGetRidOF
   m_EditorClassIdentifier: 
+  id: bb5781ef-0c81-4656-af23-1bc4370d714a
   Action: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   state: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   isAutomatic: 1
@@ -20,12 +21,15 @@ MonoBehaviour:
     full of <link>fluorescent goo</link>. '
   TextForRepetition: "WE SAID:   \n  \nThat's not how you use a secret code found
     in weird tube inside a <link>truck</link> full of <link>fluorescent goo</link>.  "
+  CustomStatus: 
   Photos:
   - photo: {fileID: 0}
     text: 
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

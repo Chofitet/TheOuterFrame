@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: StrangeGooStolenMemory
   m_EditorClassIdentifier: 
+  id: fd63b9ea-70a5-4831-b984-a18d00b4c4eb
   Action: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
   isAutomatic: 1
@@ -21,10 +22,16 @@ MonoBehaviour:
   TextForRepetition: "WE SAID: \n\nBrainwashing techniques require a sentient being
     to be applied upon.\nThis green pudding is not.\n\nBUT maybe anothe kind of washing
     could work. \n\nMaybe."
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: a21473e66381ecb4f94e1128b63c5081, type: 3}
     text: mmmh
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
+  AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

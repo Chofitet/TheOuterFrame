@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: Young Witness2
   m_EditorClassIdentifier: 
+  id: 4c86969a-00f7-4982-b1a9-b0a1216d2ab4
   Action: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   state: {fileID: 11400000, guid: dff69f21fc51caf4b89d839f72773fa4, type: 2}
   isAutomatic: 1
@@ -21,11 +22,16 @@ MonoBehaviour:
 
 
     We need to identify whoever it is first.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 02f46409339842e4691c0b5a712022d3, type: 3}
     text: MORE DETAILS
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
-  FinalReport: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

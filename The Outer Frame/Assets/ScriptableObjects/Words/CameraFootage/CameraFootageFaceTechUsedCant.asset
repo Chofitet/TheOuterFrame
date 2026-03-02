@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: CameraFootageFaceTechUsedCant
   m_EditorClassIdentifier: 
+  id: 3094bdf9-2c1d-4051-845b-d68edbf1565e
   Action: {fileID: 11400000, guid: df69e6d598f54d946a85f1f7cd601944, type: 2}
   state: {fileID: 11400000, guid: df69e6d598f54d946a85f1f7cd601944, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
   Text: We no longer can.
   TextForRepetition: 
+  CustomStatus: 
   Photos: []
   Conditionals:
   - condition: {fileID: 11400000, guid: cb9eab3faab9cc54da2982f9b433b9d4, type: 2}
@@ -25,6 +27,7 @@ MonoBehaviour:
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

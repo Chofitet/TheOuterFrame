@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: StrangeGooInspectedAfterMike
   m_EditorClassIdentifier: 
+  id: f410da62-31c1-4182-ab2b-cf2bf5de399f
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
@@ -24,6 +25,7 @@ MonoBehaviour:
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: eeb759d3e82c0704e9a0cceefa696b90, type: 3}
     text: GOOPIE
@@ -34,8 +36,10 @@ MonoBehaviour:
   Conditionals:
   - condition: {fileID: 11400000, guid: 43994936b8273bc459ee021cd42e7d4e, type: 2}
     ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

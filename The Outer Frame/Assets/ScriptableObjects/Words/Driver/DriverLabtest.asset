@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: DriverLabtest
   m_EditorClassIdentifier: 
+  id: f8832037-ae36-4211-901a-3c8e3e31732a
   Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   isAutomatic: 0
@@ -21,14 +22,17 @@ MonoBehaviour:
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 505d0f4b1e958c34fa96173523c8599e, type: 3}
     text: SCIENCE
   Conditionals:
   - condition: {fileID: 11400000, guid: 039e116a61c669e498d57d9226eb564f, type: 2}
     ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

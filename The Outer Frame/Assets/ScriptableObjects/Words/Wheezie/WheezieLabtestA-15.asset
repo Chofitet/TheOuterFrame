@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: WheezieLabtestA-15
   m_EditorClassIdentifier: 
+  id: 0c7dc745-286b-43a2-95a5-72e17c88f531
   Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   isAutomatic: 0
@@ -21,6 +22,7 @@ MonoBehaviour:
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
   Photos: []
   Conditionals:
   - condition: {fileID: 11400000, guid: 039e116a61c669e498d57d9226eb564f, type: 2}
@@ -28,6 +30,7 @@ MonoBehaviour:
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

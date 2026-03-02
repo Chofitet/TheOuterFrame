@@ -182,7 +182,7 @@ public class PCWikiController : MonoBehaviour
             DataBaseFields[i].SetActive(true);
             TMP_Text auxText = DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>();
             auxText.text = auxDictionary[i];
-            InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(auxText);
+            InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(auxText,null,false,true);
             FindableWordsManager.FWM.InstanciateFindableWord(DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>(),FindableBtnType.FindableBTN);
             HyperlinksManager.HLM.InstanciateHyperLink(DataBaseFields[i].transform.GetChild(1).GetComponent<TMP_Text>(), FindableBtnType.HyperLink);
         }

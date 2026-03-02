@@ -27,7 +27,7 @@ public class HyperlinksBTNController : MonoBehaviour
         word = Word;
         OriginalText = textField.text;
         _isRepitedButton = isRepitedButton;
-        ApplyEffectOnHover("#00C3CC");
+        Invoke("ApplyUnderline", 0.01f);
        
         wordIndex = _wordIndex;
     }
@@ -42,7 +42,10 @@ public class HyperlinksBTNController : MonoBehaviour
     {
         ApplyEffectOnHover("#00F3FF");
     }
-
+    public void ApplyUnderline()
+    {
+        ApplyEffectOnHover("#00C3CC");
+    }
 
     public void ApplyEffectOnHover(string color)
     {

@@ -10,7 +10,7 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
     public IReadOnlyList<FindableWordData> HyperLinks => hyperLinks;
     public void SetHyperLinks(List<FindableWordData> _hyperlinks) { hyperLinks = _hyperlinks; }
 
-    List<RedactedBlockData> redactedBlocks = new();
+    public List<RedactedBlockData> redactedBlocks = new();
     public IReadOnlyList<RedactedBlockData> RedactedBlocks => redactedBlocks;
     public void SetRedactedBlocks(List<RedactedBlockData> _RedactedBlocks) { redactedBlocks = _RedactedBlocks; }
     

@@ -12,20 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: DriverUNFOUNDLabTested
   m_EditorClassIdentifier: 
+  id: 0b861e9e-7c10-46fe-891a-e9622cc4a72c
   Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
   Text: "We\u2019d have to find the driver first.\r\n"
   TextForRepetition: "WE SAID:\n\nWe\u2019d have to find the driver first.\r\n"
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 035ebd6833f1fc3459745f039d3facbb, type: 3}
     text: STILL MISSING
   Conditionals:
   - condition: {fileID: 11400000, guid: 75c399ba044115b498551401a398df2e, type: 2}
     ifNot: 1
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

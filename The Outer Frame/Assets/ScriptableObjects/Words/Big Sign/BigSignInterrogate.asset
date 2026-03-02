@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: BigSignInterrogate
   m_EditorClassIdentifier: 
+  id: a1ba11e8-a8c7-491c-b4f6-bf83473249f7
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 1
@@ -23,12 +24,15 @@ MonoBehaviour:
 
     Please don''t start with that interact with
     unanimate objects as if they were real people thing that you always do.'
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 63e2960646b88c64da1592602dc03892, type: 3}
     text: NOT POSSIBLE
   Conditionals: []
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0

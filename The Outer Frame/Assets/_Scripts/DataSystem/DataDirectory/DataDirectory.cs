@@ -8,6 +8,8 @@ public class DataDirectory : ScriptableObject
 {
     [SerializeField] private List<DataType> allData = new();
 
+    [SerializeField] private List<DataType> NeedPreprocess = new();
+
     private Dictionary<Guid, DataType> datasById = new();
 
     public void Initialize()
@@ -91,6 +93,19 @@ public class DataDirectory : ScriptableObject
         allData.Clear();
         datasById.Clear();
     }
+
+    public void AddNeedPreprocess(DataType data)
+    {
+        if (!NeedPreprocess.Contains(data))
+            NeedPreprocess.Add(data);
+    }
+
+    public void ClearPreprocess()
+    {
+        NeedPreprocess.Clear();
+    }
+
+    public List<DataType> GetNeedReprocess() { return NeedPreprocess; }
 
     public IReadOnlyDictionary<Guid, DataType> GetDictionary()
         => datasById;

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -33,6 +34,11 @@ public class ProccessFindableWordsEditor : Editor
             script.ProcessAllDatabaseEntries();
         }
 
+        if(GUILayout.Button("Process All Pending Data"))
+        {
+            script.ProcessAllPendingData();
+        }
+
         GUILayout.Space(10);
 
         GUI.backgroundColor = new Color(0.8f, 0.9f, 1f);
@@ -47,5 +53,7 @@ public class ProccessFindableWordsEditor : Editor
         }
 
         GUI.backgroundColor = Color.white;
+
     }
+
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: PetroBoyCommited
   m_EditorClassIdentifier: 
+  id: 2ed63619-8b79-44b9-b303-f04db51a838f
   Action: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
   state: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
   isAutomatic: 0
@@ -24,6 +25,7 @@ MonoBehaviour:
 
 '
   TextForRepetition: Done that already.
+  CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
     text: HOPE HE GET'S BETTER
@@ -32,8 +34,10 @@ MonoBehaviour:
   Conditionals:
   - condition: {fileID: 11400000, guid: 4fec0d9b987291b4ab045db3ed90b855, type: 2}
     ifNot: 0
+  ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
+  AgentRecoveryTime: 0
   TriggerDrawerAnim: 0
   DeleteDBReport: 0
   SecondToLastReport: 0
