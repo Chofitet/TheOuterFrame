@@ -13,6 +13,7 @@ public class UpdateWindowController : MonoBehaviour
     [SerializeField] Image DatabaseImage;
     [SerializeField] Sprite NoImage;
     [SerializeField] TMP_Text PaperType;
+    Coroutine AwaitToCloseCoroutine;
     bool isDeleting;
     public void UpdatePC(Component sender, object obj)
     {
@@ -28,11 +29,21 @@ public class UpdateWindowController : MonoBehaviour
 
         PaperType.text = isAReport ? "REPORT TO:" : "TRANSCRIPTION TO:";
 
+        if(AwaitToCloseCoroutine != null) StopCoroutine(AwaitToCloseCoroutine);
+
+        AwaitToCloseCoroutine = StartCoroutine(AwaitToClose());
+
         if (isDeleting)
         {
             SetDeletingPC();
             OnWikiWindow?.Invoke(this, null);
         }
+    }
+
+    IEnumerator AwaitToClose()
+    {
+        yield return new WaitForSeconds(2);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void DeletingPC(Component sender, object obj)

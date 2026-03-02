@@ -41,6 +41,7 @@ public class SoundManager : MonoBehaviour
         audioSource.clip = soundInfo.audioSource.clip;
         if (soundInfo.clips.Count != 0) PlayRandomClip(audioSource, soundInfo.clips);
         audioSource.outputAudioMixerGroup = soundInfo.audioSource.outputAudioMixerGroup;
+        ClippingSounds.RemoveAll(x => !x);
         audioSource.volume = soundInfo.audioSource.volume / GetVolumeDecrementFactorClippingAudio(audioSource);
 
         audioSource.pitch = soundInfo.audioSource.pitch;
@@ -52,7 +53,6 @@ public class SoundManager : MonoBehaviour
         audioSource.maxDistance = soundInfo.audioSource.maxDistance;  
         audioSource.rolloffMode = soundInfo.audioSource.rolloffMode;
 
-        ClippingSounds.RemoveAll(x => !x);
         ClippingSounds.Add(audioSource);
         StartCoroutine(CheckForClippingSounds(audioSource));
 
@@ -99,6 +99,7 @@ public class SoundManager : MonoBehaviour
     IEnumerator CheckForClippingSounds(AudioSource sound)
     {
         yield return new WaitForSeconds(0.3f);
+        ClippingSounds.RemoveAll(x => !x);
         ClippingSounds.Remove(sound);
     }
 
