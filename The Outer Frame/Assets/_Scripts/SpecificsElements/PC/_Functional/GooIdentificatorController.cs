@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GooIdentificatorController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GooIdentificatorController : MonoBehaviour
     [SerializeField] GameObject ComponentAccessWindow;
     [SerializeField] GameObject BackButton;
     [SerializeField] GameObject NextButton;
+    [SerializeField] GameObject QuitButton;
     [SerializeField] GameEvent OnDisableSearchBar;
 
     [SerializeField] GameObject RightAnswerePanel;
@@ -170,12 +172,21 @@ public class GooIdentificatorController : MonoBehaviour
 
         if(areEqual && isAccessComponentRight)
         {
-            RightAnswerePanel.SetActive(true);
+            StartCoroutine(DelayShowAnswere(RightAnswerePanel));
         }
         else
         {
-            WrongAnswerePanel.SetActive(true);
+            StartCoroutine(DelayShowAnswere(WrongAnswerePanel));
         }
+    }
+
+    IEnumerator DelayShowAnswere(GameObject panel)
+    {
+        QuitButton.GetComponent<Button>().interactable = false;
+        BackButton.gameObject.SetActive(false);
+        yield return new WaitForSeconds(2);
+        QuitButton.GetComponent<Button>().interactable = true;
+        panel.SetActive(true);
     }
 
     public void ReactiveProtocolIdea(Component sender, object obj)
@@ -216,6 +227,7 @@ public class GooIdentificatorController : MonoBehaviour
         IdentficatorPage = 0;
 
         WrongAnswerePanel.SetActive(false);
+        RightAnswerePanel.SetActive(false);
 
         foreach (GameObject page in Pages)
         {

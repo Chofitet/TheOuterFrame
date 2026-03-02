@@ -13,7 +13,11 @@ public class ComponentEnterWindow : MonoBehaviour
     [SerializeField] Image SearchBarGameObject;
     [SerializeField] WordData ComponentWord;
     [SerializeField] GameEvent OnGooIdentificatorComponentAccessGranted;
+    [SerializeField] GameEvent OnShakeNotebook;
+    [SerializeField] SliderUpdateAnim Slider;
+    [SerializeField] GameObject SearchButton;
     WordData SearchedWord;
+
     WordData TryAccessWord;
     private bool isInPCView = true;
     bool isUnlockingPage;
@@ -25,11 +29,17 @@ public class ComponentEnterWindow : MonoBehaviour
     private void Start()
     {
         textAnim = SearchBar.GetComponent<TypingAnimText>();
+        
     }
 
     public void ShowPanel(bool x)
     {
         content.SetActive(x);
+        if (x)
+        {
+            SearchBar.text = " |";
+            startVerticalBarAnim();
+        }
     }
     //OnChangeView
     public void GetActualView(Component sender, object obj)
@@ -67,24 +77,40 @@ public class ComponentEnterWindow : MonoBehaviour
 
     public void TryAccess()
     {
-        Invoke("UnlockPage", 2f);
-        isUnlockingPage = true;
-        SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
-        SearchBar.text = "PROCESSING INFO";
-
-        if (TryAccessWord == ComponentWord)
+        if (SearchBar.text == " |")
         {
-            OnGooIdentificatorComponentAccessGranted?.Invoke(this, true);
+            OnShakeNotebook?.Invoke(this, null);
         }
         else
         {
-            OnGooIdentificatorComponentAccessGranted?.Invoke(this, false);
+            Invoke("UnlockPage", 2f);
+            isUnlockingPage = true;
+            SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
+            Slider.gameObject.SetActive(true);
+            Slider.AnimSlider(this, null);
+            SearchButton.GetComponent<Button>().interactable = false;
 
+            if (TryAccessWord == ComponentWord)
+            {
+                OnGooIdentificatorComponentAccessGranted?.Invoke(this, true);
+            }
+            else
+            {
+                OnGooIdentificatorComponentAccessGranted?.Invoke(this, false);
+
+            }
         }
-
         if (TryAccessWord == null)
         {
             SearchBar.text = " |";
+        }
+    }
+
+    public void PressSearchbar()
+    {
+        if (SearchBar.text == " |")
+        {
+            OnShakeNotebook?.Invoke(this, null);
         }
     }
 
@@ -93,6 +119,8 @@ public class ComponentEnterWindow : MonoBehaviour
         SearchBar.text = " |";
         TryAccessWord = null;
         isUnlockingPage = false;
+        SearchButton.GetComponent<Button>().interactable = true;
+        Slider.gameObject.SetActive(false);
         SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 1f);
         content.SetActive(false);
     }

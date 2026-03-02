@@ -34,6 +34,7 @@ public class GooIdentificatorBlock : MonoBehaviour
 
     void AnswerBlockGeneration(List<string> Answers)
     {
+        int index = 0;
         foreach(string Answer in Answers)
         {
             GameObject AnswerBlock = Instantiate(GooAnswerBlock, AnswersPivot.transform);
@@ -41,9 +42,10 @@ public class GooIdentificatorBlock : MonoBehaviour
 
             GameObject capturedBlock = AnswerBlock;
             AnswerBlock.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => PressButton(capturedBlock));
-
+            AnswerBlock.GetComponent<GooIdentificatorAnswere>().init(index);
 
             AnswereBlocks.Add(AnswerBlock);
+            index++;
         }
     }
 

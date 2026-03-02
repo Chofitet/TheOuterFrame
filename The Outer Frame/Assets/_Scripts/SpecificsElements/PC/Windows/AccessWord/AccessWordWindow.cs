@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
+using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,8 @@ public class AccessWordWindow : MonoBehaviour
     [SerializeField] GameEvent OnKeyboardSoundEvent;
     [SerializeField] Image BlockImage;
     [SerializeField] Sprite Unlocked;
+    [SerializeField] GameEvent OnShakeNotebook;
+    [SerializeField] Button SearchButton;
     WordData SearchedWord;
     WordData TryAccessWord;
     private bool isInPCView;
@@ -36,6 +39,7 @@ public class AccessWordWindow : MonoBehaviour
         SearchedWord = S_word;
         Conteiner.SetActive(true);
         startVerticalBarAnim();
+        SearchButton.interactable = true;
         //AccessWord = WordsManager.WM.RequestBDWikiData(S_word).GetAccessWord();
     }
 
@@ -75,24 +79,44 @@ public class AccessWordWindow : MonoBehaviour
     public void TryAccess()
     {
         if (!Conteiner.activeSelf) return;
-        if (TryAccessWord == WordsManager.WM.RequestBDWikiData(SearchedWord).GetAccessWord())
+
+        if (SearchBar.text == " |")
         {
-            Invoke("UnlockPage", 2f);
-            isUnlockingPage = true;
-            SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
-            SearchBar.text = "ACCESS GRANTED";
-            OnAccessWiki?.Invoke(this, null);
-            BlockImage.sprite = Unlocked;
-            WordsManager.WM.RequestBDWikiData(SearchedWord).SetisWordAccessFound();
+            OnShakeNotebook?.Invoke(null, null);
         }
         else
         {
-            SearchBar.text = "ACCESS DENIED";
+            if (TryAccessWord == WordsManager.WM.RequestBDWikiData(SearchedWord).GetAccessWord())
+            {
+                Invoke("UnlockPage", 2f);
+                isUnlockingPage = true;
+                SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
+                SearchBar.text = "ACCESS GRANTED";
+                OnAccessWiki?.Invoke(this, null);
+                BlockImage.sprite = Unlocked;
+                SearchButton.interactable = false;
+                WordsManager.WM.RequestBDWikiData(SearchedWord).SetisWordAccessFound();
+            }
+            else
+            {
+                SearchBar.text = "ACCESS DENIED";
+                SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
+                SearchButton.interactable = false;
+                Invoke("startVerticalBarAnim", 2);
+            }
         }
 
         if (TryAccessWord == null)
         {
             SearchBar.text = " |";
+        }
+    }
+
+    public void PressOnSearchBar()
+    {
+        if (SearchBar.text == " |")
+        {
+            OnShakeNotebook?.Invoke(null, null);
         }
     }
 
@@ -121,6 +145,9 @@ public class AccessWordWindow : MonoBehaviour
     void startVerticalBarAnim()
     {
         if (!Conteiner.activeSelf) return;
+        SearchButton.interactable = true;
+        SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 1f);
+        SearchBar.text = "";
         isWaitingAWord = true;
         textAnim.SetCharacterPerSecond(2);
         StartCoroutine(IdleSearchBarAnim());
