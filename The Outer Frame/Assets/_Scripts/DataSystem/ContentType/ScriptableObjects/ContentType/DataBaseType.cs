@@ -6,11 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New BDEnter", menuName = "DB")]
 public class DataBaseType : ContentType,  IReseteableScriptableObject
 {
-    [SerializeField] List<FindableWordData> hyperLinks = new();
+    List<FindableWordData> hyperLinks = new();
     public IReadOnlyList<FindableWordData> HyperLinks => hyperLinks;
     public void SetHyperLinks(List<FindableWordData> _hyperlinks) { hyperLinks = _hyperlinks; }
 
-    [SerializeField] List<RedactedBlockData> redactedBlocks = new();
+    List<RedactedBlockData> redactedBlocks = new();
     public IReadOnlyList<RedactedBlockData> RedactedBlocks => redactedBlocks;
     public void SetRedactedBlocks(List<RedactedBlockData> _RedactedBlocks) { redactedBlocks = _RedactedBlocks; }
     

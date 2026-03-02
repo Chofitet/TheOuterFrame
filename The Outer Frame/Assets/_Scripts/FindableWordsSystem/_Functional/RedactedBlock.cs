@@ -31,11 +31,12 @@ public class RedactedBlock : MonoBehaviour
             rectTransform.sizeDelta = new Vector2(15.86f, rectTransform.sizeDelta.y);
             m_Text.text = "XXXXXXXXXX";
         }
+        transform.localScale = Vector3.one;
 
         //Invoke("CheckIfInsideRect", 0.1f);
     }
 
-    public void CheckIfInsideRect()
+   /* public void CheckIfInsideRect()
     {
         RectTransform rectTransform = GetComponentInParent<RectTransform>();
 
@@ -54,5 +55,5 @@ public class RedactedBlock : MonoBehaviour
                localPosition.x <= rectTransform.rect.xMax &&
                localPosition.y >= rectTransform.rect.yMin &&
                localPosition.y <= rectTransform.rect.yMax;
-    }
+    }*/
 }
