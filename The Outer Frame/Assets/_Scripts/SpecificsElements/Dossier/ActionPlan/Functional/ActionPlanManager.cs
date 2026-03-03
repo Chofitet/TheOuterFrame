@@ -41,6 +41,7 @@ public class ActionPlanManager : MonoBehaviour
         if(isAFakeAP)
         {
             DisableButtonsRecursively(gameObject.transform);
+
         }
     }
 
@@ -68,6 +69,12 @@ public class ActionPlanManager : MonoBehaviour
         AP.GetComponent<ActionPlan>().Inicialization(Actions, IsProgressorFull, isFirstTimeIdeaAdded, SecondToLastWord, SecondToLastAction, SecondToLastIdea, condition, isSecodToLastActionDoit, GoToCreditsReports);
         transform.Rotate(Vector3.zero);
         isFirstTimeIdeaAdded = false;
+
+        if(isAFakeAP)
+        { 
+            AP.GetComponent<CanvasGroup>().interactable = false;
+            AP.GetComponent <CanvasGroup>().blocksRaycasts = false;
+        }
       }
     public void AddAction(Component sender, object obj)
     {
