@@ -1,15 +1,11 @@
-using System.Collections;
+#if UNITY_EDITOR
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using TMPro;
 using UnityEditor;
-using UnityEditor.Build;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
-using UnityEngine.Windows;
 
-public class Pre_ProccessFindableWords : MonoBehaviour, IPreprocessBuildWithReport
+public class Pre_ProccessFindableWords : MonoBehaviour
 {
     [SerializeField] ContentType contentTypeTest;
     [SerializeField] FindableWordsManager findableWordsManager;
@@ -29,10 +25,6 @@ public class Pre_ProccessFindableWords : MonoBehaviour, IPreprocessBuildWithRepo
     [SerializeField] TMP_Text TVTitleField;
     [SerializeField] TMP_Text TV2LinesTitleField;
     [SerializeField] TMP_Text TVTextField;
-
-    public int callbackOrder => 0;
-
-#if UNITY_EDITOR
 
     /*[InitializeOnLoadMethod]
     private static void RegisterPlayModeCallback()
@@ -211,14 +203,13 @@ public class Pre_ProccessFindableWords : MonoBehaviour, IPreprocessBuildWithRepo
 
     public void ProcessAllPendingData()
     {
-        ProcessPendingData();
+         ProcessPendingData();
     }
 
-    public void OnPreprocessBuild(BuildReport report)
+    private void Start()
     {
-        ProcessPendingData();
+        if (UnityEditor.EditorApplication.isPlaying) ProcessPendingData();
     }
-
     public void ProcessPendingData()
     {
        List<ReportType> reports = directory.GetNeedReprocess().OfType<ReportType>().ToList();
@@ -232,7 +223,7 @@ public class Pre_ProccessFindableWords : MonoBehaviour, IPreprocessBuildWithRepo
         directory.ClearPreprocess();
     }
 
-#endif
+
 
 }
-
+#endif

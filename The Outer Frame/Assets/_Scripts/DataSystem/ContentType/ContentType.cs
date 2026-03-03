@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Windows;
 
 abstract public class ContentType : DataType
 {
@@ -9,7 +7,6 @@ abstract public class ContentType : DataType
 
     string primaryText;
     string secondaryText;
-    private bool needsReprocess;
 
     private List<FindableWordData> findableWords;
 
@@ -25,6 +22,7 @@ abstract public class ContentType : DataType
 
     private void OnValidate()
     {
+#if UNITY_EDITOR
         if (GetText() != primaryText || GetTextSecundary() != secondaryText) 
         {
             DataServiceEditor.AddToNeedsReprocess(this);
@@ -32,5 +30,6 @@ abstract public class ContentType : DataType
 
         primaryText = GetText();
         secondaryText = GetTextSecundary();
+#endif
     }
 }
