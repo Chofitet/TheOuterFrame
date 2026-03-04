@@ -121,6 +121,7 @@ public static class DataServiceEditor
 
     public static void AddToNeedsReprocess(DataType data)
     {
+        if (directory == null) return;
         directory.AddNeedPreprocess(data);
     }
 

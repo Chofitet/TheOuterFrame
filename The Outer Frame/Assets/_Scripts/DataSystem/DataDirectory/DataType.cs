@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DataType : ScriptableObject
 {
-    private string id;
+    [SerializeField] private string id;
 
     public Guid ID
     {
