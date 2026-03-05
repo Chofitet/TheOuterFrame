@@ -203,7 +203,7 @@ public class PCController : MonoBehaviour
 
         WikiTitleSearchedWord.text = TitleName;
         
-        if (word.GetReportList().Count != 0 && !word.GetIsFound())
+        if (word.GetDB() != null && !word.GetIsFound())
         {
             WikiTitleSearchedWord.text = "<link>" + TitleName + "</link>";
             WikiTitleSearchedWord.ForceMeshUpdate();

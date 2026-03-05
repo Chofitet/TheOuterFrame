@@ -647,8 +647,7 @@ public class WordData : DataType, IReseteableScriptableObject
 
     void AddFormDataBaseOnFindableAs()
     {
-        if (DatabaseNameVersion == "") GetFormNameVersion();
-        FindableAs.Add(DatabaseNameVersion);
+        if (DatabaseNameVersion != "")  FindableAs.Add(DatabaseNameVersion);
     }
 
     public TimeData GetTimeOfState(StateEnum state)
