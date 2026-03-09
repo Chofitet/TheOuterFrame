@@ -149,7 +149,11 @@ public class NotebookWordInstance : MonoBehaviour
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         line.pivot = new Vector2(1, 0);
         line.localPosition = new Vector2(line.sizeDelta.x, line.localPosition.y);
-        line.DOSizeDelta(new Vector2(0, line.sizeDelta.y), 0.3f).OnComplete(() => processManager.UnregisterProcess());
+        line.DOSizeDelta(new Vector2(0, line.sizeDelta.y), 0.3f).OnComplete(() =>
+        {
+            line.pivot = new Vector2(0, 0);
+            processManager.UnregisterProcess();
+        });
     }
 
     IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
