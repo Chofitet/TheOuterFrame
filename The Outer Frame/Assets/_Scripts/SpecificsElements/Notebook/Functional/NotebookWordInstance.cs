@@ -133,10 +133,24 @@ public class NotebookWordInstance : MonoBehaviour
 
     }
 
+    [ContextMenu("Croos word")]
+    public void OnCrossWord()
+    {
+        CrossOutWord();
+    }
+
+    [ContextMenu("Erase Croos word")]
+    public void OnEraseCrossWord()
+    {
+        EraseCrossWord();
+    }
+
+    Vector3 CrossOriginalPos;
     public void CrossOutWord()
     {
         processManager.RegisterProcess();
         RectTransform line = strikethrough.GetComponent<RectTransform>();
+        CrossOriginalPos = line.localPosition;
         line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y), 0.3f).OnComplete(() => processManager.UnregisterProcess());
         OnCrossWordSound?.Invoke(this, null);
         isCross = true;
@@ -147,11 +161,16 @@ public class NotebookWordInstance : MonoBehaviour
     {
         processManager.RegisterProcess();
         RectTransform line = strikethrough.GetComponent<RectTransform>();
+        
         line.pivot = new Vector2(1, 0);
+        Vector2 _originalPosition = new Vector2(line.sizeDelta.x, line.localPosition.y);
         line.localPosition = new Vector2(line.sizeDelta.x, line.localPosition.y);
         line.DOSizeDelta(new Vector2(0, line.sizeDelta.y), 0.3f).OnComplete(() =>
         {
-            line.pivot = new Vector2(0, 0);
+            line.pivot = new Vector2(0, 0.5f);
+            line.localPosition = new Vector2(CrossOriginalPos.x, CrossOriginalPos.y);
+            isCross = false;
+            btn.enabled = true;
             processManager.UnregisterProcess();
         });
     }

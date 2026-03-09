@@ -11,6 +11,7 @@ public class GooIdentificatorController : MonoBehaviour
     [SerializeField] GameObject QuestionBlock;
     [SerializeField] GameObject QuestionBlockPivot;
     [SerializeField] List<IdentificatorGooQuestion> IdentificatorQuestions = new List<IdentificatorGooQuestion>();
+    [SerializeField] List<CodeArray> RightAnswerers = new List<CodeArray>();
     [SerializeField] GameObject ComponentAccessWindow;
     [SerializeField] GameObject BackButton;
     [SerializeField] GameObject NextButton;
@@ -24,9 +25,12 @@ public class GooIdentificatorController : MonoBehaviour
 
     [SerializeField] List<ConditionalClass> InactiveGooIdea;
 
+    
+
     bool isAccessComponentRight = false;
  
-    int[] RightAnsweres = { -1, -1, -1, -1, -1 };
+    int[] RightAnswere = { -1, -1, -1, -1, -1 };
+  
 
     List<GameObject> Pages = new List<GameObject>();
 
@@ -49,10 +53,11 @@ public class GooIdentificatorController : MonoBehaviour
             questionBlock.gameObject.SetActive(false);
             Pages.Add(questionBlock);
 
-            RightAnsweres[index] = id.GetCorrectAnswer();
-
+            RightAnswere[index] = id.GetCorrectAnswer();
+            
             index++;
         }
+        RightAnswerers.Add(new CodeArray(RightAnswere));
 
         Pages[0].gameObject.SetActive(true);
 
@@ -167,10 +172,16 @@ public class GooIdentificatorController : MonoBehaviour
     public void CheckFinalAnsweres(Component sender, object obj)
     {
         isAccessComponentRight = (bool)obj;
+        bool isOneCodeCorrect = false;
 
-        bool areEqual = RightAnsweres.SequenceEqual(playerCode);
+        foreach(CodeArray code in RightAnswerers)
+        {
+            isOneCodeCorrect = code.values.SequenceEqual(playerCode);
 
-        if(areEqual && isAccessComponentRight)
+            if (isOneCodeCorrect) break;
+        }
+
+        if(isOneCodeCorrect && isAccessComponentRight)
         {
             StartCoroutine(DelayShowAnswere(RightAnswerePanel));
         }
@@ -323,4 +334,15 @@ public class IdentificatorGooQuestion
     public string GetQuestion() { return question;}
     public List<string> GetAnswers() { return answers; }
     public int GetCorrectAnswer() {  return correctAnswer;}
+}
+
+[Serializable]
+public class CodeArray
+{
+    public int[] values = { -1, -1, -1, -1, -1 };
+
+    public CodeArray(int[] _values)
+    {
+        this.values = _values;
+    }
 }
