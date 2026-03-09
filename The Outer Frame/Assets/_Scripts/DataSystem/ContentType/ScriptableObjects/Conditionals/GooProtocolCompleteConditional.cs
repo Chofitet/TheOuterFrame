@@ -7,7 +7,17 @@ using UnityEngine;
 public class GooProtocolCompleteConditional : ScriptableObject, IConditionable, IReseteableScriptableObject
 {
 
+
     [NonSerialized] bool conditionalState = false;
+
+    private void OnEnable()
+    {
+        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
+    }
+    public void ResetScriptableObject()
+    {
+        conditionalState = false;
+    }
 
     public void SetConditionalState()
     {
@@ -39,8 +49,5 @@ public class GooProtocolCompleteConditional : ScriptableObject, IConditionable, 
         throw new System.NotImplementedException();
     }
 
-    public void ResetScriptableObject()
-    {
-        conditionalState = false;
-    }
+   
 }
