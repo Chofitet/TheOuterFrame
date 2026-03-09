@@ -16,6 +16,7 @@ public class PCWikiController : MonoBehaviour
     [SerializeField] List<GameObject> DataBaseFields = new List<GameObject>();
     [SerializeField] GameObject WikiInfoContent;
     [SerializeField] GameEvent OnPressGooIdentificatorBTN;
+    [SerializeField] GameEvent OnPresAutomaticGooIdentificatorBTN;
     List<GameObject> FIeldsInWikiInfo = new List<GameObject>();
     [SerializeField] GameObject LoadScreen;
     DataBaseType input;
@@ -151,6 +152,11 @@ public class PCWikiController : MonoBehaviour
     public void PressGooIdentificatorBTN()
     {
         OnPressGooIdentificatorBTN?.Invoke(this, null);
+    }
+
+    public void PressGoAutomaticIdentificatorBTN()
+    {
+        OnPresAutomaticGooIdentificatorBTN?.Invoke(this, null);
     }
 
     bool CheckAreLocked()
