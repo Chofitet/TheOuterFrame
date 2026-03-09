@@ -10,29 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: DeandraInspectedNotBrainwashedInCar
+  m_Name: CatatonicInspectedfor First Time after Brainwashed
   m_EditorClassIdentifier: 
-  id: 10a5b858-4a66-45bc-b741-77e25668f63b
+  id: aa1bcd02-8cb2-482b-a962-c6983f08b116
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: -2
-  Text: "The President was alone on the roof of a <link>Petro Station</link> after
-    an experience that left her terrified beyond rational thought inside half of
-    a car.\n\nThen we came along and erased her memories. \n\nShe carried nothing
-    on her; who travels like that?"
-  TextForRepetition: 'We already tried that, remember?
+  Text: 'Whatever she experienced sent her into deep shell-shocked state. and then
+    we came along and wiped her mind clean.
+
+
+    Her pockets are empty, she carries
+    no possessions with her whatsoever. Who travels like that?'
+  TextForRepetition: 'We already did that, remember?
 
     The report is probably
     on your desk or in the DB if you uploaded it.'
   CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: 7c6609f8dc3138d4a913b8b79986bd92, type: 3}
-    text: JUST ONE OF THOSE DAYS
+  - photo: {fileID: 21300000, guid: 68750a6ee9ebd9c4087734702596ebb9, type: 3}
+    text: WHO IS SHE?
   Conditionals:
-  - condition: {fileID: 11400000, guid: b45ccba6bd4446446962778a5aada0e8, type: 2}
-    ifNot: 1
-  - condition: {fileID: 11400000, guid: e59dfb32193ea4648a4abb446ebf8081, type: 2}
+  - condition: {fileID: 11400000, guid: badc88481efd1af4ab91797455729431, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 8bbbe64175ef1df4c8df4d80bd3c92c1, type: 2}
     ifNot: 1
   ObjectType: 0
   isOrderMatters: 0

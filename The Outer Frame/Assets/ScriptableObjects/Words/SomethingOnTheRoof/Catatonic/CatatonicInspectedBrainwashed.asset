@@ -21,8 +21,12 @@ MonoBehaviour:
     we came along and wiped her mind clean.
 
 
-    Her pockets are empty, she carries
-    no possessions with her whatsoever. Who travels like that?'
+    She no longer repeats "there were
+    two at 54" now.
+
+
+    Her pockets are empty, she carries no possessions with
+    her whatsoever. Who travels like that?'
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
@@ -33,6 +37,8 @@ MonoBehaviour:
     text: WHO IS SHE?
   Conditionals:
   - condition: {fileID: 11400000, guid: badc88481efd1af4ab91797455729431, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 8bbbe64175ef1df4c8df4d80bd3c92c1, type: 2}
     ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
