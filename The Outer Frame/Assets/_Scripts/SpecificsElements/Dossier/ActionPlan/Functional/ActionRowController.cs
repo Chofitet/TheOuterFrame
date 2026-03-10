@@ -29,6 +29,7 @@ public class ActionRowController : MonoBehaviour
     FadeWordsEffect fadeAclaration;
     bool once;
     WordData Word;
+    bool isPendigToErase;
 
     public void Initialization(StateEnum _state, bool _isFirstTimeIdeaAdded)
     {
@@ -126,7 +127,7 @@ public class ActionRowController : MonoBehaviour
 
     public StateEnum GetState() { return state; }
 
-    public void ResetRow()
+    public void ResetRow(bool noPlaySound = false)
     {
         toggle.isOn = false;
         if (!fade.GetisVisible()) return;
@@ -252,6 +253,45 @@ public class ActionRowController : MonoBehaviour
         fadeAclaration.StartEffect();
     }
 
+    Coroutine PendingToEraseCoroutine;
+
+    public void OnInactiveReplaceWord(Component SENDER, object obj)
+    {
+        WordData _word = (WordData) obj;
+        if (!Word) return;
+
+        Debug.Log($"Erase word {_word} from AP");
+
+        if(_word == Word)
+        {
+            isPendigToErase = true;
+        }
+    }
+
+    public void OnAPView(Component sender, object obj)
+    {
+        bool isInAp = (bool)obj;
+
+        if (!isPendigToErase) return;
+
+        if (isInAp)
+        {
+            PendingToEraseCoroutine = StartCoroutine(TriggerPendingToEraseCoroutine());
+        }
+        else
+        {
+            if(PendingToEraseCoroutine != null) StopCoroutine(PendingToEraseCoroutine);
+        }
+
+
+    }
+
+    IEnumerator TriggerPendingToEraseCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        ResetRow();
+        isPendigToErase = false;
+    }
 
     public bool GetIsOn() { return toggle.isOn; }
 }

@@ -142,6 +142,8 @@ public class ActionPlan : MonoBehaviour
 
     public void ApprovedActionPlan()
     {
+        
+
         if (isProgressorFull)
         {
             OnProgressorFull?.Invoke(this, null);
@@ -162,6 +164,13 @@ public class ActionPlan : MonoBehaviour
             ProgressorSetFull(null, null);
             return;
         }
+
+        bool isOneActionOn = false;
+        foreach (ActionRowController row in Actions)
+        {
+            if (row.GetIsOn()) isOneActionOn = true;
+        }
+        if (!isOneActionOn) return;
 
         SendActionToProgressor();
     }

@@ -21,6 +21,7 @@ public class DossierController : MonoBehaviour
     [SerializeField] GameEvent OnWritingShakeDossier;
     [SerializeField] GameEvent OnShakeDossierSound;
     [SerializeField] GameEvent OnActionPlanDossier;
+    [SerializeField] GameEvent OnIsInActionPlan;
 
     private void Start()
     {
@@ -43,7 +44,7 @@ public class DossierController : MonoBehaviour
         isInBrifing2 = false;
         IsTakingIdea = false;
         onceInAP = false;
-
+        OnIsInActionPlan?.Invoke(sender, true);
 
     }
 
@@ -58,6 +59,7 @@ public class DossierController : MonoBehaviour
         BrifingBtn.GetComponent<BoxCollider>().enabled = false;
         ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
         if(wasBrieffing2Taked) Brifing2BTN.GetComponent<BoxCollider>().enabled = true;
+        OnIsInActionPlan?.Invoke(sender, false);
 
         isInBrifing = true;
         isInActionPlan = false;
@@ -77,6 +79,7 @@ public class DossierController : MonoBehaviour
         BrifingBtn.GetComponent<BoxCollider>().enabled = true;
         ActionPlanBtn.GetComponent<BoxCollider>().enabled = true;
         Brifing2BTN.GetComponent<BoxCollider>().enabled = false;
+        OnIsInActionPlan?.Invoke(sender, false);
 
         isInBrifing2 = true;
         isInActionPlan = false;
@@ -157,6 +160,9 @@ public class DossierController : MonoBehaviour
     public void CheckVIew(Component sender, object obj)
     {
         currentView = (ViewStates)obj;
+
+        if(isInActionPlan && currentView == ViewStates.DossierView) OnIsInActionPlan?.Invoke(sender, true);
+        else OnIsInActionPlan?.Invoke(sender, false);
     }
 
     bool onceInAP; 
@@ -176,6 +182,7 @@ public class DossierController : MonoBehaviour
         if (currentView == ViewStates.DossierView)
         {
             OnActionPlanDossier?.Invoke(this, null);
+            Debug.Log("is in AP");
         }
     }
     

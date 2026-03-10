@@ -15,6 +15,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] Button btn;
     [SerializeField] Transform EraseParticles;
     [SerializeField] GameEvent OnButtonElement;
+    [SerializeField] GameEvent OnInactiveReplaceWord;
     NotebookProcessManager processManager;
     WordData wordReference;
     bool isCross;
@@ -96,6 +97,7 @@ public class NotebookWordInstance : MonoBehaviour
     public void RefreshWord(Component sender, object obj)
     {
         if (wordReference == null) return;
+
         if (wordReference.GetInactiveStateSeen() && !wordReference.GetEraseState())
         {
             if (isCross) return;
@@ -109,6 +111,7 @@ public class NotebookWordInstance : MonoBehaviour
     {
         text.text = wordReference.GetName();
         if (isCross) EraseCrossWord();
+        OnInactiveReplaceWord?.Invoke(this, wordReference);
         StartCoroutine(AnimFade(text, false, text, true, word.GetName()));
         wordReference = word;
         word.SetIsFound();
@@ -133,21 +136,12 @@ public class NotebookWordInstance : MonoBehaviour
 
     }
 
-    [ContextMenu("Croos word")]
-    public void OnCrossWord()
-    {
-        CrossOutWord();
-    }
-
-    [ContextMenu("Erase Croos word")]
-    public void OnEraseCrossWord()
-    {
-        EraseCrossWord();
-    }
+  
 
     Vector3 CrossOriginalPos;
     public void CrossOutWord()
     {
+        OnInactiveReplaceWord?.Invoke(this, wordReference);
         processManager.RegisterProcess();
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         CrossOriginalPos = line.localPosition;

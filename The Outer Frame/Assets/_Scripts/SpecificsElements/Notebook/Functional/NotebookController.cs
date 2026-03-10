@@ -16,6 +16,7 @@ public class NotebookController : MonoBehaviour
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
     [SerializeField] NotebookProcessManager ProccessManager;
     [SerializeField] GameEvent OnPendingWordsToPutInBoard;
+   
     int i = 0;
     bool once;
     bool isStarting = true;
@@ -127,7 +128,8 @@ public class NotebookController : MonoBehaviour
             {
                 ClearUnderLine();
                 script.ReplaceWord(newword);
-                
+               
+
                 aux = true;
             }
             
