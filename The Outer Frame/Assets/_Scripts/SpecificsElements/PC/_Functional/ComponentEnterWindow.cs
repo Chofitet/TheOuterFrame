@@ -40,6 +40,7 @@ public class ComponentEnterWindow : MonoBehaviour
             SearchBar.text = " |";
             startVerticalBarAnim();
         }
+        else StopAllCoroutines();
     }
     //OnChangeView
     public void GetActualView(Component sender, object obj)
