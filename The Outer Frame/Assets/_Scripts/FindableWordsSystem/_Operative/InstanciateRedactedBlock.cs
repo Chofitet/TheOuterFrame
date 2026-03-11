@@ -26,7 +26,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
         }
     }
 
-    public void InstanciateRedactedBlocks(TMP_Text textField, IReadOnlyList<RedactedBlockData> pre_proccess_PositioBlock = null, bool CleanPool = false, bool useTXTAsParent = false)
+    public void InstanciateRedactedBlocks(TMP_Text textField, IReadOnlyList<RedactedBlockData> pre_proccess_PositioBlock = null, bool cleanPool = false, bool useTXTAsParent = false)
     {
         if (textField == null)
         {
@@ -48,14 +48,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
         try
         {
-            if (CleanPool)
-            {
-                foreach (GameObject child in RedactedBlockList)
-                {
-                    pool.ReturnToPool(child);
-                }
-                RedactedBlockList.Clear();
-            }
+            if (cleanPool) CleanPool();
 
             IReadOnlyList<RedactedBlockData> PositionBlock;
 
@@ -93,6 +86,17 @@ public class InstanciateRedactedBlock : MonoBehaviour
         }
 
     }
+    public void EmptyRedactedBlockConteiner(Component Sender, object obj)
+    {
+        CleanPool();
+    }
 
-
+    void CleanPool()
+    {
+        foreach (GameObject child in RedactedBlockList)
+        {
+            pool.ReturnToPool(child);
+        }
+        RedactedBlockList.Clear();
+    }
 }

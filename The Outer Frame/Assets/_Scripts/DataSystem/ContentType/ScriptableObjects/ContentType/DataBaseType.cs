@@ -22,6 +22,7 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
     [SerializeField] bool hasGooIdentificatorBTN;
     [SerializeField] WordData wordToUnlock;
     [SerializeField] StateEnum UnlockState;
+    [SerializeField] bool NoSetFindableInDBTitle;
     [Header("Extra data")]
     [SerializeField] Sprite image;
     [SerializeField] string phoneNum;
@@ -93,6 +94,8 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
     public bool GetWasSearched() { return wasSearched; }
 
     public void SetWasSetted() => WasSetted = true;
+
+    public bool GetNoSetFindableInDBTitle() { return NoSetFindableInDBTitle; }
 
     private TimeData CompleteTime;
     public void SetTimeWhenWasDone()

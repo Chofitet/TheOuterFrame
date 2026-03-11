@@ -17,6 +17,7 @@ public class PCController : MonoBehaviour
     [SerializeField] WordData IrrelevantDB;
     [SerializeField] GameObject BtnBackToLastEntry;
     [SerializeField] GameEvent OnLogFilterType;
+    [SerializeField] GameEvent OnSearchEmptyDB;
     
     GameEvent LastWindow;
     bool isWaitingAWord;
@@ -148,6 +149,7 @@ public class PCController : MonoBehaviour
             {
                 SearchBar.text = " |";
                 if (isInPCView) OnShakeNotebook?.Invoke(this, null);
+                OnSearchEmptyDB?.Invoke(this, null);
                 return;
             }
 
@@ -203,7 +205,7 @@ public class PCController : MonoBehaviour
 
         WikiTitleSearchedWord.text = TitleName;
         
-        if (word.GetDB() != null && !word.GetIsFound())
+        if (word.GetDB() != null && !word.GetIsFound() && !db.GetNoSetFindableInDBTitle())
         {
             WikiTitleSearchedWord.text = "<link>" + TitleName + "</link>";
             WikiTitleSearchedWord.ForceMeshUpdate();
