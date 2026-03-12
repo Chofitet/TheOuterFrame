@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: CameraFootageGetRidOf
+  m_Name: CameraFootageGetRidOfYesFaceTech
   m_EditorClassIdentifier: 
-  id: beb0fae6-fae8-43f7-943b-de2604b92509
+  id: 79e404cb-3a2c-4334-a2ba-a57055ba2531
   Action: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   state: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "We deleted all of tonight's footage. \n\nWe also scrambled the Secusys a
-    bit so any new video recordings look like a loop of a dog walking by.\n\nThe
-    cameras are no longer a concern.\n"
+  Text: "We deleted all of the footage. \n\nSo that's it, nothing to see here.\n\n"
   TextForRepetition: 'We already did that, remember?
+
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
@@ -30,7 +29,9 @@ MonoBehaviour:
     text: DELETED!
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
     text: WE DID IT!
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 43c8cbc28299d9842883365291f98827, type: 2}
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
