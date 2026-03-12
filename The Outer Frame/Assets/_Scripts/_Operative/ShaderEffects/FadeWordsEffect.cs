@@ -27,7 +27,7 @@ public class FadeWordsEffect : MonoBehaviour
         SetBlank(1);
         m_TextComponent = GetComponent<TextMeshProUGUI>();
         string auxText = m_TextComponent.text;
-        if (auxText.Length > 50)
+        if (auxText.Length > 100)
         {
             auxText = lastCleanText;
         }
@@ -51,7 +51,7 @@ public class FadeWordsEffect : MonoBehaviour
         m_TextComponent = GetComponent<TextMeshProUGUI>();
         string auxText = m_TextComponent.text;
 
-        if (auxText.Length > 50)
+        if (auxText.Length > 100)
         {
             auxText = lastCleanText;
         }

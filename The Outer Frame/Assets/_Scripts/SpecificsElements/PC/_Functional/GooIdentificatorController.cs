@@ -29,7 +29,7 @@ public class GooIdentificatorController : MonoBehaviour
 
     bool isAccessComponentRight = false;
  
-    int[] RightAnswere = { -1, -1, -1, -1, -1 };
+    int[] RightAnswere = { -1, -1, -1, -1 };
   
 
     List<GameObject> Pages = new List<GameObject>();
@@ -38,7 +38,7 @@ public class GooIdentificatorController : MonoBehaviour
 
    
 
-    int[] playerCode= {-1,-1,-1,-1,-1};
+    int[] playerCode= {-1,-1,-1,-1};
     private bool isOrderMatters;
 
     private void Start()
@@ -234,7 +234,7 @@ public class GooIdentificatorController : MonoBehaviour
 
     public void Reset()
     {
-        playerCode = new int[]{ -1,-1,-1,-1,-1};
+        playerCode = new int[]{ -1,-1,-1,-1};
         IdentficatorPage = 0;
 
         WrongAnswerePanel.SetActive(false);
@@ -339,7 +339,7 @@ public class IdentificatorGooQuestion
 [Serializable]
 public class CodeArray
 {
-    public int[] values = { -1, -1, -1, -1, -1 };
+    public int[] values = { -1, -1, -1, -1 };
 
     public CodeArray(int[] _values)
     {

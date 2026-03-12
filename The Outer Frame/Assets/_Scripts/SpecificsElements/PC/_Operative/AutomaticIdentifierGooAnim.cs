@@ -24,6 +24,7 @@ public class AutomaticIdentifierGooAnim : MonoBehaviour
     public void CloseAutomaticIdentifierPanel(Component sender, object obj)
     {
         CloseAutomaticIdentifierPanel();
+        
     }
 
     public void CloseAutomaticIdentifierPanel()
@@ -31,6 +32,7 @@ public class AutomaticIdentifierGooAnim : MonoBehaviour
         Debug.Log("Closing panel");
         if (BootingCoroutine != null) StopCoroutine(BootingCoroutine);
         Reset();
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void StartBootingAnim()
@@ -78,5 +80,6 @@ public class AutomaticIdentifierGooAnim : MonoBehaviour
         textField.text = "";
         pointText.text = "";
         lessAutomaticBTN.SetActive(false);
+        
     }
 }
