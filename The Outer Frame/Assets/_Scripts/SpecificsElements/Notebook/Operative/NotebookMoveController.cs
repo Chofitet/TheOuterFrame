@@ -321,6 +321,7 @@ public class NotebookMoveController : MonoBehaviour
         {
             CloseNotebook(true);
         }
+
     }
 
     bool isShaking = false;

@@ -20,12 +20,19 @@ public class FadeWordsEffect : MonoBehaviour
     [SerializeField] float DilateMultiplier = 1;
     bool isVisible;
     [SerializeField] Material[] matLevels;
+    private string lastCleanText = "";
 
     public void StartEffect(bool isFadeTransparent = true)
     {
         SetBlank(1);
         m_TextComponent = GetComponent<TextMeshProUGUI>();
         string auxText = m_TextComponent.text;
+        if (auxText.Length > 50)
+        {
+            auxText = lastCleanText;
+        }
+        else lastCleanText = auxText;
+
         if (auxText.Contains("material"))
         {
             m_TextComponent.text = "";
@@ -43,6 +50,13 @@ public class FadeWordsEffect : MonoBehaviour
         SetBlank(1);
         m_TextComponent = GetComponent<TextMeshProUGUI>();
         string auxText = m_TextComponent.text;
+
+        if (auxText.Length > 50)
+        {
+            auxText = lastCleanText;
+        }
+        else lastCleanText = auxText;
+
         if (auxText.Contains("material"))
         {
             m_TextComponent.text = "";

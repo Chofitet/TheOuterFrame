@@ -14,23 +14,25 @@ public class RedactedBlock : MonoBehaviour
 
         if (redactedText == "RE")
         {
-            rectTransform.sizeDelta = new Vector2(4.49f, rectTransform.sizeDelta.y);
             m_Text.text = "XXX";
+            rectTransform.sizeDelta = new Vector2(4.49f, rectTransform.sizeDelta.y);
         }
         else if (redactedText == "REDA")
         {
-            rectTransform.sizeDelta = new Vector2(7.64f, rectTransform.sizeDelta.y);
             m_Text.text = "XXXXX";
+            rectTransform.sizeDelta = new Vector2(7.64f, rectTransform.sizeDelta.y);
         }
         else if (redactedText == "REDACTED")
         {
+            rectTransform.sizeDelta = new Vector2(13.1f, rectTransform.sizeDelta.y);
             m_Text.text = "XXXXXXXXX";
         }
         else if (redactedText == "REDACTEDTO")
         {
-            rectTransform.sizeDelta = new Vector2(15.86f, rectTransform.sizeDelta.y);
             m_Text.text = "XXXXXXXXXX";
+            rectTransform.sizeDelta = new Vector2(15.86f, rectTransform.sizeDelta.y);
         }
+
         transform.localScale = Vector3.one;
 
         //Invoke("CheckIfInsideRect", 0.1f);

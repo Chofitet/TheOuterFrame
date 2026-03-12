@@ -22,7 +22,7 @@ public class NotebookPhonesController : MonoBehaviour
     private void Start(){
         initialConteinerPos = WordContainer.localPosition;
         Invoke("SetisStartingFalse", 2f);
-        WordContainer.transform.localPosition = new Vector3(0, -300, 0);
+        WordContainer.transform.localPosition = new Vector3(0, -500, 0);
     }
 
     void SetisStartingFalse()
@@ -266,7 +266,7 @@ public class NotebookPhonesController : MonoBehaviour
     public void DisableInSlidePhones(Component sender, object obj)
     {
         IsPhoneSlideOut = false;
-        WordContainer.transform.localPosition = new Vector3(0,-300,0);
+        WordContainer.transform.localPosition = new Vector3(0,-500,0);
     }
 
     
