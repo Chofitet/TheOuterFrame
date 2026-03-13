@@ -18,6 +18,8 @@ public class SceneManagerScript : MonoBehaviour
         fadeObject = Instantiate(fadeScenePrefab, transform);
         if(OtherBeginDuration !=0) fadeObject.GetComponent<FadeSceneController>().fadeDuration(OtherBeginDuration);
         OnStartGame?.Invoke(this, null);
+
+        Application.targetFrameRate = 60;
     }
 
     [SerializeField] GameObject fadeScenePrefab;
