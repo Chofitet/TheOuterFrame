@@ -9,6 +9,7 @@ public class NotebookMoveController : MonoBehaviour
     [SerializeField] Transform[] Positions;
     [SerializeField] float MoveDuration;
     [SerializeField] Transform VanimPos;
+    [SerializeField] Transform BackVanimPos;
     [SerializeField] GameEvent OnSlidePhoneUpSound;
     [SerializeField] GameEvent OnSlidePhoneDownSound;
     [SerializeField] GameEvent OnTakeNotebookSound;
@@ -407,8 +408,8 @@ public class NotebookMoveController : MonoBehaviour
         moveSequence.Append(transform.DOMove(VanimPos.position, 0.2f))
             .Join(transform.DORotate(VanimPos.rotation.eulerAngles,0.2f))
             .AppendInterval(0.4f)
-            .Append(transform.DOMove(Positions[6].position, 0.2f))
-            .Join(transform.DORotate(Positions[6].rotation.eulerAngles, 0.2f));
+            .Append(transform.DOMove(BackVanimPos.position, 0.2f))
+            .Join(transform.DORotate(BackVanimPos.rotation.eulerAngles, 0.2f));
 
     }
 

@@ -345,9 +345,9 @@ public class SlotController : MonoBehaviour
         ProgressBar.value = 0;
         TimeManager.OnSecondsChange -= UpdateProgress;
 
-        if (Report != null) if (Report.GetKillAgent() && isActionComplete) DisableAgent();
+        if (Report != null) if (Report.GetKillAgent() && isActionComplete && !isAMultiAction) DisableAgent();
         if (isAgentDead) DisableAgent();
-        if (Report != null) if (Report.GetKillAgent() && Report.GetAgentRecoveryTime() != 0 && isActionComplete)
+        if (Report != null) if (Report.GetKillAgent() && Report.GetAgentRecoveryTime() != 0 && isActionComplete && !isAMultiAction)
         {
             SetRecovery(Report.GetAgentRecoveryTime());
             return;
