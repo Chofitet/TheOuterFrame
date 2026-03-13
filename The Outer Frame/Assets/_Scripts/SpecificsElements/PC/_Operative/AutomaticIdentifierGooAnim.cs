@@ -66,12 +66,18 @@ public class AutomaticIdentifierGooAnim : MonoBehaviour
 
         string[] lines = originalText.Split('\n');
 
+        int linesAmount = lines.Length;
+        int lineIndex = 1;
+
         foreach (string line in lines)
         {
+            
             textField.text += line + "\n";
-            yield return new WaitForSeconds(0.15f); 
+            if(lineIndex != linesAmount) yield return new WaitForSeconds(0.15f);
+
+            lineIndex++;
         }
-        yield return new WaitForSeconds(0.15f);
+
         lessAutomaticBTN.SetActive(true);
     }
 
