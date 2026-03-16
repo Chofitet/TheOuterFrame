@@ -135,7 +135,6 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         //isDone = true;
     }
 
-
     public bool CheckForConditionals(List<ConditionalClass> ListOfConditionals)
     {
         try

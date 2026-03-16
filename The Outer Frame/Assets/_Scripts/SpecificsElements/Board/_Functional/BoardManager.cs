@@ -15,6 +15,8 @@ public class BoardManager : MonoBehaviour
     [SerializeField] Transform StartPos;
     [SerializeField] Transform TakeOutPos;
     [SerializeField] GameEvent OnPlaced4WordsInBoard;
+    [SerializeField] List<GeneratorActionController> IdeasToCheckConditionals = new List<GeneratorActionController>();
+    [SerializeField] GameEvent OnSendIdeaConditionalBool;
     [SerializeField] MoveBoardElementsToPos[] SetInTutorial;
     [SerializeField] StringConnectionController[] ConnectInTutorial;
     [SerializeField] GameEvent OnEnableInput;
@@ -35,6 +37,8 @@ public class BoardManager : MonoBehaviour
     public void StateView(Component sender, object obj)
     {
         ViewStates view = (ViewStates)obj;
+
+        CheckIdeaConditionals();
 
         if (view == ViewStates.BoardView)
         {
@@ -182,5 +186,14 @@ public class BoardManager : MonoBehaviour
     public void MadeConnections(Component sender, object obj)
     {
         OnUpdateConnections?.Invoke(this, null);
+    }
+
+    void CheckIdeaConditionals()
+    {
+        foreach(GeneratorActionController idea in IdeasToCheckConditionals)
+        {
+            bool conditional = idea.GetComponent<IPlacedOnBoard>().GetConditionalState();
+            if (conditional) OnSendIdeaConditionalBool?.Invoke(this, null);
+        }
     }
 }
