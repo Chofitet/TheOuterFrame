@@ -204,10 +204,10 @@ public class NotebookWordInstance : MonoBehaviour
 
     public void ClearUnderline()
     {
-       
+        
         if (isActiveInBoard) return;
         if (isinactive) return;
-        if (!wordReference.GetInactiveStateSeen()) btn.enabled = true;
+        if (actualView != ViewStates.OnTakeSomeInBoard && actualView != ViewStates.BoardView) if (!wordReference.GetInactiveStateSeen()) btn.enabled = true;
         text.text = wordReference.GetName();
     }
 

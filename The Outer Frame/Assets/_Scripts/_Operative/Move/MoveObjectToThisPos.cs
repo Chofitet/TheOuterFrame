@@ -14,12 +14,14 @@ public class MoveObjectToThisPos : MonoBehaviour
     Sequence MoveSequence;
     GameObject newObject;
     Transform CurrentTarget;
+    string isBlockMovement;
 
     [SerializeField] List<BoardElementsTransforms> Positions = new List<BoardElementsTransforms>();
 
 
     public void moveObjectToThisPos(Component sender, object obj)
     {
+        if (isBlockMovement == "yes") return;
         if (LastObj)
         {
             GameObject anotherObject = (GameObject)obj;
@@ -42,6 +44,8 @@ public class MoveObjectToThisPos : MonoBehaviour
 
         GameObject _object = (GameObject)obj;
 
+        if (_object == null) return;
+
         ListOfBoardElementsPositions elementPosition = _object.GetComponent<ListOfBoardElementsPositions>();
         if (elementPosition != null) CurrentTarget = SearchElementPosition(elementPosition.BoardElementsPosition);
         else CurrentTarget = transform;
@@ -53,6 +57,7 @@ public class MoveObjectToThisPos : MonoBehaviour
 
     void MoveObject(GameObject _object, float TimeToWait)
     {
+        if (isBlockMovement == "yes") return;
         inMovingToPosition = true;
         LastObj = _object;
         initPos = LastObj.transform.position;
@@ -73,6 +78,7 @@ public class MoveObjectToThisPos : MonoBehaviour
     }
     public void BackLastObjectToPos(Component sender, object obj)
     {
+        if (isBlockMovement == "yes") return;
         if (!LastObj)
         {
            // Debug.Log("Any positsToReturn");
@@ -126,6 +132,11 @@ public class MoveObjectToThisPos : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void BlockMovement(Component sender,object obj)
+    {
+        isBlockMovement = (string) obj;
     }
 }
 
