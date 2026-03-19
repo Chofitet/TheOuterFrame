@@ -5,12 +5,17 @@ using DG.Tweening;
 
 public class BoardTutorialPosit : MonoBehaviour
 {
-    Vector3 GeneralViewPos;
+    
+    [Header("Position Placed in board")]
+    [SerializeField] Transform GeneralViewPos;
     [SerializeField] Transform BoardViewPos;
-    [SerializeField] Transform OutOfView;
     [SerializeField] Transform OutOfViewfromBoard;
+    [Header("Position Taked next to notebook")]
+    [SerializeField] Transform NextToNotebookPos;
+    [SerializeField] Transform OutOfView;
     [SerializeField] int amountOfWordsToShowPosit;
-    [SerializeField] GameEvent OnReturningPositBlock;
+
+    [SerializeField] GameEvent OnButtonElement;
     int amountOfWordsTaked;
     bool pendingToShowPosit;
     bool thereIsAnIdeaPendingToPut;
@@ -26,7 +31,6 @@ public class BoardTutorialPosit : MonoBehaviour
     private void Start()
     {
         Posit = transform.GetChild(0).gameObject;
-        GeneralViewPos = Posit.transform.position;
         Posit.SetActive(false);
     }
 
@@ -49,7 +53,7 @@ public class BoardTutorialPosit : MonoBehaviour
 
         if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
 
-        if (ActualView == ViewStates.BoardView || ActualView == ViewStates.GeneralView || ActualView == ViewStates.OnTakenPaperView || ActualView == ViewStates.OnTakeSomeInBoard || ActualView == ViewStates.DossierView || ActualView == ViewStates.PauseView)
+        if (ActualView == ViewStates.BoardView || ActualView == ViewStates.GeneralView || ActualView == ViewStates.OnTakenPaperView || ActualView == ViewStates.OnTakeSomeInBoard || ActualView == ViewStates.DossierView || ActualView == ViewStates.PauseView || ActualView == ViewStates.BoardZoomView)
         {
             return;
         }
@@ -80,7 +84,7 @@ public class BoardTutorialPosit : MonoBehaviour
 
         if (ActualView == ViewStates.BoardView)
         {
-            movePosit(BoardViewPos.position);
+            movePosit(BoardViewPos);
         }
         else if (ActualView == ViewStates.GeneralView)
         {
@@ -97,38 +101,47 @@ public class BoardTutorialPosit : MonoBehaviour
         Debug.Log("At least one idea is pendig to show");
     }
 
-    void movePosit(Vector3 MoveTo)
+    public void MoveToTakedPosition(Component sender, object obj)
+    {
+        OnButtonElement?.Invoke(this, ViewStates.BoardView);
+        movePosit(NextToNotebookPos);
+    }
+
+    public void BackToBoardPosition(Component sender, object obj)
+    {
+
+        Transform toMove = obj as Transform;
+
+        if (toMove == null) toMove = GeneralViewPos;
+
+        movePosit(toMove);
+    }
+
+    void movePosit(Transform MoveTo)
     {
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
         moveSequence = DOTween.Sequence();
 
-        moveSequence.Append(Posit.transform.DOMove(MoveTo,0.5f)).SetEase(Ease.InOutCirc);
-    }
-
-    public void OnPlacedWordOnBoard(Component sender, object obj)
-    {
-        if (NotShowedYet) inactive = true;
-        if (inactive) return;
-        if (isInTutorial) return;
-        if (LastView != ViewStates.OnTakeSomeInBoard) return;
-        if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
-
-        wordWasPlacedOnBoard = true;
-
-        MoveOutView(OutOfView);
+        moveSequence.Append(Posit.transform.DOMove(MoveTo.position, 0.5f)).SetEase(Ease.InOutCirc)
+            .Join(Posit.transform.DORotate(MoveTo.rotation.eulerAngles, 0.5f));
     }
 
     public void CheckPendingBordsToPlaceOnBoard(Component sender, object obj)
     {
         if (inactive) return;
+        if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
         bool arePendingWords = (bool)obj;
-        if (arePendingWords) return;
-        if (LastView == ViewStates.OnTakeSomeInBoard) return;
+        if (arePendingWords)
+        {
+            return;
+        }
+         
 
         wordWasPlacedOnBoard = true;
 
-        MoveOutView(OutOfViewfromBoard);
+        if (LastView != ViewStates.OnTakeSomeInBoard) MoveOutView(OutOfViewfromBoard);
+        else MoveOutView(OutOfView);
     }
 
     void MoveOutView(Transform toMove)
@@ -137,8 +150,6 @@ public class BoardTutorialPosit : MonoBehaviour
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
         moveSequence = DOTween.Sequence();
-
-        OnReturningPositBlock?.Invoke(this, null);
 
         Destroy(Posit.GetComponent<ButtonElement>());
 

@@ -13,23 +13,12 @@ public class MoveObjectToThisPos : MonoBehaviour
     Tween tweenRot;
     Sequence MoveSequence;
     GameObject newObject;
-    Transform CurrentTarget;
-    string isBlockMovement;
-
-    [SerializeField] List<BoardElementsTransforms> Positions = new List<BoardElementsTransforms>();
-
 
     public void moveObjectToThisPos(Component sender, object obj)
     {
-        if (isBlockMovement == "yes") return;
         if (LastObj)
         {
             GameObject anotherObject = (GameObject)obj;
-
-            ListOfBoardElementsPositions _elementPosition = anotherObject.GetComponent<ListOfBoardElementsPositions>();
-            if(_elementPosition != null ) CurrentTarget = SearchElementPosition(_elementPosition.BoardElementsPosition);
-            else  CurrentTarget = transform;
-
             if (anotherObject != LastObj)
             {
                 BackLastObjectToPos(null, LastObj);
@@ -41,14 +30,7 @@ public class MoveObjectToThisPos : MonoBehaviour
             }
             return;
         }
-
         GameObject _object = (GameObject)obj;
-
-        if (_object == null) return;
-
-        ListOfBoardElementsPositions elementPosition = _object.GetComponent<ListOfBoardElementsPositions>();
-        if (elementPosition != null) CurrentTarget = SearchElementPosition(elementPosition.BoardElementsPosition);
-        else CurrentTarget = transform;
 
         MoveObject(_object, 0);
     }
@@ -57,7 +39,6 @@ public class MoveObjectToThisPos : MonoBehaviour
 
     void MoveObject(GameObject _object, float TimeToWait)
     {
-        if (isBlockMovement == "yes") return;
         inMovingToPosition = true;
         LastObj = _object;
         initPos = LastObj.transform.position;
@@ -69,8 +50,8 @@ public class MoveObjectToThisPos : MonoBehaviour
         MoveSequence = DOTween.Sequence();
 
         MoveSequence.AppendInterval(TimeToWait)
-                    .Append(LastObj.transform.DOMove(CurrentTarget.position, 0.5f).SetEase(Ease.InOutCirc))
-                    .Join(LastObj.transform.DORotate(CurrentTarget.rotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc))
+                    .Append(LastObj.transform.DOMove(transform.position, 0.5f).SetEase(Ease.InOutCirc))
+                    .Join(LastObj.transform.DORotate(transform.rotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc))
                     .OnComplete(() =>
                     {
                         inMovingToPosition = false;
@@ -78,10 +59,9 @@ public class MoveObjectToThisPos : MonoBehaviour
     }
     public void BackLastObjectToPos(Component sender, object obj)
     {
-        if (isBlockMovement == "yes") return;
         if (!LastObj)
         {
-           // Debug.Log("Any positsToReturn");
+            // Debug.Log("Any positsToReturn");
             return;
         }
 
@@ -104,13 +84,13 @@ public class MoveObjectToThisPos : MonoBehaviour
 
         BackSequence.Append(objectToBack.transform.DOMove(initPos, 0.5f).SetEase(Ease.InOutCirc))
                     .Join(objectToBack.transform.DORotate(initRot, 0.3f).SetEase(Ease.InOutCirc))
-                    .OnComplete(()=> 
+                    .OnComplete(() =>
                     {
                         LastObj.GetComponent<BoxCollider>().enabled = false;
                         objectToBack.GetComponent<BoxCollider>().enabled = true;
                         if (!isReplaced && !inMovingToPosition) LastObj = null;
                         objectToBack = null;
-                        
+
                     });
 
 
@@ -122,34 +102,4 @@ public class MoveObjectToThisPos : MonoBehaviour
         LastObj = null;
     }
 
-    Transform SearchElementPosition(BoardElementsPositions indexPos)
-    {
-        foreach(BoardElementsTransforms pos in Positions)
-        {
-            if(pos.GetPosition(indexPos) != null)
-            {
-                return pos.GetPosition(indexPos);
-            }
-        }
-        return null;
-    }
-
-    public void BlockMovement(Component sender,object obj)
-    {
-        isBlockMovement = (string) obj;
-    }
-}
-
-[Serializable]
-public class BoardElementsTransforms
-{
-    public BoardElementsPositions position;
-    public Transform transform;
-
-    public Transform GetPosition(BoardElementsPositions indexPos)
-    {
-        if (indexPos == position) return transform;
-
-        return null;
-    }
 }
