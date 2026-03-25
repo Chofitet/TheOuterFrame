@@ -43,13 +43,31 @@ public class BoardTutorialPosit : MonoBehaviour
         if(amountOfWordsTaked == amountOfWordsToShowPosit) pendingToShowPosit = true;
     }
 
+    public void CheckView(Component sender, object obj)
+    {
+        if (inactive) return;
+        if (isInTutorial) return;
+        ActualView = (ViewStates)obj;
+        if (LastView == null) LastView = ActualView;
+
+        if (ActualView == ViewStates.BoardView)
+        {
+            movePosit(BoardViewPos);
+        }
+        else if (ActualView == ViewStates.GeneralView)
+        {
+            movePosit(GeneralViewPos);
+        }
+    }
 
     public void CheckViewWithDelay(Component sender, object obj)
     {
         if (inactive) return;
         if (isInTutorial) return;
         ActualView = (ViewStates)obj;
+        
         LastView = ActualView;
+        
 
         if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
 
@@ -57,6 +75,16 @@ public class BoardTutorialPosit : MonoBehaviour
         {
             return;
         }
+
+        ActiveDesactivePosIt();
+    }
+
+    public void CkeckOnApprove(Component sender, object obj)
+    {
+        if (inactive) return;
+        if (isInTutorial) return;
+
+        if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
 
         ActiveDesactivePosIt();
     }
@@ -75,22 +103,7 @@ public class BoardTutorialPosit : MonoBehaviour
         NotShowedYet = false;
     }
 
-    public void CheckView(Component sender, object obj)
-    {
-        if (inactive) return;
-        if (isInTutorial) return;
-        ActualView = (ViewStates)obj;
-        if (LastView == null) LastView = ActualView;
-
-        if (ActualView == ViewStates.BoardView)
-        {
-            movePosit(BoardViewPos);
-        }
-        else if (ActualView == ViewStates.GeneralView)
-        {
-            movePosit(GeneralViewPos);
-        }
-    }
+   
 
 
     public void GetTrueConditionalIdeas(Component sender, object obj)
