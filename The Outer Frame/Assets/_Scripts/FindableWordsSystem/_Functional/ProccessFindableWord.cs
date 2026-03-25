@@ -71,9 +71,24 @@ public static class ProccessFindableWord
             bool checkSlicebtn = false;
 
             // Position of btn
-            Vector3 wordLocation = textField.textInfo.characterInfo[ textField.textInfo.wordInfo[startIndex].firstCharacterIndex].topLeft;
+            var firstCharIndex = textField.textInfo.wordInfo[startIndex].firstCharacterIndex;
+            var charInfo = textField.textInfo.characterInfo[firstCharIndex];
+            var lineInfo = textField.textInfo.lineInfo[charInfo.lineNumber];
+
+            float capHeight = lineInfo.baseline + (textField.font.faceInfo.capLine * textField.fontSize / textField.font.faceInfo.pointSize) * 1.05f;
+
+            Vector3 wordLocation = new Vector3( charInfo.topLeft.x, capHeight,  charInfo.topLeft.z);
+
             float combinedWordLength = 0;
-            float heightInfo = 0;
+
+            var faceInfo = textField.font.faceInfo;
+            float scale = textField.fontSize / faceInfo.pointSize;
+
+            float capHeightOnly = faceInfo.capLine * scale;
+            float descender = Mathf.Abs(faceInfo.descentLine * scale);
+
+            float heightInfo = (capHeightOnly + descender);
+            
             string word = "";
 
             for (int i = 0; i < wordCount; i++)
@@ -100,26 +115,35 @@ public static class ProccessFindableWord
                 // Length of btn
                 combinedWordLength += Math.Abs(firstCharInfo.topLeft.x - lastCharInfo.topRight.x);
                 // heightInfo of btn
-                heightInfo = Math.Max(heightInfo, Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y));
+                //heightInfo = Math.Max(heightInfo, Math.Abs(firstCharInfo.topLeft.y - firstCharInfo.bottomLeft.y));
 
                 //  check to slice btn in differents text lines
                 if (i + 1 < wordCount && textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i].firstCharacterIndex].lineNumber != textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].lineNumber && i + 1 != wordCount)
                 {
 
                     combinedWordLength = combinedWordLength + spaceToAdd;
-                    heightInfo += heightInfo / 4;
+                    //heightInfo += heightInfo / 3;
                     checkSlicebtn = true;
                     findableWords.Add(new FindableWordData(word, wordLocation, combinedWordLength, heightInfo, checkSlicebtn, startIndex, irrelevant));
-                    wordLocation = textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].topLeft;
+
+                    firstCharIndex = textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex;
+                    charInfo = textField.textInfo.characterInfo[firstCharIndex];
+                    lineInfo = textField.textInfo.lineInfo[charInfo.lineNumber];
+
+                    capHeight = lineInfo.baseline + (textField.font.faceInfo.capLine * textField.fontSize / textField.font.faceInfo.pointSize)* 1.05f;
+
+                    wordLocation = new Vector3(charInfo.topLeft.x, capHeight, charInfo.topLeft.z);
+
+                    //wordLocation = textField.textInfo.characterInfo[textField.textInfo.wordInfo[startIndex + i + 1].firstCharacterIndex].topLeft;
                     combinedWordLength = 0;
                     spaceToAdd = 0;
-                    heightInfo = 0;
+                   // heightInfo = 0;
                 }
 
             }
 
             combinedWordLength = combinedWordLength + spaceToAdd;
-            heightInfo += heightInfo / 4;
+            //heightInfo += heightInfo / 3;
 
             findableWords.Add(new FindableWordData(word, wordLocation, combinedWordLength, heightInfo, checkSlicebtn, startIndex, irrelevant));
         }
