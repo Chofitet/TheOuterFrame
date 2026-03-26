@@ -143,7 +143,6 @@ public class ActionPlan : MonoBehaviour
     public void ApprovedActionPlan()
     {
         
-
         if (isProgressorFull)
         {
             OnProgressorFull?.Invoke(this, null);
@@ -168,6 +167,8 @@ public class ActionPlan : MonoBehaviour
         bool isOneActionOn = false;
         foreach (ActionRowController row in Actions)
         {
+            if (row.GetIsAnSpecialAction() && !row.GetIsOn()) row.ResetActionRow();
+
             if (row.GetIsOn()) isOneActionOn = true;
         }
         if (!isOneActionOn) return;

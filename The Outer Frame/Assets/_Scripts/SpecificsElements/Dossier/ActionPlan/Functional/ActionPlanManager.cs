@@ -91,11 +91,19 @@ public class ActionPlanManager : MonoBehaviour
 
     public void RemoveAction(Component sender, object obj)
     {
-        DataFromActionPlan data = (DataFromActionPlan)obj;
+        /*DataFromActionPlan data = (DataFromActionPlan)obj;
         StateEnum removeAction = data.state;
         if (removeAction.GetSpecialActionWord())
         {
             Actions.Remove(removeAction);
+        }*/
+
+       
+
+        if (SpecialAction)
+        {
+           SpecialAction.SetisWrittenOnAP(false);
+            Actions.Remove(SpecialAction);
         }
     }
 

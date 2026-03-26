@@ -72,78 +72,99 @@ public class FadeWordsEffect : MonoBehaviour
     {
         int length = text.Length;
         float totalDuration = FadeSpeed;
-        float stepDuration = totalDuration / Mathf.Max(1, length);
-
-        // Materiales de más claro a más oscuro
-       
 
         if (fadeIn)
         {
             int currentIndex = 0;
             isVisible = true;
+            float elapsed = 0f;
+
+            m_TextComponent.text = $"<alpha=#00>{text}";
+            m_TextComponent.ForceMeshUpdate();
+
             while (currentIndex < length)
             {
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                elapsed += Time.deltaTime;
 
-                for (int i = 0; i < length; i++)
+                float progress = Mathf.Clamp01(elapsed / totalDuration);
+                int newIndex = Mathf.FloorToInt(progress * length);
+
+                if (newIndex != currentIndex)
                 {
-                    int diff = currentIndex - i;
+                    currentIndex = newIndex;
 
-                    if (diff == 0)
-                        sb.Append($"<material=\"{matLevels[1].name}\">{text[i]}</material>"); // letra actual -> mat 2
-                    else if (diff == 1)
-                        sb.Append($"<material=\"{matLevels[2].name}\">{text[i]}</material>"); // inmediata izquierda -> mat 3
-                    else if (diff >= 2 && diff <= 3)
-                        sb.Append($"<material=\"{matLevels[3].name}\">{text[i]}</material>"); // dos siguientes a la izquierda -> mat 4
-                    else if (diff < 0)
-                        sb.Append($"<material=\"{matLevels[0].name}\">{text[i]}</material>"); // aún no dibujadas
-                    else
-                        sb.Append(text[i]); // resto de letras ya dibujadas -> normal
-                }
-
-                m_TextComponent.text = sb.ToString();
-                m_TextComponent.ForceMeshUpdate();
-
-                currentIndex++;
-                yield return new WaitForSeconds(stepDuration);
-            }
-
-            m_TextComponent.text = text; // al final todo normal
-        }
-        else
-        {
-            isVisible = false;
-            int currentIndex = 0; // empezamos desde la izquierda
-                OnEraseSound?.Invoke(this, null);
-
-                while (currentIndex < length)
-                {
                     System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
                     for (int i = 0; i < length; i++)
                     {
-                        if (i == currentIndex) // letra empezando a borrarse
+                        int diff = currentIndex - i;
+
+                        if (diff == 0)
+                            sb.Append($"<material=\"{matLevels[1].name}\">{text[i]}</material>");
+                        else if (diff == 1)
+                            sb.Append($"<material=\"{matLevels[2].name}\">{text[i]}</material>");
+                        else if (diff >= 2 && diff <= 3)
+                            sb.Append($"<material=\"{matLevels[3].name}\">{text[i]}</material>");
+                        else if (diff < 0)
+                            sb.Append($"<material=\"{matLevels[0].name}\">{text[i]}</material>");
+                        else
+                            sb.Append(text[i]);
+                    }
+
+                    m_TextComponent.text = sb.ToString();
+                    m_TextComponent.ForceMeshUpdate();
+                }
+
+                yield return null; 
+            }
+
+            m_TextComponent.text = text;
+        }
+        else
+        {
+            isVisible = false;
+
+            int currentIndex = 0;
+            float elapsed = 0f;
+
+            OnEraseSound?.Invoke(this, null);
+
+            while (currentIndex < length)
+            {
+                elapsed += Time.deltaTime;
+
+                float progress = Mathf.Clamp01(elapsed / totalDuration);
+                int newIndex = Mathf.FloorToInt(progress * length);
+
+                if (newIndex != currentIndex)
+                {
+                    currentIndex = newIndex;
+
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (i == currentIndex)
                             sb.Append($"<alpha=#AA>{text[i]}");
-                        else if (i == currentIndex - 1) // más apagada
+                        else if (i == currentIndex - 1)
                             sb.Append($"<alpha=#55>{text[i]}");
-                        else if (i < currentIndex - 1) // ya borradas
+                        else if (i < currentIndex - 1)
                             sb.Append($"<alpha=#00>{text[i]}");
-                        else // todavía visibles
+                        else
                             sb.Append($"<alpha=#FF>{text[i]}");
                     }
 
                     m_TextComponent.text = sb.ToString();
-                    currentIndex++;
 
-                    float progress = (float)currentIndex / (float)length;
-                    OnEraseProgress?.Invoke(progress);
-
-                    yield return new WaitForSeconds(stepDuration);
+                    float eraseProgress = (float)currentIndex / length;
+                    OnEraseProgress?.Invoke(eraseProgress);
                 }
 
-                // al final dejamos todo borrado
-                m_TextComponent.text = "";
+                yield return null; 
             }
+
+            m_TextComponent.text = "";
+        }
 
         OnComplete?.Invoke();
     }
@@ -173,4 +194,6 @@ public class FadeWordsEffect : MonoBehaviour
     {
         return isVisible;
     }
+
+    public void SetFadeSpeed(float speed) => FadeSpeed = speed;
 }

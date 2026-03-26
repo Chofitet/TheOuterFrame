@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static System.Net.Mime.MediaTypeNames;
-using static UnityEngine.ParticleSystem;
 
 public class ActionRowController : MonoBehaviour
 {
@@ -12,6 +10,8 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] GameObject strikethrough;
     [SerializeField] TMP_Text ActionText;
     [SerializeField] Toggle toggle;
+    [SerializeField] Image toggleImage;
+    [SerializeField] Sprite handmadeToggle;
     [SerializeField] Button btn;
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] TMP_Text observationTxt;
@@ -47,6 +47,8 @@ public class ActionRowController : MonoBehaviour
             DotsLine.SetActive(false);
             ActionText.font = writingFont;
             Invoke("ClickButton", 2f);
+            fade = fadeAction;
+            toggleImage.sprite = handmadeToggle;
             if (!_isFirstTimeIdeaAdded) return;
             fadeAction.StartEffect();
         }
@@ -130,10 +132,17 @@ public class ActionRowController : MonoBehaviour
     public void ResetRow(bool noPlaySound = false)
     {
         toggle.isOn = false;
+        if (isSpecialAction) return;
         if (!fade.GetisVisible()) return;
         StartCoroutine(AnimOnlyErase());
-        
     }
+
+    public void ResetActionRow()
+    {
+        toggle.isOn = false;
+        StartCoroutine(AnimOnlyErase());
+    }
+
     void Erasefinished()
     {
         EraseParticles.GetComponent<ParticleSystem>().Stop();
@@ -192,28 +201,102 @@ public class ActionRowController : MonoBehaviour
 
     IEnumerator AnimOnlyErase()
     {
+        
         EraseParticles.GetComponent<ParticleSystem>().Stop();
         fade.StopAllCoroutines();
         fade.StartEffect(false);
         fade.OnEraseProgress += eraseParticles;
         fade.OnComplete += Erasefinished;
-        if (Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation())
+        if (Word)
         {
-            yield return new WaitForSeconds(0.2f);
-            fadeAclaration.OnEraseProgress += eraseParticlesAclatarion;
-            fadeAclaration.StartEffect(false);
-            yield return new WaitForSeconds(0.2f);
-            EraseParticlesAclaration.GetComponent<ParticleSystem>().Stop();
-            fadeAclaration.OnEraseProgress -= eraseParticlesAclatarion;
-            AclarationTxt.text = "";
+            if (Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation())
+            {
+                yield return new WaitForSeconds(0.2f);
+                fadeAclaration.OnEraseProgress += eraseParticlesAclatarion;
+                fadeAclaration.StartEffect(false);
+                yield return new WaitForSeconds(0.2f);
+                EraseParticlesAclaration.GetComponent<ParticleSystem>().Stop();
+                fadeAclaration.OnEraseProgress -= eraseParticlesAclatarion;
+                AclarationTxt.text = "";
+            }
         }
     }
 
     public void eraseParticles(float progress)
     {
+        TMP_Text actualField = Word ? Wordtext : ActionText;
+
+        if(!Word) toggleImage.enabled = false;
+
+        if (actualField == null) return;
+
+        actualField.ForceMeshUpdate();
+        var textInfo = actualField.textInfo;
+
+        int lineCount = textInfo.lineCount;
+        if (lineCount == 0) return;
+
         EraseParticles.GetComponent<ParticleSystem>().Play();
-        Vector3 initPos = Wordtext.transform.localPosition + new Vector3(2,0,0);
-        EraseParticles.localPosition = Vector3.Lerp(initPos, new Vector3(Wordtext.transform.localPosition.x + Wordtext.preferredWidth, initPos.y, initPos.z), progress);
+
+        float totalWidth = 0f;
+        float[] lineWidths = new float[lineCount];
+
+        for (int i = 0; i < lineCount; i++)
+        {
+            var line = textInfo.lineInfo[i];
+
+            if (line.firstCharacterIndex > line.lastCharacterIndex)
+            {
+                lineWidths[i] = 0;
+                continue;
+            }
+
+            var firstChar = textInfo.characterInfo[line.firstCharacterIndex];
+            var lastChar = textInfo.characterInfo[line.lastCharacterIndex];
+
+            float width = lastChar.topRight.x - firstChar.bottomLeft.x;
+            lineWidths[i] = width;
+            totalWidth += width;
+        }
+
+        if (totalWidth <= 0f) return;
+
+        float accumulated = 0f;
+
+        for (int i = 0; i < lineCount; i++)
+        {
+            float normalized = lineWidths[i] / totalWidth;
+
+            if (progress <= accumulated + normalized)
+            {
+                var line = textInfo.lineInfo[i];
+
+                if (line.firstCharacterIndex > line.lastCharacterIndex) return;
+
+                var firstChar = textInfo.characterInfo[line.firstCharacterIndex];
+                var lastChar = textInfo.characterInfo[line.lastCharacterIndex];
+
+                float localProgress = (progress - accumulated) / normalized;
+
+                float startX = firstChar.bottomLeft.x;
+                float endX = lastChar.topRight.x;
+                float y = firstChar.bottomLeft.y;
+
+                float x = Mathf.Lerp(startX, endX, localProgress);
+
+                Vector3 offset = actualField.transform.localPosition + new Vector3(2, 0, 0);
+                EraseParticles.localPosition = new Vector3(x, y, 0) + offset;
+
+                return;
+            }
+
+            accumulated += normalized;
+        }
+    }
+
+    void EraseLine()
+    {
+
     }
 
     public void eraseParticlesAclatarion(float progress)
@@ -294,4 +377,6 @@ public class ActionRowController : MonoBehaviour
     }
 
     public bool GetIsOn() { return toggle.isOn; }
+
+    public bool GetIsAnSpecialAction() { return isSpecialAction; }
 }

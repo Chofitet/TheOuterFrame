@@ -89,6 +89,11 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
     public void MoveToPlacedPos(Component sender, object obj)
     {
+        if(name == "BoardIdeaKickCargo")
+        {
+            Debug.Log("moving kick cargo idea");
+        }
+
         if (isOutOfBoard) return;
         if (conditions == null)
         {
