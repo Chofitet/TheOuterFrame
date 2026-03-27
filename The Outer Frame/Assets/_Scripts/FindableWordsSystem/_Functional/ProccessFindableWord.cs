@@ -75,7 +75,7 @@ public static class ProccessFindableWord
             var charInfo = textField.textInfo.characterInfo[firstCharIndex];
             var lineInfo = textField.textInfo.lineInfo[charInfo.lineNumber];
 
-            float capHeight = lineInfo.baseline + (textField.font.faceInfo.capLine * textField.fontSize / textField.font.faceInfo.pointSize) * 1.05f;
+            float capHeight = lineInfo.baseline + (textField.font.faceInfo.capLine * textField.fontSize / textField.font.faceInfo.pointSize) * 1.2f;
 
             Vector3 wordLocation = new Vector3( charInfo.topLeft.x, capHeight,  charInfo.topLeft.z);
 
@@ -87,7 +87,7 @@ public static class ProccessFindableWord
             float capHeightOnly = faceInfo.capLine * scale;
             float descender = Mathf.Abs(faceInfo.descentLine * scale);
 
-            float heightInfo = (capHeightOnly + descender);
+            float heightInfo = (capHeightOnly + descender) * 1.2f;
             
             string word = "";
 
@@ -130,7 +130,7 @@ public static class ProccessFindableWord
                     charInfo = textField.textInfo.characterInfo[firstCharIndex];
                     lineInfo = textField.textInfo.lineInfo[charInfo.lineNumber];
 
-                    capHeight = lineInfo.baseline + (textField.font.faceInfo.capLine * textField.fontSize / textField.font.faceInfo.pointSize)* 1.05f;
+                    capHeight = lineInfo.baseline + (textField.font.faceInfo.capLine * textField.fontSize / textField.font.faceInfo.pointSize)* 1.2f;
 
                     wordLocation = new Vector3(charInfo.topLeft.x, capHeight, charInfo.topLeft.z);
 

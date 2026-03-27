@@ -149,7 +149,7 @@ public class PCController : MonoBehaviour
             {
                 SearchBar.text = " |";
                 if (isInPCView) OnShakeNotebook?.Invoke(this, null);
-                OnSearchEmptyDB?.Invoke(this, null);
+                //OnSearchEmptyDB?.Invoke(this, null);
                 return;
             }
 
@@ -170,6 +170,7 @@ public class PCController : MonoBehaviour
             WikiTitleSearchedWord.text = "";
             foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
             OnPCSearchWord?.Invoke(this, word);
+            OnSearchEmptyDB?.Invoke(this, null);
             return;
         }
 

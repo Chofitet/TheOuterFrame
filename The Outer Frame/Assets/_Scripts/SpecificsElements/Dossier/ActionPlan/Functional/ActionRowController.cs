@@ -132,6 +132,7 @@ public class ActionRowController : MonoBehaviour
     public void ResetRow(bool noPlaySound = false)
     {
         toggle.isOn = false;
+        once = false;
         if (isSpecialAction) return;
         if (!fade.GetisVisible()) return;
         StartCoroutine(AnimOnlyErase());
