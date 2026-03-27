@@ -249,6 +249,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     }
     public void IsApproveAnAction(Component sender, object obj)
     {
+        if (ActionIsDoing) return;
         DataFromActionPlan data = (DataFromActionPlan)obj;
         StateEnum action = data.state;
         if (ActionsToAdd[0] != action)

@@ -58,6 +58,17 @@ public class ProtocolIdeaBTNController : MonoBehaviour
         }
     }
 
+    public void ReactiveIdeaDirectly()
+    {
+        if (isActionDoing) return;
+        if (isForeverInactive) return;
+        isActionDoing = false;
+        isInactive = false;
+        ChangeToColorToNormal();
+        GetComponent<Button>().interactable = true;
+        OnReactiveGooIdea?.Invoke(this, null);
+    }
+
     public void RejectIdea(StateEnum actualIdea)
     {
         if (actualIdea == idea)

@@ -205,6 +205,11 @@ public class GooIdentificatorController : MonoBehaviour
         ProtocolIdea.ReactiveIdea((StateEnum)obj);
     }
 
+    public void ReactiveIdeaDirectly(Component sender, object obj)
+    {
+        ProtocolIdea.ReactiveIdeaDirectly();
+    }
+
     public void RejectProtocolIdea(Component sender, object obj)
     {
         ProtocolIdea.RejectIdea((StateEnum)obj);
