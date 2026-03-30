@@ -17,6 +17,12 @@ public class PinchofonoManager : MonoBehaviour
     [SerializeField] GameEvent OnAddEntryLog;
     [SerializeField] GameEvent OnCallLineInterrupted;
 
+    private void OnDisable()
+    {
+        TimeManager.OnMinuteChange -= CounterPassTime;
+        TimeManager.OnSecondsChange -= SecondPass;
+    }
+
     public void SetRecording(Component sender, object obj)
     {
         if (!WordSelectedInNotebook.Notebook.GetSelectedWord()) return;

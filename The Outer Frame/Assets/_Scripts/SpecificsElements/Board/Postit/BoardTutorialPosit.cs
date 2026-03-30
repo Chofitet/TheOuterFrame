@@ -157,6 +157,15 @@ public class BoardTutorialPosit : MonoBehaviour
         else MoveOutView(OutOfView);
     }
 
+    public void PlaceAPhotBeforeActivatePosit(Component sender, object obj)
+    {
+        if (ActualView != ViewStates.BoardView && ActualView != ViewStates.OnTakeSomeInBoard) return;
+        if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit)
+        {
+            inactive = true;
+        }
+    }
+
     void MoveOutView(Transform toMove)
     {
 
