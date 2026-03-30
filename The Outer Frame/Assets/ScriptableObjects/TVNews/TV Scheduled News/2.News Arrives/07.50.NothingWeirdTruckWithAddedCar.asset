@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
-  m_Name: 07.50.NothingWeirdTruck
+  m_Name: 07.50.NothingWeirdTruckWithAddedCar
   m_EditorClassIdentifier: 
-  id: 392f0485-0077-445f-ab9a-77f30f684b9c
+  id: eddcf544-550e-43b8-9f24-a5ea849bb404
   headline: 
   headlineTwoLines: "NOTHING WEIRD <link>AT ROAD 54</link> \nYET!"
   text: WAS IT ALL HOAX? COULD ALL OF IT BE UNDER THE SHADOW OF A BIGGER WHATEVER?
@@ -35,7 +35,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 5e3f162beae27c242920a73d1ea64639, type: 2}
     ifNot: 0
   - condition: {fileID: 11400000, guid: e59dfb32193ea4648a4abb446ebf8081, type: 2}
-    ifNot: 1
+    ifNot: 0
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}
