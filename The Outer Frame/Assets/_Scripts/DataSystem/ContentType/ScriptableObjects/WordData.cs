@@ -14,6 +14,7 @@ public class WordData : DataType, IReseteableScriptableObject
     [SerializeField] string FormNameVersion;
     [FormerlySerializedAs("Form_DatabaseNameVersion")]
     [SerializeField] string DatabaseNameVersion;
+    [SerializeField] bool AddDatabaseVersionOnFindableList = true;
     [SerializeField] string ProgressorNameVersion;
     [SerializeField] string PhoneNumber;
     [SerializeField] bool isAPhoneNumber;
@@ -647,7 +648,7 @@ public class WordData : DataType, IReseteableScriptableObject
 
     void AddFormDataBaseOnFindableAs()
     {
-        if (DatabaseNameVersion != "")  FindableAs.Add(DatabaseNameVersion);
+        if (DatabaseNameVersion != "" && AddDatabaseVersionOnFindableList)  FindableAs.Add(DatabaseNameVersion);
     }
 
     public TimeData GetTimeOfState(StateEnum state)
