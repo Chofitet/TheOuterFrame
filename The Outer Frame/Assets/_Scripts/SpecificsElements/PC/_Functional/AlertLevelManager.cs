@@ -16,6 +16,7 @@ public class AlertLevelManager : MonoBehaviour
     [SerializeField] GameEvent OnGameOverAlert;
     [SerializeField] GameEvent OnUpAlertLevel;
     [SerializeField] GameEvent OnDownAlertLevel;
+    [SerializeField] bool NoLimitToGameOver;
     float timeFactor = 1;
     int level;
     bool isStoped;
@@ -33,8 +34,8 @@ public class AlertLevelManager : MonoBehaviour
         AlertData data = (AlertData)obj;
         int auxIncruise = level + data.IncruseNum;
         if(data.AclarationText != "") AclarationText.text = data.AclarationText;
-        if (level < 0) level = 1;
-        if(auxIncruise < 0) auxIncruise = 1;
+        if (level < 15) level = 15;
+        if(auxIncruise < 15) auxIncruise = 15;
        // Debug.Log($"Level to incruise {level}");
         DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
             if (auxIncruise >= maxLevel)
@@ -75,7 +76,7 @@ public class AlertLevelManager : MonoBehaviour
     {
         NumLevel.text = level + "%";
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && NoLimitToGameOver)
         {
             maxLevel = 1000;
             NumLevel.text = "1000%";
