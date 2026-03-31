@@ -28,7 +28,9 @@ MonoBehaviour:
   Hour: 4
   Minute: 50
   MinTransmitionTime: 4
-  Conditions: []
+  Conditions:
+  - condition: {fileID: 11400000, guid: 3c7e1717090ae8e47ba470f415120e5f, type: 2}
+    ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0
   ReplacedBy: {fileID: 0}
