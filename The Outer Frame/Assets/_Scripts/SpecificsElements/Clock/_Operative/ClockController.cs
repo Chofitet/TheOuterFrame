@@ -123,37 +123,95 @@ public class ClockController : MonoBehaviour
     {
         currentView = (ViewStates)obj;
 
+        if (delayToBack) return;
         if (!isSpeedUp) return;
         if (currentView == ViewStates.GeneralView) return;
         TimeManager.timeManager.NormalizeTime();
         
     }
 
+    string currentAnimationName = "";
+
+    private void Update()
+    {
+        AnimatorClipInfo[] animInfo = anim.GetCurrentAnimatorClipInfo(1);
+        string currentName = animInfo[0].clip.name;
+
+        currentAnimationName = currentName;
+
+
+        if (currentName == "clock armature|speedDown")
+        {
+            ClockX2Light.TurnOffLight(null, null);
+            DialLight.TurnOffLight(null, null);
+        }
+        else if(currentName == "clock armature|speedUp")
+        {
+            ClockX2Light.TurnOnLigth(null, null);
+            DialLight.TurnOnLigth(null, null);
+        }
+
+        if(currentName == "clock armature|idleFast")
+        {
+            if(!isSpeedUp)
+            {
+                anim.SetTrigger("speedDown");
+            }
+        }
+
+        if (currentName == "clock armature|idleNormal")
+        {
+            if (isSpeedUp)
+            {
+                anim.SetTrigger("speedUp");
+            }
+        }
+    }
+
+    public void CheckWithDelay(Component sender, object obj)
+    {
+      /*  AnimatorClipInfo[] animInfo = anim.GetCurrentAnimatorClipInfo(1);
+        string currentName = animInfo[0].clip.name;
+
+
+        if (!isSpeedUp && currentName == "clock armature|idleFast")
+        {
+            anim.SetTrigger("speedDown");
+
+        }
+        if(isSpeedUp && currentName == "clock armature|idleNormal")
+        {
+            anim.SetTrigger("speedUp");
+        }*/
+
+    }
+    bool delayToBack = false;
     public void OnPressClockBTN(Component sender, object obj)
     {
         TimeManager.timeManager.SpeedUpTime();
-
     }
+
 
     public void OnNormalizeTime(Component sender, object obj)
     {
         if (isSpeedUp) anim.SetTrigger("speedDown");
-        if (!isDoingClockDialAnim) { DialLight.TurnOffLight(null, null); ClockX2Light.TurnOffLight(null, null); }
+        //if (!isDoingClockDialAnim) { DialLight.TurnOffLight(null, null); ClockX2Light.TurnOffLight(null, null); }
         isSpeedUp = false;
         ClockBTN.GetComponent<Collider>().enabled = false;
-        ClockBTN.transform.DOMove(NormalClockPoas.position, 0.3f).OnComplete(()=> ClockBTN.GetComponent<Collider>().enabled = true);
+        ClockBTN.transform.DOMove(NormalClockPoas.position, 0.4f).OnComplete(()=> ClockBTN.GetComponent<Collider>().enabled = true);
     }
 
     public void OnSpeedUpTime(Component sender, object obj)
     {
+        if (delayToBack) return;
         if (!isSpeedUp) anim.SetTrigger("speedUp");
         
         isSpeedUp = true;
-        DialLight.TurnOnLigth(null, null);
-        ClockX2Light.TurnOnLigth(null, null);
+       // DialLight.TurnOnLigth(null, null);
+       // ClockX2Light.TurnOnLigth(null, null);
         OnViewChange?.Invoke(this, null);
         ClockBTN.GetComponent<Collider>().enabled = false;
-        ClockBTN.transform.DOMove(SpeedClockPos.position, 0.3f).OnComplete(() => ClockBTN.GetComponent<Collider>().enabled = true);
+        ClockBTN.transform.DOMove(SpeedClockPos.position, 0.4f).OnComplete(() => ClockBTN.GetComponent<Collider>().enabled = true);
         Invoke("CheckClockState", 0.1f);
         isDoingClockDialAnim = true;
     }
@@ -180,7 +238,7 @@ public class ClockController : MonoBehaviour
     {
         isDoingClockDialAnim = false;
 
-        if (!isSpeedUp) { DialLight.TurnOffLight(null, null); ClockX2Light.TurnOffLight(null, null); }
+        //if (!isSpeedUp) { DialLight.TurnOffLight(null, null); ClockX2Light.TurnOffLight(null, null); }
 
     }
 
