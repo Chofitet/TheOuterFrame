@@ -146,7 +146,7 @@ public class StringConnectionController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.15f);
         lineRenderer.enabled = x;
-        DuplicateMeshForShadows();
+        //DuplicateMeshForShadows();
     }
 
     void DuplicateMeshForShadows()
