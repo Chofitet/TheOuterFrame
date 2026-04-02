@@ -146,5 +146,37 @@ public class StringConnectionController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.15f);
         lineRenderer.enabled = x;
+        DuplicateMeshForShadows();
+    }
+
+    void DuplicateMeshForShadows()
+    {
+        if (lineRenderer == null) return;
+
+        if (lineRenderer.transform.parent.Find("ShadowCopy") != null)
+            return;
+
+        GameObject shadowObj = Instantiate(lineRenderer.gameObject, lineRenderer.transform.parent);
+        shadowObj.name = "ShadowCopy";
+
+        shadowObj.transform.localPosition = lineRenderer.transform.localPosition;
+        shadowObj.transform.localRotation = lineRenderer.transform.localRotation;
+        shadowObj.transform.localScale = lineRenderer.transform.localScale;
+
+        var shadowRopeMesh = shadowObj.GetComponent<RopeMesh>(); 
+
+        if (shadowRopeMesh != null)
+        {
+            shadowRopeMesh.ropeWidth =  0.001f;
+
+        }
+
+        var renderer = shadowObj.GetComponent<MeshRenderer>();
+        if (renderer != null)
+        {
+            renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            renderer.receiveShadows = false;
+        }
+
     }
 }
