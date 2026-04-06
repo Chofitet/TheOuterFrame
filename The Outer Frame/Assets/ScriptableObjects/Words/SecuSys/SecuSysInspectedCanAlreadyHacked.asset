@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: SecuSysInspectedCan
+  m_Name: SecuSysInspectedCanAlreadyHacked
   m_EditorClassIdentifier: 
-  id: 9e50b3f7-45e4-4ee9-b08c-61d377882126
+  id: d174f704-8a58-41ce-8721-5300c900cd47
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 61614aa9380a9b744b3385a4d91249d8, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "Here is where all the security footage is stored. \n\r\nIt looks like as
-    if a modem and an external hard drive drank a lot of wine at a Xmas party. \n
-    \r\nSeems to be working fine.\r\n"
+  Text: "It looks like what happenes when a modem and an HDD drink too much wine
+    at a Xmas party. \n\nAll the security footage is stored in this thing. \n\r\nSeems
+    to be working fine.\r\n"
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
@@ -30,6 +30,8 @@ MonoBehaviour:
     text: THIS THING
   Conditionals:
   - condition: {fileID: 11400000, guid: 7f661753ff6be2e4da5e7e5e777c969d, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 6e5e95bff44c8e448a9ef942f222b62b, type: 2}
     ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
