@@ -199,7 +199,7 @@ public class ChannelController : MonoBehaviour
         EmergencyScreen.SetActive(true);
         EmergencyTextField.text = _new.GetHeadline();
         isFirstNew = false;
-        FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField,FindableBtnType.FindableBTN);
+        FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField,FindableBtnType.FindableBTN,null,false,true);
     }
 
     public void resetChannel()

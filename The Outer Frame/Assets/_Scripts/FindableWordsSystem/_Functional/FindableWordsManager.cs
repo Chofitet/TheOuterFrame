@@ -31,7 +31,7 @@ public class FindableWordsManager : MonoBehaviour
         }
     }
 
-    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, IReadOnlyList<FindableWordData> pre_proccess_PositioWords = null, bool _comesFromDBTitle = false)
+    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, IReadOnlyList<FindableWordData> pre_proccess_PositioWords = null, bool _comesFromDBTitle = false, bool _comesFromNewEmergency =false)
     {
         // btnType para cuando quiera refactorizar este script para que funcione con links tambien
 
@@ -87,7 +87,7 @@ public class FindableWordsManager : MonoBehaviour
                 auxObj.transform.localRotation = Quaternion.identity;
                 auxObj.name = "FindableBTN_" + w.GetWordData().GetName();
                 auxObj.GetComponent<FindableWordBTNController>().enabled = true;
-                auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle);
+                auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle, _comesFromNewEmergency);
                 FindableWordsBTNs.Add(auxObj);
                 OnFindableWordInstance?.Invoke(this, auxObj);
                // auxObj.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(auxObj));

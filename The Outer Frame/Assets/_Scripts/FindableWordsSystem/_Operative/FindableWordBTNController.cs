@@ -37,11 +37,14 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     {
         if (wasFinded || _isRepitedButton) return;
         ApplyShader("");
+        TryDeleteOverlay();
+
     }
 
     bool _isRepitedButton;
     bool _comesFromDBTitle;
-    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton, bool comesFromDBTitle = false)
+    bool _comesFromNewEmergency;
+    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton, bool comesFromDBTitle = false, bool comesFromNewEmergency = false)
     {
         rectTransform.sizeDelta = new Vector2(Width, Heigth);
         textField = TextField;
@@ -49,6 +52,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         wordToPass = word;
         _isRepitedButton = isRepitedButton;
         _comesFromDBTitle = comesFromDBTitle;
+        _comesFromNewEmergency = comesFromNewEmergency;
         ApplyShader("Bold");
     }
 
@@ -56,8 +60,10 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     {
         if (isInactive) return;
         OnFindableWordButtonHover?.Invoke(this, 4);
+        if(_comesFromNewEmergency) TryCreateOverlay();
         ApplyShader("Red");
         GlowOn();
+
     }
 
     public void ChangeToColorToNormal()
@@ -294,6 +300,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     {
         OnFindableWordButtonPress?.Invoke(this, wordToPass);
         ApplyShader("Grey");
+        TryDeleteOverlay();
         wasFinded = true;
         Destroy(gameObject);
     }
@@ -315,6 +322,25 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
 
         return false;
     }
+
+    void TryCreateOverlay()
+    {
+        var overlay = GetComponent<FindableOverlay>();
+        if (overlay != null)
+        {
+            overlay.CreateOverlay(textField);
+        }
+    }
+
+    void TryDeleteOverlay()
+    {
+        var overlay = GetComponent<FindableOverlay>();
+        if (overlay != null)
+        {
+            overlay.RemoveOverlay();
+        }
+    }
+
 
     public bool GetIsVisible() { return IsVisible(); }
     public TMP_Text GetTextField() { return textField; }
