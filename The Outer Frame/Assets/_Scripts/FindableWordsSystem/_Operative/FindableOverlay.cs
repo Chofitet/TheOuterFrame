@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FindableOverlay : MonoBehaviour
 {
@@ -59,5 +61,54 @@ public class FindableOverlay : MonoBehaviour
         if (overlay == null) return;
 
         overlay.text = original.text;
+    }
+
+    Sequence glowSequence;
+
+    Material GetMat()
+    {
+        return GetComponent<ShaderMaterialManager>().GetBoldMaterial(original.font.name);
+    }
+
+    public void GlowOn()
+    {
+        if (overlay == null) return;
+
+        Material mat = GetMat();
+
+        glowSequence?.Kill();
+
+        glowSequence = DOTween.Sequence();
+
+        glowSequence.Append(
+            DOTween.To(
+                () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
+                x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
+                0.2f,
+                0.15f
+            ).SetEase(Ease.InOutSine)
+        );
+    }
+
+    public void GlowOff()
+    {
+        if (overlay == null) return;
+
+        Material mat = GetMat();
+
+        glowSequence?.Kill();
+
+        glowSequence = DOTween.Sequence();
+
+        glowSequence.Append(
+            DOTween.To(
+                () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
+                x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
+                0.5f,
+                0.15f
+            ).SetEase(Ease.InOutSine)
+        );
+
+
     }
 }

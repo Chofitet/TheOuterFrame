@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ShaderMaterialManager : MonoBehaviour
 {
-    [SerializeField] List<Material> material = new List<Material>(); 
+    [SerializeField] List<Material> material = new List<Material>();
+    [SerializeField] List<Material> BoldMaterial = new List<Material>();
 
     public Material GetHighLigthMaterial(string originalMaterial)
     {
@@ -15,6 +16,19 @@ public class ShaderMaterialManager : MonoBehaviour
            {
                 return mat;
            }
+        }
+
+        return null;
+    }
+
+    public Material GetBoldMaterial(string originalMaterial)
+    {
+        foreach (Material mat in BoldMaterial)
+        {
+            if (mat.name.Contains(originalMaterial))
+            {
+                return mat;
+            }
         }
 
         return null;

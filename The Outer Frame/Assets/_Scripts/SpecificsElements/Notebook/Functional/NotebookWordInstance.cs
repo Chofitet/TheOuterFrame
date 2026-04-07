@@ -279,7 +279,7 @@ public class NotebookWordInstance : MonoBehaviour
 
         btn.enabled = false;
     }
-    public void ThicknessOn(float targetValue = 0.3f, float duration = 0.3f)
+    public void ThicknessOn(float targetValue = 0.35f, float duration = 0.3f)
     {
         Material mat = GetMat();
 

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
+using System;
 using System.Text;
-using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using DG.Tweening;
-using System.Xml;
 
 [RequireComponent(typeof(ShaderMaterialManager))]
 public class FindableWordBTNController : MonoBehaviour, IFindableBTN
@@ -60,9 +54,14 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     {
         if (isInactive) return;
         OnFindableWordButtonHover?.Invoke(this, 4);
-        if(_comesFromNewEmergency) TryCreateOverlay();
+        if (_comesFromNewEmergency)
+        {
+            TryCreateOverlay();
+            overlay.GlowOn();
+        }
         ApplyShader("Red");
-        GlowOn();
+        isHovered = true;
+        AnimateGlow();
 
     }
 
@@ -70,7 +69,9 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     {
         if (isInactive) return;
         OnFindableWordButtonUnHover?.Invoke(this, 3);
-        GlowOff();
+        if (_comesFromNewEmergency) overlay.GlowOff();
+        isHovered = false;
+        AnimateGlow();
     }
 
     public void ApplyShaderMaterial(string x)
@@ -323,9 +324,11 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         return false;
     }
 
+    FindableOverlay overlay;
+
     void TryCreateOverlay()
     {
-        var overlay = GetComponent<FindableOverlay>();
+        overlay = GetComponent<FindableOverlay>();
         if (overlay != null)
         {
             overlay.CreateOverlay(textField);
@@ -334,7 +337,6 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
 
     void TryDeleteOverlay()
     {
-        var overlay = GetComponent<FindableOverlay>();
         if (overlay != null)
         {
             overlay.RemoveOverlay();
@@ -353,48 +355,35 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         wordToPass = TheCabin;
     }
 
-    private Sequence glowSequence;
-
-    public void GlowOn()
+    private Tween glowTween;
+    bool isHovered;
+    void AnimateGlow()
     {
         Material mat = GetMat();
 
-        // Cancelamos cualquier animación previa
-        glowSequence?.Kill();
+        glowTween?.Kill();
 
-        glowSequence = DOTween.Sequence();
+        float target = isHovered ? 0.25f : 0.15f;
 
-        glowSequence.Append(
-            DOTween.To(
-                () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
-                x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
-                0.25f,   
-                0.15f    
-            ).SetEase(Ease.InOutSine)
-        );
+        if (_comesFromNewEmergency) target = 1f;
+
+        glowTween = DOTween.To(
+            () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
+            x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
+            target,
+            0.15f
+        )
+        .SetEase(Ease.InOutSine).OnComplete(() =>
+        {
+            if (!isHovered)
+            {
+                glowTween.OnKill(() => ApplyShader("Bold"));
+            }
+        });
+
+         
     }
 
-    public void GlowOff()
-    {
-        Material mat = GetMat();
-
-        glowSequence?.Kill();
-
-        glowSequence = DOTween.Sequence();
-
-        float enValue = 0.2f; //
-
-        glowSequence.Append(
-            DOTween.To(
-                () => mat.GetFloat(ShaderUtilities.ID_OutlineWidth),
-                x => mat.SetFloat(ShaderUtilities.ID_OutlineWidth, x),
-                enValue,      
-                0.15f   
-            ).SetEase(Ease.InOutSine)
-        );
-
-        glowSequence.OnComplete(() => ApplyShader("Bold"));
-    }
 
     private Material GetMat()
     {
