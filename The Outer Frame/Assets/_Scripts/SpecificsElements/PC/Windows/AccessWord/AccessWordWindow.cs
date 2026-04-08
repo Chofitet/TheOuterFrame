@@ -17,6 +17,7 @@ public class AccessWordWindow : MonoBehaviour
     [SerializeField] Sprite Unlocked;
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] Button SearchButton;
+    [SerializeField] GameObject FailButton;
     WordData SearchedWord;
     WordData TryAccessWord;
     private bool isInPCView;
@@ -97,6 +98,7 @@ public class AccessWordWindow : MonoBehaviour
             }
             else
             {
+                FailButton.SetActive(true);
                 SearchBar.text = "ACCESS DENIED";
                 SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
                 SearchButton.interactable = false;
@@ -143,6 +145,7 @@ public class AccessWordWindow : MonoBehaviour
     void startVerticalBarAnim()
     {
         if (!Conteiner.activeSelf) return;
+        FailButton.SetActive(false);
         SearchButton.interactable = true;
         SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 1f);
         SearchBar.text = "";
