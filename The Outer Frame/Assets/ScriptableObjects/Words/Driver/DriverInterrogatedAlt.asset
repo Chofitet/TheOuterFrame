@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
   m_Name: DriverInterrogatedAlt
   m_EditorClassIdentifier: 
-  id: 2cbd4bd9-b84d-4317-9a2b-9105bfbed350
+  id: 2b9190f2-749a-482c-b533-bb0478bb4225
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  state: {fileID: 11400000, guid: e5d5abcd8d73e5842ba332e0d701908a, type: 2}
+  state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "His name is <link>Sergio Raracara</link>. He knows he works for us so no
-    need to worry about squealing. \n\nHe swears that out of nowhere, while he was
-    \"driving his own business\", <link>the BIGGEST cow he has ever seen</link> jumped
-    at full cow-speed in front of the truck. \nWhen he woke up, the cow was no more
-    but the <link>cargo</link> doors were open. So he closed them without looking
-    inside as he's not allowed to interact with whatever's there. \nBut he gave us
-    the <link>285-P9AQ</link>. Maybe that's something. "
+  Text: "Boy, is this guy shaky! His name is <link>Sergio Raracara</link>. \n\nHe
+    knows who we work for, so no need to worry about him squealing. \n\nIt happened
+    like this: Out of nowhere, while he was \"driving his own business\", <link>the
+    BIGGEST cow he has ever seen</link> jumped at full cow-speed in front of the
+    truck. \n\nWhen he came to on the road, the cow was no more, the truck was lodged,
+    and the <link>cargo</link> doors were slightly open. He tried to shut them without
+    looking inside, but he finally gave up and hid. \n\nHe doesn't know what he stepped
+    on."
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
@@ -34,10 +35,8 @@ MonoBehaviour:
     text: SERGIO
   - photo: {fileID: 21300000, guid: 0a7b6bd54caa0a149a1f7282b8f59d45, type: 3}
     text: HOW BIG?
-  - photo: {fileID: 21300000, guid: e1e6545efd0782040aa14e393fbf505c, type: 3}
-    text: THIS
   Conditionals:
-  - condition: {fileID: 11400000, guid: 9c21b2ec550347540bac6af00fe8f515, type: 2}
+  - condition: {fileID: 11400000, guid: 6fdf5a5cebdd130489c9f5dc2512ffe8, type: 2}
     ifNot: 0
   - condition: {fileID: 11400000, guid: 943f7c831f97a514aa18834ef5319415, type: 2}
     ifNot: 1

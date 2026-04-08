@@ -10,26 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: CatatonicGetRidOF
+  m_Name: CatatonicCommitedNoCar
   m_EditorClassIdentifier: 
-  id: b8708c27-7bc5-407e-95db-37d22d56acb1
-  Action: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
-  state: {fileID: 11400000, guid: 97a42f0c7c7dc84429663e847f2d2a80, type: 2}
+  id: bc785e8c-603f-4389-ba46-ed83f388f90b
+  Action: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
+  state: {fileID: 11400000, guid: 9203f7eecb742424a88b3ae1740e1064, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: 'She is gone.
+  Text: 'We locked her in a mental institution.
 
 
-    It''s a nice farm, she''ll like it.'
+    She kinda had it coming.'
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
     on your desk or in the DB if you uploaded it.'
   CustomStatus: 
   Photos:
+  - photo: {fileID: 21300000, guid: 720e92b894357924a93f9384f42d9282, type: 3}
+    text: CLINICALY INSANE
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
     text: GOOD RIDDANCE!
-  Conditionals: []
+  - photo: {fileID: 21300000, guid: 9ccc246c1db8126409b3f2f693fe022e, type: 3}
+    text: NOTHING LEFT
+  Conditionals:
+  - condition: {fileID: 11400000, guid: b103e25f48bd41547bfab3546fa5b7d7, type: 2}
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
