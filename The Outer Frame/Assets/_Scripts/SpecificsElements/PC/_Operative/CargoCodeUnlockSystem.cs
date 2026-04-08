@@ -34,11 +34,15 @@ public class CargoCodeUnlockSystem : MonoBehaviour
     TypingAnimText textAnim;
     bool isWaitingAWord;
 
+    Vector2 originalOffseMin;
     void Start()
     {
         symbolsSlots = SymbolsSlotsContainer.GetComponentsInChildren<CargoCodeDigitController>();
         textAnim = SearchBar.GetComponent<TypingAnimText>();
-        originalTextAlignement = textAnim.gameObject.GetComponent<RectTransform>().localPosition;
+
+        Vector2 offsetMin = textAnim.gameObject.GetComponent<RectTransform>().offsetMin;
+        offsetMin.x = 0;
+        textAnim.gameObject.GetComponent<RectTransform>().offsetMin = offsetMin;
     }
 
     public void OpenPanel(Component sender, object obj)
@@ -86,9 +90,13 @@ public class CargoCodeUnlockSystem : MonoBehaviour
         SearchBar.text = " |";
         if (!isInPCView) return;
         if (!Conteiner.activeSelf) return;
+
+        Vector2 offsetMin = textAnim.gameObject.GetComponent<RectTransform>().offsetMin;
+        offsetMin.x = 2.34f;
+        textAnim.gameObject.GetComponent<RectTransform>().offsetMin = offsetMin;
+
         WordData _word = (WordData)obj;
         TryAccessWord = _word;
-        textAnim.gameObject.GetComponent<RectTransform>().localPosition = originalTextAlignement;
         SearchBar.text = DeleteSpetialCharacter(TryAccessWord.GetName());
         StopCoroutine(IdleSearchBarAnim());
         textAnim.SetCharacterPerSecond();
@@ -142,12 +150,10 @@ public class CargoCodeUnlockSystem : MonoBehaviour
         StopCoroutine(IdleSearchBarAnim());
         Conteiner.SetActive(false);
         TryAccessWord = null;
-        textAnim.gameObject.GetComponent<RectTransform>().localPosition = originalTextAlignement;
         OnCloseWoredAccessWindow?.Invoke(this, null);
         OnDisableSearchBar?.Invoke(this, false);
     }
 
-    Vector3 originalTextAlignement;
     void startVerticalBarAnim()
     {
         if (!Conteiner.activeSelf) return;
@@ -155,10 +161,10 @@ public class CargoCodeUnlockSystem : MonoBehaviour
         SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 1f);
         SearchBar.text = "";
         isWaitingAWord = true;
-        
-        Vector3 auxTextAlignement = new Vector3(0, originalTextAlignement.y, originalTextAlignement.z);
 
-        textAnim.gameObject.GetComponent<RectTransform>().localPosition = auxTextAlignement;
+        Vector2 offsetMin = textAnim.gameObject.GetComponent<RectTransform>().offsetMin;
+        offsetMin.x = 0;
+        textAnim.gameObject.GetComponent<RectTransform>().offsetMin = offsetMin;
 
         textAnim.SetCharacterPerSecond(2);
         StartCoroutine(IdleSearchBarAnim());
@@ -195,11 +201,15 @@ public class CargoCodeUnlockSystem : MonoBehaviour
 
     IEnumerator CargoDooorFailOpening()
     {
+        foreach (CargoCodeDigitController digit in symbolsSlots) digit.InactiveBackPanel();
+        SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
         failButton.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        foreach (CargoCodeDigitController digit in symbolsSlots) digit.ActiveBackPanel();
+        SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 1f);
         failButton.SetActive(false);
         isUnlockingPage = false;
-        startVerticalBarAnim();
+        //startVerticalBarAnim();
     }
 
 }
