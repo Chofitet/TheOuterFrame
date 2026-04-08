@@ -8,6 +8,9 @@ public class CargoCodeDigitController : MonoBehaviour
 {
     [SerializeField] List<Symbols> symbols = new List<Symbols>();
     [SerializeField] Image SymbolImage;
+    [SerializeField] Image BackImage;
+    [SerializeField] Button UpBTN;
+    [SerializeField] Button DownBTN;
     int symbolIndex = 0;
     bool isInCorrectSymbol;
 
@@ -36,6 +39,21 @@ public class CargoCodeDigitController : MonoBehaviour
     }
 
     public bool GetIsInCorrectSymbol() { return isInCorrectSymbol; }
+
+    public void InactiveBackPanel()
+    {
+        BackImage.color = new Color(BackImage.color.r, BackImage.color.g, BackImage.color.b, 0.5f);
+        UpBTN.interactable = false;
+        DownBTN.interactable = false;
+    }
+    public void ActiveBackPanel()
+    {
+        BackImage.color = new Color(BackImage.color.r, BackImage.color.g, BackImage.color.b, 1);
+        UpBTN.interactable = true;
+        DownBTN.interactable = true;
+    }
+
+
 
 }
 
