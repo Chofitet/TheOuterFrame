@@ -58,6 +58,8 @@ public class ActionRowController : MonoBehaviour
     {
         if (isSpecialAction || !isInView) return;
 
+        if (isPendigToErase) return;
+
         Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
 
         if (toggle.isOn && once)

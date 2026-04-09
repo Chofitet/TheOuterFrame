@@ -135,6 +135,7 @@ public class StringConnectionController : MonoBehaviour
 
     public void ConnectDirectly()
     {
+        if (isConnected) return;
         isConnected = true;
         content.SetActive(true);
         AnimPin2.transform.position = startPosPin2;
