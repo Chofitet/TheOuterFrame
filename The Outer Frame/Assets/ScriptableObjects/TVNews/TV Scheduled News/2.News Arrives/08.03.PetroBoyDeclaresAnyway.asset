@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
+  m_Name: 08.03.PetroBoyDeclaresAnyway
+  m_EditorClassIdentifier: 
+  id: 7e549ae2-575b-469e-b2ec-78f37d2a071d
+  headline: 
+  headlineTwoLines: '"THEY TRIED TO SHUT ME DOWN"
+
+    <link>PEDRO BOYLD</link> HEARD
+    IT ALL!
+
+'
+  text: '"SOMETHING ESCAPED FROM A BIG VEHICLE <link>AT ROAD 54</link> AND RAN IN
+    THE DIRECTION OF <link>WHOOPLA TOWN</link>". "IT SOUNDED <link>HUGE</link>". 
+    HOW CAN WE PROTECT OUR COUNTRY?'
+  newType: 0
+  CustomAclarationAlert: A WITNESS GAVE TESTIMONY TO THE MEDIA
+  image: {fileID: 21300000, guid: a7c45a2a7adf8de42b8d95bb97e61889, type: 3}
+  channel: 1
+  Priority: 1
+  alertLevelIncrement: 24
+  Emergency: 0
+  Day: 0
+  Hour: 8
+  Minute: 3
+  MinTransmitionTime: 4
+  Conditions:
+  - condition: {fileID: 11400000, guid: 8b2b4b79e10303e46b05b65924de48cf, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 52d30fed534b83349aa787e1231849e0, type: 2}
+    ifNot: 1
+  ReplacedIf: []
+  isOrderMatters: 0
+  ReplacedBy: {fileID: 0}

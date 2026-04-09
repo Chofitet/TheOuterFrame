@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
+  m_Name: 09.41.WeirdWallAgainAgain
+  m_EditorClassIdentifier: 
+  id: 55334dca-64a9-49b0-b28f-0d7720fbd77b
+  headline: 
+  headlineTwoLines: 'GIANT WHITE DOME OF PLASTIC DOOM  STILL STANDS <link>AT ROAD
+    54</link> '
+  text: NO ONE HAS CLAIMED OWNERSHIP OF THIS THING YET
+  newType: 0
+  CustomAclarationAlert: EVIDENCE BROADCASTED BY THE MEDIA
+  image: {fileID: 21300000, guid: ed5e2794e1a7bd443b42b0a2923ee3a4, type: 3}
+  channel: 1
+  Priority: 1
+  alertLevelIncrement: 90
+  Emergency: 0
+  Day: 0
+  Hour: 9
+  Minute: 41
+  MinTransmitionTime: 4
+  Conditions:
+  - condition: {fileID: 11400000, guid: 5d00dc8f548f304458b4f7403642553e, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 5e3f162beae27c242920a73d1ea64639, type: 2}
+    ifNot: 0
+  ReplacedIf: []
+  isOrderMatters: 0
+  ReplacedBy: {fileID: 0}
