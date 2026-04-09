@@ -11,6 +11,12 @@ public class VolumenSettings : MonoBehaviour
     public string parameterName = "MasterVolume";
     [SerializeField] float duration;
     private Tween tween;
+    [SerializeField] bool fadeOnStart;
+
+    private void Start()
+    {
+        if (fadeOnStart) FadeIn();
+    }
 
     public void OnFadeIn(Component sender, object obj)
     {
@@ -45,7 +51,5 @@ public class VolumenSettings : MonoBehaviour
             duration
         );
     }
-
-
 
 }
