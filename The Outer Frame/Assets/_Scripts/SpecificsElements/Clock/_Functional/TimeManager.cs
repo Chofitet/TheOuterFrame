@@ -21,9 +21,10 @@ public class TimeManager : MonoBehaviour
 
     [Header("Time Game Over")]
     [SerializeField] TimeCheckConditional TimeToLose;
-    [SerializeField] GameEvent OnElementClick;
-    [SerializeField] GameEvent OnGameOverTime;
-    [SerializeField] GameEvent OnDisableInput;
+    [HideInInspector][SerializeField] GameEvent OnElementClick;
+    [HideInInspector][SerializeField] GameEvent OnGameOverTime;
+    [HideInInspector][SerializeField] GameEvent OnDisableInput;
+
 
     bool isDisableToLoose;
 
@@ -185,17 +186,19 @@ public class TimeManager : MonoBehaviour
         OnAcceleratedTime?.Invoke(this, false);
     }
 
-    bool once;
+    bool onceTimeToLose;
+    bool onceTimeToCutDemo;
     void CheckGameOverCondition()
     {
         if (isDisableToLoose) return;
-        if(TimeToLose.GetStateCondition() && !once)
+        if(TimeToLose.GetStateCondition() && !onceTimeToLose)
         {
             OnElementClick?.Invoke(this, ViewStates.GameOverView);
             OnDisableInput?.Invoke(this, null);
             OnGameOverTime?.Invoke(this, null);
-            once = true;
+            onceTimeToLose = true;
         }
+        
     }
 
     public void DisableLoose(Component senddr, object obj)

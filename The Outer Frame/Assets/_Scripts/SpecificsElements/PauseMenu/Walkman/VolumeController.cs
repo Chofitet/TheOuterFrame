@@ -7,6 +7,7 @@ public class VolumeController : MonoBehaviour
 {
     AudioSource audioSource;
     [SerializeField] float fadeDuration = 1f;
+    [SerializeField] bool fadeOnStart;
 
     private float originalVolume;
 
@@ -21,6 +22,8 @@ public class VolumeController : MonoBehaviour
             originalVolume = audioSource.volume;
             audioSource.volume = 0;
         }
+
+        if (fadeOnStart) FadeInVolume(null, null);
     }
 
     // Función para bajar el volumen a cero

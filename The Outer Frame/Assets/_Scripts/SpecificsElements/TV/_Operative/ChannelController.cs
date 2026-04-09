@@ -197,7 +197,9 @@ public class ChannelController : MonoBehaviour
     void ChangeToEmergencyLayout(INewType _new)
     {
         EmergencyScreen.SetActive(true);
-        EmergencyTextField.text = _new.GetHeadline();
+        if (_new.GetHeadline() != "")
+        { EmergencyTextField.text = _new.GetHeadline(); }
+        else EmergencyTextField.text = _new.GetHeadline2();
         isFirstNew = false;
         FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField,FindableBtnType.FindableBTN,null,false,true);
     }
