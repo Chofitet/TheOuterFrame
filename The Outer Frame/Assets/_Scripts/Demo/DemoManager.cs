@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class DemoManager : MonoBehaviour
 {
-    [SerializeField] bool isOnDemo;
+    [SerializeField] bool DemoMode;
     [SerializeField] GameEvent OnGoToDemoCut;
     [SerializeField] GameEvent OnDisableInput;
+
+    [Header("Demo reports cut off")]
+    [SerializeField] List<ReportType> DemoReportsCutOff = new List<ReportType>();
     [SerializeField] float TimeToWaitBeforeReportUp = 1;
 
-    [Header("Reports to Cut Demo")]
-    [SerializeField] List<ReportType> ReportsToTriggerDemoCut = new List<ReportType>();
-
-    [Header("Time To Cut Demo")]
-    [SerializeField] TimeCheckConditional TimeToCutDemo;
+    [Header("Demo time cut off")]
+    [SerializeField] TimeCheckConditional DemoTimeCutOff;
 
 
     private void OnEnable()
@@ -27,11 +27,11 @@ public class DemoManager : MonoBehaviour
 
     public void CheckFirstTakeReport(Component sender,object obj)
     {
-        if (!isOnDemo) return;
+        if (!DemoMode) return;
         
         GameObject reportSended = (GameObject)obj;
 
-        foreach(ReportType report in ReportsToTriggerDemoCut)
+        foreach(ReportType report in DemoReportsCutOff)
         {
             if(reportSended.GetComponent<IndividualReportController>().GetRepoertype() == report)
             {
@@ -48,9 +48,9 @@ public class DemoManager : MonoBehaviour
     bool onceTimeToCutDemo;
     void UpdateMinuteClock()
     {
-        if (!isOnDemo) return;
-        if (TimeToCutDemo == null) return;
-        if (TimeToCutDemo.GetStateCondition() && !onceTimeToCutDemo)
+        if (!DemoMode) return;
+        if (DemoTimeCutOff == null) return;
+        if (DemoTimeCutOff.GetStateCondition() && !onceTimeToCutDemo)
         {
             OnDisableInput?.Invoke(this, null);
             OnGoToDemoCut?.Invoke(this, null);
@@ -60,7 +60,7 @@ public class DemoManager : MonoBehaviour
 
     public void InactiveCutDemo(Component sender, object obj)
     {
-        isOnDemo = false;
+        DemoMode = false;
     }
 
 }
