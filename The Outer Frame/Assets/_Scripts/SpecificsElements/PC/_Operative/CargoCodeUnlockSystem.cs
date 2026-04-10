@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Windows;
 
 public class CargoCodeUnlockSystem : MonoBehaviour
 {
@@ -22,10 +21,12 @@ public class CargoCodeUnlockSystem : MonoBehaviour
     [SerializeField] WordData AccessCode;
     [SerializeField] DataBaseType dataBaseCargo;
     [SerializeField] GameObject failButton;
+    [SerializeField] SliderUpdateAnim slider;
 
     [SerializeField] GameObject codePanelConteiner;
     [SerializeField] GameObject CargoOpenText;
     [SerializeField] GameObject CargoOpenButton;
+    [SerializeField] GameEvent OnSoundPCLoad;
 
     WordData TryAccessWord;
     private bool isInPCView;
@@ -184,8 +185,13 @@ public class CargoCodeUnlockSystem : MonoBehaviour
 
     IEnumerator CargoDoorOpening()
     {
+        OnSoundPCLoad?.Invoke(this, null);
         codePanelConteiner.SetActive(false);
-        yield return new WaitForSeconds(2.5f);
+        slider.gameObject.SetActive(true);
+        slider.AnimSlider(this, null);
+        yield return new WaitForSeconds(1.9f);
+        OnSoundPCLoad?.Invoke(this, null);
+        slider.gameObject.SetActive(false);
         CargoOpenText.SetActive(true);
         yield return new WaitForSeconds(0.8f);
         CargoOpenText.SetActive(false);

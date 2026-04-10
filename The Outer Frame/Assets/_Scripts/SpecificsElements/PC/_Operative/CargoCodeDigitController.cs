@@ -13,6 +13,10 @@ public class CargoCodeDigitController : MonoBehaviour
     [SerializeField] Button DownBTN;
     int symbolIndex = 0;
     bool isInCorrectSymbol;
+    private void Start()
+    {
+        SymbolImage.sprite = symbols[0].Symbol;
+    }
 
     public void PressUpBTN()
     {

@@ -12,6 +12,7 @@ public class PopUpManager : MonoBehaviour
     [SerializeField] Vector3 PopUpOffset;
     [SerializeField] float EdgeMargin = 2;
     [SerializeField] RectTransform instantiationPoint;
+    [SerializeField] GameEvent OnInstanciatePopUpOnPC;
 
     private void Start()
     {
@@ -39,6 +40,8 @@ public class PopUpManager : MonoBehaviour
         popUpInstances.Add(Instance);
 
         Instance.transform.SetParent(transform);
+
+        OnInstanciatePopUpOnPC?.Invoke(this, null);
     }
 
 

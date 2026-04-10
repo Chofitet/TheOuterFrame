@@ -17,6 +17,7 @@ public class GooIdentificatorController : MonoBehaviour
     [SerializeField] GameObject NextButton;
     [SerializeField] GameObject QuitButton;
     [SerializeField] GameEvent OnDisableSearchBar;
+    [SerializeField] GameEvent OnPCLoadSound;
 
     [SerializeField] GameObject RightAnswerePanel;
     [SerializeField] GameObject WrongAnswerePanel;
@@ -102,6 +103,7 @@ public class GooIdentificatorController : MonoBehaviour
         turnOffPages();
         if (Pages[IdentficatorPage] == null) return;
         Pages[IdentficatorPage].SetActive(true);
+        OnPCLoadSound?.Invoke(this,null);
     }
 
     void turnOffPages()
@@ -181,6 +183,7 @@ public class GooIdentificatorController : MonoBehaviour
             if (isOneCodeCorrect) break;
         }
 
+
         if(isOneCodeCorrect && isAccessComponentRight)
         {
             StartCoroutine(DelayShowAnswere(RightAnswerePanel));
@@ -196,6 +199,7 @@ public class GooIdentificatorController : MonoBehaviour
         QuitButton.GetComponent<Button>().interactable = false;
         BackButton.gameObject.SetActive(false);
         yield return new WaitForSeconds(2);
+        OnPCLoadSound?.Invoke(this, null);
         QuitButton.GetComponent<Button>().interactable = true;
         panel.SetActive(true);
     }
