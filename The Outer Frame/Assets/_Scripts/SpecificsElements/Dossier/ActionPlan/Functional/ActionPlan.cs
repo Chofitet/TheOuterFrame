@@ -62,7 +62,6 @@ public class ActionPlan : MonoBehaviour
         }
     }
 
-
     void OnButtonRowPress(ActionRowController script)
     {
 
@@ -112,6 +111,7 @@ public class ActionPlan : MonoBehaviour
             ApproveBtn.enabled = false;
         }
     }
+
 
     public void SelectedWord(Component sender, object obj)
     {
@@ -271,6 +271,11 @@ public class ActionPlan : MonoBehaviour
         {
             actions.gameObject.GetComponent<Button>().enabled = false;
         }
+    }
+
+    public void OnEraseInactiveOrReplacedWords(Component sender, object obj)
+    {
+        isOneToggleSelected = false;
     }
 
 }

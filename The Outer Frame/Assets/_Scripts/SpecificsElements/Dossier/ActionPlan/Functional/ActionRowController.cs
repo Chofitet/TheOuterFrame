@@ -58,7 +58,11 @@ public class ActionRowController : MonoBehaviour
     {
         if (isSpecialAction || !isInView) return;
 
-        if (isPendigToErase) return;
+        if (isPendigToErase)
+        {
+            return;
+        }
+
 
         Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
 
@@ -350,7 +354,7 @@ public class ActionRowController : MonoBehaviour
 
         if(_word == Word)
         {
-            isPendigToErase = true;
+            if (toggle.isOn) isPendigToErase = true;
         }
     }
 
