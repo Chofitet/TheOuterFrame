@@ -79,6 +79,8 @@ public class SlotController : MonoBehaviour
         if (multiActionNum != 1) Actiontxt.text = "Helping " + state.GetIdeaInfinitiveVerb();
         Wordtxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
         Actiontxt.GetComponent<FontSizeAdjustToOneLine>().AdjustFontSize();
+        Wordtxt.color = new Color(Wordtxt.color.r, Wordtxt.color.g, Wordtxt.color.b, 0f);
+        Actiontxt.color = new Color(Actiontxt.color.r, Actiontxt.color.g, Actiontxt.color.b, 0f);
         StartCoroutine(DelayedWarp());
 
         isActionComplete = false;
@@ -575,7 +577,9 @@ public class SlotController : MonoBehaviour
     IEnumerator DelayedWarp()
     {
         yield return null; // espera 1 frame
-        if(Wordtxt.IsActive())Wordtxt.GetComponent<WarpTextExample>().UpdateText();
+        Wordtxt.color = new Color(Wordtxt.color.r, Wordtxt.color.g, Wordtxt.color.b, 1f);
+        Actiontxt.color = new Color(Actiontxt.color.r, Actiontxt.color.g, Actiontxt.color.b, 1f);
+        if (Wordtxt.IsActive())Wordtxt.GetComponent<WarpTextExample>().UpdateText();
         if(Actiontxt.IsActive()) Actiontxt.GetComponent<WarpTextExample>().UpdateText();
     }
 
