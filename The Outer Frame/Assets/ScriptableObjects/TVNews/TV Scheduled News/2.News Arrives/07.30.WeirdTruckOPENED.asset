@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
-  m_Name: 07.30.NoCrashJustBillboard
+  m_Name: 07.30.WeirdTruckOPENED
   m_EditorClassIdentifier: 
-  id: 392f0485-0077-445f-ab9a-77f30f684b9c
-  headline: NO CRASH AT ALL <link>AT ROAD 54</link> ??
+  id: 71e9f70c-5577-49fb-af03-f319b1a0a8d0
+  headline: NUCLEAR ABOMINATION LOOSE!!
   headlineTwoLines: 
-  text: WAS IT ALL A HOAX? OR JUST THE SHADOW OF SOMETHING BIGGER? WHAT WERE WE EVEN
-    REPORTING ALL THIS TIME? SURELY THERE IS SOMETHING GOING ON! AND WE WILL FIND
-    IT!
+  text: "AN UNFATHOMABLE MAN-MADE ABOMINATION OBVIOUSLY ESCAPED FROM THE TRUCK THAT
+    CRASHED ON ROAD 54 LEAVING NUCLEAR WASTE ON THE RUN! THERE IS NO QUESTION ABOUT
+    IT. \nIT IS PITCHFORK-AND-TORCH TIME, EVERYBODY!"
   newType: 0
-  CustomAclarationAlert: 
-  image: {fileID: 21300000, guid: 6cbb1b59b687d8e40be85af4d7043017, type: 3}
+  CustomAclarationAlert: EVIDENCE WAS REPORTED TO THE PUBLIC
+  image: {fileID: 21300000, guid: 36d2dfa55de16e64a939af1f25f9f460, type: 3}
   channel: 1
   Priority: 1
-  alertLevelIncrement: -20
+  alertLevelIncrement: 100
   Emergency: 0
   Day: 0
   Hour: 7
@@ -31,12 +31,12 @@ MonoBehaviour:
   MinTransmitionTime: 4
   Conditions:
   - condition: {fileID: 11400000, guid: 5d00dc8f548f304458b4f7403642553e, type: 2}
-    ifNot: 0
-  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
-    ifNot: 0
+    ifNot: 1
   - condition: {fileID: 11400000, guid: 5e3f162beae27c242920a73d1ea64639, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 95dcef167cd4049439d47deff9e5f43c, type: 2}
     ifNot: 0
-  - condition: {fileID: 11400000, guid: e59dfb32193ea4648a4abb446ebf8081, type: 2}
+  - condition: {fileID: 11400000, guid: c7689f12bab59cd438ae74c8bf835034, type: 2}
     ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0

@@ -10,33 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
-  m_Name: 07.30.NoCrashJustBillboard
+  m_Name: 08.05.WeirdWallGooREPEAT
   m_EditorClassIdentifier: 
-  id: 392f0485-0077-445f-ab9a-77f30f684b9c
-  headline: NO CRASH AT ALL <link>AT ROAD 54</link> ??
-  headlineTwoLines: 
-  text: WAS IT ALL A HOAX? OR JUST THE SHADOW OF SOMETHING BIGGER? WHAT WERE WE EVEN
-    REPORTING ALL THIS TIME? SURELY THERE IS SOMETHING GOING ON! AND WE WILL FIND
-    IT!
+  id: d4a6295b-a857-4676-8fb4-b05df2810365
+  headline: 
+  headlineTwoLines: GIANT WHITE DOME OF PLASTIC DOOM LEAKING NUCLEAR WASTE OVER <link>ROAD
+    54</link>
+  text: "A MYSTERIOUS STRUCTURE OBSTRUCTS ROAD 54! THIS IS DEFINITELY NOT JUST A
+    CONSTRUCTION SITE. WHAT ARE THEY TRYING TO CONCEAL UNDER ITS RUBBERY EMBRACE?
+    WE\u2019LL FIND OUR WAY INSIDE IT, YOU CAN COUNT ON THAT."
   newType: 0
-  CustomAclarationAlert: 
-  image: {fileID: 21300000, guid: 6cbb1b59b687d8e40be85af4d7043017, type: 3}
+  CustomAclarationAlert: EVIDENCE WAS REPORTED TO THE PUBLIC
+  image: {fileID: 21300000, guid: ed5e2794e1a7bd443b42b0a2923ee3a4, type: 3}
   channel: 1
   Priority: 1
-  alertLevelIncrement: -20
+  alertLevelIncrement: 66
   Emergency: 0
   Day: 0
-  Hour: 7
-  Minute: 30
+  Hour: 8
+  Minute: 5
   MinTransmitionTime: 4
   Conditions:
   - condition: {fileID: 11400000, guid: 5d00dc8f548f304458b4f7403642553e, type: 2}
-    ifNot: 0
-  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
-    ifNot: 0
+    ifNot: 1
   - condition: {fileID: 11400000, guid: 5e3f162beae27c242920a73d1ea64639, type: 2}
     ifNot: 0
-  - condition: {fileID: 11400000, guid: e59dfb32193ea4648a4abb446ebf8081, type: 2}
+  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
     ifNot: 1
   ReplacedIf: []
   isOrderMatters: 0

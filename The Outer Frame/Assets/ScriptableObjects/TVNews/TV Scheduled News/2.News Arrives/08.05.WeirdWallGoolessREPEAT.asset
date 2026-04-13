@@ -10,28 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86e1c7fc9a134ee4eba2f07c9b497f99, type: 3}
-  m_Name: 07.30.WeirdWall
+  m_Name: 08.05.WeirdWallGoolessREPEAT
   m_EditorClassIdentifier: 
-  id: 56ac82e3-7c97-46c2-8cdb-8d9a272df5f0
+  id: 122224bb-1ea2-444a-9204-e87517b7dace
   headline: 
-  headlineTwoLines: GIANT WHITE DOME OF PLASTIC DOOM APPEARS <link>AT ROAD 54</link>
-  text: OR IS IT JUST A CONSTRUCTION SITE? WAS IT HERE BEFORE? WHAT DOES IT CONCEAL
-    UNDER ITS RUBBERY EMBRACE?
+  headlineTwoLines: GIANT WHITE DOME OF PLASTIC DOOM OBSTRUCTING <link>AT ROAD 54</link>
+  text: "A MYSTERIOUS STRUCTURE OBSTRUCTS ROAD 54! THIS IS DEFINITELY NOT JUST A
+    CONSTRUCTION SITE. WHAT ARE THEY TRYING TO CONCEAL UNDER ITS RUBBERY EMBRACE?
+    WE\u2019LL FIND OUR WAY INSIDE IT, YOU CAN COUNT ON THAT."
   newType: 0
   CustomAclarationAlert: EVIDENCE WAS REPORTED TO THE PUBLIC
   image: {fileID: 21300000, guid: ed5e2794e1a7bd443b42b0a2923ee3a4, type: 3}
   channel: 1
   Priority: 1
-  alertLevelIncrement: 25
+  alertLevelIncrement: 55
   Emergency: 0
   Day: 0
-  Hour: 7
-  Minute: 30
+  Hour: 8
+  Minute: 5
   MinTransmitionTime: 4
   Conditions:
   - condition: {fileID: 11400000, guid: 5d00dc8f548f304458b4f7403642553e, type: 2}
     ifNot: 1
   - condition: {fileID: 11400000, guid: 5e3f162beae27c242920a73d1ea64639, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
     ifNot: 0
   ReplacedIf: []
   isOrderMatters: 0
