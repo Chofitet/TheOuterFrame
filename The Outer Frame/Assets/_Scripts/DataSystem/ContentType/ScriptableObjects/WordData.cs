@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -143,6 +144,9 @@ public class WordData : DataType, IReseteableScriptableObject
     {
 
         ReportType aux = null;
+
+        string WordName = name;
+
         foreach (ActionState AS in ActionsStates)
         {
             if (AS.GetState() == state) aux = AS.GetLastReport();
@@ -275,6 +279,8 @@ public class WordData : DataType, IReseteableScriptableObject
     public void ChangeState(ReportType report)
     {
         StateEnum state = report.GetState();
+
+        string ActualWord = name;
 
         if (!stateHistory.Contains(state))
         {
@@ -603,7 +609,7 @@ public class WordData : DataType, IReseteableScriptableObject
         CheckedStateHistory.Clear();
         ActionsStates.Clear();
 
-        foreach ( StateEnum state in oldword.GetHistory())
+        foreach (StateEnum state in oldword.GetHistory())
         {
             stateHistory.Add(state);
         }
@@ -614,7 +620,18 @@ public class WordData : DataType, IReseteableScriptableObject
 
         if (oldword.GetIsPhoneNumberFound()) SetIsPhoneNumberFound();
 
-        ActionsStates = oldword.GetActionStatesList();
+        ActionsStates = oldword.GetActionStatesList().Select(x => new ActionState(x)).ToList();
+
+        //chequear si al remplazarse, tiene el mismo vilify, conservar el lastReport de la ccion vilify
+        // Si no, setearlo a null
+
+       /* ReportType vilifyOldWord = oldword.GetVilifyReport();
+        ReportType vilifyNewWord = GetVilifyReport();
+
+        if (!vilifyOldWord) return;
+        if(!vilifyNewWord) return;
+
+        if (vilifyNewWord != vilifyOldWord) ActionsStates[8].SetReport(null);*/
     }
 
     public void DeleteFoundAsWord(string foundAsTxt)
@@ -731,6 +748,17 @@ public class WordData : DataType, IReseteableScriptableObject
         return words;
     }
 
+    ReportType GetVilifyReport()
+    {
+        foreach(ReportType report in reportTypes)
+        {
+            if(report.name.ToLower().Contains("vili"))
+            {
+                return report;
+            }
+        }
+        return null;
+    }
    
 
 }
@@ -746,6 +774,13 @@ public class ActionState
     {
         state = _state;
     }
+
+    public ActionState(ActionState other)
+    {
+        state = other.state;
+        LastReport = other.LastReport; 
+    }
+
 
     public StateEnum GetState() { return state; }
     public ReportType GetLastReport() { return LastReport; }

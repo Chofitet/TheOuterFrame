@@ -113,7 +113,7 @@ public class SlotController : MonoBehaviour
             SetLEDState(Color.red, "Red");
         }
         //Se está haciendo el mismo en este momento
-        else if (word.CheckIfActionIsDoing(state) && !isAMultiAction)
+        else if ((word.CheckIfActionIsDoing(state) || Report.getDoing()) && !isAMultiAction )
         {
             FillFast();
             isTheSameAction = true;
@@ -177,6 +177,7 @@ public class SlotController : MonoBehaviour
             TimeManager.OnSecondsChange += UpdateProgress;
             UpdateProgress();
             SetLEDState(Color.green, "Green");
+            Report.SetDoing(true);
             
             if(state == VilifyState) OnSetVilifyAction?.Invoke(this, true);
         }
@@ -253,7 +254,8 @@ public class SlotController : MonoBehaviour
         
         _word.SetDoingAction(_state, false);
         inFillFast = false;
-       
+        Report.SetDoing(false);
+
         Report = WordsManager.WM.RequestReport(_word, _state);
         if(Report.GetObjectToPrint() == ObjectToPrint.Candy1 || Report.GetObjectToPrint() == ObjectToPrint.Candy2) OnSetCandy?.Invoke(this, Report.GetObjectToPrint());
         AgentIcon.SetActive(false);
@@ -264,7 +266,7 @@ public class SlotController : MonoBehaviour
             Report.SetWasSet();
         }
         else isAlreadyDone = true;
-        _state = WordsManager.WM.GetHistory(_word).Last();
+        if(WordsManager.WM.GetHistory(_word).Count != 0) _state = WordsManager.WM.GetHistory(_word).Last();
         OnAddEntryLog?.Invoke(this, new LogEntryData(_word, _state.GetActionedVerb(), Report, null));
         Report.SetTimeWhenWasDone();
         timeComplete = TimeManager.timeManager.GetTime();
@@ -305,6 +307,7 @@ public class SlotController : MonoBehaviour
         _word.SetDoingAction(_state, false);
         isAborted = true;
         inFillFast = false;
+        Report.SetDoing(false);
         OnFinishActionProgress?.Invoke(this, this);
         OnReactiveIdeaPosit?.Invoke(this, _state);
         TimeManager.OnSecondsChange -= UpdateProgress;
