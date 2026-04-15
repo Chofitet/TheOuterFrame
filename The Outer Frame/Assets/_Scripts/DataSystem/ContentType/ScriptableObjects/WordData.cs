@@ -107,7 +107,8 @@ public class WordData : DataType, IReseteableScriptableObject
         {
             if (report.CheckConditionals())
             {
-                if (report.CheckIfIsDefault() && GetLastReportOfAnAction(state) != null) continue;
+                if (report.GetWasSet()) continue;
+                //if (report.CheckIfIsDefault() && GetLastReportOfAnAction(state) != null) continue;
 
                 return report;
             }
