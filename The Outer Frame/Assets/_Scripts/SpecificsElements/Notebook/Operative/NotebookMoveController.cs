@@ -186,6 +186,7 @@ public class NotebookMoveController : MonoBehaviour
     public void CallToSetPositionWritingOnTV(Component sender, object obj)
     {
         if (lastView != ViewStates.TVView) return;
+        dontLeaveNotebook = true;
         SetPos(5, true);
     }
 
