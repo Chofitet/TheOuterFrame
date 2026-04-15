@@ -15,8 +15,8 @@ MonoBehaviour:
   id: f38f65f9-3c25-4d3f-9b8a-5f78be0f28cc
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  isAutomatic: 1
-  ChangeTimeOfAction: 0
+  isAutomatic: 0
+  ChangeTimeOfAction: -3
   Text: 'She was a mumbling mess BEFORE we wiped her mind.
 
 
@@ -35,6 +35,8 @@ MonoBehaviour:
     text: UNRESPONSIVE
   Conditionals:
   - condition: {fileID: 11400000, guid: badc88481efd1af4ab91797455729431, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 99487cad318e58741bd284e267383ee2, type: 2}
     ifNot: 0
   ObjectType: 0
   isOrderMatters: 0

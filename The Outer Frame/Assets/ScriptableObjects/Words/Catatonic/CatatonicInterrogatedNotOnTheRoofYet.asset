@@ -10,30 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: CatatonicInterrogated
+  m_Name: CatatonicInterrogatedNotOnTheRoofYet
   m_EditorClassIdentifier: 
-  id: d8b0fcb5-59fd-409f-bf29-85b3a93ec318
+  id: 5d647538-6ef9-46c9-b24b-966258d5857d
   Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
-  state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
+  state: {fileID: 11400000, guid: ed1faa972a83b1c44a8ce64f193253b5, type: 2}
   isAutomatic: 0
-  ChangeTimeOfAction: -3
-  Text: "She does not partake in conversation.\n\n\"There were two at 54\" is all
-    that she says. \n\nWhatever happened left her in a deep shell-shock state. \n\nShe
-    clearly knows something, there's just no way of getting anything else out of
-    her as she is."
-  TextForRepetition: 'We already did that, remember?
+  ChangeTimeOfAction: 0
+  Text: We are not up there yet
+  TextForRepetition: 'We already did that, remember? not there yet
 
-    The report is probably
-    on your desk or in the DB if you uploaded it.'
+    The report
+    is probably on your desk or in the DB if you uploaded it.'
   CustomStatus: ATTEMPTED
   Photos:
-  - photo: {fileID: 21300000, guid: 7c6609f8dc3138d4a913b8b79986bd92, type: 3}
+  - photo: {fileID: 21300000, guid: af9bfbc22f7c3de47a5c5f442b74c1dd, type: 3}
     text: NOT TALKING
   Conditionals:
   - condition: {fileID: 11400000, guid: badc88481efd1af4ab91797455729431, type: 2}
     ifNot: 1
   - condition: {fileID: 11400000, guid: 99487cad318e58741bd284e267383ee2, type: 2}
-    ifNot: 0
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
