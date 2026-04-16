@@ -1124,6 +1124,7 @@ GameObject:
   - component: {fileID: 3612240375461985165}
   - component: {fileID: 292070351192617154}
   - component: {fileID: 5622801922793223678}
+  - component: {fileID: 8435262521588347918}
   m_Layer: 0
   m_Name: ActionRowPrefab
   m_TagString: Untagged
@@ -1181,6 +1182,7 @@ MonoBehaviour:
   OnWrittingFormSound: {fileID: 11400000, guid: bdd569d0d7c334446b9d71f870e17875, type: 2}
   EraseParticles: {fileID: 3113988203799421024}
   EraseParticlesAclaration: {fileID: 3723299584987896479}
+  OnForceSelectedWordInActionRows: {fileID: 11400000, guid: 61bbe30c501f1544a996617146e60930, type: 2}
 --- !u!114 &1121595303662360917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,6 +1308,41 @@ MonoBehaviour:
       - m_Target: {fileID: 2075909277059069969}
         m_TargetAssemblyTypeName: ActionRowController, Assembly-CSharp
         m_MethodName: OnAPView
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+--- !u!114 &8435262521588347918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062246628295916328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 61bbe30c501f1544a996617146e60930, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2075909277059069969}
+        m_TargetAssemblyTypeName: ActionRowController, Assembly-CSharp
+        m_MethodName: OnForceChangeWord
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
