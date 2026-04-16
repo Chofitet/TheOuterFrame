@@ -83,15 +83,16 @@ public class AlertLevelManager : MonoBehaviour
         }
     }
 
-
-
     public void AccelerateAnims(Component sender, object obj)
     {
         timeFactor = (float)obj;
-
-        
     }
 
+    [ContextMenu("Try Alert Level")]
+    public void AlertLevelTry()
+    {
+        UpdateNum(null, 1);
+    }
 
 }
 

@@ -11,8 +11,10 @@ public class BlinkMaterialEffect : MonoBehaviour
     [SerializeField] float duration = 0.5f;
     [SerializeField] float TurnOffDuration;
     [SerializeField] float maxIntensity = 1f;
+    [SerializeField] float maxBlinkIntensity = 1f;
     [SerializeField] float minIntensity = 1f;
     [SerializeField] bool BlinkInStart;
+    [SerializeField] bool BlinkFromValueDifferentTo0;
     [SerializeField] bool isTurnInStart;
     [SerializeField] float TurnLightDuration;
     private Color originalEmissionColor;
@@ -62,12 +64,20 @@ public class BlinkMaterialEffect : MonoBehaviour
 
         if (TurnOnCoroutine != null) StopCoroutine(TurnOnCoroutine);
         if (TurnOffCoroutine != null) StopCoroutine(TurnOffCoroutine);
+
+        float initIntensity = 0;
+        float finalIntensity = maxIntensity;
+        if (BlinkFromValueDifferentTo0)
+        {
+            initIntensity = maxIntensity;
+            finalIntensity = maxBlinkIntensity;
+        }
         if (material.IsKeywordEnabled("_EMISSION"))
         {
             
             BlinkSequence = DOTween.Sequence();
 
-            BlinkSequence.Append(DOTween.To(() => 0f, x => SetEmissionIntensity(x), maxIntensity, duration))
+            BlinkSequence.Append(DOTween.To(() => initIntensity, x => SetEmissionIntensity(x), finalIntensity, duration))
                 .SetLoops(-1, LoopType.Yoyo) 
                 .SetEase(Ease.InOutSine); 
 
@@ -81,7 +91,7 @@ public class BlinkMaterialEffect : MonoBehaviour
 
     public void TurnOffLight(Component sender, object obj)
     {
-
+        if (inactiveTurnOff) return;
         if (BlinkSequence != null && BlinkSequence.IsPlaying())
         {
             BlinkSequence.Kill();
@@ -119,6 +129,16 @@ public class BlinkMaterialEffect : MonoBehaviour
     public void SetSpecificColor(Color c)
     {
         _color = c;
+    }
+
+    public void SetDuration(Component sender, object obj)
+    {
+        duration = (float)obj;
+    }
+
+    public void SetBlinkFromValueDifferentTo0False(Component sender, object obj)
+    {
+        BlinkFromValueDifferentTo0 = false;
     }
 
     public void SetOtherColor(Component sender, object obj)
@@ -186,5 +206,15 @@ public class BlinkMaterialEffect : MonoBehaviour
         blinkCoroutine = null;
     }
 
+    public void SetTurnLightDuration(Component sender,object obj)
+    {
+        TurnLightDuration = (float)obj;
+    }
+
+    bool inactiveTurnOff;
+    public void InactiveTurnOff(Component sender, object obj)
+    {
+        inactiveTurnOff = true;
+    }
 
 }
