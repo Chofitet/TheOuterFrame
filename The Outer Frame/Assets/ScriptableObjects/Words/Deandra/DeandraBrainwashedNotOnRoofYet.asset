@@ -14,21 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: bd92dc70-ecc3-49e2-9fce-fe4e4a3857d3
   Action: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
-  state: {fileID: 11400000, guid: 24adcf528d55be2438584dad7714e6f8, type: 2}
+  state: {fileID: 11400000, guid: d35b9a6d0a91e8b43b6cde193cfa8f56, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: -9
-  Text: 'We already did that, remember?
+  Text: 'She was said to be on the roof, but we can''t get up there!
 
-    You must have the report somewhere on
-    your desk, or in the DB if you uploaded it.'
-  TextForRepetition: 'We already did that, remember?
+
+    There
+    are no stairs or anything remotely climbable.
+
+
+    It''s way out of hands reach.'
+  TextForRepetition: 'We already tried that, remember?
 
     You must have the report
     somewhere on your desk, or in the DB if you uploaded it.'
-  CustomStatus: 
+  CustomStatus: ATTEMPTED
   Photos:
-  - photo: {fileID: 21300000, guid: 94c8925cc44e54a4b8387d6702b1a0de, type: 3}
-    text: DONE!
+  - photo: {fileID: 21300000, guid: af9bfbc22f7c3de47a5c5f442b74c1dd, type: 3}
+    text: TOO DANG HIGH
   Conditionals:
   - condition: {fileID: 11400000, guid: 99487cad318e58741bd284e267383ee2, type: 2}
     ifNot: 1
