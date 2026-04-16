@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: SomethingOnTheRoofInspectedOnRoof
+  m_EditorClassIdentifier: 
+  id: bd731790-ebe5-4c85-8d3b-4ebb479682ce
+  Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  isAutomatic: 1
+  ChangeTimeOfAction: 0
+  Text: 'We already did  that, remember?
+
+
+    The report is probably on your desk
+    or in the DB if you uploaded it.'
+  TextForRepetition: 'We already tried that, remember?
+
+    The report is probably
+    on your desk or in the DB if you uploaded it.'
+  CustomStatus: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 94c8925cc44e54a4b8387d6702b1a0de, type: 3}
+    text: REMEMBER
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 99487cad318e58741bd284e267383ee2, type: 2}
+    ifNot: 0
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  AgentRecoveryTime: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0
