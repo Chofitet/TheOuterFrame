@@ -21,6 +21,7 @@ public class ActionRowController : MonoBehaviour
     [SerializeField] GameEvent OnWrittingFormSound;
     [SerializeField] Transform EraseParticles;
     [SerializeField] Transform EraseParticlesAclaration;
+    [SerializeField] GameEvent OnForceSelectedWordInActionRows; 
     
      bool isSpecialAction;
     StateEnum state;
@@ -54,17 +55,23 @@ public class ActionRowController : MonoBehaviour
         }
     }
 
+    WordData WordPendingToReplaceErased;
+    bool ApTakedByPressAWord;
     public void OnSelectWordInNotebook(Component sender, object obj)
     {
         if (isSpecialAction || !isInView) return;
 
+        ApTakedByPressAWord = true;
+
         if (isPendigToErase)
         {
+            if (ActionText.text == "Inspect") WordPendingToReplaceErased = WordSelectedInNotebook.Notebook.GetSelectedWord();
+            else Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
             return;
         }
 
-
-        Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
+        if(obj != null) Word = (WordData) obj;
+        else  Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
 
         if (toggle.isOn && once)
         {
@@ -116,10 +123,12 @@ public class ActionRowController : MonoBehaviour
     void buttonCheck()
     {
         Invoke("CheckToggle", 0.01f);
+
         if (Word)
         {
             Wordtext.text = Word.GetFormNameVersion();
             StartCoroutine(AnimOnlyWriting(Wordtext, true));
+            once = true;
         }
         else if (!isSpecialAction) OnShakeNotebook?.Invoke(this, null);
 
@@ -129,6 +138,11 @@ public class ActionRowController : MonoBehaviour
     void buttonUncheck()
     {
         Invoke("UnCheckToggle", 0.01f);
+    }
+
+    public void OnForceChangeWord(Component sneder,object obj)
+    {
+       if(!isSpecialAction) Word = (WordData)obj;
     }
 
     public Button GetButton() { return btn; }
@@ -227,13 +241,22 @@ public class ActionRowController : MonoBehaviour
                 AclarationTxt.text = "";
             }
         }
+        if(WordPendingToReplaceErased)
+        {
+            yield return new WaitForSeconds(0.4f);
+            toggle.isOn = true;
+            OnSelectWordInNotebook(null, WordPendingToReplaceErased);
+            OnForceSelectedWordInActionRows?.Invoke(this, WordPendingToReplaceErased);
+            WordPendingToReplaceErased = null;
+            
+        }
     }
 
     public void eraseParticles(float progress)
     {
         TMP_Text actualField = Word ? Wordtext : ActionText;
 
-        if(!Word) toggleImage.enabled = false;
+        if(!Word && isSpecialAction) toggleImage.enabled = false;
 
         if (actualField == null) return;
 
@@ -321,6 +344,7 @@ public class ActionRowController : MonoBehaviour
 
         if (actualView == ViewStates.DossierView || actualView == ViewStates.OnTakenPaperView) isInView = true;
         else isInView = false;
+
     }
 
     public void CheckToggle()
@@ -362,7 +386,10 @@ public class ActionRowController : MonoBehaviour
     {
         bool isInAp = (bool)obj;
 
+        ApTakedByPressAWord = false;
+
         if (!isPendigToErase) return;
+        
 
         if (isInAp)
         {
@@ -373,14 +400,28 @@ public class ActionRowController : MonoBehaviour
             if(PendingToEraseCoroutine != null) StopCoroutine(PendingToEraseCoroutine);
         }
 
-
     }
+
 
     IEnumerator TriggerPendingToEraseCoroutine()
     {
         yield return new WaitForSeconds(0.5f);
-        ResetRow();
-        isPendigToErase = false;
+        if (!ApTakedByPressAWord && !Word.GetInactiveState())
+        {
+            isPendigToErase = false;
+            WordData newWord = WordsManager.WM.FindActualWordRetroactive(Word);
+            WordSelectedInNotebook.Notebook.ForceSelectedWord(newWord);
+            OnSelectWordInNotebook(null, newWord);
+            OnForceSelectedWordInActionRows?.Invoke(this, newWord);
+
+        }
+        else
+        {
+            ResetRow();
+            OnForceSelectedWordInActionRows?.Invoke(this, null);
+            isPendigToErase = false;
+        }
+        
     }
 
     public bool GetIsOn() { return toggle.isOn; }

@@ -211,6 +211,10 @@ public class WordSelectedInNotebook : MonoBehaviour
         OnSelectedWordInNotebook?.Invoke(this, SelectedWord);
         
     }
+    public void ForceSelectedWord(WordData word)
+    {
+        SelectedWord = word;
+    }
 
     ViewStates actualView;
     public void ActualView(Component sender, object obj)
