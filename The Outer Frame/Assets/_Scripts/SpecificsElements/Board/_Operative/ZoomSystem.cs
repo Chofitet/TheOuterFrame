@@ -46,7 +46,6 @@ public class ZoomSystem : MonoBehaviour
         inZoom = true;
         if (ZoomSequence.IsActive() & ZoomSequence != null) ZoomSequence.Kill();
         currentDelay = 0f;
-        once = false;
         
     }
 
@@ -54,8 +53,8 @@ public class ZoomSystem : MonoBehaviour
     {
         if (once) return;
         inZoom = false;
-
-        if(ZoomSequence.IsActive() & ZoomSequence != null) ZoomSequence.Kill();
+        once = true;
+        if (ZoomSequence.IsActive() & ZoomSequence != null) ZoomSequence.Kill();
 
         ZoomSequence = DOTween.Sequence();
 
@@ -63,7 +62,7 @@ public class ZoomSystem : MonoBehaviour
 
         OnButtonElement?.Invoke(null, ViewStates.BoardView);
 
-        once = true;
+        
     }
 
     private void Update()
@@ -106,6 +105,8 @@ public class ZoomSystem : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         startHolding = false;
         if (isHolding) SetZoom();
+        yield return new WaitForSeconds(0.3f);
+        once = false;
     }
 
     public void CkeckView(Component sender,object obj)

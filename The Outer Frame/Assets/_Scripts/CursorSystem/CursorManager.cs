@@ -40,6 +40,7 @@ public class CursorManager : MonoBehaviour
     private GraphicRaycaster raycaster;
     private EventSystem eventSystem;
     private PointerEventData pointerEventData;
+    [SerializeField] BoxCollider ColliderToIngnoreBlockInput;
     bool zoomView;
 
     private void Start()
@@ -173,7 +174,19 @@ public class CursorManager : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         raycaster.Raycast(pointerEventData, results);
 
-        return results.Count > 0;
+        if (results.Count == 0)
+            return false;
+
+        int index = 0;
+
+        Debug.Log(results[0].gameObject.name);
+
+        if (results[index].module.GetComponent<BlockingRaycasterForCanvas>())
+        {
+           return !results[index].module.GetComponent<BlockingRaycasterForCanvas>().GetIsCanvasBlocking(ColliderToIngnoreBlockInput);
+        }
+        else return results[index].module == raycaster;
+
     }
 
     private Vector2 Hotspot(Texture2D tex, bool centered)

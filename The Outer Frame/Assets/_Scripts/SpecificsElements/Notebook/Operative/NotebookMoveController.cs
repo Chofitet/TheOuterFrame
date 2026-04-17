@@ -402,14 +402,29 @@ public class NotebookMoveController : MonoBehaviour
 
     public void CompleteSlotsProgressorAnim(Component sender, object obj)
     {
-        if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
+        if (moveSequence != null && moveSequence.IsActive())
+            moveSequence.Kill();
+
+        isMoving = true;
+        lerpTime = 0f;
+        currentTarget = VanimPos;
+
         moveSequence = DOTween.Sequence();
 
-        moveSequence.Append(transform.DOMove(VanimPos.position, 0.2f))
-            .Join(transform.DORotate(VanimPos.rotation.eulerAngles,0.2f))
+        moveSequence
+            .Append( DOTween.To(() => lerpTime, x => lerpTime = x, 1f, 0.2f ).SetEase(Ease.InOutSine))
+            .AppendCallback(() =>
+            {
+                lerpTime = 0f;
+                currentTarget = Positions[6];
+            })
             .AppendInterval(0.4f)
-            .Append(transform.DOMove(Positions[6].position, 0.2f))
-            .Join(transform.DORotate(Positions[6].rotation.eulerAngles, 0.2f));
+            .Append( DOTween.To(() => lerpTime,x => lerpTime = x, 1f, 0.2f).SetEase(Ease.InOutSine))
+            .OnComplete(() =>
+            {
+                isMoving = false;
+                currentTarget = null;
+            });
 
     }
 
