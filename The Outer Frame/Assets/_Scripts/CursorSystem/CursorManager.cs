@@ -179,8 +179,6 @@ public class CursorManager : MonoBehaviour
 
         int index = 0;
 
-        Debug.Log(results[0].gameObject.name);
-
         if (results[index].module.GetComponent<BlockingRaycasterForCanvas>())
         {
            return !results[index].module.GetComponent<BlockingRaycasterForCanvas>().GetIsCanvasBlocking(ColliderToIngnoreBlockInput);
