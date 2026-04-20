@@ -30,4 +30,9 @@ public class ProfilesController : MonoBehaviour
         }
 
     }
+
+    public void ResetSaveData()
+    {
+        DataPersistenceManager.instance.ResetSpecificFields("0", false, true);
+    }
 }
