@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -657,7 +656,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: NO
+  m_text: TO THE BEGINNING
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 04254657d17da0048975bd5488fed185, type: 2}
   m_sharedMaterial: {fileID: 7836884641927880348, guid: 04254657d17da0048975bd5488fed185, type: 2}
@@ -925,7 +924,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YES
+  m_text: LATER THAN THAT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 04254657d17da0048975bd5488fed185, type: 2}
   m_sharedMaterial: {fileID: 7836884641927880348, guid: 04254657d17da0048975bd5488fed185, type: 2}
@@ -1118,8 +1117,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -80, y: -38.719345}
-  m_SizeDelta: {x: 100, y: 50}
+  m_AnchoredPosition: {x: 152.5, y: -38.719345}
+  m_SizeDelta: {x: 234.9, y: 50}
   m_Pivot: {x: 0.49999994, y: 0.5}
 --- !u!114 &1258233171
 MonoBehaviour:
@@ -1328,8 +1327,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: -38.71936}
-  m_SizeDelta: {x: 100, y: 50}
+  m_AnchoredPosition: {x: -153.8, y: -38.71936}
+  m_SizeDelta: {x: 242.1, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1301997994
 MonoBehaviour:
@@ -1535,6 +1534,7 @@ MonoBehaviour:
   PCClickCursor: {fileID: 0}
   PCInteractiveCursor: {fileID: 0}
   targetCanvas: {fileID: 0}
+  ColliderToIngnoreBlockInput: {fileID: 0}
 --- !u!4 &1330696511
 Transform:
   m_ObjectHideFlags: 0
@@ -1602,6 +1602,7 @@ MonoBehaviour:
   _string: 
   viewState: 0
   gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
 --- !u!114 &1501844448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1916,7 +1917,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: WISH TO TIME TRAVEL AND TRY AGAIN?
+  m_text: WHERE WILL YOU GO?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 04254657d17da0048975bd5488fed185, type: 2}
   m_sharedMaterial: {fileID: 7836884641927880348, guid: 04254657d17da0048975bd5488fed185, type: 2}
@@ -1943,8 +1944,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 34
+  m_fontSizeBase: 34
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
