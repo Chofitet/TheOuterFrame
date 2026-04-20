@@ -372,7 +372,9 @@ public class ProgressorModuleController : MonoBehaviour
         PrintBTN.GetComponent<BoxCollider>().enabled = false;
         colliderUnused.GetComponent<BoxCollider>().enabled = true;
         blinkmaterialAbort.TurnOffLight(null, null);
-        anim.SetTrigger("resetProgressor");
+        AnimatorClipInfo[] animInfo = anim.GetCurrentAnimatorClipInfo(0);
+        string currentAnimName = animInfo[0].clip.name;
+        if (currentAnimName != "progresor module armature|printAction") anim.SetTrigger("resetProgressor");
         DisableAbort = true;
         multiAgentNum = 0;
         isAborted = false;

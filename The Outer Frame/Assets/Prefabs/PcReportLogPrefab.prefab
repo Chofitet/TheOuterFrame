@@ -867,6 +867,7 @@ GameObject:
   - component: {fileID: 5404378352718592532}
   - component: {fileID: 5986072315857154637}
   - component: {fileID: 5206388687938216067}
+  - component: {fileID: 1095517423256689033}
   m_Layer: 5
   m_Name: OpenFileBTN
   m_TagString: Untagged
@@ -988,6 +989,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1095517423256689033}
+        m_TargetAssemblyTypeName: TriggerArrayOfEvents, Assembly-CSharp
+        m_MethodName: TriggerEvents
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5206388687938216067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1000,6 +1013,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1095517423256689033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6602436383790357029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b57a199d70c584b886ab6d8ca99ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EventsToTrigger:
+  - {fileID: 11400000, guid: c579def08006a3446ad76b3ce9be9cd0, type: 2}
+  delay: 0
+  SomethingToPass: {fileID: 0}
+  SomeStringToPass: 
 --- !u!1 &7090828984957056913
 GameObject:
   m_ObjectHideFlags: 0

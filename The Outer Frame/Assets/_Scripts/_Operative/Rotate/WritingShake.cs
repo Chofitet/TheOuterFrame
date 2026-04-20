@@ -9,6 +9,12 @@ public class WritingShake : MonoBehaviour
     [SerializeField] int vibrato = 10;
     [SerializeField] float randomness = 90;
     Sequence DoShakeSequence;
+    Quaternion InitLoacalPosition;
+
+    private void Start()
+    {
+        InitLoacalPosition = Quaternion.Euler(transform.localRotation.eulerAngles);
+    }
 
     public void writingShake(Component sender, object obj)
     {
@@ -25,6 +31,13 @@ public class WritingShake : MonoBehaviour
 
     public void KillWriting(Component sender, object obj)
     {
-        if (DoShakeSequence != null && DoShakeSequence.IsActive()) DoShakeSequence.Kill(true);
+        if (DoShakeSequence != null && DoShakeSequence.IsActive())
+        {
+            DoShakeSequence.Kill(true);
+        }
+        DoShakeSequence = DOTween.Sequence();
+        DoShakeSequence.Append(transform.DOLocalRotate(InitLoacalPosition.eulerAngles, 0.2f));
+
+
     }
 }

@@ -20,7 +20,7 @@ public class NotebookProcessManager : MonoBehaviour
         activeProcesses--;
         if (activeProcesses <= 0)
         {
-            Invoke("invokeOnAllProcessesFinished", 0.7f);
+            Invoke("invokeOnAllProcessesFinished", 0.2f);
             activeProcesses = 0;
         }
     }

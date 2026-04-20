@@ -178,12 +178,12 @@ public class PhoneRowNotebookController : MonoBehaviour
     IEnumerator WritingAnim(TMP_Text textFild, string text)
     {
         processManager.RegisterProcess();
-        OnWritingShakeNotebook?.Invoke(this, 0.5f);
+        OnWritingShakeNotebook?.Invoke(this, 0.3f);
         OnWritingNotebookSound?.Invoke(this, null);
         textFild.text = text;
         //textFild.gameObject.GetComponent<FadeWordsEffect>().SetBlank(0);
         textFild.GetComponent<FadeWordsEffect>().StartEffect();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         ResolveStateOnFinish();
         processManager.UnregisterProcess();
     }

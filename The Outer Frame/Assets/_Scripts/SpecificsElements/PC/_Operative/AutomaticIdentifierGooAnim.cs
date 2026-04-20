@@ -8,6 +8,8 @@ public class AutomaticIdentifierGooAnim : MonoBehaviour
     [SerializeField] TMP_Text textField;
     [SerializeField] TMP_Text pointText;
     [SerializeField] GameObject lessAutomaticBTN;
+    [SerializeField] GameEvent OnLoadingBarSound;
+    [SerializeField] GameEvent OnCloseAutomaticGooIdentificator;
 
     string originalText;
     private void Start()
@@ -24,12 +26,11 @@ public class AutomaticIdentifierGooAnim : MonoBehaviour
     public void CloseAutomaticIdentifierPanel(Component sender, object obj)
     {
         CloseAutomaticIdentifierPanel();
-        
     }
 
     public void CloseAutomaticIdentifierPanel()
     {
-        Debug.Log("Closing panel");
+        OnCloseAutomaticGooIdentificator?.Invoke(this, null);
         if (BootingCoroutine != null) StopCoroutine(BootingCoroutine);
         Reset();
         transform.GetChild(0).gameObject.SetActive(false);
@@ -68,6 +69,8 @@ public class AutomaticIdentifierGooAnim : MonoBehaviour
 
         int linesAmount = lines.Length;
         int lineIndex = 1;
+
+        OnLoadingBarSound?.Invoke(this, null);
 
         foreach (string line in lines)
         {

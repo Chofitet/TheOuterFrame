@@ -18,6 +18,7 @@ public class NotebookMoveController : MonoBehaviour
     [SerializeField] Transform PosBackDossier;
     [SerializeField] AnimationCurve OutOfBackDossierCurve;
     [SerializeField] NotebookProcessManager processManager;
+    [SerializeField] GameEvent OnKillWritingShake;
 
     Animator anim;
     private Sequence moveSequence;
@@ -40,6 +41,7 @@ public class NotebookMoveController : MonoBehaviour
     private bool pendingIsUp = false;
     private bool pendingPhoneAction = false;
     private bool pendingOpenPhones = false;
+    Quaternion LocalRotationOnStart;
 
     private void Start()
     {
@@ -48,6 +50,7 @@ public class NotebookMoveController : MonoBehaviour
         OriginalTransform = transform.parent;
         processManager.OnProcessStarted += OnStartWordProcess;
         processManager.OnAllProcessesFinished += OnFinishAlltWordsProcess;
+        LocalRotationOnStart = Quaternion.Euler(transform.localRotation.eulerAngles);
 
     }
 
@@ -73,12 +76,11 @@ public class NotebookMoveController : MonoBehaviour
 
         if (pendingToGoDown)
         {
-
+            
             int target = pendingPosIndex;
             bool targetUp = pendingIsUp;
 
-
-
+            CutShakeSequence();
             ForcePosition(target, false);
             pendingToGoDown = false;
             SetPos(target, targetUp);
@@ -207,6 +209,7 @@ public class NotebookMoveController : MonoBehaviour
         {
             shakeSequence.Kill();
         }
+        OnKillWritingShake?.Invoke(this, null);
         isShaking = false;
         currentTarget = Positions[num];
         isMoving = true;
@@ -372,6 +375,19 @@ public class NotebookMoveController : MonoBehaviour
             isShaking = false;
         });
 
+    }
+
+    void CutShakeSequence()
+    {
+        if (shakeSequence != null && shakeSequence.IsActive())
+        {
+            shakeSequence.Kill();
+            
+        }
+
+        isShaking = false;
+
+        transform.localRotation = LocalRotationOnStart;
     }
 
     void OpenPhoneNums(bool isSlidingForWrite = false)
