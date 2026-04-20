@@ -22,11 +22,13 @@ public class CargoCodeUnlockSystem : MonoBehaviour
     [SerializeField] DataBaseType dataBaseCargo;
     [SerializeField] GameObject failButton;
     [SerializeField] SliderUpdateAnim slider;
+    [SerializeField] GameEvent OnLoadingBarSound;
 
     [SerializeField] GameObject codePanelConteiner;
     [SerializeField] GameObject CargoOpenText;
     [SerializeField] GameObject CargoOpenButton;
     [SerializeField] GameEvent OnSoundPCLoad;
+    [SerializeField] GameEvent OnPCSearchWord;
 
     WordData TryAccessWord;
     private bool isInPCView;
@@ -62,6 +64,7 @@ public class CargoCodeUnlockSystem : MonoBehaviour
 
             WordsManager.WM.AddStateOnHistory(dataBaseCargo.GetwordToUnlock(), dataBaseCargo.GetUnlockState());
             WordsManager.WM.AddStateOnSeenHistory(dataBaseCargo.GetwordToUnlock(), dataBaseCargo.GetUnlockState());
+            dataBaseCargo.GetwordToUnlock().AddStateInDBEntryStateHistory(dataBaseCargo.GetUnlockState());
 
             StartCoroutine(CargoDoorOpening());
         }
@@ -189,8 +192,11 @@ public class CargoCodeUnlockSystem : MonoBehaviour
         codePanelConteiner.SetActive(false);
         slider.gameObject.SetActive(true);
         slider.AnimSlider(this, null);
-        yield return new WaitForSeconds(1.9f);
-        OnSoundPCLoad?.Invoke(this, null);
+        OnLoadingBarSound?.Invoke(this, null);
+        yield return new WaitForSeconds(1.7f);
+        OnPCSearchWord?.Invoke(this, AccessCode);
+        yield return new WaitForSeconds(0.2f);
+        //OnSoundPCLoad?.Invoke(this, null);
         slider.gameObject.SetActive(false);
         CargoOpenText.SetActive(true);
         yield return new WaitForSeconds(0.8f);

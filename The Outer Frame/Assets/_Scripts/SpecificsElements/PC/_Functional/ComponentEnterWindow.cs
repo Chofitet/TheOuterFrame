@@ -16,6 +16,7 @@ public class ComponentEnterWindow : MonoBehaviour
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] SliderUpdateAnim Slider;
     [SerializeField] GameObject SearchButton;
+    [SerializeField] GameEvent OnLoadingSound;
     WordData SearchedWord;
 
     WordData TryAccessWord;
@@ -89,6 +90,7 @@ public class ComponentEnterWindow : MonoBehaviour
             SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
             Slider.gameObject.SetActive(true);
             Slider.AnimSlider(this, null);
+            OnLoadingSound?.Invoke(this, null);
             SearchButton.GetComponent<Button>().interactable = false;
 
             if (TryAccessWord == ComponentWord)

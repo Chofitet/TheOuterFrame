@@ -18,6 +18,7 @@ public class GooIdentificatorController : MonoBehaviour
     [SerializeField] GameObject QuitButton;
     [SerializeField] GameEvent OnDisableSearchBar;
     [SerializeField] GameEvent OnPCLoadSound;
+    
 
     [SerializeField] GameObject RightAnswerePanel;
     [SerializeField] GameObject WrongAnswerePanel;
