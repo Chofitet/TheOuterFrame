@@ -17,12 +17,11 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: a8cba594c091fc24892cf741db0243c8, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "You are not gonna like this.\n  \nIt's a cluster of mess, there's green
-    stuff and equipment scattered everywhere, big glass vessel labeled <link>VESSEL
-    Q7-016</link> has completely shattered on one side and it's empty...\n \nThere's
-    a code printed on the inside of the vessel: <link>E-CODE b02i2E90L</link>. \n\nWhatever
-    it was they were transporting it escaped leaving that glowing stuff behind.\n
-    \n<link>Something</link> is on the loose, Boss. "
+  Text: "There's green stuff and wrecked equipment everywhere.\n\nA big dark glass
+    case labeled <link>VESSEL Q7-016</link> is shattered on the side. It's empty...\n
+    \nThere's a code printed on the inside: <link>E-CODE b02i2E90L</link>. \n\nUnless
+    that thing carried green goo exclusively, some <link>thing</link> is out there,
+    Boss. \n\nThe cargo got out."
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
@@ -32,9 +31,9 @@ MonoBehaviour:
   - photo: {fileID: 21300000, guid: 36d2dfa55de16e64a939af1f25f9f460, type: 3}
     text: A MESS
   - photo: {fileID: 21300000, guid: 79c1b9dbb31971d4c832ea8230ccb2e0, type: 3}
-    text: IT'S OUT
+    text: COMPROMISED
   - photo: {fileID: 21300000, guid: a3426cc168ae9e0458bc81eb547dfa10, type: 3}
-    text: CODE?
+    text: E-CODE?
   Conditionals:
   - condition: {fileID: 11400000, guid: bee3a3f0236098241af2f156e6b6669f, type: 2}
     ifNot: 0
