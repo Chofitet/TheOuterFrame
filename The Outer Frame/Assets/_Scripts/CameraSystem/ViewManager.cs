@@ -47,6 +47,7 @@ public class ViewManager : MonoBehaviour
     bool delayingView;
     bool IsStuckInView;
     bool isTransitioning;
+    bool isTimeAccelerated;
     ViewStates StuckView;
     ViewStates? nextViewRequest;
 
@@ -292,6 +293,7 @@ public class ViewManager : MonoBehaviour
                 if (isGameOver) return;
                 OnTakenPaperView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
+                BackToTakePaperViewWithMoving(NewView);
                 break;
             case ViewStates.OnTakeSomeInBoard:
                 if (isGameOver) return;
@@ -346,8 +348,29 @@ public class ViewManager : MonoBehaviour
         if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView  && !IsStuckInView)
         {
             if (isGameOver) return;
+            if (isTimeAccelerated && currentviewState != ViewStates.PinchofonoView) return;
             OnSitDownSound?.Invoke(this, null);
         }
+
+       
+    }
+
+    void BackToTakePaperViewWithMoving(ViewStates nextView)
+    {
+        if (IsAMovedPosition(currentviewState))
+        {
+            if (nextView == ViewStates.OnTakenPaperView) OnSitDownSound?.Invoke(this, null);
+        }
+    }
+
+    bool IsAMovedPosition(ViewStates viewState)
+    {
+        return viewState == ViewStates.ProgressorView
+            || viewState == ViewStates.TVView
+            || viewState == ViewStates.PCView
+            || viewState == ViewStates.PauseView
+            || viewState == ViewStates.BoardView
+            || viewState == ViewStates.PinchofonoView;
     }
 
     public void SetIsInTutorial(Component sender, object obj)
@@ -402,7 +425,17 @@ public class ViewManager : MonoBehaviour
         if (currentviewState == ViewStates.BoardView) callback?.Invoke();
 
     }
-   
+
+    public void OnTimeAccelerated(Component sender, object obj)
+    {
+        isTimeAccelerated = true;
+    }
+
+    public void OnTimeNormalized(Component sender, object obj)
+    {
+        isTimeAccelerated = false;
+    }
+
     [ContextMenu("Trigger Time GameOver")]
     public void TimeGameOver()
     {

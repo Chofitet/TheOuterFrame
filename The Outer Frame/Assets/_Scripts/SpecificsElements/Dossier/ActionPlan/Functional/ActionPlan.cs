@@ -98,6 +98,12 @@ public class ActionPlan : MonoBehaviour
         {
             shakeBtn.SetActive(false);
             ApproveBtn.enabled = true;
+
+            if (!isOneToggleSelected)
+            {
+                shakeBtn.SetActive(true);
+                ApproveBtn.enabled = false;
+            }
         }
         else if (!state.GetSpecialActionWord() && word)
         {
