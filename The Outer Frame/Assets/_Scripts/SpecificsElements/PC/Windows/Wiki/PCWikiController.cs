@@ -203,7 +203,7 @@ public class PCWikiController : MonoBehaviour
         if (view == ViewStates.PCView)
         {
             isInPCView = true;
-            if(input) input.SetWasSearched();
+            //if(input) input.SetWasSearched();  //checkear en caso de que dejen de funcionar Updates de DB
         }
         else isInPCView = false;
 

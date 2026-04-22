@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 4459119248748078720}
   - component: {fileID: 279214027332564645}
   - component: {fileID: 103533067298417677}
+  - component: {fileID: 5576713876046699826}
   m_Layer: 0
   m_Name: btnShake
   m_TagString: Untagged
@@ -400,6 +401,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5576713876046699826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336729663028734016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2837442988914159190
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +648,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8811778082310879973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,7 +688,6 @@ MonoBehaviour:
   OnFinalActionSend: {fileID: 11400000, guid: 1ced714df6a195d4d9b211ff956fdf37, type: 2}
   OnShakeNotebook: {fileID: 11400000, guid: a6f125be9cc68494dbc219f3492d31f7, type: 2}
   shakeBtn: {fileID: 2336729663028734016}
-  OnGoToCredits: {fileID: 11400000, guid: 86531596836f95c478191fac2ebae44b, type: 2}
 --- !u!114 &7890689546900030479
 MonoBehaviour:
   m_ObjectHideFlags: 0

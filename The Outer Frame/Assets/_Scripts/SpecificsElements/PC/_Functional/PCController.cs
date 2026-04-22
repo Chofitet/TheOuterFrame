@@ -75,10 +75,10 @@ public class PCController : MonoBehaviour
         }
         else isInPCView = false;
 
-        if(word)
+        /*if(word)
         {
-            word.GetDB().SetWasSearched();
-        }
+            word.GetDB().SetWasSearched(); //checkear en caso de que dejen de funcionar Updates de DB
+        }*/
     }
 
     public void SearchHyperLink(Component sender, object obj)
