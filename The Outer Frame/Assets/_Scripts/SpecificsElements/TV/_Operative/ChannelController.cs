@@ -12,6 +12,7 @@ public class ChannelController : MonoBehaviour
     [SerializeField] string numOfChannel;
     [SerializeField] bool isStaticChannel;
     [SerializeField] int DefaultMinutesToPassNews;
+    [SerializeField] int DefaultMinutesToPassVilifyNews;  
     [SerializeField] OverlayAnimation OverlayAnims;
     [SerializeField] TMP_Text EmergencyTextField;
     [SerializeField] GameObject EmergencyScreen;
@@ -80,10 +81,12 @@ public class ChannelController : MonoBehaviour
         EmergencyScreen.SetActive(false);
 
         New = _new;
-        
+
+        int minutesToPassTonextNew = DefaultMinutesToPassNews;
+        if (_new.GetNewType() == NewType.Vilify) minutesToPassTonextNew = DefaultMinutesToPassVilifyNews;
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
-        TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
+        TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, minutesToPassTonextNew);
 
 
         OverlayAnims.NewsOut();
