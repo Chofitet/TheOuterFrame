@@ -52,6 +52,7 @@ public class ZoomSystem : MonoBehaviour
     public void SetInZoomOut(Component sender, object obj)
     {
         if (once) return;
+        if (actualView != ViewStates.BoardZoomView) return;
         inZoom = false;
         once = true;
         if (ZoomSequence.IsActive() & ZoomSequence != null) ZoomSequence.Kill();
@@ -109,11 +110,12 @@ public class ZoomSystem : MonoBehaviour
         once = false;
     }
 
+    ViewStates actualView;
     public void CkeckView(Component sender,object obj)
     {
-        ViewStates view = (ViewStates)obj;
+        actualView = (ViewStates)obj;
 
-        if (view == ViewStates.BoardView || view == ViewStates.BoardZoomView)
+        if (actualView == ViewStates.BoardView || actualView == ViewStates.BoardZoomView)
         {
             isInBoardView = true;
         }
