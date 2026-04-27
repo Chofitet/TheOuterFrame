@@ -91,6 +91,7 @@ public class AccessWordWindow : MonoBehaviour
                 isUnlockingPage = true;
                 SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 0.5f);
                 SearchBar.text = "ACCESS GRANTED";
+                SearchButton.GetComponent<Image>().color = Color.green; 
                 OnAccessWiki?.Invoke(this, null);
                 BlockImage.sprite = Unlocked;
                 SearchButton.interactable = false;
@@ -148,6 +149,7 @@ public class AccessWordWindow : MonoBehaviour
         FailButton.SetActive(false);
         SearchButton.interactable = true;
         SearchBarGameObject.color = new Color(SearchBarGameObject.color.r, SearchBarGameObject.color.g, SearchBarGameObject.color.b, 1f);
+        SearchButton.GetComponent<Image>().color = Color.white;
         SearchBar.text = "";
         isWaitingAWord = true;
         textAnim.SetCharacterPerSecond(2);

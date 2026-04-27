@@ -9,6 +9,7 @@ public class PositPaperTutorial : MonoBehaviour
     [SerializeField] Transform TakePosition;
     [SerializeField] float TakeSpeed;
     [SerializeField] AnimationCurve _animationCurve;
+    [SerializeField] GameEvent OnPositTake;
     Sequence MoveSequence;
     private bool pendingLeave;
     private BoxCollider _collider;
@@ -41,6 +42,8 @@ public class PositPaperTutorial : MonoBehaviour
         float curX = startRot.x;
         float curY = startRot.y;
         float curZ = startRot.z;
+
+        OnPositTake?.Invoke(this,gameObject);
 
         void ApplyEuler() => transform.localEulerAngles = new Vector3(curX, curY, curZ);
 
@@ -88,5 +91,10 @@ public class PositPaperTutorial : MonoBehaviour
         {
             OnLeavePosIt(null, null);
         }
+    }
+
+    public void AnotherPostItUp(Component sender, object obj)
+    {
+        if ((GameObject)obj != gameObject) OnLeavePosIt(null, null);
     }
 }

@@ -205,8 +205,13 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
             }
 
         }
-        Debug.Log("LastCompleted conditional = " + lastCompleteConditional);
-        return lastCompleteConditional.GetTimeToShowNews();
+        if(lastCompleteConditional != null)
+        {
+            return lastCompleteConditional.GetTimeToShowNews();
+        }
+
+        return 13; // puede que esto genere problemas
+
     }
 
     public int GetChannelNum() {  return channel;}

@@ -113,7 +113,7 @@ public class ChannelController : MonoBehaviour
 
         _new.SetWasStreamed();
 
-        OverlayAnims.NewsFormatIdle();
+        //OverlayAnims.NewsFormatIdle();
         FilterNewChannel(_new);
 
         if (_new.GetHeadline2() != "")

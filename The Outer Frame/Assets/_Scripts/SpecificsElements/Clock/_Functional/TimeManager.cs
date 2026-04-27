@@ -19,6 +19,9 @@ public class TimeManager : MonoBehaviour
     [SerializeField] int MinutesToChangeNews;
     [SerializeField] GameEvent OnStopSpeedTimeSound;
 
+    [SerializeField] GameEvent OnMinutePass;
+    [SerializeField] GameEvent OnSecondPass;
+
     [Header("Time Game Over")]
     [SerializeField] TimeCheckConditional TimeToLose;
     [HideInInspector][SerializeField] GameEvent OnElementClick;
@@ -100,6 +103,7 @@ public class TimeManager : MonoBehaviour
         {
             Seconds++;
             OnSecondsChange?.Invoke();
+            OnSecondPass?.Invoke(this, null);
             secondCounter -= 1f;
 
             if (Seconds >= 60)
@@ -107,6 +111,7 @@ public class TimeManager : MonoBehaviour
                 Minute++;
                 Seconds = 0;
                 OnMinuteChange?.Invoke();
+                OnMinutePass?.Invoke(this, null);
                // Debug.Log("minute: " + Minute);
                 CheckGameOverCondition();
 
@@ -115,6 +120,7 @@ public class TimeManager : MonoBehaviour
                     Hour++;
                     Minute = 0;
                     OnHourChange?.Invoke();
+              
                 }
 
                 if (Minute % MinutesToChangeNews == 0)

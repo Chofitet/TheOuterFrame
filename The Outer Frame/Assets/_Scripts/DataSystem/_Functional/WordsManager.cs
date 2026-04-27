@@ -380,5 +380,6 @@ public class WordsManager : MonoBehaviour
             word.SetDataBase(EmpyDataBase);
         }
     }
+
 }
 

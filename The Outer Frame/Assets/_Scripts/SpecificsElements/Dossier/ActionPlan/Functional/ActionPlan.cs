@@ -16,6 +16,7 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameEvent OnFinalActionSend;
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] GameObject shakeBtn;
+    [SerializeField] GameEvent OnSendGoodVilify;
     WordData FinalActionWord;
     StateEnum FinalActionState;
     StateEnum FinalActionIdea;
@@ -194,8 +195,8 @@ public class ActionPlan : MonoBehaviour
         OnApprovedActionPlan.Invoke(this, data);
         OnSetGeneralView?.Invoke(this, null);
         if(state.GetNeedWordLocation())word.SetIsPendingToShowLocation(false);
-    }
 
+    }
     public void SendFinalActionToProgressor(Component sender, object obj)
     {
         ApproveBtn.enabled = false;
@@ -204,8 +205,10 @@ public class ActionPlan : MonoBehaviour
         OnApprovedActionPlan.Invoke(this, data);
         Invoke("delayCheckButton", 0.02f);
         OnSetGeneralView?.Invoke(this, null);
-       
+
     }
+
+
 
     void delayCheckButton()
     {
@@ -214,6 +217,8 @@ public class ActionPlan : MonoBehaviour
 
     public void DestroyActionPlan(Component sender, object obj)
     {
+        
+        
         Destroy(gameObject);
     }
 

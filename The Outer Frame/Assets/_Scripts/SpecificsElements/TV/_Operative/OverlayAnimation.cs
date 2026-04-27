@@ -6,6 +6,7 @@ using Cinemachine.Utility;
 using System.Runtime.InteropServices;
 using TMPro;
 using System;
+using UnityEditor.Experimental.GraphView;
 
 public class OverlayAnimation : MonoBehaviour
 {
@@ -41,162 +42,367 @@ public class OverlayAnimation : MonoBehaviour
     Sequence quipAnim;
     bool first;
     private List<Tween> overlayTweens = new List<Tween>();
+    private Transform currentTarget;
+    private Transform currentMovingObject;
 
 
-    private void Start()
+    float lerpTime;
+
+    bool moveNewsTitle;
+    bool moveNewsText;
+    bool movePics;
+    bool moveQuip;
+
+    Transform targetNewsTitle;
+    Transform targetNewsText;
+    Transform targetPics;
+    Transform targetQuip;
+
+
+    // =====================================================
+    // START
+    // =====================================================
+
+    void Start()
     {
+        textStartingPosition = newsTextUI.transform.localPosition;
+        titleStartingPosition = newsTitleUI.transform.localPosition;
+        quipStartingPosition = newsQuipUI.transform.localPosition;
+        picsStartingPosition = picsUI.transform.localPosition;
 
-        textStartingPosition = newsTextUI.transform.position;
-        //newsTextUI.transform.position = textOffscreenPositionRight.position;
-
-        titleStartingPosition = newsTitleUI.transform.position;
-        //newsTitleUI.transform.position = titleOffscreenPositionLeft.position;
-
-        quipStartingPosition = newsQuipUI.transform.position;
-        //newsQuipUI.transform.position = quipOffscreenPosition.position;
-
-        picsStartingPosition = picsUI.transform.position;
-        //picsUI.transform.position = picsOffscreenPosition.position;
-
-        /*NewContentTMPtxt = newsTextUI.transform.GetChild(0).GetComponent<TMP_Text>();
-        HeadlineTMPtxt = newsTitleUI.transform.GetChild(0).GetComponent<TMP_Text>();
-        QuipTMPtxt = newsQuipUI.transform.GetChild(0).GetComponent<TMP_Text>();*/
         first = true;
-
     }
 
-    ////////////////////
+
+    // =====================================================
+    // UPDATE
+    // =====================================================
+
+    void Update()
+    {
+        if (moveNewsTitle && targetNewsTitle != null)
+        {
+            newsTitleUI.transform.localPosition =
+                Vector3.Lerp(
+                    newsTitleUI.transform.localPosition,
+                    targetNewsTitle.localPosition,
+                    lerpTime);
+        }
+
+        if (moveNewsText && targetNewsText != null)
+        {
+            newsTextUI.transform.localPosition =
+                Vector3.Lerp(
+                    newsTextUI.transform.localPosition,
+                    targetNewsText.localPosition,
+                    lerpTime);
+        }
+
+        if (movePics && targetPics != null)
+        {
+            picsUI.transform.localPosition =
+                Vector3.Lerp(
+                    picsUI.transform.localPosition,
+                    targetPics.localPosition,
+                    lerpTime);
+        }
+
+        if (moveQuip && targetQuip != null)
+        {
+            newsQuipUI.transform.localPosition =
+                Vector3.Lerp(
+                    newsQuipUI.transform.localPosition,
+                    targetQuip.localPosition,
+                    lerpTime);
+        }
+    }
+
+
+    // =====================================================
+    // NEWS IN
+    // =====================================================
 
     public void NewsIn()
     {
-        if (newsInAnim != null && newsInAnim.IsActive()) newsInAnim.Kill();
-        newsTitleUI.transform.position = titleOffscreenPositionLeft.transform.position;
-        newsTextUI.transform.position = textOffscreenPositionRight.transform.position;
-        NewContentTMPtxt.color = new Color(NewContentTMPtxt.color.r, NewContentTMPtxt.color.g, NewContentTMPtxt.color.b, 0);
-        HeadlineTMPtxt.color = new Color(HeadlineTMPtxt.color.r, HeadlineTMPtxt.color.g, HeadlineTMPtxt.color.b, 0);
+        if (newsInAnim != null && newsInAnim.IsActive())
+            newsInAnim.Kill();
+
+        newsTitleUI.transform.localPosition =
+            titleOffscreenPositionLeft.localPosition;
+
+        newsTextUI.transform.localPosition =
+            textOffscreenPositionRight.localPosition;
+
+        SetAlpha(NewContentTMPtxt, 0);
+        SetAlpha(HeadlineTMPtxt, 0);
 
         newsInAnim = DOTween.Sequence();
         overlayTweens.Add(newsInAnim);
-        newsInAnim.PrependInterval(pauseTimes)
-            .Append(newsTitleUI.transform.DOMove(titleStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
-            .Join(newsTextUI.transform.DOMove(textStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
-            .AppendCallback(() => fadeUI(NewContentTMPtxt,1, moveTimes))
-            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 1, moveTimes))
-            .JoinCallback(() => fadeUI(Headline2TMPtxt,1,moveTimes))
-            .JoinCallback(() => fadeUI(QuipTMPtxt, 1, moveTimes));
+
+        newsInAnim
+            .PrependInterval(pauseTimes)
+
+            .AppendCallback(() =>
+            {
+                targetNewsTitle = CreateLocalTarget(titleStartingPosition);
+                targetNewsText = CreateLocalTarget(textStartingPosition);
+
+                moveNewsTitle = true;
+                moveNewsText = true;
+                lerpTime = 0;
+            })
+
+            .Append(
+                DOTween.To(
+                    () => lerpTime,
+                    x => lerpTime = x,
+                    1,
+                    moveTimes * acceleratedFactor
+                ).SetEase(Ease.InOutBack)
+            )
+
+            .AppendCallback(() =>
+            {
+                fadeUI(NewContentTMPtxt, 1, moveTimes);
+                fadeUI(HeadlineTMPtxt, 1, moveTimes);
+                fadeUI(Headline2TMPtxt, 1, moveTimes);
+                fadeUI(QuipTMPtxt, 1, moveTimes);
+            })
+
+            .OnComplete(() =>
+            {
+                moveNewsTitle = false;
+                moveNewsText = false;
+            });
     }
-    [ContextMenu("News In")]
-    private void NewsInTest()
-    {
-        NewsIn();
-    }
+
+
+    // =====================================================
+    // NEWS OUT
+    // =====================================================
 
     public void NewsOut()
     {
-        if (newsOutAnim != null && newsOutAnim.IsActive()) newsOutAnim.Kill();
-        newsTitleUI.transform.position = titleStartingPosition;
-        newsTextUI.transform.position = textStartingPosition;
+        if (newsOutAnim != null && newsOutAnim.IsActive())
+            newsOutAnim.Kill();
 
+        newsTitleUI.transform.localPosition = titleStartingPosition;
+        newsTextUI.transform.localPosition = textStartingPosition;
 
         newsOutAnim = DOTween.Sequence();
         overlayTweens.Add(newsOutAnim);
-        newsOutAnim.PrependInterval(pauseTimes)
-            .AppendCallback(() => fadeUI(NewContentTMPtxt,0,0.1f))
-            .JoinCallback(() => fadeUI(HeadlineTMPtxt, 0,0.1f))
-            .JoinCallback(() => fadeUI(QuipTMPtxt, 0, 0.1f))
-            .JoinCallback(() => fadeUI(Headline2TMPtxt, 0, 0.1f))
+
+        newsOutAnim
             .PrependInterval(pauseTimes)
-            .Append(newsTitleUI.transform.DOMove(titleOffscreenPositionRight.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
-            .Join(newsTextUI.transform.DOMove(textOffscreenPositionLeft.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack))
-            .OnComplete(() => OnAnimLayoutFinish?.Invoke(this,null));
 
+            .AppendCallback(() =>
+            {
+                fadeUI(NewContentTMPtxt, 0, 0.1f);
+                fadeUI(HeadlineTMPtxt, 0, 0.1f);
+                fadeUI(QuipTMPtxt, 0, 0.1f);
+                fadeUI(Headline2TMPtxt, 0, 0.1f);
+            })
+
+            .AppendCallback(() =>
+            {
+                targetNewsTitle = titleOffscreenPositionRight;
+                targetNewsText = textOffscreenPositionLeft;
+
+                moveNewsTitle = true;
+                moveNewsText = true;
+                lerpTime = 0;
+            })
+
+            .Append(
+                DOTween.To(
+                    () => lerpTime,
+                    x => lerpTime = x,
+                    1,
+                    moveTimes * acceleratedFactor
+                ).SetEase(Ease.InOutBack)
+            )
+
+            .OnComplete(() =>
+            {
+                moveNewsTitle = false;
+                moveNewsText = false;
+
+                OnAnimLayoutFinish?.Invoke(this, null);
+            });
     }
-    [ContextMenu("News Out")]
-    private void NewsOutTest()
-    {
-        NewsOut();
-    }
 
-    public void NewsFormatIdle()
-    {
-        /*
-        if (!first) return;
-        newsTitleUI.transform.position = titleStartingPosition;
-        newsTextUI.transform.position = textStartingPosition;
 
-        picsUI.transform.position = picsStartingPosition;
-
-        newsQuipUI.transform.position = quipStartingPosition;*/
-    }
-
-    //////////////////////////////
+    // =====================================================
+    // PICS IN
+    // =====================================================
 
     public void PicsIn()
     {
-        if (newsOutAnim != null && newsOutAnim.IsActive()) newsOutAnim.Kill();
-        picsUI.transform.position = picsOffscreenPosition.transform.position;
+        if (pictureInAnim != null && pictureInAnim.IsActive())
+            pictureInAnim.Kill();
+
+        picsUI.transform.localPosition =
+            picsOffscreenPosition.localPosition;
 
         pictureInAnim = DOTween.Sequence();
         overlayTweens.Add(pictureInAnim);
-        pictureInAnim.PrependInterval(pauseTimes)
-                       .Append(picsUI.transform.DOMove(picsStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack));
+
+        pictureInAnim
+            .PrependInterval(pauseTimes)
+
+            .AppendCallback(() =>
+            {
+                targetPics = CreateLocalTarget(picsStartingPosition);
+                movePics = true;
+                lerpTime = 0;
+            })
+
+            .Append(
+                DOTween.To(
+                    () => lerpTime,
+                    x => lerpTime = x,
+                    1,
+                    moveTimes * acceleratedFactor
+                ).SetEase(Ease.InOutBack)
+            )
+
+            .OnComplete(() => movePics = false);
     }
-    [ContextMenu("Pics In")]
-    private void PicsInTest()
-    {
-        PicsIn();
-    }
+
+
+    // =====================================================
+    // PICS OUT
+    // =====================================================
 
     public void PicsOut()
     {
-        if (pictureOutAnim != null && pictureOutAnim.IsActive()) pictureOutAnim.Kill();
-        picsUI.transform.position = picsStartingPosition;
+        if (pictureOutAnim != null && pictureOutAnim.IsActive())
+            pictureOutAnim.Kill();
+
+        picsUI.transform.localPosition =
+            picsStartingPosition;
 
         pictureOutAnim = DOTween.Sequence();
         overlayTweens.Add(pictureOutAnim);
-        pictureOutAnim.PrependInterval(pauseTimes)
-            .Append(picsUI.transform.DOMove(picsOffscreenPosition.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack));
-    }
-    [ContextMenu("Pics Out")]
-    private void PicsOutTest()
-    {
-        PicsOut();
+
+        pictureOutAnim
+            .PrependInterval(pauseTimes)
+
+            .AppendCallback(() =>
+            {
+                targetPics = picsOffscreenPosition;
+                movePics = true;
+                lerpTime = 0;
+            })
+
+            .Append(
+                DOTween.To(
+                    () => lerpTime,
+                    x => lerpTime = x,
+                    1,
+                    moveTimes * acceleratedFactor
+                ).SetEase(Ease.InOutBack)
+            )
+
+            .OnComplete(() => movePics = false);
     }
 
-    /////////////////////////////
+
+    // =====================================================
+    // QUIP IN
+    // =====================================================
 
     public void QuipIn()
     {
-        if (quipAnim != null && quipAnim.IsActive()) quipAnim.Kill();
-        newsQuipUI.transform.position = quipOffscreenPosition.transform.position;
-        QuipTMPtxt.color = new Color(QuipTMPtxt.color.r, QuipTMPtxt.color.g, QuipTMPtxt.color.b, 0);
+        if (quipAnim != null && quipAnim.IsActive())
+            quipAnim.Kill();
+
+        newsQuipUI.transform.localPosition =
+            quipOffscreenPosition.localPosition;
+
+        SetAlpha(QuipTMPtxt, 0);
 
         quipAnim = DOTween.Sequence();
         overlayTweens.Add(quipAnim);
-        quipAnim.PrependInterval(pauseTimes)
-            .Append(newsQuipUI.transform.DOMove(quipStartingPosition, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack));
+
+        quipAnim
+            .PrependInterval(pauseTimes)
+
+            .AppendCallback(() =>
+            {
+                targetQuip = CreateLocalTarget(quipStartingPosition);
+                moveQuip = true;
+                lerpTime = 0;
+            })
+
+            .Append(
+                DOTween.To(
+                    () => lerpTime,
+                    x => lerpTime = x,
+                    1,
+                    moveTimes * acceleratedFactor
+                ).SetEase(Ease.InOutBack)
+            )
+
+            .OnComplete(() => moveQuip = false);
     }
-    [ContextMenu("Quip In")]
-    private void QuipInTest()
-    {
-        QuipIn();
-    }
+
+
+    // =====================================================
+    // QUIP OUT
+    // =====================================================
 
     public void QuipOut()
     {
-        if (quipAnim != null && quipAnim.IsActive()) quipAnim.Kill();
-        newsQuipUI.transform.position = quipStartingPosition;
-        
+        if (quipAnim != null && quipAnim.IsActive())
+            quipAnim.Kill();
+
+        newsQuipUI.transform.localPosition =
+            quipStartingPosition;
 
         quipAnim = DOTween.Sequence();
         overlayTweens.Add(quipAnim);
-        quipAnim.PrependInterval(pauseTimes)
-            .Append(newsQuipUI.transform.DOMove(quipOffscreenPosition.position, moveTimes * acceleratedFactor).SetEase(Ease.InOutBack));
+
+        quipAnim
+            .PrependInterval(pauseTimes)
+
+            .AppendCallback(() =>
+            {
+                targetQuip = quipOffscreenPosition;
+                moveQuip = true;
+                lerpTime = 0;
+            })
+
+            .Append(
+                DOTween.To(
+                    () => lerpTime,
+                    x => lerpTime = x,
+                    1,
+                    moveTimes * acceleratedFactor
+                ).SetEase(Ease.InOutBack)
+            )
+
+            .OnComplete(() => moveQuip = false);
     }
-    [ContextMenu("Quip Out")]
-    private void QuipOutTest()
+
+
+    // =====================================================
+    // HELPERS
+    // =====================================================
+
+    Transform CreateLocalTarget(Vector3 localPos)
     {
-        QuipOut();
+        GameObject go = new GameObject("TempTarget");
+        go.transform.SetParent(transform, false);
+        go.transform.localPosition = localPos;
+        return go.transform;
+    }
+
+    void SetAlpha(TMP_Text txt, float a)
+    {
+        Color c = txt.color;
+        c.a = a;
+        txt.color = c;
     }
 
     public void AcceleratedTime(Component sender, object obj)
@@ -227,7 +433,12 @@ public class OverlayAnimation : MonoBehaviour
     void fadeUI( TMP_Text textToFade,float valueToFade, float fadeTime)
     {
         textToFade.DOFade(valueToFade, fadeTime * acceleratedFactor);
+
     }
 
     public float GetAnimTime() { return newsChangeTime * acceleratedFactor; }
+
+    
 }
+
+

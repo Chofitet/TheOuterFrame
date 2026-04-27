@@ -26,6 +26,7 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] Light light2;
     [SerializeField] GameObject colliderUnused;
     [SerializeField] GameEvent OnAbortMultiAction;
+    [SerializeField] GameEvent OnSendGoodVilify;
     [ColorUsage(true, true)][SerializeField] Color LedRed;
 
     [Header("Candy Parameters")]
@@ -101,6 +102,11 @@ public class ProgressorModuleController : MonoBehaviour
         isWaitingForSetSlot = true;
         slot.OnSetAction += activeAbortButton;
         isChargingAction = true;
+
+        if(state.name.ToLower().Contains("vili"))
+        {
+            if (word.GetVilifiedNew().GetIncreaseAlertLevel() < 0) OnSendGoodVilify?.Invoke(this, null);
+        }
     }
 
     void activeAbortButton(bool x)

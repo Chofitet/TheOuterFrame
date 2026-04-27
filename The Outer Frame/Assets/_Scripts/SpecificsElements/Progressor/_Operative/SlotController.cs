@@ -29,6 +29,7 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameEvent OnAddEntryLog;
     [SerializeField] GameEvent OnResetProgressorSlots;
     [SerializeField] GameEvent OnRecoveryAgent;
+    [SerializeField] OneVilifyWasSendedConditional OneVilifyWasSendedConditional;
     TimeData IsVilifyLocked = new TimeData(0,0,0);
 
     public Action<bool> OnSetAction;
@@ -180,8 +181,15 @@ public class SlotController : MonoBehaviour
             UpdateProgress();
             SetLEDState(Color.green, "Green");
             Report.SetDoing(true);
-            
-            if(state == VilifyState) OnSetVilifyAction?.Invoke(this, true);
+
+            if (state == VilifyState)
+            {
+                if (word.GetVilifiedNew())
+                {
+                    if (word.GetVilifiedNew().GetIncreaseAlertLevel() < 0) OneVilifyWasSendedConditional.SetConidionTrue();
+                }
+                OnSetVilifyAction?.Invoke(this, true);
+            }
         }
        
 
