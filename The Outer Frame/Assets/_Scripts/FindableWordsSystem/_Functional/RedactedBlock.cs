@@ -15,7 +15,7 @@ public class RedactedBlock : MonoBehaviour
         if (redactedText == "RE")
         {
             m_Text.text = "XXX";
-            rectTransform.sizeDelta = new Vector2(4.49f, rectTransform.sizeDelta.y);
+            rectTransform.sizeDelta = new Vector2(4.52f, rectTransform.sizeDelta.y);
         }
         else if (redactedText == "REDA")
         {

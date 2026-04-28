@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using Cinemachine.Utility;
-using System.Runtime.InteropServices;
 using TMPro;
-using System;
-using UnityEditor.Experimental.GraphView;
 
 public class OverlayAnimation : MonoBehaviour
 {
@@ -161,11 +157,11 @@ public class OverlayAnimation : MonoBehaviour
                 ).SetEase(Ease.InOutBack)
             )
 
-            .AppendCallback(() =>
+            .JoinCallback(() =>
             {
-                fadeUI(NewContentTMPtxt, 1, moveTimes);
-                fadeUI(HeadlineTMPtxt, 1, moveTimes);
-                fadeUI(Headline2TMPtxt, 1, moveTimes);
+                fadeUI(NewContentTMPtxt, 1, moveTimes );
+                fadeUI(HeadlineTMPtxt, 1, moveTimes );
+                fadeUI(Headline2TMPtxt, 1, moveTimes );
                 fadeUI(QuipTMPtxt, 1, moveTimes);
             })
 
@@ -197,20 +193,19 @@ public class OverlayAnimation : MonoBehaviour
 
             .AppendCallback(() =>
             {
-                fadeUI(NewContentTMPtxt, 0, 0.1f);
-                fadeUI(HeadlineTMPtxt, 0, 0.1f);
-                fadeUI(QuipTMPtxt, 0, 0.1f);
-                fadeUI(Headline2TMPtxt, 0, 0.1f);
-            })
-
-            .AppendCallback(() =>
-            {
                 targetNewsTitle = titleOffscreenPositionRight;
                 targetNewsText = textOffscreenPositionLeft;
 
                 moveNewsTitle = true;
                 moveNewsText = true;
                 lerpTime = 0;
+            })
+            .JoinCallback(() =>
+            {
+                fadeUI(NewContentTMPtxt, 0, moveTimes *0.3f);
+                fadeUI(HeadlineTMPtxt, 0, moveTimes * 0.3f);
+                fadeUI(QuipTMPtxt, 0, moveTimes * 0.3f);
+                fadeUI(Headline2TMPtxt, 0, moveTimes * 0.3f);
             })
 
             .Append(
@@ -426,13 +421,15 @@ public class OverlayAnimation : MonoBehaviour
             {
                 tween.Play();
             }
+            
             acceleratedFactor = 1 / _speed;
+            Debug.Log("accelerator factor: " + acceleratedFactor);
         }
     }
 
     void fadeUI( TMP_Text textToFade,float valueToFade, float fadeTime)
     {
-        textToFade.DOFade(valueToFade, fadeTime * acceleratedFactor);
+        textToFade.DOFade(valueToFade, (fadeTime * acceleratedFactor)).SetEase(Ease.InQuad);
 
     }
 

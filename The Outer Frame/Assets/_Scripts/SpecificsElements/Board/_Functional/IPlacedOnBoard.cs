@@ -16,6 +16,8 @@ public interface IPlacedOnBoard
 
     BoardType GetType();
 
+    public void ActiveInteraction();
+
 }
 
 

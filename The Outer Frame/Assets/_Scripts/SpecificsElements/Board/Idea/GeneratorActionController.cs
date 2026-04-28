@@ -41,11 +41,15 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
         if (CheckForConditionals(Conditionals))
         {
-            OnAppearActionIdea();
             return true;
         }
 
         return false;
+    }
+
+    public void ActiveInteraction()
+    {
+        OnAppearActionIdea();
     }
 
     private void OnMouseUpAsButton()
@@ -292,14 +296,16 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         return istaken;
     }
 
+    ViewStates actualView;
     public void CheckView(Component sender, object obj)
     {
+        actualView = (ViewStates)obj;
 
-       if ((ViewStates)obj == ViewStates.BoardView)
+       if (actualView == ViewStates.BoardView)
         {
             BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(false);
         }
-       else if((ViewStates)obj == ViewStates.OnTakeSomeInBoard)
+       else if(actualView == ViewStates.OnTakeSomeInBoard)
         {
             BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(true);
         }

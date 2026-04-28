@@ -111,4 +111,8 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         return TypeElement;
     }
 
+    public void ActiveInteraction()
+    {
+        //nothing here
+    }
 }

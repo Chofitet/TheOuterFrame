@@ -119,5 +119,10 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
     {
         return TypeElement;
     }
+
+    public void ActiveInteraction()
+    {
+        //nothing here
+    }
 }
 

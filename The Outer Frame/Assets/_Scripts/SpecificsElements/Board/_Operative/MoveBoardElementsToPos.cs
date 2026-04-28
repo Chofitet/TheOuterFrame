@@ -104,6 +104,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
         {
             if (isPlaced) return;
             if (!conditions.GetConditionalState() && !toReplece) return;
+            conditions.ActiveInteraction();
 
             Vector3 InitPos = (Vector3)obj;
             OnMarkAsMoving?.Invoke(this, GetTypeOfObject());
