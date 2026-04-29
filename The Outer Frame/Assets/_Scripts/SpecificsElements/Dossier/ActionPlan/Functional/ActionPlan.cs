@@ -291,6 +291,8 @@ public class ActionPlan : MonoBehaviour
     {
         if (obj == null) return;
         word = (WordData) obj;
+        shakeBtn.SetActive(false);
+        ApproveBtn.enabled = true;
     }
 
 }

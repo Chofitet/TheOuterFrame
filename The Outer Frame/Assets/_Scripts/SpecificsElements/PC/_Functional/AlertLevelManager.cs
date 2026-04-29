@@ -41,6 +41,7 @@ public class AlertLevelManager : MonoBehaviour
             if (auxIncruise >= maxLevel)
             {
                 Invoke("end", 0.2f);
+                isStoped = true;
             }
             }); 
 

@@ -383,6 +383,7 @@ public class WordData : DataType, IReseteableScriptableObject
         stateHistory.Clear();
         CheckedStateHistory.Clear();
         StateHistoryTime.Clear();
+        DBEntryStateHistory.Clear();
         currentState = null;
         ActionsStates.Clear();
         isFound = false;
