@@ -570,6 +570,7 @@ GameObject:
   - component: {fileID: 5438105260921204910}
   - component: {fileID: 4476807633338538825}
   - component: {fileID: 1512184619029467852}
+  - component: {fileID: 1321643212802744139}
   m_Layer: 0
   m_Name: PlanActionPrefab2
   m_TagString: Untagged
@@ -648,7 +649,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8811778082310879973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -689,6 +690,7 @@ MonoBehaviour:
   OnShakeNotebook: {fileID: 11400000, guid: a6f125be9cc68494dbc219f3492d31f7, type: 2}
   shakeBtn: {fileID: 2336729663028734016}
   OnSendGoodVilify: {fileID: 11400000, guid: fa03dcccfac2a374db420578ced6683f, type: 2}
+  BlockStampiInput: {fileID: 4501459300740108005}
 --- !u!114 &7890689546900030479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,6 +998,41 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+--- !u!114 &1321643212802744139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968318278359937755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 61bbe30c501f1544a996617146e60930, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7199042322043686895}
+        m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
+        m_MethodName: ForceChangeWordSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
 --- !u!1 &3248228044903846294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,8 +1043,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3394053889998514405}
   - component: {fileID: 4501459300740108005}
-  - component: {fileID: 1961984411628303067}
-  - component: {fileID: 8577718302069747989}
   m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
@@ -1051,80 +1086,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1961984411628303067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3248228044903846294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: de4c2261a9464294dbcdf9529638137f, type: 2}
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4501459300740108005}
-        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  DelayCall: 0
-  _float: 0
-  _string: 
-  viewState: 0
-  gameEvent: {fileID: 0}
-  _transform: {fileID: 0}
---- !u!114 &8577718302069747989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3248228044903846294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: 6501ba893dbd2d94188bbaba0eab43f9, type: 2}
-  Event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4501459300740108005}
-        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  DelayCall: 0.5
-  _float: 0
-  _string: 
-  viewState: 0
-  gameEvent: {fileID: 0}
-  _transform: {fileID: 0}
 --- !u!1 &4099223590196117057
 GameObject:
   m_ObjectHideFlags: 0

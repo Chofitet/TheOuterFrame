@@ -28,6 +28,7 @@ public class CallType : ContentType, IStateComparable, IReseteableScriptableObje
     [SerializeField] string To;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string Dialogue;
     [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string IterruptedDialogue;
+    [SerializeField] bool Uninterruptible;
 
     [SerializeField] List<WordData> Involved = new List<WordData>(); 
     
@@ -77,7 +78,7 @@ public class CallType : ContentType, IStateComparable, IReseteableScriptableObje
 
     public List<WordData> GetInvolved() { return Involved; }
 
-    public void SetIsinterrrupted() { isInterrupted = true; }
+    public void SetIsinterrrupted() { if(!Uninterruptible) isInterrupted = true; }
     public StateEnum GetState() { return state; }
 
     public void SetCachedStartTime(TimeData time) { CachedStartTime = time; }
