@@ -17,6 +17,7 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] GameObject shakeBtn;
     [SerializeField] GameEvent OnSendGoodVilify;
+    [SerializeField] BoxCollider BlockStampiInput;
     WordData FinalActionWord;
     StateEnum FinalActionState;
     StateEnum FinalActionIdea;
@@ -29,7 +30,7 @@ public class ActionPlan : MonoBehaviour
     bool isSecodToLastActionDoit;
     IConditionable condition;
 
-    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded, WordData _FinalActionWord, StateEnum _FinalActionState, StateEnum _FinalActionIdea,ScriptableObject _condition, bool _isSecodToLastActionDoit)
+    public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded, WordData _FinalActionWord, StateEnum _FinalActionState, StateEnum _FinalActionIdea, ScriptableObject _condition, bool _isSecodToLastActionDoit)
     {
         isFirstTimeIdeaAdded = _isFirstTimeIdeaAdded;
         InstantiateActionRows(ActionList);
@@ -44,7 +45,7 @@ public class ActionPlan : MonoBehaviour
 
     void InstantiateActionRows(List<StateEnum> listActions)
     {
-        foreach(StateEnum actions in listActions)
+        foreach (StateEnum actions in listActions)
         {
             GameObject ActionInstantiate = Instantiate(ActionRowPrefab, ActionsContainer, false);
             ActionRowController script = ActionInstantiate.GetComponent<ActionRowController>();
@@ -63,7 +64,7 @@ public class ActionPlan : MonoBehaviour
     void OnButtonRowPress(ActionRowController script)
     {
 
-        if(!isOneToggleSelected)
+        if (!isOneToggleSelected)
         {
             script.OnButtonClick();
         }
@@ -83,13 +84,13 @@ public class ActionPlan : MonoBehaviour
                     ApproveBtn.enabled = false;
                     exit = true;
                     isOneToggleSelected = false;
-                    
+
                     continue;
                 }
 
             }
             if (exit) return;
-            
+
         }
 
         if (state.GetSpecialActionWord())
@@ -119,7 +120,7 @@ public class ActionPlan : MonoBehaviour
 
     public void SelectedWord(Component sender, object obj)
     {
-        if(!isInDossier) return;
+        if (!isInDossier) return;
         if (state)
         {
             shakeBtn.SetActive(false);
@@ -146,7 +147,7 @@ public class ActionPlan : MonoBehaviour
 
     public void ApprovedActionPlan()
     {
-        
+
         if (isProgressorFull)
         {
             OnProgressorFull?.Invoke(this, null);
@@ -160,10 +161,10 @@ public class ActionPlan : MonoBehaviour
             return;
         }
 
-        if(FinalActionWord == word && condition.GetStateCondition())
+        if (FinalActionWord == word && condition.GetStateCondition())
         {
             OnFinalActionSend?.Invoke(this, null);
-           // state = FinalActionIdea;
+            // state = FinalActionIdea;
             ProgressorSetFull(null, null);
             return;
         }
@@ -194,7 +195,7 @@ public class ActionPlan : MonoBehaviour
         if (state.GetSpecialActionWord()) state.SetisWrittenOnAP(false);
         OnApprovedActionPlan.Invoke(this, data);
         OnSetGeneralView?.Invoke(this, null);
-        if(state.GetNeedWordLocation())word.SetIsPendingToShowLocation(false);
+        if (state.GetNeedWordLocation()) word.SetIsPendingToShowLocation(false);
 
     }
     public void SendFinalActionToProgressor(Component sender, object obj)
@@ -217,8 +218,8 @@ public class ActionPlan : MonoBehaviour
 
     public void DestroyActionPlan(Component sender, object obj)
     {
-        
-        
+
+
         Destroy(gameObject);
     }
 
@@ -231,19 +232,41 @@ public class ActionPlan : MonoBehaviour
     void OnStampAP()
     {
         ApproveBtn.transform.GetChild(0).gameObject.SetActive(false);
-        
+
     }
 
     bool isInDossier;
+    Coroutine DisableBlockStampInputCoroutine;
     public void CheckView(Component sender, object obj)
     {
-        if ((ViewStates)obj == ViewStates.DossierView || (ViewStates)obj == ViewStates.OnTakenPaperView) isInDossier = true;
+        ViewStates actualView = (ViewStates)obj;
+        if (actualView == ViewStates.DossierView || actualView == ViewStates.OnTakenPaperView) isInDossier = true;
         else isInDossier = false;
+
+        if (actualView == ViewStates.DossierView)
+        {
+            if (DisableBlockStampInputCoroutine != null) StopCoroutine(DisableBlockStampInputCoroutine);
+            DisableBlockStampInputCoroutine = StartCoroutine(DisableBlockStampInput());
+        }
+        else
+        {
+            if (DisableBlockStampInputCoroutine != null) StopCoroutine(DisableBlockStampInputCoroutine);
+            BlockStampiInput.enabled = true;
+        }
+
+    }
+
+    IEnumerator DisableBlockStampInput()
+    {
+        yield return new WaitForSeconds(0.5f);
+        BlockStampiInput.enabled = false;
+
     }
 
     public void ProgressorSetNotFull(Component sender, object obj)
     {
         isProgressorFull = false;
+        
     }
 
     public void ProgressorSetFull(Component sender, object obj)
@@ -262,6 +285,12 @@ public class ActionPlan : MonoBehaviour
     public void OnEraseInactiveOrReplacedWords(Component sender, object obj)
     {
         isOneToggleSelected = false;
+    }
+
+    public void ForceChangeWordSelect(Component sender, object obj)
+    {
+        if (obj == null) return;
+        word = (WordData) obj;
     }
 
 }
