@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: PetroStationInspectedPetroBoyNGYBSecusysNFNGCamerasNGBathroomC
+  m_EditorClassIdentifier: 
+  id: d09a2ff2-32f4-4123-84a3-d5e37a6451a6
+  Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 1
+  Text: "It's a service station lazily named \"Petro Station\". \n  \nNot much to
+    look around. \n  \nThere are quite a lot of <link>security cameras</link>, some
+    even pointing at the crash site, it also has a public <link>bathroom</link> at
+    the side. That's fortunate in case we have to stay here for too long. \n \nThe
+    only person around is a counter boy that calls himself <link>Petro Boy</link>. "
+  TextForRepetition: 'We already did that, remember?
+
+    The report is probably
+    on your desk, or in the DB if you uploaded it.'
+  CustomStatus: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 279d895115123924d88d8124c445733a, type: 3}
+    text: THIS PLACE
+  - photo: {fileID: 21300000, guid: 040b71834a88bc14089dd0785d07ff41, type: 3}
+    text: HAS A BATHROOM
+  - photo: {fileID: 21300000, guid: 88d43ed4eaba0ce458e44a60f4f11153, type: 3}
+    text: SOME CAMERAS
+  - photo: {fileID: 21300000, guid: 88d43ed4eaba0ce458e44a60f4f11153, type: 3}
+    text: SOME CAMERAS
+  - photo: {fileID: 21300000, guid: 8dc578159f0326c4cb30abaf16c73b56, type: 3}
+    text: THIS GUY
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 52d30fed534b83349aa787e1231849e0, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 6d7f9e14d37a622429f3baf0992994d6, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: dc03d4c3736cf334ab7dae5d80935ad0, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: ed61fb827c41bf24f9af0a6f755151d3, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 4fec0d9b987291b4ab045db3ed90b855, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 6fc9a2e72b75a734aab4c3a8f8ef3458, type: 2}
+    ifNot: 0
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  AgentRecoveryTime: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

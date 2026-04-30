@@ -10,42 +10,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: PetroStationInspectedPetroBoyNGSecusysNGCamerasNGBathroomC
+  m_Name: PetroStationInspectedPetroBoyYGSecusysYFYGCamerasYGBathroomB
   m_EditorClassIdentifier: 
-  id: 136ec013-a541-4120-b740-abc15755e9b9
+  id: 2b9e3b0b-8571-4842-bd16-b90baf7a206c
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 1
-  Text: "It's a service station lazily named \"Petro Station\". \n  \nNot much to
-    look around. \n  \nThere are quite a lot of <link>security cameras</link>, some
-    even pointing at the crash site, it also has a public <link>bathroom</link> at
-    the side. That's fortunate in case we have to stay here for too long. \n \nThe
-    only person around is a counter boy that calls himself <link>Petro Boy</link>. "
+  Text: "It's a service station lazily named \"Petro Station\". \n  \nWe've left
+    not much untouched. There where some cameras but they are gone now. There is
+    a public <link>bathroom</link> at the side of the building. That's fortunate
+    in case we have to stay here for too long. "
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
   CustomStatus: 
   Photos:
-  - photo: {fileID: 21300000, guid: 279d895115123924d88d8124c445733a, type: 3}
+  - photo: {fileID: 21300000, guid: 3aadda425c220bf469086fc2ad879fbf, type: 3}
     text: THIS PLACE
-  - photo: {fileID: 21300000, guid: 040b71834a88bc14089dd0785d07ff41, type: 3}
-    text: HAS A BATHROOM
-  - photo: {fileID: 21300000, guid: 88d43ed4eaba0ce458e44a60f4f11153, type: 3}
-    text: SOME CAMERAS
-  - photo: {fileID: 21300000, guid: 88d43ed4eaba0ce458e44a60f4f11153, type: 3}
-    text: SOME CAMERAS
-  - photo: {fileID: 21300000, guid: d07206e9a8578d241a968021398780f3, type: 3}
-    text: THIS THING
+  - photo: {fileID: 21300000, guid: 0cd79845e42417a448159342fa974a4b, type: 3}
+    text: WE DID THAT
+  - photo: {fileID: 21300000, guid: 78298ce0489f7af4bb7edcd801ac4cbd, type: 3}
+    text: EX CAMERAS
   Conditionals:
   - condition: {fileID: 11400000, guid: 52d30fed534b83349aa787e1231849e0, type: 2}
-    ifNot: 1
+    ifNot: 0
   - condition: {fileID: 11400000, guid: 6d7f9e14d37a622429f3baf0992994d6, type: 2}
-    ifNot: 1
+    ifNot: 0
   - condition: {fileID: 11400000, guid: dc03d4c3736cf334ab7dae5d80935ad0, type: 2}
-    ifNot: 1
+    ifNot: 0
   - condition: {fileID: 11400000, guid: ed61fb827c41bf24f9af0a6f755151d3, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 4fec0d9b987291b4ab045db3ed90b855, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 31786559b3577114fa863e4bd4cd2276, type: 2}
     ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
