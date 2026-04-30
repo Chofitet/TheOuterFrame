@@ -16,7 +16,7 @@ public class DemoManager : MonoBehaviour
     [SerializeField] float TimeToWaitBeforeReportUp = 1;
     int StampsAfterIndex = 1;
 
-   [HideInInspector][Header("Demo report to cut off on stamp")]
+    [Header("Demo report to cut off on stamp")]
     [SerializeField] List<ReportType> DemoReportsCutOffOnStamp = new List<ReportType>();
 
     [Header("Demo time cut off")]
