@@ -45,7 +45,7 @@ public class PCWikiController : MonoBehaviour
     {
         if (_wordData == null)
         {
-            WikiData.text = "YOU SEARCH NOTHING YOU GET NOTHING";
+            WikiData.text = "";
             FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);
 
             HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);

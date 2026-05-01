@@ -17,6 +17,10 @@ public class AlertLevelManager : MonoBehaviour
     [SerializeField] GameEvent OnUpAlertLevel;
     [SerializeField] GameEvent OnDownAlertLevel;
     [SerializeField] bool NoLimitToGameOver;
+    [SerializeField] GameEvent Oninstanciatepopup;
+    [SerializeField] TVNewType WishlistNew;
+    [SerializeField] GameEvent On1000Wishlists;
+    [SerializeField] GameObject Mas;
     float timeFactor = 1;
     int level;
     bool isStoped;
@@ -24,9 +28,33 @@ public class AlertLevelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        level = InitAlertLevel;
+        //level = InitAlertLevel;
     }
 
+
+    [ContextMenu("1000 wishlists")]
+    public void MilWishlists()
+    {
+        Invoke("startIncruise", 1.3f);
+        Invoke("Mil", 2.9f);
+        Invoke("WishlistReach", 3.6f);
+        On1000Wishlists?.Invoke(this, null);
+    }
+
+    void startIncruise()
+    {
+        UpdateNum(null, new AlertData(1000, "THANK YOU ALL!!!"));
+    }
+
+    void Mil()
+    {
+        Mas.SetActive(true);
+    }
+
+    void WishlistReach()
+    {
+        Oninstanciatepopup?.Invoke(this, WishlistNew as IPopUp);
+    }
 
     public void UpdateNum(Component sender, object obj)
     {
@@ -34,28 +62,28 @@ public class AlertLevelManager : MonoBehaviour
         AlertData data = (AlertData)obj;
         int auxIncruise = level + data.IncruseNum;
         if(data.AclarationText != "") AclarationText.text = data.AclarationText;
-        if (level < 15) level = 15;
-        if(auxIncruise < 15) auxIncruise = 15;
+        /*if (level < 15) level = 15;
+        if(auxIncruise < 15) auxIncruise = 15;*/
        // Debug.Log($"Level to incruise {level}");
         DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
-            if (auxIncruise >= maxLevel)
+            /*if (auxIncruise >= maxLevel)
             {
                 Invoke("end", 0.2f);
                 isStoped = true;
-            }
+            }*/
             }); 
 
-        if (auxIncruise >= 100)
+       /* if (auxIncruise >= 100)
         {
             return;
-        }
+        }*/
 
-        if (data.IncruseNum > 0)
+        if (data.IncruseNum < 0)
         {
             Led.SetSpecificColor(IncreaseColor);
             OnUpAlertLevel?.Invoke(this, null);
         }
-        else if (data.IncruseNum < 0)
+        else if (data.IncruseNum > 0)
         {
             Led.SetSpecificColor(DecreaseColor);
             OnDownAlertLevel?.Invoke(this, null);
@@ -75,7 +103,13 @@ public class AlertLevelManager : MonoBehaviour
 
     private void Update()
     {
-        NumLevel.text = level + "%";
+        NumLevel.text = level.ToString();
+
+        if (Input.GetKeyDown(KeyCode.W))
+           {
+            MilWishlists();
+        }
+
 
         if (Input.GetKeyDown(KeyCode.G) && NoLimitToGameOver)
         {

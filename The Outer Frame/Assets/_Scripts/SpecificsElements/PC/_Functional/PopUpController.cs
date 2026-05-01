@@ -17,7 +17,7 @@ public class PopUpController : MonoBehaviour, IDragHandler, IBeginDragHandler
     public void Initialize(string _text, RectTransform  _canvasRectTransform)
     {
         text.text = _text;
-        canvasRectTransform = _canvasRectTransform;
+        //canvasRectTransform = _canvasRectTransform;
         rectTransform = GetComponent<RectTransform>();
         view.init();
     }

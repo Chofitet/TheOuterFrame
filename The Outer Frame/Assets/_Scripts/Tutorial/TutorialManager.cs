@@ -6,15 +6,16 @@ public class TutorialManager : MonoBehaviour, IDataPersistence
 {
     [SerializeField] GameEvent OnSetTutorial;
     [SerializeField] bool StartWithTutorial;
+    [SerializeField] bool nosettutorial;
     bool isInTutorial = true;
     // Start is called before the first frame update
     void Start()
     {
-        if(isInTutorial || StartWithTutorial) OnSetTutorial?.Invoke(this, true);
+        /*if(isInTutorial || StartWithTutorial) OnSetTutorial?.Invoke(this, true);
         else
         {
             OnSetTutorial?.Invoke(this, false);
-        }
+        }*/
     }
 
     public void FinishTutorial(Component sender, object obj)
