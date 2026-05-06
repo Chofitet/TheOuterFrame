@@ -7,10 +7,25 @@ public class LetterboxCamera : MonoBehaviour
     [SerializeField] private float targetAspectWidth = 16f;
     [SerializeField] private float targetAspectHeight = 9f;
 
+    [SerializeField] private int forcedWidth = 1920;
+    [SerializeField] private int forcedHeight = 1080;
+    [SerializeField] private bool forceResolution = false;
+
     void Start()
     {
-        Camera cam = GetComponent<Camera>();
+        SetRatio();
 
+        if (forceResolution)
+        {
+            Screen.SetResolution(forcedWidth, forcedHeight, FullScreenMode.Windowed);
+        }
+
+       
+    }
+
+    void SetRatio()
+    {
+        Camera cam = GetComponent<Camera>();
         // Aspecto nativo (ejemplo: 16/9)
         float targetAspect = targetAspectWidth / targetAspectHeight;
         // Aspecto actual de la pantalla

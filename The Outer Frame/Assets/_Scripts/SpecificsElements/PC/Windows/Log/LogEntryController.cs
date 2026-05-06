@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
+using UnityEngine.UIElements;
 
 public class LogEntryController : MonoBehaviour
 {
@@ -24,18 +26,17 @@ public class LogEntryController : MonoBehaviour
         _data = data;
 
 
-        if (reportType) 
+        if (reportType)
         {
             SubjectTxt.text = data.word.GetDatabaseNameVersion();
         }
         else
         {
             SubjectTxt.text = WordsManager.WM.FindWordWithPhoneNum(data.word).GetName();
-            
+
         }
-        CheckTextOverflow(SubjectTxt);
-        ActionTxt.text = data.action;
-        CheckTextOverflow(ActionTxt);
+
+        SetText(data.action,ActionTxt);
 
 
         TimeData actualTime = TimeManager.timeManager.GetTime();
@@ -91,6 +92,49 @@ public class LogEntryController : MonoBehaviour
             if(call == callType) return true;
         }
         return false;
+    }
+
+    TMP_Text _pendingField;
+    string _pendingText;
+
+    public void SetText(string text, TMP_Text field)
+    {
+        _pendingText = text;
+        _pendingField = field;
+
+        field.text = text;
+
+        if (gameObject.activeInHierarchy)
+            StartCoroutine(TruncateText(_pendingText, _pendingField));
+    }
+
+    private void OnEnable()
+    {
+        if (!string.IsNullOrEmpty(_pendingText) && _pendingField != null)
+        {
+            StartCoroutine(TruncateText(_pendingText, _pendingField));
+        }
+    }
+
+    IEnumerator TruncateText(string text,TMP_Text textField)
+    {
+        yield return new WaitForEndOfFrame();
+
+        // Si no excede 2 líneas, no hacemos nada
+        if (textField.textInfo.lineCount <= 2) yield break;
+
+        // Empezamos a recortar caracteres
+        string trimmed = text;
+
+        while (trimmed.Length > 0)
+        {
+            trimmed = trimmed.Substring(0, trimmed.Length - 1);
+            textField.text = trimmed + "...";
+            textField.ForceMeshUpdate();
+
+            if (textField.textInfo.lineCount <= 2)
+                break;
+        }
     }
 
     void CheckTextOverflow(TMP_Text tmpComponent)

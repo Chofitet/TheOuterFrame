@@ -117,10 +117,17 @@ public class ActionPlan : MonoBehaviour
         }
     }
 
+    public void DisableButtonsOnWritting(Component sender, object obj)
+    {
+        EnableDisableAllBtns(false);
+    }
 
     public void SelectedWord(Component sender, object obj)
     {
         if (!isInDossier) return;
+
+        EnableDisableAllBtns(true);
+
         if (state)
         {
             shakeBtn.SetActive(false);
@@ -274,11 +281,12 @@ public class ActionPlan : MonoBehaviour
         isProgressorFull = true;
     }
 
-    public void DisableAllBtns()
+
+    public void EnableDisableAllBtns(bool x)
     {
         foreach (ActionRowController actions in Actions)
         {
-            actions.gameObject.GetComponent<Button>().enabled = false;
+            actions.GetButton().enabled = x;
         }
     }
 

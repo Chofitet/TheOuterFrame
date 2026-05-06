@@ -560,6 +560,7 @@ GameObject:
   - component: {fileID: 1155756700967342275}
   - component: {fileID: 8811778082310879973}
   - component: {fileID: 7199042322043686895}
+  - component: {fileID: -5656689868955673757}
   - component: {fileID: 7890689546900030479}
   - component: {fileID: 463616968848741621}
   - component: {fileID: 5673280197938382148}
@@ -649,7 +650,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8811778082310879973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,6 +692,41 @@ MonoBehaviour:
   shakeBtn: {fileID: 2336729663028734016}
   OnSendGoodVilify: {fileID: 11400000, guid: fa03dcccfac2a374db420578ced6683f, type: 2}
   BlockStampiInput: {fileID: 4501459300740108005}
+--- !u!114 &-5656689868955673757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968318278359937755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 5c0b83c1d8c4e7c48b89eb46fa45aa2a, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7199042322043686895}
+        m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
+        m_MethodName: DisableButtonsOnWritting
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
 --- !u!114 &7890689546900030479
 MonoBehaviour:
   m_ObjectHideFlags: 0
