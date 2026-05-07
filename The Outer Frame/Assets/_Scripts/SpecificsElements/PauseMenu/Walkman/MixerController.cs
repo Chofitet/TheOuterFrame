@@ -50,7 +50,7 @@ public class MixerController : MonoBehaviour, IDataPersistence
 
         if (dB <= -59f)
         {
-            audiomixer.SetFloat(AudioMixerGroup, -80f); 
+            audiomixer.SetFloat(AudioMixerGroup, -144f); 
         }
         else
         {
