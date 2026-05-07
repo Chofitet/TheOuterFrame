@@ -18,7 +18,7 @@ public class DinamicMaterialAssigner : MonoBehaviour
         Material newMaterial = new Material(Shader.Find("Standard"));
         newMaterial.mainTexture = sprite.texture;
 
-        if (isTransparent)
+        if (isTransparent && !isATransparencePhoto)
         {
             // Configurar transparente
             newMaterial.SetFloat("_Mode", 3);
