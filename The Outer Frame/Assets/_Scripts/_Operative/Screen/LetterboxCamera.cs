@@ -15,10 +15,10 @@ public class LetterboxCamera : MonoBehaviour
     {
         SetRatio();
 
-        if (forceResolution)
+        /*if (forceResolution)
         {
             Screen.SetResolution(forcedWidth, forcedHeight, FullScreenMode.Windowed);
-        }
+        }*/
 
        
     }

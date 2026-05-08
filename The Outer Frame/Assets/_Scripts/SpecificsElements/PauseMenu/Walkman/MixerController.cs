@@ -35,9 +35,18 @@ public class MixerController : MonoBehaviour, IDataPersistence
         VolumeValue = Mathf.Clamp((float)obj, 0.001f, 1f);
         float finalValue = isInverted ? 1 - VolumeValue : VolumeValue;
 
-        audiomixer.SetFloat(AudioMixerGroup, Mathf.Log10(finalValue <= 0 ? 0.001f : finalValue) * 20);
+        float dB = Mathf.Log10(finalValue <= 0 ? 0.001f : finalValue) * 20;
 
-        // No actualizamos texto en SetVolume para no interferir con carga inicial
+
+
+        if (dB <= -59f)
+        {
+            audiomixer.SetFloat(AudioMixerGroup, -144);
+        }
+        else
+        {
+            audiomixer.SetFloat(AudioMixerGroup, dB);
+        }
     }
 
     public void VolumeChanger(Component sender, object obj)
@@ -77,7 +86,7 @@ public class MixerController : MonoBehaviour, IDataPersistence
 
         if (dB <= -59f)
         {
-            audiomixer.SetFloat(AudioMixerGroup, -80f);
+            audiomixer.SetFloat(AudioMixerGroup, -144f);
         }
         else
         {
