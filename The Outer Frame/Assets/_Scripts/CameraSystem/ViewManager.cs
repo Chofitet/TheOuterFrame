@@ -31,6 +31,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnEnableInput;
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] GameEvent OnNormalizeTime;
+    [SerializeField] GameEvent OnChangeScene;
 
     [Header("Game Overs")]
     [SerializeField] GameEvent OnTimeGameOver;
@@ -121,6 +122,11 @@ public class ViewManager : MonoBehaviour
                 isInPause = false;
                 OnBackToPause?.Invoke(this, null);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            OnChangeScene?.Invoke(this, "RetryMenu");
         }
 
        /* if (Input.GetKeyDown(KeyCode.Alpha1))
