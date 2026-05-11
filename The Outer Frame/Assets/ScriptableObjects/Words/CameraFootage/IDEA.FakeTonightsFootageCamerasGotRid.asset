@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
+  m_Name: IDEA.FakeTonightsFootageCamerasGotRid
+  m_EditorClassIdentifier: 
+  id: ce3f22cc-a628-4fe1-a18f-6c1e1f12ff15
+  Action: {fileID: 11400000, guid: 8188049cde094484597b0ff4d29a4629, type: 2}
+  state: {fileID: 11400000, guid: 76cb23c552728b14db497db8e0f9ddb3, type: 2}
+  isAutomatic: 0
+  ChangeTimeOfAction: 0
+  Text: "We faked all of tonight's footage.\n\nTrusts us, it looks alright. \n\nWe
+    also scrambled the Secusys a bit so any new video recordings look like a loop
+    of a dog walking by.\n\nI guess we overdid it with the cameras."
+  TextForRepetition: 
+  CustomStatus: 
+  Photos:
+  - photo: {fileID: 21300000, guid: 7b96d6d318d76d5428b5cf92ce06d5d6, type: 3}
+    text: FAKE FOOTAGE
+  - photo: {fileID: 21300000, guid: 78298ce0489f7af4bb7edcd801ac4cbd, type: 3}
+    text: OVERDONE
+  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
+    text: ANOTHER GOOD JOB COMPLETE!
+  Conditionals:
+  - condition: {fileID: 11400000, guid: dc03d4c3736cf334ab7dae5d80935ad0, type: 2}
+    ifNot: 0
+  ObjectType: 0
+  isOrderMatters: 0
+  AgentDown: 0
+  AgentRecoveryTime: 0
+  TriggerDrawerAnim: 0
+  DeleteDBReport: 0
+  SecondToLastReport: 0
+  LastReport: 0

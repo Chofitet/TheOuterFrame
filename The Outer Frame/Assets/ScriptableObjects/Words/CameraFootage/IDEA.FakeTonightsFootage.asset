@@ -10,24 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: IDEA.RemoveTonightsFootage
+  m_Name: IDEA.FakeTonightsFootage
   m_EditorClassIdentifier: 
   id: d5dca5ae-4c45-4099-a271-e27a8517450a
   Action: {fileID: 11400000, guid: 8188049cde094484597b0ff4d29a4629, type: 2}
   state: {fileID: 11400000, guid: 8188049cde094484597b0ff4d29a4629, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "We deleted all of tonight's footage. \n\nWe also scrambled the Secusys a
-    bit so any new video recordings look like a loop of a dog walking by.\n\nThe
-    cameras are no longer a concern."
+  Text: "We faked all of tonight's footage.\n\nTrusts us, it looks alright. \n\nWe
+    also scrambled the Secusys a bit so any new video recordings look like a loop
+    of a dog walking by.\n\nThe cameras are no longer a concern."
   TextForRepetition: 
   CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 7b96d6d318d76d5428b5cf92ce06d5d6, type: 3}
-    text: HARMLESSLY FAKE
+    text: FAKE FOOTAGE
+  - photo: {fileID: 21300000, guid: 88d43ed4eaba0ce458e44a60f4f11153, type: 3}
+    text: HARMLESS NOW
   - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
     text: ANOTHER GOOD JOB COMPLETE!
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: dc03d4c3736cf334ab7dae5d80935ad0, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0

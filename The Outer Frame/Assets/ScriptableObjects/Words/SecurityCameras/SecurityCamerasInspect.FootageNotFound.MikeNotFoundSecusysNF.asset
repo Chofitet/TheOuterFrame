@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: SecurityCamerasInspect.FootageNotFound.MikeNotFound
+  m_Name: SecurityCamerasInspect.FootageNotFound.MikeNotFoundSecusysNF
   m_EditorClassIdentifier: 
   id: 5d080172-b918-4be8-a970-87b34f952eae
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
@@ -30,7 +30,9 @@ MonoBehaviour:
   - photo: {fileID: 21300000, guid: 88d43ed4eaba0ce458e44a60f4f11153, type: 3}
     text: CHEAP
   Conditionals:
-  - condition: {fileID: 11400000, guid: 5c1e48d1557130545998b25d52b6519d, type: 2}
+  - condition: {fileID: 11400000, guid: 6e5e95bff44c8e448a9ef942f222b62b, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 4fec0d9b987291b4ab045db3ed90b855, type: 2}
     ifNot: 1
   ObjectType: 0
   isOrderMatters: 0

@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: SecurityCamerasInspect.FootageFound.MikeFound
+  m_Name: SecurityCamerasInspect.FootageNotFound.MikeNotFoundSecusysF
   m_EditorClassIdentifier: 
-  id: d34650d3-461a-42cd-8d6e-25c1ec7bf5aa
+  id: f7c780b8-cf63-4142-9edf-a380dbe84b86
   Action: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   state: {fileID: 11400000, guid: 3f8d2bd4e87b4924680abe1951056f98, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
   Text: "These are not CCTVs at all, they are cheap webcams disguised as high-tech
-    surveillance equipment. \n\nSome are pointing directly at us and the <link>truck</link>.
-    \n \nWe already saw the footage. It was bad."
+    surveillance equipment. \n \nRegardless of that, some are pointing directly at
+    us and the <link>truck</link>. \n \nWe should find the main computer to get access
+    to any footage captured by those things. \n \nMaybe they saw the crash. "
   TextForRepetition: 'We already tried that, remember?
 
     The report is probably
@@ -30,6 +31,8 @@ MonoBehaviour:
     text: CHEAP
   Conditionals:
   - condition: {fileID: 11400000, guid: 6e5e95bff44c8e448a9ef942f222b62b, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 4fec0d9b987291b4ab045db3ed90b855, type: 2}
     ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
