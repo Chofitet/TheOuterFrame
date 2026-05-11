@@ -10,6 +10,7 @@ public class TVManager : MonoBehaviour
     [SerializeField] int InitChannel = 1;
     [SerializeField] List<ChannelController> Channels = new List<ChannelController>();
     [HideInInspector][SerializeField] TMP_Text ChannelNumTxt;
+    [SerializeField] TVRandomNewType RandomNewToStart;
     [SerializeField] List<TVScheduledNewType> ScheduledNews = new List<TVScheduledNewType>();
     List<INewType> QueueOfNews = new List<INewType>();
     [SerializeField] List<TVNewType> ReactiveNews = new List<TVNewType>();
@@ -25,18 +26,19 @@ public class TVManager : MonoBehaviour
     {
         TVNewPropertiesList = GetComponent<TVNewTypeProperties>();
         AddVilifiedNewsToReactiveList(WordsManager.WM.GetVilifiedNews());
-        FillEmptiesChannels();
+        if (RandomNewToStart) FillEmptiesChannels(RandomNewToStart);
+        else FillEmptiesChannels();
         ChangeChannel(null, Channels[InitChannel].gameObject);
     }
 
     private void OnEnable()
     {
-        TimeManager.OnMinuteChange += NewsDirector;
+        //TimeManager.OnMinuteChange += NewsDirector;
        // TimeManager.OnMinuteChange += CountTimeToNewGenericEmptySlot;
     }
     private void OnDisable()
     {
-        TimeManager.OnMinuteChange -= NewsDirector;
+       // TimeManager.OnMinuteChange -= NewsDirector;
        // TimeManager.OnMinuteChange -= CountTimeToNewGenericEmptySlot;
     }
     
@@ -188,14 +190,16 @@ public class TVManager : MonoBehaviour
         return null;
     }
 
-    void FillEmptiesChannels()
+    void FillEmptiesChannels(TVRandomNewType specificRandmNew = null)
     {
         foreach (ChannelController channel in Channels)
         {
             if (channel.GetisStaticChannel()) continue;
             if (channel.GetTimeToRestartRandoms())
             {
-                INewType randomNew = SetRandomNew(Channels.IndexOf(channel));
+                INewType randomNew;
+                if (specificRandmNew != null) randomNew = specificRandmNew;
+                else randomNew = SetRandomNew(Channels.IndexOf(channel));
 
                 channel.SetNew(randomNew,TVNewPropertiesList.GetTVNewPropertyData(randomNew.GetNewType()));
                 channel.SetIsFull(true);
