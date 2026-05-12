@@ -76,7 +76,7 @@ public class DrawerController : MonoBehaviour
                           .AppendInterval(WaitDuration)
                           .AppendCallback(() =>
                           {
-                              OnDrawerCloseSound?.Invoke(this, null);
+                              //OnDrawerCloseSound?.Invoke(this, null);
                               //BackToGeneralView?.Invoke(this, null);
                           })
                           //.Append(transform.DOMove(StartPos, OpenDuration).SetEase(Ease.OutQuint))
