@@ -28,6 +28,14 @@ public class DrawerController : MonoBehaviour
         StartPos = transform.position;
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.Y)) 
+        {
+            OpenDrawerAnim();
+        }
+    }
+
     public void TakePhotoAnim(Component sender, object obj)
     {
         GameObject PhotoObject = (GameObject)obj;
@@ -69,12 +77,12 @@ public class DrawerController : MonoBehaviour
                           .AppendCallback(() =>
                           {
                               OnDrawerCloseSound?.Invoke(this, null);
-                              BackToGeneralView?.Invoke(this, null);
+                              //BackToGeneralView?.Invoke(this, null);
                           })
-                          .Append(transform.DOMove(StartPos, OpenDuration).SetEase(Ease.OutQuint))
+                          //.Append(transform.DOMove(StartPos, OpenDuration).SetEase(Ease.OutQuint))
                           .OnComplete(()=>
                           {
-                              EnableInput?.Invoke(this, null);
+                              //EnableInput?.Invoke(this, null);
                           });
     }
 
