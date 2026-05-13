@@ -42,7 +42,7 @@ public class DinamicMaterialAssigner : MonoBehaviour
         {
             // Configurar opaco
             newMaterial.SetFloat("_Metallic", 1f);
-            newMaterial.SetFloat("_Glossiness", 0.25f);
+            newMaterial.SetFloat("_Glossiness", 0.5f);
         }
 
         
