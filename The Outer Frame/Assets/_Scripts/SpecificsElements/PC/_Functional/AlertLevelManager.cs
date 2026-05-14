@@ -36,19 +36,7 @@ public class AlertLevelManager : MonoBehaviour
         if(data.AclarationText != "") AclarationText.text = data.AclarationText;
         if (level < 15) level = 15;
         if(auxIncruise < 15) auxIncruise = 15;
-       // Debug.Log($"Level to incruise {level}");
-        DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
-            if (auxIncruise >= maxLevel)
-            {
-                Invoke("end", 0.2f);
-                isStoped = true;
-            }
-            }); 
-
-        if (auxIncruise >= 100)
-        {
-            return;
-        }
+        // Debug.Log($"Level to incruise {level}");
 
         if (data.IncruseNum > 0)
         {
@@ -60,6 +48,20 @@ public class AlertLevelManager : MonoBehaviour
             Led.SetSpecificColor(DecreaseColor);
             OnDownAlertLevel?.Invoke(this, null);
         }
+
+        if (auxIncruise >= 100)
+        {
+            isStoped = true;
+        }
+
+        DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
+            if (auxIncruise >= maxLevel)
+            {
+                Invoke("end", 0.2f);
+                isStoped = true;
+            }
+        }); 
+
     }
 
     private void end()
