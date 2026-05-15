@@ -33,6 +33,7 @@ public class PinchofonoManager : MonoBehaviour
         TimeManager.OnSecondsChange += SecondPass;
         CountDown.text = minutesToRecording + "00";
         word = WordSelectedInNotebook.Notebook.GetSelectedWord();
+        CheckCallToShow();
     }
 
     bool triggerInterruptedOnce;
@@ -43,28 +44,9 @@ public class PinchofonoManager : MonoBehaviour
         SecondPassCounter = 0;
         //CountDown.text = $"{minutesToRecording - minutePassCounter:00}";
 
-        List<CallType> CallsInTimeZone = WordsManager.WM.RequestCall(word);
+        CheckCallToShow();
 
-        if (CallsInTimeZone.Count == 0) Debug.Log("No Calls To show");
-
-
-        // Chequeo de llamadas en ventana horaria y condicionales
-        if (!CallToShow)
-        {
-            foreach (CallType call in CallsInTimeZone)
-            {
-                if (call.GetIsCatch()) continue;
-                if (call.CheckForConditionals())
-                {
-                    CallToShow = call;
-                    CallToShow.SetCached(true);
-                    OnCallCatch?.Invoke(this, null);
-                    return;
-                }
-            }
-        }
-        
-        if(CallToShow)
+        if (CallToShow)
         {
             //Chequeo de Acciones que interrumpen
 
@@ -101,6 +83,30 @@ public class PinchofonoManager : MonoBehaviour
             OnAddEntryLog?.Invoke(this, new LogEntryData(word, "WIRETAPPED", null, CallToShow));
             CallToShow = null;
             isInterrupted = false;
+        }
+    }
+
+    void CheckCallToShow()
+    {
+        List<CallType> CallsInTimeZone = WordsManager.WM.RequestCall(word);
+
+        if (CallsInTimeZone.Count == 0) Debug.Log("No Calls To show");
+
+
+        // Chequeo de llamadas en ventana horaria y condicionales
+        if (!CallToShow)
+        {
+            foreach (CallType call in CallsInTimeZone)
+            {
+                if (call.GetIsCatch()) continue;
+                if (call.CheckForConditionals())
+                {
+                    CallToShow = call;
+                    CallToShow.SetCached(true);
+                    OnCallCatch?.Invoke(this, null);
+                    return;
+                }
+            }
         }
     }
 

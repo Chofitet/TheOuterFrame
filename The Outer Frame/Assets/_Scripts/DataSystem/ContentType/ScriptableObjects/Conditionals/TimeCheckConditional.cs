@@ -41,12 +41,12 @@ public class TimeCheckConditional : ScriptableObject, IConditionable
 
         if (Is == WhenCondition.Backwards)
         {
-            if (timeToCheck > ActualTime) return true;
+            if (timeToCheck >= ActualTime) return true;
             else return false; 
         }
         else
         {
-            if (timeToCheck < ActualTime) return true;
+            if (timeToCheck <= ActualTime) return true;
             else return false;
         }
     }

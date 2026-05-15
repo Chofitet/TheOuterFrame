@@ -26,15 +26,36 @@ public class PinchofonoWaveController : MonoBehaviour
 
     public void StartRecording(Component sender, object obj)
     {
-        StartRecordingSequence = DOTween.Sequence();
-        CatchCallSequence1.Kill();
-        CatchCallSequence2.Kill();
+        // Frenar otras secuencias
+        CatchCallSequence1?.Kill();
+        CatchCallSequence2?.Kill();
+        StartRecordingSequence?.Kill();
 
-        StartRecordingSequence.Append(DOTween.To(() => amplitud1, x => amplitud1 = x, AmplitudIdle, 1f))
-                              .Join(DOTween.To(() => frequency1, x => frequency1 = x, FrequencyIdle, 1f))
-                              .Join(DOTween.To(() => amplitud2, x => amplitud2 = x, AmplitudIdle, 1f))
-                              .Join(DOTween.To(() => frequency2, x => frequency2 = x, FrequencyIdle, 1f));
-                              //.OnComplete(() => StaticLoop());
+        StartRecordingSequence = DOTween.Sequence();
+
+        StartRecordingSequence.AppendCallback(() =>
+        {
+            // Valores suaves
+            float recAmplitude1 = Random.Range(0f, AmplitudIdle);
+            float recFrequency1 = Random.Range(0f, FrequencyIdle);
+
+            float recAmplitude2 = Random.Range(0f, AmplitudIdle);
+            float recFrequency2 = Random.Range(0f, FrequencyIdle);
+
+            StartRecordingSequence.Append(
+                DOTween.To(() => amplitud1, x => amplitud1 = x, recAmplitude1, 0.5f)
+            )
+            .Join(
+                DOTween.To(() => frequency1, x => frequency1 = x, recFrequency1, 0.5f)
+            )
+            .Join(
+                DOTween.To(() => amplitud2, x => amplitud2 = x, recAmplitude2, 0.5f)
+            )
+            .Join(
+                DOTween.To(() => frequency2, x => frequency2 = x, recFrequency2, 0.5f)
+            );
+        })
+        .SetLoops(-1, LoopType.Yoyo);
     }
 
     Sequence CatchCallSequence1;
@@ -82,7 +103,7 @@ public class PinchofonoWaveController : MonoBehaviour
 
     public void CatchCall(Component sender, object obj)
     {
-        
+        StartRecordingSequence?.Kill();
         StartCoroutine(StopCatchAnim());
         // Secuencia para amplitud1 y frecuencia1
         if (CatchCallSequence1 != null && CatchCallSequence1.IsPlaying())
@@ -123,6 +144,7 @@ public class PinchofonoWaveController : MonoBehaviour
 
     public void EndRecording(Component sender, object obj)
     {
+        StartRecordingSequence?.Kill();
         Sequence EndRecordingSequence = DOTween.Sequence();
         CatchCallSequence1.Kill();
         CatchCallSequence2.Kill();
