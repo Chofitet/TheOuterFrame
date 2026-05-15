@@ -268,7 +268,7 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.PCView:
                 if (isGameOver) return;
-                TimeManager.timeManager.SetAnotherSpeed(0.5f);
+                TimeManager.timeManager.SetAnotherSpeed(0.03125f);
                 OnPCWiew?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 break;
@@ -279,7 +279,7 @@ public class ViewManager : MonoBehaviour
                 break;
             case ViewStates.TVView:
                 if (inOnFinalReport) { OnSendReportAutomatically?.Invoke(this, null); return; }
-                TimeManager.timeManager.SetAnotherSpeed(0.75f);
+                TimeManager.timeManager.SetAnotherSpeed(0.0625f);
                 OnTVView?.Invoke(this, null);
                 OnNotebookTake.Invoke(this, true);
                 break;

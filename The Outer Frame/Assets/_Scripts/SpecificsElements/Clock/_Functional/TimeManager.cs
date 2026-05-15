@@ -187,7 +187,7 @@ public class TimeManager : MonoBehaviour
 
     public void SetAnotherSpeed(float _speed)
     {
-        TimeVariation = _speed;
+        TimeVariation = _speed * 60;
         OnTimeSpeedChange?.Invoke(this, _speed);
         OnAcceleratedTime?.Invoke(this, false);
     }
