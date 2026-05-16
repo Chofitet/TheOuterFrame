@@ -421,8 +421,15 @@ public class OverlayAnimation : MonoBehaviour
             {
                 tween.Play();
             }
-            
-            acceleratedFactor = 1 / _speed;
+
+            if(_speed < 1 && _speed != 0)
+            {
+                acceleratedFactor = 1;
+            }
+            else
+            {
+                acceleratedFactor = 1 / _speed;
+            }
             Debug.Log("accelerator factor: " + acceleratedFactor);
         }
     }

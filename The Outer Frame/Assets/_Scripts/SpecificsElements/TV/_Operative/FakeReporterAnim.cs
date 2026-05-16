@@ -48,7 +48,16 @@ public class FakeReporterAnim : MonoBehaviour
 
     public void AccelerateAnimator(Component sender, object obj)
     {
-        speedFactor = (float)obj;
+        float _speed = (float)obj;
+        if(_speed < 1 && _speed != 0)
+        {
+            speedFactor = 1;
+        }
+        else
+        {
+            speedFactor = _speed;
+        }
+
         RotateRandomly();
 
     }

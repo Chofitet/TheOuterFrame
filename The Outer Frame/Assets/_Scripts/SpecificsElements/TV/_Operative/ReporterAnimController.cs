@@ -7,7 +7,6 @@ public class ReporterAnimController : MonoBehaviour
 {
     Animator anim;
     bool isAnimating;
-    float speed;
 
     [SerializeField] int _minClips = 2;
     [SerializeField] int _maxClips = 11;
@@ -111,8 +110,15 @@ public class ReporterAnimController : MonoBehaviour
     {
         float _speed = (float)obj;
 
-        anim.speed = _speed;
-        speed = 1/_speed;
+        if (_speed < 1 && _speed != 0)
+        {
+            anim.speed = 1;
+        }
+        else
+        {
+            anim.speed = _speed;
+        }
+
         //Debug.Log("speed: " + _speed);
     }
 }
