@@ -285,9 +285,13 @@ public class PinchofonoController : MonoBehaviour
             }
 
             canvasG.alpha = 0;
+            canvasG.interactable = false;
+            canvasG.blocksRaycasts = false;
         }
 
         Screens[panelNum].GetComponent<CanvasGroup>().alpha = 1;
+        Screens[panelNum].GetComponent<CanvasGroup>().interactable = true;
+        Screens[panelNum].GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         if (panelNum == 3 || panelNum == 4) messagePanelCoroutine = StartCoroutine(ShowErrorMessagePanel(message, lastScreenNum));
         if (panelNum == 5) OnBlinkPhoneScreen?.Invoke(this, null);

@@ -26,7 +26,6 @@ public class StringConnectionController : MonoBehaviour
     private void Start()
     {
         content = transform.GetChild(0).gameObject;
-        content.SetActive(false);
 
         if (!Node1 || !Node2)
         {
@@ -36,9 +35,20 @@ public class StringConnectionController : MonoBehaviour
 
         startPosPin1 = AnimPin1.transform.position;
         startPosPin2 = AnimPin2.transform.position;
-
+        AnimPin2.transform.position = startPosPin1;
         lineRenderer.enabled = false;
+        AnimPin1.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+        AnimPin2.transform.GetChild(0).GetComponent<MeshRenderer>().enabled=false;
+        Invoke("sarasa", 1.5f);
+    }
 
+    void sarasa()
+    {
+        if (isConnected) return;
+        lineRenderer.enabled = true;
+        AnimPin1.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+        AnimPin2.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+        content.SetActive(false);
     }
 
     public void UpdatePositionRotation(Component sender, object obj)
@@ -73,7 +83,7 @@ public class StringConnectionController : MonoBehaviour
                     AnimPin2.transform.DOMoveY(startPosPin2.y, 0.5f).SetEase(curveStringAnim)
                 );
 
-                StartCoroutine(EnableMesh(true));
+               // StartCoroutine(EnableMesh(true));
             }
             content.SetActive(true);
             
@@ -139,7 +149,10 @@ public class StringConnectionController : MonoBehaviour
         isConnected = true;
         content.SetActive(true);
         AnimPin2.transform.position = startPosPin2;
-        StartCoroutine(EnableMesh(true));
+        AnimPin1.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+        AnimPin2.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+        lineRenderer.enabled = true;
+        //StartCoroutine(EnableMesh(true));
 
     }
 

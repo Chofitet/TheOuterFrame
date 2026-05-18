@@ -43,14 +43,16 @@ public class ProgressorManager : MonoBehaviour
             return;
         }
 
-        if(!WordsManager.WM.RequestReport(_word, state))
+        ReportType report = WordsManager.WM.RequestReport(_word, state);
+
+        if (!report)
         {
             Debug.LogWarning("No " + state.GetInfinitiveVerb() + " reports to show in " + _word.GetName());
             return;
         }
 
 
-        int timeAction = Mathf.Abs(state.GetTime() + WordsManager.WM.RequestReport(_word, state).GetChangeTimeOfAction());
+        int timeAction = Mathf.Abs(state.GetTime() + report.GetChangeTimeOfAction());
         int auxMultiActionNum = 1;
         
         int agentsAvaible = GetUnusedSlot(4).Count;
@@ -68,7 +70,7 @@ public class ProgressorManager : MonoBehaviour
             string a = slot.name;
             Debug.Log(slot.name);
 
-            slot.SetAction(_word, state, timeAction, auxMultiActionNum, agentsAvaible);
+            slot.SetAction(_word, state, timeAction, auxMultiActionNum, report.GetKillAgent(), agentsAvaible);
 
             auxMultiActionNum += 1;
 
@@ -87,6 +89,7 @@ public class ProgressorManager : MonoBehaviour
 
         if (multipleAgentAction1.Count != 0) multipleAgentAction1Used = true;
         if (multipleAgentAction2.Count != 0) multipleAgentAction2Used = true;
+
 
         OnProgressorSetSlot?.Invoke(this, false);
 

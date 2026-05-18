@@ -272,13 +272,33 @@ public class ActionPlan : MonoBehaviour
 
     public void ProgressorSetNotFull(Component sender, object obj)
     {
-        isProgressorFull = false;
-        
+        if (!AgentDownInlastReportTaked)
+        {
+            isProgressorFull = false;
+        }
+        AgentDownInlastReportTaked = false;
     }
 
     public void ProgressorSetFull(Component sender, object obj)
     {
         isProgressorFull = true;
+    }
+
+    bool AgentDownInlastReportTaked;
+
+    public void TakeReport(Component sender, object obj)
+    {
+        GameObject report = (GameObject)obj;
+
+        bool AgentDown = report.GetComponent<IndividualReportController>().GetRepoertype().GetKillAgent();
+
+        if (AgentDown)
+        {
+            AgentDownInlastReportTaked = true;
+            return;
+        };
+
+        isProgressorFull = false;
     }
 
 

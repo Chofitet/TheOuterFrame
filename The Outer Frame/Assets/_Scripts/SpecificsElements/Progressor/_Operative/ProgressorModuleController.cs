@@ -77,7 +77,7 @@ public class ProgressorModuleController : MonoBehaviour
         AdjustTimeToSetSlot();
     }
 
-    public void SetAction(WordData _word,StateEnum _state,int _time, int _multiAgentNum, int _agentsUsed = 1)
+    public void SetAction(WordData _word,StateEnum _state,int _time, int _multiAgentNum, bool _AgentDown, int _agentsUsed = 1)
     {
         word = _word;
         state = _state;

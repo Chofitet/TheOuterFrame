@@ -66,7 +66,7 @@ public class MixerController : MonoBehaviour, IDataPersistence
             audiomixer.SetFloat(AudioMixerGroup, dB);
         }
 
-        textFiled.text = Mathf.RoundToInt(VolumeValue * 10).ToString();
+        textFiled.text = Mathf.RoundToInt(VolumeValue * 10).ToString("00");
 
         DataPersistenceManager.instance.SaveGame();
     }
@@ -92,7 +92,7 @@ public class MixerController : MonoBehaviour, IDataPersistence
         {
             audiomixer.SetFloat(AudioMixerGroup, dB);
         }
-        textFiled.text = Mathf.RoundToInt(VolumeValue * 10).ToString();
+        textFiled.text = Mathf.RoundToInt(VolumeValue * 10).ToString("00");
     }
 
     public void SaveData(GameData data)

@@ -572,6 +572,8 @@ GameObject:
   - component: {fileID: 4476807633338538825}
   - component: {fileID: 1512184619029467852}
   - component: {fileID: 1321643212802744139}
+  - component: {fileID: 267840734977668012}
+  - component: {fileID: -4853268255774498197}
   m_Layer: 0
   m_Name: PlanActionPrefab2
   m_TagString: Untagged
@@ -1054,6 +1056,76 @@ MonoBehaviour:
       - m_Target: {fileID: 7199042322043686895}
         m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
         m_MethodName: ForceChangeWordSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+--- !u!114 &267840734977668012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968318278359937755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: a8aca89b20b8af342ae99857a49302d6, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7199042322043686895}
+        m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
+        m_MethodName: TakeReport
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+--- !u!114 &-4853268255774498197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968318278359937755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: c993878c00186bf4d9b196abbc165204, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7199042322043686895}
+        m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
+        m_MethodName: ProgressorSetNotFull
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

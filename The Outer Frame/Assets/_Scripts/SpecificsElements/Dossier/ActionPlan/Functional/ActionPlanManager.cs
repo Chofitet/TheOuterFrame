@@ -112,6 +112,15 @@ public class ActionPlanManager : MonoBehaviour
 
     public void TakeReport(Component sender, object obj)
     {
+        GameObject report = (GameObject)obj;
+
+        bool AgentDown = report.GetComponent<IndividualReportController>().GetRepoertype().GetKillAgent();
+
+        if (AgentDown)
+        {
+            return;
+        }
+
         IsProgressorFull = false;
     }
 
