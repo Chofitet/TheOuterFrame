@@ -29,8 +29,9 @@ public class MoveBoardElementsToPos : MonoBehaviour
     {
         UpdateFinalPositionRotation(null, null);
         conditions = GetComponent<IPlacedOnBoard>();
+        isPlaced = true;
 
-        
+
 
         if (conditions == null)
         {
@@ -80,7 +81,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
     void sarasa()
     {
-        Content.SetActive(false);
+        //Content.SetActive(false);
     }
 
     public void SetToReplace() => toReplece = true;

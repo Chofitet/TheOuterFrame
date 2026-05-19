@@ -35,11 +35,11 @@ public class StringConnectionController : MonoBehaviour
 
         startPosPin1 = AnimPin1.transform.position;
         startPosPin2 = AnimPin2.transform.position;
-        AnimPin2.transform.position = startPosPin1;
+        /*AnimPin2.transform.position = startPosPin1;
         lineRenderer.enabled = false;
         AnimPin1.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
         AnimPin2.transform.GetChild(0).GetComponent<MeshRenderer>().enabled=false;
-        Invoke("sarasa", 1.5f);
+        Invoke("sarasa", 1.5f);*/
     }
 
     void sarasa()

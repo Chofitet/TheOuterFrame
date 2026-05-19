@@ -8,6 +8,9 @@ using Unity.VisualScripting;
 
 public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 {
+    [SerializeField] bool Checked;
+    [SerializeField] bool Crossed;
+    [SerializeField] bool Inactive;
     [SerializeField] List<StateEnum> ActionsToAdd = new List<StateEnum>();
     [SerializeField] List<StringConnectionController> StringConnections = new List<StringConnectionController>();
     [SerializeField] List<ConditionalClass> Conditionals = new List<ConditionalClass>();
@@ -22,6 +25,22 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [HideInInspector][SerializeField] GameEvent OnMoveToOutOfView;
     [HideInInspector][SerializeField] GameEvent OnSetTakenPosit;
     [HideInInspector][SerializeField] GameObject CroosIcon;
+
+    
+
+
+    private void Start()
+    {
+        if (Checked)
+        {
+            CheckImage.SetActive(true);
+        }
+        else if (Crossed)
+        {
+            CroosIcon.SetActive(true);
+        }
+    }
+
     bool ActionIsDoing;
     bool isDone;
     private bool istaken;
@@ -90,6 +109,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         return true;
     }
 
+    
 
     void CheckIfDone()
     {
@@ -280,9 +300,14 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
     public void TriggerInactiveAnimation(Component sender, object obj)
     {
+       if (Inactive)
+        {
+            Wepaa();
+        }
+    }
 
-        if (!WasInactivate ) return;
-
+    void Wepaa()
+    {
         GetComponent<InactiveIdeaAnimation>().InactiveAnim();
     }
 
