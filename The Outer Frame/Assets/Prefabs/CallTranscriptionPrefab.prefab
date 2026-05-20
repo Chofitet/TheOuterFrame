@@ -601,12 +601,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtCall: {fileID: 7703025785835858413}
-  InfoPanel: {fileID: 8163302515818293033}
   txtFrom: {fileID: 4047278683354791455}
-  txtTo: {fileID: 5051632581294836078}
   txtAt: {fileID: 1031628272777757384}
-  InterseptedInfoPanel: {fileID: 0}
-  txtFromNoIntercepted: {fileID: 0}
   UploadBTN: {fileID: 5582075369032992792}
   DisposeBTN: {fileID: 4716700708955093945}
 --- !u!65 &2078201477349972005
@@ -700,6 +696,7 @@ MonoBehaviour:
   _string: 
   viewState: 0
   gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
 --- !u!114 &5454041765905835969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -740,6 +737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockCollider: {fileID: 3315099134244185667}
+  raycaster: {fileID: 6848851642761059838}
 --- !u!1 &4212380794060885381
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,7 +938,6 @@ GameObject:
   - component: {fileID: 3841848574295459417}
   - component: {fileID: 5874085747317351577}
   - component: {fileID: 6848851642761059838}
-  - component: {fileID: 6700180530222732481}
   m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
@@ -1034,21 +1031,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6700180530222732481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4970858808264341153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce2f7dd61910b4745811980029fff845, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blockingLayer:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!1 &5041817001018564779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,6 +1848,7 @@ MonoBehaviour:
   _string: 
   viewState: 0
   gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
 --- !u!1 &8163302515818293033
 GameObject:
   m_ObjectHideFlags: 0

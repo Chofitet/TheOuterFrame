@@ -200,6 +200,7 @@ public class PaperMoveController : MonoBehaviour
             currentPaper.transform.SetParent(auxTrans);
             SetPosition(auxTrans, Ease.InCubic);
             SetPaperState(PaperState.HoldingRight);
+            currentPaper.GetComponent<PaperStatesController>().SetPaperState(PaperState.HoldingRight);
             currentPaper.GetComponent<BoxCollider>().enabled = true;
         }
     }
