@@ -177,53 +177,66 @@ public class OverlayAnimation : MonoBehaviour
     // NEWS OUT
     // =====================================================
 
-    public void NewsOut()
+    public void NewsOut(bool isEmergency)
     {
         if (newsOutAnim != null && newsOutAnim.IsActive())
             newsOutAnim.Kill();
 
-        newsTitleUI.transform.localPosition = titleStartingPosition;
-        newsTextUI.transform.localPosition = textStartingPosition;
-
         newsOutAnim = DOTween.Sequence();
         overlayTweens.Add(newsOutAnim);
 
-        newsOutAnim
-            .PrependInterval(pauseTimes)
+        if (!isEmergency)
+        {
+            newsTitleUI.transform.localPosition = titleStartingPosition;
+            newsTextUI.transform.localPosition = textStartingPosition;
 
-            .AppendCallback(() =>
-            {
-                targetNewsTitle = titleOffscreenPositionRight;
-                targetNewsText = textOffscreenPositionLeft;
+            newsOutAnim
+                .PrependInterval(pauseTimes)
 
-                moveNewsTitle = true;
-                moveNewsText = true;
-                lerpTime = 0;
-            })
-            .JoinCallback(() =>
-            {
-                fadeUI(NewContentTMPtxt, 0, moveTimes *0.3f);
-                fadeUI(HeadlineTMPtxt, 0, moveTimes * 0.3f);
-                fadeUI(QuipTMPtxt, 0, moveTimes * 0.3f);
-                fadeUI(Headline2TMPtxt, 0, moveTimes * 0.3f);
-            })
+                .AppendCallback(() =>
+                {
+                    targetNewsTitle = titleOffscreenPositionRight;
+                    targetNewsText = textOffscreenPositionLeft;
 
-            .Append(
-                DOTween.To(
-                    () => lerpTime,
-                    x => lerpTime = x,
-                    1,
-                    moveTimes * acceleratedFactor
-                ).SetEase(Ease.InOutBack)
-            )
+                    moveNewsTitle = true;
+                    moveNewsText = true;
+                    lerpTime = 0;
+                })
+                .JoinCallback(() =>
+                {
+                    fadeUI(NewContentTMPtxt, 0, moveTimes * 0.3f);
+                    fadeUI(HeadlineTMPtxt, 0, moveTimes * 0.3f);
+                    fadeUI(QuipTMPtxt, 0, moveTimes * 0.3f);
+                    fadeUI(Headline2TMPtxt, 0, moveTimes * 0.3f);
+                })
 
-            .OnComplete(() =>
+                .Append(
+                    DOTween.To(
+                        () => lerpTime,
+                        x => lerpTime = x,
+                        1,
+                        moveTimes * acceleratedFactor
+                    ).SetEase(Ease.InOutBack)
+                )
+
+                .OnComplete(() =>
+                {
+                    moveNewsTitle = false;
+                    moveNewsText = false;
+
+                    OnAnimLayoutFinish?.Invoke(this, null);
+                });
+        }
+        else
+        {
+            newsOutAnim.PrependInterval(pauseTimes + moveTimes * acceleratedFactor).OnComplete(() =>
             {
                 moveNewsTitle = false;
                 moveNewsText = false;
 
                 OnAnimLayoutFinish?.Invoke(this, null);
-            });
+            }); ;
+        }
     }
 
 
@@ -269,8 +282,9 @@ public class OverlayAnimation : MonoBehaviour
     // PICS OUT
     // =====================================================
 
-    public void PicsOut()
+    public void PicsOut(bool isEmergency)
     {
+        if (isEmergency) return;
         if (pictureOutAnim != null && pictureOutAnim.IsActive())
             pictureOutAnim.Kill();
 
@@ -280,26 +294,29 @@ public class OverlayAnimation : MonoBehaviour
         pictureOutAnim = DOTween.Sequence();
         overlayTweens.Add(pictureOutAnim);
 
-        pictureOutAnim
-            .PrependInterval(pauseTimes)
+        if (!isEmergency)
+        {
+            pictureOutAnim
+                .PrependInterval(pauseTimes)
 
-            .AppendCallback(() =>
-            {
-                targetPics = picsOffscreenPosition;
-                movePics = true;
-                lerpTime = 0;
-            })
+                .AppendCallback(() =>
+                {
+                    targetPics = picsOffscreenPosition;
+                    movePics = true;
+                    lerpTime = 0;
+                })
 
-            .Append(
-                DOTween.To(
-                    () => lerpTime,
-                    x => lerpTime = x,
-                    1,
-                    moveTimes * acceleratedFactor
-                ).SetEase(Ease.InOutBack)
-            )
+                .Append(
+                    DOTween.To(
+                        () => lerpTime,
+                        x => lerpTime = x,
+                        1,
+                        moveTimes * acceleratedFactor
+                    ).SetEase(Ease.InOutBack)
+                )
 
-            .OnComplete(() => movePics = false);
+                .OnComplete(() => movePics = false);
+        }
     }
 
 
@@ -347,8 +364,9 @@ public class OverlayAnimation : MonoBehaviour
     // QUIP OUT
     // =====================================================
 
-    public void QuipOut()
+    public void QuipOut(bool isEmergency)
     {
+        if (isEmergency) return;
         if (quipAnim != null && quipAnim.IsActive())
             quipAnim.Kill();
 
@@ -357,6 +375,7 @@ public class OverlayAnimation : MonoBehaviour
 
         quipAnim = DOTween.Sequence();
         overlayTweens.Add(quipAnim);
+
 
         quipAnim
             .PrependInterval(pauseTimes)

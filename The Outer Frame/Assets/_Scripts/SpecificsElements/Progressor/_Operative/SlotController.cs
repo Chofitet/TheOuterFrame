@@ -52,6 +52,7 @@ public class SlotController : MonoBehaviour
 
     bool isRecoveryAgent;
     StateEnum isOtherGroupActionDoing;
+    bool thereAreSomethigOnPrinter;
 
     TimeData timeComplete;
     bool inFillFast;
@@ -621,6 +622,10 @@ public class SlotController : MonoBehaviour
     public bool GetisAMultiAction() { return isAMultiAction; }
 
     public int GetUsedAgents() { return AgentsUsed; }
+
+    public void SetthereAreSomethigOnPrinter(bool x) { thereAreSomethigOnPrinter = x; }
+
+    public bool GetthereAreSomethigOnPrinter() { return thereAreSomethigOnPrinter; }    
 
     public TimeData GetIsAVilifyBlockedAction() {
         if (isAVilifyBlockedAction) return IsVilifyLocked;

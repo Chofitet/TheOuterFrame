@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ActionPlan : MonoBehaviour
 {
@@ -272,6 +273,18 @@ public class ActionPlan : MonoBehaviour
 
     public void ProgressorSetNotFull(Component sender, object obj)
     {
+        if (obj != null)
+        {
+            if (obj is SlotController slotController)
+            {
+                if (slotController.GetthereAreSomethigOnPrinter()) return;
+            }
+            else if (obj is GameObject slotControllerGO)
+            {
+                if (slotControllerGO.gameObject.GetComponent<SlotController>().GetthereAreSomethigOnPrinter()) return;
+            }
+        }
+
         if (!AgentDownInlastReportTaked)
         {
             isProgressorFull = false;

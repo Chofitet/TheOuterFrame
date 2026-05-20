@@ -89,13 +89,11 @@ public class ChannelController : MonoBehaviour
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, minutesToPassTonextNew);
 
 
-        OverlayAnims.NewsOut();
-        OverlayAnims.PicsOut();
-        OverlayAnims.QuipOut();
-        OnChangeReporterAnim?.Invoke(this, null);
+        OverlayAnims.NewsOut(New.GetIfIsAEmergency());
+        OverlayAnims.PicsOut(New.GetIfIsAEmergency());
+        OverlayAnims.QuipOut(New.GetIfIsAEmergency());
+        if(!New.GetIfIsAEmergency()) OnChangeReporterAnim?.Invoke(this, null);
 
-
-        
 
         _new.SetWasStreamed();
 

@@ -269,7 +269,9 @@ public class ProgressorModuleController : MonoBehaviour
     public void ReportTaked(Component sender, object obj)
     {
         GameObject report = (GameObject)obj;
-        
+
+        if (sender is PrinterController)  slot.SetthereAreSomethigOnPrinter(false);
+
         if (report == slot.gameObject)
         {
             reportTaked();
@@ -306,7 +308,8 @@ public class ProgressorModuleController : MonoBehaviour
     {
         TimeManager.timeManager.NormalizeTime();
         slot.cancelTryAbortBlink();
-      
+        slot.SetthereAreSomethigOnPrinter(true);
+
         if (sender.gameObject == PrintBTN)
         {
             if (!isPrinterFull)
