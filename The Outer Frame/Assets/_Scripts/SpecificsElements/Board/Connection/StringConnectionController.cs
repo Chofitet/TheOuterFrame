@@ -53,8 +53,8 @@ public class StringConnectionController : MonoBehaviour
 
     public void UpdatePositionRotation(Component sender, object obj)
     {
-       startPosPin1 = AnimPin1.transform.position;
-        startPosPin2 = AnimPin2.transform.position;
+      /*startPosPin1 = AnimPin1.transform.position;
+        startPosPin2 = AnimPin2.transform.position;*/
         
     }
 
