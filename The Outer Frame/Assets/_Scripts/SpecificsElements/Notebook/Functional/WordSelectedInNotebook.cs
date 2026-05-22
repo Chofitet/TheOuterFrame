@@ -53,6 +53,28 @@ public class WordSelectedInNotebook : MonoBehaviour
         if(WordsFound.Count == 4 && isInTutorial) OnTaked4Words?.Invoke(this, null);
     }
 
+    bool AddWordsToRememberOnce;
+    public void AddWordsToRemember(Component sender, object obj)
+    {
+        if (AddWordsToRememberOnce) return;
+
+        List<WordData> wordsToRemember = (List<WordData>)obj;
+
+        StartCoroutine(AddWordsToRememberCoroutine(wordsToRemember));
+
+        AddWordsToRememberOnce = true;
+    }
+
+    IEnumerator AddWordsToRememberCoroutine(List<WordData> wordsToRemember)
+    {
+        foreach (WordData word in wordsToRemember)
+        {
+            AddWordToNotebook(null, word);
+
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
     void AddWord(WordData word, bool isDirectly = false)
     {
         OnDelayNotChangeView?.Invoke(this, 1f);
