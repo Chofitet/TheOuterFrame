@@ -12,6 +12,7 @@ public class WordsToRememberManager : MonoBehaviour
     List<WordData> ChosenMemberWords = new List<WordData>(); // Internal List of Words Selected to remember
     [SerializeField] GameEvent OnAddWordsToRemember;
     [SerializeField] GameEvent OnShowRememberWordsInVoid;
+    [SerializeField] GameEvent OnChangeScene;
 
 
     private void Awake()
@@ -25,7 +26,7 @@ public class WordsToRememberManager : MonoBehaviour
 
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this.gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -40,6 +41,9 @@ public class WordsToRememberManager : MonoBehaviour
 
             case "RememberVoid":
                 CheckWordsOnRememberVoid();
+                break;
+            case "LoseMenu":
+                CheckEnterTheVoid();
                 break;
         }
     }
@@ -67,6 +71,19 @@ public class WordsToRememberManager : MonoBehaviour
         WordData memberWord = (WordData) obj;
 
         ChosenMemberWords.Add(memberWord);
+    }
+
+    void CheckEnterTheVoid()
+    {
+        foreach (WordData memberWords in AllMemberWords)
+        {
+            if (memberWords.GetIsFound())
+            {
+                OnChangeScene?.Invoke(this, "RememberVoid");
+                return;
+            }
+        }
+        OnChangeScene?.Invoke(this, "LoadingScreen");
     }
 
 }
