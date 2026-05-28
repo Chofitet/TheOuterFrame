@@ -768,6 +768,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1310269473}
   - component: {fileID: 1310269474}
+  - component: {fileID: 1310269475}
   m_Layer: 5
   m_Name: WordToRememberManager
   m_TagString: Untagged
@@ -807,11 +808,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9ab859d42193c40b556530ebf2b9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WordsToRemember:
-  - {fileID: 11400000, guid: c99dd3a3fbf54c841950ceca8dd616e3, type: 2}
-  - {fileID: 11400000, guid: 5ac0347ad45d75548918bc3e64745199, type: 2}
   WordToRememberPrefab: {fileID: 2306723103316533188, guid: d1d33a8f7f39972478d74aa4dedfb530, type: 3}
   Anchors: {fileID: 1424102956}
+--- !u!114 &1310269475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310269472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 276a7b3baa47f3c4fb94fecdd86015b2, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1310269474}
+        m_TargetAssemblyTypeName: WordToRememberInstantiator, Assembly-CSharp
+        m_MethodName: ShowRememberWordsInVoid
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
 --- !u!1 &1424102956
 GameObject:
   m_ObjectHideFlags: 0

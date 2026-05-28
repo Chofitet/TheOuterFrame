@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class WordToRememberInstantiator : MonoBehaviour
 {
-    [SerializeField] List<WordData> WordsToRemember;
     [SerializeField] GameObject WordToRememberPrefab;
     [SerializeField] GameObject Anchors;
- 
+
     private void Start()
     {
+        
+    } 
+
+    public void ShowRememberWordsInVoid(Component sender,object obj)
+    { 
+        List<WordData> WordsToRemember = (List<WordData>)obj;
+
         Transform[] anchorTransforms = Anchors.GetComponentsInChildren<Transform>();
 
         for (int i = 0; i < WordsToRemember.Count; i++)

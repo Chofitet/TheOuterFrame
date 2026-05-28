@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4111746491468630510}
   - component: {fileID: 2291186452869489074}
   m_Layer: 5
-  m_Name: WordToRemember
+  m_Name: MemberWord
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textField: {fileID: 579326226542764342}
+  OnAddMemberWord: {fileID: 11400000, guid: 047a3b9023a1d634583b607346eab67b, type: 2}
 --- !u!1 &5398700294632969434
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +173,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2291186452869489074}
+        m_TargetAssemblyTypeName: WordToRemember, Assembly-CSharp
+        m_MethodName: AddWordToMemberList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2233216980023359896}
         m_TargetAssemblyTypeName: TriggerArrayOfEvents, Assembly-CSharp
         m_MethodName: TriggerEvents
