@@ -68,9 +68,16 @@ public class WordsToRememberManager : MonoBehaviour
 
     public void SetWordsToRemember(Component sender,object obj)
     {
-        WordData memberWord = (WordData) obj;
+        GameObject memberWord = (GameObject) obj;
 
-        ChosenMemberWords.Add(memberWord);
+        ChosenMemberWords.Add(memberWord.GetComponent<WordToRemember>().GetWord());
+    }
+
+    public void UnsetWordsToRemember(Component sender, object obj)
+    {
+        GameObject memberWord = (GameObject)obj;
+
+        ChosenMemberWords.Remove(memberWord.GetComponent<WordToRemember>().GetWord());
     }
 
     void CheckEnterTheVoid()
