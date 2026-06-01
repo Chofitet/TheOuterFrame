@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5586237898383205550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4452585970146717320}
+  - component: {fileID: 2732603500979759520}
+  - component: {fileID: 1177952497098039011}
+  - component: {fileID: 5997567024593055360}
+  m_Layer: 0
+  m_Name: RememberVoidManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4452585970146717320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586237898383205550}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 35.31917, y: 37.977753, z: 20.483376}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2732603500979759520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586237898383205550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65b3e4862d61334e82a53ab79e5e122, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugMode: 0
+  AllMemberWords:
+  - {fileID: 11400000, guid: 5ac0347ad45d75548918bc3e64745199, type: 2}
+  - {fileID: 11400000, guid: c81ef9c7d599e5041b21070cc79fc8af, type: 2}
+  - {fileID: 11400000, guid: c99dd3a3fbf54c841950ceca8dd616e3, type: 2}
+  OnAddWordsToRemember: {fileID: 11400000, guid: 9d164848125968b4b8a58b8b7bc95a2c, type: 2}
+  OnShowRememberWordsInVoid: {fileID: 11400000, guid: 276a7b3baa47f3c4fb94fecdd86015b2, type: 2}
+  OnChangeScene: {fileID: 11400000, guid: e069a67fbe9177e4db980499aaedcb61, type: 2}
+--- !u!114 &1177952497098039011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586237898383205550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 047a3b9023a1d634583b607346eab67b, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2732603500979759520}
+        m_TargetAssemblyTypeName: WordsToRememberManager, Assembly-CSharp
+        m_MethodName: SetWordsToRemember
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+--- !u!114 &5997567024593055360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586237898383205550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: c29ae9a2091246a4ebf33cc5e77dd115, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2732603500979759520}
+        m_TargetAssemblyTypeName: WordsToRememberManager, Assembly-CSharp
+        m_MethodName: UnsetWordsToRemember
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}

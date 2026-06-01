@@ -11,12 +11,7 @@ public class WordToRememberInstantiator : MonoBehaviour
     [SerializeField] GameEvent OnChangeScene;
     [SerializeField] List<WordData> DebugMemberWords;
     [SerializeField] List<Transform> Pivots;
-
-    private void Start()
-    {
-        
-    } 
-
+    bool isInBackView;
     public void ShowRememberWordsInVoid(Component sender,object obj)
     { 
         List<WordData> WordsToRemember = (List<WordData>)obj;
@@ -67,9 +62,29 @@ public class WordToRememberInstantiator : MonoBehaviour
 
         Transform pivot = GetEmptyPlace();
 
-        memberWord.transform.SetParent(pivot);
-        MoveMemberWordToSpaceSequence.Append(memberWord.transform.DOMove(pivot.position, 0.3f))
+        if (MoveMemberWordToSpaceSequence != null & MoveMemberWordToSpaceSequence.IsActive()) MoveMemberWordToSpaceSequence.Kill();
+
+        MoveMemberWordToSpaceSequence = DOTween.Sequence();
+
+        if (isInBackView)
+        {
+            MoveMemberWordToSpaceSequence.PrependInterval(0.5f)
+                .AppendCallback(()=>
+                {
+                    memberWord.transform.SetParent(pivot);
+                })
+            .Append(memberWord.transform.DOMove(pivot.position, 0.3f))
               .Join(memberWord.transform.DORotate(pivot.rotation.eulerAngles, 0.3f));
+        }
+        else
+        {
+            memberWord.transform.SetParent(pivot);
+            MoveMemberWordToSpaceSequence.Append(memberWord.transform.DOMove(pivot.position, 0.3f))
+              .Join(memberWord.transform.DORotate(pivot.rotation.eulerAngles, 0.3f));
+        }
+
+        
+        
     }
 
     Transform GetEmptyPlace()
@@ -80,5 +95,15 @@ public class WordToRememberInstantiator : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void IsInBackView(Component sender, object obj)
+    {
+        isInBackView = true;
+    }
+
+    public void IsInDefaultView(Component sender, object obj)
+    {
+        isInBackView = false;
     }
 }

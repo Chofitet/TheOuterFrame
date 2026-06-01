@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class WordsToRememberManager : MonoBehaviour
 {
-    public static WordsToRememberManager Instance;
+    public static WordsToRememberManager instance;
 
+    [SerializeField] bool DebugMode;
     [SerializeField] List<WordData> AllMemberWords = new List<WordData>();
     List<WordData> MemberWordsCandidates = new List<WordData>(); //Internal List of memeberWords filter by founded and they are candidates
     List<WordData> ChosenMemberWords = new List<WordData>(); // Internal List of Words Selected to remember
@@ -17,16 +18,15 @@ public class WordsToRememberManager : MonoBehaviour
 
     private void Awake()
     {
-        // Evita duplicados
-        if (Instance != null && Instance != this)
+        if (instance != null)
         {
-            Destroy(gameObject);
+            Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
+            Destroy(this.gameObject);
             return;
         }
-
-        Instance = this;
-
+        instance = this;
         DontDestroyOnLoad(this.gameObject);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -57,6 +57,7 @@ public class WordsToRememberManager : MonoBehaviour
     void CheckWordsOnRememberVoid()
     {
         MemberWordsCandidates.Clear();
+        ChosenMemberWords.Clear();
 
         foreach (WordData memberWords in AllMemberWords)
         {
@@ -64,13 +65,17 @@ public class WordsToRememberManager : MonoBehaviour
         }
 
         OnShowRememberWordsInVoid?.Invoke(this, MemberWordsCandidates);
+        if (DebugMode) OnShowRememberWordsInVoid?.Invoke(this, AllMemberWords);
     }
 
     public void SetWordsToRemember(Component sender,object obj)
     {
         GameObject memberWord = (GameObject) obj;
 
-        ChosenMemberWords.Add(memberWord.GetComponent<WordToRemember>().GetWord());
+
+        WordData word = memberWord.GetComponent<WordToRemember>().GetWord();
+
+        if (!ChosenMemberWords.Contains(word))ChosenMemberWords.Add(word);
     }
 
     public void UnsetWordsToRemember(Component sender, object obj)

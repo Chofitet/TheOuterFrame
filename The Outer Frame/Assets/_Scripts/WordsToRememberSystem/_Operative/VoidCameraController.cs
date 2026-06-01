@@ -45,6 +45,8 @@ public class VoidCameraController : MonoBehaviour
     public void BackToTheFirstCam(Component sender, object obj)
     {
         SetPriority(0);
+        if (ColdDownClickCoroutine != null) StopCoroutine(ColdDownClickCoroutine);
+        waitForColdDown = false;
         currentClicks = 0;
     }
 
