@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 31003330}
   - component: {fileID: 31003336}
   m_Layer: 5
-  m_Name: RetryBTN
+  m_Name: ContinueBTN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e069a67fbe9177e4db980499aaedcb61, type: 2}
   delay: 0
   SomethingToPass: {fileID: 0}
-  SomeStringToPass: LoadingScreen
+  SomeStringToPass: RememberVoid
 --- !u!114 &31003333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1192,11 +1192,11 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1658136144}
-  m_Father: {fileID: 2103024500}
+  m_Father: {fileID: 1392213749}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000019073486, y: -63}
+  m_AnchoredPosition: {x: -0.5, y: -4.3}
   m_SizeDelta: {x: 123.4971, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &313980239
@@ -2103,7 +2103,7 @@ GameObject:
   - component: {fileID: 728913036}
   - component: {fileID: 728913037}
   m_Layer: 5
-  m_Name: PlayBTN
+  m_Name: StartBTN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2556,6 +2556,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785738886}
   m_CullTransparentMesh: 1
+--- !u!1001 &936056194
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 35.31917
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 37.977753
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.483376
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4452585970146717320, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5586237898383205550, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
+      propertyPath: m_Name
+      value: RememberVoidManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e0cea010d0a66d44dae0656c5458aa06, type: 3}
 --- !u!1 &950901689
 GameObject:
   m_ObjectHideFlags: 0
@@ -2725,11 +2782,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 88334461}
-  m_Father: {fileID: 2103024500}
+  m_Father: {fileID: 1392213749}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -104.999985}
+  m_AnchoredPosition: {x: -0.5000067, y: -46.300014}
   m_SizeDelta: {x: 90, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1100718997
@@ -3455,6 +3512,43 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+--- !u!1 &1392213748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1392213749}
+  m_Layer: 5
+  m_Name: Credits/LeavePanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1392213749
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392213748}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 313980238}
+  - {fileID: 1100718996}
+  m_Father: {fileID: 2103024500}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.00076675, y: -62.1}
+  m_SizeDelta: {x: 171.94, y: 44.8}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1417975425
 GameObject:
   m_ObjectHideFlags: 0
@@ -9498,8 +9592,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 313980238}
-  - {fileID: 1100718996}
+  - {fileID: 1392213749}
   - {fileID: 428148460}
   - {fileID: 728913030}
   - {fileID: 31003329}
@@ -9555,13 +9648,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103024499}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b1ce5304ee3d6b439af13d7c2e08779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonNewGame: {fileID: 728913029}
-  buttonRetry: {fileID: 31003328}
+  buttonContinue: {fileID: 31003328}
+  Credits_LeavePanel: {fileID: 1392213748}
 --- !u!1 &2107950492
 GameObject:
   m_ObjectHideFlags: 0
@@ -9723,3 +9816,4 @@ SceneRoots:
   - {fileID: 1660321688}
   - {fileID: 5106592430481949555}
   - {fileID: 1306441488}
+  - {fileID: 936056194}

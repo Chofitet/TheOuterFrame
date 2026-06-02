@@ -21,8 +21,8 @@ public class TutorialManager : MonoBehaviour, IDataPersistence
     {
         OnSetTutorial?.Invoke(this, false);
         isInTutorial = false;
-        DataPersistenceManager.instance.NewGame();
-        DataPersistenceManager.instance.SaveGame();
+       // DataPersistenceManager.instance.NewGame();
+       // DataPersistenceManager.instance.SaveGame();
     }
 
     public void LoadData(GameData data)

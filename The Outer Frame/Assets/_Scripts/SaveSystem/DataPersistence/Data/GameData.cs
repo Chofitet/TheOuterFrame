@@ -7,6 +7,8 @@ public class GameData
 {
     public long lastUpdated;
     public bool TutorialComplete;
+    public bool ContingencyContinue;
+    public List<WordData> LastMemberWords;
 
     public float MusicVolume;
     public float SoundVolume;
@@ -14,8 +16,8 @@ public class GameData
     // the game starts with when there's no data to load
     public GameData() 
     {
-
-        TutorialComplete = true;
+        //TutorialComplete = true;
+        ContingencyContinue = false;
         MusicVolume = 1;
         SoundVolume = 0;
     }

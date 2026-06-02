@@ -15,7 +15,7 @@ public class WordsToRememberManager : MonoBehaviour
     [SerializeField] GameEvent OnShowRememberWordsInVoid;
     [SerializeField] GameEvent OnChangeScene;
 
-
+    bool isInRememberVoid;
     private void Awake()
     {
         if (instance != null)
@@ -33,6 +33,7 @@ public class WordsToRememberManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        isInRememberVoid = false;
         switch (scene.name)
         {
             case "Level1":
@@ -40,6 +41,7 @@ public class WordsToRememberManager : MonoBehaviour
                 break;
 
             case "RememberVoid":
+                isInRememberVoid = true;
                 CheckWordsOnRememberVoid();
                 break;
             case "LoseMenu":
@@ -50,6 +52,7 @@ public class WordsToRememberManager : MonoBehaviour
 
     void CheckWordOnLevel1()
     {
+        DataPersistenceManager.instance.ContingencyContinue(false, null);
         OnAddWordsToRemember?.Invoke(this, ChosenMemberWords);
     }
 
@@ -64,8 +67,21 @@ public class WordsToRememberManager : MonoBehaviour
             if(memberWords.GetIsFound()) MemberWordsCandidates.Add(memberWords);
         }
 
+        DataPersistenceManager dataPersistenceManager = DataPersistenceManager.instance;
+
+        if (dataPersistenceManager != null)
+        {
+            if (dataPersistenceManager.GetGameData().ContingencyContinue)
+            {
+                MemberWordsCandidates = new List<WordData>(DataPersistenceManager.instance.GetGameData().LastMemberWords);
+            }
+        }
+
         OnShowRememberWordsInVoid?.Invoke(this, MemberWordsCandidates);
         if (DebugMode) OnShowRememberWordsInVoid?.Invoke(this, AllMemberWords);
+
+        DataPersistenceManager.instance.ContingencyContinue(true,MemberWordsCandidates);
+
     }
 
     public void SetWordsToRemember(Component sender,object obj)

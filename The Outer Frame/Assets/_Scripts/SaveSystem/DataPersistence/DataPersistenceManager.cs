@@ -29,9 +29,9 @@ public class DataPersistenceManager : MonoBehaviour
 
     public static DataPersistenceManager instance { get; private set; }
 
-    private void Awake() 
+    private void Awake()
     {
-        if (instance != null) 
+        if (instance != null)
         {
             Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
             Destroy(this.gameObject);
@@ -40,7 +40,7 @@ public class DataPersistenceManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        if (disableDataPersistence) 
+        if (disableDataPersistence)
         {
             Debug.LogWarning("Data Persistence is currently disabled!");
         }
@@ -50,23 +50,23 @@ public class DataPersistenceManager : MonoBehaviour
         InitializeSelectedProfileId();
     }
 
-    private void OnEnable() 
+    private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnDisable() 
+    private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
 
         // start up the auto saving coroutine
-        if (autoSaveCoroutine != null) 
+        if (autoSaveCoroutine != null)
         {
             StopCoroutine(autoSaveCoroutine);
         }
@@ -74,7 +74,7 @@ public class DataPersistenceManager : MonoBehaviour
         SaveGame();
     }
 
-    public void ChangeSelectedProfileId(string newProfileId) 
+    public void ChangeSelectedProfileId(string newProfileId)
     {
         // update the profile to use for saving and loading
         this.selectedProfileId = newProfileId;
@@ -82,7 +82,7 @@ public class DataPersistenceManager : MonoBehaviour
         LoadGame();
     }
 
-    public void DeleteProfileData(string profileId) 
+    public void DeleteProfileData(string profileId)
     {
         // delete the data for this profile id
         dataHandler.Delete(profileId);
@@ -92,9 +92,9 @@ public class DataPersistenceManager : MonoBehaviour
         LoadGame();
     }
 
-    public void ResetSpecificFields(string profile, bool keepVolumeSettings = false,bool keepTutorial = false)
+    public void ResetSpecificFields(string profile, bool keepVolumeSettings = false, bool keepTutorial = false)
     {
-        if (gameData == null) return;
+       /* if (gameData == null) return;
 
         bool oldTutorial = gameData.TutorialComplete;
         float oldMusic = gameData.MusicVolume;
@@ -111,8 +111,17 @@ public class DataPersistenceManager : MonoBehaviour
             gameData.SoundVolume = oldSound;
         }
 
-        SaveGame();
+        SaveGame();*/
+    } 
 
+    public void ContingencyContinue(bool x,List<WordData> LastMemberWords)
+    {
+        if (gameData == null) return;
+        gameData.ContingencyContinue = x;
+        if (LastMemberWords == null) gameData.LastMemberWords.Clear();
+        else gameData.LastMemberWords = new List<WordData>(LastMemberWords);
+
+        SaveGame();
     }
 
     private void InitializeSelectedProfileId() 
@@ -212,6 +221,8 @@ public class DataPersistenceManager : MonoBehaviour
     {
         return dataHandler.LoadAllProfiles();
     }
+
+    public GameData GetGameData() { return gameData; }
 
     private IEnumerator AutoSave() 
     {

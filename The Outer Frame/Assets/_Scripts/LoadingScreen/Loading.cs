@@ -20,7 +20,10 @@ public class Loading : MonoBehaviour
             progressBar.fillAmount = 0;
 
         }
-        else progressBar.gameObject.SetActive(false);
+        else
+        {
+            progressBar.gameObject.SetActive(false);
+        }
     }
 
     public void UpdateProgress(float v)

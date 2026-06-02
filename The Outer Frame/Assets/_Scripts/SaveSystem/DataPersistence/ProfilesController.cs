@@ -6,27 +6,25 @@ using UnityEngine.UI;
 
 public class ProfilesController : MonoBehaviour
 {
-    [SerializeField] GameObject buttonNewGame;
-    [SerializeField] GameObject buttonRetry;
+    [SerializeField] GameObject buttonContinue;
+    [SerializeField] GameObject Credits_LeavePanel;
 
     private void Start()
     {
-        if(DataPersistenceManager.instance.HasGameData())
+        if (!DataPersistenceManager.instance.HasGameData())
         {
-            buttonNewGame.SetActive(true);
-            buttonRetry.GetComponent<RectTransform>().localPosition = new Vector3(0, 26.6f, 0);
-            buttonRetry.transform.GetChild(0).GetComponent<TMP_Text>().text = "RETRY";
-            buttonRetry.transform.GetComponent<TriggerArrayOfEvents>().ChangeSomeStringToPass("LoadingScreen");
-            buttonNewGame.GetComponent<Button>().onClick.AddListener(() => DataPersistenceManager.instance.ResetSpecificFields("0",false,true));
-            //buttonNewGame.GetComponent<Button>().onClick.AddListener(DataPersistenceManager.instance.NewGame);
-            //buttonNewGame.GetComponent<Button>().onClick.AddListener(DataPersistenceManager.instance.SaveGame);
+            DataPersistenceManager.instance.NewGame();
+            DataPersistenceManager.instance.SaveGame();
         }
         else
         {
-            
-           // buttonRetry.GetComponent<Button>().onClick.AddListener(DataPersistenceManager.instance.NewGame);
-           // buttonRetry.GetComponent<Button>().onClick.AddListener(DataPersistenceManager.instance.SaveGame);
+            DataPersistenceManager.instance.ChangeSelectedProfileId("0");
+        }
 
+        if(!DataPersistenceManager.instance.GetGameData().ContingencyContinue)
+        {
+            Credits_LeavePanel.transform.localPosition = new Vector3(Credits_LeavePanel.transform.localPosition.x, -13.3f, Credits_LeavePanel.transform.localPosition.x);
+            buttonContinue.SetActive(false);
         }
 
     }
