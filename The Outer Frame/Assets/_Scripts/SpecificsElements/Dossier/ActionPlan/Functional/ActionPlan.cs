@@ -27,9 +27,11 @@ public class ActionPlan : MonoBehaviour
     StateEnum state;
     bool isOneToggleSelected;
     bool isProgressorFull;
+    bool AllModulesAreTaked;
     bool isFirstTimeIdeaAdded;
     bool isSecodToLastActionDoit;
     IConditionable condition;
+
 
     public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded, WordData _FinalActionWord, StateEnum _FinalActionState, StateEnum _FinalActionIdea, ScriptableObject _condition, bool _isSecodToLastActionDoit)
     {
@@ -37,6 +39,7 @@ public class ActionPlan : MonoBehaviour
         InstantiateActionRows(ActionList);
         ApproveBtn.enabled = false;
         isProgressorFull = _progressorfull;
+        if (isProgressorFull) AllModulesAreTaked = true;
         FinalActionWord = _FinalActionWord;
         FinalActionState = _FinalActionState;
         FinalActionIdea = _FinalActionIdea;
@@ -305,12 +308,15 @@ public class ActionPlan : MonoBehaviour
 
         bool AgentDown = report.GetComponent<IndividualReportController>().GetRepoertype().GetKillAgent();
 
-        if (AgentDown)
+        bool reportCompleted = report.GetComponent<IndividualReportController>().GetCompleted();
+
+        if (AgentDown && AllModulesAreTaked && reportCompleted)
         {
             AgentDownInlastReportTaked = true;
             return;
         };
 
+        AllModulesAreTaked = false;
         isProgressorFull = false;
     }
 

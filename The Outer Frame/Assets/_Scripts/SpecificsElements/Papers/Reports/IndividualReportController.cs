@@ -93,6 +93,6 @@ public class IndividualReportController : MonoBehaviour
         }
     }
 
-    
+    public bool GetCompleted() { return isComplete; }
 
 }
