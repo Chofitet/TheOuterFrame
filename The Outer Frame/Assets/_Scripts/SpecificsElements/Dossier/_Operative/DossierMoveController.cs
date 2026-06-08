@@ -30,6 +30,7 @@ public class DossierMoveController : MonoBehaviour
     Sequence AddIdeaSequence;
     Sequence AddAPpileSequence;
     Sequence MoveDossierSequence;
+    bool BlockDossierUp;
 
 
     bool isAddingIdea;
@@ -41,6 +42,7 @@ public class DossierMoveController : MonoBehaviour
 
     void Update()
     {
+        
         if (isFollowingTarget && TakenPosition != null)
         {
             transform.position = Vector3.Lerp(transform.position, TakenPosition.position, lerpTime);
@@ -56,8 +58,14 @@ public class DossierMoveController : MonoBehaviour
 
     public void ChangeToBoardAnim()
     {
+        
         InitShowInPalcePos = InitShowInBoardPosition;
         FinalShowInPlacePos = FinalShowInBoardPosition;
+    }
+
+    public void SetTrueBlockDossierUp(Component Sender, object obj)
+    {
+        BlockDossierUp = true;
     }
 
     public void ShowInBoard(Component sender, object obj)
@@ -173,6 +181,11 @@ public class DossierMoveController : MonoBehaviour
 
     public void TakeDossier(Component sender, object obj)
     {
+        if (BlockDossierUp)
+        {
+            BlockDossierUp = false;
+            return;
+        }
         if (isReturningFromProgressor)
         {
             TakeDossierFromProgressor();

@@ -51,15 +51,15 @@ public class ViewManager : MonoBehaviour
     ViewStates StuckView;
     ViewStates? nextViewRequest;
 
+    Coroutine startViewCoroutine;
     private void Start()
     {
-        DisableInput(null, null);
-        Invoke("EnableInputInStart", 0.6f);
+        
         currentDelay = delayBetweenViews;
         if (!isInTutorial)
         {
             OnDisableInput?.Invoke(this, null);
-            Invoke("SetStartView", 0.6f);
+            startViewCoroutine = StartCoroutine(SetStartView(0.6f,0f));
         }
         else
         {
@@ -67,15 +67,23 @@ public class ViewManager : MonoBehaviour
         }
     }
 
-    void SetStartView()
+    IEnumerator SetStartView(float timeDelayView, float timeDelayEnableInput)
     {
+        DisableInput(null, null);
+        yield return new WaitForSeconds(timeDelayView);
         OnEnableInput?.Invoke(this, null);
         UpdateViewState(null, StartView);
+        yield return new WaitForSeconds(timeDelayEnableInput);
+        EnableInput(null, null);
     }
 
-    void EnableInputInStart()
+    public void SetStartView(Component sender, object obj)
     {
-        EnableInput(null, null);
+        if (startViewCoroutine != null) StopCoroutine(startViewCoroutine);
+
+        StartViewData data = (StartViewData)obj;
+        StartView = data.view;
+        startViewCoroutine = StartCoroutine(SetStartView(data.ViewTime, data.InputDisableTime));
     }
 
     void Update()
@@ -472,4 +480,17 @@ public enum ViewStates
     DrawerView,
     TutorialView,
     BoardZoomView
+}
+
+public class StartViewData
+{
+    public ViewStates view;
+    public float ViewTime;
+    public float InputDisableTime;
+    public StartViewData(ViewStates _view,float _ViewTime, float _InputDisableTime)
+    {
+        view = _view;
+        InputDisableTime = _InputDisableTime;
+        ViewTime = _ViewTime;
+    }
 }

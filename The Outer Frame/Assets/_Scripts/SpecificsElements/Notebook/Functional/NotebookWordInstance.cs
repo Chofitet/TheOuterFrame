@@ -12,6 +12,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] GameEvent OnWritingShakeNotebook;
     [SerializeField] GameEvent OnCrossWordSound;
     [SerializeField] GameEvent OnWritingNotebookSound;
+    [SerializeField] GameEvent OnWritingWordFinished;
     [SerializeField] Button btn;
     [SerializeField] Transform EraseParticles;
     [SerializeField] GameEvent OnButtonElement;
@@ -67,7 +68,7 @@ public class NotebookWordInstance : MonoBehaviour
     {
         var fade = text.gameObject.GetComponent<FadeWordsEffect>();
         fade.OnComplete -= OnWritingFinished;
-
+        OnWritingWordFinished?.Invoke(this, wordReference);
         processManager.UnregisterProcess();
     }
 

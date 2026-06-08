@@ -203,6 +203,12 @@ public class DataPersistenceManager : MonoBehaviour
         SaveGame();
     }
 
+    public void ResetRememberWords()
+    {
+        gameData.LastMemberWords.Clear();
+        gameData.ContingencyContinue = false;
+    }
+
     private List<IDataPersistence> FindAllDataPersistenceObjects() 
     {
         // FindObjectsofType takes in an optional boolean to include inactive gameobjects

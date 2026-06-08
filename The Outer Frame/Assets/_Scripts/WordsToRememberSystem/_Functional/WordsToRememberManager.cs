@@ -39,7 +39,6 @@ public class WordsToRememberManager : MonoBehaviour
             case "Level1":
                 CheckWordOnLevel1();
                 break;
-
             case "RememberVoid":
                 isInRememberVoid = true;
                 CheckWordsOnRememberVoid();
@@ -47,13 +46,21 @@ public class WordsToRememberManager : MonoBehaviour
             case "LoseMenu":
                 CheckEnterTheVoid();
                 break;
+            case "MainMenu":
+                MemberWordsCandidates.Clear();
+                ChosenMemberWords.Clear();
+                break;
+
         }
     }
 
     void CheckWordOnLevel1()
     {
         DataPersistenceManager.instance.ContingencyContinue(false, null);
-        OnAddWordsToRemember?.Invoke(this, ChosenMemberWords);
+
+        if(!DebugMode) OnAddWordsToRemember?.Invoke(this, ChosenMemberWords);
+        else OnAddWordsToRemember?.Invoke(this, AllMemberWords);
+
     }
 
     //Construct the Candidate list of memember word entering the void
