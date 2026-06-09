@@ -58,8 +58,14 @@ public class WordsToRememberManager : MonoBehaviour
     {
         DataPersistenceManager.instance.ContingencyContinue(false, null);
 
-        if(!DebugMode) OnAddWordsToRemember?.Invoke(this, ChosenMemberWords);
-        else OnAddWordsToRemember?.Invoke(this, AllMemberWords);
+        if (!DebugMode)
+        {
+            if (ChosenMemberWords.Count > 0) OnAddWordsToRemember?.Invoke(this, ChosenMemberWords);
+        }
+        else
+        {
+            OnAddWordsToRemember?.Invoke(this, AllMemberWords);
+        }
 
     }
 

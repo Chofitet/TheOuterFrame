@@ -27,11 +27,11 @@ public class TutorialManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        isInTutorial = data.TutorialComplete;
+       isInTutorial = data.TutorialComplete;
     }
 
     public void SaveData(GameData data)
     {
-        data.TutorialComplete = isInTutorial;
+       data.TutorialComplete = isInTutorial;
     }
 }

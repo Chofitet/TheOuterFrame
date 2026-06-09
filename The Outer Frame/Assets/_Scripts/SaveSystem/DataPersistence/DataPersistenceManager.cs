@@ -71,6 +71,9 @@ public class DataPersistenceManager : MonoBehaviour
             StopCoroutine(autoSaveCoroutine);
         }
         autoSaveCoroutine = StartCoroutine(AutoSave());
+
+        if(scene.name == "MainMenu") ResetInMainMenu();
+
         SaveGame();
     }
 
@@ -203,10 +206,12 @@ public class DataPersistenceManager : MonoBehaviour
         SaveGame();
     }
 
-    public void ResetRememberWords()
+   
+    void ResetInMainMenu()
     {
         gameData.LastMemberWords.Clear();
         gameData.ContingencyContinue = false;
+        gameData.TutorialComplete = true;
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects() 

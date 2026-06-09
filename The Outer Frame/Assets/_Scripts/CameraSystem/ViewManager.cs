@@ -69,12 +69,11 @@ public class ViewManager : MonoBehaviour
 
     IEnumerator SetStartView(float timeDelayView, float timeDelayEnableInput)
     {
-        DisableInput(null, null);
+        OnDisableInput?.Invoke(this, null);
         yield return new WaitForSeconds(timeDelayView);
-        OnEnableInput?.Invoke(this, null);
         UpdateViewState(null, StartView);
         yield return new WaitForSeconds(timeDelayEnableInput);
-        EnableInput(null, null);
+        OnEnableInput?.Invoke(this, null);
     }
 
     public void SetStartView(Component sender, object obj)
