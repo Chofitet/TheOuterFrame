@@ -15,7 +15,7 @@ public class DataType : ScriptableObject
 
     protected void MarkDirty()
     {
-        DataServiceEditor.MarkDirty(this);
+        DatatService.instance.MarkDirty(this);
     }
 
     public virtual void ResetScriptableObject()

@@ -4,30 +4,33 @@ using UnityEngine;
 
 public class DatatService : MonoBehaviour
 {
-    Dictionary<Guid, DataType> directory;
-    [SerializeField] string ID;
+    [SerializeField] DataDirectory directory;
 
-    void GetDirectory()
+    public static DatatService instance { get; private set; }
+
+    private void Awake()
     {
-       // directory = DataServiceEditor.datasById;
+        if (instance != null)
+        {
+            Debug.Log("Found more than one DataService in the scene. Destroying the newest one.");
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
+        directory.Initialize();
     }
 
-    public DataType GetConfig(Guid IDguid)
+
+    public DataDirectory GetDirectory()
     {
-        if (directory == null)
-            return null;
-
-        if (directory.TryGetValue(IDguid, out var config))
-            return config;
-
-        return null;
+       return directory;
     }
 
-    public DataType GetConfig(string IDstring)
-    {
-        if (Guid.TryParse(IDstring, out var guid))
-            return GetConfig(guid);
 
-        return null;
+    public  void MarkDirty(DataType data)
+    {
+        directory.AddToModifyData(data);
     }
 }
