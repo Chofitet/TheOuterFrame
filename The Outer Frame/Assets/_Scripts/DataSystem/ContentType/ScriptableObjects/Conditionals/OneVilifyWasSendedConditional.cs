@@ -4,17 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //[CreateAssetMenu(fileName = "One Vilify Conditional", menuName = "Conditionals/ One Vilify Conditional")]
-public class OneVilifyWasSendedConditional : ScriptableObject, IConditionable, IReseteableScriptableObject 
+public class OneVilifyWasSendedConditional : DataType, IConditionable, IReseteableScriptableObject 
 {
     [NonSerialized] bool OneVilifyWasSend;
-    private void OnEnable()
-    {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }
-
+    
     public void SetConidionTrue()
     {
         OneVilifyWasSend = true;
+        MarkDirty();
     }
 
     public bool CheckIfHaveTime()
@@ -42,7 +39,7 @@ public class OneVilifyWasSendedConditional : ScriptableObject, IConditionable, I
         throw new NotImplementedException();
     }
 
-    public void ResetScriptableObject()
+    public override void ResetScriptableObject()
     {
         OneVilifyWasSend = false;
     }

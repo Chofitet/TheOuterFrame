@@ -4,5 +4,5 @@ using UnityEngine;
 
 interface IReseteableScriptableObject 
 {
-    void ResetScriptableObject();
+   // void ResetScriptableObject();
 }

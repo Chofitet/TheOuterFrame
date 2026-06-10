@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
 
 public class WordsToRememberManager : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class WordsToRememberManager : MonoBehaviour
     [SerializeField] GameEvent OnAddWordsToRemember;
     [SerializeField] GameEvent OnShowRememberWordsInVoid;
     [SerializeField] GameEvent OnChangeScene;
+
+    [SerializeField] DataDirectory directory;
 
     bool isInRememberVoid;
     private void Awake()
@@ -86,15 +90,45 @@ public class WordsToRememberManager : MonoBehaviour
         {
             if (dataPersistenceManager.GetGameData().ContingencyContinue)
             {
-                MemberWordsCandidates = new List<WordData>(DataPersistenceManager.instance.GetGameData().LastMemberWords);
+                MemberWordsCandidates = GetMemberWordsByID(DataPersistenceManager.instance.GetGameData().LastMemberWordsID);
             }
+        }
+
+        foreach(WordData candidates in MemberWordsCandidates)
+        {
+            Debug.Log($"{candidates.name} was found");
         }
 
         OnShowRememberWordsInVoid?.Invoke(this, MemberWordsCandidates);
         if (DebugMode) OnShowRememberWordsInVoid?.Invoke(this, AllMemberWords);
 
-        DataPersistenceManager.instance.ContingencyContinue(true,MemberWordsCandidates);
+        DataPersistenceManager.instance.ContingencyContinue(true, GetIDByMemberWords(MemberWordsCandidates));
+    }
 
+    List<WordData> GetMemberWordsByID(List<string> list)
+    {
+        List<WordData> MemberWordsByID = new List<WordData>();
+
+        foreach(string id in list)
+        {
+            WordData memberWord = directory.GetById(id) as WordData;
+
+            MemberWordsByID.Add(memberWord);
+        }
+
+        return MemberWordsByID;
+    }
+
+    List<string> GetIDByMemberWords(List<WordData> list)
+    {
+        List<string> idByMemberWords = new();
+
+        foreach (WordData memberWord in list)
+        {
+            idByMemberWords.Add(memberWord.ID.ToString());
+        }
+
+        return idByMemberWords;
     }
 
     public void SetWordsToRemember(Component sender,object obj)
@@ -126,5 +160,7 @@ public class WordsToRememberManager : MonoBehaviour
         }
         OnChangeScene?.Invoke(this, "LoadingScreen");
     }
+
+
 
 }

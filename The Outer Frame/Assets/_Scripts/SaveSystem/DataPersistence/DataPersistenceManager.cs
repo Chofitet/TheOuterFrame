@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -72,7 +73,7 @@ public class DataPersistenceManager : MonoBehaviour
         }
         autoSaveCoroutine = StartCoroutine(AutoSave());
 
-        if(scene.name == "MainMenu") ResetInMainMenu();
+        if(scene.name == "MainMenu" && !gameData.ContingencyContinue) ResetInMainMenu();
 
         SaveGame();
     }
@@ -117,12 +118,12 @@ public class DataPersistenceManager : MonoBehaviour
         SaveGame();*/
     } 
 
-    public void ContingencyContinue(bool x,List<WordData> LastMemberWords)
+    public void ContingencyContinue(bool x,List<string> LastMemberWordsID)
     {
         if (gameData == null) return;
         gameData.ContingencyContinue = x;
-        if (LastMemberWords == null) gameData.LastMemberWords.Clear();
-        else gameData.LastMemberWords = new List<WordData>(LastMemberWords);
+        if (LastMemberWordsID == null) gameData.LastMemberWordsID.Clear();
+        else gameData.LastMemberWordsID = new List<string>(LastMemberWordsID);
 
         SaveGame();
     }
@@ -207,9 +208,11 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
    
+    
+
     void ResetInMainMenu()
     {
-        gameData.LastMemberWords.Clear();
+        gameData.LastMemberWordsID.Clear();
         gameData.ContingencyContinue = false;
         gameData.TutorialComplete = true;
     }

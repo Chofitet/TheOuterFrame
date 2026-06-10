@@ -167,6 +167,7 @@ public class WordData : DataType, IReseteableScriptableObject
             if (!CurrentDoingActions.Contains(action)) return;
             CurrentDoingActions.Remove(action);
         }
+        MarkDirty();
     }
 
     public bool CheckIfActionIsDoing(StateEnum action)
@@ -305,6 +306,7 @@ public class WordData : DataType, IReseteableScriptableObject
             }
         }
 
+        MarkDirty();
     }
     public bool CheckIfStateWasDone(StateEnum state)
     {
@@ -344,19 +346,21 @@ public class WordData : DataType, IReseteableScriptableObject
     public void CheckStateSeen(StateEnum newState)
     {
         CheckedStateHistory.Add(newState);
+        MarkDirty();
     }
 
     public void AddStateInDBEntryStateHistory(StateEnum newState)
     {
         if (DBEntryStateHistory.Contains(newState)) return;
         DBEntryStateHistory.Add(newState);
+        MarkDirty();
     }
 
     public void AddStateInHistory(StateEnum newState)
     {
         if (stateHistory.Contains(newState)) return;
         stateHistory.Add(newState);
-
+        MarkDirty();
     }
 
     public void CleanStateFromHistory(StateEnum state)
@@ -364,6 +368,7 @@ public class WordData : DataType, IReseteableScriptableObject
         if (stateHistory.Contains(state))
         {
             stateHistory.Remove(state);
+            MarkDirty();
         }
     }
 
@@ -373,12 +378,8 @@ public class WordData : DataType, IReseteableScriptableObject
 
     #region InactiveLogic
 
-    private void OnEnable()
-    {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }
 
-    public void ResetScriptableObject()
+    public override void ResetScriptableObject()
     {
         stateHistory.Clear();
         CheckedStateHistory.Clear();
@@ -457,6 +458,7 @@ public class WordData : DataType, IReseteableScriptableObject
     public void SetInactive()
     {
         isInactive = true;
+        MarkDirty();
     }
 
     public DeleteCrossoutWorsd CheckOtherWordDelete(WordData word)
@@ -570,7 +572,11 @@ public class WordData : DataType, IReseteableScriptableObject
     }
     public string GetPhoneNumber() { return PhoneNumber; }
     public bool GetIsPhoneNumberFound() { return isPhoneNumberFound; }
-    public bool SetIsPhoneNumberFound() => isPhoneNumberFound = true;
+    public void SetIsPhoneNumberFound()
+    {
+        isPhoneNumberFound = true;
+        MarkDirty();
+    }
     public bool GetIsAPhoneNumber() { return isAPhoneNumber; }
 
     public List<CallType> GetListOfCalls() { return CallTypes; }
@@ -595,6 +601,7 @@ public class WordData : DataType, IReseteableScriptableObject
         {
             
             ActionsStates.Add(new ActionState(state));
+            MarkDirty();
         }
     }
 
@@ -602,7 +609,7 @@ public class WordData : DataType, IReseteableScriptableObject
     {
         stateHistory.Clear();
         CheckedStateHistory.Clear();
-
+        MarkDirty();
     }
 
     public void ReplaceHistory(WordData oldword)
@@ -624,16 +631,18 @@ public class WordData : DataType, IReseteableScriptableObject
 
         ActionsStates = oldword.GetActionStatesList().Select(x => new ActionState(x)).ToList();
 
+        MarkDirty();
+
         //chequear si al remplazarse, tiene el mismo vilify, conservar el lastReport de la ccion vilify
         // Si no, setearlo a null
 
-       /* ReportType vilifyOldWord = oldword.GetVilifyReport();
-        ReportType vilifyNewWord = GetVilifyReport();
+        /* ReportType vilifyOldWord = oldword.GetVilifyReport();
+         ReportType vilifyNewWord = GetVilifyReport();
 
-        if (!vilifyOldWord) return;
-        if(!vilifyNewWord) return;
+         if (!vilifyOldWord) return;
+         if(!vilifyNewWord) return;
 
-        if (vilifyNewWord != vilifyOldWord) ActionsStates[8].SetReport(null);*/
+         if (vilifyNewWord != vilifyOldWord) ActionsStates[8].SetReport(null);*/
     }
 
     public void DeleteFoundAsWord(string foundAsTxt)
@@ -690,6 +699,7 @@ public class WordData : DataType, IReseteableScriptableObject
         {
             isPendingToShowLocation = true;
         }
+        MarkDirty();
     }
 
     public string GetWordFirstLocationAppear()
@@ -703,6 +713,7 @@ public class WordData : DataType, IReseteableScriptableObject
    public void SetPlacedInBoard()
     {
         isPlacedInBoad = true;
+        MarkDirty();
     }
 
     public bool GetPlacedInBoard() { return isPlacedInBoad; }
@@ -718,6 +729,7 @@ public class WordData : DataType, IReseteableScriptableObject
         while (currentWord != null)
         {
             currentWord.SetIsFound();
+            MarkDirty();
 
             auxWord = currentWord;
 

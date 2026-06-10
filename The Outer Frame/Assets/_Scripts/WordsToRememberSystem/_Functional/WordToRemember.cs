@@ -16,6 +16,14 @@ public class WordToRemember : MonoBehaviour
 
     public void Initialize(WordData _word)
     {
+        try
+        {
+            Debug.Log(_word.name);
+        }
+        catch
+        {
+            Debug.LogWarning("El wordData no está siedo encontrado en la build");
+        }
         word = _word;
         textField.text = _word.GetName();
     }

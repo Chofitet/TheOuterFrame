@@ -58,12 +58,8 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
     [NonSerialized] bool wasSearched;
     [NonSerialized] bool WasSetted;
 
-    private void OnEnable()
-    {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }
 
-    public void ResetScriptableObject()
+    public override void ResetScriptableObject()
     {
         isWordAccessFound = false;
         wasSearched = false;
@@ -78,7 +74,11 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
 
     public string GetPhoneNum() { return phoneNum; }
 
-    public void SetisWordAccessFound() => isWordAccessFound = true;
+    public void SetisWordAccessFound()
+    {
+        isWordAccessFound = true;
+        MarkDirty();
+    }
 
     public bool GetisWordAccessFound() { return isWordAccessFound; }
 
@@ -90,10 +90,18 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
 
     public StateEnum GetUnlockState() { return UnlockState; }
 
-    public void SetWasSearched() => wasSearched = true;
+    public void SetWasSearched()
+    {
+        wasSearched = true;
+        MarkDirty();
+    }
     public bool GetWasSearched() { return wasSearched; }
 
-    public void SetWasSetted() => WasSetted = true;
+    public void SetWasSetted()
+    {
+        WasSetted = true;
+        MarkDirty();
+    }
 
     public bool GetNoSetFindableInDBTitle() { return NoSetFindableInDBTitle; }
 

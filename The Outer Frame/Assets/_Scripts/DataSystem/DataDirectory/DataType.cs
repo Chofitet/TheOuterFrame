@@ -13,29 +13,39 @@ public class DataType : ScriptableObject
         set => id = value.ToString();
     }
 
-/*#if UNITY_EDITOR
-
-    protected virtual void OnEnable()
+    protected void MarkDirty()
     {
-        DataServiceEditor.Register(this);
+        DataServiceEditor.MarkDirty(this);
     }
 
-    protected virtual void OnValidate()
+    public virtual void ResetScriptableObject()
     {
-        // si se duplica, se autoregistra con otro ID
-        if (!string.IsNullOrEmpty(id))
+
+    }
+
+    /*#if UNITY_EDITOR
+
+        protected virtual void OnEnable()
         {
-            var existing = DataServiceEditor.Get(ID);
-            if (existing == null || existing != this)
+            DataServiceEditor.Register(this);
+        }
+
+        protected virtual void OnValidate()
+        {
+            // si se duplica, se autoregistra con otro ID
+            if (!string.IsNullOrEmpty(id))
             {
+                var existing = DataServiceEditor.Get(ID);
+                if (existing == null || existing != this)
+                {
+                    DataServiceEditor.Register(this);
+                }
+            }
+            else
+            {
+                Debug.Log($"register {name}");
                 DataServiceEditor.Register(this);
             }
         }
-        else
-        {
-            Debug.Log($"register {name}");
-            DataServiceEditor.Register(this);
-        }
-    }
-#endif*/
+    #endif*/
 }

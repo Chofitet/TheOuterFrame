@@ -23,12 +23,7 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
     [NonSerialized] bool wasStremed;
     bool isOrderMatters;
 
-    private void OnEnable()
-    {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }
-
-    public void ResetScriptableObject()
+    public override void ResetScriptableObject()
     {
         wasStremed = false;
         EndTime = null;
@@ -44,6 +39,7 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
     public void SetTimeWhenWasDone()
     {
         CompleteTime = TimeManager.timeManager.GetTime();
+        MarkDirty();
     }
 
     public string GetHeadline() { return headline; }
@@ -148,6 +144,7 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
         EndTime = ScriptableObject.CreateInstance<TimeCheckConditional>();
         EndTime.Initialize(true, FixedEndTime.Day, FixedEndTime.Hour, FixedEndTime.Minute);
 
+        MarkDirty();
         //Debug.Log("Defined Time to show new: " + FixedEndTime.ToString());
     }
 
@@ -220,7 +217,10 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
 
     public int GetPriority(){  return priority;}
 
-    public void SetWasStreamed() { wasStremed = true;}
+    public void SetWasStreamed() {
+        wasStremed = true;
+        MarkDirty();
+    }
 
     public bool GetWasStreamed(){ return wasStremed;}
 

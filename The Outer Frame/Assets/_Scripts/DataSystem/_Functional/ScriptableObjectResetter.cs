@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class ScriptableObjectResetter : MonoBehaviour
 {
     public static ScriptableObjectResetter instance { get; private set; }
-    HashSet<IReseteableScriptableObject> SOlist = new HashSet<IReseteableScriptableObject>();
+   // HashSet<IReseteableScriptableObject> SOlist = new HashSet<IReseteableScriptableObject>();
+    [SerializeField] DataDirectory Directory;
     [SerializeField] GameEvent OnChangeScene;
     [SerializeField] Loading loadingUI;
 
@@ -33,18 +34,15 @@ public class ScriptableObjectResetter : MonoBehaviour
        StartCoroutine(ResetAllScriptableObject());
     }
 
-    public void RegisterScriptableObject(ScriptableObject _SO)
-    {
-        IReseteableScriptableObject SO = _SO as IReseteableScriptableObject;
-        SOlist.Add(SO);
-    }
-
     public IEnumerator ResetAllScriptableObject()
     {
+        List<DataType> SOlist = Directory.GetModifyData();
+
+
         int total = SOlist.Count;
         int count = 0;
 
-        foreach (var so in SOlist)
+        foreach (DataType so in SOlist)
         {
             so.ResetScriptableObject();
             count++;

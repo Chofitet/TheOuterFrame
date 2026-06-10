@@ -132,5 +132,10 @@ public static class DataServiceEditor
             ? data
             : null;
     }
+
+    public static void MarkDirty(DataType data)
+    {
+        directory.AddToModifyData(data);
+    }
 }
 

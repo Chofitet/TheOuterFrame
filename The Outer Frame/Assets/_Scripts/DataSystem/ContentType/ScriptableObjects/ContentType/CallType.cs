@@ -42,7 +42,7 @@ public class CallType : ContentType, IStateComparable, IReseteableScriptableObje
     [NonSerialized] TimeData CachedStartTime;
     [NonSerialized] TimeData CachedFinishTime;
 
-    public void ResetScriptableObject()
+    public override void ResetScriptableObject()
     {
         isCatch = false;
         isInterrupted = false;
@@ -66,10 +66,16 @@ public class CallType : ContentType, IStateComparable, IReseteableScriptableObje
         isCatch = x;
         if (x) SetTimeWhenWasDone();
         else CompleteTime = new TimeData(0,0,0);
+
+        MarkDirty();
     }
     public bool GetIsCatch() { return isCatch; }
 
-    public void SetWasEnterToDataBase(bool x) => wasEnterToDataBase = x;
+    public void SetWasEnterToDataBase(bool x)
+    {
+        wasEnterToDataBase = x;
+        MarkDirty();
+    }
     public bool GetWasEnterToDataBase() { return wasEnterToDataBase; }
 
     public string GetFrom() { return From; }
@@ -78,21 +84,27 @@ public class CallType : ContentType, IStateComparable, IReseteableScriptableObje
 
     public List<WordData> GetInvolved() { return Involved; }
 
-    public void SetIsinterrrupted() { if(!Uninterruptible) isInterrupted = true; }
+    public void SetIsinterrrupted() { if (!Uninterruptible)
+        {
+            isInterrupted = true;
+            MarkDirty();
+        }
+    }
     public StateEnum GetState() { return state; }
 
-    public void SetCachedStartTime(TimeData time) { CachedStartTime = time; }
-    public void SetCachedFinishTime(TimeData time) { CachedFinishTime = time; }
+    public void SetCachedStartTime(TimeData time) 
+        {
+            CachedStartTime = time;
+            MarkDirty();
+        }
+    public void SetCachedFinishTime(TimeData time) { 
+        CachedFinishTime = time;
+        MarkDirty();
+        }
 
     public TimeData GetCachedStartTime() { return CachedStartTime; }
     public TimeData GetCachedFinishTime() {  return CachedFinishTime; }
 
-    private void OnEnable()
-    {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }
-
-   
 
     public void SetWord(WordData _word)
     {
@@ -101,6 +113,7 @@ public class CallType : ContentType, IStateComparable, IReseteableScriptableObje
         EndTime = new TimeCheckConditional();
         StartTime.Initialize(true, 0, StartHour, StartMinute);
         EndTime.Initialize(false, 0, EndHour, EndMinute);
+        MarkDirty();
     }
 
     public WordData GetWord() { return word; }
@@ -126,6 +139,7 @@ public class CallType : ContentType, IStateComparable, IReseteableScriptableObje
         EndTime.Initialize(false, FixedEndTime.Day, FixedEndTime.Hour, FixedEndTime.Minute);
 
         Debug.Log("Defined Time Zone. Start: " + FixedStartTime.ToString() + " Ends: " + FixedEndTime.ToString());
+        MarkDirty();
     }
 
     private TimeData AddMinutesToTime(TimeData time, int minutesToAdd)

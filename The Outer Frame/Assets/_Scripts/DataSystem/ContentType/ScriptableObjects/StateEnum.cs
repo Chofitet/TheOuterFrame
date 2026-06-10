@@ -29,12 +29,7 @@ public class StateEnum : DataType, IReseteableScriptableObject
     [HideInInspector][SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
 
 
-    private void OnEnable()
-    {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }
-
-    public void ResetScriptableObject()
+    public override void ResetScriptableObject()
     {
         isDone = false;
         isWrittenOnAP = false;
@@ -60,7 +55,11 @@ public class StateEnum : DataType, IReseteableScriptableObject
 
     public string GetIdeaVerb() { return IdeaVerb; }
 
-    public void SetIsDone(bool x) => isDone = x;
+    public void SetIsDone(bool x)
+    {
+        isDone = x;
+        MarkDirty();
+    }
 
     public bool GetIsDone() { return isDone; }
 
@@ -74,7 +73,11 @@ public class StateEnum : DataType, IReseteableScriptableObject
         return AgentsNeeded;
     }
 
-    public void SetisWrittenOnAP(bool x) => isWrittenOnAP = x;
+    public void SetisWrittenOnAP(bool x)
+    {
+        isWrittenOnAP = x;
+        MarkDirty();
+    }
 
     public bool GetisWrittenOnAP() { return isWrittenOnAP; }
 

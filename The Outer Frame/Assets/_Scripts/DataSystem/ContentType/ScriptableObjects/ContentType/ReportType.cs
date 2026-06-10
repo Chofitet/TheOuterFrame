@@ -53,7 +53,6 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
 
     private void OnEnable()
     {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
 
         if (!state)
         {
@@ -64,7 +63,7 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
     }
 
 
-    public void ResetScriptableObject()
+    public override void ResetScriptableObject()
     {
         wasSet = false;
         doing = false;
@@ -75,14 +74,25 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
 
     public bool GetWasSet() { return wasSet; }
 
-    public bool SetWasSet() => wasSet = true;
+    public void SetWasSet()
+    {
+        wasSet = true;
+        MarkDirty();
+    }
     public bool GetIsAutomatic() { return isAutomatic; }
 
-    public void SetDoing(bool x) { doing = x; }
+    public void SetDoing(bool x) { 
+        doing = x;
+        MarkDirty();
+    }
 
     public bool getDoing() { return doing; }
 
-    public void setwasRegisteredInDB() => wasRegisteredInDB = true;
+    public void setwasRegisteredInDB()
+    {
+        wasRegisteredInDB = true;
+        MarkDirty();
+    }
 
     public bool GetIsTheLastReport() { return LastReport; }
 

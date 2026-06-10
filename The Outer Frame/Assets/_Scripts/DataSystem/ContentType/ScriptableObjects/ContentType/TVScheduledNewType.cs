@@ -28,14 +28,10 @@ public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableOb
     [SerializeField] TVScheduledNewType ReplacedBy;
     [NonSerialized] bool wasStremed;
 
-    private void OnEnable()
-    {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }
-
-    public void ResetScriptableObject()
+    public override void ResetScriptableObject()
     {
         wasStremed = false;
+
     }
 
     //Lista de condicionantes y chequeo de si son true todas para desactivar o reprogramar noticia
@@ -164,6 +160,7 @@ public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableOb
     public void SetWasStreamed()
     {
         wasStremed = true;
+        MarkDirty();
     }
 
     public bool GetWasStreamed()

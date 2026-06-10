@@ -4,17 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Goo Protocol Conditional", menuName = "Conditionals/GooProtocolConditional")]
-public class GooProtocolCompleteConditional : ScriptableObject, IConditionable, IReseteableScriptableObject
+public class GooProtocolCompleteConditional : DataType, IConditionable, IReseteableScriptableObject
 {
 
 
     [NonSerialized] bool conditionalState = false;
 
-    private void OnEnable()
-    {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }
-    public void ResetScriptableObject()
+    public override void ResetScriptableObject()
     {
         conditionalState = false;
     }
@@ -22,6 +18,7 @@ public class GooProtocolCompleteConditional : ScriptableObject, IConditionable, 
     public void SetConditionalState()
     {
         conditionalState = true;
+        MarkDirty();
     }
 
     public bool CheckIfHaveTime()
