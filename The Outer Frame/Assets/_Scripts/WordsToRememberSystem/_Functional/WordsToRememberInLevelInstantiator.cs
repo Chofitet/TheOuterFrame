@@ -9,9 +9,16 @@ public class WordsToRememberInLevelInstantiator : MonoBehaviour
     [SerializeField] List<Transform> anchors;
     [SerializeField] Transform Anchor;
     [SerializeField] Transform FinalAnchorPosition;
+    Vector3 GrabPosition;
     [SerializeField] float TimeToDownMemberWords;
     [SerializeField] GameEvent OnSetStartView;
- 
+
+    private void Start()
+    {
+        GrabPosition = transform.position;
+        transform.position = FinalAnchorPosition.position;
+    }
+
 
     public void InstanciateMemberWords(Component sender, object obj)
     {
@@ -29,8 +36,17 @@ public class WordsToRememberInLevelInstantiator : MonoBehaviour
             index++;
         }
 
-        if (WordsToRemember.Count > 0) OnSetStartView?.Invoke(this, new StartViewData(ViewStates.DossierView,1.2f, TimeToDownMemberWords));
+        if (WordsToRemember.Count > 0)
+        {
+            OnSetStartView?.Invoke(this, new StartViewData(ViewStates.DossierView, 0.6f, TimeToDownMemberWords));
+            Invoke("UpPapers", 1.2f);
+        }
 
+    }
+
+    void UpPapers()
+    {
+        transform.DOMove(GrabPosition, 0.5f);
     }
 
 }

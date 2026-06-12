@@ -23,6 +23,7 @@ public class NotebookWordInstance : MonoBehaviour
     bool isActiveInBoard;
     bool isinactive;
     bool PendingToAddBoard;
+    float waitAtTheEnd = 0;
     public void Initialization(WordData word, bool noAnim = false, NotebookProcessManager _processManager = null, float height = 0)
     {
         if(_processManager != null) processManager = _processManager;
@@ -213,6 +214,7 @@ public class NotebookWordInstance : MonoBehaviour
     }
 
     public WordData GetWord() { return wordReference; }
+
 
    public void TryActiveWord(bool x)
     {

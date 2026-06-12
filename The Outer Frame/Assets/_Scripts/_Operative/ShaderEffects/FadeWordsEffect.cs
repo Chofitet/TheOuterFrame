@@ -21,7 +21,6 @@ public class FadeWordsEffect : MonoBehaviour
     bool isVisible;
     [SerializeField] Material[] matLevels;
     private string lastCleanText = "";
-
     public void StartEffect(bool isFadeTransparent = true)
     {
         SetBlank(1);
