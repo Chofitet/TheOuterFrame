@@ -16,11 +16,13 @@ namespace TMPro.Examples
         public float CurveScale = 1.0f;
         public float boundsMax = 0.1f;
         public float boundsMin = 0.1f;
+        [SerializeField] bool AutomaticUpdate;
 
         void Awake()
         {
             m_TextComponent = gameObject.GetComponent<TMP_Text>();
         }
+
 
 
         public void UpdateText()
@@ -29,6 +31,10 @@ namespace TMPro.Examples
             if(gameObject.activeSelf) StartCoroutine(WarpText());
         }
 
+        private void Update()
+        {
+            if (AutomaticUpdate) UpdateText();
+        }
 
         private AnimationCurve CopyAnimationCurve(AnimationCurve curve)
         {
