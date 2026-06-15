@@ -60,6 +60,11 @@ public class BoardTutorialPosit : MonoBehaviour
         }
     }
 
+    public void MoveToGeneralViewPos(Component sender, object obj)
+    {
+        movePosit(GeneralViewPos);
+    }
+
     public void CheckViewWithDelay(Component sender, object obj)
     {
         if (inactive) return;
@@ -116,7 +121,7 @@ public class BoardTutorialPosit : MonoBehaviour
 
     public void MoveToTakedPosition(Component sender, object obj)
     {
-        OnButtonElement?.Invoke(this, ViewStates.BoardView);
+        if(LastView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
         movePosit(NextToNotebookPos);
     }
 

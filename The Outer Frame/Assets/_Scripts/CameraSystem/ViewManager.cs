@@ -352,7 +352,7 @@ public class ViewManager : MonoBehaviour
 
     void BackToGeneralViewWhitMoving()
     {
-        if (currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView  && !IsStuckInView)
+        if (currentviewState != ViewStates.GeneralView && currentviewState != ViewStates.DossierView && currentviewState != ViewStates.OnTakenPaperView  && !IsStuckInView)
         {
             if (isGameOver) return;
             if (isTimeAccelerated && currentviewState != ViewStates.PinchofonoView) return;
