@@ -9,6 +9,7 @@ public class MoveMemberWordsToHand : MonoBehaviour
     [SerializeField] List<Transform> Pivots = new List<Transform>();
     Sequence MoveMemberWordToHandSequence;
     [SerializeField] float MoveDuration = 0.3f;
+    [SerializeField] Transform FinalPos;
 
     Transform currentTarget;
     GameObject currentMemberWord;
@@ -88,6 +89,14 @@ public class MoveMemberWordsToHand : MonoBehaviour
         return null;
     }
 
+    Sequence GetOutSequence;
+    public void GetOutMemberWords(Component sender,object obj)
+    {
+        GetOutSequence = DOTween.Sequence();
+
+        GetOutSequence.PrependInterval(0.5f) 
+            .Append(transform.DOMove(FinalPos.position, 0.5f));
+    }
 
 
 }
