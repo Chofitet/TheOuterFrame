@@ -21,6 +21,6 @@ public class WordToRememberInLevel : MonoBehaviour
        
 
         Vector3 finalPos = transform.position + new Vector3(0,-0.05f,0);
-        transform.DOMove(finalPos, 0.5f);
+        transform.DOMove(finalPos, 0.5f).OnComplete(()=> Destroy(gameObject));
     }
 }

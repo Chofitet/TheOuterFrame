@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
@@ -11,6 +12,7 @@ public class WordsToRememberManager : MonoBehaviour
 
     [SerializeField] bool DebugMode;
     [SerializeField] List<WordData> AllMemberWords = new List<WordData>();
+    [SerializeField] int AvailableMemberWords;
     List<WordData> MemberWordsCandidates = new List<WordData>(); //Internal List of memeberWords filter by founded and they are candidates
     List<WordData> ChosenMemberWords = new List<WordData>(); // Internal List of Words Selected to remember
     [SerializeField] GameEvent OnAddWordsToRemember;
@@ -79,10 +81,17 @@ public class WordsToRememberManager : MonoBehaviour
         MemberWordsCandidates.Clear();
         ChosenMemberWords.Clear();
 
+        List<WordData> AuxMemberWordsCandidates = new List<WordData>();
+
         foreach (WordData memberWords in AllMemberWords)
         {
-            if(memberWords.GetIsFound()) MemberWordsCandidates.Add(memberWords);
+            if (memberWords.GetIsFound())
+            {
+                AuxMemberWordsCandidates.Add(memberWords);
+            }
         }
+
+        MemberWordsCandidates = AuxMemberWordsCandidates.OrderBy(_ => UnityEngine.Random.value).Take(AvailableMemberWords).ToList();
 
         DataPersistenceManager dataPersistenceManager = DataPersistenceManager.instance;
 

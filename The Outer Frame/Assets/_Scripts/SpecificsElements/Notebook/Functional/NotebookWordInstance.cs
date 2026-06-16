@@ -197,6 +197,7 @@ public class NotebookWordInstance : MonoBehaviour
             Invoke("UnSelectWord", 0.3f);
         }
         if (actualView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
+        //if(actualView == ViewStates.DossierView) OnButtonElement?.Invoke(this, ViewStates.DossierView);
     }
     void UnSelectWord()
     {
