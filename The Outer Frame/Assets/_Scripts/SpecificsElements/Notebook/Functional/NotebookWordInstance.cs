@@ -185,6 +185,7 @@ public class NotebookWordInstance : MonoBehaviour
         processManager.UnregisterProcess();
     }
 
+    bool takeDossierWithWordOnBeginningOnce;
     public void SetSelectedWord()
     {
        text.text = "<u>" + wordReference.GetName() + "</u>";
@@ -197,7 +198,8 @@ public class NotebookWordInstance : MonoBehaviour
             Invoke("UnSelectWord", 0.3f);
         }
         if (actualView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
-        //if(actualView == ViewStates.DossierView) OnButtonElement?.Invoke(this, ViewStates.DossierView);
+        if (actualView == ViewStates.DossierView && !takeDossierWithWordOnBeginningOnce) OnButtonElement?.Invoke(this, ViewStates.DossierView);
+        takeDossierWithWordOnBeginningOnce = true;
     }
     void UnSelectWord()
     {
