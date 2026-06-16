@@ -62,6 +62,7 @@ public class WordData : DataType, IReseteableScriptableObject
     [NonSerialized] List<StateEnum> CurrentDoingActions = new List<StateEnum>();
     [NonSerialized] bool isPlacedInBoad;
     [NonSerialized] bool isPendingToShowLocation = false;
+    [NonSerialized] bool WordWasRemember;
     #region GetInputLogic
 
     public void InitSet()
@@ -392,7 +393,7 @@ public class WordData : DataType, IReseteableScriptableObject
         isInactive = false;
         CurrentDoingActions.Clear();
         isPlacedInBoad = false;
-
+        WordWasRemember = false;
         //Debug.Log("reseted " + name);
     }
 
@@ -593,7 +594,11 @@ public class WordData : DataType, IReseteableScriptableObject
     public string GetApInformLocation() { return ApInformLocation; }
     public bool SetIsPendingToShowLocation(bool x) => isPendingToShowLocation = x; 
     public bool GetIsPendingToShowLocation() { return isPendingToShowLocation; }
-
+    public void SetWordWasRemember() { 
+        WordWasRemember = true;
+        MarkDirty();
+    }
+    public bool GetWordWasRemember() { return WordWasRemember; }
     public void SetListOfActions(List<StateEnum> actions)
     {
         ActionsStates.Clear();

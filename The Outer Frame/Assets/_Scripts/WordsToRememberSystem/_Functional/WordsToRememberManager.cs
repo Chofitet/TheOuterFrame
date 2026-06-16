@@ -66,7 +66,11 @@ public class WordsToRememberManager : MonoBehaviour
 
         if (!DebugMode)
         {
-            if (ChosenMemberWords.Count > 0) OnAddWordsToRemember?.Invoke(this, ChosenMemberWords);
+            if (ChosenMemberWords.Count > 0)
+            {
+                OnAddWordsToRemember?.Invoke(this, ChosenMemberWords);
+                foreach (WordData memberWord in ChosenMemberWords) memberWord.SetWordWasRemember();
+            }
         }
         else
         {
