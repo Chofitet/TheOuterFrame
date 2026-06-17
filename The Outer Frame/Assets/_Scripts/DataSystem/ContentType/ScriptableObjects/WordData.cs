@@ -63,7 +63,27 @@ public class WordData : DataType, IReseteableScriptableObject
     [NonSerialized] bool isPlacedInBoad;
     [NonSerialized] bool isPendingToShowLocation = false;
     [NonSerialized] bool WordWasRemember;
+    [NonSerialized] bool AppearOnReport = false;
     #region GetInputLogic
+
+    public override void ResetScriptableObject()
+    {
+        stateHistory.Clear();
+        CheckedStateHistory.Clear();
+        StateHistoryTime.Clear();
+        DBEntryStateHistory.Clear();
+        currentState = null;
+        ActionsStates.Clear();
+        isFound = false;
+        isPhoneNumberFound = false;
+        isInactive = false;
+        CurrentDoingActions.Clear();
+        isPlacedInBoad = false;
+        WordWasRemember = false;
+        AppearOnReport = false;
+        //Debug.Log("reseted " + name);
+    }
+
 
     public void InitSet()
     {
@@ -378,24 +398,6 @@ public class WordData : DataType, IReseteableScriptableObject
     #endregion
 
     #region InactiveLogic
-
-
-    public override void ResetScriptableObject()
-    {
-        stateHistory.Clear();
-        CheckedStateHistory.Clear();
-        StateHistoryTime.Clear();
-        DBEntryStateHistory.Clear();
-        currentState = null;
-        ActionsStates.Clear();
-        isFound = false;
-        isPhoneNumberFound = false;
-        isInactive = false;
-        CurrentDoingActions.Clear();
-        isPlacedInBoad = false;
-        WordWasRemember = false;
-        //Debug.Log("reseted " + name);
-    }
 
     public bool GetInactiveStateSeen()
     {
@@ -712,6 +714,13 @@ public class WordData : DataType, IReseteableScriptableObject
         if (!isPendingToShowLocation) return string.Empty;
         else return ApInformLocation;
     }
+
+    public void SetAppearOnReport()
+    {
+        AppearOnReport = true;
+        MarkDirty();
+    }
+    public bool GetAppearOnReport() { return AppearOnReport; }
 
     public bool GetIsFound() { return isFound;}
 

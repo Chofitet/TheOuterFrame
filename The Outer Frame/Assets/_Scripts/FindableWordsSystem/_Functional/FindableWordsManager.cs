@@ -31,7 +31,7 @@ public class FindableWordsManager : MonoBehaviour
         }
     }
 
-    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, IReadOnlyList<FindableWordData> pre_proccess_PositioWords = null, bool _comesFromDBTitle = false, bool _comesFromNewEmergency =false)
+    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, IReadOnlyList<FindableWordData> pre_proccess_PositioWords = null, bool _comesFromDBTitle = false, bool _comesFromNewEmergency =false, bool _comesFromReport = false)
     {
         // btnType para cuando quiera refactorizar este script para que funcione con links tambien
 
@@ -79,6 +79,7 @@ public class FindableWordsManager : MonoBehaviour
             foreach (FindableWordData w in PositionsWord)
             {
                 if (isInLastWord && w.GetWordData() != LastWord) continue;
+                if(_comesFromReport) w.GetWordData().SetAppearOnReport();
                 if (w.GetWordData().GetIsFound()) continue;
                 if (w.GetWordData().GetInactiveState()) continue;
                 GameObject auxObj = pool.GetFromPool(textField.transform);
