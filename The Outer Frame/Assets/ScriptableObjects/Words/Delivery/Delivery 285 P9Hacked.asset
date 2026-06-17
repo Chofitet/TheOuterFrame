@@ -17,16 +17,18 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 99326b0cce1f22e439291949cc00f99c, type: 2}
   isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: It's just a  code.
+  Text: It's just a code.
   TextForRepetition: 'WE SAID:
 
 
-    It''s just a  code.'
+    It''s just a code.'
   CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
     text: UNREWARDING
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 834ab9b169295414d82a41e6e30a8bb6, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0

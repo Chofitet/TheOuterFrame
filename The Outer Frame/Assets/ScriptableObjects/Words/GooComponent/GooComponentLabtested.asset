@@ -18,12 +18,15 @@ MonoBehaviour:
   isAutomatic: 1
   ChangeTimeOfAction: 0
   Text: You should read that initial report again. That's all we got.
-  TextForRepetition: You should read that initial report again. That's all we got.
+  TextForRepetition: "You should read that initial report again. \nIt's that thing's
+    primary component.\nThat's all we got."
   CustomStatus: 
   Photos:
   - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
     text: SORRY
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: a6fb180bd6bbd954f804cb3872315615, type: 2}
+    ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
