@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: StrangeGooMopUpCargoOrVTTInspected
+  m_Name: StrangeGooMopUpCargoAndVTTNotInspectedDomeDown
   m_EditorClassIdentifier: 
-  id: 779e30be-a223-45b7-8581-8627f03f2fd9
+  id: a1252e21-7ac2-4140-8371-c54c1cbdfddd
   Action: {fileID: 11400000, guid: 978fd1b3f2b54f04dad1b8d1c77bf880, type: 2}
   state: {fileID: 11400000, guid: 978fd1b3f2b54f04dad1b8d1c77bf880, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "We had to do some circular breathing to whistle all the way through, but
-    that green stuff is finally gone!! \n\nEverything else was left a little dirty
-    as it was before, so to no raise suspicion."
+  Text: "We had to do some circular breathing. But we whistled all the way through.
+    And now that hazardous green stuff is finally gone!! \n\nWe tried to leave everything
+    else as dirty as it was, so to no raise suspicion."
   TextForRepetition: 
   CustomStatus: 
   Photos:
@@ -27,16 +27,16 @@ MonoBehaviour:
     text: GONE!
   - photo: {fileID: 21300000, guid: b1e2be96e1b2d154ea50b41fea45c9c1, type: 3}
     text: CLEAN ALL THE WAY
-  - photo: {fileID: 21300000, guid: efc5ac221b2481d4486fe30ef012e955, type: 3}
-    text: IT JUST GLOWS NOW
-  - photo: {fileID: 21300000, guid: efc5ac221b2481d4486fe30ef012e955, type: 3}
-    text: IT JUST GLOWS NOW
-  - photo: {fileID: 21300000, guid: 5e64932087aec944bb4f13899e554915, type: 3}
+  - photo: {fileID: 21300000, guid: 6cbb1b59b687d8e40be85af4d7043017, type: 3}
     text: BEYOND REPROACH
   Conditionals:
   - condition: {fileID: 11400000, guid: 7e4ea38c4c1c9ff4e8641495f3bee1c1, type: 2}
     ifNot: 1
-  - condition: {fileID: 11400000, guid: cdd3674130adc94489ae934889791486, type: 2}
+  - condition: {fileID: 11400000, guid: af24b02b9f7fd1747a65ed31b8736396, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 5e3f162beae27c242920a73d1ea64639, type: 2}
+    ifNot: 0
+  - condition: {fileID: 11400000, guid: 5e3f162beae27c242920a73d1ea64639, type: 2}
     ifNot: 0
   ObjectType: 0
   isOrderMatters: 0
