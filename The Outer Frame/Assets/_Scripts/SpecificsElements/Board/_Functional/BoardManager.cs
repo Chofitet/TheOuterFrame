@@ -21,6 +21,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] StringConnectionController[] ConnectInTutorial;
     [SerializeField] GameEvent OnEnableInput;
     [SerializeField] GameEvent OnDisableInput;
+    [SerializeField] GameEvent OnConnectStringByClicking;
 
     [Header("CallsToUpdate")]
     [SerializeField] GameEvent OnInactiveIdeas;
@@ -154,12 +155,15 @@ public class BoardManager : MonoBehaviour
         OnUpdateIdeas.Invoke(this, StartPos.position);
         yield return new WaitForSeconds(WaitIdeas);
         //OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
+        yield return new WaitForSeconds(WaitConnections);
+        OnUpdateConnections.Invoke(this, null);
 
     }
 
     float WaitPhotoUpdate = 0f;
     float WaitPosit = 0f;
     float WaitIdeas = 0f;
+    float WaitConnections = 0f;
 
     public void ActualTypeOfElementMoving(Component sender, object obj)
     {
@@ -168,6 +172,7 @@ public class BoardManager : MonoBehaviour
         WaitPhotoUpdate = 0;
         WaitPosit = 0;
         WaitIdeas = 0;
+        WaitConnections = 0;
 
         if (typeOf == BoardType.photoUpdate)
         {
@@ -181,11 +186,15 @@ public class BoardManager : MonoBehaviour
         {
             WaitIdeas = 0.3f;
         }
+        else if(typeOf == BoardType.connection)
+        {
+            WaitConnections = 0.3f;
+        }
     }
 
     public void MadeConnections(Component sender, object obj)
     {
-        OnUpdateConnections?.Invoke(this, null);
+        OnConnectStringByClicking?.Invoke(this, null);
     }
 
     void CheckIdeaConditionals()

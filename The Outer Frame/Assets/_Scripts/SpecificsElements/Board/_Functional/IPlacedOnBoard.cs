@@ -27,4 +27,5 @@ public enum BoardType
     photoUpdate,
     posit,
     Idea,
+    connection
 }

@@ -5,7 +5,7 @@ using DG.Tweening;
 using GogoGaga.OptimizedRopesAndCables;
 
 
-public class StringConnectionController : MonoBehaviour
+public class StringConnectionController : MonoBehaviour, IPlacedOnBoard
 {
     [SerializeField] MoveBoardElementsToPos Node1;
     [SerializeField] MoveBoardElementsToPos Node2;
@@ -21,6 +21,7 @@ public class StringConnectionController : MonoBehaviour
     [SerializeField] MeshRenderer lineRenderer;
     [SerializeField] AnimationCurve curveStringAnim;
     GameObject content;
+    [SerializeField] BoardType boardType;
     bool isConnected;
 
     private void Start()
@@ -58,6 +59,8 @@ public class StringConnectionController : MonoBehaviour
         
     }
 
+    bool pendingToMakeConection;
+
     bool once = false;
     public void CheckConnection(Component sender, object obj)
     {
@@ -65,31 +68,52 @@ public class StringConnectionController : MonoBehaviour
        if (Node1.GetIsPlacedFinish() && Node2.GetIsPlacedFinish() && CheckForConditionals())
         {
             if (GetComponentInParent<BoardStringsGroup>().CheckIfOtherStringArePlaced(this.gameObject)) return;
-            if (!once)
-            {
-                AnimPin2.transform.position = startPosPin1;
-                once = true;
-
-                Sequence seq = DOTween.Sequence();
-
-                seq.Join(
-                    AnimPin2.transform.DOMoveX(startPosPin2.x, 0.5f).SetEase(Ease.Linear)
-                );
-                seq.Join(
-                    AnimPin2.transform.DOMoveZ(startPosPin2.z, 0.5f).SetEase(curveStringAnim)
-                );
-
-                seq.Join(
-                    AnimPin2.transform.DOMoveY(startPosPin2.y, 0.5f).SetEase(curveStringAnim)
-                );
-
-               // StartCoroutine(EnableMesh(true));
-            }
-            content.SetActive(true);
-            
-            if(!isConnected) OnPuttingStringSound?.Invoke(this, null);
-            isConnected = true;
+            pendingToMakeConection = true;
         }
+    }
+
+    public void MakeConnectionByClicking(Component sender, object obj)
+    {
+        if (isConnected) return;
+        if (Node1.GetIsPlacedFinish() && Node2.GetIsPlacedFinish() && CheckForConditionals())
+        {
+            if (GetComponentInParent<BoardStringsGroup>().CheckIfOtherStringArePlaced(this.gameObject)) return;
+            MakeConnectionAnim();
+        }
+    }
+
+    public void MakeConnectionAutomactly(Component sender, object obj)
+    {
+        if (!pendingToMakeConection) return;
+        MakeConnectionAnim();
+    }
+
+    void MakeConnectionAnim()
+    {
+        if (!once)
+        {
+            AnimPin2.transform.position = startPosPin1;
+            once = true;
+
+            Sequence seq = DOTween.Sequence();
+
+            seq.Join(
+                AnimPin2.transform.DOMoveX(startPosPin2.x, 0.5f).SetEase(Ease.Linear)
+            );
+            seq.Join(
+                AnimPin2.transform.DOMoveZ(startPosPin2.z, 0.5f).SetEase(curveStringAnim)
+            );
+
+            seq.Join(
+                AnimPin2.transform.DOMoveY(startPosPin2.y, 0.5f).SetEase(curveStringAnim)
+            );
+
+            // StartCoroutine(EnableMesh(true));
+        }
+        content.SetActive(true);
+
+        if (!isConnected) OnPuttingStringSound?.Invoke(this, null);
+        isConnected = true;
     }
 
     public bool GetIsConnected() { return isConnected; }
@@ -107,7 +131,7 @@ public class StringConnectionController : MonoBehaviour
 
             IConditionable auxConditional = conditional as IConditionable;
 
-            if (!auxConditional.GetStateCondition())
+            if (!auxConditional.GetStateCondition(2))
             {
                 return false;
             }
@@ -192,5 +216,39 @@ public class StringConnectionController : MonoBehaviour
             renderer.receiveShadows = false;
         }
 
+    }
+
+    public bool GetConditionalState()
+    {
+        return false;
+    }
+
+    public bool ActiveInBegining()
+    {
+        return false;
+    }
+
+    public bool GetIsTaken()
+    {
+        return false;
+    }
+
+    public bool IsOutOfBoard()
+    {
+        return false;
+    }
+    public WordData GetWordData()
+    {
+            return null;
+    }
+
+    BoardType IPlacedOnBoard.GetType()
+    {
+            return boardType;
+    }
+
+    public void ActiveInteraction()
+    {
+       
     }
 }
