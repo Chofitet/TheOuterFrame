@@ -510,11 +510,11 @@ MonoBehaviour:
   blockInput: {fileID: 5001483677920266564}
   models:
   - model: {fileID: 4051645623761528418}
-    MaxWordLenght: 0
+    MaxWordLenght: 20
   - model: {fileID: 7007188860616316943}
-    MaxWordLenght: 0
-  - model: {fileID: 0}
-    MaxWordLenght: 0
+    MaxWordLenght: 20
+  - model: {fileID: 1183685355968162748}
+    MaxWordLenght: 14
 --- !u!65 &233893290814841594
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -825,7 +825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7029948723529949830, guid: 252c5bf96af4c5746b315fd1890c7b9a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4292154010595695564, guid: 252c5bf96af4c5746b315fd1890c7b9a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -884,6 +884,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 252c5bf96af4c5746b315fd1890c7b9a, type: 3}
+--- !u!1 &1183685355968162748 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3902236401156706468, guid: 252c5bf96af4c5746b315fd1890c7b9a, type: 3}
+  m_PrefabInstance: {fileID: 2759242965520694040}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2432073158202121459 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 252c5bf96af4c5746b315fd1890c7b9a, type: 3}

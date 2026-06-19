@@ -151,7 +151,10 @@ public class WordsToRememberManager : MonoBehaviour
 
         WordData word = memberWord.GetComponent<WordToRemember>().GetWord();
 
-        if (!ChosenMemberWords.Contains(word))ChosenMemberWords.Add(word);
+        if (!ChosenMemberWords.Contains(word))
+        {
+            ChosenMemberWords.Add(word);
+        }
     }
 
     public void UnsetWordsToRemember(Component sender, object obj)
@@ -173,7 +176,5 @@ public class WordsToRememberManager : MonoBehaviour
         }
         OnChangeScene?.Invoke(this, "LoadingScreen");
     }
-
-
 
 }

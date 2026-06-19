@@ -64,6 +64,7 @@ public class WordData : DataType, IReseteableScriptableObject
     [NonSerialized] bool isPendingToShowLocation = false;
     [NonSerialized] bool WordWasRemember;
     [NonSerialized] bool AppearOnReport = false;
+    [NonSerialized] int MemberWordNumPaperModel = 0;
     #region GetInputLogic
 
     public override void ResetScriptableObject()
@@ -81,6 +82,7 @@ public class WordData : DataType, IReseteableScriptableObject
         isPlacedInBoad = false;
         WordWasRemember = false;
         AppearOnReport = false;
+        MemberWordNumPaperModel = 0;
         //Debug.Log("reseted " + name);
     }
 
@@ -729,6 +731,14 @@ public class WordData : DataType, IReseteableScriptableObject
         isPlacedInBoad = true;
         MarkDirty();
     }
+
+    public void SetMemberWordNumPaperModel(int x)
+    {
+        MemberWordNumPaperModel = x;
+        MarkDirty();
+    }
+
+    public int GetMemberWordNumPaperModel() { return MemberWordNumPaperModel; }
 
     public bool GetPlacedInBoard() { return isPlacedInBoad; }
 

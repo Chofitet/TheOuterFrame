@@ -24,14 +24,17 @@ public class WordToRemember : MonoBehaviour
         int index = 0;
         foreach (MemberWordsModels paperModelData in models)
         {
+            
             index ++;
             GameObject paper = paperModelData.GetModel(word.GetName().Length);
+            paper.SetActive(false);
 
-            if(paper)
+            if (paper)
             {
                 if (ChosenPapersList.Contains(index)) continue;
                 paper.SetActive(true);
                 ChosenPaper = index;
+                word.SetMemberWordNumPaperModel(ChosenPaper);
                 return;
             }
             
@@ -94,11 +97,10 @@ public class MemberWordsModels
 {
     public GameObject model;
     public int MaxWordLenght;
-    int PaperNum;
 
     public GameObject GetModel(int NumCharacters)
     {
-        if(NumCharacters > MaxWordLenght) return model;
+        if(NumCharacters < MaxWordLenght) return model;
 
         return null;
     }

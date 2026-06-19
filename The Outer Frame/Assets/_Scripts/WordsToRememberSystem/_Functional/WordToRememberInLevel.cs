@@ -9,10 +9,14 @@ public class WordToRememberInLevel : MonoBehaviour
 {
     WordData word;
     [SerializeField] TMP_Text textField;
+    [SerializeField] List<GameObject> models = new List<GameObject>();
     public void Initialize(WordData _word)
     {
         word = _word;
         textField.text = _word.GetName();
+
+        foreach (GameObject model in models) { model.SetActive(false); }
+        models[word.GetMemberWordNumPaperModel()].SetActive(true);
     }
 
     public void GetOut(Component sender, object obj)
