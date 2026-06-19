@@ -32,7 +32,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         {
             transform.position = new Vector3(0, 0, 0);
             transform.GetChild(0).gameObject.SetActive(true);
-            //ActiveChildPosits();
+            ActiveChildPosits();
             MarkRetroactiveWordPlaced();
             OnPutPhotoOnBoard?.Invoke(this, word);
             word.SetPlacedInBoard();
@@ -43,7 +43,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
         else return false;
     }
 
-        /*void ActiveChildPosits()
+        void ActiveChildPosits()
     {
         foreach(MoveBoardElementsToPos posit in PostIts)
         {
@@ -56,7 +56,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
                 Canvas.SetActive(false);
             }
         }
-    }*/
+    }
 
     bool CheckRetroactiveWordWasPlaced() 
     {
@@ -88,6 +88,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
 
     public bool ActiveInBegining()
     {
+        ActiveChildPosits();
        return ActiveInBeginning;
     }
 

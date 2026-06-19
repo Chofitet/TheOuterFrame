@@ -22,6 +22,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [HideInInspector][SerializeField] GameEvent OnMoveToOutOfView;
     [HideInInspector][SerializeField] GameEvent OnSetTakenPosit;
     [HideInInspector][SerializeField] GameObject CroosIcon;
+    [SerializeField] bool ActiveInBeginning;
     bool ActionIsDoing;
     bool isDone;
     private bool istaken;
@@ -288,7 +289,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
     public bool ActiveInBegining()
     {
-        return false;
+        return ActiveInBeginning;
     }
 
     public bool GetIsTaken()
