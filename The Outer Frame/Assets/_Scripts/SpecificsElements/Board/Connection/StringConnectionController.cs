@@ -22,6 +22,7 @@ public class StringConnectionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] AnimationCurve curveStringAnim;
     GameObject content;
     [SerializeField] BoardType boardType;
+    [SerializeField] bool activeInBeggining;
     bool isConnected;
 
     private void Start()
@@ -50,6 +51,8 @@ public class StringConnectionController : MonoBehaviour, IPlacedOnBoard
         AnimPin1.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
         AnimPin2.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
         content.SetActive(false);
+
+        if (activeInBeggining) ConnectDirectly();
     }
 
     public void UpdatePositionRotation(Component sender, object obj)

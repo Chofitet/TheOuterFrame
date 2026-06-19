@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,21 +12,25 @@ public class WordToRemember : MonoBehaviour
     [SerializeField] GameEvent OnRemoveMemberWord;
     [SerializeField] GameEvent OnBackToDefaultPosInVoid;
     [SerializeField] BoxCollider blockInput;
+    [SerializeField] List<MemberWordsModels> models = new List<MemberWordsModels>();
     bool isTaken;
-
+    int ChosenPaper;
 
     public void Initialize(WordData _word)
     {
-        try
-        {
-            Debug.Log(_word.name);
-        }
-        catch
-        {
-            Debug.LogWarning("El wordData no está siedo encontrado en la build");
-        }
         word = _word;
         textField.text = _word.GetName();
+
+        foreach(MemberWordsModels paperModelData in models)
+        {
+            GameObject paper = paperModelData.GetModel(word.GetName().Length);
+
+            if(paper)
+            {
+                paper.SetActive(true);
+            }
+            
+        }
     }
 
     public void AddWordToMemberList(Component sender,object obj)
@@ -69,5 +74,25 @@ public class WordToRemember : MonoBehaviour
         isInBackView = false;
     }
 
+    public void SetWordModel(int CharactersNum)
+    {
+
+    }
+
     public WordData GetWord() { return word; }
+}
+
+[Serializable]
+public class MemberWordsModels
+{
+    public GameObject model;
+    public int MaxWordLenght;
+
+    public GameObject GetModel(int NumCharacters)
+    {
+        if(NumCharacters > MaxWordLenght) return model;
+
+        return null;
+    }
+
 }

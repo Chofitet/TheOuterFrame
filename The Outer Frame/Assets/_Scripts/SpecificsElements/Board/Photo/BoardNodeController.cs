@@ -13,6 +13,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
     MoveBoardElementsToPos[] PostIts;
     [SerializeField] GameObject PhotoModel;
     [SerializeField] GameObject Canvas;
+    [SerializeField] bool ActiveInBeginning;
     bool AwaitingForPlace;
     GameObject content;
 
@@ -87,7 +88,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
 
     public bool ActiveInBegining()
     {
-       return false;
+       return ActiveInBeginning;
     }
 
     public bool GetIsTaken()
