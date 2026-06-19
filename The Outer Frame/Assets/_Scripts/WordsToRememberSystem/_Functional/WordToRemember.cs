@@ -16,22 +16,29 @@ public class WordToRemember : MonoBehaviour
     bool isTaken;
     int ChosenPaper;
 
-    public void Initialize(WordData _word)
+    public void Initialize(WordData _word, List<int> ChosenPapersList)
     {
         word = _word;
         textField.text = _word.GetName();
 
-        foreach(MemberWordsModels paperModelData in models)
+        int index = 0;
+        foreach (MemberWordsModels paperModelData in models)
         {
+            index ++;
             GameObject paper = paperModelData.GetModel(word.GetName().Length);
 
             if(paper)
             {
+                if (ChosenPapersList.Contains(index)) continue;
                 paper.SetActive(true);
+                ChosenPaper = index;
+                return;
             }
             
         }
     }
+
+    public int GetChosenPaper() { return ChosenPaper; }
 
     public void AddWordToMemberList(Component sender,object obj)
     {
@@ -87,6 +94,7 @@ public class MemberWordsModels
 {
     public GameObject model;
     public int MaxWordLenght;
+    int PaperNum;
 
     public GameObject GetModel(int NumCharacters)
     {

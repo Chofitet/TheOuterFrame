@@ -11,6 +11,8 @@ public class WordToRememberInstantiator : MonoBehaviour
     [SerializeField] GameEvent OnChangeScene;
     [SerializeField] List<WordData> DebugMemberWords;
     [SerializeField] List<Transform> Pivots;
+    List<int> ChosenPapers = new List<int>();
+
     bool isInBackView;
     public void ShowRememberWordsInVoid(Component sender,object obj)
     { 
@@ -34,7 +36,9 @@ public class WordToRememberInstantiator : MonoBehaviour
             );
 
             wordToRemember.GetComponent<WordToRemember>()
-                .Initialize(WordsToRemember[i]);
+                .Initialize(WordsToRemember[i], ChosenPapers);
+
+            ChosenPapers.Add(wordToRemember.GetComponent<WordToRemember>().GetChosenPaper());
         }
     }
 

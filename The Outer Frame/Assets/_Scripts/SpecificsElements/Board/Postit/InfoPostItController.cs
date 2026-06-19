@@ -11,7 +11,7 @@ public class InfoPostItController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] bool isOrderMatters;
     GameObject content;
     
-    bool isActiveInBegining;
+    public bool isActiveInBegining;
 
     [SerializeField] BoardType TypeElement;
 
