@@ -46,7 +46,7 @@ public class MoveMemberWordsToHand : MonoBehaviour
                     x => lerpTime = x,
                     1,
                     MoveDuration
-                ).SetEase(Ease.InOutSine)
+                )//.SetEase(Ease.OutSine)
             )
             .OnComplete(() =>
             {
