@@ -10,6 +10,7 @@ public class MoveMemberWordsToHand : MonoBehaviour
     Sequence MoveMemberWordToHandSequence;
     [SerializeField] float MoveDuration = 0.3f;
     [SerializeField] Transform FinalPos;
+    [SerializeField] float AnimDownPapersGoTolevel1 = 0.5f;
 
     Transform currentTarget;
     GameObject currentMemberWord;
@@ -95,7 +96,7 @@ public class MoveMemberWordsToHand : MonoBehaviour
         GetOutSequence = DOTween.Sequence();
 
         GetOutSequence.PrependInterval(0.5f) 
-            .Append(transform.DOMove(FinalPos.position, 0.5f));
+            .Append(transform.DOMove(FinalPos.position, AnimDownPapersGoTolevel1));
     }
 
 
