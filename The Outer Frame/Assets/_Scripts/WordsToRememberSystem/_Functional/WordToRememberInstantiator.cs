@@ -12,6 +12,7 @@ public class WordToRememberInstantiator : MonoBehaviour
     [SerializeField] List<WordData> DebugMemberWords;
     [SerializeField] List<Transform> Pivots;
     List<int> ChosenPapers = new List<int>();
+    [SerializeField] float AnimTakeWordTime = 0.3f;
 
     bool isInBackView;
     public void ShowRememberWordsInVoid(Component sender,object obj)
@@ -77,14 +78,14 @@ public class WordToRememberInstantiator : MonoBehaviour
                 {
                     memberWord.transform.SetParent(pivot);
                 })
-            .Append(memberWord.transform.DOMove(pivot.position, 0.3f))
-              .Join(memberWord.transform.DORotate(pivot.rotation.eulerAngles, 0.3f));
+            .Append(memberWord.transform.DOMove(pivot.position, AnimTakeWordTime))
+              .Join(memberWord.transform.DORotate(pivot.rotation.eulerAngles, AnimTakeWordTime));
         }
         else
         {
             memberWord.transform.SetParent(pivot);
-            MoveMemberWordToSpaceSequence.Append(memberWord.transform.DOMove(pivot.position, 0.3f))
-              .Join(memberWord.transform.DORotate(pivot.rotation.eulerAngles, 0.3f));
+            MoveMemberWordToSpaceSequence.Append(memberWord.transform.DOMove(pivot.position, AnimTakeWordTime))
+              .Join(memberWord.transform.DORotate(pivot.rotation.eulerAngles, AnimTakeWordTime));
         }
 
         
