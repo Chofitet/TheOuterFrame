@@ -25,19 +25,23 @@ public class WordToRemember : MonoBehaviour
         foreach (MemberWordsModels paperModelData in models)
         {
             
-            index ++;
+            
             GameObject paper = paperModelData.GetModel(word.GetName().Length);
-            paper.SetActive(false);
+           
 
             if (paper)
             {
-                if (ChosenPapersList.Contains(index)) continue;
-                paper.SetActive(true);
                 ChosenPaper = index;
+                index++;
+
+                if (ChosenPapersList.Contains(ChosenPaper)) continue;
+                paper.SetActive(true);
+                
                 word.SetMemberWordNumPaperModel(ChosenPaper);
                 return;
             }
-            
+            else index++;
+
         }
     }
 
