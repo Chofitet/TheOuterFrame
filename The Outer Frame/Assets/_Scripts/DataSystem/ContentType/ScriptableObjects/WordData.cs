@@ -82,7 +82,7 @@ public class WordData : DataType, IReseteableScriptableObject
         isPlacedInBoad = false;
         WordWasRemember = false;
         AppearOnReport = false;
-        MemberWordNumPaperModel = 0;
+        //MemberWordNumPaperModel = 0;
         //Debug.Log("reseted " + name);
     }
 
@@ -735,7 +735,7 @@ public class WordData : DataType, IReseteableScriptableObject
     public void SetMemberWordNumPaperModel(int x)
     {
         MemberWordNumPaperModel = x;
-        MarkDirty();
+        //MarkDirty();
     }
 
     public int GetMemberWordNumPaperModel() { return MemberWordNumPaperModel; }

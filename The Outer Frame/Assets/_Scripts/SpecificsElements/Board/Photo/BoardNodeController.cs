@@ -88,7 +88,7 @@ public class BoardNodeController : MonoBehaviour, IPlacedOnBoard
 
     public bool ActiveInBegining()
     {
-        ActiveChildPosits();
+        //ActiveChildPosits();
        return ActiveInBeginning;
     }
 
