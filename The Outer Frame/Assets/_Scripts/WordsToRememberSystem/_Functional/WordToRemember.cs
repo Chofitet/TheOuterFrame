@@ -127,33 +127,22 @@ public class WordToRemember : MonoBehaviour
 
     public void MoveToHand(Transform target, float duration)
     {
-        if (moveSequence != null && moveSequence.IsActive())
-            moveSequence.Kill();
+        if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
         currentTarget = target;
-        transform.SetParent(target);
+        
 
         moveSequence = DOTween.Sequence();
+        isFollowingTarget = true;
+        lerpTime = 0;
 
-        moveSequence
-            .AppendCallback(() =>
-            {
-                isFollowingTarget = true;
-                lerpTime = 0;
-            })
-            .Append(
-                DOTween.To(
-                    () => lerpTime,
-                    x => lerpTime = x,
-                    1f,
-                    duration)
+        moveSequence.Append(
+                DOTween.To(() => lerpTime,x => lerpTime = x,1f,duration)
             )
             .OnComplete(() =>
             {
                 isFollowingTarget = false;
-
-                transform.position = target.position;
-                transform.rotation = target.rotation;
+                transform.SetParent(target);
             });
     }
 
@@ -163,43 +152,25 @@ public class WordToRemember : MonoBehaviour
             moveSequence.Kill();
 
         moveSequence = DOTween.Sequence();
-
+        currentTarget = pivot;
+        lerpTime = 0f;
+        isFollowingTarget = true;
 
         if (isInBackView)
         {
             moveSequence
-                .PrependInterval(0.7f)
-                .AppendCallback(() =>
-                {
-                    transform.SetParent(pivot);
-                });
-        }
-        else
-        {
-            transform.SetParent(pivot);
+                .PrependInterval(0.7f);
         }
 
         moveSequence
-        .AppendCallback(() =>
-        {
-            currentTarget = pivot;
-            lerpTime = 0f;
-            isFollowingTarget = true;
-        })
         .Append(
-            DOTween.To(
-                () => lerpTime,
-                x => lerpTime = x,
-                1f,
-                duration)
+            DOTween.To(  () => lerpTime, x => lerpTime = x, 1f, duration)
         )
         .OnComplete(() =>
         {
-            transform.position = pivot.position;
-            transform.rotation = pivot.rotation;
-
             isFollowingTarget = false;
             currentTarget = null;
+            transform.SetParent(pivot);
         });
 
     }

@@ -13,6 +13,7 @@ public class VoidCameraController : MonoBehaviour
     bool waitForColdDown = true;
     Coroutine ColdDownClickCoroutine;
 
+    [SerializeField] List<GameEvent> GoAwaySoundsEvents = new List<GameEvent>();
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class VoidCameraController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1)) 
         {
+            GoAwaySoundsEvents[currentClicks]?.Invoke(this, null);
             if (currentClicks == 0) SetPriority(1);
             else if (currentClicks == 1) SetPriority(2);
             else if (currentClicks == 2) SetPriority(3);

@@ -11,93 +11,43 @@ public class MoveMemberWordsToHand : MonoBehaviour
     [SerializeField] float MoveDuration = 0.3f;
     [SerializeField] Transform FinalPos;
     [SerializeField] float AnimDownPapersGoTolevel1 = 0.5f;
-
+    private bool isFollowingTarget;
     Transform currentTarget;
     GameObject currentMemberWord;
 
     bool isMoving;
     float lerpTime;
 
-    public void PlaceMemberWord(Component sender, object obj)
-    {
-       /* GameObject memberWord = (GameObject)obj;
-
-        Transform pivot = GetEmptyPlace();
-
-        if (pivot == null)
-            return;
-
-        memberWord.transform.SetParent(pivot);
-
-        if (MoveMemberWordToHandSequence != null && MoveMemberWordToHandSequence.IsActive())
-            MoveMemberWordToHandSequence.Kill();
-
-        currentMemberWord = memberWord;
-        currentTarget = pivot;
-
-        isMoving = true;
-        lerpTime = 0;
-
-        Sequence MoveMemberWordToHandSequence = DOTween.Sequence();
-
-        MoveMemberWordToHandSequence
-            .Append(
-                DOTween.To(
-                    () => lerpTime,
-                    x => lerpTime = x,
-                    1,
-                    MoveDuration
-                )//.SetEase(Ease.OutSine)
-            )
-            .OnComplete(() =>
-            {
-                isMoving = false;
-
-                if (currentMemberWord != null && currentTarget != null)
-                {
-                    currentMemberWord.transform.position = currentTarget.position;
-                    currentMemberWord.transform.rotation = currentTarget.rotation;
-                }
-            });*/
-    }
-
-    private void Update()
-    {
-        if (!isMoving || currentMemberWord == null || currentTarget == null)
-            return;
-
-        currentMemberWord.transform.position = Vector3.Lerp(
-            currentMemberWord.transform.position,
-            currentTarget.position,
-            lerpTime
-        );
-
-        currentMemberWord.transform.rotation = Quaternion.Lerp(
-            currentMemberWord.transform.rotation,
-            currentTarget.rotation,
-            lerpTime
-        );
-    }
-
-    private Transform GetEmptyPlace()
-    {
-        foreach (Transform pivot in Pivots)
-        {
-            if (pivot.childCount == 0)
-                return pivot;
-        }
-
-        return null;
-    }
-
     Sequence GetOutSequence;
     public void GetOutMemberWords(Component sender,object obj)
     {
         GetOutSequence = DOTween.Sequence();
 
-        GetOutSequence.PrependInterval(0.5f) 
-            .Append(transform.DOMove(FinalPos.position, AnimDownPapersGoTolevel1));
+            GetOutSequence
+        .PrependInterval(0.5f)
+        .AppendCallback(() =>
+        {
+            isFollowingTarget = true;
+            currentTarget = FinalPos;
+        })
+        .AppendInterval(AnimDownPapersGoTolevel1)
+        .OnComplete(() =>
+        {
+            isFollowingTarget = false;
+
+            if (currentTarget != null)
+                transform.position = currentTarget.position;
+        });
     }
 
-
+    private void Update()
+    {
+        if (isFollowingTarget && currentTarget != null)
+        {
+            transform.position = Vector3.Lerp(
+                transform.position,
+                currentTarget.position,
+                0.2f);
+        }
+    }
 }

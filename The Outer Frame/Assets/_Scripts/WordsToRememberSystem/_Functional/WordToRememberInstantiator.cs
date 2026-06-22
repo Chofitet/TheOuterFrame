@@ -16,7 +16,6 @@ public class WordToRememberInstantiator : MonoBehaviour
     [SerializeField] float AnimTakeWordTime = 0.3f;
     [SerializeField] float AnimLeaveWordTime;
 
-    bool isInBackView;
     public void ShowRememberWordsInVoid(Component sender,object obj)
     { 
         List<WordData> WordsToRemember = (List<WordData>)obj;
@@ -31,12 +30,7 @@ public class WordToRememberInstantiator : MonoBehaviour
         {
             Transform anchor = anchorTransforms[i + 1];
 
-            GameObject wordToRemember = Instantiate(
-                WordToRememberPrefab,
-                anchor.position,
-                anchor.rotation,
-                anchor
-            );
+            GameObject wordToRemember = Instantiate( WordToRememberPrefab, anchor.position,anchor.rotation, anchor);
 
             wordToRemember.GetComponent<WordToRemember>()
                 .Initialize(WordsToRemember[i], ChosenPapers, AnimTakeWordTime, HandPivots[i], anchor, AnimLeaveWordTime);
@@ -61,55 +55,4 @@ public class WordToRememberInstantiator : MonoBehaviour
         MemberWordsTaked -= 1;
     }
 
-
-    public void PlaceMemberWord(Component sender, object obj)
-    {
-        /*GameObject memberWord = (GameObject)obj;
-
-        Transform pivot = GetEmptyPlace();
-
-        //if (MoveMemberWordToSpaceSequence != null & MoveMemberWordToSpaceSequence.IsActive()) MoveMemberWordToSpaceSequence.Kill();
-
-        Sequence MoveMemberWordToSpaceSequence = DOTween.Sequence();
-
-        if (isInBackView)
-        {
-            MoveMemberWordToSpaceSequence.PrependInterval(0.5f)
-                .AppendCallback(()=>
-                {
-                    memberWord.transform.SetParent(pivot);
-                })
-            .Append(memberWord.transform.DOMove(pivot.position, AnimTakeWordTime))
-              .Join(memberWord.transform.DORotate(pivot.rotation.eulerAngles, AnimTakeWordTime));
-        }
-        else
-        {
-            memberWord.transform.SetParent(pivot);
-            MoveMemberWordToSpaceSequence.Append(memberWord.transform.DOMove(pivot.position, AnimTakeWordTime))
-              .Join(memberWord.transform.DORotate(pivot.rotation.eulerAngles, AnimTakeWordTime));
-        }*/
-
-        
-        
-    }
-
-    Transform GetEmptyPlace()
-    {
-        foreach (Transform pivot in Pivots)
-        {
-            if (pivot.childCount == 0) return pivot;
-        }
-
-        return null;
-    }
-
-    public void IsInBackView(Component sender, object obj)
-    {
-        isInBackView = true;
-    }
-
-    public void IsInDefaultView(Component sender, object obj)
-    {
-        isInBackView = false;
-    }
 }
