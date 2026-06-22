@@ -7,7 +7,7 @@ using System.Linq;
 public class MoveMemberWordsToHand : MonoBehaviour
 {
     [SerializeField] List<Transform> Pivots = new List<Transform>();
-    Sequence MoveMemberWordToHandSequence;
+    //Sequence MoveMemberWordToHandSequence;
     [SerializeField] float MoveDuration = 0.3f;
     [SerializeField] Transform FinalPos;
     [SerializeField] float AnimDownPapersGoTolevel1 = 0.5f;
@@ -20,7 +20,7 @@ public class MoveMemberWordsToHand : MonoBehaviour
 
     public void PlaceMemberWord(Component sender, object obj)
     {
-        GameObject memberWord = (GameObject)obj;
+       /* GameObject memberWord = (GameObject)obj;
 
         Transform pivot = GetEmptyPlace();
 
@@ -38,7 +38,7 @@ public class MoveMemberWordsToHand : MonoBehaviour
         isMoving = true;
         lerpTime = 0;
 
-        MoveMemberWordToHandSequence = DOTween.Sequence();
+        Sequence MoveMemberWordToHandSequence = DOTween.Sequence();
 
         MoveMemberWordToHandSequence
             .Append(
@@ -58,7 +58,7 @@ public class MoveMemberWordsToHand : MonoBehaviour
                     currentMemberWord.transform.position = currentTarget.position;
                     currentMemberWord.transform.rotation = currentTarget.rotation;
                 }
-            });
+            });*/
     }
 
     private void Update()

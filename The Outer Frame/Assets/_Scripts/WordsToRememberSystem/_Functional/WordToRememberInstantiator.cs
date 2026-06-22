@@ -11,8 +11,10 @@ public class WordToRememberInstantiator : MonoBehaviour
     [SerializeField] GameEvent OnChangeScene;
     [SerializeField] List<WordData> DebugMemberWords;
     [SerializeField] List<Transform> Pivots;
+    [SerializeField] List<Transform> HandPivots;
     List<int> ChosenPapers = new List<int>();
     [SerializeField] float AnimTakeWordTime = 0.3f;
+    [SerializeField] float AnimLeaveWordTime;
 
     bool isInBackView;
     public void ShowRememberWordsInVoid(Component sender,object obj)
@@ -37,7 +39,7 @@ public class WordToRememberInstantiator : MonoBehaviour
             );
 
             wordToRemember.GetComponent<WordToRemember>()
-                .Initialize(WordsToRemember[i], ChosenPapers);
+                .Initialize(WordsToRemember[i], ChosenPapers, AnimTakeWordTime, HandPivots[i], anchor, AnimLeaveWordTime);
 
             ChosenPapers.Add(wordToRemember.GetComponent<WordToRemember>().GetChosenPaper());
         }
@@ -59,17 +61,16 @@ public class WordToRememberInstantiator : MonoBehaviour
         MemberWordsTaked -= 1;
     }
 
-    Sequence MoveMemberWordToSpaceSequence;
 
     public void PlaceMemberWord(Component sender, object obj)
     {
-        GameObject memberWord = (GameObject)obj;
+        /*GameObject memberWord = (GameObject)obj;
 
         Transform pivot = GetEmptyPlace();
 
-        if (MoveMemberWordToSpaceSequence != null & MoveMemberWordToSpaceSequence.IsActive()) MoveMemberWordToSpaceSequence.Kill();
+        //if (MoveMemberWordToSpaceSequence != null & MoveMemberWordToSpaceSequence.IsActive()) MoveMemberWordToSpaceSequence.Kill();
 
-        MoveMemberWordToSpaceSequence = DOTween.Sequence();
+        Sequence MoveMemberWordToSpaceSequence = DOTween.Sequence();
 
         if (isInBackView)
         {
@@ -86,7 +87,7 @@ public class WordToRememberInstantiator : MonoBehaviour
             memberWord.transform.SetParent(pivot);
             MoveMemberWordToSpaceSequence.Append(memberWord.transform.DOMove(pivot.position, AnimTakeWordTime))
               .Join(memberWord.transform.DORotate(pivot.rotation.eulerAngles, AnimTakeWordTime));
-        }
+        }*/
 
         
         
