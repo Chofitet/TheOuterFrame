@@ -14,6 +14,10 @@ public class VoidCameraController : MonoBehaviour
     Coroutine ColdDownClickCoroutine;
 
     [SerializeField] List<GameEvent> GoAwaySoundsEvents = new List<GameEvent>();
+    [SerializeField] List<GameEvent> ComeBackSoundsEvents = new List<GameEvent>();
+
+    [SerializeField] float TimeToChangeScene;
+    [SerializeField] GameEvent OnExitBackVoid;
 
     private void Start()
     {
@@ -33,7 +37,8 @@ public class VoidCameraController : MonoBehaviour
             else if (currentClicks == 3)
             {
                 SetPriority(4);
-                OnChangeScene?.Invoke(this, "LoadingScreen");
+                Invoke("changeScene", TimeToChangeScene);
+                OnExitBackVoid?.Invoke(this, null);
             }
 
             if (ColdDownClickCoroutine != null) StopCoroutine(ColdDownClickCoroutine);
@@ -44,11 +49,17 @@ public class VoidCameraController : MonoBehaviour
         }
     }
 
+    void changeScene()
+    {
+        OnChangeScene?.Invoke(this, "LoadingScreen");
+    }
+
     public void BackToTheFirstCam(Component sender, object obj)
     {
         SetPriority(0);
         if (ColdDownClickCoroutine != null) StopCoroutine(ColdDownClickCoroutine);
         waitForColdDown = false;
+        ComeBackSoundsEvents[currentClicks]?.Invoke(this, null);
         currentClicks = 0;
     }
 

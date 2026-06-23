@@ -14,6 +14,8 @@ public class WordToRemember : MonoBehaviour
     [SerializeField] GameEvent OnBackToDefaultPosInVoid;
     [SerializeField] BoxCollider blockInput;
     [SerializeField] List<MemberWordsModels> models = new List<MemberWordsModels>();
+    [SerializeField] List<GameEvent> OnGrabPapersSounds = new List<GameEvent>();
+    [SerializeField] List<GameEvent> OnBackPapersSounds = new List<GameEvent>();
     Transform takePosition;
     Transform idlePosition;
     float takeDuration;
@@ -32,8 +34,6 @@ public class WordToRemember : MonoBehaviour
         int index = 0;
         foreach (MemberWordsModels paperModelData in models)
         {
-
-
             GameObject paper = paperModelData.GetModel(word.GetName().Length);
 
 
@@ -67,6 +67,8 @@ public class WordToRemember : MonoBehaviour
             isTaken = true;
             StartCoroutine(BlockInput(0.3f));
             MoveToHand(takePosition, takeDuration);
+
+            OnGrabPapersSounds[int.Parse(idlePosition.name)]?.Invoke(this,null);
         }
         else
         {
@@ -130,7 +132,7 @@ public class WordToRemember : MonoBehaviour
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
         currentTarget = target;
-        
+        transform.SetParent(target);
 
         moveSequence = DOTween.Sequence();
         isFollowingTarget = true;
@@ -142,7 +144,7 @@ public class WordToRemember : MonoBehaviour
             .OnComplete(() =>
             {
                 isFollowingTarget = false;
-                transform.SetParent(target);
+                
             });
     }
 
@@ -166,6 +168,7 @@ public class WordToRemember : MonoBehaviour
         .Append(
             DOTween.To(  () => lerpTime, x => lerpTime = x, 1f, duration)
         )
+        .JoinCallback(()=> OnBackPapersSounds[int.Parse(idlePosition.name)]?.Invoke(this, null))
         .OnComplete(() =>
         {
             isFollowingTarget = false;

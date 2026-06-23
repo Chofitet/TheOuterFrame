@@ -15,7 +15,9 @@ public class WordToRememberInstantiator : MonoBehaviour
     List<int> ChosenPapers = new List<int>();
     [SerializeField] float AnimTakeWordTime = 0.3f;
     [SerializeField] float AnimLeaveWordTime;
+    [SerializeField] GameEvent OnTakeDownMemberPapers;
 
+    [SerializeField] float TimeToChangeScene;
     public void ShowRememberWordsInVoid(Component sender,object obj)
     { 
         List<WordData> WordsToRemember = (List<WordData>)obj;
@@ -46,8 +48,20 @@ public class WordToRememberInstantiator : MonoBehaviour
 
         if (WordsToRememberAmount == MemberWordsTaked)
         {
-            OnChangeScene?.Invoke(this, null);
+            Invoke("changeScene", TimeToChangeScene);
+            OnTakeDownMemberPapers?.Invoke(this, MemberWordsTaked);
         }
+    }
+
+    public void CheckOnExitBackVoid(Component sender,object obj)
+    {
+        Invoke("changeScene", TimeToChangeScene);
+        OnTakeDownMemberPapers?.Invoke(this, MemberWordsTaked);
+    }
+
+    void changeScene()
+    {
+        OnChangeScene?.Invoke(this, "LoadingScreen");
     }
 
     public void UncheckMembersWordsTaked(Component sender, object obj)
