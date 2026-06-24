@@ -8,12 +8,13 @@ using UnityEngine;
 public class WordToRemember : MonoBehaviour
 {
     WordData word;
-    [SerializeField] TMP_Text textField;
+    [SerializeField] List<TMP_Text> textFields;
     [SerializeField] GameEvent OnAddMemberWord;
     [SerializeField] GameEvent OnRemoveMemberWord;
     [SerializeField] GameEvent OnBackToDefaultPosInVoid;
     [SerializeField] BoxCollider blockInput;
     [SerializeField] List<MemberWordsModels> models = new List<MemberWordsModels>();
+    [SerializeField] List<GameObject> PapersGOs = new List<GameObject>();
     [SerializeField] List<GameEvent> OnGrabPapersSounds = new List<GameEvent>();
     [SerializeField] List<GameEvent> OnBackPapersSounds = new List<GameEvent>();
     Transform takePosition;
@@ -26,7 +27,8 @@ public class WordToRemember : MonoBehaviour
     public void Initialize(WordData _word, List<int> ChosenPapersList, float _takeDuration, Transform _takePosition, Transform _IdlePosition, float _leaveDuration)
     {
         word = _word;
-        textField.text = _word.GetName();
+        foreach (TMP_Text textField in textFields) textField.text = _word.GetName();
+        foreach (GameObject paper in PapersGOs) paper.SetActive(false);
         takeDuration = _takeDuration;
         takePosition = _takePosition;
         idlePosition = _IdlePosition;
