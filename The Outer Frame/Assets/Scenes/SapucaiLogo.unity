@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +122,58 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &265840323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 265840325}
+  - component: {fileID: 265840324}
+  m_Layer: 0
+  m_Name: CursorSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &265840324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265840323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbad10dcc51140f4bb240cee48227167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultCursor: {fileID: 2800000, guid: c67ba65e41889cc419c0d55f9d7c21f4, type: 3}
+  ClickCursor: {fileID: 2800000, guid: e4637df0c0c23ad4c89c9dd3d45e67ed, type: 3}
+  InteractiveCursor: {fileID: 2800000, guid: e25f178d28e679842b1a5f833f961e78, type: 3}
+  PCDefaultCursor: {fileID: 0}
+  PCClickCursor: {fileID: 0}
+  PCInteractiveCursor: {fileID: 0}
+  targetCanvas: {fileID: 0}
+  ColliderToIngnoreBlockInput: {fileID: 0}
+--- !u!4 &265840325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265840323}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.02371437, y: 0.24559397, z: -0.09955045}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &724244252
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +795,7 @@ MonoBehaviour:
   _string: 
   viewState: 0
   gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
 --- !u!114 &1607792040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -809,6 +861,7 @@ MonoBehaviour:
   _string: MainMenu
   viewState: 0
   gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
 --- !u!1 &1807840557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,3 +1067,4 @@ SceneRoots:
   - {fileID: 1013578174}
   - {fileID: 1607792041}
   - {fileID: 784896493}
+  - {fileID: 265840325}

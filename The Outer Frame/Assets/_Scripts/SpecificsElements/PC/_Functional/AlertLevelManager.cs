@@ -28,6 +28,7 @@ public class AlertLevelManager : MonoBehaviour
     }
 
 
+    private Tween currentTween;
     public void UpdateNum(Component sender, object obj)
     {
         if (isStoped) return;
@@ -54,14 +55,17 @@ public class AlertLevelManager : MonoBehaviour
             isStoped = true;
         }
 
-        DOTween.To(() => level, x => level = x, auxIncruise, 0.8f / timeFactor).SetEase(Ease.InSine).OnComplete(() => { 
+        currentTween?.Kill();
+
+        currentTween = DOTween.To(() => level, x => level = x, auxIncruise, 0.8f).SetEase(Ease.InSine).OnComplete(() => { 
             if (auxIncruise >= maxLevel)
             {
                 Invoke("end", 0.2f);
                 isStoped = true;
             }
-        }); 
+        });
 
+        currentTween.timeScale = timeFactor;
     }
 
     private void end()
@@ -88,7 +92,8 @@ public class AlertLevelManager : MonoBehaviour
 
     public void AccelerateAnims(Component sender, object obj)
     {
-        timeFactor = (float)obj;
+        if((float)obj >= 1) timeFactor = (float)obj;
+        if(currentTween != null) currentTween.timeScale = timeFactor;
     }
 
     [ContextMenu("Try Alert Level")]
