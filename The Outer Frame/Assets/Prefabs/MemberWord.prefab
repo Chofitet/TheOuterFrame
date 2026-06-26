@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4740008215950389714}
   - component: {fileID: 3372890073257981758}
-  - component: {fileID: 4927071059610347833}
-  - component: {fileID: 8859978097140825348}
   - component: {fileID: 6538698831294300926}
+  - component: {fileID: 4927071059610347833}
   m_Layer: 0
   m_Name: Text (TMP)NarizPapers
   m_TagString: Untagged
@@ -47,6 +46,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584277973126881979}
   m_CullTransparentMesh: 1
+--- !u!114 &6538698831294300926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584277973126881979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 790744c462254b7ba8038e6ed28b3db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VertexCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -2.178936
+      value: 0.07836914
+      inSlope: 0.3496999
+      outSlope: 0.3496999
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.13191663
+    - serializedVersion: 3
+      time: -0.89561665
+      value: 0.47770125
+      inSlope: 0.03277928
+      outSlope: 0.03277928
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.69672644
+    - serializedVersion: 3
+      time: 1.048277
+      value: 0.53301847
+      inSlope: 0.5075224
+      outSlope: 0.5075224
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.23758042
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2.2180448
+      value: 0.75906956
+      inSlope: -0.013019187
+      outSlope: -0.013019187
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.21009202
+    - serializedVersion: 3
+      time: 3.4361877
+      value: 0.0040512085
+      inSlope: -0.5217011
+      outSlope: -0.5217011
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04231262
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  AngleMultiplier: 1
+  SpeedMultiplier: 1
+  CurveScale: 10
+  boundsMax: 8
+  boundsMin: -8
+  AutomaticUpdate: 0
 --- !u!114 &4927071059610347833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,87 +204,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!225 &8859978097140825348
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1584277973126881979}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
---- !u!114 &6538698831294300926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1584277973126881979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 790744c462254b7ba8038e6ed28b3db2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VertexCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -2.178936
-      value: 0.07836914
-      inSlope: 0.3496999
-      outSlope: 0.3496999
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.13191663
-    - serializedVersion: 3
-      time: -0.89561665
-      value: 0.47770125
-      inSlope: 0.03277928
-      outSlope: 0.03277928
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.69672644
-    - serializedVersion: 3
-      time: 1.048277
-      value: 0.53301847
-      inSlope: 0.5075224
-      outSlope: 0.5075224
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.23758042
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2.2180448
-      value: 0.75906956
-      inSlope: -0.013019187
-      outSlope: -0.013019187
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.21009202
-    - serializedVersion: 3
-      time: 3.4361877
-      value: 0.0040512085
-      inSlope: -0.5217011
-      outSlope: -0.5217011
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.04231262
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  CurveScale: 10
-  boundsMax: 8
-  boundsMin: -8
-  AutomaticUpdate: 1
 --- !u!1 &1800820426665571876
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,9 +301,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5563383446764653781}
   - component: {fileID: 1483296047936287423}
-  - component: {fileID: 8427765969152904848}
-  - component: {fileID: 1197888007718172205}
   - component: {fileID: 221823506484401457}
+  - component: {fileID: 8427765969152904848}
   m_Layer: 0
   m_Name: Text (TMP)MisionesPaper
   m_TagString: Untagged
@@ -351,6 +337,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2191268212412953130}
   m_CullTransparentMesh: 1
+--- !u!114 &221823506484401457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2191268212412953130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 790744c462254b7ba8038e6ed28b3db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VertexCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -2.376789
+      value: 0.60866547
+      inSlope: 0.012999662
+      outSlope: 0.012999662
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.4395418
+    - serializedVersion: 3
+      time: 0.4724547
+      value: 0.26690114
+      inSlope: -0.00015362646
+      outSlope: -0.00015362646
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.34063116
+    - serializedVersion: 3
+      time: 4.482849
+      value: 0.7960663
+      inSlope: 0.21112634
+      outSlope: 0.21112634
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08991649
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  AngleMultiplier: 1
+  SpeedMultiplier: 1
+  CurveScale: 30
+  boundsMax: 8
+  boundsMin: -8
+  AutomaticUpdate: 0
 --- !u!114 &8427765969152904848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,69 +477,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!225 &1197888007718172205
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2191268212412953130}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
---- !u!114 &221823506484401457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2191268212412953130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 790744c462254b7ba8038e6ed28b3db2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VertexCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -2.376789
-      value: 0.60866547
-      inSlope: 0.012999662
-      outSlope: 0.012999662
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.4395418
-    - serializedVersion: 3
-      time: 0.4724547
-      value: 0.26690114
-      inSlope: -0.00015362646
-      outSlope: -0.00015362646
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.34063116
-    - serializedVersion: 3
-      time: 4.482849
-      value: 0.7960663
-      inSlope: 0.21112634
-      outSlope: 0.21112634
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.08991649
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  CurveScale: 30
-  boundsMax: 8
-  boundsMin: -8
-  AutomaticUpdate: 1
 --- !u!1 &2272388225421708709
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,9 +589,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2520762293278676520}
   - component: {fileID: 1719214067597736762}
-  - component: {fileID: 1071525595790849919}
-  - component: {fileID: 6938253970133998497}
   - component: {fileID: 5437963583011893455}
+  - component: {fileID: 1071525595790849919}
   m_Layer: 0
   m_Name: Text (TMP)ArgentinaPaper
   m_TagString: Untagged
@@ -652,6 +625,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4477396546747832805}
   m_CullTransparentMesh: 1
+--- !u!114 &5437963583011893455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477396546747832805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 790744c462254b7ba8038e6ed28b3db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VertexCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -1.5045624
+      value: 0.008483887
+      inSlope: 0.3496999
+      outSlope: 0.3496999
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.13191663
+    - serializedVersion: 3
+      time: 0.32352892
+      value: 0.9923574
+      inSlope: -0.013019187
+      outSlope: -0.013019187
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.21009202
+    - serializedVersion: 3
+      time: 2.9633484
+      value: 0.0040512085
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  AngleMultiplier: 1
+  SpeedMultiplier: 1
+  CurveScale: 3
+  boundsMax: 8
+  boundsMin: -8
+  AutomaticUpdate: 0
 --- !u!114 &1071525595790849919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,69 +765,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!225 &6938253970133998497
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4477396546747832805}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
---- !u!114 &5437963583011893455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4477396546747832805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 790744c462254b7ba8038e6ed28b3db2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VertexCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -1.5045624
-      value: 0.008483887
-      inSlope: 0.3496999
-      outSlope: 0.3496999
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.13191663
-    - serializedVersion: 3
-      time: 0.32352892
-      value: 0.9923574
-      inSlope: -0.013019187
-      outSlope: -0.013019187
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.21009202
-    - serializedVersion: 3
-      time: 2.9633484
-      value: 0.0040512085
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  AngleMultiplier: 1
-  SpeedMultiplier: 1
-  CurveScale: 3
-  boundsMax: 8
-  boundsMin: -8
-  AutomaticUpdate: 1
 --- !u!1 &4616106884645152541
 GameObject:
   m_ObjectHideFlags: 0

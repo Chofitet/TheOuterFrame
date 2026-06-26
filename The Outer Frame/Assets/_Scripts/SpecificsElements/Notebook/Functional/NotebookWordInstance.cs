@@ -330,7 +330,7 @@ public class NotebookWordInstance : MonoBehaviour
         return text.GetComponent<ShaderMaterialManager>().GetHighLigthMaterial(materialName.Replace("\"", ""));
     }
 
-    ViewStates actualView;
+    ViewStates actualView = ViewStates.DossierView;
     public void CheckView(Component sender,object obj)
     {
         actualView = (ViewStates)obj;

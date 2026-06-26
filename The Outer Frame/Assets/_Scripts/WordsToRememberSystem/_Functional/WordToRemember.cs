@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Unity.Profiling;
+using TMPro.Examples;
 
 public class WordToRemember : MonoBehaviour
 {
@@ -23,12 +25,18 @@ public class WordToRemember : MonoBehaviour
     float leaveDuration;
     bool isTaken;
     int ChosenPaper;
-
+    static readonly ProfilerMarker WarpMarker = new ProfilerMarker("WarpText Update");
     public void Initialize(WordData _word, List<int> ChosenPapersList, float _takeDuration, Transform _takePosition, Transform _IdlePosition, float _leaveDuration)
     {
         word = _word;
-        foreach (TMP_Text textField in textFields) textField.text = _word.GetName();
+        foreach (TMP_Text textField in textFields)
+        {
+            textField.text = _word.GetName();
+
+            Invoke("UpdateMesh", 0.1f);
+        }
         foreach (GameObject paper in PapersGOs) paper.SetActive(false);
+
         takeDuration = _takeDuration;
         takePosition = _takePosition;
         idlePosition = _IdlePosition;
@@ -55,13 +63,20 @@ public class WordToRemember : MonoBehaviour
         }
     }
 
+    void UpdateMesh()
+    {
+        foreach (TMP_Text textField in textFields)
+        {
+            if (textField.IsActive()) textField.GetComponent<WarpTextExample>().UpdateText();
+        }
+    }
     public int GetChosenPaper() { return ChosenPaper; }
 
     public void AddWordToMemberList(Component sender, object obj)
     {
         if ((GameObject)obj != gameObject) return;
 
-
+        WarpMarker.Begin();
 
         if (!isTaken)
         {
@@ -81,6 +96,7 @@ public class WordToRemember : MonoBehaviour
             if (isInBackView) StartCoroutine(BlockInput(1.3f));
             else StartCoroutine(BlockInput(0.3f));
         }
+        WarpMarker.End();
     }
 
     IEnumerator BlockInput(float time)
@@ -135,8 +151,9 @@ public class WordToRemember : MonoBehaviour
 
         currentTarget = target;
         transform.SetParent(target);
+        foreach (TMP_Text textField in textFields) if (textField.IsActive()) textField.GetComponent<WarpTextExample>().UpdateText();
 
-        moveSequence = DOTween.Sequence();
+            moveSequence = DOTween.Sequence();
         isFollowingTarget = true;
         lerpTime = 0;
 
@@ -176,6 +193,7 @@ public class WordToRemember : MonoBehaviour
             isFollowingTarget = false;
             currentTarget = null;
             transform.SetParent(pivot);
+            foreach (TMP_Text textField in textFields) if(textField.IsActive()) textField.GetComponent<WarpTextExample>().UpdateText();
         });
 
     }
