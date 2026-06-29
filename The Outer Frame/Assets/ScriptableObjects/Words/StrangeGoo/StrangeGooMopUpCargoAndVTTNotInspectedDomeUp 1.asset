@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: StrangeGooMopUpCargoAndVTTNotInspectedDomeUp
+  m_Name: StrangeGooMopUpCargoAndVTTNotInspectedDomeUp 1
   m_EditorClassIdentifier: 
-  id: 4bc389ff-45b5-4e11-9655-b1bcd04948da
+  id: ebff6f7c-f8c7-4d5d-957f-3245407ad7a5
   Action: {fileID: 11400000, guid: 978fd1b3f2b54f04dad1b8d1c77bf880, type: 2}
   state: {fileID: 11400000, guid: 978fd1b3f2b54f04dad1b8d1c77bf880, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: "We had to do some circular breathing. But we whistled all the way through.
-    And now that hazardous green stuff is finally gone!! \n\nWe tried to leave everything
-    else as dirty as it was, so to no raise suspicion."
+  Text: "How did you know about that gren stuff?\n\nWe had to do some circular breathing.
+    But we whistled all the way through. And guess what? That fluorescent hazard
+    gone!! \n\nWe tried to leave everything else as dirty as it was, so to no raise
+    suspicion."
   TextForRepetition: 
   CustomStatus: 
   Photos:
@@ -37,7 +38,7 @@ MonoBehaviour:
   - condition: {fileID: 11400000, guid: 5e3f162beae27c242920a73d1ea64639, type: 2}
     ifNot: 0
   - condition: {fileID: 11400000, guid: f5af9515824ab1747b814b910041cc58, type: 2}
-    ifNot: 0
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0
