@@ -72,6 +72,12 @@ public class VolumenSettings : MonoBehaviour, IDataPersistence
         );
     }
 
+    private void OnDestroy()
+    {
+        tween?.Kill();
+        tween = null;
+    }
+
     float SavedVolumeValue = 1f;
     public void LoadData(GameData data)
     {

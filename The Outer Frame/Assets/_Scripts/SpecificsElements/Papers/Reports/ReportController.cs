@@ -117,6 +117,9 @@ public class ReportController : MonoBehaviour
         else if(!TimeToUnlockVilify.isANullTimeData())
         {
             Resulttxt.text = $"People will get suspicious if we put so many of our ‘broadcasts’ up one after the other.\n\nLet’s try again after {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}.";
+
+            status = "<color=#AE0000>WITHHELD</color>";
+
             isNotCompleted = true;
             photo1.Set("LET'S NOT ABUSE IT", WrongResultImg[6]);
             UploadBTN.SetActive(false);

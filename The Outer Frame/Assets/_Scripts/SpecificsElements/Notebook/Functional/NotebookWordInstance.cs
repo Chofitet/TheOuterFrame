@@ -24,12 +24,14 @@ public class NotebookWordInstance : MonoBehaviour
     bool isinactive;
     bool PendingToAddBoard;
     float waitAtTheEnd = 0;
-    public void Initialization(WordData word, bool noAnim = false, NotebookProcessManager _processManager = null, float height = 0)
+    public void Initialization(WordData word, ViewStates _actualView, bool noAnim = false, NotebookProcessManager _processManager = null, float height = 0)
     {
         if(_processManager != null) processManager = _processManager;
         wordReference = word;
         text.text = wordReference.GetName();
         btn.onClick.AddListener(SetSelectedWord);
+
+        actualView = _actualView;
 
         float writingTime = 0;
 

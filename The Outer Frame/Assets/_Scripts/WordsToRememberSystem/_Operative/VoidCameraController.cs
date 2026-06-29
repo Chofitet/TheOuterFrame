@@ -26,6 +26,7 @@ public class VoidCameraController : MonoBehaviour
 
     void Update()
     {
+        if (isDisable) return;        
         if (waitForColdDown) return;
 
         if (Input.GetMouseButtonDown(1)) 
@@ -75,6 +76,12 @@ public class VoidCameraController : MonoBehaviour
         waitForColdDown = true;
         yield return new WaitForSeconds(coldDownToClick);
         waitForColdDown = false;
+    }
+
+    bool isDisable;
+    public void DisableCamMove(Component sender, object obj)
+    {
+        isDisable = true;
     }
 
 }
