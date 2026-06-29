@@ -427,7 +427,13 @@ public class ProgressorModuleController : MonoBehaviour
     public void accelerateAnims(Component sender, object obj)
     {
         TimeVariation = (float)obj;
-        anim.SetFloat("speed", TimeVariation);
+
+        if (TimeVariation < 1 && TimeVariation != 0)
+        {
+            TimeVariation = 1;
+        }
+
+            anim.SetFloat("speed", TimeVariation);
 
         if(TimeVariation == 1)
         {
