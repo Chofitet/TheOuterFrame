@@ -214,7 +214,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         gameData.LastMemberWordsID.Clear();
         gameData.ContingencyContinue = false;
-        gameData.TutorialComplete = true;
+        gameData.isInTutorial = true;
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects() 

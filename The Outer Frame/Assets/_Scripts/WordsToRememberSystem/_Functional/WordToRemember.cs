@@ -207,8 +207,9 @@ public class MemberWordsModels
 
     public GameObject GetModel(int NumCharacters)
     {
-        if(NumCharacters < MaxWordLenght) return model;
+        //if (NumCharacters < MaxWordLenght)
+        return model;
 
-        return null;
+       // return null;
     }
 }

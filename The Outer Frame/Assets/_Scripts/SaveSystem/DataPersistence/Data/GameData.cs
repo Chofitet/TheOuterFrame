@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameData
 {
     public long lastUpdated;
-    public bool TutorialComplete;
+    public bool isInTutorial;
     public bool ContingencyContinue;
     public List<string> LastMemberWordsID;
 
@@ -17,7 +17,7 @@ public class GameData
     // the game starts with when there's no data to load
     public GameData() 
     {
-        //TutorialComplete = true;
+        isInTutorial = true;
         LastMemberWordsID = new List<string>();
         ContingencyContinue = false;
         MusicVolume = 1;
