@@ -5,17 +5,19 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
-public class VolumenSettings : MonoBehaviour
+public class VolumenSettings : MonoBehaviour, IDataPersistence
 {
     public AudioMixer mixer;
     public string parameterName = "MasterVolume";
     [SerializeField] float duration;
     private Tween tween;
     [SerializeField] bool fadeOnStart;
+    [SerializeField] bool fadeOnStartToSavedVolume;
 
     private void Start()
     {
         if (fadeOnStart) FadeIn();
+        if (fadeOnStartToSavedVolume) FadeInToSavedVolume();
     }
 
     public void OnFadeIn(Component sender, object obj)
@@ -29,6 +31,24 @@ public class VolumenSettings : MonoBehaviour
     public void FadeIn()
     {
         FadeTo(0f, duration); // 0 dB = volumen normal
+    }
+
+    public void FadeInToSavedVolume()
+    {
+
+        float dB = Mathf.Log10(SavedVolumeValue <= 0 ? 0.001f : SavedVolumeValue) * 20;
+
+
+        if (dB <= -59f)
+        {
+            FadeTo(-144, duration);
+        }
+        else
+        {
+            FadeTo(dB, duration); 
+        }
+
+        
     }
 
     public void FadeOut()
@@ -52,4 +72,14 @@ public class VolumenSettings : MonoBehaviour
         );
     }
 
+    float SavedVolumeValue = 1f;
+    public void LoadData(GameData data)
+    {
+        SavedVolumeValue = data.SoundVolume;
+    }
+
+    public void SaveData(GameData data)
+    {
+        
+    }
 }
