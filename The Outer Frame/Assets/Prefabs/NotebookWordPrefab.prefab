@@ -211,6 +211,7 @@ MonoBehaviour:
   CurveScale: 1.5
   boundsMax: 8
   boundsMin: -8
+  AutomaticUpdate: 0
 --- !u!114 &3491815975724868493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5282,6 +5283,7 @@ GameObject:
   - component: {fileID: 948486051262655659}
   - component: {fileID: 7466773553679168335}
   - component: {fileID: 4981730057984089132}
+  - component: {fileID: 4008862356091547}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -5346,6 +5348,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &4008862356091547
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746003229699241807}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &5210209159018678749
 GameObject:
   m_ObjectHideFlags: 0

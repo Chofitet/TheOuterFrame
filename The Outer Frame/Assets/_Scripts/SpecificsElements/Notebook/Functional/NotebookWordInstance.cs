@@ -53,9 +53,13 @@ public class NotebookWordInstance : MonoBehaviour
             OnWritingShakeNotebook?.Invoke(this, writingTime);
             OnWritingNotebookSound?.Invoke(this, null);
             Invoke("Alpha1", 1);
+            
         }
+        else takeDossierWithWordOnBeginningOnce = true;
 
-        if(height != 0)
+        if (word.GetWordWasRemember()) takeDossierWithWordOnBeginningOnce = true;
+
+        if (height != 0)
         {
             RectTransform rt = transform.GetChild(0).GetComponent<RectTransform>();
             Vector2 size = rt.sizeDelta;
@@ -109,7 +113,6 @@ public class NotebookWordInstance : MonoBehaviour
             strikethrough.SetActive(true);
             CrossOutWord();
         }
-
     }
     public void ReplaceWord(WordData word)
     {
@@ -129,8 +132,6 @@ public class NotebookWordInstance : MonoBehaviour
         }
         
     }
-
-
 
     public void ReplaceWordInstantly(WordData word)
     {
@@ -200,8 +201,13 @@ public class NotebookWordInstance : MonoBehaviour
             Invoke("UnSelectWord", 0.3f);
         }
         if (actualView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
-        if (actualView == ViewStates.DossierView && !takeDossierWithWordOnBeginningOnce) OnButtonElement?.Invoke(this, ViewStates.DossierView);
-        takeDossierWithWordOnBeginningOnce = true;
+        
+        
+        //
+
+        if (actualView == ViewStates.DossierView && takeDossierWithWordOnBeginningOnce) OnButtonElement?.Invoke(this, ViewStates.DossierView);
+
+        takeDossierWithWordOnBeginningOnce = false;
     }
     void UnSelectWord()
     {
@@ -216,7 +222,9 @@ public class NotebookWordInstance : MonoBehaviour
         if (isinactive) return;
         if (actualView != ViewStates.OnTakeSomeInBoard && actualView != ViewStates.BoardView) if (!wordReference.GetInactiveStateSeen()) btn.enabled = true;
         text.text = wordReference.GetName();
+        
     }
+
 
     public WordData GetWord() { return wordReference; }
 
