@@ -18,8 +18,10 @@ public class WordToRememberInstantiator : MonoBehaviour
     [SerializeField] GameEvent OnTakeDownMemberPapers;
 
     [SerializeField] float TimeToChangeScene;
+    bool CallOnce;
     public void ShowRememberWordsInVoid(Component sender,object obj)
-    { 
+    {
+        if (CallOnce) return;
         List<WordData> WordsToRemember = (List<WordData>)obj;
 
         if (DebugMemberWords.Count != 0) WordsToRemember = DebugMemberWords;
@@ -39,6 +41,8 @@ public class WordToRememberInstantiator : MonoBehaviour
 
             ChosenPapers.Add(wordToRemember.GetComponent<WordToRemember>().GetChosenPaper());
         }
+
+        CallOnce = true;
     }
 
     int MemberWordsTaked;

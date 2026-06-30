@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LoopingSoundController : MonoBehaviour
 {
+    [SerializeField] private GameEvent InstanciateStartSound;
     [SerializeField] float timeToLoopNext;
     [SerializeField] GameEvent InstanciateSound;
     [SerializeField] float timeToStartCycle;
@@ -17,8 +18,9 @@ public class LoopingSoundController : MonoBehaviour
 
     IEnumerator LoopSound()
     {
+        yield return new WaitForSeconds(0.5f);
+        InstanciateStartSound?.Invoke(this, null);
         yield return new WaitForSeconds(timeToStartCycle);
-
         InstanciateSound?.Invoke(this,null);
 
         while (true)

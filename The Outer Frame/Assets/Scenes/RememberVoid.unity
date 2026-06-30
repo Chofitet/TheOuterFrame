@@ -3013,21 +3013,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
-      propertyPath: MaxDistance
-      value: 493.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
-      propertyPath: MinDistance
-      value: 285.74
-      objectReference: {fileID: 0}
-    - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: a9142439032d00b47a579c3fd666b34e, type: 3}
-    - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
-      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
-      value: 0.6027778
-      objectReference: {fileID: 0}
     - target: {fileID: 1472274587180999255, guid: cff20160bf0428d408df77af56300529, type: 3}
       propertyPath: m_LocalPosition.x
       value: 514
@@ -3071,7 +3059,7 @@ PrefabInstance:
     - target: {fileID: 3057006611313143368, guid: cff20160bf0428d408df77af56300529, type: 3}
       propertyPath: TriggerEvent
       value: 
-      objectReference: {fileID: 11400000, guid: 002dfa949521cb94dbfa144d845ed7e5, type: 2}
+      objectReference: {fileID: 11400000, guid: 042db88f5476098448824cf47a738efc, type: 2}
     - target: {fileID: 4272404554539597363, guid: cff20160bf0428d408df77af56300529, type: 3}
       propertyPath: m_Name
       value: StartVoidSound
@@ -3194,21 +3182,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
-      propertyPath: MaxDistance
-      value: 493.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
-      propertyPath: MinDistance
-      value: 285.74
-      objectReference: {fileID: 0}
-    - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: af6e9e91c011bde4aa694f7abf1746f1, type: 3}
-    - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
-      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
-      value: 0.6027778
-      objectReference: {fileID: 0}
     - target: {fileID: 1472274587180999255, guid: cff20160bf0428d408df77af56300529, type: 3}
       propertyPath: m_LocalPosition.x
       value: 514
@@ -3623,7 +3599,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2036355301}
   - {fileID: 2084494365}
   - {fileID: 358137169}
   - {fileID: 742585937}
@@ -5221,13 +5196,13 @@ Transform:
   m_GameObject: {fileID: 2036355300}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 536172005}
   - {fileID: 1609518480}
-  m_Father: {fileID: 1298216297}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2036355302
 MonoBehaviour:
@@ -5241,6 +5216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9cf63de0336c6b4abd1494a7e131e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InstanciateStartSound: {fileID: 11400000, guid: 042db88f5476098448824cf47a738efc, type: 2}
   timeToLoopNext: 74.5
   InstanciateSound: {fileID: 11400000, guid: bb9f7516b41e8cd4ea0842d147a66473, type: 2}
   timeToStartCycle: 74.5
@@ -5336,21 +5312,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
-      propertyPath: MaxDistance
-      value: 493.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
-      propertyPath: MinDistance
-      value: 285.74
-      objectReference: {fileID: 0}
-    - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 7d20b02b3a449e448b9bb4072f152f43, type: 3}
-    - target: {fileID: 948700082155368241, guid: cff20160bf0428d408df77af56300529, type: 3}
-      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
-      value: 0.6027778
-      objectReference: {fileID: 0}
     - target: {fileID: 1472274587180999255, guid: cff20160bf0428d408df77af56300529, type: 3}
       propertyPath: m_LocalPosition.x
       value: 514
@@ -5873,4 +5837,5 @@ SceneRoots:
   - {fileID: 1216777889}
   - {fileID: 1355690008}
   - {fileID: 913313222}
+  - {fileID: 2036355301}
   - {fileID: 1298216297}
