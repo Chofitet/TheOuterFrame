@@ -12,6 +12,7 @@ public class VolumenSettings : MonoBehaviour, IDataPersistence
     [SerializeField] float duration;
     private Tween tween;
     [SerializeField] bool fadeOnStart;
+    [SerializeField] bool isInverted;
     [SerializeField] bool fadeOnStartToSavedVolume;
 
     private void Start()
@@ -35,8 +36,8 @@ public class VolumenSettings : MonoBehaviour, IDataPersistence
 
     public void FadeInToSavedVolume()
     {
-
-        float dB = Mathf.Log10(SavedVolumeValue <= 0 ? 0.001f : SavedVolumeValue) * 20;
+        float finalValue = isInverted ? 1 - SavedVolumeValue : SavedVolumeValue;
+        float dB = Mathf.Log10(finalValue <= 0 ? 0.001f : finalValue) * 20;
 
 
         if (dB <= -59f)
