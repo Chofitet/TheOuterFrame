@@ -52,7 +52,7 @@ public class InstanciateRedactedBlock : MonoBehaviour
 
             IReadOnlyList<RedactedBlockData> PositionBlock;
 
-            if (pre_proccess_PositioBlock != null && pre_proccess_PositioBlock.Count > 0)
+            if (pre_proccess_PositioBlock != null && pre_proccess_PositioBlock.Count > 0 && false) // Para evitar los preprocess
             {
                 Debug.LogWarning("Using PreProccess REDACTED Data");
                 PositionBlock = pre_proccess_PositioBlock;

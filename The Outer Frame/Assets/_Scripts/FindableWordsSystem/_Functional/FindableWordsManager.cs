@@ -65,7 +65,7 @@ public class FindableWordsManager : MonoBehaviour
 
             IReadOnlyList<FindableWordData> PositionsWord = null;
 
-            if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count > 0)
+            if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count > 0 && false) //falso para evitar el preproces
             {
                 Debug.LogWarning("Using PreProccess FINDABLEWORD Data");
                 PositionsWord = pre_proccess_PositioWords;

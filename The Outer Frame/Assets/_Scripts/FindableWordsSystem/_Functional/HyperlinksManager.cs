@@ -74,7 +74,7 @@ public class HyperlinksManager : MonoBehaviour
 
             IReadOnlyList<FindableWordData> PositionsWord = null;
 
-            if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count > 0)
+            if (pre_proccess_PositioWords != null && pre_proccess_PositioWords.Count > 0 && false) //falso para evitar el preproces
             {
                 Debug.LogWarning("Using PreProccess HYPERLINK Data");
                 PositionsWord = pre_proccess_PositioWords;
