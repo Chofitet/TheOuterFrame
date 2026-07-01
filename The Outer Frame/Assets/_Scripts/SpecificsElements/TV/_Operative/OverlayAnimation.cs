@@ -449,7 +449,6 @@ public class OverlayAnimation : MonoBehaviour
             {
                 acceleratedFactor = 1 / _speed;
             }
-            Debug.Log("accelerator factor: " + acceleratedFactor);
         }
     }
 

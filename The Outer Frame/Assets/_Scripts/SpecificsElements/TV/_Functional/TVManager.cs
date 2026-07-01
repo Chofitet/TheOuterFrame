@@ -68,7 +68,7 @@ public class TVManager : MonoBehaviour
     #endregion
 
     void NewsDirector()
-    { 
+    {
         //checkean si una noticia nueva entró y la coloca en la cola.
         CheckForScheduledNews();
         CheckForReactiveNews();
@@ -275,5 +275,8 @@ public class TVManager : MonoBehaviour
         }
     }
 
-
+    public void DisableTVUpdate(Component sender, object obj)
+    {
+        TimeManager.OnMinuteChange -= NewsDirector;
+    }
 }

@@ -128,9 +128,9 @@ public class ActionPlan : MonoBehaviour
 
     public void SelectedWord(Component sender, object obj)
     {
-        if (!isInDossier) return;
-
         EnableDisableAllBtns(true);
+
+        if (!isInDossier) return;
 
         if (state)
         {

@@ -752,6 +752,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1607792041}
   - component: {fileID: 1607792040}
+  - component: {fileID: 1607792044}
+  - component: {fileID: 1607792043}
   - component: {fileID: 1607792039}
   - component: {fileID: 1607792042}
   m_Layer: 0
@@ -774,13 +776,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsDesactive: 0
-  TriggerEvent: {fileID: 11400000, guid: e069a67fbe9177e4db980499aaedcb61, type: 2}
+  TriggerEvent: {fileID: 11400000, guid: 45916646e6b27b547b011c5bdddd8145, type: 2}
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1607792040}
-        m_TargetAssemblyTypeName: SceneManagerScript, Assembly-CSharp
-        m_MethodName: OnChangeScene
+      - m_Target: {fileID: 1607792042}
+        m_TargetAssemblyTypeName: GameEventListener, Assembly-CSharp
+        m_MethodName: CancelDelayCall
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1607792043}
+        m_TargetAssemblyTypeName: TriggerArrayOfEvents, Assembly-CSharp
+        m_MethodName: TriggerEventsWithEvent
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -792,7 +806,7 @@ MonoBehaviour:
         m_CallState: 2
   DelayCall: 0
   _float: 0
-  _string: 
+  _string: MainMenu
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
@@ -844,9 +858,9 @@ MonoBehaviour:
   Event:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1607792040}
-        m_TargetAssemblyTypeName: SceneManagerScript, Assembly-CSharp
-        m_MethodName: OnChangeScene
+      - m_Target: {fileID: 1607792043}
+        m_TargetAssemblyTypeName: TriggerArrayOfEvents, Assembly-CSharp
+        m_MethodName: TriggerEventsWithEvent
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -859,6 +873,58 @@ MonoBehaviour:
   DelayCall: 3
   _float: 0
   _string: MainMenu
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+--- !u!114 &1607792043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607792038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b57a199d70c584b886ab6d8ca99ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EventsToTrigger:
+  - {fileID: 11400000, guid: e069a67fbe9177e4db980499aaedcb61, type: 2}
+  delay: 0
+  SomethingToPass: {fileID: 0}
+  SomeStringToPass: MainMenu
+--- !u!114 &1607792044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607792038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: e069a67fbe9177e4db980499aaedcb61, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1607792040}
+        m_TargetAssemblyTypeName: SceneManagerScript, Assembly-CSharp
+        m_MethodName: OnChangeScene
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}

@@ -34,7 +34,7 @@ public class FindableWordsManager : MonoBehaviour
     public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, IReadOnlyList<FindableWordData> pre_proccess_PositioWords = null, bool _comesFromDBTitle = false, bool _comesFromNewEmergency =false, bool _comesFromReport = false)
     {
         // btnType para cuando quiera refactorizar este script para que funcione con links tambien
-
+        if (noInstantiateMore) return;
         if (textField == null)
         {
             Debug.LogError("TextField is null");
@@ -154,10 +154,15 @@ public class FindableWordsManager : MonoBehaviour
         isInLastWord = true;
     }
 
+    bool noInstantiateMore;
     public void RemoveAllFindableWords(Component sender, object obj)
     {
-        foreach (GameObject fw in FindableWordsBTNs) Destroy(fw);
-
+        foreach (GameObject fw in FindableWordsBTNs)
+        {
+            fw.GetComponent<FindableWordBTNController>().ApplyShaderMaterial("");
+            Destroy(fw);
+        }
+        noInstantiateMore = true;
     }
 }
 public enum FindableBtnType
