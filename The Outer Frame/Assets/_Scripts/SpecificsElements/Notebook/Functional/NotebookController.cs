@@ -7,25 +7,26 @@ using UnityEngine.UIElements;
 
 public class NotebookController : MonoBehaviour
 {
-    [SerializeField] GameObject WordPrefab;
-    [SerializeField] Transform WordContainer;
+    [SerializeField] List<NotebookPage> pages = new List<NotebookPage>();
     [SerializeField] WordData CabinWord;
     List<Transform> WordSpots = new List<Transform>();
     List<GameObject> WordsInstances = new List<GameObject>();
-    [SerializeField] Transform WordAnchors;
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
     [SerializeField] NotebookProcessManager ProccessManager;
     [SerializeField] GameEvent OnPendingWordsToPutInBoard;
-   
+    [SerializeField] float PassPageTime;
+    float TimeLeftToEndPassingPage;
+    int actualEmpyPage;
+    int actualPage;
     int i = 0;
     bool once;
     bool isStarting = true;
     List<int> removedIndex = new List<int>();
     private void Start()
     {
-        for (int i = 0; i < WordAnchors.childCount;i++)
+        foreach(NotebookPage page in pages)
         {
-            WordSpots.Add(WordAnchors.GetChild(i));
+            WordSpots.AddRange(page.GetWordSpots());
         }
 
         Invoke("SetisStartingFalse", 1f);
@@ -46,7 +47,7 @@ public class NotebookController : MonoBehaviour
         int auxIndex = i;
 
         bool isOutOfRange = false;
-        if (i >= WordAnchors.childCount - 1) isOutOfRange = true;
+        if (i >= WordSpots.Count - 1) isOutOfRange = true;
 
 
         bool replaceBool = WordReplaceOther(LastWordAdded);
@@ -82,13 +83,16 @@ public class NotebookController : MonoBehaviour
 
     IEnumerator DelayInstanciate(float delayTime, int auxIndex, WordData LastWordAdded)
     {
+        
         yield return new WaitForSeconds(delayTime);
         float specialHeight = 0;
         if (WordSpots[auxIndex].GetComponent<CopyWordNotebookProperties>()) specialHeight = WordSpots[auxIndex].GetComponent<CopyWordNotebookProperties>().height;
-        GameObject wordaux = Instantiate(WordPrefab, WordSpots[auxIndex].position, WordSpots[auxIndex].rotation, WordContainer);
+        GameObject wordaux = pages[actualEmpyPage].InstanciateWord();
         wordaux.GetComponent<NotebookWordInstance>().GetButton().onClick.AddListener(ClearUnderLine);
-        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded,actualView, isStarting, ProccessManager, specialHeight);
+
+        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded,actualEmpyPage, actualPage, PassPageTime, actualView, isStarting, ProccessManager, specialHeight,TimeLeftToEndPassingPage);
         WordsInstances.Add(wordaux);
+        if (pages[actualEmpyPage].GetIsFull()) actualEmpyPage++; 
     }
 
 
@@ -329,11 +333,31 @@ public class NotebookController : MonoBehaviour
 
     void DeleteWords()
     {
-        for(int i = 0; i < WordContainer.childCount; i++)
+        foreach(Transform word in WordSpots) 
         {
-            Destroy(WordContainer.GetChild(i).gameObject);
+            Destroy(word.GetChild(i).gameObject);
         }
     }
-    
 
+    public void SetActualPage(Component sender, object obj)
+    {
+        int newActualPage = (int)obj;
+
+        if (actualPage != newActualPage)
+        {
+            isPassingPage = true;
+            TimeLeftToEndPassingPage = PassPageTime;
+        }
+        actualPage = newActualPage;
+    }
+    bool isPassingPage;
+    private void Update()
+    {
+        if(isPassingPage)
+        {
+            TimeLeftToEndPassingPage -= Time.deltaTime;
+
+            if (TimeLeftToEndPassingPage <= 0) isPassingPage = false;
+        }
+    }
 }

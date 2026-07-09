@@ -119,6 +119,5 @@ public class ReporterAnimController : MonoBehaviour
             anim.speed = _speed;
         }
 
-        //Debug.Log("speed: " + _speed);
     }
 }
