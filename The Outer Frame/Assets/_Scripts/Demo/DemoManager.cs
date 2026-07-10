@@ -82,6 +82,7 @@ public class DemoManager : MonoBehaviour
 
     public void CheckOnStamp(Component sender, object obj)
     {
+        if (!DemoMode) return;
         DataFromActionPlan dataFromActionPlan = (DataFromActionPlan)obj;
 
         CheckForAStampReportToGoToDemoCutOff(DemoReportsCutOffOnStamp, dataFromActionPlan.word, dataFromActionPlan.state); // corta con un reporte específico
@@ -96,7 +97,8 @@ public class DemoManager : MonoBehaviour
 
     public void CheckOnSearchInDB(Component sender, object obj)
     {
-        foreach(SearchedInDBConditional conditional in SearchedInDBCutOff)
+        if (!DemoMode) return;
+        foreach (SearchedInDBConditional conditional in SearchedInDBCutOff)
         {
             if(conditional.GetStateCondition())
             {
