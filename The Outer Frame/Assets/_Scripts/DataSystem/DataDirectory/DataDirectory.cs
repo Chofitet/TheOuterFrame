@@ -8,7 +8,7 @@ public class DataDirectory : ScriptableObject
 {
     [SerializeField] private List<DataType> allData = new();
 
-    [SerializeField] private List<DataType> NeedPreprocess = new();
+    //[SerializeField] private List<DataType> NeedPreprocess = new();
 
     [SerializeField] private List<DataType> ModifyData = new();
 
@@ -17,7 +17,7 @@ public class DataDirectory : ScriptableObject
     public void Initialize()
     {
         datasById.Clear();
-
+        ClearModifyData();
         foreach (var data in allData)
         {
             if (data == null) continue;
@@ -119,13 +119,13 @@ public class DataDirectory : ScriptableObject
 
     public void AddNeedPreprocess(DataType data)
     {
-        if (!NeedPreprocess.Contains(data))
-            NeedPreprocess.Add(data);
+       /* if (!NeedPreprocess.Contains(data))
+            NeedPreprocess.Add(data);*/
     }
 
     public void ClearPreprocess()
     {
-        NeedPreprocess.Clear();
+        //NeedPreprocess.Clear();
     }
 
     public void AddToModifyData(DataType data)
@@ -139,7 +139,7 @@ public class DataDirectory : ScriptableObject
 
     public List<DataType> GetAllData() { return allData; }
 
-    public List<DataType> GetNeedReprocess() { return NeedPreprocess; }
+   // public List<DataType> GetNeedReprocess() { return NeedPreprocess; }
 
     public IReadOnlyDictionary<Guid, DataType> GetDictionary()
         => datasById;

@@ -212,13 +212,13 @@ public class Pre_ProccessFindableWords : MonoBehaviour
     }
     public void ProcessPendingData()
     {
-       List<ReportType> reports = directory.GetNeedReprocess().OfType<ReportType>().ToList();
-        List<DataBaseType> dbs = directory.GetNeedReprocess().OfType<DataBaseType>().ToList();
-        List<CallType> transcripts = directory.GetNeedReprocess().OfType<CallType>().ToList();
+      // List<ReportType> reports = directory.GetNeedReprocess().OfType<ReportType>().ToList();
+      //  List<DataBaseType> dbs = directory.GetNeedReprocess().OfType<DataBaseType>().ToList();
+      //  List<CallType> transcripts = directory.GetNeedReprocess().OfType<CallType>().ToList();
 
-        ProcessReports(reports);
-        ProcessDatabaseEntries(dbs);
-        ProcessTranscripts(transcripts);
+       // ProcessReports(reports);
+       // ProcessDatabaseEntries(dbs);
+       // ProcessTranscripts(transcripts);
 
         directory.ClearPreprocess();
     }
