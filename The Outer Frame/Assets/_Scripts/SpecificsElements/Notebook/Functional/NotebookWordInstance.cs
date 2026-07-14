@@ -10,7 +10,8 @@ public class NotebookWordInstance : MonoBehaviour
 {
     [SerializeField] TMP_Text text;
     [SerializeField] private int minCharacters = 5;
-    [SerializeField] private float xOffset = 20f;
+    [SerializeField] private float CharactersOffset = 2f;
+    [SerializeField] float MinWidthToIndent;
     [SerializeField] GameObject strikethrough;
     [SerializeField] GameEvent OnWritingShakeNotebook;
     [SerializeField] GameEvent OnCrossWordSound;
@@ -39,16 +40,21 @@ public class NotebookWordInstance : MonoBehaviour
         text.text = wordReference.GetName();
         btn.onClick.AddListener(SetSelectedWord);
 
-        if (text.text.Length < minCharacters && isInSecondColumn)
-        {
-            RectTransform rt = GetComponent<RectTransform>();
-            rt.anchoredPosition += Vector2.right * xOffset;
-        }
+        
+
+        /*RectTransform rt = GetComponent<RectTransform>();
+
+        int extraCharacters = text.text.Length - minCharacters;
+        float offset = extraCharacters * CharactersOffset;
+
+        rt.anchoredPosition += Vector2.left * offset;*/
 
         actualView = _actualView;
         pageNum = _pageNum;
         actualPage = _actualPage;
         PassPageTime = _PassPageTime;
+
+        if (isInSecondColumn) indentWord();
 
         if (!word.GetIsFound())
         {
@@ -71,6 +77,34 @@ public class NotebookWordInstance : MonoBehaviour
             size.y = height;
             rt.sizeDelta = size;
         }
+
+    }
+
+    void indentWord()
+    {
+        text.ForceMeshUpdate();
+
+        if(text.text =="President Deandra")
+        {
+            Debug.Log("a");
+        }
+        RectTransform rt = GetComponent<RectTransform>();
+
+        TMP_CharacterInfo[] textInfo = text.textInfo.characterInfo;
+
+        float wordWidht = 0;
+        float wordExtraWidht = 0;
+
+        foreach(TMP_CharacterInfo character in textInfo)
+        {
+            float characterWidth = Math.Abs(character.bottomLeft.x - character.bottomRight.x);
+
+            wordWidht += characterWidth;
+
+            if(wordWidht > MinWidthToIndent) wordExtraWidht += characterWidth;
+        }
+
+        rt.anchoredPosition += Vector2.left * (wordExtraWidht + 0.6f);
 
     }
 
