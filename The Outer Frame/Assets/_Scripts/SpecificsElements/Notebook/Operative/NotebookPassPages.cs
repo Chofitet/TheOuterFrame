@@ -6,23 +6,26 @@ public class NotebookPassPages : MonoBehaviour
 {
     [SerializeField] GameObject LeftPageBTN;
     [SerializeField] GameObject RightPageBTN;
+    [SerializeField] GameObject LeftModel;
+    [SerializeField] GameObject RightModel;
+    [SerializeField] GameObject RightModelShadow;
+
     [SerializeField] GameEvent OnChangePage;
 
     [SerializeField] List<NotebookPage> Pages;
-    [SerializeField] GameObject upperCorner;
+    [SerializeField] GameObject backPageCorner;
     [SerializeField] GameObject upperBlendCorner;
-    bool isFirstFlip = true;
 
-    Animator anim;
 
     int actualPage;
 
     private void Start()
     {
-        anim = GetComponent<Animator>();
-
         LeftPageBTN.SetActive(false);
         RightPageBTN.SetActive(false);
+        LeftModel.SetActive(false);
+        RightModel.SetActive(false);
+        RightModelShadow.SetActive(false);
 
         StartCoroutine(DelayTurnOfAllPagesExceptFor(0));
     }
@@ -60,9 +63,14 @@ public class NotebookPassPages : MonoBehaviour
         Pages[actualPage].DisableEnable(true);
 
         RightPageBTN.SetActive(true);
-        if(actualPage == 0) LeftPageBTN.SetActive(false);
+        RightModel.SetActive(true);
+        RightModelShadow.SetActive(true);
+        if (actualPage == 0)
+        {
+            LeftModel.SetActive(false);
+            LeftPageBTN.SetActive(false);
+        }
 
-        anim.SetTrigger("unroll");
         OnChangePage?.Invoke(this, actualPage);
     }
 
@@ -74,25 +82,18 @@ public class NotebookPassPages : MonoBehaviour
         actualPage += 1;
         Pages[actualPage].DisableEnable(true);
 
-
         LeftPageBTN.SetActive(true);
-        if (actualPage + 1 == Pages.Count) RightPageBTN.SetActive(false);
+        LeftModel.SetActive(true);
+        if (actualPage + 1 == Pages.Count)
+        {
+            RightModel.SetActive(false);
+            RightModelShadow.SetActive(false);
+            RightPageBTN.SetActive(false);
+        }
 
-        anim.SetTrigger("roll");
         OnChangePage?.Invoke(this, actualPage);
         
-        if(isFirstFlip)
-        {
-            Invoke("BlendCorner", 0.5f);
-            isFirstFlip = false;
-        }
     }
 
-    void BlendCorner()
-    {
-
-        upperBlendCorner.SetActive(true);
-        upperCorner.SetActive(false);
-    }
 
 }

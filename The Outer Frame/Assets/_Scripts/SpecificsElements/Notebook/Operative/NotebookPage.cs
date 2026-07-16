@@ -7,7 +7,6 @@ using DG.Tweening;
 public class NotebookPage : MonoBehaviour
 {
     [SerializeField] Transform WordAnchors;
-    [SerializeField] int PageNum;
     [SerializeField] GameObject WordPrefab;
     int numWords;
     List<Transform> WordSpots = new List<Transform>();
@@ -28,10 +27,10 @@ public class NotebookPage : MonoBehaviour
 
     public void DisableEnable(bool x)
     {
-        //gameObject.GetComponent<Canvas>().enabled = x;
+        gameObject.GetComponent<Canvas>().enabled = x;
 
-        if (x) AnimateMask(110, ShowWordsDuration,0.1f);
-        else AnimateMask(0, HideWordsDuration,0);
+        /*if (x) AnimateMask(110, ShowWordsDuration,0.1f);
+        else AnimateMask(0, HideWordsDuration,0);*/
     }
 
     public List<Transform> GetWordSpots() { return WordSpots; }
