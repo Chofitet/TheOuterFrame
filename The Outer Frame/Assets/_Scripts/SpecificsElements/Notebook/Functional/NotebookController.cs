@@ -13,6 +13,7 @@ public class NotebookController : MonoBehaviour
     List<GameObject> WordsInstances = new List<GameObject>();
     List<WordData> InctiveWordsOnBoard = new List<WordData>();
     [SerializeField] NotebookProcessManager ProccessManager;
+    [SerializeField] NotebookPassPages notebookPassPages;
     [SerializeField] GameEvent OnPendingWordsToPutInBoard;
     [SerializeField] float PassPageTime;
     float TimeLeftToEndPassingPage;
@@ -90,7 +91,7 @@ public class NotebookController : MonoBehaviour
         GameObject wordaux = pages[actualEmpyPage].InstanciateWord();
         wordaux.GetComponent<NotebookWordInstance>().GetButton().onClick.AddListener(ClearUnderLine);
 
-        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded,actualEmpyPage, actualPage, PassPageTime, actualView, isStarting, ProccessManager, specialHeight,TimeLeftToEndPassingPage);
+        wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded,actualEmpyPage, notebookPassPages, PassPageTime, actualView, isStarting, ProccessManager, specialHeight,TimeLeftToEndPassingPage);
         WordsInstances.Add(wordaux);
         if (pages[actualEmpyPage].GetIsFull()) actualEmpyPage++; 
     }

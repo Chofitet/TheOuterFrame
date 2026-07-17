@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System;
 using static System.Net.Mime.MediaTypeNames;
+using System.Threading.Tasks;
 
 public class NotebookWordInstance : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] private float CharactersOffset = 2f;
     [SerializeField] float MinWidthToIndent;
     [SerializeField] GameObject strikethrough;
+    [SerializeField] FadeWordsEffect fade;
     [SerializeField] GameEvent OnWritingShakeNotebook;
     [SerializeField] GameEvent OnCrossWordSound;
     [SerializeField] GameEvent OnWritingNotebookSound;
@@ -22,6 +24,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] GameEvent OnButtonElement;
     [SerializeField] GameEvent OnInactiveReplaceWord;
     [SerializeField] GameEvent OnRequestChangePage;
+
     NotebookProcessManager processManager;
     WordData wordReference;
     float PassPageTime;
@@ -33,25 +36,19 @@ public class NotebookWordInstance : MonoBehaviour
     int pageNum;
     int actualPage;
     bool isInSecondColumn;
-    public void Initialization(WordData word,int _pageNum, int _actualPage,float _PassPageTime, ViewStates _actualView, bool noAnim = false, NotebookProcessManager _processManager = null, float height = 0, float extraTimeWhilePassingPage = 0)
+    NotebookPassPages notebookPasspage;
+    
+    public void Initialization(WordData word, int _pageNum, NotebookPassPages _notebookPasspage,float _PassPageTime, ViewStates _actualView, bool noAnim = false, NotebookProcessManager _processManager = null, float height = 0, float extraTimeWhilePassingPage = 0)
     {
         if(_processManager != null) processManager = _processManager;
         wordReference = word;
         text.text = wordReference.GetName();
         btn.onClick.AddListener(SetSelectedWord);
 
-        
-
-        /*RectTransform rt = GetComponent<RectTransform>();
-
-        int extraCharacters = text.text.Length - minCharacters;
-        float offset = extraCharacters * CharactersOffset;
-
-        rt.anchoredPosition += Vector2.left * offset;*/
 
         actualView = _actualView;
         pageNum = _pageNum;
-        actualPage = _actualPage;
+        notebookPasspage = _notebookPasspage;
         PassPageTime = _PassPageTime;
 
         if (isInSecondColumn) indentWord();
@@ -61,11 +58,9 @@ public class NotebookWordInstance : MonoBehaviour
             word.SetIsFound();
             if (!noAnim)
             {
-                bool needPassPage = pageNum != actualPage ? true : false;
-                StartCoroutine(WriteFade(needPassPage, extraTimeWhilePassingPage));
+                WriteFade();
             }
         }
-
         else takeDossierWithWordOnBeginningOnce = true;
 
         if (word.GetWordWasRemember()) takeDossierWithWordOnBeginningOnce = true;
@@ -113,23 +108,24 @@ public class NotebookWordInstance : MonoBehaviour
         isInSecondColumn = true;
     }
 
-    IEnumerator WriteFade(bool needPassPage, float extraTimeWhilePassingPage)
+    public async Task WriteFade()
     {
         processManager.RegisterProcess();
-        var fade = text.gameObject.GetComponent<FadeWordsEffect>();
         fade.OnComplete += OnWritingFinished;
         fade.SetBlank(0);
 
 
-        if (extraTimeWhilePassingPage != 0) extraTimeWhilePassingPage = extraTimeWhilePassingPage + 0.5f;
-        yield return new WaitForSeconds(extraTimeWhilePassingPage);
+        /*if (extraTimeWhilePassingPage != 0) extraTimeWhilePassingPage = extraTimeWhilePassingPage + 0.5f;
+        yield return new WaitForSeconds(extraTimeWhilePassingPage);*/
 
-        if (needPassPage)
+        /*if (needPassPage)
         {
             OnRequestChangePage?.Invoke(this, pageNum);
             yield return new WaitForSeconds(PassPageTime); // wait for pass page
 
-        }
+        }*/
+
+        await notebookPasspage.RequestPage(pageNum,0.3f);
 
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
         OnWritingNotebookSound?.Invoke(this, null);
@@ -138,7 +134,6 @@ public class NotebookWordInstance : MonoBehaviour
 
     void OnWritingFinished()
     {
-        var fade = text.gameObject.GetComponent<FadeWordsEffect>();
         fade.OnComplete -= OnWritingFinished;
         OnWritingWordFinished?.Invoke(this, wordReference);
         processManager.UnregisterProcess();
@@ -147,10 +142,9 @@ public class NotebookWordInstance : MonoBehaviour
     public void EraseAnim()
     {
         processManager.RegisterProcess();
-        var erase = GetComponent<FadeWordsEffect>();
-        erase.OnEraseProgress += eraseParticles;
-        erase.OnComplete += OnEraseFinished;
-        erase.StartEffect(false);
+        fade.OnEraseProgress += eraseParticles;
+        fade.OnComplete += OnEraseFinished;
+        fade.StartEffect(false);
     }
     public void eraseParticles(float progress)
     {
@@ -159,7 +153,6 @@ public class NotebookWordInstance : MonoBehaviour
     }
     void OnEraseFinished()
     {
-        var fade = text.gameObject.GetComponent<FadeWordsEffect>();
         fade.OnComplete -= OnEraseFinished;
         EraseParticles.GetComponent<ParticleSystem>().Stop();
         fade.OnEraseProgress -= eraseParticles;
@@ -180,15 +173,14 @@ public class NotebookWordInstance : MonoBehaviour
             btn.enabled = false;
             strikethrough.SetActive(true);
 
-            StartCoroutine(CrossOutWord(needPassPage));
+            CrossOutWord(needPassPage);
         }
     }
     public void ReplaceWord(WordData word)
     {
-        bool needPassPage = pageNum != actualPage ? true : false;
         text.text = wordReference.GetName();
 
-        StartCoroutine(ReplaceWordAnim(needPassPage, text, false, text, true, word.GetName()));
+        ReplaceWordAnim( text, false, text, true, word.GetName());
         
         OnInactiveReplaceWord?.Invoke(this, wordReference);
         wordReference = word;
@@ -202,27 +194,22 @@ public class NotebookWordInstance : MonoBehaviour
         }
     }
 
-    IEnumerator ReplaceWordAnim(bool needPassPage, TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
+    public async Task ReplaceWordAnim(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
     {
         processManager.RegisterProcess();
-        FadeWordsEffect effect = first.gameObject.GetComponent<FadeWordsEffect>();
-        effect.SetBlank(1);
+        fade.SetBlank(1);
 
-        if (needPassPage)
-        {
-            OnRequestChangePage?.Invoke(this, pageNum);
-            yield return new WaitForSeconds(PassPageTime); // wait for pass page
-        }
+        await notebookPasspage.RequestPage(pageNum, 1f);
 
         if (isCross) EraseCrossWord();
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
-        effect.StartEffect(isTransparent1);
-        if (!isTransparent1) effect.OnEraseProgress += eraseParticles;
-        yield return new WaitForSeconds(0.5f);
+        fade.StartEffect(isTransparent1);
+        if (!isTransparent1) fade.OnEraseProgress += eraseParticles;
+        await Task.Delay(500);
         EraseParticles.GetComponent<ParticleSystem>().Stop();
         if (first == second) first.text = txt;
-        second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
-        yield return new WaitForSeconds(0.5f);
+        fade.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
+        await Task.Delay(500);
         processManager.UnregisterProcess();
     }
 
@@ -236,16 +223,13 @@ public class NotebookWordInstance : MonoBehaviour
   
 
     Vector3 CrossOriginalPos;
-    public IEnumerator CrossOutWord(bool needPassPage )
+    public async Task CrossOutWord(bool needPassPage )
     {
         processManager.RegisterProcess();
         OnInactiveReplaceWord?.Invoke(this, wordReference);
-        if (needPassPage)
-        {
-            OnRequestChangePage?.Invoke(this, pageNum);
-            yield return new WaitForSeconds(PassPageTime); // wait for pass page
-        }
-        
+
+        await notebookPasspage.RequestPage(pageNum, 0.3f);
+
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         CrossOriginalPos = line.localPosition;
         line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y), 0.3f).OnComplete(() => processManager.UnregisterProcess());

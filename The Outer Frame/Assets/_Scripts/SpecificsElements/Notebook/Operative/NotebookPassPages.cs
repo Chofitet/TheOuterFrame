@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class NotebookPassPages : MonoBehaviour
@@ -15,6 +16,8 @@ public class NotebookPassPages : MonoBehaviour
     [SerializeField] List<NotebookPage> Pages;
     [SerializeField] GameObject backPageCorner;
     [SerializeField] GameObject upperBlendCorner;
+
+    [SerializeField] float timeToPasspage;
 
 
     int actualPage;
@@ -36,7 +39,7 @@ public class NotebookPassPages : MonoBehaviour
     }
     void TurnOfAllPagesExceptFor(int i)
     {
-        foreach(NotebookPage page in Pages)
+        foreach (NotebookPage page in Pages)
         {
             page.DisableEnable(false);
         }
@@ -44,13 +47,13 @@ public class NotebookPassPages : MonoBehaviour
     }
 
 
-    public void PassToASpecificPage(Component sender,object obj)
+    public void PassToASpecificPage(Component sender, object obj)
     {
         int requestPage = (int)obj;
 
         if (requestPage > actualPage) PassRightPage(null, null);
 
-        if(requestPage < actualPage) PassLeftPage(null,null);
+        if (requestPage < actualPage) PassLeftPage(null, null);
 
     }
 
@@ -74,6 +77,7 @@ public class NotebookPassPages : MonoBehaviour
         OnChangePage?.Invoke(this, actualPage);
     }
 
+
     public void PassRightPage(Component sender, object obj)
     {
         if (actualPage + 1 == Pages.Count) return;
@@ -92,8 +96,56 @@ public class NotebookPassPages : MonoBehaviour
         }
 
         OnChangePage?.Invoke(this, actualPage);
-        
+
     }
 
+    float passPageCountDown;
 
+    public async Task RequestPage(int targetPage, float timeToFinishAnim)
+    {
+        if (targetPage == actualPage)
+        {
+            passPageCountDown += timeToFinishAnim;
+            return;
+        }
+
+        while (passPageCountDown > 0)
+        {
+            Debug.Log("awaiting");
+            await Task.Yield();
+            Debug.Log("finish await");
+        }
+
+        passPageCountDown += timeToFinishAnim;
+
+        if (targetPage > actualPage)
+        {
+            PassRightPage(null, null);
+        }
+        else if (targetPage < actualPage)
+        {
+            PassLeftPage(null, null);
+        }
+
+        return;
+    }
+
+    private void Update()
+    {
+        if (passPageCountDown <= 0)
+        {
+            passPageCountDown = 0;
+            return;
+        }
+
+        passPageCountDown -= Time.deltaTime;
+
+    }
+
+}
+
+class PageRequest
+{
+    public int TargetPage;
+    public TaskCompletionSource<bool> Completion;
 }
