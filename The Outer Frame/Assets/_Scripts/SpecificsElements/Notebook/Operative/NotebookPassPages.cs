@@ -12,6 +12,7 @@ public class NotebookPassPages : MonoBehaviour
     [SerializeField] GameObject RightModelShadow;
 
     [SerializeField] GameEvent OnChangePage;
+    [SerializeField] GameEvent OnChangePageDirection;
 
     [SerializeField] List<NotebookPage> Pages;
     [SerializeField] GameObject backPageCorner;
@@ -75,6 +76,7 @@ public class NotebookPassPages : MonoBehaviour
         }
 
         OnChangePage?.Invoke(this, actualPage);
+        OnChangePageDirection?.Invoke(this, 1);
     }
 
 
@@ -96,6 +98,7 @@ public class NotebookPassPages : MonoBehaviour
         }
 
         OnChangePage?.Invoke(this, actualPage);
+        OnChangePageDirection?.Invoke(this, -1);
 
     }
 
@@ -111,9 +114,7 @@ public class NotebookPassPages : MonoBehaviour
 
         while (passPageCountDown > 0)
         {
-            Debug.Log("awaiting");
             await Task.Yield();
-            Debug.Log("finish await");
         }
 
         passPageCountDown += timeToFinishAnim;

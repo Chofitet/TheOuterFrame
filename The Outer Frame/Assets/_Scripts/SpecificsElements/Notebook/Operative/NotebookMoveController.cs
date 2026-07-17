@@ -378,6 +378,25 @@ public class NotebookMoveController : MonoBehaviour
 
     }
 
+    Sequence PassPageRotationSequence;
+    [SerializeField] Transform LeftRotation;
+    [SerializeField] Transform RightRotation;
+    public void PassPageRotation(Component sender, object obj)
+    {
+        int direction = (int)obj;
+
+        if (PassPageRotationSequence != null && PassPageRotationSequence.IsActive()) PassPageRotationSequence.Kill();
+
+        Transform rotationDirection = direction == 1? RightRotation : LeftRotation;
+
+        PassPageRotationSequence = DOTween.Sequence();
+        Vector3 initionRotation = transform.rotation.eulerAngles;
+
+        PassPageRotationSequence.Append(transform.DORotate(rotationDirection.rotation.eulerAngles, 0.2f))
+            .Append(transform.DORotate(initionRotation, 0.2f));
+
+    }
+
     void CutShakeSequence()
     {
 
