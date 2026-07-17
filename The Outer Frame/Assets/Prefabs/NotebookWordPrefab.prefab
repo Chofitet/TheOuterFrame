@@ -5561,6 +5561,7 @@ GameObject:
   - component: {fileID: 5448267931498313990}
   - component: {fileID: 3081441184715541069}
   - component: {fileID: 3792950946451842311}
+  - component: {fileID: 6813675352129036036}
   m_Layer: 0
   m_Name: NotebookWordPrefab
   m_TagString: Untagged
@@ -5612,7 +5613,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 976639871496013436}
+  minCharacters: 17
+  CharactersOffset: 1.9
+  MinWidthToIndent: 36.5
   strikethrough: {fileID: 4746003229699241807}
+  fade: {fileID: 4453182348745804469}
   OnWritingShakeNotebook: {fileID: 11400000, guid: 91b91b8ed370dec49bc053924dd787de, type: 2}
   OnCrossWordSound: {fileID: 11400000, guid: 34e24a3358b56814cad33862402de1ef, type: 2}
   OnWritingNotebookSound: {fileID: 11400000, guid: fb485f55efe0c7c4abce479643c237e3, type: 2}
@@ -5621,6 +5626,7 @@ MonoBehaviour:
   EraseParticles: {fileID: 1374346152624410519}
   OnButtonElement: {fileID: 11400000, guid: 728ff54e4b091ed4a8663d6831367c10, type: 2}
   OnInactiveReplaceWord: {fileID: 11400000, guid: 016b74336b072ab429d18d2dbcd5ecac, type: 2}
+  OnRequestChangePage: {fileID: 11400000, guid: d7c9363a797623e45ba0a518fa269717, type: 2}
 --- !u!114 &1800291645160190155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5746,6 +5752,41 @@ MonoBehaviour:
       - m_Target: {fileID: 6592215315726425342}
         m_TargetAssemblyTypeName: NotebookWordInstance, Assembly-CSharp
         m_MethodName: OnBoardUpdate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+--- !u!114 &6813675352129036036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8693245384509004982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 0d0583875f1551a4c97c7af6da485f74, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6592215315726425342}
+        m_TargetAssemblyTypeName: NotebookWordInstance, Assembly-CSharp
+        m_MethodName: SetActualPage
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

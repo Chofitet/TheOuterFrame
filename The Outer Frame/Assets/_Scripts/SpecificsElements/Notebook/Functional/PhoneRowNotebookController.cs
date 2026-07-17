@@ -222,7 +222,7 @@ public class PhoneRowNotebookController : MonoBehaviour
     IEnumerator CrossAnim()
     {
         if (isCross) yield return null;
-        processManager.RegisterProcess();
+       processManager.RegisterProcess();
 
         
         RectTransform line = strikethrough.GetComponent<RectTransform>();

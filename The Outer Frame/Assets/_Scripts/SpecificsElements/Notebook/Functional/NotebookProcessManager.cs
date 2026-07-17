@@ -8,6 +8,7 @@ public class NotebookProcessManager : MonoBehaviour
     private int activeProcesses = 0;
     public event Action OnAllProcessesFinished;
     public event Action OnProcessStarted;
+    int proccessNumber;
 
     public void RegisterProcess()
     {
@@ -28,8 +29,11 @@ public class NotebookProcessManager : MonoBehaviour
     void invokeOnAllProcessesFinished()
     {
         OnAllProcessesFinished?.Invoke();
+        proccessNumber = 0;
         Debug.Log("All Notebook process end");
     }
 
     public bool IsProcessing => activeProcesses > 0;
+
+
 }

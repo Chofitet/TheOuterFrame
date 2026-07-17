@@ -4,11 +4,17 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using static System.Net.Mime.MediaTypeNames;
+using System.Threading.Tasks;
 
 public class NotebookWordInstance : MonoBehaviour
 {
     [SerializeField] TMP_Text text;
+    [SerializeField] private int minCharacters = 5;
+    [SerializeField] private float CharactersOffset = 2f;
+    [SerializeField] float MinWidthToIndent;
     [SerializeField] GameObject strikethrough;
+    [SerializeField] FadeWordsEffect fade;
     [SerializeField] GameEvent OnWritingShakeNotebook;
     [SerializeField] GameEvent OnCrossWordSound;
     [SerializeField] GameEvent OnWritingNotebookSound;
@@ -17,43 +23,43 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] Transform EraseParticles;
     [SerializeField] GameEvent OnButtonElement;
     [SerializeField] GameEvent OnInactiveReplaceWord;
+    [SerializeField] GameEvent OnRequestChangePage;
+
     NotebookProcessManager processManager;
     WordData wordReference;
+    float PassPageTime;
     bool isCross;
     bool isActiveInBoard;
     bool isinactive;
     bool PendingToAddBoard;
     float waitAtTheEnd = 0;
-    public void Initialization(WordData word, ViewStates _actualView, bool noAnim = false, NotebookProcessManager _processManager = null, float height = 0)
+    int pageNum;
+    int actualPage;
+    bool isInSecondColumn;
+    NotebookPassPages notebookPasspage;
+    
+    public void Initialization(WordData word, int _pageNum, NotebookPassPages _notebookPasspage,float _PassPageTime, ViewStates _actualView, bool noAnim = false, NotebookProcessManager _processManager = null, float height = 0, float extraTimeWhilePassingPage = 0)
     {
         if(_processManager != null) processManager = _processManager;
         wordReference = word;
         text.text = wordReference.GetName();
         btn.onClick.AddListener(SetSelectedWord);
 
-        actualView = _actualView;
 
-        float writingTime = 0;
+        actualView = _actualView;
+        pageNum = _pageNum;
+        notebookPasspage = _notebookPasspage;
+        PassPageTime = _PassPageTime;
+
+        if (isInSecondColumn) indentWord();
 
         if (!word.GetIsFound())
         {
-            writingTime = 0.5f;
             word.SetIsFound();
             if (!noAnim)
             {
-                processManager.RegisterProcess();
-                var fade = text.gameObject.GetComponent<FadeWordsEffect>();
-                fade.OnComplete += OnWritingFinished;
-                fade.StartEffect();
+                WriteFade();
             }
-        }
-
-        if (!noAnim)
-        {
-            OnWritingShakeNotebook?.Invoke(this, writingTime);
-            OnWritingNotebookSound?.Invoke(this, null);
-            Invoke("Alpha1", 1);
-            
         }
         else takeDossierWithWordOnBeginningOnce = true;
 
@@ -67,13 +73,67 @@ public class NotebookWordInstance : MonoBehaviour
             rt.sizeDelta = size;
         }
 
-       //btn.GetComponent<Image>().enabled = true;
-       //btn.GetComponent<Image>().color = new Color(UnityEngine.Random.Range(0f,1f), UnityEngine.Random.Range(0f, 1f), 1);
+    }
+
+    void indentWord()
+    {
+        text.ForceMeshUpdate();
+
+        if(text.text =="President Deandra")
+        {
+            Debug.Log("a");
+        }
+        RectTransform rt = GetComponent<RectTransform>();
+
+        TMP_CharacterInfo[] textInfo = text.textInfo.characterInfo;
+
+        float wordWidht = 0;
+        float wordExtraWidht = 0;
+
+        foreach(TMP_CharacterInfo character in textInfo)
+        {
+            float characterWidth = Math.Abs(character.bottomLeft.x - character.bottomRight.x);
+
+            wordWidht += characterWidth;
+
+            if(wordWidht > MinWidthToIndent) wordExtraWidht += characterWidth;
+        }
+
+        rt.anchoredPosition += Vector2.left * (wordExtraWidht + 0.6f);
+
+    }
+
+    public void IsInSecondColumn()
+    {
+        isInSecondColumn = true;
+    }
+
+    public async Task WriteFade()
+    {
+        processManager.RegisterProcess();
+        fade.OnComplete += OnWritingFinished;
+        fade.SetBlank(0);
+
+
+        /*if (extraTimeWhilePassingPage != 0) extraTimeWhilePassingPage = extraTimeWhilePassingPage + 0.5f;
+        yield return new WaitForSeconds(extraTimeWhilePassingPage);*/
+
+        /*if (needPassPage)
+        {
+            OnRequestChangePage?.Invoke(this, pageNum);
+            yield return new WaitForSeconds(PassPageTime); // wait for pass page
+
+        }*/
+
+        await notebookPasspage.RequestPage(pageNum,0.3f);
+
+        OnWritingShakeNotebook?.Invoke(this, 0.5f);
+        OnWritingNotebookSound?.Invoke(this, null);
+        fade.StartEffect();
     }
 
     void OnWritingFinished()
     {
-        var fade = text.gameObject.GetComponent<FadeWordsEffect>();
         fade.OnComplete -= OnWritingFinished;
         OnWritingWordFinished?.Invoke(this, wordReference);
         processManager.UnregisterProcess();
@@ -82,10 +142,9 @@ public class NotebookWordInstance : MonoBehaviour
     public void EraseAnim()
     {
         processManager.RegisterProcess();
-        var erase = GetComponent<FadeWordsEffect>();
-        erase.OnEraseProgress += eraseParticles;
-        erase.OnComplete += OnEraseFinished;
-        erase.StartEffect(false);
+        fade.OnEraseProgress += eraseParticles;
+        fade.OnComplete += OnEraseFinished;
+        fade.StartEffect(false);
     }
     public void eraseParticles(float progress)
     {
@@ -94,7 +153,6 @@ public class NotebookWordInstance : MonoBehaviour
     }
     void OnEraseFinished()
     {
-        var fade = text.gameObject.GetComponent<FadeWordsEffect>();
         fade.OnComplete -= OnEraseFinished;
         EraseParticles.GetComponent<ParticleSystem>().Stop();
         fade.OnEraseProgress -= eraseParticles;
@@ -109,20 +167,24 @@ public class NotebookWordInstance : MonoBehaviour
         if (wordReference.GetInactiveStateSeen() && !wordReference.GetEraseState())
         {
             if (isCross) return;
+
+            bool needPassPage = pageNum != actualPage ? true : false;
+
             btn.enabled = false;
             strikethrough.SetActive(true);
-            CrossOutWord();
+
+            CrossOutWord(needPassPage);
         }
     }
     public void ReplaceWord(WordData word)
     {
         text.text = wordReference.GetName();
-        if (isCross) EraseCrossWord();
+
+        ReplaceWordAnim( text, false, text, true, word.GetName());
+        
         OnInactiveReplaceWord?.Invoke(this, wordReference);
-        StartCoroutine(AnimFade(text, false, text, true, word.GetName()));
         wordReference = word;
         word.SetIsFound();
-        OnWritingShakeNotebook?.Invoke(this, 0.5f);
         btn.enabled = true;
 
         foreach (WordData ascendat in word.SearchForWordsThatReplaceRetroactive())
@@ -130,7 +192,25 @@ public class NotebookWordInstance : MonoBehaviour
             // si alguna de las palabras anterior fue puesta en el board, activa el placed automático al remplasarce
             if(ascendat.GetPlacedInBoard()) PendingToAddBoard = true;
         }
-        
+    }
+
+    public async Task ReplaceWordAnim(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
+    {
+        processManager.RegisterProcess();
+        fade.SetBlank(1);
+
+        await notebookPasspage.RequestPage(pageNum, 1f);
+
+        if (isCross) EraseCrossWord();
+        OnWritingShakeNotebook?.Invoke(this, 0.5f);
+        fade.StartEffect(isTransparent1);
+        if (!isTransparent1) fade.OnEraseProgress += eraseParticles;
+        await Task.Delay(500);
+        EraseParticles.GetComponent<ParticleSystem>().Stop();
+        if (first == second) first.text = txt;
+        fade.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
+        await Task.Delay(500);
+        processManager.UnregisterProcess();
     }
 
     public void ReplaceWordInstantly(WordData word)
@@ -138,16 +218,18 @@ public class NotebookWordInstance : MonoBehaviour
         wordReference = word;
         word.SetIsFound();
         text.text = wordReference.GetName();
-
     }
 
   
 
     Vector3 CrossOriginalPos;
-    public void CrossOutWord()
+    public async Task CrossOutWord(bool needPassPage )
     {
-        OnInactiveReplaceWord?.Invoke(this, wordReference);
         processManager.RegisterProcess();
+        OnInactiveReplaceWord?.Invoke(this, wordReference);
+
+        await notebookPasspage.RequestPage(pageNum, 0.3f);
+
         RectTransform line = strikethrough.GetComponent<RectTransform>();
         CrossOriginalPos = line.localPosition;
         line.DOSizeDelta(new Vector2(text.GetComponent<RectTransform>().sizeDelta.x, line.sizeDelta.y), 0.3f).OnComplete(() => processManager.UnregisterProcess());
@@ -172,20 +254,6 @@ public class NotebookWordInstance : MonoBehaviour
             btn.enabled = true;
             processManager.UnregisterProcess();
         });
-    }
-
-    IEnumerator AnimFade(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
-    {
-        processManager.RegisterProcess();
-        FadeWordsEffect effect = first.gameObject.GetComponent<FadeWordsEffect>();
-        effect.StartEffect(isTransparent1);
-        if (!isTransparent1) effect.OnEraseProgress += eraseParticles;
-        yield return new WaitForSeconds(0.5f);
-        EraseParticles.GetComponent<ParticleSystem>().Stop();
-        if (first == second) first.text = txt;
-        second.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
-        yield return new WaitForSeconds(0.5f);
-        processManager.UnregisterProcess();
     }
 
     bool takeDossierWithWordOnBeginningOnce;
@@ -354,6 +422,11 @@ public class NotebookWordInstance : MonoBehaviour
             btn.onClick.Invoke();
             PendingToAddBoard = false;
         }
+    }
+
+    public void SetActualPage(Component sender, object obj)
+    {
+        actualPage = (int)obj;
     }
 
     public void SetInactive(bool x) => isinactive = x;

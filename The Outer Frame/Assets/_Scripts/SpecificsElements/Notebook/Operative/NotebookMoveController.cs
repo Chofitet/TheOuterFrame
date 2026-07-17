@@ -41,7 +41,7 @@ public class NotebookMoveController : MonoBehaviour
     private bool pendingIsUp = false;
     private bool pendingPhoneAction = false;
     private bool pendingOpenPhones = false;
-    Quaternion LocalRotationOnStart;
+    Quaternion LocalRotation;
 
     private void Start()
     {
@@ -50,7 +50,7 @@ public class NotebookMoveController : MonoBehaviour
         OriginalTransform = transform.parent;
         processManager.OnProcessStarted += OnStartWordProcess;
         processManager.OnAllProcessesFinished += OnFinishAlltWordsProcess;
-        LocalRotationOnStart = Quaternion.Euler(transform.localRotation.eulerAngles);
+        LocalRotation= Quaternion.Euler(transform.localRotation.eulerAngles);
 
     }
 
@@ -245,6 +245,7 @@ public class NotebookMoveController : MonoBehaviour
                         child.transform.DOLocalRotate(Vector3.zero, 0.2f);
                         SetTransform(OriginalTransform);
                         OnceLeave = false;
+                        LocalRotation = Quaternion.Euler(transform.localRotation.eulerAngles);
                     });
 
 
@@ -379,6 +380,7 @@ public class NotebookMoveController : MonoBehaviour
 
     void CutShakeSequence()
     {
+
         if (shakeSequence != null && shakeSequence.IsActive())
         {
             shakeSequence.Kill();
@@ -387,7 +389,7 @@ public class NotebookMoveController : MonoBehaviour
 
         isShaking = false;
 
-        transform.localRotation = LocalRotationOnStart;
+        transform.localRotation = LocalRotation;
     }
 
     void OpenPhoneNums(bool isSlidingForWrite = false)
