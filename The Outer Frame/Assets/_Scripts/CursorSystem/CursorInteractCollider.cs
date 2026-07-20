@@ -6,9 +6,15 @@ using UnityEngine;
 public class CursorInteractCollider : MonoBehaviour
 {
     bool inside = false;
+    bool isEnable = true;
 
     private void OnMouseOver()
     {
+        if (!isEnable)
+        {
+            CursorManager.CM.ExitInteractive();
+            return;
+        }
         if (!inside)
         {
             inside = true;
@@ -18,6 +24,7 @@ public class CursorInteractCollider : MonoBehaviour
 
     private void OnMouseExit()
     {
+        if (!isEnable) return;
         if (inside)
         {
             inside = false;
@@ -29,5 +36,14 @@ public class CursorInteractCollider : MonoBehaviour
     {
         if (inside)
             CursorManager.CM.ClickInteractive();
+    }
+
+    public void DisableInteractCursor(Component sender, object obj)
+    {
+        isEnable = false;
+    }
+    public void EnableInteractCursor(Component sender, object obj)
+    {
+        isEnable = true;
     }
 }

@@ -75,6 +75,8 @@ public class CursorManager : MonoBehaviour
             ChangeState(CursorState.Hover);
         else
             ChangeState(CursorState.Default);
+
+        hoverCount = Mathf.Clamp(hoverCount, 0, 1);
     }
 
     private void ChangeState(CursorState newState)
@@ -115,7 +117,6 @@ public class CursorManager : MonoBehaviour
                     pc ? Vector2.zero : Hotspot(DefaultCursor, true),
                     CursorMode.Auto
                 );
-                
                 break;
 
             case CursorState.Hover:

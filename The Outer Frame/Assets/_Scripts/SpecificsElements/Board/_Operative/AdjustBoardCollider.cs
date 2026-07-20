@@ -6,25 +6,28 @@ public class AdjustBoardCollider : MonoBehaviour
 {
     BoxCollider _collider;
     Vector3 InitialPos;
-
-    void Start()
-    {
-        _collider = GetComponent<BoxCollider>();
-        InitialPos = transform.position;
-    }
+    [SerializeField] BoxCollider GeneralButton;
+    [SerializeField] BoxCollider TakeSomeInBoardButton;
 
     public void AdjustCollider(Component sender, object obj)
     {
         ViewStates view = (ViewStates)obj;
 
 
-        if(view == ViewStates.BoardView || view == ViewStates.OnTakeSomeInBoard)
+        if(view == ViewStates.OnTakeSomeInBoard)
         {
-            transform.localPosition = Vector3.zero;
+            TakeSomeInBoardButton.enabled = true;
+            GeneralButton.enabled = false;
+        }
+        else if (view == ViewStates.BoardView) 
+        {
+            TakeSomeInBoardButton.enabled = false;
+            GeneralButton.enabled = false;
         }
         else
         {
-            transform.position = InitialPos;
+            TakeSomeInBoardButton.enabled = false;
+            GeneralButton.enabled = true;
         }
     }
 
