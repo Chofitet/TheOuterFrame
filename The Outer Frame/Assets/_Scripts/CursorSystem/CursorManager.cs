@@ -115,6 +115,7 @@ public class CursorManager : MonoBehaviour
                     pc ? Vector2.zero : Hotspot(DefaultCursor, true),
                     CursorMode.Auto
                 );
+                
                 break;
 
             case CursorState.Hover:

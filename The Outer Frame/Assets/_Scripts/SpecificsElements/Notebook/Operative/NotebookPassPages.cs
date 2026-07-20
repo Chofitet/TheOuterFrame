@@ -143,10 +143,10 @@ public class NotebookPassPages : MonoBehaviour
 
     }
 
-}
+    [ContextMenu("EnableSecondPage")]
+    public void EnableSecondPage()
+    {
+        PassRightPage(null, null);
+    }
 
-class PageRequest
-{
-    public int TargetPage;
-    public TaskCompletionSource<bool> Completion;
 }
