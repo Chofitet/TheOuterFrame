@@ -36,7 +36,7 @@ public class ActionRowController : MonoBehaviour
     {
         state = _state;
         ActionText.text = _state.GetInfinitiveVerb();
-        btn.onClick.AddListener(OnButtonClick);
+        btn.onClick.AddListener(() => OnButtonClick(false));
         fade = Wordtext.GetComponent<FadeWordsEffect>();
         fadeAction = ActionText.GetComponent<FadeWordsEffect>();
         fadeAclaration = AclarationTxt.GetComponent<FadeWordsEffect>();
@@ -63,6 +63,9 @@ public class ActionRowController : MonoBehaviour
 
         ApTakedByPressAWord = true;
 
+        if (obj != null) Word = (WordData)obj;
+        else Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
+
         if (isPendigToErase)
         {
             if (ActionText.text == "Inspect") WordPendingToReplaceErased = WordSelectedInNotebook.Notebook.GetSelectedWord();
@@ -70,8 +73,7 @@ public class ActionRowController : MonoBehaviour
             return;
         }
 
-        if(obj != null) Word = (WordData) obj;
-        else  Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
+        
 
         if (toggle.isOn && once)
         {
@@ -97,7 +99,7 @@ public class ActionRowController : MonoBehaviour
         btn.onClick.Invoke();
     }
 
-    public void OnButtonClick()
+    public void OnButtonClick(bool isAutomatic = false)
     {
         if(!isInView) return;
 
@@ -111,7 +113,7 @@ public class ActionRowController : MonoBehaviour
         }
 
         if (!toggle.isOn) buttonCheck();
-        else buttonUncheck();
+        else if (isAutomatic) buttonUncheck();
 
     }
 
@@ -213,6 +215,7 @@ public class ActionRowController : MonoBehaviour
         effect.StartEffect(isTransparent1);
         OnWrittingFormSound?.Invoke(this, null);
         yield return new WaitForSeconds(0.2f);
+        if (!Word) yield return 0;
         if (Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation())
         {
             AnimAclarationText(Word.GetWordFirstLocationAppear());

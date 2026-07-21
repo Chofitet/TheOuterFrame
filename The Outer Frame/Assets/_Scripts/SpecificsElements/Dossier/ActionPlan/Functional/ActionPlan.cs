@@ -70,7 +70,7 @@ public class ActionPlan : MonoBehaviour
 
         if (!isOneToggleSelected)
         {
-            script.OnButtonClick();
+            script.OnButtonClick(true);
         }
 
         isOneToggleSelected = true;
@@ -331,7 +331,16 @@ public class ActionPlan : MonoBehaviour
 
     public void OnEraseInactiveOrReplacedWords(Component sender, object obj)
     {
-        isOneToggleSelected = false;
+        if(obj == null)
+        {
+            isOneToggleSelected = false;
+            return;
+        }
+
+        WordData toEraseWord = (WordData)obj;
+
+        if(toEraseWord == word) isOneToggleSelected = false;
+
     }
 
     public void ForceChangeWordSelect(Component sender, object obj)
