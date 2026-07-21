@@ -19,6 +19,7 @@ public class NotebookPassPages : MonoBehaviour
     [SerializeField] GameObject upperBlendCorner;
 
     [SerializeField] float timeToPasspage;
+    [SerializeField] float AwaitPassPageToStartProcess;
 
 
     int actualPage;
@@ -127,6 +128,10 @@ public class NotebookPassPages : MonoBehaviour
         {
             PassLeftPage(null, null);
         }
+
+
+        passPageCountDown += AwaitPassPageToStartProcess;
+        await Task.Delay(Mathf.RoundToInt(AwaitPassPageToStartProcess * 1000));
 
         return;
     }
