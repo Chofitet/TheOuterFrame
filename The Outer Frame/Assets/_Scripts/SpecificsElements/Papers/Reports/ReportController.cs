@@ -36,7 +36,7 @@ public class ReportController : MonoBehaviour
     ReportType report;
     bool IsAlreadyImposible;
 
-    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, bool isAlreadyImposible, TimeData timeComplete,TimeData TimeToUnlockVilify, int AgentsUsed)
+    public void initReport(WordData _word, ReportType _report, bool isAborted, bool isAlreadyDone, bool isTheSameAction, StateEnum isOtherActionInGroupDoing, bool isAlreadyImposible, bool isAVilifyBlockedAction, TimeData timeComplete,TimeData TimeToUnlockVilify, int AgentsUsed)
     {
         word = _word;
         report = _report;
@@ -114,7 +114,7 @@ public class ReportController : MonoBehaviour
             DisposeBTN.SetActive(true);
 
         }
-        else if(!TimeToUnlockVilify.isANullTimeData())
+        else if(isAVilifyBlockedAction)
         {
             Resulttxt.text = $"People will get suspicious if we put so many of our ‘broadcasts’ up one after the other.\n\nLet’s try again after {TimeToUnlockVilify.Hour:00}:{TimeToUnlockVilify.Minute:00}.";
 

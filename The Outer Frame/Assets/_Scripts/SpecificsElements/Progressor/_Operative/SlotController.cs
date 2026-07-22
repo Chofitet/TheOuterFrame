@@ -31,6 +31,7 @@ public class SlotController : MonoBehaviour
     [SerializeField] GameEvent OnRecoveryAgent;
     [SerializeField] OneVilifyWasSendedConditional OneVilifyWasSendedConditional;
     TimeData IsVilifyLocked = new TimeData(0,0,0);
+    TimeData IsVilifyLockedAux = new TimeData(0, 0, 0);
 
     public Action<bool> OnSetAction;
 
@@ -146,6 +147,7 @@ public class SlotController : MonoBehaviour
             isAVilifyBlockedAction = true;
             noComplete = true;
             SetLEDState(Color.red, "Red");
+            SetVilifyLockedTime(IsVilifyLocked);
         }
         // Es una accion que ya no es posible 
         else if(state.GetInactiveConditionals() || word.GetInactiveState() )
@@ -349,7 +351,7 @@ public class SlotController : MonoBehaviour
         isAlreadyImposible = false;
         noComplete = false;
         AgentsUsed = 1;
-        
+        SetVilifyLockedTime(new TimeData(0, 0, 0));
 
         AbortIcon.SetActive(false);
         CheckIcon.SetActive(false);
@@ -597,6 +599,11 @@ public class SlotController : MonoBehaviour
         IsVilifyLocked = (TimeData)obj;
     }
 
+    void SetVilifyLockedTime(TimeData time)
+    {
+        IsVilifyLockedAux = time;
+    }
+
     public WordData GetWord() { return _word; }
 
     public StateEnum GetState() { return _state; }
@@ -627,10 +634,8 @@ public class SlotController : MonoBehaviour
 
     public bool GetthereAreSomethigOnPrinter() { return thereAreSomethigOnPrinter; }    
 
-    public TimeData GetIsAVilifyBlockedAction() {
-        if (isAVilifyBlockedAction) return IsVilifyLocked;
-        else return new TimeData(0, 0, 0);    
-    }
+    public TimeData GetVilifyBlockedTimeData() {  return IsVilifyLockedAux;   }
+    public bool GetIsAVilifyBlockedAction() { return isAVilifyBlockedAction;}
     public bool GetNoComplete() { return noComplete; }
 
 

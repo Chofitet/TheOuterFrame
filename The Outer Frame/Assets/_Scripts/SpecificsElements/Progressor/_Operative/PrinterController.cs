@@ -35,7 +35,7 @@ public class PrinterController : MonoBehaviour
         if (slotController.GetObjectType() == ObjectToPrint.report || slotController.GetNoComplete() || slotController.GetIsAborted())
         {
             Object = Instantiate(ReportPrefab, InstanciateSpot.position, InstanciateSpot.rotation, InstanciateSpot);
-            Object.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetReport(), slotController.GetIsAborted(), slotController.getisAlreadyDone(), slotController.GetIsTheSameAction(), slotController.GetIsOtherGroupActionDoing(), slotController.GetIsAlreadyImposible(), slotController.GetTimeComplete(), slotController.GetIsAVilifyBlockedAction(), slotController.GetUsedAgents());
+            Object.GetComponent<ReportController>().initReport(slotController.GetWord(), slotController.GetReport(), slotController.GetIsAborted(), slotController.getisAlreadyDone(), slotController.GetIsTheSameAction(), slotController.GetIsOtherGroupActionDoing(), slotController.GetIsAlreadyImposible(),slotController.GetIsAVilifyBlockedAction(), slotController.GetTimeComplete(), slotController.GetVilifyBlockedTimeData(), slotController.GetUsedAgents());
             Object.transform.DOMove(OutSpot.position, 0.2f).SetEase(Ease.OutSine);
         }
         else if(slotController.GetObjectType() == ObjectToPrint.Candy1 || slotController.GetObjectType() == ObjectToPrint.Candy2)

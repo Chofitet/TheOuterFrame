@@ -1844,7 +1844,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -53.524, y: 61}
+  m_AnchoredPosition: {x: -53.524048, y: 61}
   m_SizeDelta: {x: 64.25, y: 32.709}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1575413874
@@ -2898,9 +2898,9 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
     m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
     m_ColorMultiplier: 1.29
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -3322,6 +3322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeDuration: 3
+  fadeOnStart: 0
 --- !u!82 &1981322237
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3640,6 +3641,7 @@ MonoBehaviour:
   PCClickCursor: {fileID: 0}
   PCInteractiveCursor: {fileID: 0}
   targetCanvas: {fileID: 0}
+  ColliderToIngnoreBlockInput: {fileID: 0}
 --- !u!4 &2113379557
 Transform:
   m_ObjectHideFlags: 0
