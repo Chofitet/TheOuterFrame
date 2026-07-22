@@ -19,7 +19,7 @@ public class NotebookMoveController : MonoBehaviour
     [SerializeField] AnimationCurve OutOfBackDossierCurve;
     [SerializeField] NotebookProcessManager processManager;
     [SerializeField] GameEvent OnKillWritingShake;
-
+    [SerializeField] List<GameObject> DisableInTutorial;
     Animator anim;
     private Sequence moveSequence;
     private Sequence moveWithDossierSequence;
@@ -522,6 +522,12 @@ public class NotebookMoveController : MonoBehaviour
     }
 
 
-
+    public void OnSetTutorial(Component Sender, object obj)
+    {
+        foreach (GameObject GO in DisableInTutorial)
+        {
+            GO.SetActive(!(bool)obj);
+        }
+    }
 
 }
