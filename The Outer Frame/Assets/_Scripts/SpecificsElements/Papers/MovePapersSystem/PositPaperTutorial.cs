@@ -18,7 +18,8 @@ public class PositPaperTutorial : MonoBehaviour
     {
         _collider = GetComponent<BoxCollider>();
     }
-    private void OnMouseUpAsButton()
+
+    private void OnMouseDown()
     {
         OnTakePosIt(null, null);
         _collider.enabled = false;
