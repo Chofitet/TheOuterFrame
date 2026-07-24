@@ -39,6 +39,7 @@ public class MoveObjectToThisPos : MonoBehaviour
 
     void MoveObject(GameObject _object, float TimeToWait)
     {
+        if (_object == null) return;
         inMovingToPosition = true;
         LastObj = _object;
         initPos = LastObj.transform.position;

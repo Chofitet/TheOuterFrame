@@ -16,12 +16,12 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] bool isAFailedIdea;
     [HideInInspector][SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
     [SerializeField] GameObject Content;
-    [HideInInspector][SerializeField] GameEvent OnMoveObjectToPapersPos;
-    [HideInInspector][SerializeField] GameObject CheckImage;
-    [HideInInspector][SerializeField] GameEvent OnMoveToCornerIdea;
-    [HideInInspector][SerializeField] GameEvent OnMoveToOutOfView;
-    [HideInInspector][SerializeField] GameEvent OnSetTakenPosit;
-    [HideInInspector][SerializeField] GameObject CroosIcon;
+    [SerializeField] GameEvent OnMoveObjectToPapersPos;
+    [SerializeField] GameObject CheckImage;
+    [SerializeField] GameEvent OnMoveToCornerIdea;
+    [SerializeField] GameEvent OnMoveToOutOfView;
+    [SerializeField] GameEvent OnSetTakenPosit;
+    [SerializeField] GameObject CroosIcon;
     [SerializeField] bool ActiveInBeginning;
     bool ActionIsDoing;
     bool isDone;
@@ -53,13 +53,12 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         OnAppearActionIdea();
     }
 
-    private void OnMouseUpAsButton()
+    private void OnMouseDown()
     {
         GetComponent<BoxCollider>().enabled = false;
         istaken = true;
         OnSetTakenPosit?.Invoke(null, gameObject);
     }
-
     public void Reset(Component sender, object obj)
     {
         istaken = false;

@@ -53,17 +53,13 @@ public class CursorManager : MonoBehaviour
     }
     public void EnterInteractive()
     {
-        /*hoverCount++;
-        if (hoverCount > 0) */
-        if (!isClicking) ChangeState(CursorState.Hover);
         inInside = true;
+        if (!isClicking) ChangeState(CursorState.Hover);
+        
     }
 
     public void ExitInteractive()
     {
-        /*hoverCount = Mathf.Max(hoverCount - 1, 0);
-        if (hoverCount == 0)*/
-
         inInside = false;
         if (!isClicking) ChangeState(CursorState.Default);
     }

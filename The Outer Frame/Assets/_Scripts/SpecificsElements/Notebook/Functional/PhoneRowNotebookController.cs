@@ -120,11 +120,11 @@ public class PhoneRowNotebookController : MonoBehaviour
 
         if(ActualState == NumberStates.FoundWithWord)
         {
-            ClearWordUnderline();
+            ClearWordUnderline(true);
         }
         if(NumBtn.enabled && !isMovingToPinchofono)
         {
-            ClearNumdUnderline();
+            ClearNumdUnderline(true);
         }
     }
 
@@ -158,6 +158,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         Num.text = $"<u>{wordNum.GetName()}</u>";
         if(ActualState == NumberStates.FoundWithWord) ClearWordUnderline(true);
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordNum);
+
         
     }
     Coroutine GoToPinchofono;
