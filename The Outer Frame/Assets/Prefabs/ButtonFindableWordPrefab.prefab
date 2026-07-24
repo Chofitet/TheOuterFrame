@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 2174038686827204139}
   - component: {fileID: 5659363823318156345}
   - component: {fileID: 9006669820389021483}
+  - component: {fileID: 3590768502570692727}
   - component: {fileID: 7925318461116273827}
   - component: {fileID: 6562775938033293353}
   - component: {fileID: 9106724016615758131}
@@ -278,22 +279,33 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5659363823318156345}
-          m_TargetAssemblyTypeName: FindableWordBTNController, Assembly-CSharp
-          m_MethodName: RegisterWord
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+--- !u!114 &3590768502570692727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8898949953936741358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917b47f3e3382294aafbbf5133cc4a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPointerDown:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5659363823318156345}
+        m_TargetAssemblyTypeName: FindableWordBTNController, Assembly-CSharp
+        m_MethodName: RegisterWord
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!137 &7925318461116273827
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -392,6 +404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlwaysValid: 0
 --- !u!114 &-5341541904337477307
 MonoBehaviour:
   m_ObjectHideFlags: 0

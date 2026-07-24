@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 279214027332564645}
   - component: {fileID: 103533067298417677}
   - component: {fileID: 5576713876046699826}
-  - component: {fileID: 1999241601824803630}
+  - component: {fileID: 8694280440611085432}
   m_Layer: 0
   m_Name: btnShake
   m_TagString: Untagged
@@ -402,7 +402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1999241601824803630
+  isAlwaysValid: 0
+--- !u!114 &8694280440611085432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -411,26 +412,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 2336729663028734016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Script: {fileID: 11500000, guid: 917b47f3e3382294aafbbf5133cc4a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7199042322043686895}
-          m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
-          m_MethodName: ShakeBtn
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  onPointerDown:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7199042322043686895}
+        m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
+        m_MethodName: ShakeBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2837442988914159190
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,7 +1228,7 @@ GameObject:
   - component: {fileID: 1590592820732351876}
   - component: {fileID: 3903721326796803651}
   - component: {fileID: 841682988369439598}
-  - component: {fileID: 4209532409146328780}
+  - component: {fileID: 7347111440934618216}
   m_Layer: 0
   m_Name: btnApproved
   m_TagString: Untagged
@@ -1340,6 +1339,34 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1590592820732351876}
   m_OnClick:
     m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &841682988369439598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4099223590196117057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlwaysValid: 0
+--- !u!114 &7347111440934618216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4099223590196117057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917b47f3e3382294aafbbf5133cc4a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPointerDown:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7199042322043686895}
         m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
@@ -1353,47 +1380,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &841682988369439598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4099223590196117057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71334abbdfdd8440ad31ae44ad1fbdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4209532409146328780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4099223590196117057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7199042322043686895}
-          m_TargetAssemblyTypeName: ActionPlan, Assembly-CSharp
-          m_MethodName: ApprovedActionPlan
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &4395714257086611728
 GameObject:
   m_ObjectHideFlags: 0

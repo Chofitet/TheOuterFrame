@@ -58,6 +58,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         GetComponent<BoxCollider>().enabled = false;
         istaken = true;
         OnSetTakenPosit?.Invoke(null, gameObject);
+
     }
     public void Reset(Component sender, object obj)
     {

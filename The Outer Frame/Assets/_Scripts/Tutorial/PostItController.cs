@@ -24,11 +24,12 @@ public class PostItController : MonoBehaviour
         _collider = GetComponent<BoxCollider>();
     }
 
-    private void OnMouseUpAsButton()
+    private void OnMouseDown()
     {
         OnTakePosIt(null, null);
         _collider.enabled = false;
     }
+
     public void OnTakePosIt(Component sender, object obj)
     {
         if (MoveSequence != null && MoveSequence.IsActive())

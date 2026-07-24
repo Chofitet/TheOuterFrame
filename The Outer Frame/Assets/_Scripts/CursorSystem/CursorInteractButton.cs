@@ -42,7 +42,7 @@ public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (!isInside) return;
+        if (!isInside) return; //despues este
         CursorManager.CM.ClickInteractive();
     }
 
@@ -65,8 +65,14 @@ public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         if (!isInside) return;
 
-        isInside = false;
+        //primero este
+        Invoke("MarkInsideFalse", 0.01f);
         CursorManager.CM.ExitInteractive();
+    }
+
+    void MarkInsideFalse()
+    {
+        isInside = false;
     }
 
 }
