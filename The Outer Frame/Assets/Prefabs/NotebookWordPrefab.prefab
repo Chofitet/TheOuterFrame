@@ -5375,6 +5375,7 @@ GameObject:
   - component: {fileID: 6693489156669828721}
   - component: {fileID: 987230522069162183}
   - component: {fileID: 4736540333207353509}
+  - component: {fileID: 5888076354437509183}
   m_Layer: 0
   m_Name: WordButtonNotebook
   m_TagString: Untagged
@@ -5546,6 +5547,21 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &5888076354437509183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5210209159018678749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917b47f3e3382294aafbbf5133cc4a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPointerDown:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8693245384509004982
 GameObject:
   m_ObjectHideFlags: 0

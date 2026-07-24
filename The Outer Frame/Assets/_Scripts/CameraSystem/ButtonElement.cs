@@ -12,7 +12,7 @@ public class ButtonElement : MonoBehaviour
     [SerializeField] bool NotInactiveBTN;
     bool CancelEvent;
 
-    private void OnMouseUpAsButton()
+    private void OnMouseDown()
     {
         CancelEvent = false;
         if (!isActive) return;

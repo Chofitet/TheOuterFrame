@@ -36,7 +36,7 @@ public class ActionRowController : MonoBehaviour
     {
         state = _state;
         ActionText.text = _state.GetInfinitiveVerb();
-        btn.onClick.AddListener(() => OnButtonClick(false));
+        btn.GetComponent<OnClickDownEvent>().onPointerDown.AddListener(() => OnButtonClick(false));
         fade = Wordtext.GetComponent<FadeWordsEffect>();
         fadeAction = ActionText.GetComponent<FadeWordsEffect>();
         fadeAclaration = AclarationTxt.GetComponent<FadeWordsEffect>();
@@ -96,7 +96,7 @@ public class ActionRowController : MonoBehaviour
     void ClickButton()
     {
         if (btn == null) return;
-        btn.onClick.Invoke();
+        btn.GetComponent<OnClickDownEvent>().onPointerDown.Invoke();
     }
 
     public void OnButtonClick(bool isAutomatic = false)

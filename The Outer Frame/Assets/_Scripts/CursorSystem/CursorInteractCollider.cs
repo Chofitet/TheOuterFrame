@@ -5,45 +5,54 @@ using UnityEngine;
 
 public class CursorInteractCollider : MonoBehaviour
 {
-    bool inside = false;
     bool isEnable = true;
+    bool isInside;
 
     private void OnMouseOver()
     {
-        if (!isEnable)
+        if (!isEnable) return;
+
+        if (!isInside)
         {
-            CursorManager.CM.ExitInteractive();
-            return;
-        }
-        if (!inside)
-        {
-            inside = true;
+            isInside = true;
             CursorManager.CM.EnterInteractive();
         }
     }
 
     private void OnMouseExit()
     {
-        if (!isEnable) return;
-        if (inside)
-        {
-            inside = false;
-            CursorManager.CM.ExitInteractive();
-        }
+        ExitIfNeeded();
     }
 
     private void OnMouseDown()
     {
-        if (inside)
-            CursorManager.CM.ClickInteractive();
+        if (!isEnable) return;
+
+        CursorManager.CM.ClickInteractive();
     }
 
     public void DisableInteractCursor(Component sender, object obj)
     {
         isEnable = false;
+        ExitIfNeeded();
     }
+
     public void EnableInteractCursor(Component sender, object obj)
     {
         isEnable = true;
     }
+
+    private void OnDisable()
+    {
+        ExitIfNeeded();
+    }
+
+    private void ExitIfNeeded()
+    {
+        if (!isInside) return;
+
+        isInside = false;
+        CursorManager.CM.ExitInteractive();
+    }
+
 }

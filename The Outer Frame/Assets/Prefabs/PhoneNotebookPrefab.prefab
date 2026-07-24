@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 6517865830723192155}
   - component: {fileID: 27839901634036616}
   - component: {fileID: 3363700964312732342}
+  - component: {fileID: 2909268448419896741}
   m_Layer: 0
   m_Name: Num
   m_TagString: Untagged
@@ -355,19 +356,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4333535389256641292}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7943965153216304880}
-        m_TargetAssemblyTypeName: PhoneRowNotebookController, Assembly-CSharp
-        m_MethodName: PressNumber
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &27839901634036616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,6 +384,22 @@ MonoBehaviour:
   material:
   - {fileID: 2100000, guid: b84e47ac2fa871d4aa319cab81814c15, type: 2}
   - {fileID: 2100000, guid: 503e0f40dba621944866d4784c7f4701, type: 2}
+  BoldMaterial: []
+--- !u!114 &2909268448419896741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3878347440031413184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917b47f3e3382294aafbbf5133cc4a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPointerDown:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6271906704084622735
 GameObject:
   m_ObjectHideFlags: 0
@@ -5627,6 +5632,7 @@ GameObject:
   - component: {fileID: 9064190732677294057}
   - component: {fileID: 776943595061324505}
   - component: {fileID: 4750016878479543047}
+  - component: {fileID: 3568445090271281986}
   m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
@@ -5814,19 +5820,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4945757936077853831}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7943965153216304880}
-        m_TargetAssemblyTypeName: PhoneRowNotebookController, Assembly-CSharp
-        m_MethodName: PressWord
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &776943595061324505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5854,3 +5848,19 @@ MonoBehaviour:
   material:
   - {fileID: 2100000, guid: b84e47ac2fa871d4aa319cab81814c15, type: 2}
   - {fileID: 2100000, guid: 503e0f40dba621944866d4784c7f4701, type: 2}
+  BoldMaterial: []
+--- !u!114 &3568445090271281986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8656327876052398730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917b47f3e3382294aafbbf5133cc4a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPointerDown:
+    m_PersistentCalls:
+      m_Calls: []

@@ -75,8 +75,8 @@ public class NotebookPhonesController : MonoBehaviour
         if (!LastPhoneAdded.GetIsAPhoneNumber()) return;
 
         GameObject wordaux = Instantiate(PhoneNumberPrefab, WordContainer);
-        wordaux.GetComponent<PhoneRowNotebookController>().GetWordButton().onClick.AddListener(ClearUnderLine);
-        wordaux.GetComponent<PhoneRowNotebookController>().GetNumButton().onClick.AddListener(ClearUnderLine);
+        wordaux.GetComponent<PhoneRowNotebookController>().GetWordButton().GetComponent<OnClickDownEvent>().onPointerDown.AddListener(ClearUnderLine);
+        wordaux.GetComponent<PhoneRowNotebookController>().GetNumButton().GetComponent<OnClickDownEvent>().onPointerDown.AddListener(ClearUnderLine);
         wordaux.GetComponent<PhoneRowNotebookController>().Initialization(LastPhoneAdded, this, proccessManager);
         WordsInstances.Add(wordaux);
 

@@ -7,70 +7,66 @@ using UnityEngine.UI;
 
 public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    Button btn;
-    bool inside = false;
+    private Button btn;
+
+    private bool isInside;
+    private bool wasValid;
+    [SerializeField] bool isAlwaysValid;
 
     void Awake()
     {
         btn = GetComponent<Button>();
+        wasValid = IsValid();
     }
 
     bool IsValid()
     {
-        return gameObject.activeInHierarchy && btn != null && btn.enabled && btn.interactable;
-    }
-
-    void Update()
-    {
-        if (inside && !IsValid())
-        {
-            inside = false;
-            CursorManager.CM.ExitInteractive(); 
-            CursorManager.CM.ForceDefault();   
-        }
+        return gameObject.activeInHierarchy && btn != null &&btn.enabled && btn.interactable;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsValid())
-        {
-            inside = true;
-            CursorManager.CM.EnterInteractive();
-        }
-        else
-        {
-            inside = false;
-            CursorManager.CM.ForceDefault();
-        }
+        if (!IsValid()) return;
+
+        isInside = true;
+        CursorManager.CM.EnterInteractive();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (inside)
-        {
-            inside = false;
-            CursorManager.CM.ExitInteractive();
-        }
-        else
-        {
-            CursorManager.CM.ForceDefault();
-        }
+        if (!isInside) return;
+
+        isInside = false;
+        CursorManager.CM.ExitInteractive();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (IsValid())
-            CursorManager.CM.ClickInteractive();
+        if (!isInside) return;
+        CursorManager.CM.ClickInteractive();
     }
 
-    void OnDisable()
+    void Update()
     {
-        if (inside)
+        bool valid = IsValid();
+
+        // Si el botón dejó de ser interactuable mientras el cursor estaba encima,
+        // simulamos un PointerExit.
+        if (wasValid && !valid && isInside && !isAlwaysValid)
         {
-            inside = false;
+            isInside = false;
             CursorManager.CM.ExitInteractive();
-            CursorManager.CM.ForceDefault();
         }
+
+        wasValid = valid;
+    }
+
+    private void OnDisable()
+    {
+        if (!isInside) return;
+
+        isInside = false;
+        CursorManager.CM.ExitInteractive();
     }
 
 }

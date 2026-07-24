@@ -17,13 +17,14 @@ public class ColliderButtonCallEvent : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        if (TriggerWithMouseDown) return;
-        TriggerActions();
+        /*if (TriggerWithMouseDown) return;
+        TriggerActions();*/
     }
 
     private void OnMouseDown()
     {
-        if (TriggerWithMouseDown) TriggerActions();
+        //if (TriggerWithMouseDown) 
+            TriggerActions();
     }
 
     void TriggerActions()

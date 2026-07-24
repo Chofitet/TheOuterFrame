@@ -34,8 +34,8 @@ public class PhoneRowNotebookController : MonoBehaviour
 
         phonesController = _phonesController;
 
-        //si se inicializa es porque es un numero, nunca que encuentro una palabra se trigerea esto
-        //lo que me tengo que preguntar es si su palabra fue encontrada o no
+        WordBtn.GetComponent<OnClickDownEvent>().onPointerDown.AddListener(PressWord);
+        NumBtn.GetComponent<OnClickDownEvent>().onPointerDown.AddListener(PressNumber);
 
         word = WordsManager.WM.FindWordWithPhoneNum_NumberFound(_word);
         if (word.GetIsAPhoneNumber()) word = WordsManager.WM.FindWordWithPhoneNum(_word);

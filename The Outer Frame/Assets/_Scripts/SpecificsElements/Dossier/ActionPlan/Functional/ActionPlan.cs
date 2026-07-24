@@ -54,7 +54,7 @@ public class ActionPlan : MonoBehaviour
             GameObject ActionInstantiate = Instantiate(ActionRowPrefab, ActionsContainer, false);
             ActionRowController script = ActionInstantiate.GetComponent<ActionRowController>();
             script.Initialization(actions, isFirstTimeIdeaAdded);
-            script.GetButton().onClick.AddListener(() => OnButtonRowPress(script));
+            script.GetButton().GetComponent<OnClickDownEvent>().onPointerDown.AddListener(() => OnButtonRowPress(script));
             Actions.Add(script);
 
 

@@ -42,6 +42,8 @@ public class CursorManager : MonoBehaviour
     private PointerEventData pointerEventData;
     [SerializeField] BoxCollider ColliderToIngnoreBlockInput;
     bool zoomView;
+    bool isClicking;
+    bool inInside;
 
     private void Start()
     {
@@ -51,14 +53,19 @@ public class CursorManager : MonoBehaviour
     }
     public void EnterInteractive()
     {
-        hoverCount++;
-        if (hoverCount > 0) ChangeState(CursorState.Hover);
+        /*hoverCount++;
+        if (hoverCount > 0) */
+        if (!isClicking) ChangeState(CursorState.Hover);
+        inInside = true;
     }
 
     public void ExitInteractive()
     {
-        hoverCount = Mathf.Max(hoverCount - 1, 0);
-        if (hoverCount == 0) ChangeState(CursorState.Default);
+        /*hoverCount = Mathf.Max(hoverCount - 1, 0);
+        if (hoverCount == 0)*/
+
+        inInside = false;
+        if (!isClicking) ChangeState(CursorState.Default);
     }
 
     public void ClickInteractive()
@@ -68,15 +75,16 @@ public class CursorManager : MonoBehaviour
 
     private IEnumerator ClickRoutine()
     {
+        isClicking = true;
         ChangeState(CursorState.Click);
         yield return new WaitForSeconds(0.1f);
+        isClicking = false;
 
-        if (hoverCount > 0)
+        if (inInside)
             ChangeState(CursorState.Hover);
         else
             ChangeState(CursorState.Default);
-
-        hoverCount = Mathf.Clamp(hoverCount, 0, 1);
+        //hoverCount = 0;
     }
 
     private void ChangeState(CursorState newState)
@@ -147,7 +155,7 @@ public class CursorManager : MonoBehaviour
     }
     public void ForceDefault()
     {
-        hoverCount = 0;
+        
         ChangeState(CursorState.Default);
     }
     Coroutine PCcursorCoroutine;

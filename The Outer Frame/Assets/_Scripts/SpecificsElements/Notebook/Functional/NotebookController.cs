@@ -89,7 +89,7 @@ public class NotebookController : MonoBehaviour
         float specialHeight = 0;
         if (WordSpots[auxIndex].GetComponent<CopyWordNotebookProperties>()) specialHeight = WordSpots[auxIndex].GetComponent<CopyWordNotebookProperties>().height;
         GameObject wordaux = pages[actualEmpyPage].InstanciateWord();
-        wordaux.GetComponent<NotebookWordInstance>().GetButton().onClick.AddListener(ClearUnderLine);
+        wordaux.GetComponent<NotebookWordInstance>().GetButton().GetComponent<OnClickDownEvent>().onPointerDown.AddListener(ClearUnderLine);
 
         wordaux.GetComponent<NotebookWordInstance>().Initialization(LastWordAdded,actualEmpyPage, notebookPassPages, PassPageTime, actualView, isStarting, ProccessManager, specialHeight,TimeLeftToEndPassingPage);
         WordsInstances.Add(wordaux);

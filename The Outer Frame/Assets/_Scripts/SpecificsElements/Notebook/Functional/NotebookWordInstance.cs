@@ -43,7 +43,7 @@ public class NotebookWordInstance : MonoBehaviour
         if(_processManager != null) processManager = _processManager;
         wordReference = word;
         text.text = wordReference.GetName();
-        btn.onClick.AddListener(SetSelectedWord);
+        btn.GetComponent<OnClickDownEvent>().onPointerDown.AddListener(SetSelectedWord);
 
 
         actualView = _actualView;
@@ -419,7 +419,7 @@ public class NotebookWordInstance : MonoBehaviour
     {
         if (PendingToAddBoard)
         {
-            btn.onClick.Invoke();
+            btn.GetComponent<OnClickDownEvent>().onPointerDown.Invoke();
             PendingToAddBoard = false;
         }
     }
