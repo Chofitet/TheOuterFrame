@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ActionRowController : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class ActionRowController : MonoBehaviour
     bool once;
     WordData Word;
     bool isPendigToErase;
+    Coroutine EraseAndWriteWord;
 
     public void Initialization(StateEnum _state, bool _isFirstTimeIdeaAdded)
     {
@@ -77,7 +79,7 @@ public class ActionRowController : MonoBehaviour
 
         if (toggle.isOn && once)
         {
-            StartCoroutine(AnimEraseWriting(Wordtext, false, Wordtext, true, Word.GetFormNameVersion()));
+            EraseAndWriteWord = StartCoroutine(AnimEraseWriting(Wordtext, false, Wordtext, true, Word.GetFormNameVersion()));
             
         }
         if(toggle.isOn && !once)
@@ -151,19 +153,27 @@ public class ActionRowController : MonoBehaviour
 
     public StateEnum GetState() { return state; }
 
-    public void ResetRow(bool noPlaySound = false)
+    public void ResetRow(bool noPlaySound = false, bool CancelPending = true)
     {
         toggle.isOn = false;
         once = false;
         if (isSpecialAction) return;
         if (!fade.GetisVisible()) return;
         StartCoroutine(AnimOnlyErase());
+       if(EraseAndWriteWord != null)
+        {
+            StopCoroutine(EraseAndWriteWord);
+            EraseAndWriteWord = null;
+            Wordtext.text = "";
+        }
+
     }
 
     public void ResetActionRow()
     {
         toggle.isOn = false;
         StartCoroutine(AnimOnlyErase());
+       
     }
 
     void Erasefinished()
@@ -215,7 +225,7 @@ public class ActionRowController : MonoBehaviour
         effect.StartEffect(isTransparent1);
         OnWrittingFormSound?.Invoke(this, null);
         yield return new WaitForSeconds(0.2f);
-        if (!Word) yield return 0;
+        if (!Word) yield break;
         if (Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation())
         {
             AnimAclarationText(Word.GetWordFirstLocationAppear());
@@ -233,7 +243,7 @@ public class ActionRowController : MonoBehaviour
         fade.OnComplete += Erasefinished;
         if (Word)
         {
-            if (Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation())
+            if (Word.GetWordFirstLocationAppear() != string.Empty && state.GetNeedWordLocation() && !WordPendingToReplaceErased)
             {
                 yield return new WaitForSeconds(0.2f);
                 fadeAclaration.OnEraseProgress += eraseParticlesAclatarion;
@@ -247,6 +257,7 @@ public class ActionRowController : MonoBehaviour
         if(WordPendingToReplaceErased)
         {
             yield return new WaitForSeconds(0.4f);
+            if (!WordPendingToReplaceErased) yield break;
             toggle.isOn = true;
             OnSelectWordInNotebook(null, WordPendingToReplaceErased);
             OnForceSelectedWordInActionRows?.Invoke(this, WordPendingToReplaceErased);

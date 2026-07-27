@@ -202,6 +202,7 @@ public class ViewManager : MonoBehaviour
             isTransitioning = false;
         }
     }
+
     public void UpdateViewState(Component sender, object _view)
     {
         //if (delayingView) return;
@@ -424,6 +425,7 @@ public class ViewManager : MonoBehaviour
     {
         IsStuckInView = false;
         currentDelay = delayBetweenViews;
+        nextViewRequest = null;
     }
 
     IEnumerator DelayForTimeChange(Action callback)
