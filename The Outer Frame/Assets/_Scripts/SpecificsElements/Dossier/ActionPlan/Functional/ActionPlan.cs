@@ -67,12 +67,10 @@ public class ActionPlan : MonoBehaviour
 
     void OnButtonRowPress(ActionRowController script)
     {
-
         if (!isOneToggleSelected)
         {
             script.OnButtonClick(true);
         }
-
         isOneToggleSelected = true;
         bool exit = false;
         foreach (ActionRowController actions in Actions)
@@ -128,9 +126,16 @@ public class ActionPlan : MonoBehaviour
 
     public void SelectedWord(Component sender, object obj)
     {
-        EnableDisableAllBtns(true);
+        if(!isPendingToErase) EnableDisableAllBtns(true);
+        else
+        {
+            Invoke("enableButtons", 0.6f);
+            isOneToggleSelected = true;
+        }
 
         if (!isInDossier) return;
+
+        isPendingToErase = false;
 
         if (state)
         {
@@ -153,6 +158,7 @@ public class ActionPlan : MonoBehaviour
         }
 
         OnWriteShakeDossier?.Invoke(this, 0.5f);
+
     }
 
 
@@ -325,10 +331,11 @@ public class ActionPlan : MonoBehaviour
     {
         foreach (ActionRowController actions in Actions)
         {
+            Debug.Log("EnableButtons");
             actions.GetButton().enabled = x;
         }
     }
-
+    bool isPendingToErase;
     public void OnEraseInactiveOrReplacedWords(Component sender, object obj)
     {
         if(obj == null)
@@ -339,18 +346,27 @@ public class ActionPlan : MonoBehaviour
 
         WordData toEraseWord = (WordData)obj;
 
-        if(toEraseWord == word) isOneToggleSelected = false;
+        if (toEraseWord == word)
+        {
+            isPendingToErase = true;
+            isOneToggleSelected = false;
+        }
 
     }
 
     public void ForceChangeWordSelect(Component sender, object obj)
     {
+        Invoke("enableButtons", 0.1f);
         if (obj == null) return;
         word = (WordData) obj;
         shakeBtn.SetActive(false);
         ApproveBtn.enabled = true;
     }
 
+    void enableButtons()
+    {
+        EnableDisableAllBtns(true);
+    }
 }
 
 public class DataFromActionPlan
