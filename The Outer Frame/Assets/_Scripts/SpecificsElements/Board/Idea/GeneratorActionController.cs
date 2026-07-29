@@ -325,12 +325,9 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     Coroutine DisableButtonCoroutine;
     IEnumerator DisableButton(bool endValue)
     {
-        GetComponent<BoxCollider>().enabled =false; 
         BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(false);
         yield return new WaitForSeconds(0.4f);
         BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(endValue);
-        GetComponent<BoxCollider>().enabled = true;
-
     }
 
 
