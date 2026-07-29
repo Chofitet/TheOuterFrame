@@ -28,9 +28,8 @@ public class MoveBoardElementsToPos : MonoBehaviour
     private void Start()
     {
         UpdateFinalPositionRotation(null, null);
-        conditions = GetComponent<IPlacedOnBoard>();
 
-        
+        conditions = GetComponent<IPlacedOnBoard>();
 
         if (conditions == null)
         {
@@ -52,6 +51,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
     public void UpdateFinalPositionRotation(Component sender, object obj)
     {
+        Debug.Log("epalee");
         if(Content != null)
         {
             // Buscar TODOS los hijos, incluso los inactivos
@@ -153,8 +153,10 @@ public class MoveBoardElementsToPos : MonoBehaviour
         transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad).OnComplete(() => {
             isPlacedFinish = true;
             OnUpdatingBoardPlacedFinish?.Invoke(this, null);
-            });
-        transform.DORotate(FinalRotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc);
+                  transform.position = FinalPosition;
+
+              });
+        transform.DORotate(FinalRotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc).OnComplete(() => transform.rotation = FinalRotation);
         OnPlaceInBoardSound?.Invoke(this, null);
          
     }

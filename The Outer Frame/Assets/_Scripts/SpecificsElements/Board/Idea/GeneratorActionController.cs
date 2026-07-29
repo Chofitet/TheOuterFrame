@@ -75,6 +75,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
         if (ActionIsDoing) return;
 
+        StartCoroutine(RefreshCollider());
+
         BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
         IdeaButtom = BtnGeneratorIdeaPrefab.gameObject;
     }
@@ -87,10 +89,16 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (InactiveConditionals.Count == 0) return false;
         if (!CheckForConditionals(InactiveConditionals)) return false;
 
-        //GetComponent<BoxCollider>().enabled = false;
         return true;
     }
 
+    IEnumerator RefreshCollider()
+    {
+        yield return new WaitForSeconds(0.35f);
+        GetComponent<BoxCollider>().enabled = false;
+        yield return new WaitForSeconds(0.05f);
+        GetComponent<BoxCollider>().enabled = true;
+    }
 
     void CheckIfDone()
     {
@@ -304,13 +312,27 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
        if (actualView == ViewStates.BoardView)
         {
-            BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(false);
+            if(DisableButtonCoroutine != null) StopCoroutine(DisableButtonCoroutine);
+            DisableButtonCoroutine = StartCoroutine(DisableButton(false));
         }
        else if(actualView == ViewStates.OnTakeSomeInBoard)
         {
-            BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(true);
+            if (DisableButtonCoroutine != null) StopCoroutine(DisableButtonCoroutine);
+            DisableButtonCoroutine = StartCoroutine(DisableButton(true));
         }
     }
+
+    Coroutine DisableButtonCoroutine;
+    IEnumerator DisableButton(bool endValue)
+    {
+        GetComponent<BoxCollider>().enabled =false; 
+        BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(false);
+        yield return new WaitForSeconds(0.4f);
+        BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(endValue);
+        GetComponent<BoxCollider>().enabled = true;
+
+    }
+
 
     public WordData GetWordData()
     {
