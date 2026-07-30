@@ -41,11 +41,13 @@ public class BoardManager : MonoBehaviour
 
         CheckIdeaConditionals();
 
+
+
         if (view == ViewStates.BoardView)
         {
             IsInView = true;
             if (updateCorrutine != null) StopCoroutine(updateCorrutine);
-            updateCorrutine = StartCoroutine(UpdateCycle(0.5f));
+            updateCorrutine = StartCoroutine(UpdateCycle(0.5f, false));
             OnRefreshInfoInBoard?.Invoke(this, null);
             
         }
@@ -59,7 +61,7 @@ public class BoardManager : MonoBehaviour
         OnAutoUpdatePreviusPhoto?.Invoke(null, StartPos.position);
         //Invoke("Conections", 0.6f);
         if(updateCorrutine != null) StopCoroutine(updateCorrutine);
-        updateCorrutine = StartCoroutine(UpdateCycle(0));
+        updateCorrutine = StartCoroutine(UpdateCycle(0, true));
         WordsCounts += 1;
         if (WordsCounts == 4 && isInTutorial) OnPlaced4WordsInBoard?.Invoke(this, null);
     }
@@ -122,42 +124,64 @@ public class BoardManager : MonoBehaviour
         OnEnableInput?.Invoke(this, null);
     }
 
-    IEnumerator UpdateCycle(float waitTime)
+    IEnumerator UpdateCycle(float waitTime, bool DisableInBeginning)
     {
         int cycles = 0;
 
         
         yield return new WaitForSeconds(waitTime);
-       
+
+        
+
         while (cycles < 3)
         {
-            yield return StartCoroutine(UpdateElements());
+           
+            yield return StartCoroutine(UpdateElements(DisableInBeginning));
             OnRefreshNotebook?.Invoke(this, null);
             cycles++;
         }
 
-        OnEnableInput.Invoke(this, null);
-        
+
+        restarWaitVariables();
+    }
+
+    void restarWaitVariables()
+    {
         WaitPhotoUpdate = 0;
         WaitPosit = 0;
         WaitIdeas = 0;
+        WaitConnections = 0;
     }
 
-    IEnumerator UpdateElements()
+    IEnumerator UpdateElements(bool DisableInBeginning)
     {
         if (!IsInView) yield break;
-        OnDisableInput.Invoke(this, null);
+       
+        if(DisableInBeginning) OnDisableInput.Invoke(this, null);
         OnInactiveIdeas?.Invoke(this, null);
         OnUpdatePhotoUpdate?.Invoke(this, StartPos.position);
+        DisableInput();
         yield return new WaitForSeconds(WaitPhotoUpdate);
         OnUpdatePosits.Invoke(this, StartPos.position);
+        DisableInput();
         yield return new WaitForSeconds(WaitPosit);
         OnUpdateIdeas.Invoke(this, StartPos.position);
+        DisableInput();
         yield return new WaitForSeconds(WaitIdeas);
         //OnTakeOutInfoInBoard?.Invoke(this, TakeOutPos);
         yield return new WaitForSeconds(WaitConnections);
         OnUpdateConnections.Invoke(this, null);
+        OnEnableInput.Invoke(this, null);
 
+    }
+    void DisableInput()
+    {
+      
+        float TimeToWait = WaitPhotoUpdate + WaitPosit + WaitIdeas + WaitConnections;
+        if (TimeToWait == 0) return;
+        
+        Debug.Log("disable Input");
+        OnDisableInput.Invoke(this, null);
     }
 
     float WaitPhotoUpdate = 0f;
@@ -168,7 +192,6 @@ public class BoardManager : MonoBehaviour
     public void ActualTypeOfElementMoving(Component sender, object obj)
     {
         BoardType typeOf = (BoardType) obj;
-
         WaitPhotoUpdate = 0;
         WaitPosit = 0;
         WaitIdeas = 0;
@@ -176,20 +199,26 @@ public class BoardManager : MonoBehaviour
 
         if (typeOf == BoardType.photoUpdate)
         {
+            
             WaitPhotoUpdate = 0.3f;
         }
         else if(typeOf == BoardType.posit)
         {
+            
             WaitPosit = 0.3f;
         }
-        else if(typeOf == BoardType.posit)
+        else if(typeOf == BoardType.Idea)
         {
+            
             WaitIdeas = 0.3f;
         }
         else if(typeOf == BoardType.connection)
         {
+            
             WaitConnections = 0.3f;
         }
+
+       
     }
 
     public void MadeConnections(Component sender, object obj)
