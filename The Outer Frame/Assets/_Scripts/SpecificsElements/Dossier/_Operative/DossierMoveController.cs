@@ -24,6 +24,8 @@ public class DossierMoveController : MonoBehaviour
     [SerializeField] GameEvent OnBackPositToBoardPos;
     [SerializeField] Transform cameraPivot;
     [SerializeField] Transform InitCameraPivot;
+
+    [SerializeField] List<GameObject> PartsToHideOnAPPlasing;
     Transform InitShowInPalcePos;
     Transform FinalShowInPlacePos;
     Animator DossierAnim;
@@ -274,16 +276,36 @@ public class DossierMoveController : MonoBehaviour
         DossierAnim.SetTrigger("instantBriefing");
         OnBriefingDossier?.Invoke(this, null);
         isAddingIdea = false;
-
+       
         //Append(transform.DOMove(TakenPosition.position, 0.8f).SetEase(Ease.OutSine))
 
         AddAPpileSequence
-            .AppendInterval(0.8f)
+            .AppendInterval(0.1f)
+            .AppendCallback(() =>
+            {
+                HideOnAPPlasing(true);
+            })
+            .AppendInterval(0.7f)
             .OnComplete(() =>
             {
+               
                 DossierAnim.ResetTrigger("toBA");
                 OnActionPlanDossier?.Invoke(this, null);
             });
+    }
+
+    public void OnHideOnAPPlasing(Component sender, object obj)
+    {
+        HideOnAPPlasing(false);
+    }
+
+    void HideOnAPPlasing(bool x)
+    {
+        foreach (GameObject GO in PartsToHideOnAPPlasing)
+        {
+            if (GO.GetComponent<SkinnedMeshRenderer>()) GO.GetComponent<SkinnedMeshRenderer>().enabled = x;
+            else GO.SetActive(x);
+        }
     }
 
     public void SetisAddingIdea(Component sender, object obj)
