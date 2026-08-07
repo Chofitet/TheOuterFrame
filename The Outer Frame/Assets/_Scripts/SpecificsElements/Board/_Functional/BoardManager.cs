@@ -23,6 +23,12 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] GameEvent OnConnectStringByClicking;
 
+    [Header("WaitTimes")]
+    [SerializeField] float waitPhotoUpdate = 0f;
+    [SerializeField] float waitPosit = 0f;
+    [SerializeField] float waitIdeas = 0f;
+    [SerializeField] float waitConnections = 0f;
+
     [Header("CallsToUpdate")]
     [SerializeField] GameEvent OnInactiveIdeas;
     [SerializeField] GameEvent OnUpdatePhotoUpdate;
@@ -40,8 +46,6 @@ public class BoardManager : MonoBehaviour
         ViewStates view = (ViewStates)obj;
 
         CheckIdeaConditionals();
-
-
 
         if (view == ViewStates.BoardView)
         {
@@ -61,6 +65,7 @@ public class BoardManager : MonoBehaviour
         OnAutoUpdatePreviusPhoto?.Invoke(null, StartPos.position);
         //Invoke("Conections", 0.6f);
         if(updateCorrutine != null) StopCoroutine(updateCorrutine);
+        WaitPhotoUpdate = waitPhotoUpdate;
         updateCorrutine = StartCoroutine(UpdateCycle(0, true));
         WordsCounts += 1;
         if (WordsCounts == 4 && isInTutorial) OnPlaced4WordsInBoard?.Invoke(this, null);
@@ -200,22 +205,22 @@ public class BoardManager : MonoBehaviour
         if (typeOf == BoardType.photoUpdate)
         {
             
-            WaitPhotoUpdate = 0.3f;
+            WaitPhotoUpdate = waitPhotoUpdate;
         }
         else if(typeOf == BoardType.posit)
         {
             
-            WaitPosit = 0.3f;
+            WaitPosit = waitPosit;
         }
         else if(typeOf == BoardType.Idea)
         {
             
-            WaitIdeas = 0.3f;
+            WaitIdeas = waitIdeas;
         }
         else if(typeOf == BoardType.connection)
         {
             
-            WaitConnections = 0.3f;
+            WaitConnections = waitConnections;
         }
 
        
