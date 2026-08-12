@@ -64,7 +64,8 @@ public class BoardManager : MonoBehaviour
         OnBoardPlacedPhotos?.Invoke(null, StartPos.position);
         OnAutoUpdatePreviusPhoto?.Invoke(null, StartPos.position);
         //Invoke("Conections", 0.6f);
-        if(updateCorrutine != null) StopCoroutine(updateCorrutine);
+        if (updateCorrutine != null) StopCoroutine(updateCorrutine);
+        if (UpdateElementCoroutine != null) StopCoroutine(UpdateElementCoroutine);
         WaitPhotoUpdate = waitPhotoUpdate;
         updateCorrutine = StartCoroutine(UpdateCycle(0, true));
         WordsCounts += 1;
@@ -129,6 +130,7 @@ public class BoardManager : MonoBehaviour
         OnEnableInput?.Invoke(this, null);
     }
 
+    Coroutine UpdateElementCoroutine;
     IEnumerator UpdateCycle(float waitTime, bool DisableInBeginning)
     {
         int cycles = 0;
@@ -141,11 +143,10 @@ public class BoardManager : MonoBehaviour
         while (cycles < 3)
         {
            
-            yield return StartCoroutine(UpdateElements(DisableInBeginning));
+            yield return UpdateElementCoroutine = StartCoroutine(UpdateElements(DisableInBeginning));
             OnRefreshNotebook?.Invoke(this, null);
             cycles++;
         }
-
 
         restarWaitVariables();
     }
@@ -185,7 +186,6 @@ public class BoardManager : MonoBehaviour
         float TimeToWait = WaitPhotoUpdate + WaitPosit + WaitIdeas + WaitConnections;
         if (TimeToWait == 0) return;
         
-        Debug.Log("disable Input");
         OnDisableInput.Invoke(this, null);
     }
 

@@ -193,6 +193,7 @@ public class PhoneRowNotebookController : MonoBehaviour
 
     IEnumerator EraseAnim(TMP_Text textFild)
     {
+        isInWritingFade = true;
         processManager.RegisterProcess();
         OnWritingShakeNotebook?.Invoke(this, 0.5f);
         txtName.text = lastText;
@@ -202,6 +203,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         erase.StartEffect(false);
 
         yield return new WaitForSeconds(0.5f);
+        isInWritingFade = false;
         processManager.UnregisterProcess();
     }
 
@@ -334,6 +336,7 @@ public class PhoneRowNotebookController : MonoBehaviour
     {
         if (!clearDirectly) if (WordSelectedInNotebook.Notebook.GetSelectedWord() == wordNum) return;
         NumBtn.enabled = true;
+        if (isInWritingFade) return;
         Num.text = wordNum.GetName();
     }
 
