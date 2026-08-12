@@ -36,6 +36,7 @@ public class NotebookWordInstance : MonoBehaviour
     int pageNum;
     int actualPage;
     bool isInSecondColumn;
+    bool isInWritingFade;
     NotebookPassPages notebookPasspage;
     
     public void Initialization(WordData word, int _pageNum, NotebookPassPages _notebookPasspage,float _PassPageTime, ViewStates _actualView, bool noAnim = false, NotebookProcessManager _processManager = null, float height = 0, float extraTimeWhilePassingPage = 0)
@@ -113,7 +114,7 @@ public class NotebookWordInstance : MonoBehaviour
         processManager.RegisterProcess();
         fade.OnComplete += OnWritingFinished;
         fade.SetBlank(0);
-
+        isInWritingFade = true;
 
         /*if (extraTimeWhilePassingPage != 0) extraTimeWhilePassingPage = extraTimeWhilePassingPage + 0.5f;
         yield return new WaitForSeconds(extraTimeWhilePassingPage);*/
@@ -137,6 +138,7 @@ public class NotebookWordInstance : MonoBehaviour
         fade.OnComplete -= OnWritingFinished;
         OnWritingWordFinished?.Invoke(this, wordReference);
         processManager.UnregisterProcess();
+        isInWritingFade = false;
     }
 
     public void EraseAnim()
@@ -289,6 +291,7 @@ public class NotebookWordInstance : MonoBehaviour
         if (isActiveInBoard) return;
         if (isinactive) return;
         if (actualView != ViewStates.OnTakeSomeInBoard && actualView != ViewStates.BoardView) if (!wordReference.GetInactiveStateSeen()) btn.enabled = true;
+        if (isInWritingFade) return;
         text.text = wordReference.GetName();
         
     }

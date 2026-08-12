@@ -27,6 +27,7 @@ public class PhoneRowNotebookController : MonoBehaviour
     [SerializeField] GameEvent OnElementBtn;
     NumberStates ActualState;
     NotebookPhonesController phonesController;
+    bool isInWritingFade;
 
     public void Initialization(WordData _word,NotebookPhonesController _phonesController, NotebookProcessManager _processManager = null)
     {
@@ -92,6 +93,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         //remplazar los ??? por la palabra
         phonesController.AddAction(EraseAnim(txtName));
         phonesController.AddAction(WritingAnim(txtName, word.GetName()));
+        
         SetNumState(NumberStates.FoundWithWord);
 
     }
@@ -117,8 +119,7 @@ public class PhoneRowNotebookController : MonoBehaviour
 
     public void ClearUnderline()
     {
-
-        if(ActualState == NumberStates.FoundWithWord)
+        if (ActualState == NumberStates.FoundWithWord)
         {
             ClearWordUnderline(true);
         }
@@ -178,6 +179,7 @@ public class PhoneRowNotebookController : MonoBehaviour
    
     IEnumerator WritingAnim(TMP_Text textFild, string text)
     {
+        isInWritingFade = true;
         processManager.RegisterProcess();
         OnWritingShakeNotebook?.Invoke(this, 0.3f);
         OnWritingNotebookSound?.Invoke(this, null);
@@ -250,6 +252,8 @@ public class PhoneRowNotebookController : MonoBehaviour
             ApplyMaterial("Board");
             WordBtn.enabled = true;
         }
+
+        isInWritingFade = false;
     }
 
     public void ReplaceWordInstantly(WordData _word)
@@ -323,6 +327,7 @@ public class PhoneRowNotebookController : MonoBehaviour
         if (isActiveInBoard) return;
         if (isinactive) return;
         WordBtn.enabled = true;
+        if(isInWritingFade) return; 
         txtName.text = word.GetName();
     }
     public void ClearNumdUnderline( bool clearDirectly = false)
