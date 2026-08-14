@@ -31,17 +31,6 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
         conditions = GetComponent<IPlacedOnBoard>();
 
-        if (conditions == null)
-        {
-            Debug.Log(transform.parent.parent.parent.gameObject.name);
-        }
-
-        if(name == "QuiteClean")
-        {
-            Debug.Log(transform.parent.parent.parent.gameObject.name);
-
-        }
-        
         if (!conditions.ActiveInBegining())
         {
             Invoke("sarasa", 0.1f);
@@ -89,10 +78,6 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
     public void MoveToPlacedPos(Component sender, object obj)
     {
-        if(name == "BoardIdeaKickCargo")
-        {
-            Debug.Log("moving kick cargo idea");
-        }
 
         if (isOutOfBoard) return;
         if (conditions == null)

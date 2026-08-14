@@ -70,8 +70,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     {
         if (!CheckForConditionals(Conditionals)) return;
 
-       if(!istaken) GetComponent<BoxCollider>().enabled = true;
-
+        if(!istaken) GetComponent<BoxCollider>().enabled = true;
 
         if (ActionIsDoing) return;
 
