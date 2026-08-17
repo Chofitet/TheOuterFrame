@@ -118,11 +118,12 @@ public class BoardTutorialPosit : MonoBehaviour
         thereIsAnIdeaPendingToPut = true;
         Debug.Log("At least one idea is pendig to show");
     }
-
+    bool isTaken;
     public void MoveToTakedPosition(Component sender, object obj)
     {
         if(LastView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
         movePosit(NextToNotebookPos);
+        isTaken = true;
     }
 
     public void BackToBoardPosition(Component sender, object obj)
@@ -133,6 +134,7 @@ public class BoardTutorialPosit : MonoBehaviour
         if (toMove == null) toMove = GeneralViewPos;
 
         movePosit(toMove);
+        isTaken = false;
     }
 
     void movePosit(Transform MoveTo)
@@ -158,7 +160,7 @@ public class BoardTutorialPosit : MonoBehaviour
 
         wordWasPlacedOnBoard = true;
 
-        if (LastView != ViewStates.OnTakeSomeInBoard) MoveOutView(OutOfViewfromBoard);
+        if (!isTaken) MoveOutView(OutOfViewfromBoard);
         else MoveOutView(OutOfView);
     }
 
