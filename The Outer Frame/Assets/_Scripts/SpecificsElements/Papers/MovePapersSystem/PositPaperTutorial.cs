@@ -10,6 +10,11 @@ public class PositPaperTutorial : MonoBehaviour
     [SerializeField] float TakeSpeed;
     [SerializeField] AnimationCurve _animationCurve;
     [SerializeField] GameEvent OnPositTake;
+    [SerializeField] bool SendSelfThroughOnPositTake = true;
+    [SerializeField] GameEvent OnButtonElement;
+    [SerializeField] ViewStates ViewToChange;
+    [SerializeField] bool takeShorterWay = true;
+    
     Sequence MoveSequence;
     private bool pendingLeave;
     private BoxCollider _collider;
@@ -35,6 +40,9 @@ public class PositPaperTutorial : MonoBehaviour
         MoveSequence = DOTween.Sequence();
         pendingLeave = false;
 
+        OnButtonElement?.Invoke(this, ViewToChange);
+        
+
         // Calcular los ángulos de destino más cercanos (evita giros largos)
         float targetX = startRot.x + Mathf.DeltaAngle(startRot.x, targetRot.x);
         float targetY = startRot.y + Mathf.DeltaAngle(startRot.y, targetRot.y);
@@ -44,7 +52,8 @@ public class PositPaperTutorial : MonoBehaviour
         float curY = startRot.y;
         float curZ = startRot.z;
 
-        OnPositTake?.Invoke(this,gameObject);
+        if(SendSelfThroughOnPositTake) OnPositTake?.Invoke(this,gameObject);
+        else OnPositTake?.Invoke(this, null);
 
         void ApplyEuler() => transform.localEulerAngles = new Vector3(curX, curY, curZ);
 
@@ -53,12 +62,19 @@ public class PositPaperTutorial : MonoBehaviour
             .Join(transform.DOMoveY(TakePosition.position.y, TakeSpeed).SetEase(_animationCurve))
             .Join(transform.DOMoveZ(TakePosition.position.z, TakeSpeed));
 
-        MoveSequence.Join(DOTween.To(() => curX, x => { curX = x; ApplyEuler(); }, targetX, TakeSpeed)
+        if (takeShorterWay)
+        {
+            MoveSequence.Join(DOTween.To(() => curX, x => { curX = x; ApplyEuler(); }, targetX, TakeSpeed)
             .SetEase(Ease.OutSine));
-        MoveSequence.Join(DOTween.To(() => curY, y => { curY = y; ApplyEuler(); }, targetY, TakeSpeed)
-            .SetEase(Ease.InQuad));
-        MoveSequence.Join(DOTween.To(() => curZ, z => { curZ = z; ApplyEuler(); }, targetZ, TakeSpeed)
-            .SetEase(Ease.InQuad));
+            MoveSequence.Join(DOTween.To(() => curY, y => { curY = y; ApplyEuler(); }, targetY, TakeSpeed)
+                .SetEase(Ease.InQuad));
+            MoveSequence.Join(DOTween.To(() => curZ, z => { curZ = z; ApplyEuler(); }, targetZ, TakeSpeed)
+                .SetEase(Ease.InQuad));
+        }
+        else
+        {
+            MoveSequence.Join(transform.DORotate(TakePosition.rotation.eulerAngles, TakeSpeed));
+        }
 
         MoveSequence.OnComplete(() =>
         {

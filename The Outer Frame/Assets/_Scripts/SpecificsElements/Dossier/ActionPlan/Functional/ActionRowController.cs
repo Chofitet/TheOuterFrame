@@ -34,6 +34,7 @@ public class ActionRowController : MonoBehaviour
     bool isPendigToErase;
     Coroutine EraseAndWriteWordCoroutine;
     Coroutine WriteWordCoroutine;
+    [SerializeField] float waitToCheckActionIdea = 1.2f;
 
     public void Initialization(StateEnum _state, bool _isFirstTimeIdeaAdded)
     {
@@ -50,7 +51,8 @@ public class ActionRowController : MonoBehaviour
             isSpecialAction = true;
             DotsLine.SetActive(false);
             ActionText.font = writingFont;
-            Invoke("ClickButton", 2f);
+            Invoke("ClickButton", waitToCheckActionIdea);
+            isInView = true;
             fade = fadeAction;
             toggleImage.sprite = handmadeToggle;
             if (!_isFirstTimeIdeaAdded) return;

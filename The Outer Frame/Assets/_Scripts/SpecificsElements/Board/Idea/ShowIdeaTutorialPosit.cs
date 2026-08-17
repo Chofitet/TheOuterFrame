@@ -23,13 +23,13 @@ public class ShowIdeaTutorialPosit : MonoBehaviour
     bool pendingToShowPosit;
     public void TryShowPosit(Component sender, object obj)
     {
-
         showPosit(timeToAppear);
     }
 
 
     void showPosit(float AwaitTime)
     {
+        if (!isActive) return;
         if (PositShowed) return;
         if (DisableShowingPosit) return;
         if (showPositSequence != null && showPositSequence.IsActive()) showPositSequence.Kill();
@@ -55,6 +55,7 @@ public class ShowIdeaTutorialPosit : MonoBehaviour
 
     public void StopShowPosit(Component sender, object obj)
     {
+        isActive = true;
         ViewStates ActualView = (ViewStates)obj;
         if (ActualView == ViewStates.OnTakeSomeInBoard) inOnTakeSomeInBoarView = true;
         else inOnTakeSomeInBoarView = false;
@@ -120,4 +121,9 @@ public class ShowIdeaTutorialPosit : MonoBehaviour
         DisableShowingPosit = true;
     }
 
+    bool isActive = true;
+    public void DisablePosit(Component sender, object obj)
+    {
+        isActive = false;
+    }
 }
