@@ -29,7 +29,10 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnRefreshPinchofonoScreen;
     [SerializeField] GameObject EnterFullNumberFirst;
     [SerializeField] GameObject[] Screens;
-    
+    [SerializeField] List<TMP_Text> RECWord;
+    [SerializeField] List<TMP_Text> PrintWords;
+    [SerializeField] List<TMP_Text> CancelWords;
+
     int lastScreenNum = 0;
     WordData ActualWord;
     bool IsInView;
@@ -124,6 +127,7 @@ public class PinchofonoController : MonoBehaviour
             yield return new WaitForSeconds(0.15f);
         }
 
+        BlinkWords(ref RECGlowWordSequence, RECWord);
         currentState = PhoneState.waitingRec;
         txtPressRECtoStart.text = "PRESS REC TO START WIRETAPPING";
     }
@@ -136,9 +140,15 @@ public class PinchofonoController : MonoBehaviour
         if (messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
         if (refreshScreenCoroutine != null) StopCoroutine(refreshScreenCoroutine);
 
-        if (currentState == PhoneState.waitingNumber) ShowPanel(3, "TO START WIRETAPPING \n ENTER A VALID PHONE NUMBER");
+
+        if (currentState == PhoneState.waitingNumber)
+        {
+            PushGlow(RECGlowWordSequence, RECWord);
+            ShowPanel(3, "TO START WIRETAPPING \n ENTER A VALID PHONE NUMBER");
+        }
         else if (currentState == PhoneState.dialingNumber)
         {
+            PushGlow(RECGlowWordSequence, RECWord);
             StartCoroutine(ShowEnterFullNumberFirst());
         }
         else if (currentState == PhoneState.waitingRec)
@@ -148,7 +158,7 @@ public class PinchofonoController : MonoBehaviour
             OnClosePhonePadSound?.Invoke(this, null);
             SetIsRecordingTrue();
             StopCoroutine(AnimPadDial(""));
-
+            TurnGlow(ref RECGlowWordSequence, RECWord);
             ChangePhoneState(null, PhoneState.recording);
         }
     }
@@ -175,13 +185,27 @@ public class PinchofonoController : MonoBehaviour
         if (messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
         if (refreshScreenCoroutine != null) StopCoroutine(refreshScreenCoroutine);
 
-        if (currentState == PhoneState.waitingNumber) ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
+
+        if (currentState == PhoneState.waitingNumber)
+        {
+            PushGlow(PrintGlowWordSequence, PrintWords);
+            ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
+        }
         else if (currentState == PhoneState.dialingNumber)
         {
+            PushGlow(PrintGlowWordSequence, PrintWords);
             StartCoroutine(ShowEnterFullNumberFirst());
         }
-        else if (currentState == PhoneState.waitingRec) ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
-        else if (currentState == PhoneState.recording) ShowPanel(3, "NOT YET, \n WIRETAPPING IN PROGRESS");
+        else if (currentState == PhoneState.waitingRec)
+        {
+            PushGlow(PrintGlowWordSequence, PrintWords);
+            ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
+        }
+        else if (currentState == PhoneState.recording)
+        {
+            PushGlow(PrintGlowWordSequence, PrintWords);
+            ShowPanel(3, "NOT YET, \n WIRETAPPING IN PROGRESS");
+        }
         else if (currentState == PhoneState.waitingPrinting)
         {
             if (transcriptionInQueue)
@@ -190,6 +214,7 @@ public class PinchofonoController : MonoBehaviour
                 return;
             }
 
+            TurnOffGlow(ref PrintGlowWordSequence, PrintWords);
             ShowPanel(0);
             OnPrintCall?.Invoke(this, null);
             CallToPrint = null;
@@ -209,6 +234,8 @@ public class PinchofonoController : MonoBehaviour
 
         SetIsRecordingFalse();
 
+        TurnOffGlow(ref RECGlowWordSequence, RECWord);
+        BlinkWords(ref PrintGlowWordSequence, PrintWords);
 
         if (CallToPrint != null)
         {
@@ -236,6 +263,7 @@ public class PinchofonoController : MonoBehaviour
     #region AbortLogic
     public void AbortBTNPressed(Component sender, object obj)
     {
+        PushGlow(CancelGlowWordSequence, CancelWords);
         canvas.enabled = true;
         anim.SetTrigger("abortPush");
         if (messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
@@ -255,6 +283,7 @@ public class PinchofonoController : MonoBehaviour
     public void ConfirmAbort()
     {
         ResetAll(null, null);
+        TurnOffGlow(ref RECGlowWordSequence, RECWord);
         OnAbortCallRecording?.Invoke(this, null);
         OnOpenPhonePadSound?.Invoke(this, null);
     }
@@ -313,6 +342,66 @@ public class PinchofonoController : MonoBehaviour
 
     #endregion
 
+    #region GlowWords
+
+    Sequence RECGlowWordSequence;
+    Sequence PrintGlowWordSequence;
+    Sequence CancelGlowWordSequence;
+ 
+    void BlinkWords(ref Sequence sequence, List<TMP_Text> list)
+    {
+        sequence?.Kill();
+
+        sequence = DOTween.Sequence();
+
+        foreach (TMP_Text text in list)
+        {
+            text.alpha = 0;
+
+            sequence.Join(
+                text.DOFade(1, 0.8f)
+                    .SetLoops(-1, LoopType.Yoyo)
+            );
+        }
+    }
+
+    void TurnGlow(ref Sequence sequence, List<TMP_Text> list)
+    {
+        sequence?.Kill();
+
+        sequence = DOTween.Sequence();
+
+        foreach (TMP_Text text in list)
+        {
+            sequence.Append(text.DOFade(1, 0.2f));
+        }
+    }
+
+    void TurnOffGlow(ref Sequence sequence, List<TMP_Text> list)
+    {
+        sequence?.Kill();
+
+        foreach (TMP_Text text in list)
+        {
+            text.DOFade(0, 0.2f);
+        }
+    }
+
+    void PushGlow(Sequence sequence, List<TMP_Text> list)
+    {
+        sequence?.Kill();
+
+        foreach (TMP_Text text in list)
+        {
+            text.alpha = 0;
+
+            sequence.Join(text.DOFade(1, 0.25f));
+            sequence.Join(text.DOFade(0, 0.25f).SetDelay(0.25f));
+        }
+    }
+
+    #endregion
+
 
     //OnViewStateChange
     public void CheckPinchofonoView(Component sender, object obj)
@@ -326,6 +415,7 @@ public class PinchofonoController : MonoBehaviour
             if (Recording_WaitingForPrint) anim.SetTrigger("padClose");
             if (Recording_WaitingForPrint) OnClosePhonePadSound?.Invoke(this, null);
             if (dialingCoroutine != null) StopCoroutine(dialingCoroutine);
+            if (Recording_WaitingForPrint)TurnOffGlow(ref RECGlowWordSequence, RECWord);
         }
 
         IsInView = (view == ViewStates.PinchofonoView) ? true : false;
