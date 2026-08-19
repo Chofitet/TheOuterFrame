@@ -14,7 +14,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] bool isOrderMatters;
     [SerializeField] List<ConditionalClass> InactiveConditionals = new List<ConditionalClass>();
     [SerializeField] bool isAFailedIdea;
-    [HideInInspector][SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
+    [SerializeField] BtnGenerateIdeaController BtnGeneratorIdeaPrefab;
     [SerializeField] GameObject Content;
     [SerializeField] GameEvent OnMoveObjectToPapersPos;
     [SerializeField] GameObject CheckImage;

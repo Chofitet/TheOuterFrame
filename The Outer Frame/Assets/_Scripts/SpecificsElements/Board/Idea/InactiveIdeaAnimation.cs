@@ -30,7 +30,7 @@ public class InactiveIdeaAnimation : MonoBehaviour
         float angle = 0;
         Vector3 pivotDescentrado = PivotPoint.position;
         TakeOffBoardBTN.SetActive(true);
-        TakeIdeaButton.GetComponent<Button>().enabled = false;
+        TakeIdeaButton.gameObject.SetActive(false);
         InactiveAnimSequence.Append(DOTween.To(() => angle, x =>
         {
             float delta = x - angle;
