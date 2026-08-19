@@ -11,6 +11,9 @@ public class LetterboxCamera : MonoBehaviour
     [SerializeField] private int forcedHeight = 1080;
     [SerializeField] private bool forceResolution = false;
 
+    private int lastWidth;
+    private int lastHeight;
+
     void Start()
     {
         SetRatio();
@@ -26,17 +29,15 @@ public class LetterboxCamera : MonoBehaviour
     void SetRatio()
     {
         Camera cam = GetComponent<Camera>();
-        // Aspecto nativo (ejemplo: 16/9)
-        float targetAspect = targetAspectWidth / targetAspectHeight;
-        // Aspecto actual de la pantalla
-        float windowAspect = (float)Screen.width / (float)Screen.height;
 
-        // Calcula el factor de escala
+        float targetAspect = targetAspectWidth / targetAspectHeight;
+        float windowAspect = (float)Screen.width / Screen.height;
+
         float scaleHeight = windowAspect / targetAspect;
 
         if (scaleHeight < 1.0f)
         {
-            // Pantalla más "alta" que 16:9 ? franjas negras arriba/abajo
+            // Barras arriba y abajo
             Rect rect = cam.rect;
 
             rect.width = 1.0f;
@@ -48,15 +49,28 @@ public class LetterboxCamera : MonoBehaviour
         }
         else
         {
-            // Pantalla más "ancha" que 16:9 ? ocupa todo el alto (no habrá barras verticales)
+            // Barras a izquierda y derecha
+            float scaleWidth = 1.0f / scaleHeight;
+
             Rect rect = cam.rect;
 
-            rect.width = 1.0f;
+            rect.width = scaleWidth;
             rect.height = 1.0f;
-            rect.x = 0;
+            rect.x = (1.0f - scaleWidth) / 2.0f;
             rect.y = 0;
 
             cam.rect = rect;
+        }
+    }
+
+    void Update()
+    {
+        if (Screen.width != lastWidth || Screen.height != lastHeight)
+        {
+            lastWidth = Screen.width;
+            lastHeight = Screen.height;
+
+            SetRatio();
         }
     }
 }

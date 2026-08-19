@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class MixerController : MonoBehaviour, IDataPersistence
 {
@@ -14,10 +14,11 @@ public class MixerController : MonoBehaviour, IDataPersistence
     [SerializeField] bool isInverted; // true si el volumen va invertido (por ejemplo, sonido ambiente)
 
     float VolumeValue = 1f;
+    bool isSettingInStart;
 
     private void Start()
     {
-        // Si ya hay texto inicial (por ejemplo "10"), se usa para setear el volumen inicial
+        isSettingInStart = true;
         if (float.TryParse(textFiled.text, out float initialTextValue))
         {
             float initialVolume = Mathf.Clamp(initialTextValue / 10f, 0.001f, 1f);
@@ -47,11 +48,47 @@ public class MixerController : MonoBehaviour, IDataPersistence
         {
             audiomixer.SetFloat(AudioMixerGroup, dB);
         }
+
+        if(slider)
+        {
+            slider.value = VolumeValue;
+            lastSliderValue = VolumeValue;
+        }
+
+        isSettingInStart = false;
+    }
+
+    private float lastSliderValue;
+    [SerializeField] Slider slider;
+    public void VolumeSliderChanger(float sliderValue)
+    {
+        if (isSettingInStart) return;
+        // Snap a divisiones de 0.1
+        float currentValue = Mathf.Round(sliderValue * 10f) / 10f;
+
+        // Cuántos pasos de 0.1 se movió
+        int steps = Mathf.RoundToInt((currentValue - lastSliderValue) * 10f);
+
+        if (steps != 0)
+        {
+            volumenChanger(steps * 0.1f);
+        }
+
+        // Guardamos el nuevo valor
+        lastSliderValue = currentValue;
+
+        // Aplicamos el snap visualmente
+        slider.SetValueWithoutNotify(currentValue);
     }
 
     public void VolumeChanger(Component sender, object obj)
     {
-        VolumeValue += (float)obj;
+        volumenChanger((float)obj);
+    }
+
+    public void volumenChanger(float amount)
+    {
+        VolumeValue += amount;
         VolumeValue = Mathf.Clamp(VolumeValue, 0.001f, 1f);
 
         float finalValue = isInverted ? 1 - VolumeValue : VolumeValue;
@@ -59,7 +96,7 @@ public class MixerController : MonoBehaviour, IDataPersistence
 
         if (dB <= -59f)
         {
-            audiomixer.SetFloat(AudioMixerGroup, -144f); 
+            audiomixer.SetFloat(AudioMixerGroup, -144f);
         }
         else
         {
