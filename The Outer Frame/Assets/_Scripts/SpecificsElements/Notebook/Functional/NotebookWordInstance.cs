@@ -24,6 +24,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] GameEvent OnButtonElement;
     [SerializeField] GameEvent OnInactiveReplaceWord;
     [SerializeField] GameEvent OnRequestChangePage;
+    [SerializeField] GameEvent OnSendReportAutomatly;
 
     NotebookProcessManager processManager;
     WordData wordReference;
@@ -222,9 +223,12 @@ public class NotebookWordInstance : MonoBehaviour
         text.text = wordReference.GetName();
     }
 
-  
+    public void SetIsFinalReport()
+    {
+        isInFinalreport = true;
+    }
 
-    Vector3 CrossOriginalPos;
+        Vector3 CrossOriginalPos;
     public async Task CrossOutWord(bool needPassPage )
     {
         processManager.RegisterProcess();
@@ -259,8 +263,16 @@ public class NotebookWordInstance : MonoBehaviour
     }
 
     bool takeDossierWithWordOnBeginningOnce;
+    bool isInFinalreport;
     public void SetSelectedWord()
     {
+        if(isInFinalreport)
+        {
+            OnSendReportAutomatly?.Invoke(this, null);
+            isInFinalreport = false;
+            return;
+        }
+
        text.text = "<u>" + wordReference.GetName() + "</u>";
         if (actualView == ViewStates.BoardView) text.text = wordReference.GetName();
         WordSelectedInNotebook.Notebook.SetSelectedWord(wordReference);
@@ -417,6 +429,7 @@ public class NotebookWordInstance : MonoBehaviour
         actualView = (ViewStates)obj;
 
     }
+
 
     public void OnBoardUpdate(Component sender,object obj)
     {

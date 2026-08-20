@@ -16,7 +16,10 @@ public class IndividualReportController : MonoBehaviour
     [SerializeField] GameEvent OnReactiveIdeaPosit;
     [SerializeField] GameEvent OnGrabFinalReport;
     [SerializeField] GameEvent OnTakeSecondToLastReport;
+    [SerializeField] GameEvent OnSendReportAutomatly;
     [SerializeField] GameEvent OnActionRejected;
+    [SerializeField] GameEvent OnDisableInput;
+    [SerializeField] GameEvent OnEnableInput;
     public void SetType(bool x, WordData _word ,ReportType _report)
     {
         report = _report;
@@ -33,6 +36,7 @@ public class IndividualReportController : MonoBehaviour
         if (report.GetIsTheLastReport()) return;
         if (report.GetDeleteDBRepoert())
         {
+            OnDisableInput?.Invoke(this, null);
             OnTakeFinalReport?.Invoke(this, null);
         }
 
@@ -58,7 +62,9 @@ public class IndividualReportController : MonoBehaviour
 
     IEnumerator delay()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.5f);
+        OnEnableInput?.Invoke(this, null);
+        yield return new WaitForSeconds(2.5f);
         Destroy(gameObject);
     }
 
@@ -91,6 +97,11 @@ public class IndividualReportController : MonoBehaviour
         {
             OnTakeSecondToLastReport?.Invoke(this, null);
         }
+    }
+
+    public void SendReportAutomatly()
+    {
+        OnSendReportAutomatly?.Invoke(this, null);
     }
 
     public bool GetCompleted() { return isComplete; }

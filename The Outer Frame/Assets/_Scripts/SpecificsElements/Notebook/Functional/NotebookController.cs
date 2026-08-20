@@ -149,6 +149,7 @@ public class NotebookController : MonoBehaviour
             NotebookWordInstance script = w.GetComponent<NotebookWordInstance>();
 
             script.ReplaceWordInstantly(CabinWord);
+            script.SetIsFinalReport();
         }
     }
 
