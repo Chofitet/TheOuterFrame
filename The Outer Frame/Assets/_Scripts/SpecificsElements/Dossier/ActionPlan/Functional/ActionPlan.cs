@@ -36,6 +36,7 @@ public class ActionPlan : MonoBehaviour
     public void Inicialization(List<StateEnum> ActionList, bool _progressorfull, bool _isFirstTimeIdeaAdded, WordData _FinalActionWord, StateEnum _FinalActionState, StateEnum _FinalActionIdea, ScriptableObject _condition, bool _isSecodToLastActionDoit)
     {
         isFirstTimeIdeaAdded = _isFirstTimeIdeaAdded;
+        isSecodToLastActionDoit = _isSecodToLastActionDoit;
         InstantiateActionRows(ActionList);
         ApproveBtn.enabled = false;
         isProgressorFull = _progressorfull;
@@ -43,7 +44,7 @@ public class ActionPlan : MonoBehaviour
         FinalActionWord = _FinalActionWord;
         FinalActionState = _FinalActionState;
         FinalActionIdea = _FinalActionIdea;
-        isSecodToLastActionDoit = _isSecodToLastActionDoit;
+        
         condition = _condition as IConditionable;
     }
 
@@ -53,7 +54,7 @@ public class ActionPlan : MonoBehaviour
         {
             GameObject ActionInstantiate = Instantiate(ActionRowPrefab, ActionsContainer, false);
             ActionRowController script = ActionInstantiate.GetComponent<ActionRowController>();
-            script.Initialization(actions, isFirstTimeIdeaAdded);
+            script.Initialization(actions, isFirstTimeIdeaAdded, isSecodToLastActionDoit);
             script.GetButton().GetComponent<OnClickDownEvent>().onPointerDown.AddListener(() => OnButtonRowPress(script));
             Actions.Add(script);
 

@@ -13,6 +13,13 @@ public class InstanceFindableWordsInTMPText : MonoBehaviour
         FindableWordsManager.FWM.InstanciateFindableWord(textField, FindableBtnType.FindableBTN);
 
     }
+
+    private void OnEnable()
+    {
+        textField = GetComponent<TMP_Text>();
+        FindableWordsManager.FWM.InstanciateFindableWord(textField, FindableBtnType.FindableBTN);
+
+    }
     public void InstanciateWords()
     {
         FindableWordsManager.FWM.InstanciateFindableWord(textField, FindableBtnType.FindableBTN);

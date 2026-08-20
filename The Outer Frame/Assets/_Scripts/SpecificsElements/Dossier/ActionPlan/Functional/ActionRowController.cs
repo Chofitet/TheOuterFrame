@@ -36,7 +36,7 @@ public class ActionRowController : MonoBehaviour
     Coroutine WriteWordCoroutine;
     [SerializeField] float waitToCheckActionIdea = 1.2f;
 
-    public void Initialization(StateEnum _state, bool _isFirstTimeIdeaAdded)
+    public void Initialization(StateEnum _state, bool _isFirstTimeIdeaAdded, bool isFinalAction)
     {
         state = _state;
         ActionText.text = _state.GetInfinitiveVerb();
@@ -51,7 +51,7 @@ public class ActionRowController : MonoBehaviour
             isSpecialAction = true;
             DotsLine.SetActive(false);
             ActionText.font = writingFont;
-            Invoke("ClickButton", waitToCheckActionIdea);
+            if(!isFinalAction) Invoke("ClickButton", waitToCheckActionIdea);
             isInView = true;
             fade = fadeAction;
             toggleImage.sprite = handmadeToggle;

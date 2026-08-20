@@ -59,6 +59,12 @@ public class NotebookPage : MonoBehaviour
         );
     }
 
+    public void RestartPage(Component sender,object obj)
+    {
+        numWords = 0;
+        isFull = false;
+    }
+
 }
 
 

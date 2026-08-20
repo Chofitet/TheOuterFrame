@@ -206,6 +206,8 @@ public class NotebookController : MonoBehaviour
 
         delete(auxList);
         i = 0;
+        actualEmpyPage = 0;
+        actualPage = 0;
     }
 
     void delete(List<GameObject> list)

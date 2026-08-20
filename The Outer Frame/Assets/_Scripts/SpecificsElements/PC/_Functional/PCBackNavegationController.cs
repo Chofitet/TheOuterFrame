@@ -130,4 +130,10 @@ public class PCBackNavegationController : MonoBehaviour
         ButtonsAppear();
     }
 
+    public void DeleteHistory(Component sender,object obj) 
+    {
+        SearchedWordsHistory.Clear();
+        Debug.Log("History clear");
+    }
+
 }

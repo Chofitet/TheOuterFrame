@@ -146,7 +146,11 @@ public class ReportController : MonoBehaviour
         GetComponent<IndividualReportController>().SetType(false, word, report);
 
         if (isNotCompleted) return;
-        if (report.GetDeleteDBRepoert() || report.GetIsTheLastReport()) btnText.transform.parent.gameObject.SetActive(false);
+        if (report.GetDeleteDBRepoert() || report.GetIsTheLastReport())
+        {
+            btnText.transform.parent.gameObject.SetActive(false);
+            if(report.GetIsTheLastReport()) UploadBTN.SetActive(false);
+        }
         Resulttxt.text = report.GetText();
         FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt, FindableBtnType.FindableBTN, report.FindableWords, false, false, true);
         GetComponent<IndividualReportController>().SetType(true, word, report);

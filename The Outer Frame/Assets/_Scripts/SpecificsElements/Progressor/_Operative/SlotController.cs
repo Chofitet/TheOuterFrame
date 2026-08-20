@@ -477,6 +477,15 @@ public class SlotController : MonoBehaviour
         DarkenLedPanelSequence.Append(LedPanel.DOColor(color, 1f).SetEase(Ease.OutCirc));
     }
 
+    public void RecoverAgentAutomatly(Component sender,object obj)
+    {
+        if (isAgentDead || isRecoveryAgent)
+        {
+            isRecoveryAgent = false;
+            DelayRecoveryReset();
+        }
+    }
+
     void DelayRecoveryReset()
     {
         EnableAgent();

@@ -279,4 +279,13 @@ public class TVManager : MonoBehaviour
     {
         TimeManager.OnMinuteChange -= NewsDirector;
     }
+    public void TurnOffTV(Component sender, object obj)
+    {
+        ChangeChannel(null,Channels[1].gameObject);
+    }
+
+    public void TechnicalDifficulties(Component sender, object obj)
+    {
+        ChangeChannel(null, Channels[3].gameObject);
+    }
 }
