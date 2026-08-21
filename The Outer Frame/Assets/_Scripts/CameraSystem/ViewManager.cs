@@ -43,6 +43,7 @@ public class ViewManager : MonoBehaviour
     bool isInPause;
     bool isGameOver;
     bool inOnFinalReport;
+    bool isInPostGlitch;
     bool isInTutorial = false;
     bool delayingView;
     bool IsStuckInView;
@@ -309,7 +310,7 @@ public class ViewManager : MonoBehaviour
                 OnTakeSomeInBoard?.Invoke(this, null);
                 break;
             case ViewStates.GameOverView:
-                if (inOnFinalReport) return;
+                if (isInPostGlitch) return;
                 TimeManager.timeManager.NormalizeTime();
                 OnGameOverView.Invoke(this, "RetryMenu");
                 OnNotebookTake.Invoke(this, false);
@@ -405,6 +406,12 @@ public class ViewManager : MonoBehaviour
     public void OnFinalReportTake(Component sender, object obj)
     {
         inOnFinalReport = true;
+        isInPostGlitch = true;
+    }
+
+    public void OnFinalReportTakeFalse(Component sender, object obj)
+    {
+        inOnFinalReport = false;
     }
 
     IEnumerator DelayBetweenViews()

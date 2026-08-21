@@ -29,4 +29,5 @@ public interface INewType
     void SetWasStreamed();
 
     bool GetWasStreamed();
+
 }

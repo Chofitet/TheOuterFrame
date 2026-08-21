@@ -77,6 +77,16 @@ public class PopUpManager : MonoBehaviour
     {
         popUpInstances.RemoveAll(s => s == null);
     }
+
+    public void DeleteAllPopUps(Component sender, object obj)
+    {
+        foreach(GameObject popUp in popUpInstances)
+        {
+            Destroy(popUp);
+        }
+
+        popUpInstances.RemoveAll(S => S == null);
+    }
 }
 
 

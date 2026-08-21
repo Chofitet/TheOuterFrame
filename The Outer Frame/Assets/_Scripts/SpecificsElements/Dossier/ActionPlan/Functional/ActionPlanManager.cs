@@ -38,7 +38,6 @@ public class ActionPlanManager : MonoBehaviour
         if(isAFakeAP)
         {
             DisableButtonsRecursively(gameObject.transform);
-
         }
     }
 
@@ -60,6 +59,7 @@ public class ActionPlanManager : MonoBehaviour
 
     public void SetActionPlan(Component sender, object obj)
     {
+        if (FinalActionSended) return;
         if (transform.childCount != 0) Destroy(transform.GetChild(0).gameObject);
         
         GameObject AP = Instantiate(ActionPlanPrefab, transform, false);
@@ -153,10 +153,12 @@ public class ActionPlanManager : MonoBehaviour
         OnSendLastActionPlan?.Invoke(null, SecondToLastIdea);
     }
 
+    bool FinalActionSended;
     void SendEndActionPlan()
     {
         OnEnableInput?.Invoke(this, null);
         OnSendEndActionPlan?.Invoke(null, "Credits");
+        FinalActionSended = true;
     }
 
     public void SetisSecodToLastActionDoit(Component sender, object obj)

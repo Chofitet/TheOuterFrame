@@ -445,6 +445,11 @@ public class NotebookWordInstance : MonoBehaviour
         actualPage = (int)obj;
     }
 
+    public void SetIsInFinalreportFalse(Component sender, object obj)
+    {
+        isInFinalreport = false;
+    }
+
     public void SetInactive(bool x) => isinactive = x;
 }
 

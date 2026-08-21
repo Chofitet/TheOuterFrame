@@ -104,6 +104,7 @@ public class IndividualReportController : MonoBehaviour
         OnSendReportAutomatly?.Invoke(this, null);
     }
 
+    public bool GetIsDBDelerReport() { return report.GetDeleteDBRepoert(); }
     public bool GetCompleted() { return isComplete; }
 
 }

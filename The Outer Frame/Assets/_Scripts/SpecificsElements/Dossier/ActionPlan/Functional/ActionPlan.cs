@@ -222,7 +222,7 @@ public class ActionPlan : MonoBehaviour
         shakeBtn.SetActive(true);
         DataFromActionPlan data = new DataFromActionPlan(FinalActionWord, FinalActionIdea);
         OnApprovedActionPlan.Invoke(this, data);
-        Invoke("delayCheckButton", 0.02f);
+       // Invoke("delayCheckButton", 0.02f);
         OnSetGeneralView?.Invoke(this, null);
 
     }

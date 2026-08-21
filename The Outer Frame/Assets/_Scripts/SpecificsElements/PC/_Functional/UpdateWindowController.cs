@@ -15,8 +15,10 @@ public class UpdateWindowController : MonoBehaviour
     [SerializeField] TMP_Text PaperType;
     Coroutine AwaitToCloseCoroutine;
     bool isDeleting;
+    bool DeletingOnce;
     public void UpdatePC(Component sender, object obj)
     {
+        if (DeletingOnce) return;
         WordData word = (WordData)obj;
 
         Datatxt.text = WordsManager.WM.FindWordWithPhoneNum(word).GetDatabaseNameVersion();
@@ -33,10 +35,11 @@ public class UpdateWindowController : MonoBehaviour
 
         AwaitToCloseCoroutine = StartCoroutine(AwaitToClose());
 
-        if (isDeleting)
+        if (isDeleting && !DeletingOnce)
         {
             SetDeletingPC();
             OnWikiWindow?.Invoke(this, null);
+            DeletingOnce = true;
         }
     }
 
