@@ -203,10 +203,22 @@ public class PCWikiController : MonoBehaviour
         if (view == ViewStates.PCView)
         {
             isInPCView = true;
+            MarkDBWasSeenCourotine = StartCoroutine(MarkDBWasSeen());
             //if(input) input.SetWasSearched();  //checkear en caso de que dejen de funcionar Updates de DB
         }
-        else isInPCView = false;
+        else
+        {
+            isInPCView = false;
+            if(MarkDBWasSeenCourotine != null) StopCoroutine(MarkDBWasSeenCourotine);
+        }
 
+    }
+
+    Coroutine MarkDBWasSeenCourotine;
+    IEnumerator MarkDBWasSeen()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (input) input.SetWasSeen();
     }
 
     bool CheckFieldsInWikiInfoContent()

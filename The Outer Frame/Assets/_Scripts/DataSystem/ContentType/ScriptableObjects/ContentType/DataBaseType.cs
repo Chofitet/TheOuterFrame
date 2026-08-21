@@ -57,6 +57,7 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
     [NonSerialized] bool isWordAccessFound;
     [NonSerialized] bool wasSearched;
     [NonSerialized] bool WasSetted;
+    [NonSerialized] bool WasSeen;
 
 
     public override void ResetScriptableObject()
@@ -64,6 +65,7 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
         isWordAccessFound = false;
         wasSearched = false;
         WasSetted = false;
+        WasSeen = false;
     }
 
 
@@ -103,6 +105,12 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
         MarkDirty();
     }
 
+    public void SetWasSeen()
+    {
+        WasSeen = true;
+        MarkDirty();
+    }
+    public bool GetWasSeen() {  return WasSeen; }
     public bool GetNoSetFindableInDBTitle() { return NoSetFindableInDBTitle; }
 
     private TimeData CompleteTime;
