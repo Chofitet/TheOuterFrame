@@ -13,12 +13,14 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameEvent OnProgressorFull;
     [SerializeField] GameEvent OnSetGeneralView;
     [SerializeField] Button ApproveBtn;
+    [SerializeField] GameObject StampImg;
     [SerializeField] GameEvent OnWriteShakeDossier;
     [SerializeField] GameEvent OnFinalActionSend;
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] GameObject shakeBtn;
     [SerializeField] GameEvent OnSendGoodVilify;
-    [SerializeField] BoxCollider BlockStampiInput;
+    [SerializeField] GameObject BtnsParent;
+    [SerializeField] GameEvent OnSetTransitioningAnimTime;
     WordData FinalActionWord;
     StateEnum FinalActionState;
     StateEnum FinalActionIdea;
@@ -243,14 +245,14 @@ public class ActionPlan : MonoBehaviour
 
     public void Stamp(Component sender, object obj)
     {
-        ApproveBtn.transform.GetChild(0).gameObject.SetActive(true);
+        OnSetTransitioningAnimTime?.Invoke(this, 1.8f);
+        StampImg.SetActive(true);
         Invoke("OnStampAP", 0.4f);
     }
 
     void OnStampAP()
     {
-        ApproveBtn.transform.GetChild(0).gameObject.SetActive(false);
-
+        StampImg.SetActive(false);
     }
 
     bool isInDossier;
@@ -269,15 +271,16 @@ public class ActionPlan : MonoBehaviour
         else
         {
             if (DisableBlockStampInputCoroutine != null) StopCoroutine(DisableBlockStampInputCoroutine);
-            BlockStampiInput.enabled = true;
+            BtnsParent.SetActive(false);
         }
 
     }
 
     IEnumerator DisableBlockStampInput()
     {
-        yield return new WaitForSeconds(0.5f);
-        BlockStampiInput.enabled = false;
+        BtnsParent.SetActive(false);
+        yield return new WaitForSeconds(0.45f);
+        BtnsParent.SetActive(true);
 
     }
 

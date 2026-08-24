@@ -31,6 +31,7 @@ public class ViewManager : MonoBehaviour
     [SerializeField] GameEvent OnEnableInput;
     [SerializeField] GameEvent OnDisableInput;
     [SerializeField] GameEvent OnNormalizeTime;
+    [SerializeField] GameEvent OnSetTransitioningAnimTime;
 
     [Header("Game Overs")]
     [SerializeField] GameEvent OnTimeGameOver;
@@ -335,6 +336,7 @@ public class ViewManager : MonoBehaviour
 
         }
         OnViewStateChange?.Invoke(this, NewView);
+        OnSetTransitioningAnimTime?.Invoke(this, 0.5f);
         currentviewState = NewView;
         StartCoroutine(DelayBetweenViews());
         if (currentviewState != ViewStates.PauseView) if (isInPause) isInPause = false;

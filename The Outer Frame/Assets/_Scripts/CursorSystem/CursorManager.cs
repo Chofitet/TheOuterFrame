@@ -44,6 +44,7 @@ public class CursorManager : MonoBehaviour
     bool zoomView;
     bool isClicking;
     bool inInside;
+    bool isTrasitioning;
 
     private void Start()
     {
@@ -124,6 +125,7 @@ public class CursorManager : MonoBehaviour
                 break;
 
             case CursorState.Hover:
+                if (isTrasitioning) break;
                 Cursor.SetCursor(
                     pc ? PCInteractiveCursor : InteractiveCursor,
                     pc ? Vector2.zero : Hotspot(InteractiveCursor, true),
@@ -196,6 +198,21 @@ public class CursorManager : MonoBehaviour
     private Vector2 Hotspot(Texture2D tex, bool centered)
     {
         return centered ? new Vector2(tex.width / 2, tex.height / 2) : Vector2.zero;
+    }
+
+    public void OnSetTransitioning(Component sender, object obj)
+    {
+        float transitioneningTime = (float) obj;
+        if (TransitioningCoroutine != null) StopCoroutine(TransitioningCoroutine);
+        TransitioningCoroutine = StartCoroutine(Transitioning(transitioneningTime));
+    }
+
+    Coroutine TransitioningCoroutine;
+    IEnumerator Transitioning(float time)
+    {
+        isTrasitioning = true;
+        yield return new WaitForSeconds(time);
+        isTrasitioning = false;
     }
 }
 
