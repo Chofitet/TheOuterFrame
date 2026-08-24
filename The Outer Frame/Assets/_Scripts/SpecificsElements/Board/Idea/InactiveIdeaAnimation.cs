@@ -15,6 +15,7 @@ public class InactiveIdeaAnimation : MonoBehaviour
     [SerializeField] GameEvent OnButtonElement;
     [SerializeField] GameEvent OnDiscartIdea;
     [SerializeField] GameObject TakeIdeaButton;
+   
     bool once;
 
 
@@ -41,6 +42,8 @@ public class InactiveIdeaAnimation : MonoBehaviour
         .Join(LampOff.DOFade(1, 1.2f))
         .Join(LampOn.DOFade(0, 1.2f));
 
+        Vector3 newBoxColliderCenter = GetComponent<BoxCollider>().center;
+        GetComponent<BoxCollider>().center = new Vector3(0, newBoxColliderCenter.y, newBoxColliderCenter.z);
     }
 
     public void TakeOutIdea()

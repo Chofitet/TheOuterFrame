@@ -18,6 +18,7 @@ public class PCController : MonoBehaviour
     [SerializeField] GameObject BtnBackToLastEntry;
     [SerializeField] GameEvent OnLogFilterType;
     [SerializeField] GameEvent OnSearchEmptyDB;
+    [SerializeField] GameEvent OnSetSearchBarState;
     
     GameEvent LastWindow;
     bool isWaitingAWord;
@@ -51,6 +52,7 @@ public class PCController : MonoBehaviour
         
         word = _word;
         SearchBar.text = " " + word.GetName().Replace("?", "").Replace("!", "");
+        OnSetSearchBarState?.Invoke(this, true);
         StopCoroutine(IdleSearchBarAnim());
         textAnim.SetCharacterPerSecond();
         isWaitingAWord = false;
@@ -129,6 +131,7 @@ public class PCController : MonoBehaviour
         if (!word)
         {
             SearchBar.text = " |";
+            OnSetSearchBarState?.Invoke(this, false);
             if (isInPCView) OnShakeNotebook?.Invoke(this, null);
         }
     }
@@ -148,6 +151,7 @@ public class PCController : MonoBehaviour
             if (!word)
             {
                 SearchBar.text = " |";
+                OnSetSearchBarState?.Invoke(this, false);
                 if (isInPCView) OnShakeNotebook?.Invoke(this, null);
                 //OnSearchEmptyDB?.Invoke(this, null);
                 return;
@@ -166,7 +170,8 @@ public class PCController : MonoBehaviour
         if (!word)
         {
             SearchBar.text = " |";
-            if(isInPCView) OnShakeNotebook?.Invoke(this, null);
+            OnSetSearchBarState?.Invoke(this, false);
+            if (isInPCView) OnShakeNotebook?.Invoke(this, null);
             WikiTitleSearchedWord.text = "";
             foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
             OnPCSearchWord?.Invoke(this, word);
@@ -275,6 +280,7 @@ public class PCController : MonoBehaviour
     IEnumerator IdleSearchBarAnim()
     {
         SearchBar.text = " |";
+        OnSetSearchBarState?.Invoke(this, false);
         textAnim.SetCharacterPerSecond(2);
 
         while (isWaitingAWord)

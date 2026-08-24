@@ -28,4 +28,9 @@ public class PaperStatesController : MonoBehaviour
         blockCollider.SetComponentEnabled<Collider>(false);
         if(actualState == PaperMoveController.PaperState.Taken) raycaster.enabled = true;
     }
+
+    public void DisableRayCast()
+    {
+        raycaster.enabled = false;
+    }
 }

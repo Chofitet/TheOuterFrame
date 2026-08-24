@@ -15,6 +15,8 @@ public class IndividualCallController : MonoBehaviour
         call = _call;
         word = call.GetWord();
         isComplete = x;
+
+        GetComponent<PaperStatesController>().DisableRayCast();
     }
 
     public void FinishReport()

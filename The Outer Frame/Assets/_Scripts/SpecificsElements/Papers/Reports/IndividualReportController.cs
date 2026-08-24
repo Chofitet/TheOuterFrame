@@ -29,6 +29,8 @@ public class IndividualReportController : MonoBehaviour
         {
             isComplete = x;
         }
+
+        GetComponent<PaperStatesController>().DisableRayCast();
     }
 
     public void FinishReport()
