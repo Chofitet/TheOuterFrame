@@ -24,16 +24,20 @@ public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointe
         return gameObject.activeInHierarchy && btn != null &&btn.enabled && btn.interactable;
     }
 
+    bool isInsideAux;
     public void OnPointerEnter(PointerEventData eventData)
     {
+        isInsideAux = true;
+        
         if (!IsValid()) return;
-
         isInside = true;
+        
         CursorManager.CM.EnterInteractive();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        isInsideAux = false;
         if (!isInside) return;
 
         isInside = false;
@@ -42,6 +46,10 @@ public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerDown(PointerEventData eventData)
     {
+
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
         if (!isInside) return; //despues este
         CursorManager.CM.ClickInteractive();
     }
@@ -50,12 +58,19 @@ public class CursorInteractButton : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         bool valid = IsValid();
 
-        // Si el botón dejó de ser interactuable mientras el cursor estaba encima,
-        // simulamos un PointerExit.
-        if (wasValid && !valid && isInside && !isAlwaysValid)
+        // Se volvió interactuable mientras el mouse estaba encima
+        if (!wasValid && valid && isInsideAux && !isAlwaysValid)
         {
+            CursorManager.CM.EnterInteractive();
+        }
+
+        // Dejó de ser interactuable mientras el cursor estaba encima
+        if (wasValid && !valid && isInsideAux && !isAlwaysValid)
+        {
+            isInsideAux = false;
             isInside = false;
             CursorManager.CM.ExitInteractive();
+
         }
 
         wasValid = valid;

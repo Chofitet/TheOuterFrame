@@ -379,8 +379,16 @@ public class ActionRowController : MonoBehaviour
     {
         ViewStates actualView = (ViewStates)obj;
 
-        if (actualView == ViewStates.DossierView || actualView == ViewStates.OnTakenPaperView) isInView = true;
-        else isInView = false;
+        if (actualView == ViewStates.DossierView || actualView == ViewStates.OnTakenPaperView)
+        {
+            btn.enabled = true;
+            isInView = true;
+        }
+        else
+        {
+            btn.enabled = false;
+            isInView = false;
+        }
 
     }
 

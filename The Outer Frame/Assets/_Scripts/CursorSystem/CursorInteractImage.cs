@@ -42,6 +42,9 @@ public class CursorInteractImage : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
         if (!isInside) return; 
         CursorManager.CM.ClickInteractive();
     }

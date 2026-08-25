@@ -61,6 +61,9 @@ public class CursorInteractToggle : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
         if (IsValid())
             CursorManager.CM.ClickInteractive();
     }

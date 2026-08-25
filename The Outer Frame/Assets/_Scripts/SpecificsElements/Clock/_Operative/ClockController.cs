@@ -195,6 +195,7 @@ public class ClockController : MonoBehaviour
     public void OnNormalizeTime(Component sender, object obj)
     {
         if (isSpeedUp) anim.SetTrigger("speedDown");
+        else return;
         //if (!isDoingClockDialAnim) { DialLight.TurnOffLight(null, null); ClockX2Light.TurnOffLight(null, null); }
         isSpeedUp = false;
         ClockBTN.GetComponent<Collider>().enabled = false;
@@ -205,6 +206,7 @@ public class ClockController : MonoBehaviour
     {
         if (delayToBack) return;
         if (!isSpeedUp) anim.SetTrigger("speedUp");
+        else return;
         
         isSpeedUp = true;
        // DialLight.TurnOnLigth(null, null);
