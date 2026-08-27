@@ -191,7 +191,6 @@ public class OverlayAnimation : MonoBehaviour
             newsTextUI.transform.localPosition = textStartingPosition;
 
             newsOutAnim
-                .PrependInterval(pauseTimes)
 
                 .AppendCallback(() =>
                 {
@@ -210,21 +209,21 @@ public class OverlayAnimation : MonoBehaviour
                     fadeUI(Headline2TMPtxt, 0, moveTimes * 0.3f);
                 })
 
-                .Append(
-                    DOTween.To(
+                .Append( DOTween.To(
                         () => lerpTime,
                         x => lerpTime = x,
-                        1,
-                        moveTimes * acceleratedFactor
-                    ).SetEase(Ease.InOutBack)
-                )
-
-                .OnComplete(() =>
+                        1, moveTimes * acceleratedFactor))
+                .InsertCallback((moveTimes * acceleratedFactor) - (moveTimes * acceleratedFactor)/2 , () =>
                 {
+                    Debug.Log("OutLayout");
                     moveNewsTitle = false;
                     moveNewsText = false;
-
                     OnAnimLayoutFinish?.Invoke(this, null);
+                })
+                .OnComplete(() =>
+                {
+                   
+
                 });
         }
         else
@@ -235,6 +234,7 @@ public class OverlayAnimation : MonoBehaviour
                 moveNewsText = false;
 
                 OnAnimLayoutFinish?.Invoke(this, null);
+                Debug.Log("OutLayout 2");
             }); ;
         }
     }
@@ -312,10 +312,12 @@ public class OverlayAnimation : MonoBehaviour
                         x => lerpTime = x,
                         1,
                         moveTimes * acceleratedFactor
-                    ).SetEase(Ease.InOutBack)
-                )
+                    ))
+                .InsertCallback((moveTimes * acceleratedFactor) - (moveTimes * acceleratedFactor) / 2, () =>
+                {
+                    movePics = false;
+                });
 
-                .OnComplete(() => movePics = false);
         }
     }
 
@@ -393,10 +395,11 @@ public class OverlayAnimation : MonoBehaviour
                     x => lerpTime = x,
                     1,
                     moveTimes * acceleratedFactor
-                ).SetEase(Ease.InOutBack)
-            )
-
-            .OnComplete(() => moveQuip = false);
+                ))
+                .InsertCallback((moveTimes * acceleratedFactor) - (moveTimes * acceleratedFactor) / 2, () =>
+                {
+                    moveQuip = false;
+                });
     }
 
 
