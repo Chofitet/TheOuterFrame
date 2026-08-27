@@ -409,6 +409,11 @@ public class ProgressorModuleController : MonoBehaviour
         Candy.SetActive(false);
         messagge.SetActive(true);
     }
+    public void OnGameOver(Component sender,object obj)
+    {
+        TurnOnLight(light, 0);
+        TurnOnLight(light2, 0);
+    }
 
     public void TryAbortAnim(Component sender, object obj)
     {
