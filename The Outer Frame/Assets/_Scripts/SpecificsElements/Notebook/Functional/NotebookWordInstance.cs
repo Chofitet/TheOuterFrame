@@ -25,6 +25,7 @@ public class NotebookWordInstance : MonoBehaviour
     [SerializeField] GameEvent OnInactiveReplaceWord;
     [SerializeField] GameEvent OnRequestChangePage;
     [SerializeField] GameEvent OnSendReportAutomatly;
+    [SerializeField] GameEvent OnTakeDossierRetuningTV;
 
     NotebookProcessManager processManager;
     WordData wordReference;
@@ -283,7 +284,11 @@ public class NotebookWordInstance : MonoBehaviour
             Invoke("UnSelectWord", 0.3f);
         }
         if (actualView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
-
+        if (actualView == ViewStates.TVView)
+        {
+            OnTakeDossierRetuningTV?.Invoke(this, null);
+            OnButtonElement?.Invoke(this, ViewStates.DossierView);
+        }
 
         //
 

@@ -265,7 +265,8 @@ public class NotebookController : MonoBehaviour
         }
         else if (actualView == ViewStates.TVView)
         {
-            DisableWordsOfList(listAllWord);
+            List<WordData> Empylist = new List<WordData>();
+            DisableWordsOfList(Empylist);
         }
         else if(actualView == ViewStates.PinchofonoView)
         {

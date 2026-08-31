@@ -216,5 +216,11 @@ public class BlinkMaterialEffect : MonoBehaviour
     {
         inactiveTurnOff = true;
     }
+    public void SetMaxIntensity(Component sender, object obj)
+    {
+        maxIntensity = (float)obj;
+    }
+
+    public float GetCurrentIntensity() { return currentIntensity; }
 
 }

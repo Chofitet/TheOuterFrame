@@ -176,6 +176,12 @@ public class DossierMoveController : MonoBehaviour
         isReturningFromProgressor = true;
     }
 
+    bool isReturningFromTV;
+    public void SetIsReturningFromTV(Component sender, object obj)
+    {
+        isReturningFromTV = true;
+    }
+
     public void SetFalseIsReturningFromProgressor(Component sender, object obj)
     {
         isReturningFromProgressor = false;
@@ -190,8 +196,14 @@ public class DossierMoveController : MonoBehaviour
         }
         if (isReturningFromProgressor)
         {
-            TakeDossierFromProgressor();
+            TakeDossierFromProgressor(0.4f);
             isReturningFromProgressor = false;
+            return;
+        }
+        else if (isReturningFromTV)
+        {
+            TakeDossierFromProgressor(0.5f);
+            isReturningFromTV = false;
             return;
         }
         if (isAddingIdea) return;
@@ -203,9 +215,8 @@ public class DossierMoveController : MonoBehaviour
                             .Join(transform.DORotate(TakenPosition.rotation.eulerAngles, 0.3f)).SetEase(Ease.InOutSine);
     }
 
-    void TakeDossierFromProgressor()
+    void TakeDossierFromProgressor(float takeVelocity)
     {
-        float takeVelocity = 0.4f;
 
         if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
 
@@ -225,15 +236,17 @@ public class DossierMoveController : MonoBehaviour
                 // Desactivar el seguimiento y resetear estados
                 isFollowingTarget = false;
                 isReturningFromProgressor = false;
+                isReturningFromTV = false;
             });
     }
     public void LeaveDossier(Component sender, object obj)
     {
         float LeaveVelocity = 0.5f;
+       
         if (isUp && actualView != ViewStates.GeneralView && actualView != ViewStates.OnTakenPaperView && actualView != ViewStates.GameOverView) LeaveVelocity = 0.3f;
         if (isAddingIdea) return;
         if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
-
+        isFollowingTarget = false;
         MoveDossierSequence = DOTween.Sequence();
         isUp = false;
         MoveDossierSequence
