@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,6 +20,7 @@ public class GameEventListener : MonoBehaviour
     [SerializeField] ViewStates viewState;
     [SerializeField] GameEvent gameEvent;
     [SerializeField] Transform _transform;
+    [SerializeField] Color _color;
 
     private void OnEnable() => TriggerEvent.registerListener(this);
 
@@ -34,6 +36,7 @@ public class GameEventListener : MonoBehaviour
             if (viewState != ViewStates.GeneralView) data = viewState;
             if(gameEvent) data = gameEvent;
             if (_transform) data = _transform;
+            if(!_color.CompareRGB(new Color(0,0,0,0))) data = _color;
         }
 
         if (IsDesactive) return;
