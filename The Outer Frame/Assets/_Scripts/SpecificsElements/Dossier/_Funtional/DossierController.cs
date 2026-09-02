@@ -138,13 +138,30 @@ public class DossierController : MonoBehaviour
     bool isInTutorial;
     public void SetActionPlanInTutorial(Component sender, object obj)
     {
-        
+
         if (obj == null) isInTutorial = true;
         else isInTutorial = (bool)obj;
 
-        foreach(GameObject go in InactiveInTutorial)
+        foreach (GameObject go in InactiveInTutorial)
         {
-                go.SetActive(!isInTutorial);
+            SetTutorialComponents(go, !isInTutorial);
+        }
+
+    }
+
+    public void DesactiveElements(Component sender, object obj)
+    {
+        foreach (GameObject go in InactiveInTutorial)
+        {
+            go.SetActive(false);
+        }
+    }
+
+    public void ActiveElements(Component sender, object obj)
+    {
+        foreach (GameObject go in InactiveInTutorial)
+        {
+            go.SetActive(true);
         }
     }
 
@@ -152,7 +169,30 @@ public class DossierController : MonoBehaviour
     {
         foreach (GameObject go in InactiveInTutorial)
         {
-            go.SetActive(true);
+            SetTutorialComponents(go, true);
+        }
+    }
+
+    private void SetTutorialComponents(GameObject go, bool active)
+    {
+        // Incluye el objeto de la lista y todos sus hijos
+        Renderer[] renderers = go.GetComponentsInChildren<Renderer>(true);
+        Collider[] colliders = go.GetComponentsInChildren<Collider>(true);
+        Canvas[] canvases = go.GetComponentsInChildren<Canvas>(true);
+
+        foreach (Renderer renderer in renderers)
+        {
+            renderer.enabled = active;
+        }
+
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = active;
+        }
+
+        foreach (Canvas canvas in canvases)
+        {
+            canvas.enabled = active;
         }
     }
 
