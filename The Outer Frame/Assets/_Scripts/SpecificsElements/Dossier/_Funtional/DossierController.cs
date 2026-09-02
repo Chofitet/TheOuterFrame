@@ -10,6 +10,7 @@ public class DossierController : MonoBehaviour
     [SerializeField] GameObject ActionPlanBtn;
     [SerializeField] GameObject Brifing2BTN;
     [SerializeField] GameObject[] InactiveInTutorial;
+    [SerializeField] GameObject[] InactiveFunctionalities;
     bool isInBrifing = true;
     bool IsTakingIdea;
     private bool isInDossierView;
@@ -142,34 +143,50 @@ public class DossierController : MonoBehaviour
         if (obj == null) isInTutorial = true;
         else isInTutorial = (bool)obj;
 
+
         foreach (GameObject go in InactiveInTutorial)
         {
-            SetTutorialComponents(go, !isInTutorial);
+            //SetTutorialComponents(go, !isInTutorial);
+            
+            if(isInTutorial)
+            {
+                go.SetActive(false);
+            }
+            else
+            {
+                go.SetActive(true);
+            }
+        }
+
+        foreach (GameObject go in InactiveFunctionalities)
+        {
+            //SetTutorialComponents(go, !isInTutorial);
+
+            if (isInTutorial)
+            {
+                SetTutorialComponents(go, false);
+            }
+            else
+            {
+                SetTutorialComponents(go, true);
+            }
         }
 
     }
 
-    public void DesactiveElements(Component sender, object obj)
+    public void DesactiveObjects(Component sender, object obj)
     {
-        foreach (GameObject go in InactiveInTutorial)
+        foreach (GameObject go in InactiveFunctionalities)
         {
             go.SetActive(false);
         }
     }
 
-    public void ActiveElements(Component sender, object obj)
+    public void ActiveObjects(Component sender, object obj)
     {
-        foreach (GameObject go in InactiveInTutorial)
+        foreach (GameObject go in InactiveFunctionalities)
         {
             go.SetActive(true);
-        }
-    }
-
-    public void ActiveFunctionalities(Component sender, object obj)
-    {
-        foreach (GameObject go in InactiveInTutorial)
-        {
-            SetTutorialComponents(go, true);
         }
     }
 
@@ -179,10 +196,16 @@ public class DossierController : MonoBehaviour
         Renderer[] renderers = go.GetComponentsInChildren<Renderer>(true);
         Collider[] colliders = go.GetComponentsInChildren<Collider>(true);
         Canvas[] canvases = go.GetComponentsInChildren<Canvas>(true);
+        MeshRenderer[] meshRenderers = go.GetComponentsInChildren<MeshRenderer>(true);
 
         foreach (Renderer renderer in renderers)
         {
             renderer.enabled = active;
+        }
+
+        foreach (MeshRenderer meshRenderer in meshRenderers)
+        {
+            meshRenderer.enabled = active;
         }
 
         foreach (Collider collider in colliders)
@@ -195,6 +218,8 @@ public class DossierController : MonoBehaviour
             canvas.enabled = active;
         }
     }
+
+
 
     ViewStates currentView;
     public void CheckVIew(Component sender, object obj)

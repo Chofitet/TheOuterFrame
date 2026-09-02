@@ -18,8 +18,7 @@ public class TVManager : MonoBehaviour
     [SerializeField] Animator anim;
     TVNewTypeProperties TVNewPropertiesList;
 
-    
-    
+    bool isStopped;
 
     private void Start()
     {
@@ -70,6 +69,7 @@ public class TVManager : MonoBehaviour
     void NewsDirector()
     {
         //checkean si una noticia nueva entró y la coloca en la cola.
+        if (isStopped) return;
         CheckForScheduledNews();
         CheckForReactiveNews();
         CheckForQueue();
@@ -278,6 +278,7 @@ public class TVManager : MonoBehaviour
     public void DisableTVUpdate(Component sender, object obj)
     {
         TimeManager.OnMinuteChange -= NewsDirector;
+        isStopped = true;
     }
     public void TurnOffTV(Component sender, object obj)
     {
