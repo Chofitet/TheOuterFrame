@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,8 @@ public class ChannelController : MonoBehaviour
     [SerializeField] Sprite BreakingImage;
     [SerializeField] GameEvent OnInstanciatePopUp;
     [SerializeField] GameEvent OnGlitchEvent;
+    [SerializeField] GameEvent OnChangeToEmergencyNew;
+    [SerializeField] GameEvent OnChangeToNormalNew;
     TimeCheckConditional MinTimeToShowNew;
     TimeCheckConditional TimeToRestartRandoms;
     INewType New;
@@ -72,14 +75,16 @@ public class ChannelController : MonoBehaviour
 
         NewProperties = typeProperties;
 
+        Debug.Log("isFirstNew " + isFirstNew);
+
         if (!isFirstNew)
         {
             SetUpFirstNew(_new);
-            isFirstNew = true;
             return;
         }
 
         EmergencyScreen.SetActive(false);
+        Debug.Log("SetNew");
 
         New = _new;
 
@@ -95,7 +100,6 @@ public class ChannelController : MonoBehaviour
         OverlayAnims.QuipOut(New.GetIfIsAEmergency());
         if(!New.GetIfIsAEmergency()) OnChangeReporterAnim?.Invoke(this, null);
 
-
         _new.SetWasStreamed();
 
         Debug.Log("The new " + _new.GetHeadline() + " was setted in channel " + name + " At " + TimeManager.timeManager.GetTime().ToString() +
@@ -106,6 +110,7 @@ public class ChannelController : MonoBehaviour
     void SetUpFirstNew(INewType _new)
     {
         EmergencyScreen.SetActive(false);
+        Debug.Log("SetUpFirstNew");
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
@@ -132,7 +137,8 @@ public class ChannelController : MonoBehaviour
         NewTextContent.text = _new.GetNewText();
         FindableWordsManager.FWM.InstanciateFindableWord(NewTextContent, FindableBtnType.FindableBTN);
         if (_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
-        
+
+
         if (_new.GetNewImag())
         {
             NewImg.transform.GetChild(0).GetComponent<Image>().sprite = _new.GetNewImag();
@@ -141,8 +147,17 @@ public class ChannelController : MonoBehaviour
         {
             NewImg.transform.GetChild(0).GetComponent<Image>().sprite = BreakingImage;
         }
-        if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
-        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
+        if (_new.GetIfIsAEmergency())
+        {
+            Debug.Log("ChangeToEmergencyLayout");
+            ChangeToEmergencyLayout(_new);
+        }
+        else
+        {
+            OnChangeToNormalNew?.Invoke(this, null);
+            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText, FindableBtnType.FindableBTN);
+            isFirstNew = true;
+        }
         OnIncreaseAlertLevel?.Invoke(this, new AlertData(_new.GetIncreaseAlertLevel(), NewProperties.TextInAlertScreen));
         OnSetNewOnTV?.Invoke(this, _new);
         OnInstanciatePopUp?.Invoke(this, _new as IPopUp);
@@ -191,7 +206,11 @@ public class ChannelController : MonoBehaviour
             NewImg.transform.GetChild(0).GetComponent<Image>().sprite = BreakingImage;
         }
         if (_new.GetIfIsAEmergency()) ChangeToEmergencyLayout(_new);
-        else FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText,FindableBtnType.FindableBTN);
+        else
+        {
+            OnChangeToNormalNew?.Invoke(this, null);
+            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText, FindableBtnType.FindableBTN);
+        }
         OnIncreaseAlertLevel?.Invoke(this, new AlertData(_new.GetIncreaseAlertLevel(), NewProperties.TextInAlertScreen));
         OnSetNewOnTV?.Invoke(this, _new);
         OnInstanciatePopUp?.Invoke(this, _new as IPopUp);
@@ -200,11 +219,13 @@ public class ChannelController : MonoBehaviour
 
     void ChangeToEmergencyLayout(INewType _new)
     {
+        OnChangeToEmergencyNew?.Invoke(this, null);
         EmergencyScreen.SetActive(true);
         if (_new.GetHeadline() != "")
         { EmergencyTextField.text = _new.GetHeadline(); }
         else EmergencyTextField.text = _new.GetHeadline2();
         isFirstNew = false;
+        Debug.Log("Set is First New False");
         FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField,FindableBtnType.FindableBTN,null,false,true);
     }
 

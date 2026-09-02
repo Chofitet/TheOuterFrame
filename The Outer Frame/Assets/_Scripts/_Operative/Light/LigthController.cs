@@ -27,4 +27,9 @@ public class LigthController : MonoBehaviour
     {
         _light.DOIntensity(attenuateFactor, time);
     }
+
+    public void ApplyColor(Component sender, object obj)
+    {
+        _light.color = (Color)obj;
+    }
 }
