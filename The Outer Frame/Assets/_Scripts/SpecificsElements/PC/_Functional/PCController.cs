@@ -48,6 +48,11 @@ public class PCController : MonoBehaviour
     {
         if (!isInPCView) return;
         if (inWordAccessWindow) return;
+        if (isPCUpdating)
+        {
+            OnKeyBoardSound?.Invoke(this, null);
+            return;
+        }
         WordData _word = (WordData)obj;
         
         word = _word;
@@ -96,11 +101,21 @@ public class PCController : MonoBehaviour
         UpdateWK(_LastSearchedWord, true);
     }
 
+    bool isPCUpdating;
+    public void StartUpdatingScreen(Component sender, object obj)
+    {
+        isPCUpdating = true;
+        Debug.Log($"isPCUpdating: {isPCUpdating}");
+    }
+
     public void UpdateDataBase(Component sender, object obj)
     {
         word = (WordData)obj;
         UpdateWK(word, false);
+        isPCUpdating = false;
+        Debug.Log($"isPCUpdating: {isPCUpdating}");
     }
+
 
     void UpdateWK(WordData word, bool forceUpdate)
     {
@@ -144,6 +159,7 @@ public class PCController : MonoBehaviour
 
     public void SearchWordInWiki(WordData LastSearchedWord = null)
     {
+
         if(LastWindow != OnWikiWindow)
         {
             //OnLogWindow
@@ -178,6 +194,7 @@ public class PCController : MonoBehaviour
             OnSearchEmptyDB?.Invoke(this, null);
             return;
         }
+       
 
         if (word == Vessel) word = A15;
         if(word == IrrelevantDB) foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
