@@ -13,14 +13,14 @@ public class ReparentObject : MonoBehaviour
     {
         if(!x)
         {
-            _object.transform.SetParent(ToReparent);
-            _object.transform.position = Vector3.zero;
+            _object.transform.SetParent(ToReparent,true);
+            //_object.transform.position = Vector3.zero;
             x = true;
         }
         else
         {
             _object.transform.SetParent(OriginalParent, true);
-            _object.transform.position = Vector3.zero;
+           // _object.transform.position = Vector3.zero;
         }
             
 
