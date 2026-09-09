@@ -57,7 +57,7 @@ public class ViewManager : MonoBehaviour
     private void Start()
     {
         
-        currentDelay = delayBetweenViews;
+       /* currentDelay = delayBetweenViews;
         if (!isInTutorial)
         {
             OnDisableInput?.Invoke(this, null);
@@ -66,7 +66,7 @@ public class ViewManager : MonoBehaviour
         else
         {
             UpdateViewState(null, ViewStates.TutorialView);
-        }
+        }*/
     }
 
     IEnumerator SetStartView(float timeDelayView, float timeDelayEnableInput)
