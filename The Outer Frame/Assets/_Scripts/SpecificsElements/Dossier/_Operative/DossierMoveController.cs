@@ -33,7 +33,7 @@ public class DossierMoveController : MonoBehaviour
     Sequence AddAPpileSequence;
     Sequence MoveDossierSequence;
     bool BlockDossierUp;
-
+    [SerializeField] GameObject DossierModel;
 
     bool isAddingIdea;
     bool isUp;
@@ -254,7 +254,7 @@ public class DossierMoveController : MonoBehaviour
             .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, LeaveVelocity - 0.2f)).SetEase(Ease.InOutSine)
         .OnComplete(() =>
          {
-             transform.GetChild(0).transform.DOLocalRotate(Vector3.zero, 0.2f);
+            transform.GetChild(0).transform.DOLocalRotate(Vector3.zero, 0.2f);
          });
     }
 
@@ -280,7 +280,7 @@ public class DossierMoveController : MonoBehaviour
    public void AddAPpile(Component sender, object obj)
     {
         if (AddAPpileSequence != null && AddAPpileSequence.IsActive()) AddAPpileSequence.Kill();
-        DossierAnim = transform.GetChild(0).GetComponent<Animator>();
+        DossierAnim = DossierModel.GetComponent<Animator>();
         AddAPpileSequence = DOTween.Sequence();
         transform.position = InitShowInGeneralViewPosition.position;
         transform.rotation = InitShowInGeneralViewPosition.rotation;
