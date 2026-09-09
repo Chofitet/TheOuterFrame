@@ -76,7 +76,7 @@ public class DossierMoveController : MonoBehaviour
         DossierAnim = transform.GetChild(0).GetComponent<Animator>();
         AddIdeaSequence = DOTween.Sequence();
         GetComponent<Animator>().enabled = false;
-        transform.position = InitShowInPalcePos.position;
+       transform.position = InitShowInPalcePos.position;
         transform.rotation = InitShowInPalcePos.rotation;
         OnActionPlanDossier?.Invoke(this, null);
         isAddingIdea = true;
@@ -122,8 +122,8 @@ public class DossierMoveController : MonoBehaviour
                 AddIdeaSequence.Kill();
                 DossierAnim.ResetTrigger("open");
             })
-            .AppendInterval(0.2f)
-            .AppendCallback(() => isFollowingTarget = false);
+            .AppendInterval(0.2f);
+            /*.AppendCallback(() => isFollowingTarget = false);*/
     }
     ViewStates actualView;
     public void CancelAddIdeaAnim(Component sender, object obj)
@@ -150,7 +150,7 @@ public class DossierMoveController : MonoBehaviour
             .OnComplete(() =>
             {
 
-                isFollowingTarget = false;
+               // isFollowingTarget = false;
 
                 isAddingIdea = false;
                 DossierAnim.ResetTrigger("open");
@@ -234,7 +234,7 @@ public class DossierMoveController : MonoBehaviour
             .OnComplete(() =>
             {
                 // Desactivar el seguimiento y resetear estados
-                isFollowingTarget = false;
+               // isFollowingTarget = false;
                 isReturningFromProgressor = false;
                 isReturningFromTV = false;
             });
@@ -246,15 +246,15 @@ public class DossierMoveController : MonoBehaviour
         if (isUp && actualView != ViewStates.GeneralView && actualView != ViewStates.OnTakenPaperView && actualView != ViewStates.GameOverView) LeaveVelocity = 0.3f;
         if (isAddingIdea) return;
         if (MoveDossierSequence != null && MoveDossierSequence.IsActive()) MoveDossierSequence.Kill();
-        isFollowingTarget = false;
+       // isFollowingTarget = false;
         MoveDossierSequence = DOTween.Sequence();
         isUp = false;
         MoveDossierSequence
             .Append(transform.DOMove(LeavePosition.position, LeaveVelocity)).SetEase(Ease.InOutSine)
-            .Join(transform.DORotate(LeavePosition.rotation.eulerAngles, LeaveVelocity - 0.2f)).SetEase(Ease.InOutSine)
+            //.Join(transform.DORotate(LeavePosition.rotation.eulerAngles, LeaveVelocity - 0.2f)).SetEase(Ease.InOutSine)
         .OnComplete(() =>
          {
-             transform.GetChild(0).transform.DOLocalRotate(Vector3.zero, 0.2f);
+            // transform.GetChild(0).transform.DOLocalRotate(Vector3.zero, 0.2f);
          });
     }
 
@@ -265,8 +265,8 @@ public class DossierMoveController : MonoBehaviour
         MoveDossierSequence = DOTween.Sequence();
 
         MoveDossierSequence.Append(transform.DORotate(new Vector3(1, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), 0.2f))
-            .AppendInterval(0.4f)
-            .Append(transform.DORotate(new Vector3(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), 0.2f));
+            .AppendInterval(0.4f);
+          //  .Append(transform.DORotate(new Vector3(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z), 0.2f));
 
     }
 
