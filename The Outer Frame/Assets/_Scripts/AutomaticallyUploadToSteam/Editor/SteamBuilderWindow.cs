@@ -154,14 +154,19 @@ public class SteamBuilderWindow : EditorWindow
         root.Add(buildInfoTitle);
 
 
-        // Branch
         branchField = new PopupField<string>(
-             "Branch",
-             config.branches,
-             config.branchIndex
-         );
+            "Branch",
+            config.branches,
+            config.branchIndex
+        );
 
         branchField.style.marginBottom = 8;
+
+        branchField.RegisterValueChangedCallback(evt =>
+        {
+            config.branchIndex = branchField.index;
+            EditorUtility.SetDirty(config);
+        });
 
         root.Add(branchField);
 
@@ -209,6 +214,11 @@ public class SteamBuilderWindow : EditorWindow
             text = "Build"
         };
 
+        Button buildAndRunButton = new Button(OnBuildAndRun)
+        {
+            text = "Build and Run"
+        };
+
         Button copyButton = new Button(OnCopy)
         {
             text = "Copy"
@@ -226,6 +236,7 @@ public class SteamBuilderWindow : EditorWindow
 
 
         buttonContainer.Add(buildButton);
+        buttonContainer.Add(buildAndRunButton);
         buttonContainer.Add(copyButton);
         buttonContainer.Add(uploadButton);
         buttonContainer.Add(buildAndUploadButton);
@@ -382,7 +393,31 @@ public class SteamBuilderWindow : EditorWindow
 
     private void OnBuild()
     {
-        Build();
+        if (Build())
+        {
+            string buildPath = Path.GetFullPath(
+                config.unityBuildFolder,
+                Application.dataPath
+            );
+
+            DirectoryHelper.OpenFolder(buildPath);
+        }
+    }
+
+    private void OnBuildAndRun()
+    {
+        if (Build())
+        {
+            string buildPath = GetBuildPath();
+
+            System.Diagnostics.Process.Start(
+                new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = buildPath,
+                    UseShellExecute = true
+                }
+            );
+        }
     }
 
     private bool Build()
@@ -441,11 +476,35 @@ public class SteamBuilderWindow : EditorWindow
   
     private void OnCopy()
     {
-        string path = Path.GetFullPath(config.unityBuildFolder, Application.dataPath);
-        string dest = Path.Combine(SteamBuilderWindowUITK.STEAM_BUILDER_PATH, config.contentRoot);
+        string buildPath = Path.GetFullPath(
+        config.unityBuildFolder,
+        Application.dataPath);
 
-        DirectoryHelper.CopyDirectory(path, dest);
-        DirectoryHelper.OpenFolder(dest);
+        string contentPath = Path.GetFullPath(
+            config.contentRoot,
+            SteamBuilderWindowUITK.STEAM_BUILDER_PATH
+        );
+
+        foreach (SteamBuilderDepot depot in config.depots)
+        {
+            string localPath = depot.localPath;
+
+            // Remove the wildcard used by SteamCMD
+            localPath = localPath.Replace("\\*", "");
+            localPath = localPath.Replace("/*", "");
+
+            string depotDestination = Path.Combine(
+                contentPath,
+                localPath
+            );
+
+            DirectoryHelper.CopyDirectory(
+                buildPath,
+                depotDestination
+            );
+        }
+
+        DirectoryHelper.OpenFolder(contentPath);
     }
 
 
@@ -501,7 +560,7 @@ public class SteamBuilderWindow : EditorWindow
         depotsLine += "\n}";
 
         var branch = "";
-        if (config.branchIndex > -1)
+        if (config.branches.Count != 0)
         {
             branch = config.branches[config.branchIndex];
         }
