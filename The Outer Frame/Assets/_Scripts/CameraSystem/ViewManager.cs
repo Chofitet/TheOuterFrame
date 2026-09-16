@@ -105,10 +105,12 @@ public class ViewManager : MonoBehaviour
             {
                 if (currentviewState != ViewStates.GeneralView) CheckForBackToGeneralView();
                 TimeManager.timeManager.NormalizeTime();
+                Debug.Log("Back no tutorial");
             }
             else
             {
                 if (currentviewState != ViewStates.TutorialView ) CheckForBackToTutorialView();
+                Debug.Log("Back tutorial");
             }
 
         }
@@ -389,21 +391,36 @@ public class ViewManager : MonoBehaviour
         isInTutorial = (bool)obj;
     }
 
+    bool isEnableBlockInput;
+
+    public void SetisEnableBlockInputFalse(Component sender, object obj)
+    {
+        //Only for fix tutorial wierd cam bug 
+        isEnableBlockInput = false;
+    }
+
     public void EnableInput(Component sender, object _view)
     {
-        if(isInputDisable)
+        if(isEnableBlockInput) return; //Only for fix tutorial wierd cam bug 
+
+        if (isInputDisable)
         {
+            Debug.Log("enable input");
             isInputDisable = false;
         }
     }
 
     public void DisableInput(Component sender,object obj)
     {
+        
         if (!isInputDisable)
         {
+            Debug.Log("disable input");
             isInputDisable = true;
+            
         }
     }
+
 
     public void OnFinalReportTake(Component sender, object obj)
     {
@@ -435,6 +452,7 @@ public class ViewManager : MonoBehaviour
         IsStuckInView = false;
         currentDelay = delayBetweenViews;
         nextViewRequest = null;
+        isEnableBlockInput = true;
     }
 
     IEnumerator DelayForTimeChange(Action callback)

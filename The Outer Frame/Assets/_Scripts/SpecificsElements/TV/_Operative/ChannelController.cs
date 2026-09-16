@@ -75,7 +75,6 @@ public class ChannelController : MonoBehaviour
 
         NewProperties = typeProperties;
 
-        Debug.Log("isFirstNew " + isFirstNew);
 
         if (!isFirstNew)
         {
@@ -84,7 +83,6 @@ public class ChannelController : MonoBehaviour
         }
 
         EmergencyScreen.SetActive(false);
-        Debug.Log("SetNew");
 
         New = _new;
 
@@ -110,7 +108,6 @@ public class ChannelController : MonoBehaviour
     void SetUpFirstNew(INewType _new)
     {
         EmergencyScreen.SetActive(false);
-        Debug.Log("SetUpFirstNew");
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, DefaultMinutesToPassNews);
@@ -149,7 +146,6 @@ public class ChannelController : MonoBehaviour
         }
         if (_new.GetIfIsAEmergency())
         {
-            Debug.Log("ChangeToEmergencyLayout");
             ChangeToEmergencyLayout(_new);
         }
         else
@@ -225,7 +221,6 @@ public class ChannelController : MonoBehaviour
         { EmergencyTextField.text = _new.GetHeadline(); }
         else EmergencyTextField.text = _new.GetHeadline2();
         isFirstNew = false;
-        Debug.Log("Set is First New False");
         FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField,FindableBtnType.FindableBTN,null,false,true);
     }
 

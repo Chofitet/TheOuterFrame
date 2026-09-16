@@ -40,7 +40,6 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
     public void UpdateFinalPositionRotation(Component sender, object obj)
     {
-        Debug.Log("epalee");
         if(Content != null)
         {
             // Buscar TODOS los hijos, incluso los inactivos
