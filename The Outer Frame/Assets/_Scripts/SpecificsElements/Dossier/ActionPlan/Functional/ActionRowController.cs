@@ -73,12 +73,11 @@ public class ActionRowController : MonoBehaviour
 
         if (isPendigToErase)
         {
+            Debug.Log($"PendingTooo {ActionText.text}");
             if (ActionText.text == "Inspect") WordPendingToReplaceErased = WordSelectedInNotebook.Notebook.GetSelectedWord();
             else Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
             return;
         }
-
-        
 
         if (toggle.isOn && once)
         {
@@ -87,12 +86,14 @@ public class ActionRowController : MonoBehaviour
         }
         if(toggle.isOn && !once)
         {
+            
             Wordtext.text = Word.GetFormNameVersion();
             WriteWordCoroutine = StartCoroutine(AnimOnlyWriting(Wordtext, true));
         }
 
         if (isSpecialAction || !toggle.isOn || !once)
         {
+            Debug.Log($"PendingTooo {ActionText.text}");
             once = true;
         }
         
@@ -156,11 +157,12 @@ public class ActionRowController : MonoBehaviour
 
     public StateEnum GetState() { return state; }
 
-    public void ResetRow(bool noPlaySound = false, bool CancelPending = true)
+    public void ResetRow(bool noPlaySound = false, bool CancelPending = false)
     {
         toggle.isOn = false;
         once = false;
         if (isSpecialAction) return;
+
 
         if (EraseAndWriteWordCoroutine != null)
         {
@@ -183,7 +185,7 @@ public class ActionRowController : MonoBehaviour
             EraseParticlesAclaration.GetComponent<ParticleSystem>().Stop();
             fadeAclaration.OnEraseProgress -= eraseParticlesAclatarion;
         }
-        if(PendingToEraseCoroutine != null  && ActionText.text != "Inspect")
+        if(PendingToEraseCoroutine != null  && ActionText.text != "Inspect" )
         {
             StopCoroutine(PendingToEraseCoroutine);
             Debug.Log("Stop coroutine");
@@ -191,9 +193,12 @@ public class ActionRowController : MonoBehaviour
             toggle.isOn = false;
             isPendigToErase = false;
         }
+        if (PendingToEraseCoroutine != null && ActionText.text == "Inspect")
+        {
+            AnotherActionWasPresingDuringPendingErase = CancelPending;
+        }
 
-        IsErasingApendingWord = false;
-        if (!fade.GetisVisible()) return;
+            if (!fade.GetisVisible()) return;
         StartCoroutine(AnimOnlyErase());
     }
 
@@ -287,6 +292,7 @@ public class ActionRowController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.4f);
             if (!WordPendingToReplaceErased) yield break;
+            if (AnotherActionWasPresingDuringPendingErase) yield break;
             toggle.isOn = true;
             OnSelectWordInNotebook(null, WordPendingToReplaceErased);
             OnForceSelectedWordInActionRows?.Invoke(this, WordPendingToReplaceErased);
@@ -449,8 +455,8 @@ public class ActionRowController : MonoBehaviour
 
     }
 
-    bool IsErasingApendingWord;
 
+    bool AnotherActionWasPresingDuringPendingErase;
     IEnumerator TriggerPendingToEraseCoroutine()
     {
         
@@ -468,7 +474,9 @@ public class ActionRowController : MonoBehaviour
         {
             Debug.Log("Pressing word");
             ResetRow();
-            OnForceSelectedWordInActionRows?.Invoke(this, null);
+            WordData newWord = WordsManager.WM.FindActualWordRetroactive(Word);
+            WordSelectedInNotebook.Notebook.ForceSelectedWord(newWord);
+            OnForceSelectedWordInActionRows?.Invoke(this, newWord);
             isPendigToErase = false;
         }
         

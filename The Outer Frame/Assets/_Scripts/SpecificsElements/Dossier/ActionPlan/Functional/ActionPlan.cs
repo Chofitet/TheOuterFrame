@@ -78,7 +78,7 @@ public class ActionPlan : MonoBehaviour
         bool exit = false;
         foreach (ActionRowController actions in Actions)
         {
-            if (script != actions) actions.ResetRow();
+            if (script != actions) actions.ResetRow(false,true);
             else
             {
                 state = script.GetState();
