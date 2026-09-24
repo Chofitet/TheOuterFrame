@@ -84,6 +84,7 @@ public class ChannelController : MonoBehaviour
 
         EmergencyScreen.SetActive(false);
 
+        if (New != null) New.SetTimeStreamedEnds(TimeManager.timeManager.GetTime());
         New = _new;
 
         int minutesToPassTonextNew = DefaultMinutesToPassNews;
@@ -92,6 +93,7 @@ public class ChannelController : MonoBehaviour
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());
         TimeToRestartRandoms = DefineTime(TimeToRestartRandoms, minutesToPassTonextNew);
 
+        New.SetStremedTime(TimeManager.timeManager.GetTime());
 
         OverlayAnims.NewsOut(New.GetIfIsAEmergency());
         OverlayAnims.PicsOut(New.GetIfIsAEmergency());
@@ -107,6 +109,8 @@ public class ChannelController : MonoBehaviour
 
     void SetUpFirstNew(INewType _new)
     {
+        if (New != null) New.SetTimeStreamedEnds(TimeManager.timeManager.GetTime());
+
         EmergencyScreen.SetActive(false);
 
         MinTimeToShowNew = DefineTime(MinTimeToShowNew, _new.GetMinTransmitionTime());

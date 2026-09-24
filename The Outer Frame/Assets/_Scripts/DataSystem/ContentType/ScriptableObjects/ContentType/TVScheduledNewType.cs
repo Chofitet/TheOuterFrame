@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New ScheduledNew", menuName = "News/ScheduledNew")]
-public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp
+public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp, IAnalytics
 {
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headline;
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
@@ -27,11 +27,12 @@ public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableOb
 
     [SerializeField] TVScheduledNewType ReplacedBy;
     [NonSerialized] bool wasStremed;
+    [NonSerialized] TimeData TimeStreamedEnds;
 
     public override void ResetScriptableObject()
     {
         wasStremed = false;
-
+        TimeStreamedEnds = new TimeData(0,0,0);
     }
 
     //Lista de condicionantes y chequeo de si son true todas para desactivar o reprogramar noticia
@@ -42,6 +43,12 @@ public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableOb
     public bool GetIfIsAEmergency() { return Emergency; }
 
     public int GetMinTransmitionTime() { return MinTransmitionTime; }
+
+    public void SetTimeStreamedEnds(TimeData time)
+    {
+        TimeStreamedEnds = time;
+        MarkDirty();
+    }
 
     Sprite INewType.GetNewImag() { return image; }
 
@@ -176,6 +183,22 @@ public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableOb
     public NewType GetNewType()
     {
         return newType;
+    }
+
+    public AnalyticsEntry GetAnalyticsData()
+    {
+        return new AnalyticsEntry
+        {
+            ID = ID.ToString(),
+            CompletedTime = GetTimeToShow(),
+            FinishedTime = TimeStreamedEnds,
+            WasDone = wasStremed
+        };
+    }
+
+    public void SetStremedTime(TimeData time)
+    {
+        //no implemented. Time Already schedule
     }
 
     //POPUP implementation

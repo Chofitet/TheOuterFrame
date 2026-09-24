@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNew", menuName = "News/ReactiveNew")]
-public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScriptableObject, IPopUp
+public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScriptableObject, IPopUp, IAnalytics
 {
     [HideInInspector][SerializeField] StateEnum state;
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
@@ -21,6 +21,7 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
     [SerializeField] int MinTransmitionTime = 8;
     [SerializeField] List<ConditionalClass> Conditions = new List<ConditionalClass>();
     [NonSerialized] bool wasStremed;
+    [NonSerialized] TimeData TimeWasStreamed;
     bool isOrderMatters;
 
     public override void ResetScriptableObject()
@@ -28,6 +29,7 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
         wasStremed = false;
         EndTime = null;
         CompleteTime = new TimeData(0, 0, 0);
+        TimeWasStreamed = new TimeData(0, 0, 0);
     }
 
     public StateEnum GetState()
@@ -49,6 +51,12 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
 
     public bool GetIfIsAEmergency() { return Emergency; }
 
+    public void SetTimeStreamedEnds(TimeData time)
+    {
+        TimeWasStreamed = time;
+         MarkDirty();
+    }
+
     public void AddConditional(ConditionalClass condition)
     {
         Conditions.Add(condition);
@@ -58,13 +66,13 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
         if (Conditions.Count == 0) return;
         Conditions.RemoveAt(0);
     }
-    public int GetIncreaseAlertLevel(){ return alertLevelIncrement;}
-    public override string GetText(){ return text;}
-    public override string GetTextSecundary(){ 
-       if(headline != "") return headline;
-       else return headlineTwoLines;
+    public int GetIncreaseAlertLevel() { return alertLevelIncrement; }
+    public override string GetText() { return text; }
+    public override string GetTextSecundary() {
+        if (headline != "") return headline;
+        else return headlineTwoLines;
     }
-    public string GetNewText() {return text;}
+    public string GetNewText() { return text; }
 
     public bool GetStateConditionalToAppear()
     {
@@ -202,7 +210,7 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
             }
 
         }
-        if(lastCompleteConditional != null)
+        if (lastCompleteConditional != null)
         {
             return lastCompleteConditional.GetTimeToShowNews();
         }
@@ -211,22 +219,38 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
 
     }
 
-    public int GetChannelNum() {  return channel;}
+    public int GetChannelNum() { return channel; }
 
-    int INewType.GetMinTransmitionTime() {  return MinTransmitionTime; }
+    int INewType.GetMinTransmitionTime() { return MinTransmitionTime; }
 
-    public int GetPriority(){  return priority;}
+    public int GetPriority() { return priority; }
 
     public void SetWasStreamed() {
         wasStremed = true;
         MarkDirty();
     }
 
-    public bool GetWasStreamed(){ return wasStremed;}
+    public bool GetWasStreamed() { return wasStremed; }
 
-    public string GetHeadline2(){ return headlineTwoLines; }
+    public string GetHeadline2() { return headlineTwoLines; }
 
     public NewType GetNewType() { return newType; }
+
+    public AnalyticsEntry GetAnalyticsData()
+    {
+        return new AnalyticsEntry
+        {
+            ID = ID.ToString(),
+            CompletedTime = CompleteTime,
+            FinishedTime = TimeWasStreamed,
+            WasDone = wasStremed
+        };
+    }
+
+    public void SetStremedTime(TimeData time)
+    {
+        //NoImplemented. Time already define by player actions
+    }
 
     //POPUP implementation
 
