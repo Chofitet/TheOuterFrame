@@ -5,6 +5,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
+
 public class AnalyticsWindow : EditorWindow
 {
     private AnalyticsFile analyticsFile;
@@ -84,17 +85,22 @@ public class AnalyticsWindow : EditorWindow
     #region TimeLine
     private int GetMinutesFromStart(TimeData time)
     {
-        return (time.Hour * 60 + time.Minute) - (4 * 60);
+        int startMinutes = StartHour * 60 + StartMinute;
+        int currentMinutes = time.Hour * 60 + time.Minute;
+
+        return currentMinutes - startMinutes;
     }
 
 
     private const int StartHour = 4;
     private const int EndHour = 12;
+    private const int StartMinute = 26;
+    private const int EndMinute = 00;
 
     private const float TimelineWidth = 800f;
     private const float TimelineHeight = 80f;
 
-    private const float LabelWidth = 100f;
+    private const float LabelWidth = 150f;
     private const float RowHeight = 45f;
 
     private const float SubRowHeight = RowHeight / 2f;
@@ -323,64 +329,81 @@ public class AnalyticsWindow : EditorWindow
 
     private void DrawTimeMarkers(Rect rect)
     {
-        int totalMinutes = (EndHour - StartHour) * 60;
+        int startTotalMinutes = StartHour * 60 + StartMinute;
+        int endTotalMinutes = EndHour * 60 + EndMinute;
 
-        for (int minute = 0; minute <= totalMinutes; minute += 15)
+        GUIStyle smallTimeStyle = new GUIStyle(EditorStyles.label);
+        smallTimeStyle.fontSize = 8;
+
+        int totalMinutes = endTotalMinutes - startTotalMinutes;
+
+        // Primer marcador: 04:26
         {
-            float normalized = minute / (float)totalMinutes;
+            float x = rect.x;
+
+            GUI.Label(
+                new Rect(
+                    x - 20,
+                    rect.y,
+                    50,
+                    20
+                ),
+                $"{StartHour}:{StartMinute:00}"
+            );
+
+            EditorGUI.DrawRect(
+                new Rect(
+                    x,
+                    rect.y + 20,
+                    1,
+                    16
+                ),
+                Color.gray
+            );
+        }
+
+        // Marcadores cada 15 minutos,
+        // empezando en el siguiente cuarto de hora.
+        int firstQuarter = ((startTotalMinutes / 15) + 1) * 15;
+
+        for (
+            int currentMinutes = firstQuarter;
+            currentMinutes <= endTotalMinutes;
+            currentMinutes += 15)
+        {
+            float normalized =
+                (currentMinutes - startTotalMinutes) /
+                (float)totalMinutes;
+
             float x = rect.x + normalized * rect.width;
 
-            bool isHour = minute % 60 == 0;
+            int hour = currentMinutes / 60;
+            int minutes = currentMinutes % 60;
 
-            // Línea principal de la timeline
-            if (isHour)
-            {
-                GUI.Label(
-                    new Rect(
-                        x - 20,
-                        rect.y,
-                        50,
-                        20
-                    ),
-                    $"{StartHour + minute / 60}:00"
-                );
+            bool isHour = minutes == 0;
 
-                EditorGUI.DrawRect(
-                    new Rect(
-                        x,
-                        rect.y + 20,
-                        1,
-                        16
-                    ),
-                    Color.gray
-                );
-            }
-            else
-            {
-                int hour = StartHour + minute / 60;
-                int minutes = minute % 60;
+            GUI.Label(
+                new Rect(
+                    x - 12,
+                    rect.y,
+                    40,
+                    20
+                ),
+                $"{hour}:{minutes:00}",
+                isHour
+                    ? EditorStyles.label
+                    : smallTimeStyle
+            );
 
-                GUI.Label(
-                    new Rect(
-                        x - 18,
-                        rect.y,
-                        40,
-                        20
-                    ),
-                    $"{hour}:{minutes:00}",
-                    EditorStyles.miniLabel
-                );
-
-                EditorGUI.DrawRect(
-                    new Rect(
-                        x,
-                        rect.y + 20,
-                        1,
-                        8
-                    ),
-                    new Color(0.4f, 0.4f, 0.4f)
-                );
-            }
+            EditorGUI.DrawRect(
+                new Rect(
+                    x,
+                    rect.y + 20,
+                    1,
+                    isHour ? 16 : 8
+                ),
+                Color.gray
+            );
         }
 
         // Línea horizontal
@@ -394,6 +417,7 @@ public class AnalyticsWindow : EditorWindow
             Color.gray
         );
     }
+
 
     #endregion
 

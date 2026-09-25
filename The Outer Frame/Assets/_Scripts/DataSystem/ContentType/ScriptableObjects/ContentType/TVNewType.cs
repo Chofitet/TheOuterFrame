@@ -151,7 +151,6 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
         TimeData FixedEndTime = AddMinutesToTime(ActualTime, GetTimeToAppear());
         EndTime = ScriptableObject.CreateInstance<TimeCheckConditional>();
         EndTime.Initialize(true, FixedEndTime.Day, FixedEndTime.Hour, FixedEndTime.Minute);
-
         MarkDirty();
         //Debug.Log("Defined Time to show new: " + FixedEndTime.ToString());
     }
@@ -249,7 +248,7 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
 
     public void SetStremedTime(TimeData time)
     {
-        //NoImplemented. Time already define by player actions
+        CompleteTime = time;
     }
 
     //POPUP implementation

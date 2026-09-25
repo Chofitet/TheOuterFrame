@@ -8,8 +8,9 @@ public class AnalyticMarkTrigger : MonoBehaviour
     [SerializeField] AnalyticsType analyticsType;
     List<AnalyticsEntry> MarksList = new List<AnalyticsEntry>();
 
-    public void SetANewMaek(Component sender, object obj)
+    public void SetANewMark(Component sender, object obj)
     {
+        Debug.Log(analyticsType);
         SetANewMark(TimeManager.timeManager.GetTime());
     }
 

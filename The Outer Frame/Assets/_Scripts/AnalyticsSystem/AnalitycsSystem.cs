@@ -24,39 +24,45 @@ public enum AnalyticsType
 {
     // TV
     [AnalyticsInfo("News", "TV")]
-    News,
+    News = 0,
 
     //board
     [AnalyticsInfo("Go To Board", "Board")]
-    GoToBoard,
+    GoToBoard = 1,
     [AnalyticsInfo("Photo Placed", "Board")]
-    PhotoPlacedInBoard,
+    PhotoPlacedInBoard = 2,
     [AnalyticsInfo("Idea Taked", "Board")]
-    IdeaTakedInBoard,
+    IdeaTakedInBoard = 3,
     [AnalyticsInfo("Idea Sended", "Board")]
-    IdeaSended,
+    IdeaSended = 4,
 
     //PC
     [AnalyticsInfo("DB Word Searched", "PC")]
-    DBWordSearched,
+    DBWordSearched = 5,
+    [AnalyticsInfo("Empty DB Serched", "PC")]
+    EmptyDBSerched = 13,
     [AnalyticsInfo("Hyper link Clicked", "PC")]
-    HyperlinkClicked,
+    HyperlinkClicked = 6,
+    
     //FindableWordInPC
 
     //WireOphone
     [AnalyticsInfo("Phone Number Finded", "WireOPhone")]
-    PhoneNumberFinded,
+    PhoneNumberFinded =7,
     [AnalyticsInfo("REC Button Pushed", "WireOPhone")]
-    RECButtonPushed,
+    RECButtonPushed = 8,
     [AnalyticsInfo("Print Button Pushed", "WireOPhone")]
-    PrintButtonPushed,
+    PrintButtonPushed = 9,
 
     //AP
     [AnalyticsInfo("Word Filled In AP", "AP")]
-    WordFilledInAP,
+    WordFilledInAP = 10,
     [AnalyticsInfo("Ap Sended", "AP")]
-    ApSended
+    ApSended = 11,
 
+    //Time 
+    [AnalyticsInfo("Time Accelerated", "Time")]
+    TimeAccelerated = 12
 }
 
 public class AnalyticsInfoAttribute : Attribute
