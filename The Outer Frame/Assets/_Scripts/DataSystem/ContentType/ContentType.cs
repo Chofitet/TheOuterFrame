@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 abstract public class ContentType : DataType
 {
-    public Guid ID;
-
+    
     string primaryText;
     string secondaryText;
 

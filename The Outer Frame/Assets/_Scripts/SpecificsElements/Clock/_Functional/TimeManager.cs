@@ -247,6 +247,7 @@ public class TimeManager : MonoBehaviour
 
 }
 
+[Serializable]
 public struct TimeData
 {
     public int Day;

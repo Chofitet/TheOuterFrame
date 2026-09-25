@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNewRandom", menuName = "News/RandomNew")]
-public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp
+public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp, IAnalytics
 {
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
@@ -13,7 +13,8 @@ public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObjec
     [SerializeField] int alertLevelIncrement;
     [SerializeField] int channel;
     [NonSerialized] bool wasStremed;
-
+    [NonSerialized]TimeData StartTime;
+    [NonSerialized]TimeData TimeStreamedEnds;
 
    /* private void OnEnable()
     {
@@ -23,13 +24,24 @@ public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObjec
     public void ResetScriptableObject()
     {
         wasStremed = false;
+        StartTime = new TimeData(0,0,0);
+        TimeStreamedEnds = new TimeData(0,0,0);
     }
 
     public int GetChannelNum()
     {
         return channel;
     }
-
+    public void SetStremedTime(TimeData time)
+    {
+        StartTime = time;
+        MarkDirty();
+    }
+    public void SetTimeStreamedEnds(TimeData time)
+    {
+        TimeStreamedEnds = time;
+        MarkDirty();
+    }
     public string GetHeadline() { return headline; }
 
     public override string GetText() { return text; }
@@ -90,6 +102,19 @@ public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObjec
     public NewType GetNewType()
     {
         return NewType.RandomNews;
+    }
+
+
+    public AnalyticsEntry GetAnalyticsData()
+    {
+        return new AnalyticsEntry
+        {
+            ID = ID.ToString(),
+            CompletedTime = StartTime,
+            FinishedTime = TimeStreamedEnds,
+            WasDone = wasStremed,
+            AnalyticType = AnalyticsType.News
+        };
     }
 
     //POPUP implementation

@@ -24,10 +24,13 @@ public interface INewType
     bool GetStateConditionalToAppear();
     int GetTimeToAppear();
 
+    void SetStremedTime(TimeData time);
     int GetMinTransmitionTime();
 
     void SetWasStreamed();
 
     bool GetWasStreamed();
+
+    void SetTimeStreamedEnds(TimeData time);
 
 }
