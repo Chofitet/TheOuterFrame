@@ -924,6 +924,7 @@ GameObject:
   m_Component:
   - component: {fileID: 119231702}
   - component: {fileID: 119231703}
+  - component: {fileID: 119231704}
   m_Layer: 0
   m_Name: DataService
   m_TagString: Untagged
@@ -959,6 +960,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directory: {fileID: 11400000, guid: 9bfd7af87de872642bdfaa0c40c2a82a, type: 2}
+--- !u!114 &119231704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119231701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 89a0034a67f6a244d859d967d30595a3, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 119231703}
+        m_TargetAssemblyTypeName: DatatService, Assembly-CSharp
+        m_MethodName: EndGame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &123501970
 GameObject:
   m_ObjectHideFlags: 0

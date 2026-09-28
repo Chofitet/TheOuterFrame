@@ -22,14 +22,28 @@ public class GameEventListener : MonoBehaviour
     [SerializeField] Transform _transform;
     [SerializeField] Color _color;
 
-    private void OnEnable() => TriggerEvent.registerListener(this);
+    private void OnEnable()
+    {
+        Debug.Log($"[EVENT LISTENER] ENABLED - {gameObject.name} - Trigger: {TriggerEvent}");
 
-    private void OnDisable() => TriggerEvent.UnregisterListener(this);
+        TriggerEvent.registerListener(this);
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log($"[EVENT LISTENER] DISABLED - {gameObject.name} - Trigger: {TriggerEvent}");
+
+        TriggerEvent.UnregisterListener(this);
+    }
 
     bool isDelaying;
     public void Raise(Component sender, object data)
     {
-        if(data == null)
+        Debug.Log(
+       $"[EVENT LISTENER] RAISED - {gameObject.name} - Trigger: {TriggerEvent}"
+   );
+
+        if (data == null)
         {
             if (_float != 0) data = _float;
             if (_string != "") data = _string;
