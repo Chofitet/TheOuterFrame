@@ -13,7 +13,7 @@ public class MixerController : MonoBehaviour, IDataPersistence
     [SerializeField] TMP_Text textFiled;
     [SerializeField] bool isInverted; // true si el volumen va invertido (por ejemplo, sonido ambiente)
 
-    float VolumeValue = 1f;
+    [SerializeField] float VolumeValue = 1f;
     bool isSettingInStart;
 
     private void Start()
@@ -107,7 +107,7 @@ public class MixerController : MonoBehaviour, IDataPersistence
 
         DataPersistenceManager.instance.SaveGame();
     }
-
+    
     // ---------------------
     // Persistencia de datos
     // ---------------------
@@ -131,7 +131,7 @@ public class MixerController : MonoBehaviour, IDataPersistence
         }
         textFiled.text = Mathf.RoundToInt(VolumeValue * 10).ToString("00");
     }
-
+    
     public void SaveData(GameData data)
     {
         if (isInverted)
