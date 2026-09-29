@@ -27,6 +27,8 @@ public class ProgressorModuleController : MonoBehaviour
     [SerializeField] GameObject colliderUnused;
     [SerializeField] GameEvent OnAbortMultiAction;
     [SerializeField] GameEvent OnSendGoodVilify;
+    [SerializeField] GameEvent OnPrintFromDesk;
+    [SerializeField] GameEvent OnPrintFromProgressor;
     [ColorUsage(true, true)][SerializeField] Color LedRed;
 
     [Header("Candy Parameters")]
@@ -45,6 +47,7 @@ public class ProgressorModuleController : MonoBehaviour
     private StateEnum state;
     private int time;
     ObjectToPrint objectType;
+    ViewStates actualView;
 
     bool isWaitingForSetSlot;
     float elapsedTime;
@@ -323,6 +326,9 @@ public class ProgressorModuleController : MonoBehaviour
                 TurnOnLight(light2, 0);
                 Invoke("ResetDelay", 0.3f);
 
+                if (actualView == ViewStates.ProgressorView) OnPrintFromProgressor?.Invoke(this, null);
+                else OnPrintFromDesk?.Invoke(this, null);
+
             }
             else
             {
@@ -366,6 +372,11 @@ public class ProgressorModuleController : MonoBehaviour
         slot.CleanSlot();
         resetSlot();
 
+    }
+
+    public void SetView(Component sender, object obj)
+    {
+        actualView = (ViewStates)obj;
     }
 
     bool DisableAbort;

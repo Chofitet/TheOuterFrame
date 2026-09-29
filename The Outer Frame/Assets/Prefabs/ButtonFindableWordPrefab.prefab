@@ -234,6 +234,11 @@ MonoBehaviour:
   OnFindableWordButtonHover: {fileID: 11400000, guid: ac2ef48730665d843b0bcf7cf5677ab9, type: 2}
   OnFindableWordButtonUnHover: {fileID: 11400000, guid: eb8dd54113456984eb2705b424e5fb6e, type: 2}
   TheCabin: {fileID: 11400000, guid: 1b2609e1d6368b1458059459fa1ad1ee, type: 2}
+  OnTakeFindadleFromGeneric: {fileID: 11400000, guid: 7640f2d731082f94b9930318b1a3968a, type: 2}
+  OnTakeFindadleFromReport: {fileID: 11400000, guid: 1e098d97a06bd53489df195674f0bccd, type: 2}
+  OnTakeFindadleFromTV: {fileID: 11400000, guid: b2bae0d0c69d3c34581e68d215a79a27, type: 2}
+  OnTakeFindadleFromPC: {fileID: 11400000, guid: 1f0ae244ef7e537439a596f685db944e, type: 2}
+  OnTakeFindadleFromTranscription: {fileID: 11400000, guid: b2bae0d0c69d3c34581e68d215a79a27, type: 2}
 --- !u!114 &9006669820389021483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +445,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &6204563712743506251
 MonoBehaviour:
   m_ObjectHideFlags: 0

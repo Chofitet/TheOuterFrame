@@ -31,11 +31,11 @@ public class TranscriptionCallController : MonoBehaviour
 
         txtCall.text = call.GetDialogue();
         txtFrom.text = word.GetPhoneNumber();
-        FindableWordsManager.FWM.InstanciateFindableWord(txtFrom,FindableBtnType.FindableBTN);
+        FindableWordsManager.FWM.InstanciateFindableWord(txtFrom,FindableBtnType.FindableBTN,FindableComesFrom.Transcript);
 
         txtAt.text = $"{_call.GetCachedStartTime().ToString()} to {_call.GetCachedFinishTime().ToString()}";
         GetComponent<IndividualCallController>().SetType(true, call);
-        FindableWordsManager.FWM.InstanciateFindableWord(txtCall,FindableBtnType.FindableBTN,_call.FindableWords);
+        FindableWordsManager.FWM.InstanciateFindableWord(txtCall,FindableBtnType.FindableBTN, FindableComesFrom.Transcript, _call.FindableWords);
         DisposeBTN.SetActive(false);
         UploadBTN.SetActive(true);
 

@@ -126,7 +126,7 @@ public class ChannelController : MonoBehaviour
             HeadlineText2.gameObject.SetActive(true);
             HeadlineText.gameObject.SetActive(false);
             HeadlineText2.text = _new.GetHeadline2();
-            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText2, FindableBtnType.FindableBTN);
+            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText2, FindableBtnType.FindableBTN, FindableComesFrom.TV);
 
         }
         else
@@ -136,7 +136,7 @@ public class ChannelController : MonoBehaviour
             HeadlineText.text = _new.GetHeadline();
         }
         NewTextContent.text = _new.GetNewText();
-        FindableWordsManager.FWM.InstanciateFindableWord(NewTextContent, FindableBtnType.FindableBTN);
+        FindableWordsManager.FWM.InstanciateFindableWord(NewTextContent, FindableBtnType.FindableBTN, FindableComesFrom.PC);
         if (_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
 
 
@@ -155,7 +155,7 @@ public class ChannelController : MonoBehaviour
         else
         {
             OnChangeToNormalNew?.Invoke(this, null);
-            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText, FindableBtnType.FindableBTN);
+            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText, FindableBtnType.FindableBTN, FindableComesFrom.TV);
             isFirstNew = true;
         }
         OnIncreaseAlertLevel?.Invoke(this, new AlertData(_new.GetIncreaseAlertLevel(), NewProperties.TextInAlertScreen));
@@ -184,7 +184,7 @@ public class ChannelController : MonoBehaviour
             HeadlineText2.gameObject.SetActive(true);
             HeadlineText.gameObject.SetActive(false);
             HeadlineText2.text = _new.GetHeadline2();
-            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText2, FindableBtnType.FindableBTN);
+            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText2, FindableBtnType.FindableBTN, FindableComesFrom.TV);
 
         }
         else
@@ -194,7 +194,7 @@ public class ChannelController : MonoBehaviour
             HeadlineText.text = _new.GetHeadline();
         }
         NewTextContent.text = _new.GetNewText();
-        FindableWordsManager.FWM.InstanciateFindableWord(NewTextContent, FindableBtnType.FindableBTN);
+        FindableWordsManager.FWM.InstanciateFindableWord(NewTextContent, FindableBtnType.FindableBTN, FindableComesFrom.TV);
         if (_new.GetNewText() == "") NewTextContent.text = _new.GetHeadline();
 
         if (_new.GetNewImag())
@@ -209,7 +209,7 @@ public class ChannelController : MonoBehaviour
         else
         {
             OnChangeToNormalNew?.Invoke(this, null);
-            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText, FindableBtnType.FindableBTN);
+            FindableWordsManager.FWM.InstanciateFindableWord(HeadlineText, FindableBtnType.FindableBTN, FindableComesFrom.TV);
         }
         OnIncreaseAlertLevel?.Invoke(this, new AlertData(_new.GetIncreaseAlertLevel(), NewProperties.TextInAlertScreen));
         OnSetNewOnTV?.Invoke(this, _new);
@@ -225,7 +225,7 @@ public class ChannelController : MonoBehaviour
         { EmergencyTextField.text = _new.GetHeadline(); }
         else EmergencyTextField.text = _new.GetHeadline2();
         isFirstNew = false;
-        FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField,FindableBtnType.FindableBTN,null,false,true);
+        FindableWordsManager.FWM.InstanciateFindableWord(EmergencyTextField,FindableBtnType.FindableBTN, FindableComesFrom.TV, null,false,true);
     }
 
     public void resetChannel()

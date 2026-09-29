@@ -5,7 +5,7 @@ using UnityEngine;
 
 interface IFindableBTN 
 {
-    void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton, bool comesFromDBTitle, bool comesFromNewEmergency);
+    void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton, bool comesFromDBTitle, bool comesFromNewEmergency, FindableComesFrom comesFrom = FindableComesFrom.Generic);
 
     WordData Getword();
 }

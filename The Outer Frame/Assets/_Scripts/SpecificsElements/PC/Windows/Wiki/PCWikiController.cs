@@ -46,7 +46,7 @@ public class PCWikiController : MonoBehaviour
         if (_wordData == null)
         {
             WikiData.text = "YOU SEARCH NOTHING YOU GET NOTHING";
-            FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN);
+            FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN, FindableComesFrom.PC);
 
             HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
 
@@ -85,7 +85,7 @@ public class PCWikiController : MonoBehaviour
         WikiInfoContent.SetActive(true);
         if (input.GetText() != null) WikiData.text = input.GetText();
         
-        FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN,input.FindableWords);
+        FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN, FindableComesFrom.PC, input.FindableWords);
         HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink, input.HyperLinks);
         InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData,input.RedactedBlocks, true);
         //WikiInfoContent.SetActive(true);
@@ -189,7 +189,7 @@ public class PCWikiController : MonoBehaviour
             TMP_Text auxText = DataBaseFields[i].transform.GetChild(2).GetComponent<TMP_Text>();
             auxText.text = auxDictionary[i];
             InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(auxText,null,false,true);
-            FindableWordsManager.FWM.InstanciateFindableWord(DataBaseFields[i].transform.GetChild(2).GetComponent<TMP_Text>(),FindableBtnType.FindableBTN);
+            FindableWordsManager.FWM.InstanciateFindableWord(DataBaseFields[i].transform.GetChild(2).GetComponent<TMP_Text>(),FindableBtnType.FindableBTN, FindableComesFrom.PC);
             HyperlinksManager.HLM.InstanciateHyperLink(DataBaseFields[i].transform.GetChild(2).GetComponent<TMP_Text>(), FindableBtnType.HyperLink);
         }
     }

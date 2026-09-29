@@ -13,6 +13,15 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     [SerializeField] GameEvent OnFindableWordButtonHover;
     [SerializeField] GameEvent OnFindableWordButtonUnHover;
     [SerializeField] WordData TheCabin;
+
+    [SerializeField] GameEvent OnTakeFindadleFromGeneric;
+    [SerializeField] GameEvent OnTakeFindadleFromReport;
+    [SerializeField] GameEvent OnTakeFindadleFromTV;
+    [SerializeField] GameEvent OnTakeFindadleFromPC;
+    [SerializeField] GameEvent OnTakeFindadleFromTranscription;
+
+    FindableComesFrom comesFrom;
+
     bool isInactive;
     TMP_Text textField;
     WordData word;
@@ -38,7 +47,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     bool _isRepitedButton;
     bool _comesFromDBTitle;
     bool _comesFromNewEmergency;
-    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton, bool comesFromDBTitle = false, bool comesFromNewEmergency = false)
+    public void Initialization(WordData Word, float Width, float Heigth, TMP_Text TextField, bool isRepitedButton, bool comesFromDBTitle = false, bool comesFromNewEmergency = false, FindableComesFrom _comesFrom = FindableComesFrom.Generic)
     {
         rectTransform.sizeDelta = new Vector2(Width, Heigth);
         textField = TextField;
@@ -47,6 +56,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         _isRepitedButton = isRepitedButton;
         _comesFromDBTitle = comesFromDBTitle;
         _comesFromNewEmergency = comesFromNewEmergency;
+        comesFrom = _comesFrom;
         ApplyShader("Bold");
     }
 
@@ -71,6 +81,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         OnFindableWordButtonUnHover?.Invoke(this, 3);
         if (_comesFromNewEmergency) overlay.GlowOff();
         isHovered = false;
+        TriggerFindableEvent(comesFrom);
         AnimateGlow();
     }
 
@@ -343,6 +354,33 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
         }
     }
 
+
+    public void TriggerFindableEvent(FindableComesFrom comesFrom)
+    {
+        switch (comesFrom)
+        {
+            case FindableComesFrom.Report:
+                OnTakeFindadleFromReport?.Invoke(this, null);
+                break;
+
+            case FindableComesFrom.TV:
+                OnTakeFindadleFromTV?.Invoke(this, null);
+                break;
+
+            case FindableComesFrom.PC:
+                OnTakeFindadleFromPC?.Invoke(this, null);
+                break;
+
+            case FindableComesFrom.Transcript:
+                OnTakeFindadleFromTranscription?.Invoke(this, null);
+                break;
+
+            case FindableComesFrom.Generic:
+            default:
+                OnTakeFindadleFromGeneric?.Invoke(this, null);
+                break;
+        }
+    }
 
     public bool GetIsVisible() { return IsVisible(); }
     public TMP_Text GetTextField() { return textField; }

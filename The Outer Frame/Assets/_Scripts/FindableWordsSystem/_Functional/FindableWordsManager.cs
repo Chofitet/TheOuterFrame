@@ -16,6 +16,9 @@ public class FindableWordsManager : MonoBehaviour
     [SerializeField] GameEvent OnFindableWordInstance;
     [SerializeField] WordData Irrelevant;
     [SerializeField] WordData LastWord;
+
+    
+
     bool isInLastWord;
     public static FindableWordsManager FWM { get; private set; }
 
@@ -31,7 +34,7 @@ public class FindableWordsManager : MonoBehaviour
         }
     }
 
-    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, IReadOnlyList<FindableWordData> pre_proccess_PositioWords = null, bool _comesFromDBTitle = false, bool _comesFromNewEmergency =false, bool _comesFromReport = false)
+    public void InstanciateFindableWord(TMP_Text textField, FindableBtnType btnType, FindableComesFrom comesFrom = FindableComesFrom.Generic, IReadOnlyList<FindableWordData> pre_proccess_PositioWords = null, bool _comesFromDBTitle = false, bool _comesFromNewEmergency =false)
     {
         // btnType para cuando quiera refactorizar este script para que funcione con links tambien
         if (noInstantiateMore) return;
@@ -79,7 +82,7 @@ public class FindableWordsManager : MonoBehaviour
             foreach (FindableWordData w in PositionsWord)
             {
                 if (isInLastWord && w.GetWordData() != LastWord) continue;
-                if(_comesFromReport) w.GetWordData().SetAppearOnReport();
+                if (comesFrom == FindableComesFrom.Report) w.GetWordData().SetAppearOnReport();
                 if (w.GetWordData().GetIsFound()) continue;
                 if (w.GetWordData().GetInactiveState()) continue;
                 GameObject auxObj = pool.GetFromPool(textField.transform);
@@ -88,12 +91,14 @@ public class FindableWordsManager : MonoBehaviour
                 auxObj.transform.localRotation = Quaternion.identity;
                 auxObj.name = "FindableBTN_" + w.GetWordData().GetName();
                 auxObj.GetComponent<FindableWordBTNController>().enabled = true;
-                auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle, _comesFromNewEmergency);
+                auxObj.GetComponent<FindableWordBTNController>().Initialization(w.GetWordData(), w.GetWidth(), w.GetHeigth(), textField, w.GeisRepitedButton(), _comesFromDBTitle, _comesFromNewEmergency, comesFrom);
                 FindableWordsBTNs.Add(auxObj);
                 OnFindableWordInstance?.Invoke(this, auxObj);
-               // auxObj.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(auxObj));
+                // auxObj.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(auxObj));
             }
-        } catch (Exception ex)
+
+        }
+        catch (Exception ex)
         {
             Debug.LogError("Error instantiating findable words: " + ex.Message);
         }
@@ -104,23 +109,23 @@ public class FindableWordsManager : MonoBehaviour
         }
 
     }
-    
 
-   /* void OnButtonClick(GameObject obj)
-    {
-        DeleteBtnAlreadyFound(obj.GetComponent<FindableWordBTNController>().Getword());
-    }
 
-    void DeleteBtnAlreadyFound(WordData newWord)
-    {
-        foreach(GameObject btn in FindableWordsBTNs)
-        {
-            if (btn.GetComponent<FindableWordBTNController>().Getword() == newWord)
-            {
-                Destroy(btn);
-            }
-        }
-    }*/
+    /* void OnButtonClick(GameObject obj)
+     {
+         DeleteBtnAlreadyFound(obj.GetComponent<FindableWordBTNController>().Getword());
+     }
+
+     void DeleteBtnAlreadyFound(WordData newWord)
+     {
+         foreach(GameObject btn in FindableWordsBTNs)
+         {
+             if (btn.GetComponent<FindableWordBTNController>().Getword() == newWord)
+             {
+                 Destroy(btn);
+             }
+         }
+     }*/
 
 
     int index;
@@ -171,3 +176,13 @@ public enum FindableBtnType
     HyperLink
 }
 
+public enum FindableComesFrom
+{
+    Generic,
+    PC,
+    TV,
+    Report,
+    Transcript,
+    Briefing
+
+}

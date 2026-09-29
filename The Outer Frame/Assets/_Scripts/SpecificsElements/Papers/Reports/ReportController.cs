@@ -62,7 +62,7 @@ public class ReportController : MonoBehaviour
         else if (isAlreadyDone)
         {
             Resulttxt.text = report.GetTextForRepetition();
-            FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt, FindableBtnType.FindableBTN, report.FindableWords,false,false,true);
+            FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt, FindableBtnType.FindableBTN, FindableComesFrom.Report, report.FindableWords);
             photo1.Set("REMEMBER TO READ", WrongResultImg[new System.Random().Next(2) == 0 ? 5 : 8]);
             if (report.GetTextForRepetition() == "") Debug.LogWarning("No text for repetition in report: " + report.name);
             status = "<color=#AE0000>REDUNDANT</color>";
@@ -152,7 +152,7 @@ public class ReportController : MonoBehaviour
             if(report.GetIsTheLastReport()) UploadBTN.SetActive(false);
         }
         Resulttxt.text = report.GetText();
-        FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt, FindableBtnType.FindableBTN, report.FindableWords, false, false, true);
+        FindableWordsManager.FWM.InstanciateFindableWord(Resulttxt, FindableBtnType.FindableBTN, FindableComesFrom.Report ,report.FindableWords);
         GetComponent<IndividualReportController>().SetType(true, word, report);
         if(!report.GetIsAutomatic()) SetMaterial(materialUploadDB);
 

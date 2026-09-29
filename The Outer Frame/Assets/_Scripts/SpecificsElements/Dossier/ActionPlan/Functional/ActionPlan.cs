@@ -21,6 +21,7 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameEvent OnSendGoodVilify;
     [SerializeField] GameObject BtnsParent;
     [SerializeField] GameEvent OnSetTransitioningAnimTime;
+    [SerializeField] GameEvent OnSentAnIdea;
     WordData FinalActionWord;
     StateEnum FinalActionState;
     StateEnum FinalActionIdea;
@@ -212,7 +213,11 @@ public class ActionPlan : MonoBehaviour
         ApproveBtn.enabled = false;
         shakeBtn.SetActive(true);
         DataFromActionPlan data = new DataFromActionPlan(word, state);
-        if (state.GetSpecialActionWord()) state.SetisWrittenOnAP(false);
+        if (state.GetSpecialActionWord())
+        {
+            OnSentAnIdea?.Invoke(this, null);
+            state.SetisWrittenOnAP(false);
+        }
         OnApprovedActionPlan.Invoke(this, data);
         OnSetGeneralView?.Invoke(this, null);
         if (state.GetNeedWordLocation()) word.SetIsPendingToShowLocation(false);
