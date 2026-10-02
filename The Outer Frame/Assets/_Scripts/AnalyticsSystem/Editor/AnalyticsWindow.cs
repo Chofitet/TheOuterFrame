@@ -11,6 +11,19 @@ public class AnalyticsWindow : EditorWindow
     private AnalyticsFile analyticsFile;
     [SerializeField] private DataDirectory directory;
 
+    private List<AnalyticsEntry> cachedBlockEntries = new();
+    private List<AnalyticsEntry> cachedMarkEntries = new();
+
+    private List<AnalyticsEntry> visibleBlockEntries = new();
+    private List<AnalyticsEntry> visibleMarkEntries = new();
+
+    private Dictionary<AnalyticsType, bool> foldouts = new();
+
+    private void OnEnable()
+    {
+        subRowStyle = new GUIStyle(EditorStyles.miniLabel);
+    }
+
     [MenuItem("Tools/Analytics Viewer")]
     public static void ShowWindow()
     {
@@ -61,15 +74,50 @@ public class AnalyticsWindow : EditorWindow
 
         analyticsFile = JsonUtility.FromJson<AnalyticsFile>(json);
 
+        BuildCache();
+        RebuildVisibleEntries();
+
         Repaint();
     }
 
-    private DataType GetDataFromEntry(AnalyticsEntry entry)
+    private void BuildCache()
     {
-        if (entry == null || string.IsNullOrEmpty(entry.ID))
-            return null;
+        cachedBlockEntries.Clear();
+        cachedMarkEntries.Clear();
 
-        return directory.GetById(entry.ID);
+        foreach (AnalyticsEntry entry in analyticsFile.Entries)
+        {
+            if (entry.VisualType == AnalyticsVisualType.Block)
+                cachedBlockEntries.Add(entry);
+            else
+                cachedMarkEntries.Add(entry);
+        }
+    }
+
+    private void RebuildVisibleEntries()
+    {
+        visibleBlockEntries.Clear();
+        visibleMarkEntries.Clear();
+
+        foreach (AnalyticsEntry entry in cachedBlockEntries)
+        {
+            string group = GetAnalyticsGroup(entry.AnalyticType);
+
+            if (groupExpanded.TryGetValue(group, out bool expanded) && expanded)
+            {
+                visibleBlockEntries.Add(entry);
+            }
+        }
+
+        foreach (AnalyticsEntry entry in cachedMarkEntries)
+        {
+            string group = GetAnalyticsGroup(entry.AnalyticType);
+
+            if (groupExpanded.TryGetValue(group, out bool expanded) && expanded)
+            {
+                visibleMarkEntries.Add(entry);
+            }
+        }
     }
 
     private string GetAssetName(DataType data)
@@ -108,17 +156,19 @@ public class AnalyticsWindow : EditorWindow
     private void DrawTimeline()
     {
         EditorGUILayout.LabelField(
-         $"Entries: {analyticsFile.Entries.Count}",
-         EditorStyles.boldLabel
-     );
+       $"Entries: {analyticsFile.Entries.Count}",
+       EditorStyles.boldLabel
+   );
 
         EditorGUILayout.Space();
 
         List<TimelineRow> rows = GetTimelineRows();
 
+        float timelineHeight = GetVisibleTimelineHeight(rows);
+
         Rect timelineRect = GUILayoutUtility.GetRect(
             1000f,
-            RowHeight * (rows.Count + 1)
+            timelineHeight
         );
 
         Rect timelineArea = new Rect(
@@ -136,12 +186,36 @@ public class AnalyticsWindow : EditorWindow
         DrawMarkEntries(timelineArea);
     }
 
-    private void DrawRows(
-     Rect timelineRect,
-     Rect timelineArea,
-     List<TimelineRow> rows)
+    private float GetVisibleTimelineHeight(List<TimelineRow> rows)
     {
-        int rowIndex = 0;
+        float height = RowHeight;
+
+        foreach (TimelineRow row in rows)
+        {
+            if (row.IsGroup)
+            {
+                height += RowHeight;
+                continue;
+            }
+
+            string group = GetAnalyticsGroup(row.Type);
+
+            if (groupExpanded.TryGetValue(group, out bool expanded) && expanded)
+            {
+                height += SubRowHeight;
+            }
+        }
+
+        return height;
+    }
+
+    private GUIStyle subRowStyle;
+
+    private void DrawRows(
+    Rect timelineRect,
+    Rect timelineArea,
+    List<TimelineRow> rows)
+    {
         float currentY = timelineRect.y + RowHeight;
 
         foreach (TimelineRow row in rows)
@@ -155,13 +229,24 @@ public class AnalyticsWindow : EditorWindow
                     RowHeight
                 );
 
-                groupExpanded[row.Group] = EditorGUI.Foldout(
-                  groupRect,
-                  groupExpanded[row.Group],
-                  row.Group,
-                  true
-              );
+                bool wasExpanded = groupExpanded[row.Group];
 
+                bool isExpanded = EditorGUI.Foldout(
+                    groupRect,
+                    wasExpanded,
+                    row.Group,
+                    true
+                );
+
+                // El foldout cambió
+                if (isExpanded != wasExpanded)
+                {
+                    groupExpanded[row.Group] = isExpanded;
+
+                    RebuildVisibleEntries();
+                }
+
+                // Línea horizontal del grupo
                 EditorGUI.DrawRect(
                     new Rect(
                         timelineArea.x,
@@ -174,9 +259,18 @@ public class AnalyticsWindow : EditorWindow
 
                 currentY += RowHeight;
             }
+
+            // -------------------------
+            // SUB ROW
+            // -------------------------
             else
             {
-                GUIStyle subRowStyle = new GUIStyle(EditorStyles.miniLabel);
+                string group = GetAnalyticsGroup(row.Type);
+
+                // Si el grupo está cerrado,
+                // directamente no dibujamos esta fila.
+                if (!groupExpanded[group])
+                    continue;
 
                 GUI.Label(
                     new Rect(
@@ -189,6 +283,7 @@ public class AnalyticsWindow : EditorWindow
                     subRowStyle
                 );
 
+                // Línea horizontal de la subfila
                 EditorGUI.DrawRect(
                     new Rect(
                         timelineArea.x,
@@ -201,8 +296,6 @@ public class AnalyticsWindow : EditorWindow
 
                 currentY += SubRowHeight;
             }
-
-            rowIndex++;
         }
     }
 
@@ -277,7 +370,7 @@ public class AnalyticsWindow : EditorWindow
         foreach (string group in groups)
         {
             if (!groupExpanded.ContainsKey(group))
-                groupExpanded[group] = true;
+                groupExpanded[group] = false;
 
             rows.Add(new TimelineRow
             {
@@ -423,11 +516,8 @@ public class AnalyticsWindow : EditorWindow
 
     private void DrawBlockEntries(Rect rect)
     {
-        foreach (AnalyticsEntry entry in analyticsFile.Entries)
+        foreach (AnalyticsEntry entry in visibleBlockEntries)
         {
-            if (entry.VisualType != AnalyticsVisualType.Block)
-                continue;
-
             DataType data = directory.GetById(entry.ID);
 
             string assetName = data != null
@@ -461,38 +551,35 @@ public class AnalyticsWindow : EditorWindow
             );
 
             float border = 2f;
-            Color borderColor = Color.black;
 
             EditorGUI.DrawRect(
                 new Rect(entryRect.x, entryRect.y, entryRect.width, border),
-                borderColor
+                Color.black
             );
 
             EditorGUI.DrawRect(
                 new Rect(entryRect.x, entryRect.yMax - border, entryRect.width, border),
-                borderColor
+                Color.black
             );
 
             EditorGUI.DrawRect(
                 new Rect(entryRect.x, entryRect.y, border, entryRect.height),
-                borderColor
+                Color.black
             );
 
             EditorGUI.DrawRect(
                 new Rect(entryRect.xMax - border, entryRect.y, border, entryRect.height),
-                borderColor
+                Color.black
             );
 
-            GUI.Label(
-                entryRect,
-                assetName
-            );
+            GUI.Label(entryRect, assetName);
         }
+
     }
 
     private void DrawMarkEntries(Rect rect)
     {
-        foreach (AnalyticsEntry entry in analyticsFile.Entries)
+        foreach (AnalyticsEntry entry in visibleMarkEntries)
         {
             if (entry.VisualType != AnalyticsVisualType.Mark)
                 continue;

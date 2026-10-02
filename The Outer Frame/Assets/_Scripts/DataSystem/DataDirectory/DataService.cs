@@ -11,18 +11,14 @@ public class DatatService : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("[DataService] AWAKE");
         if (instance != null)
         {
-            Debug.Log("Found more than one DataService in the scene. Destroying the newest one.");
             Destroy(this.gameObject);
             return;
         }
         instance = this;
         DontDestroyOnLoad(this.gameObject);
-        Debug.Log("[DataService] Initializing directory...");
         directory.Initialize();
-        Debug.Log("[DataService] Directory initialized.");
     }
 
     public void AddAnalyticMark(AnalyticsEntry entry)
@@ -30,11 +26,9 @@ public class DatatService : MonoBehaviour
         analyticsMarks.Add(entry);
     }
 
-    public void EndGame(Component sender, object obj)
+    public void ExportRunAnalytics(Component sender, object obj)
     {
-        Debug.Log("Analia");
         ExportRunAnalytics();
-
     }
 
 

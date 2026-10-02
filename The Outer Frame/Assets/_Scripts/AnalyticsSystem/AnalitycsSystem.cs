@@ -5,7 +5,17 @@ using UnityEngine;
 
 public class AnalitycsSystem : MonoBehaviour
 {
+    [SerializeField] GameEvent OnExportAnalytics;
 
+    private void OnApplicationQuit()
+    {
+        ExportAnalytics(this, "Forced Quit Game");
+    }
+
+    public void ExportAnalytics(Component sender,object obj)
+    {
+        OnExportAnalytics?.Invoke(this, (string) obj);
+    }
 }
 
 [Serializable]
