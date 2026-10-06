@@ -35,7 +35,7 @@ public class BoardManager : MonoBehaviour
     [SerializeField] GameEvent OnUpdateConnections;
     [SerializeField] GameEvent OnUpdatePosits;
     [SerializeField] GameEvent OnUpdateIdeas;
-    
+
 
     int WordsCounts;
     bool IsInView;
@@ -53,7 +53,7 @@ public class BoardManager : MonoBehaviour
             if (updateCorrutine != null) StopCoroutine(updateCorrutine);
             updateCorrutine = StartCoroutine(UpdateCycle(0.5f, false));
             OnRefreshInfoInBoard?.Invoke(this, null);
-            
+
         }
         else IsInView = false;
     }
@@ -85,7 +85,7 @@ public class BoardManager : MonoBehaviour
         OnPlacedNewBoardInformation?.Invoke(null, StartPos.position);
         OnRefreshInfoInBoard?.Invoke(this, null);
         OnRefreshNotebook?.Invoke(this, null);
-        
+
     }
 
     public void SetIsInTutorial(Component sender, object obj)
@@ -120,7 +120,7 @@ public class BoardManager : MonoBehaviour
     public void UpdatingSomethingInBoard(Component sender, object obj)
     {
         //if (!isInUpdatingTime) return;
-       // StartCoroutine(WaitUpdating());
+        // StartCoroutine(WaitUpdating());
     }
 
     IEnumerator WaitUpdating()
@@ -135,14 +135,14 @@ public class BoardManager : MonoBehaviour
     {
         int cycles = 0;
 
-        
+
         yield return new WaitForSeconds(waitTime);
 
-        
+
 
         while (cycles < 3)
         {
-           
+
             yield return UpdateElementCoroutine = StartCoroutine(UpdateElements(DisableInBeginning));
             OnRefreshNotebook?.Invoke(this, null);
             cycles++;
@@ -162,8 +162,8 @@ public class BoardManager : MonoBehaviour
     IEnumerator UpdateElements(bool DisableInBeginning)
     {
         if (!IsInView) yield break;
-       
-        if(DisableInBeginning) OnDisableInput.Invoke(this, null);
+
+        if (DisableInBeginning) OnDisableInput.Invoke(this, null);
         OnInactiveIdeas?.Invoke(this, null);
         OnUpdatePhotoUpdate?.Invoke(this, StartPos.position);
         DisableInput();
@@ -182,10 +182,10 @@ public class BoardManager : MonoBehaviour
     }
     void DisableInput()
     {
-      
+
         float TimeToWait = WaitPhotoUpdate + WaitPosit + WaitIdeas + WaitConnections;
         if (TimeToWait == 0) return;
-        
+
         OnDisableInput.Invoke(this, null);
     }
 
@@ -196,7 +196,7 @@ public class BoardManager : MonoBehaviour
 
     public void ActualTypeOfElementMoving(Component sender, object obj)
     {
-        BoardType typeOf = (BoardType) obj;
+        BoardType typeOf = (BoardType)obj;
         WaitPhotoUpdate = 0;
         WaitPosit = 0;
         WaitIdeas = 0;
@@ -204,26 +204,26 @@ public class BoardManager : MonoBehaviour
 
         if (typeOf == BoardType.photoUpdate)
         {
-            
+
             WaitPhotoUpdate = waitPhotoUpdate;
         }
-        else if(typeOf == BoardType.posit)
+        else if (typeOf == BoardType.posit)
         {
-            
+
             WaitPosit = waitPosit;
         }
-        else if(typeOf == BoardType.Idea)
+        else if (typeOf == BoardType.Idea)
         {
-            
+
             WaitIdeas = waitIdeas;
         }
-        else if(typeOf == BoardType.connection)
+        else if (typeOf == BoardType.connection)
         {
-            
+
             WaitConnections = waitConnections;
         }
 
-       
+
     }
 
     public void MadeConnections(Component sender, object obj)
@@ -231,12 +231,30 @@ public class BoardManager : MonoBehaviour
         OnConnectStringByClicking?.Invoke(this, null);
     }
 
+    private List<bool> previousConditionalStates = new();
+
     void CheckIdeaConditionals()
     {
-        foreach(GeneratorActionController idea in IdeasToCheckConditionals)
+        for (int i = 0; i < IdeasToCheckConditionals.Count; i++)
         {
-            bool conditional = idea.GetComponent<IPlacedOnBoard>().GetConditionalState();
-            if (conditional) OnSendIdeaConditionalBool?.Invoke(this, null);
+            bool currentState = IdeasToCheckConditionals[i]
+                .GetComponent<IPlacedOnBoard>()
+                .GetConditionalState();
+
+            if (previousConditionalStates.Count <= i)
+            {
+                previousConditionalStates.Add(currentState);
+                continue;
+            }
+
+            bool previousState = previousConditionalStates[i];
+
+            if (previousState != currentState)
+            {
+                OnSendIdeaConditionalBool?.Invoke(this, null);
+            }
+
+            previousConditionalStates[i] = currentState;
         }
     }
 }
