@@ -9,12 +9,26 @@ public class AnalitycsSystem : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        ExportAnalytics(this, "Forced Quit Game");
+        ExportAnalytics(this, "Forced quit");
     }
 
     public void ExportAnalytics(Component sender,object obj)
     {
-        OnExportAnalytics?.Invoke(this, (string) obj);
+        TimeSpan runTime = DateTime.Now - initTime;
+
+        string runTimeString = runTime.ToString(@"hh\:mm\:ss");
+
+        OnExportAnalytics?.Invoke(
+            this,
+            new GeneralAnalyticData((string)obj, runTimeString)
+        );
+    }
+
+    DateTime initTime;
+
+    public void SetInitRunTime(Component sender, object obj)
+    {
+        initTime = DateTime.Now;
     }
 }
 
@@ -27,6 +41,19 @@ public class AnalyticsEntry
     public bool WasDone;
     public AnalyticsType AnalyticType;
     public AnalyticsVisualType VisualType;
+}
+
+[Serializable]
+public class GeneralAnalyticData
+{
+    public string TypeOfEndRun = "";
+    public string RunTime;
+
+    public GeneralAnalyticData(string typeOfEndRund, string runTime)
+    {
+        TypeOfEndRun = typeOfEndRund;
+        RunTime = runTime;
+    }
 }
 
 [System.Serializable]

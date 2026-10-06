@@ -59,10 +59,9 @@ public class VolumenSettings : MonoBehaviour, IDataPersistence
 
     private void FadeTo(float targetDb, float duration)
     {
-        // Cancelar tween anterior si lo hubiera
+        Debug.Log("Sound error is here");
         tween?.Kill();
 
-        // Obtener valor actual
         mixer.GetFloat(parameterName, out float currentDb);
 
         tween = DOTween.To(

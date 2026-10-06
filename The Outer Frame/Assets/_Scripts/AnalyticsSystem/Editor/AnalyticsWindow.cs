@@ -160,6 +160,16 @@ public class AnalyticsWindow : EditorWindow
        EditorStyles.boldLabel
    );
 
+        EditorGUILayout.LabelField(
+      $"Playtime: {analyticsFile.GeneralData.RunTime}",
+      EditorStyles.boldLabel
+  );
+        EditorGUILayout.LabelField(
+   $"Ended by: {analyticsFile.GeneralData.TypeOfEndRun}",
+   EditorStyles.boldLabel
+);
+
+
         EditorGUILayout.Space();
 
         List<TimelineRow> rows = GetTimelineRows();
@@ -184,6 +194,8 @@ public class AnalyticsWindow : EditorWindow
 
         DrawBlockEntries(timelineArea);
         DrawMarkEntries(timelineArea);
+
+
     }
 
     private float GetVisibleTimelineHeight(List<TimelineRow> rows)

@@ -6,10 +6,11 @@ using UnityEngine;
 
 public class AnalyticsExporter : MonoBehaviour
 {
-    public static void Export(List<AnalyticsEntry> entries)
+    public static void Export(List<AnalyticsEntry> entries, GeneralAnalyticData generalData)
     {
         AnalyticsFile analyticsFile = new AnalyticsFile
         {
+            GeneralData = generalData,
             Entries = entries
         };
 
@@ -41,6 +42,7 @@ public class AnalyticsExporter : MonoBehaviour
 [Serializable]
 public class AnalyticsFile
 {
+    public GeneralAnalyticData GeneralData;
     public List<AnalyticsEntry> Entries = new();
 }
 

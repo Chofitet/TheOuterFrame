@@ -28,13 +28,14 @@ public class DatatService : MonoBehaviour
 
     public void ExportRunAnalytics(Component sender, object obj)
     {
-        ExportRunAnalytics();
+        ExportRunAnalytics((GeneralAnalyticData) obj);
     }
 
 
-    void ExportRunAnalytics()
+    void ExportRunAnalytics(GeneralAnalyticData generalData)
     {
         List<AnalyticsEntry> entries = new();
+
 
         // Analytics provenientes de ScriptableObjects
         foreach (DataType data in directory.GetModifyData().Distinct())
@@ -48,7 +49,9 @@ public class DatatService : MonoBehaviour
         // Analytics que son marcas
         entries.AddRange(analyticsMarks);
 
-        AnalyticsExporter.Export(entries);
+        AnalyticsExporter.Export(entries, generalData);
+
+        analyticsMarks.Clear();
     }
 
     public DataDirectory GetDirectory()

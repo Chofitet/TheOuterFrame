@@ -63,10 +63,8 @@ public class MixerController : MonoBehaviour, IDataPersistence
     public void VolumeSliderChanger(float sliderValue)
     {
         if (isSettingInStart) return;
-        // Snap a divisiones de 0.1
         float currentValue = Mathf.Round(sliderValue * 10f) / 10f;
 
-        // Cuántos pasos de 0.1 se movió
         int steps = Mathf.RoundToInt((currentValue - lastSliderValue) * 10f);
 
         if (steps != 0)
@@ -74,10 +72,8 @@ public class MixerController : MonoBehaviour, IDataPersistence
             volumenChanger(steps * 0.1f);
         }
 
-        // Guardamos el nuevo valor
         lastSliderValue = currentValue;
 
-        // Aplicamos el snap visualmente
         slider.SetValueWithoutNotify(currentValue);
     }
 
