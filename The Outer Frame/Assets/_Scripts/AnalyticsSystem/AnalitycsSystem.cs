@@ -92,7 +92,7 @@ public enum AnalyticsType
     BackFromLog = 15,
 
     //WireOphone
-    [AnalyticsInfo("Phone Number Found", "WireOPhone")] // No implemented
+    [AnalyticsInfo("Phone Number Found", "WireOPhone")] // comprobar
     PhoneNumberFound = 7,
     [AnalyticsInfo("Phone Number Entered", "WireOPhone")]
     PhoneNumberEntered = 18,
