@@ -459,7 +459,7 @@ public class ActionRowController : MonoBehaviour
     bool AnotherActionWasPresingDuringPendingErase;
     IEnumerator TriggerPendingToEraseCoroutine()
     {
-        
+
         yield return new WaitForSeconds(0.5f);
         if (!ApTakedByPressAWord && !Word.GetInactiveState())
         {
@@ -479,7 +479,22 @@ public class ActionRowController : MonoBehaviour
             OnForceSelectedWordInActionRows?.Invoke(this, newWord);
             isPendigToErase = false;
         }
-        
+
+    }
+
+    Coroutine DisableBTNInputCoroutine;
+    public void OnDisableBTN(Component sender, object obj)
+    {
+        if (DisableBTNInputCoroutine != null) StopCoroutine(DisableBTNInputCoroutine);
+        DisableBTNInputCoroutine = StartCoroutine(DisableBTNInput());
+    }
+
+    IEnumerator DisableBTNInput()
+    {
+        btn.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.45f);
+        btn.gameObject.SetActive(true);
+
     }
 
     public bool GetIsOn() { return toggle.isOn; }

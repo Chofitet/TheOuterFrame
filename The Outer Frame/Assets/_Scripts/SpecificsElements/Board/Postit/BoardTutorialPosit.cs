@@ -41,6 +41,9 @@ public class BoardTutorialPosit : MonoBehaviour
         amountOfWordsTaked++;
 
         if(amountOfWordsTaked == amountOfWordsToShowPosit) pendingToShowPosit = true;
+
+        if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
+        if (ActualView == ViewStates.PCView || ActualView == ViewStates.TVView || ActualView == ViewStates.ProgressorView || ActualView == ViewStates.PinchofonoView) ActiveDesactivePosIt();
     }
 
     public void CheckView(Component sender, object obj)
@@ -117,6 +120,9 @@ public class BoardTutorialPosit : MonoBehaviour
         if (isInTutorial) return;
         thereIsAnIdeaPendingToPut = true;
         Debug.Log("At least one idea is pendig to show");
+
+        if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
+        if (ActualView == ViewStates.PCView || ActualView == ViewStates.TVView || ActualView == ViewStates.ProgressorView || ActualView == ViewStates.PinchofonoView) ActiveDesactivePosIt();
     }
     bool isTaken;
     public void MoveToTakedPosition(Component sender, object obj)

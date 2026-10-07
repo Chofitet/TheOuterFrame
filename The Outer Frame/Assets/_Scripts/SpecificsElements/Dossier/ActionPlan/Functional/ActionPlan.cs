@@ -281,6 +281,12 @@ public class ActionPlan : MonoBehaviour
 
     }
 
+    public void OnDisableBlockStampInput(Component sender, object obj)
+    {
+        if (DisableBlockStampInputCoroutine != null) StopCoroutine(DisableBlockStampInputCoroutine);
+        DisableBlockStampInputCoroutine = StartCoroutine(DisableBlockStampInput());
+    }
+
     IEnumerator DisableBlockStampInput()
     {
         BtnsParent.SetActive(false);

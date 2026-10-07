@@ -38,6 +38,9 @@ public class PopUpController : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
         // Convertimos la posición inicial del mouse a local en el rect
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRectTransform,
@@ -50,6 +53,10 @@ public class PopUpController : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
+
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
          canvasRectTransform,
          eventData.position,

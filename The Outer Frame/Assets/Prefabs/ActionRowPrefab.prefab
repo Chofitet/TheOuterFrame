@@ -1142,6 +1142,8 @@ GameObject:
   - component: {fileID: 292070351192617154}
   - component: {fileID: 5622801922793223678}
   - component: {fileID: 8435262521588347918}
+  - component: {fileID: 6109457890572635726}
+  - component: {fileID: 3180761577218932215}
   m_Layer: 0
   m_Name: ActionRowPrefab
   m_TagString: Untagged
@@ -1236,6 +1238,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &3612240375461985165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1271,6 +1274,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &292070351192617154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,6 +1310,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &5622801922793223678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1341,6 +1346,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &8435262521588347918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,6 +1382,79 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &6109457890572635726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062246628295916328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 792d414ec56f78d40846201112347176, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2075909277059069969}
+        m_TargetAssemblyTypeName: ActionRowController, Assembly-CSharp
+        m_MethodName: OnDisableBTN
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &3180761577218932215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6062246628295916328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 804cf5408e93a6a43b4b7b6b678cbdf4, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2075909277059069969}
+        m_TargetAssemblyTypeName: ActionRowController, Assembly-CSharp
+        m_MethodName: OnDisableBTN
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &6606883680521036748
 GameObject:
   m_ObjectHideFlags: 0

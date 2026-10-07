@@ -22,6 +22,8 @@ public class DossierController : MonoBehaviour
     [SerializeField] GameEvent OnWritingShakeDossier;
     [SerializeField] GameEvent OnShakeDossierSound;
     [SerializeField] GameEvent OnActionPlanDossier;
+    [SerializeField] GameEvent OnBriefing1Dossier;
+    [SerializeField] GameEvent OnBriefing2Dossier;
     [SerializeField] GameEvent OnIsInActionPlan;
 
     private void Start()
@@ -65,7 +67,8 @@ public class DossierController : MonoBehaviour
         isInBrifing = true;
         isInActionPlan = false;
         isInBrifing2 = false;
-       
+
+        OnBriefing1Dossier?.Invoke(this, null);
 
     }
 
@@ -85,6 +88,8 @@ public class DossierController : MonoBehaviour
         isInBrifing2 = true;
         isInActionPlan = false;
         isInBrifing = false;
+
+        OnBriefing2Dossier?.Invoke(this, null);
     }
 
     public void OpenActionPlan(Component sender, object obj)
