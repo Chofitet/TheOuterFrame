@@ -709,7 +709,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8811778082310879973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,6 +754,8 @@ MonoBehaviour:
   BtnsParent: {fileID: 904865592514647192}
   OnSetTransitioningAnimTime: {fileID: 11400000, guid: 87b669583f387d5459736890dd23ee93, type: 2}
   OnSentAnIdea: {fileID: 11400000, guid: 23e467c5fba75af4a90a150a2ce2cca8, type: 2}
+  OnCannotSentActionPrinterFull: {fileID: 11400000, guid: 9e9470db2e4090d4d978a94eb795e17b, type: 2}
+  OnCannotSentActionFullAgents: {fileID: 11400000, guid: 944d49daa5c4bfc4a92dab9653b3b55d, type: 2}
 --- !u!114 &-5656689868955673757
 MonoBehaviour:
   m_ObjectHideFlags: 0

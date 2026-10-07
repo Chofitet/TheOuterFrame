@@ -22,6 +22,8 @@ public class ActionPlan : MonoBehaviour
     [SerializeField] GameObject BtnsParent;
     [SerializeField] GameEvent OnSetTransitioningAnimTime;
     [SerializeField] GameEvent OnSentAnIdea;
+    [SerializeField] GameEvent OnCannotSentActionPrinterFull;
+    [SerializeField] GameEvent OnCannotSentActionFullAgents;
     WordData FinalActionWord;
     StateEnum FinalActionState;
     StateEnum FinalActionIdea;
@@ -171,9 +173,14 @@ public class ActionPlan : MonoBehaviour
 
         if (isProgressorFull)
         {
+            if (isSomethingOnPrinter) OnCannotSentActionPrinterFull?.Invoke(this, null);
+            else OnCannotSentActionFullAgents?.Invoke(this, null);
+
             OnProgressorFull?.Invoke(this, null);
             return;
         }
+
+        isSomethingOnPrinter = false;
 
         if (isSecodToLastActionDoit)
         {
@@ -295,16 +302,19 @@ public class ActionPlan : MonoBehaviour
 
     }
 
+    bool isSomethingOnPrinter;
     public void ProgressorSetNotFull(Component sender, object obj)
     {
         if (obj != null)
         {
             if (obj is SlotController slotController)
             {
+                isSomethingOnPrinter = true;
                 if (slotController.GetthereAreSomethigOnPrinter()) return;
             }
             else if (obj is GameObject slotControllerGO)
             {
+                isSomethingOnPrinter = true;
                 if (slotControllerGO.gameObject.GetComponent<SlotController>().GetthereAreSomethigOnPrinter()) return;
             }
         }
@@ -318,6 +328,18 @@ public class ActionPlan : MonoBehaviour
 
     public void ProgressorSetFull(Component sender, object obj)
     {
+        if (obj != null)
+        {
+            if (obj is SlotController slotController)
+            {
+                isSomethingOnPrinter = true;
+            }
+            else if (obj is GameObject slotControllerGO)
+            {
+                isSomethingOnPrinter = true;
+            }
+        }
+
         isProgressorFull = true;
     }
 

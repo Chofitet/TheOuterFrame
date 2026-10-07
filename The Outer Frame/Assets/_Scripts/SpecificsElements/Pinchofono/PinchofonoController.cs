@@ -25,6 +25,7 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] GameEvent OnOpenPhonePadSound;
     [SerializeField] GameEvent OnClosePhonePadSound;
     [SerializeField] GameEvent OnBlinkPhoneScreen;
+    [SerializeField] GameEvent OnDialingPhone;
     [SerializeField] Canvas canvas;
     [SerializeField] GameEvent OnRefreshPinchofonoScreen;
     [SerializeField] GameObject EnterFullNumberFirst;
@@ -106,6 +107,7 @@ public class PinchofonoController : MonoBehaviour
 
         //anim.SetTrigger("padDial");
         dialingCoroutine = StartCoroutine(AnimPadDial(word.GetPhoneNumber()));
+        OnDialingPhone?.Invoke(this, null);
         OnDialingSound?.Invoke(this, null);
         anim.SetTrigger("recordReady");
         anim.SetTrigger("recordReadyWobble");
@@ -120,6 +122,7 @@ public class PinchofonoController : MonoBehaviour
         number = Regex.Replace(number, @"[()\-\s]", "");
 
         string[] numbers = number.Select(c => c.ToString()).ToArray();
+
 
         foreach (string digit in numbers)
         {

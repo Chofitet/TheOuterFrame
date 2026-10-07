@@ -124,9 +124,9 @@ public enum AnalyticsType
     PrintFromProgressorView = 23,
     [AnalyticsInfo("Aborted an AP", "Progressor")] // comprobar
     AbortedAnAP = 24,
-    [AnalyticsInfo("Cant Send, No agents", "Progressor")] // No implemented
+    [AnalyticsInfo("Cant Send, No agents", "Progressor")] // comprobar
     CantSendNoAgents = 25,
-    [AnalyticsInfo("Cant Send, Printer full", "Progressor")] // No implemented
+    [AnalyticsInfo("Cant Send, Printer full", "Progressor")] // comprobar
     CantSendPrinterFull = 26,
 
     //Findables

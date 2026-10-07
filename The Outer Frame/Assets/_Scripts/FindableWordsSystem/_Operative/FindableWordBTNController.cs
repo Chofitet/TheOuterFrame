@@ -10,6 +10,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     RectTransform rectTransform;
 
     [SerializeField] GameEvent OnFindableWordButtonPress;
+    [SerializeField] GameEvent OnFindablePhoneButtonPress;
     [SerializeField] GameEvent OnFindableWordButtonHover;
     [SerializeField] GameEvent OnFindableWordButtonUnHover;
     [SerializeField] WordData TheCabin;
@@ -311,6 +312,7 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     public void RegisterWord()
     {
         OnFindableWordButtonPress?.Invoke(this, wordToPass);
+        if (word.GetIsAPhoneNumber()) OnFindablePhoneButtonPress?.Invoke(this, null);
         ApplyShader("Grey");
         TryDeleteOverlay();
         wasFinded = true;
