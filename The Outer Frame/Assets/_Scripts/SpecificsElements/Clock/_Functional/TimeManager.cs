@@ -28,6 +28,11 @@ public class TimeManager : MonoBehaviour
     [HideInInspector][SerializeField] GameEvent OnGameOverTime;
     [HideInInspector][SerializeField] GameEvent OnDisableInput;
 
+    /// <summary>
+    /// Normal time: 8 real time seconds
+    /// TV time: 16 real time seconds
+    /// PC time: 32 real time seconds
+    /// </summary>
 
     bool isDisableToLoose;
 

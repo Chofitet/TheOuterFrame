@@ -17,6 +17,8 @@ public class LogWindowController : MonoBehaviour
     WordData LastSearchedWord;
     [SerializeField] GameObject LogContent;
     [SerializeField] RectTransform panel;
+    [SerializeField] GameObject Filter;
+    [SerializeField] GameObject NoFilter;
 
     public void AddEntry(Component sender, object obj)
     {
@@ -139,23 +141,34 @@ public class LogWindowController : MonoBehaviour
     }
 
     IEnumerator RefreshUILog(bool isFilter)
-    { 
+    {
         LogContent.SetActive(false);
         yield return new WaitForSeconds(0.2f);
-        LogContent.SetActive(true);
+
         if (!isFilter)
         {
-            Vector2 offsetMax = panel.offsetMax;
-            offsetMax.y = 6.12f; 
-            panel.offsetMax = offsetMax;
+            NoFilter.SetActive(true);
+            Filter.SetActive(false);
         }
         else
         {
-            Vector2 offsetMax = panel.offsetMax;
-            offsetMax.y = 0;
-            panel.offsetMax = offsetMax;
+            NoFilter.SetActive(false);
+            Filter.SetActive(true);
         }
-    }
+        LogContent.SetActive(true);
+        /*     if (!isFilter)
+             {
+                 Vector2 offsetMax = panel.offsetMax;
+                 offsetMax.y = 6.12f; 
+                 panel.offsetMax = offsetMax;
+             }
+             else
+             {
+                 Vector2 offsetMax = panel.offsetMax;
+                 offsetMax.y = 0;
+                 panel.offsetMax = offsetMax;
+             }*/
+        }
 
     public void ThereAreEntriesForWord(Component sender,object obj)
     {
