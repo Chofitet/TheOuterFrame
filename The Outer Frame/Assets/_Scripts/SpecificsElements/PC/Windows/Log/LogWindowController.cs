@@ -1,3 +1,4 @@
+using Palmmedia.ReportGenerator.Core.Parser.Filtering;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +25,12 @@ public class LogWindowController : MonoBehaviour
     {
         LogEntryData data = (LogEntryData)obj;
 
-        NoEntriesText.text = "";
+        if (FilterWith != null)
+        {
+            if (FilterWith == data.word) NoEntriesText.text = "";
+        }
+        else NoEntriesText.text = "";
+    
 
         if (data.reportType)
         {
@@ -54,9 +60,13 @@ public class LogWindowController : MonoBehaviour
         log.transform.SetParent(Grid.transform, false);
         log.transform.SetSiblingIndex(0);
 
-        if(FilterWith != null)
+        if (FilterWith != null)
         {
-            if(FilterWith != data.word) log.gameObject.SetActive(false);
+            if (FilterWith != data.word) log.gameObject.SetActive(false);
+        }
+        else
+        {
+            NoFilter.SetActive(true);
         }
     }
 
@@ -147,7 +157,7 @@ public class LogWindowController : MonoBehaviour
 
         if (!isFilter)
         {
-            NoFilter.SetActive(true);
+            if(LogEntries.Count != 0) NoFilter.SetActive(true);
             Filter.SetActive(false);
         }
         else

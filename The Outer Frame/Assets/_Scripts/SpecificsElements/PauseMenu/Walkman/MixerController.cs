@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MixerController : MonoBehaviour, IDataPersistence
 {
@@ -82,6 +83,7 @@ public class MixerController : MonoBehaviour, IDataPersistence
         volumenChanger((float)obj);
     }
 
+    string previousNumberLabel;
     public void volumenChanger(float amount)
     {
         VolumeValue += amount;
@@ -101,9 +103,24 @@ public class MixerController : MonoBehaviour, IDataPersistence
 
         textFiled.text = Mathf.RoundToInt(VolumeValue * 10).ToString("00");
 
+        if (textFiled.text == previousNumberLabel && (textFiled.text == "00" || textFiled.text == "10")) BlinkNumber();
+
+        previousNumberLabel = textFiled.text;
+
         DataPersistenceManager.instance.SaveGame();
     }
-    
+
+    Sequence TextFadeAlphaSequence;
+    void BlinkNumber()
+    {
+        if (TextFadeAlphaSequence != null && TextFadeAlphaSequence.active) TextFadeAlphaSequence.Kill();
+
+        TextFadeAlphaSequence = DOTween.Sequence();
+
+        TextFadeAlphaSequence.Append(textFiled.DOFade(0, 0.1f))
+            .Append(textFiled.DOFade(1, 0.1f));
+    }
+
     // ---------------------
     // Persistencia de datos
     // ---------------------
