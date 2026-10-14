@@ -17,6 +17,7 @@ public class StringConnectionController : MonoBehaviour, IPlacedOnBoard
     Vector3 startPosPin2;
     [SerializeField] GameEvent OnPuttingStringSound;
     [SerializeField] List<ScriptableObject> Conditionals = new List<ScriptableObject>();
+    [SerializeField] List<bool> ifNot = new List<bool>();
     [SerializeField] bool isOrderMatters;
     [SerializeField] MeshRenderer lineRenderer;
     [SerializeField] AnimationCurve curveStringAnim;
@@ -123,9 +124,12 @@ public class StringConnectionController : MonoBehaviour, IPlacedOnBoard
 
     public bool CheckForConditionals()
     {
-
+        int index = 0;
         foreach (ScriptableObject conditional in Conditionals)
         {
+            bool ifnot = false;
+            if (ifNot.Count != 0) ifnot = ifNot[index];
+            index++;
             if (conditional is not IConditionable)
             {
                 Debug.LogWarning(conditional.name + " is not a valid conditional");
@@ -134,7 +138,14 @@ public class StringConnectionController : MonoBehaviour, IPlacedOnBoard
 
             IConditionable auxConditional = conditional as IConditionable;
 
-            if (!auxConditional.GetStateCondition(2))
+            bool conditionState = auxConditional.GetStateCondition(2);
+
+            if (ifnot)
+            {
+                conditionState = !conditionState;
+            }
+
+            if (conditionState)
             {
                 return false;
             }
