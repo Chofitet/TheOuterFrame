@@ -4,31 +4,56 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class DemoTimer : MonoBehaviour
 {
+
     [SerializeField] float timeToWait = 10f;
     [SerializeField] GameEvent OnDemoCut;
     [SerializeField] GameObject Label;
     [SerializeField] TMP_Text Labeltxt;
 
-    bool applyCutDemoWithTime = true;
+    bool applyCutDemoWithTime = false;
 
     private float startTime;
     private bool isRunning;
     bool once;
+    bool isInLevel1;
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        CheckLevel(scene);
+    }
+
+    private void CheckLevel(Scene scene)
+    {
+        isInLevel1 = scene.name == "Level1";
+
+        isRunning = false;
+        once = false;
+    }
+
+
 
     public void StartTimer(Component sender, object obj)
     {
+        if (!isInLevel1) return;
         startTime = Time.realtimeSinceStartup;
         isRunning = true;
     }
 
     private void Update()
     {
-        if (!isRunning) return;
-        if (once) return;
-
         if (Input.GetKey(KeyCode.LeftControl) ||
             Input.GetKey(KeyCode.RightControl))
         {
@@ -48,12 +73,13 @@ public class DemoTimer : MonoBehaviour
             }
         }
 
-        if (!applyCutDemoWithTime || !isRunning)
-            return;
+        if (once) return;
+
+        if (!isRunning) return;
 
         if (Time.realtimeSinceStartup - startTime >= timeToWait * 60f)
         {
-            OnDemoCut?.Invoke(this, null);
+            if (applyCutDemoWithTime) OnDemoCut?.Invoke(this, null);
             once = true;
         }
     }
