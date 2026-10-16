@@ -92,4 +92,9 @@ public class DemoTimer : MonoBehaviour
         Label.SetActive(false);
     }
 
+    public void OnGameOver(Component sender,object obj)
+    {
+        isRunning = false;
+    }
+
 }
