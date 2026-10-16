@@ -775,6 +775,7 @@ GameObject:
   - component: {fileID: 261157647}
   - component: {fileID: 261157649}
   - component: {fileID: 261157648}
+  - component: {fileID: 261157650}
   m_Layer: 5
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
@@ -898,6 +899,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261157646}
   m_CullTransparentMesh: 1
+--- !u!114 &261157650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261157646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6e4fb24821a574eb5106d60189cffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color1: {r: 1, g: 1, b: 1, a: 0.6}
+  color2: {r: 1, g: 0.078431375, b: 0.078431375, a: 1}
 --- !u!1 &314580424
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,10 +2130,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 261157648}
-          m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 261157650}
+          m_TargetAssemblyTypeName: ColorTMPtext, Assembly-CSharp
+          m_MethodName: ChangeColor2
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2131,10 +2146,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 261157648}
-          m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 261157650}
+          m_TargetAssemblyTypeName: ColorTMPtext, Assembly-CSharp
+          m_MethodName: ChangeColor1
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2813,6 +2828,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1512394077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3705,6 +3721,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1929313398
 MonoBehaviour:
   m_ObjectHideFlags: 0

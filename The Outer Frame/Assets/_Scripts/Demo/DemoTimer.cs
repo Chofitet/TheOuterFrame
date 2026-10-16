@@ -62,14 +62,14 @@ public class DemoTimer : MonoBehaviour
             {
                 applyCutDemoWithTime = true;
                 startTime = Time.realtimeSinceStartup;
-                StartCoroutine(ShowLabel("Timer Enabled"));
+                //StartCoroutine(ShowLabel("Timer Enabled"));
             }
 
             if (Input.GetKeyDown(KeyCode.Minus) ||
                 Input.GetKeyDown(KeyCode.KeypadMinus))
             {
                 applyCutDemoWithTime = false;
-                StartCoroutine(ShowLabel("Timer Disabled"));
+                //StartCoroutine(ShowLabel("Timer Disabled"));
             }
         }
 

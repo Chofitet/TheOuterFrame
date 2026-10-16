@@ -293,6 +293,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &4198458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,6 +457,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &172769831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,6 +653,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &580136840
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +728,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &580136844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,6 +928,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &628361226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1109,6 +1114,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &669430311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1260,6 +1266,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1156116363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1295,6 +1302,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1156116364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1501,6 +1509,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1376265832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1686,6 +1695,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1425287741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1882,6 +1892,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1575413875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1994,6 +2005,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1597000873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2414,6 +2426,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1735350209
 GameObject:
   m_ObjectHideFlags: 0
@@ -2488,6 +2501,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1735350213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2692,6 +2706,7 @@ GameObject:
   - component: {fileID: 1741042070}
   - component: {fileID: 1741042072}
   - component: {fileID: 1741042071}
+  - component: {fileID: 1741042073}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2815,6 +2830,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1741042069}
   m_CullTransparentMesh: 1
+--- !u!114 &1741042073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741042069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6e4fb24821a574eb5106d60189cffa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color1: {r: 1, g: 1, b: 1, a: 0.6}
+  color2: {r: 1, g: 0.078431375, b: 0.078431375, a: 1}
 --- !u!1 &1883193840
 GameObject:
   m_ObjectHideFlags: 0
@@ -2999,10 +3028,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1741042071}
-          m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 1741042073}
+          m_TargetAssemblyTypeName: ColorTMPtext, Assembly-CSharp
+          m_MethodName: ChangeColor2
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3015,10 +3044,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1741042071}
-          m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
-          m_MethodName: set_alpha
-          m_Mode: 4
+        - m_Target: {fileID: 1741042073}
+          m_TargetAssemblyTypeName: ColorTMPtext, Assembly-CSharp
+          m_MethodName: ChangeColor1
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3275,6 +3304,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1981322235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3310,6 +3340,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1981322236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3508,6 +3539,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2041255970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3732,6 +3764,7 @@ MonoBehaviour:
   viewState: 0
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &2132544031
 MonoBehaviour:
   m_ObjectHideFlags: 0
