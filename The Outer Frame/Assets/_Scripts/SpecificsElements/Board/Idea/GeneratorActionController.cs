@@ -25,7 +25,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] bool ActiveInBeginning;
     bool ActionIsDoing;
     bool isDone;
-    private bool istaken;
+    bool istaken;
+    bool isHolding;
     GameObject IdeaButtom;
     bool WasInactivate;
 
@@ -57,12 +58,14 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     {
         GetComponent<BoxCollider>().enabled = false;
         istaken = true;
+        isHolding = true;
         OnSetTakenPosit?.Invoke(null, gameObject);
 
     }
     public void Reset(Component sender, object obj)
     {
         istaken = false;
+        
         //if (Content.activeSelf) GetComponent<BoxCollider>().enabled = true;
     }
 
@@ -70,7 +73,11 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     {
         if (!CheckForConditionals(Conditionals)) return;
 
-        if(!istaken) GetComponent<BoxCollider>().enabled = true;
+        if (!istaken)
+        {
+            GetComponent<BoxCollider>().enabled = true;
+            isHolding = false;
+        }
 
         if (ActionIsDoing) return;
 
@@ -78,6 +85,11 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
 
         BtnGeneratorIdeaPrefab.Inicialization(ActionsToAdd[0]);
         IdeaButtom = BtnGeneratorIdeaPrefab.gameObject;
+    }
+
+    public void OnSendIdeaWhitTutorialPosit(Component sender, object obj)
+    {
+        if(isHolding) BtnGeneratorIdeaPrefab.OnAddAction();
     }
 
 
@@ -97,6 +109,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         GetComponent<BoxCollider>().enabled = false;
         yield return new WaitForSeconds(0.05f);
         GetComponent<BoxCollider>().enabled = true;
+        isHolding = false;
     }
 
     void CheckIfDone()
@@ -221,6 +234,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     {
         OnMoveToCornerIdea?.Invoke(null, gameObject);
         GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(true);
+        isHolding = false;
     }
 
     public void MoveOutOfBoard(Component sender, object obj)
@@ -285,6 +299,16 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         if (ActionsToAdd[0] != action) GetComponent<MoveBoardElementsToPos>().SetIsOutOfBoard(false);
     }
 
+    public void OtherIdeaWasTaked(Component sender, object obj)
+    {
+        GameObject otherIdea = (GameObject)obj;
+        if(!otherIdea) return;
+
+        if(otherIdea != gameObject)
+        {
+            isHolding = false;
+        }
+    }
 
     public void TriggerInactiveAnimation(Component sender, object obj)
     {
@@ -313,6 +337,7 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         {
             if(DisableButtonCoroutine != null) StopCoroutine(DisableButtonCoroutine);
             DisableButtonCoroutine = StartCoroutine(DisableButton(false));
+            isHolding = false;
         }
        else if(actualView == ViewStates.OnTakeSomeInBoard)
         {
@@ -340,6 +365,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     {
         return TypeElement;
     }
+
+    public bool GetIsHolding() { return isHolding;}
 
     // Copy Pasye to Action
     public StateEnum GetActionToAdd() { return ActionsToAdd[0]; }

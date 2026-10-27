@@ -14,6 +14,7 @@ public class BoardTutorialPosit : MonoBehaviour
     [SerializeField] Transform NextToNotebookPos;
     [SerializeField] Transform OutOfView;
     [SerializeField] int amountOfWordsToShowPosit;
+    [SerializeField] List<GameObject> posits = new List<GameObject>(); 
 
     [SerializeField] GameEvent OnButtonElement;
     int amountOfWordsTaked;
@@ -21,7 +22,7 @@ public class BoardTutorialPosit : MonoBehaviour
     bool thereIsAnIdeaPendingToPut;
     GameObject Posit;
     Sequence moveSequence;
-    bool wordWasPlacedOnBoard;
+    int wordWasPlacedOnBoard;
     bool isInTutorial;
     bool inactive;
     ViewStates LastView;
@@ -31,7 +32,7 @@ public class BoardTutorialPosit : MonoBehaviour
     private void Start()
     {
         Posit = transform.GetChild(0).gameObject;
-        Posit.SetActive(false);
+        AppearPosits(false);
     }
 
     public void CheckWordsTaked(Component sender, object obj)
@@ -100,20 +101,16 @@ public class BoardTutorialPosit : MonoBehaviour
     void ActiveDesactivePosIt()
     {
         if (inactive) return;
-        if (wordWasPlacedOnBoard)
+        if (wordWasPlacedOnBoard >= amountOfWordsToShowPosit)
         {
-            Posit.SetActive(false);
+            AppearPosits(false);
             inactive = true;
             return;
         }
 
-        Posit.SetActive(true);
+        AppearPosits(true);
         NotShowedYet = false;
     }
-
-   
-
-
     public void GetTrueConditionalIdeas(Component sender, object obj)
     {
         if (inactive) return;
@@ -134,7 +131,6 @@ public class BoardTutorialPosit : MonoBehaviour
 
     public void BackToBoardPosition(Component sender, object obj)
     {
-
         Transform toMove = obj as Transform;
 
         if (toMove == null) toMove = GeneralViewPos;
@@ -164,7 +160,7 @@ public class BoardTutorialPosit : MonoBehaviour
         }
          
 
-        wordWasPlacedOnBoard = true;
+        wordWasPlacedOnBoard++;
 
         if (!isTaken) MoveOutView(OutOfViewfromBoard);
         else MoveOutView(OutOfView);
@@ -175,6 +171,7 @@ public class BoardTutorialPosit : MonoBehaviour
         if (ActualView != ViewStates.BoardView && ActualView != ViewStates.OnTakeSomeInBoard) return;
         if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit)
         {
+            if (wordWasPlacedOnBoard <= amountOfWordsToShowPosit) return;
             inactive = true;
         }
     }
@@ -194,6 +191,35 @@ public class BoardTutorialPosit : MonoBehaviour
             Destroy(gameObject)
             );
 
+    }
+
+    int lastPositAppeared;
+    void AppearPosits(bool boolState)
+    {
+        if(boolState)
+        {
+            if (lastPositAppeared >= posits.Count) return;
+            foreach (GameObject posit in posits)
+            {
+                if (posits.IndexOf(posit) == -1) break;
+                if(posits.IndexOf(posit) < lastPositAppeared)
+                {
+                 //   posit.GetComponent<BoxCollider>().enabled = false;
+                }
+                
+            }
+            posits[lastPositAppeared].SetActive(true);
+            posits[lastPositAppeared].GetComponent<BoxCollider>().enabled = true;
+            lastPositAppeared++;
+        }
+        else
+        {
+            foreach(GameObject posit in posits)
+            {
+                posit.GetComponent<BoxCollider>().enabled = true;
+                posit.SetActive(false);
+            }
+        }
     }
 
     public void SetInTutorial(Component sender, object obj)

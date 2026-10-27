@@ -11,6 +11,7 @@ public class BtnGenerateIdeaController : MonoBehaviour
 {
 
     [SerializeField] GameEvent OnAddActionInPlanAction;
+    [SerializeField] GeneratorActionController ideaGenerator;
     [SerializeField] TMP_Text txtfield;
     StateEnum state;
     bool isInactive;
@@ -22,12 +23,18 @@ public class BtnGenerateIdeaController : MonoBehaviour
         if (txtfield.text == "") txtfield.text = state.GetInfinitiveVerb();
     }
 
+    public void OnAddAction(Component sender, object obj)
+    {
+        OnAddAction();
+    }
+
     public void OnAddAction()
     {
         if (isInactive) return;
         OnAddActionInPlanAction?.Invoke(this, state);
         GetComponent<Button>().enabled = false;
         Invoke("ActiveBTN", 3f);
+        ideaGenerator.MoveToCorner();
     }
 
     void ActiveBTN()
