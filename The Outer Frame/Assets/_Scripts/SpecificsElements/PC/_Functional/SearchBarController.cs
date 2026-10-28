@@ -12,7 +12,7 @@ public class SearchBarController : MonoBehaviour
     Coroutine IdleSearchBarAnimCoroutine;
     string initWaitingSearchBarText;
     TypingAnimText textAnim;
-    private void Start()
+    private void Awake()
     {
         textAnim = SearchBarText.GetComponent<TypingAnimText>();
         textAnim.SetCharacterPerSecond(2);
@@ -63,4 +63,10 @@ public class SearchBarController : MonoBehaviour
         }
     }
 
+    public void ResertBar(Component seder, object obj)
+    {
+        StopIdleSearchBarAnim();
+        isWaitingAWord = false;
+        ClearWord();
+    }
 }

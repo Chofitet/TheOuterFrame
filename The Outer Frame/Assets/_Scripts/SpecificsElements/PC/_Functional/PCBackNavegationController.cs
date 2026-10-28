@@ -21,7 +21,7 @@ public class PCBackNavegationController : MonoBehaviour
     int index = -1;
     bool IsUsingBackFrontBTN;
     [SerializeField] WordData Irrelevant;
-    
+
 
     private void OnEnable()
     {
@@ -42,7 +42,7 @@ public class PCBackNavegationController : MonoBehaviour
 
         WordData word = (WordData)obj;
 
-        
+
 
 
         if (SearchedWordsHistory.Count != 0)
@@ -50,80 +50,105 @@ public class PCBackNavegationController : MonoBehaviour
             if (SearchedWordsHistory.Last() == null || SearchedWordsHistory.Last() == Irrelevant) SearchedWordsHistory.RemoveAt(SearchedWordsHistory.Count - 1);
 
 
-            if(SearchedWordsHistory.Count != 0) if (word == SearchedWordsHistory.Last()) return;
+            if (SearchedWordsHistory.Count != 0) if (word == SearchedWordsHistory.Last()) return;
         }
 
 
 
         SearchedWordsHistory.Add(word);
         index = SearchedWordsHistory.Count - 1;
-       // OnWikiWindow?.Invoke(this, null);
+        // OnWikiWindow?.Invoke(this, null);
         ButtonsAppear();
 
     }
 
 
-    bool OnFirstHistoryEntry;
     public void BackInHistory()
     {
-        if(!isInWikiWindow)
+        if (!isInWikiWindow)
         {
             OnWikiWindow?.Invoke(this, null);
             IsUsingBackFrontBTN = false;
+            ButtonsAppear();
             return;
         }
 
-        if (SearchedWordsHistory.Last() == null || SearchedWordsHistory.Last() == Irrelevant)
+        if (index <= 0)
         {
-            SearchedWordsHistory.RemoveAt(SearchedWordsHistory.Count - 1);
+            OnSearchWindow?.Invoke(this, null);
+            IsUsingBackFrontBTN = false;
+            ButtonsAppear();
+            return;
         }
 
         index--;
+
         WordData word = SearchedWordsHistory[index];
+
         IsUsingBackFrontBTN = true;
         BackLastEntry?.Invoke(this, word);
 
-        //if (OnFirstHistoryEntry) OnSearchWindow?.Invoke(this, null);
-
         ButtonsAppear();
-        
-        if (index <= 0)
-        {
-            OnFirstHistoryEntry = true;
-        }
 
     }
 
     public void GoFrontHistory()
     {
-        index = index + 1;
+        if (!isInWikiWindow)
+        {
+            if (SearchedWordsHistory.Count == 0 ||
+                SearchedWordsHistory[0] == null ||
+                SearchedWordsHistory[0] == Irrelevant)
+                return;
+
+            index = 0;
+            OnWikiWindow?.Invoke(this, null);
+
+            IsUsingBackFrontBTN = true;
+            BackLastEntry?.Invoke(this, SearchedWordsHistory[index]);
+
+            ButtonsAppear();
+            return;
+        }
+        else
+        {
+            OnWikiWindow?.Invoke(this, null);
+        }
+
+        // Si estamos en Wiki, avanzar normalmente.
+        if (index >= SearchedWordsHistory.Count - 1)
+            return;
+
+        index++;
+
         WordData word = SearchedWordsHistory[index];
-        OnFirstHistoryEntry = true;
+
         IsUsingBackFrontBTN = true;
         BackLastEntry?.Invoke(this, word);
+
         ButtonsAppear();
     }
 
     void ButtonsAppear()
     {
-        if(isInWikiWindow)
+        if (isInWikiWindow)
         {
             Back.SetActive(true);
             Front.SetActive(true);
             BackDB.SetActive(false);
 
-            if (OnFirstHistoryEntry) BackBTN.interactable = false;
-            else BackBTN.interactable = true; 
+            BackBTN.interactable = index >= 0;
 
-            if (index >= SearchedWordsHistory.Count - 1) FrontBTN.interactable = false;
-            else FrontBTN.interactable = true;
+            FrontBTN.interactable = index < SearchedWordsHistory.Count - 1;
+
         }
         else
         {
-            Back.SetActive(false);
-            Front.SetActive(false);
-            BackDB.SetActive(true);
+            Back.SetActive(true);
+            Front.SetActive(true);
+            BackDB.SetActive(false);
         }
+
     }
 
     public void CheckWindowWiki(Component sender, object obj)
@@ -140,10 +165,16 @@ public class PCBackNavegationController : MonoBehaviour
         ButtonsAppear();
     }
 
-    public void DeleteHistory(Component sender,object obj) 
+    public void DeleteHistory(Component sender, object obj)
     {
         SearchedWordsHistory.Clear();
         Debug.Log("History clear");
+    }
+
+    public void SearchWindow(Component sender, object obj)
+    {
+        BackBTN.interactable = false;
+        FrontBTN.interactable = true;
     }
 
 }

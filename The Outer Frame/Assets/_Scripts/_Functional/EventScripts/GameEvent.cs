@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New event", menuName = "Events")]
@@ -8,7 +9,7 @@ public class GameEvent : ScriptableObject
 	private HashSet<GameEventListener> Listeners = new HashSet<GameEventListener>();
 	public void Invoke(Component sender, object data)
 	{
-		foreach (var listener in Listeners)
+		foreach (var listener in Listeners.ToArray())
         {
 			listener.Raise(sender,data);
         }
