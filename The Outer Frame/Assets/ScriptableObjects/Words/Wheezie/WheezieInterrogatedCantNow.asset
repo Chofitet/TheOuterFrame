@@ -10,22 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68f5d81e3b853fc4798c76085aa9d38a, type: 3}
-  m_Name: WheezieLabtestA-15
+  m_Name: WheezieInterrogatedCantNow
   m_EditorClassIdentifier: 
-  id: 0c7dc745-286b-43a2-95a5-72e17c88f531
-  Action: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
-  state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
-  isAutomatic: 0
+  id: c5d1891c-4cd5-4e53-b0aa-08cc75b6e855
+  Action: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
+  state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
+  isAutomatic: 1
   ChangeTimeOfAction: 0
-  Text: How is this kid even alive? He is just a sneeze away from the pearly gates!
+  Text: "We can't now, a crowd surrounds him. Some were taking pictures, and I think
+    I even saw a priest crying.\n\nGet better kid.\nWe are all rooting for you. \nFrom
+    a distance."
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
   CustomStatus: 
-  Photos: []
+  Photos:
+  - photo: {fileID: 21300000, guid: 11032af54bcde844fbe5f80fb71b5a73, type: 3}
+    text: BETTER NOT
   Conditionals:
-  - condition: {fileID: 11400000, guid: 039e116a61c669e498d57d9226eb564f, type: 2}
+  - condition: {fileID: 11400000, guid: 34b916995da699a4aae68aa47ba6068d, type: 2}
     ifNot: 0
   ObjectType: 0
   isOrderMatters: 0

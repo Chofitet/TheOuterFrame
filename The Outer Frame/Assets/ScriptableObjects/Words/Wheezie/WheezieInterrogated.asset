@@ -17,9 +17,9 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: cfdf78d49cfb8534eb01e4b3b2ed32a0, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: -1
-  Text: "The kid was talking but he got too excited and true to his name fell to
-    the ground wheezing. \nWe were gathering some looks, so we had to leave the scene.\nAll
-    we got from him was: \"<link>Lars Boullie</link> stole my new phone.\""
+  Text: "The kid was talking but he got too excited, and true to his name fell to
+    the ground wheezing.  \nWe were getting some looks, so we had to leave the scene.
+    \nAll we got from him was: \"<link>Lars Boullie</link> stole my new phone.\" "
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
@@ -28,7 +28,9 @@ MonoBehaviour:
   Photos:
   - photo: {fileID: 21300000, guid: 24ee14c70576f854c9b305fa4557da47, type: 3}
     text: 
-  Conditionals: []
+  Conditionals:
+  - condition: {fileID: 11400000, guid: 34b916995da699a4aae68aa47ba6068d, type: 2}
+    ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
   AgentDown: 0

@@ -17,15 +17,21 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 4022a50d3cc8d7c4baae1dcf4d332a1d, type: 2}
   isAutomatic: 0
   ChangeTimeOfAction: 0
-  Text: How is this kid even alive? He is just a sneeze away from the pearly gates!
+  Text: "How is this kid even alive? He is just a sneeze away from the pearly gates!
+    \nWe'd like to suggest extreme care when and if our intent is to approach him,
+    Boss. "
   TextForRepetition: 'We already did that, remember?
 
     The report is probably
     on your desk, or in the DB if you uploaded it.'
   CustomStatus: 
-  Photos: []
+  Photos:
+  - photo: {fileID: 21300000, guid: 505d0f4b1e958c34fa96173523c8599e, type: 3}
+    text: NOT GOOD
   Conditionals:
   - condition: {fileID: 11400000, guid: 039e116a61c669e498d57d9226eb564f, type: 2}
+    ifNot: 1
+  - condition: {fileID: 11400000, guid: 34b916995da699a4aae68aa47ba6068d, type: 2}
     ifNot: 1
   ObjectType: 0
   isOrderMatters: 0
