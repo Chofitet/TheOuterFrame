@@ -45,7 +45,7 @@ public class ReportController : MonoBehaviour
         if (report.GetCustomStatus() != "") status = report.GetCustomStatus();
         UploadBTN.SetActive(true);
         StateEnum state = report.GetAction();
-        string Name = word.GetFormNameVersion();
+        string Name = " " + word.GetFormNameVersion();
         if (state.GetSpecialActionWord()) Name = "";
         string actionVerb = state.GetInfinitiveVerb();
         SetMaterial(materialDispose);
@@ -81,7 +81,14 @@ public class ReportController : MonoBehaviour
         }
         else if (isOtherActionInGroupDoing != null)
         {
-            Resulttxt.text = "We are currently " + isOtherActionInGroupDoing.GetActioningVerb() + " " + word.GetFormNameVersion() + ".\n\r\n\rWe'll have to be done with THAT first.";
+            bool otherActionIsAnIdea = false;
+            if(isOtherActionInGroupDoing.GetSpecialActionWord()) otherActionIsAnIdea = true;
+
+            string auxName;
+            if(otherActionIsAnIdea) auxName = "";
+            else auxName = " " + word.GetFormNameVersion();
+
+            Resulttxt.text = "We are currently " + isOtherActionInGroupDoing.GetActioningVerb() + auxName + ".\n\r\n\rWe'll have to be done with THAT first.";
             status = "<color=#AE0000>NOT RIGHT NOW</color>";
             photo1.Set("JUST A MOMENT", WrongResultImg[6]);
             isNotCompleted = true;
@@ -90,7 +97,7 @@ public class ReportController : MonoBehaviour
         }
         else if (isAborted)
         {
-            Resulttxt.text = "The action " + actionVerb + " " + Name + " was aborted successfully.";
+            Resulttxt.text = "The action " + actionVerb + Name + " was aborted successfully.";
             status = "<color=#AE0000>ABORTED</color>";
             photo1.Set("AS YOU SAID", WrongResultImg[7]);
             isNotCompleted = true;
@@ -135,7 +142,8 @@ public class ReportController : MonoBehaviour
             UploadBTN.SetActive(false);
             DisposeBTN.SetActive(true);
         }
-        
+
+        Name = Name.TrimStart(' '); 
 
         Hourtxt.text = $"OCT 30 - {timeComplete.Hour:00}:{timeComplete.Minute:00}";
         if(Name != "") ActionCalltxt.text = $"{actionVerb} \"{DeleteSpetialCharacter(Name).ToUpper()}\"";

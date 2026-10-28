@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class PCBackNavegationController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PCBackNavegationController : MonoBehaviour
     [SerializeField] Button BackToDB;
     [SerializeField] GameEvent BackLastEntry;
     [SerializeField] GameEvent OnWikiWindow;
+    [SerializeField] GameEvent OnSearchWindow;
     List<WordData> SearchedWordsHistory = new List<WordData>();
     GameObject Back;
     GameObject Front;
@@ -32,8 +34,6 @@ public class PCBackNavegationController : MonoBehaviour
     //OnSearchWord
     public void UpdateSearchedHistory(Component sender, object obj)
     {
-        
-
         if (IsUsingBackFrontBTN)
         {
             IsUsingBackFrontBTN = false;
@@ -43,6 +43,8 @@ public class PCBackNavegationController : MonoBehaviour
         WordData word = (WordData)obj;
 
         
+
+
         if (SearchedWordsHistory.Count != 0)
         {
             if (SearchedWordsHistory.Last() == null || SearchedWordsHistory.Last() == Irrelevant) SearchedWordsHistory.RemoveAt(SearchedWordsHistory.Count - 1);
@@ -55,13 +57,13 @@ public class PCBackNavegationController : MonoBehaviour
 
         SearchedWordsHistory.Add(word);
         index = SearchedWordsHistory.Count - 1;
-        
+       // OnWikiWindow?.Invoke(this, null);
         ButtonsAppear();
 
     }
 
-  
 
+    bool OnFirstHistoryEntry;
     public void BackInHistory()
     {
         if(!isInWikiWindow)
@@ -79,9 +81,16 @@ public class PCBackNavegationController : MonoBehaviour
         index--;
         WordData word = SearchedWordsHistory[index];
         IsUsingBackFrontBTN = true;
-
         BackLastEntry?.Invoke(this, word);
+
+        //if (OnFirstHistoryEntry) OnSearchWindow?.Invoke(this, null);
+
         ButtonsAppear();
+        
+        if (index <= 0)
+        {
+            OnFirstHistoryEntry = true;
+        }
 
     }
 
@@ -89,6 +98,7 @@ public class PCBackNavegationController : MonoBehaviour
     {
         index = index + 1;
         WordData word = SearchedWordsHistory[index];
+        OnFirstHistoryEntry = true;
         IsUsingBackFrontBTN = true;
         BackLastEntry?.Invoke(this, word);
         ButtonsAppear();
@@ -102,7 +112,7 @@ public class PCBackNavegationController : MonoBehaviour
             Front.SetActive(true);
             BackDB.SetActive(false);
 
-            if (index <= 0) BackBTN.interactable = false;
+            if (OnFirstHistoryEntry) BackBTN.interactable = false;
             else BackBTN.interactable = true; 
 
             if (index >= SearchedWordsHistory.Count - 1) FrontBTN.interactable = false;

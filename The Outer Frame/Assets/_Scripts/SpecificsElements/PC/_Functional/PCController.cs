@@ -6,7 +6,8 @@ using System.Text.RegularExpressions;
 
 public class PCController : MonoBehaviour
 {
-    [SerializeField] TMP_Text SearchBar;
+    [SerializeField] SearchBarController initSearchBar;
+    [SerializeField] SearchBarController normalSearchBar;
     [SerializeField] GameEvent OnPCSearchWord;
     [SerializeField] GameEvent OnShakeNotebook;
     [SerializeField] TMP_Text WikiTitleSearchedWord;
@@ -21,9 +22,8 @@ public class PCController : MonoBehaviour
     [SerializeField] GameEvent OnSetSearchBarState;
     
     GameEvent LastWindow;
-    bool isWaitingAWord;
     bool inWordAccessWindow;
-
+    SearchBarController ActualSearchBar;
 
     [SerializeField] WordData Vessel;
     [SerializeField] WordData A15;
@@ -31,15 +31,13 @@ public class PCController : MonoBehaviour
     WordData _LastSearchedWord;
     WordData word;
     bool isInPCView;
-    TypingAnimText textAnim;
 
     private void Start()
     {
-        isWaitingAWord = true;
-        textAnim = SearchBar.GetComponent<TypingAnimText>();
-        textAnim.SetCharacterPerSecond(2);
+        ActualSearchBar = initSearchBar;
         foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
-        StartCoroutine(IdleSearchBarAnim());
+        OnSetSearchBarState?.Invoke(this, false);
+        ActualSearchBar.StartIdleSearchBarAnim();
         LastWindow = OnWikiWindow;
     }
 
@@ -56,12 +54,14 @@ public class PCController : MonoBehaviour
         WordData _word = (WordData)obj;
         
         word = _word;
-        SearchBar.text = " " + word.GetName().Replace("?", "").Replace("!", "");
+        
         OnSetSearchBarState?.Invoke(this, true);
-        StopCoroutine(IdleSearchBarAnim());
-        textAnim.SetCharacterPerSecond();
-        isWaitingAWord = false;
-        SearchBar.GetComponent<TypingAnimText>().AnimateTyping();
+
+        ActualSearchBar.StopIdleSearchBarAnim();
+        ActualSearchBar.SetCharacterPerSecond();
+        ActualSearchBar.SetIsAwaitingAWord(false);
+        ActualSearchBar.EnterAWord(word);
+
         OnKeyBoardSound?.Invoke(this, null);
 
     }
@@ -145,7 +145,7 @@ public class PCController : MonoBehaviour
         //triggers solo de la barra, tiembla si no hay palabra
         if (!word)
         {
-            SearchBar.text = " |";
+            ActualSearchBar.ClearWord();
             OnSetSearchBarState?.Invoke(this, false);
             if (isInPCView) OnShakeNotebook?.Invoke(this, null);
         }
@@ -166,7 +166,7 @@ public class PCController : MonoBehaviour
 
             if (!word)
             {
-                SearchBar.text = " |";
+                ActualSearchBar.ClearWord();
                 OnSetSearchBarState?.Invoke(this, false);
                 if (isInPCView) OnShakeNotebook?.Invoke(this, null);
                 //OnSearchEmptyDB?.Invoke(this, null);
@@ -174,9 +174,10 @@ public class PCController : MonoBehaviour
             }
 
             FilterAll(word);
-            isWaitingAWord = true;
+            ActualSearchBar.SetIsAwaitingAWord(true);
             StopAllCoroutines();
-            StartCoroutine(IdleSearchBarAnim());
+            OnSetSearchBarState?.Invoke(this, false);
+            ActualSearchBar.StartIdleSearchBarAnim();
             word = null;
             return;
         }
@@ -185,7 +186,7 @@ public class PCController : MonoBehaviour
         //BtnBackToLastEntry.SetActive(false);
         if (!word)
         {
-            SearchBar.text = " |";
+            ActualSearchBar.ClearWord();
             OnSetSearchBarState?.Invoke(this, false);
             if (isInPCView) OnShakeNotebook?.Invoke(this, null);
             WikiTitleSearchedWord.text = "";
@@ -235,9 +236,10 @@ public class PCController : MonoBehaviour
             
         }
         FindableWordsManager.FWM.InstanciateFindableWord(WikiTitleSearchedWord, FindableBtnType.FindableBTN, FindableComesFrom.PC,null, true);
-        isWaitingAWord = true;
-       
-        StartCoroutine(IdleSearchBarAnim());
+        ActualSearchBar.SetIsAwaitingAWord(true);
+
+        OnSetSearchBarState?.Invoke(this, false);
+        ActualSearchBar.StartIdleSearchBarAnim();
         
         OnPCSearchWord?.Invoke(this, word);
 
@@ -294,25 +296,21 @@ public class PCController : MonoBehaviour
         inWordAccessWindow = (bool)obj;
     }
 
-    IEnumerator IdleSearchBarAnim()
-    {
-        SearchBar.text = " |";
-        OnSetSearchBarState?.Invoke(this, false);
-        textAnim.SetCharacterPerSecond(2);
-
-        while (isWaitingAWord)
-        {
-            textAnim.AnimateTyping();
-            yield return new WaitForSeconds(1f);
-        }
-    }
-
     IEnumerator DelayBTNBackLatEntryAppear()
     {
         yield return new WaitForSeconds(0.4f);
         BtnBackToLastEntry.SetActive(true);
     }
 
+    public void ChangeBarToInitBar(Component sender, object obj)
+    {
+        ActualSearchBar = initSearchBar;
+    }
+
+    public void ChangeBarToNormalBar(Component sender, object obj)
+    {
+        ActualSearchBar = normalSearchBar;
+    }
    
 
 }

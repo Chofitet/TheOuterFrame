@@ -26,7 +26,7 @@ public class TypingAnimText : MonoBehaviour
         if (TypeCoroutine != null) StopCoroutine(TypeCoroutine);
 
         TextField.maxVisibleCharacters = 0;
-        TypeCoroutine = StartCoroutine(TypeWriter());
+        if(gameObject.activeInHierarchy) TypeCoroutine = StartCoroutine(TypeWriter());
     }
 
     IEnumerator TypeWriter()
