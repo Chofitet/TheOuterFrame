@@ -78,25 +78,37 @@ public class BoardTutorialPosit : MonoBehaviour
         movePosit(GeneralViewPos);
     }
 
+    Coroutine CheckWhitDelayCoroutine;
+
     public void CheckViewWithDelay(Component sender, object obj)
     {
-        if (inactive) return;
-        if (isInTutorial) return;
-        ActualView = (ViewStates)obj;
+        if (CheckWhitDelayCoroutine != null) StopCoroutine(CheckWhitDelayCoroutine);
         
+        CheckWhitDelayCoroutine = StartCoroutine(CheckViewWithDelay((ViewStates)obj));
+    }
+
+    IEnumerator CheckViewWithDelay(ViewStates view)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        if (inactive) yield break;
+        if (isInTutorial) yield break;
+        ActualView = view;
+
         LastView = ActualView;
 
 
-        if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
+        if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) yield break;
 
         if (ActualView == ViewStates.BoardView || ActualView == ViewStates.GeneralView || ActualView == ViewStates.OnTakenPaperView || ActualView == ViewStates.OnTakeSomeInBoard || ActualView == ViewStates.DossierView || ActualView == ViewStates.PauseView || ActualView == ViewStates.BoardZoomView)
         {
             isChangingCam = false;
-            return;
+            yield break;
         }
 
-        if(isChangingCam) ActiveDesactivePosIt();
+        if (isChangingCam) ActiveDesactivePosIt();
         isChangingCam = false;
+
     }
 
     public void CkeckOnApprove(Component sender, object obj)

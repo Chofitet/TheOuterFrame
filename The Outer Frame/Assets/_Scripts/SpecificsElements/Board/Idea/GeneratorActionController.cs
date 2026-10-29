@@ -23,6 +23,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     [SerializeField] GameEvent OnSetTakenPosit;
     [SerializeField] GameObject CroosIcon;
     [SerializeField] bool ActiveInBeginning;
+    [SerializeField] CanvasGroup FrontCanvas;
+    [SerializeField] CanvasGroup BackCanvas;
     bool ActionIsDoing;
     bool isDone;
     bool istaken;
@@ -57,6 +59,8 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
     private void OnMouseDown()
     {
         GetComponent<BoxCollider>().enabled = false;
+        FrontCanvas.blocksRaycasts = true;
+        BackCanvas.blocksRaycasts = true;
         istaken = true;
         isHolding = true;
         OnSetTakenPosit?.Invoke(null, gameObject);
@@ -354,6 +358,11 @@ public class GeneratorActionController : MonoBehaviour, IPlacedOnBoard
         BtnGeneratorIdeaPrefab.ActivedDesactiveIdeaBTN(endValue);
     }
 
+    public void OnTutorialPutIdeaPosit(Component sender, object obj)
+    {
+        FrontCanvas.blocksRaycasts = false;
+        BackCanvas.blocksRaycasts = false;
+    }
 
     public WordData GetWordData()
     {

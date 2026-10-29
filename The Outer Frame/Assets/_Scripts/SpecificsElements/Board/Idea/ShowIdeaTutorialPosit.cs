@@ -14,6 +14,7 @@ public class ShowIdeaTutorialPosit : MonoBehaviour
     [SerializeField] Transform OutPos2;
     [SerializeField] float timeToAppear = 0.6f;
     [SerializeField] float timeMovement = 0.2f;
+    [SerializeField] GameEvent OnShowPutIdeaTutorialPosit;
 
     Sequence showPositSequence;
     bool PositShowed;
@@ -41,6 +42,7 @@ public class ShowIdeaTutorialPosit : MonoBehaviour
         .PrependInterval(AwaitTime + 0.5f)
         .AppendCallback(() =>
         {
+            OnShowPutIdeaTutorialPosit?.Invoke(this, null);
             positConteiner.transform.position = initPos.position;
             positConteiner.transform.rotation = initPos.rotation;
             positModel.transform.localRotation = InitialPosModel.localRotation;

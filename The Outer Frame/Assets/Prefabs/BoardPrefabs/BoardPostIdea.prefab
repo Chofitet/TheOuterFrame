@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 6074942112764524670}
   - component: {fileID: 8497967836194136121}
   - component: {fileID: 8350557539177762252}
+  - component: {fileID: 6458527243890816652}
   m_Layer: 10
   m_Name: BoardPostIdea
   m_TagString: Untagged
@@ -331,6 +332,8 @@ MonoBehaviour:
   OnSetTakenPosit: {fileID: 11400000, guid: 284b5299baae3f9428104175a296600e, type: 2}
   CroosIcon: {fileID: 7449861176764267332}
   ActiveInBeginning: 0
+  FrontCanvas: {fileID: 8319180811682235347}
+  BackCanvas: {fileID: 1737735746978012746}
   TypeElement: 3
 --- !u!114 &8823336814008408008
 MonoBehaviour:
@@ -918,6 +921,42 @@ MonoBehaviour:
   gameEvent: {fileID: 0}
   _transform: {fileID: 0}
   _color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &6458527243890816652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698638971177894008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7170aa5ec2bf7044baba9aa4d18c3d13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDesactive: 0
+  TriggerEvent: {fileID: 11400000, guid: 5de58fae09577b44ea5879754eb2438c, type: 2}
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9068181064678660897}
+        m_TargetAssemblyTypeName: GeneratorActionController, Assembly-CSharp
+        m_MethodName: OnTutorialPutIdeaPosit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  DelayCall: 0
+  _float: 0
+  _string: 
+  viewState: 0
+  gameEvent: {fileID: 0}
+  _transform: {fileID: 0}
+  _color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2257471455691103772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1407,6 +1446,7 @@ GameObject:
   - component: {fileID: 834384618070771921}
   - component: {fileID: 7741045832096004562}
   - component: {fileID: 974983684879005983}
+  - component: {fileID: 8319180811682235347}
   m_Layer: 10
   m_Name: FrontPosIt
   m_TagString: Untagged
@@ -1497,6 +1537,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &8319180811682235347
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4384746060027388932}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4583649141459890941
 GameObject:
   m_ObjectHideFlags: 0
@@ -1797,6 +1849,7 @@ GameObject:
   - component: {fileID: 8693591120253964169}
   - component: {fileID: 3960913202141530414}
   - component: {fileID: 1839239484359772206}
+  - component: {fileID: 1737735746978012746}
   m_Layer: 10
   m_Name: BackPosIt
   m_TagString: Untagged
@@ -1891,6 +1944,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &1737735746978012746
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244184801962107340}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7001383505415838698
 GameObject:
   m_ObjectHideFlags: 0
