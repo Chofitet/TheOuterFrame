@@ -75,7 +75,7 @@ public class PCBackNavegationController : MonoBehaviour
 
         if (index <= 0)
         {
-            OnSearchWindow?.Invoke(this, null);
+            // OnSearchWindow?.Invoke(this, null); // Descomentar para que funcione el SearchWindow
             IsUsingBackFrontBTN = false;
             ButtonsAppear();
             return;
@@ -137,16 +137,16 @@ public class PCBackNavegationController : MonoBehaviour
             Front.SetActive(true);
             BackDB.SetActive(false);
 
-            BackBTN.interactable = index >= 0;
+            BackBTN.interactable = index >/*=*/ 0; // Descomentar para que funcione el SearchWindow
 
             FrontBTN.interactable = index < SearchedWordsHistory.Count - 1;
 
         }
         else
         {
-            Back.SetActive(true);
-            Front.SetActive(true);
-            BackDB.SetActive(false);
+            Back.SetActive(false);
+            Front.SetActive(false);
+            BackDB.SetActive(true);
         }
 
     }

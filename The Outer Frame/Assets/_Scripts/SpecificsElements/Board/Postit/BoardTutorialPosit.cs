@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System;
 
 public class BoardTutorialPosit : MonoBehaviour
 {
-    
+
     [Header("Position Placed in board")]
     [SerializeField] Transform GeneralViewPos;
     [SerializeField] Transform BoardViewPos;
@@ -14,7 +15,9 @@ public class BoardTutorialPosit : MonoBehaviour
     [SerializeField] Transform NextToNotebookPos;
     [SerializeField] Transform OutOfView;
     [SerializeField] int amountOfWordsToShowPosit;
-    [SerializeField] List<GameObject> posits = new List<GameObject>(); 
+    [SerializeField] List<ExtraPositsData> posits = new List<ExtraPositsData>();
+    [SerializeField] GameObject ExtraPosits;
+
 
     [SerializeField] GameEvent OnButtonElement;
     int amountOfWordsTaked;
@@ -27,12 +30,13 @@ public class BoardTutorialPosit : MonoBehaviour
     bool inactive;
     ViewStates LastView;
     ViewStates ActualView;
-    bool NotShowedYet = true;
+    int CamChangesIndex = 0; 
+
 
     private void Start()
     {
         Posit = transform.GetChild(0).gameObject;
-        AppearPosits(false);
+        AppearPosits(false,true);
     }
 
     public void CheckWordsTaked(Component sender, object obj)
@@ -41,21 +45,26 @@ public class BoardTutorialPosit : MonoBehaviour
         if (isInTutorial) return;
         amountOfWordsTaked++;
 
-        if(amountOfWordsTaked == amountOfWordsToShowPosit) pendingToShowPosit = true;
+        if (amountOfWordsTaked == amountOfWordsToShowPosit) pendingToShowPosit = true;
 
         if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
         if (ActualView == ViewStates.PCView || ActualView == ViewStates.TVView || ActualView == ViewStates.ProgressorView || ActualView == ViewStates.PinchofonoView) ActiveDesactivePosIt();
     }
 
+    bool isChangingCam;
     public void CheckView(Component sender, object obj)
     {
         if (inactive) return;
         if (isInTutorial) return;
         ActualView = (ViewStates)obj;
         if (LastView == null) LastView = ActualView;
+        
+        if(!isChangingCam) isChangingCam = true;
+        else isChangingCam = false;
 
         if (ActualView == ViewStates.BoardView)
         {
+            MoveExtraPosit(BoardViewPos);
             movePosit(BoardViewPos);
         }
         else if (ActualView == ViewStates.GeneralView)
@@ -76,16 +85,18 @@ public class BoardTutorialPosit : MonoBehaviour
         ActualView = (ViewStates)obj;
         
         LastView = ActualView;
-        
+
 
         if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
 
         if (ActualView == ViewStates.BoardView || ActualView == ViewStates.GeneralView || ActualView == ViewStates.OnTakenPaperView || ActualView == ViewStates.OnTakeSomeInBoard || ActualView == ViewStates.DossierView || ActualView == ViewStates.PauseView || ActualView == ViewStates.BoardZoomView)
         {
+            isChangingCam = false;
             return;
         }
 
-        ActiveDesactivePosIt();
+        if(isChangingCam) ActiveDesactivePosIt();
+        isChangingCam = false;
     }
 
     public void CkeckOnApprove(Component sender, object obj)
@@ -109,7 +120,6 @@ public class BoardTutorialPosit : MonoBehaviour
         }
 
         AppearPosits(true);
-        NotShowedYet = false;
     }
     public void GetTrueConditionalIdeas(Component sender, object obj)
     {
@@ -124,19 +134,24 @@ public class BoardTutorialPosit : MonoBehaviour
     bool isTaken;
     public void MoveToTakedPosition(Component sender, object obj)
     {
-        if(LastView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
+        if (LastView == ViewStates.OnTakeSomeInBoard) OnButtonElement?.Invoke(this, ViewStates.BoardView);
+
+        ReparentExtraPosits(transform);
         movePosit(NextToNotebookPos);
         isTaken = true;
+
     }
 
+    Sequence MoveExtraPositsSequence;
     public void BackToBoardPosition(Component sender, object obj)
     {
         Transform toMove = obj as Transform;
 
         if (toMove == null) toMove = GeneralViewPos;
-
+        if(ActualView != ViewStates.OnTakeSomeInBoard)MoveExtraPosit(GeneralViewPos);
         movePosit(toMove);
         isTaken = false;
+
     }
 
     void movePosit(Transform MoveTo)
@@ -146,8 +161,27 @@ public class BoardTutorialPosit : MonoBehaviour
         moveSequence = DOTween.Sequence();
 
         moveSequence.Append(Posit.transform.DOMove(MoveTo.position, 0.5f)).SetEase(Ease.InOutCirc)
-            .Join(Posit.transform.DORotate(MoveTo.rotation.eulerAngles, 0.5f));
+            .Join(Posit.transform.DORotate(MoveTo.rotation.eulerAngles, 0.5f)).OnComplete(OnCompletePositMove);
     }
+
+    void OnCompletePositMove()
+    {
+        if (!isTaken)
+        {
+            ReparentExtraPosits(Posit.transform);
+        }
+    }
+
+    void MoveExtraPosit(Transform ToMove)
+    {
+        if (MoveExtraPositsSequence != null && MoveExtraPositsSequence.IsActive()) MoveExtraPositsSequence.Kill();
+
+        MoveExtraPositsSequence = DOTween.Sequence();
+
+        MoveExtraPositsSequence.Append(ExtraPosits.transform.DOMove(ToMove.position, 0.5f).SetEase(Ease.InOutCirc));
+
+    }
+
 
     public void CheckPendingBordsToPlaceOnBoard(Component sender, object obj)
     {
@@ -158,12 +192,16 @@ public class BoardTutorialPosit : MonoBehaviour
         {
             return;
         }
-         
+
 
         wordWasPlacedOnBoard++;
 
         if (!isTaken) MoveOutView(OutOfViewfromBoard);
-        else MoveOutView(OutOfView);
+        else
+        {
+            MoveExtraPosit(OutOfViewfromBoard);
+            MoveOutView(OutOfView);
+        }
     }
 
     public void PlaceAPhotBeforeActivatePosit(Component sender, object obj)
@@ -194,36 +232,50 @@ public class BoardTutorialPosit : MonoBehaviour
     }
 
     int lastPositAppeared;
-    void AppearPosits(bool boolState)
+    void AppearPosits(bool boolState, bool NoCountCamChanges = false)
     {
-        if(boolState)
+        if (!NoCountCamChanges)
+        {
+            CamChangesIndex++;
+            if (posits[lastPositAppeared].AmountOfCamChanges != CamChangesIndex) return;
+        }
+
+        if (boolState)
         {
             if (lastPositAppeared >= posits.Count) return;
-            foreach (GameObject posit in posits)
+            foreach (ExtraPositsData ExtraPosit in posits)
             {
-                if (posits.IndexOf(posit) == -1) break;
-                if(posits.IndexOf(posit) < lastPositAppeared)
-                {
-                 //   posit.GetComponent<BoxCollider>().enabled = false;
-                }
-                
+                if (posits.IndexOf(ExtraPosit) == -1) break;
+
             }
-            posits[lastPositAppeared].SetActive(true);
-            posits[lastPositAppeared].GetComponent<BoxCollider>().enabled = true;
+            posits[lastPositAppeared].posit.SetActive(true);
             lastPositAppeared++;
         }
         else
         {
-            foreach(GameObject posit in posits)
+            foreach (ExtraPositsData ExtraPosit in posits)
             {
-                posit.GetComponent<BoxCollider>().enabled = true;
-                posit.SetActive(false);
+                ExtraPosit.posit.SetActive(false);
             }
         }
+    }
+
+    void ReparentExtraPosits(Transform parent)
+    {
+        ExtraPosits.transform.SetParent(parent, true);
     }
 
     public void SetInTutorial(Component sender, object obj)
     {
         isInTutorial = (bool)obj;
     }
+
+
+}
+[Serializable]
+public class ExtraPositsData
+{
+    public GameObject posit;
+    public int AmountOfCamChanges;
+
 }
