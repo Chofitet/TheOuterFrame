@@ -249,6 +249,7 @@ public class BoardTutorialPosit : MonoBehaviour
         if (!NoCountCamChanges)
         {
             CamChangesIndex++;
+            if (posits.Count - 1 < lastPositAppeared) return;
             if (posits[lastPositAppeared].AmountOfCamChanges != CamChangesIndex) return;
         }
 
