@@ -37,7 +37,8 @@ public class PCController : MonoBehaviour
         ActualSearchBar = initSearchBar;
         foreach (GameObject g in PanelsAppearsOnSearch) g.SetActive(false);
         OnSetSearchBarState?.Invoke(this, false);
-        ActualSearchBar.StartIdleSearchBarAnim();
+        ActualSearchBar.ResertBar(this,null);
+        ActualSearchBar.SetWaitingSearchBarText("  Search for...");
         LastWindow = OnWikiWindow;
     }
 
@@ -239,8 +240,8 @@ public class PCController : MonoBehaviour
         ActualSearchBar.SetIsAwaitingAWord(true);
 
         OnSetSearchBarState?.Invoke(this, false);
-        ActualSearchBar.StartIdleSearchBarAnim();
-        
+        ActualSearchBar.ResertBar(this, null);
+
         OnPCSearchWord?.Invoke(this, word);
 
         _LastSearchedWord = word;
@@ -277,10 +278,23 @@ public class PCController : MonoBehaviour
     {
         gameEvent?.Invoke(this, null);
         LastWindow = gameEvent;
+
+      
     }
     public void SetLastWindow(Component sender,object obj)
     {
         LastWindow = (GameEvent)obj;
+
+        if (LastWindow == OnWikiWindow)
+        {
+            ActualSearchBar.SetWaitingSearchBarText("  Search for...");
+        }
+        else
+        {
+            ActualSearchBar.SetWaitingSearchBarText("  Filter by...");
+        }
+
+        ActualSearchBar.ResertBar(this,null);
     }
     public void FilterAll(WordData specificTag = null)
     {

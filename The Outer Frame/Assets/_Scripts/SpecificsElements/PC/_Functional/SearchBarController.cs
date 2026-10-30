@@ -10,13 +10,12 @@ public class SearchBarController : MonoBehaviour
     [SerializeField] TMP_Text WaitingSearchBarText;
     bool isWaitingAWord;
     Coroutine IdleSearchBarAnimCoroutine;
-    string initWaitingSearchBarText;
+    string ActualWaitingSearchBarText;
     TypingAnimText textAnim;
     private void Awake()
     {
         textAnim = SearchBarText.GetComponent<TypingAnimText>();
         textAnim.SetCharacterPerSecond(2);
-        initWaitingSearchBarText = WaitingSearchBarText.text;
     }
     public void EnterAWord(WordData word)
     {
@@ -31,12 +30,20 @@ public class SearchBarController : MonoBehaviour
 
     public void StartIdleSearchBarAnim()
     {
-        if (gameObject.activeInHierarchy) IdleSearchBarAnimCoroutine = StartCoroutine(IdleSearchBarAnim());
+        if (gameObject.activeInHierarchy)
+        {
+            isWaitingAWord = true;
+            IdleSearchBarAnimCoroutine = StartCoroutine(IdleSearchBarAnim());
+        }
     }
 
     public void StopIdleSearchBarAnim()
     {
-        if(IdleSearchBarAnimCoroutine != null) StopCoroutine(IdleSearchBarAnimCoroutine);
+        if (IdleSearchBarAnimCoroutine != null)
+        {
+            isWaitingAWord = false;
+            StopCoroutine(IdleSearchBarAnimCoroutine);
+        }
     }
 
     public void SetCharacterPerSecond()
@@ -54,7 +61,7 @@ public class SearchBarController : MonoBehaviour
     {
         SearchBarText.text = " |";
         textAnim.SetCharacterPerSecond(2);
-        WaitingSearchBarText.text = initWaitingSearchBarText;
+        WaitingSearchBarText.text = ActualWaitingSearchBarText;
 
         while (isWaitingAWord)
         {
@@ -66,7 +73,14 @@ public class SearchBarController : MonoBehaviour
     public void ResertBar(Component seder, object obj)
     {
         StopIdleSearchBarAnim();
-        isWaitingAWord = false;
+        isWaitingAWord = true;
         ClearWord();
+        StartIdleSearchBarAnim();
+    }
+
+    public void SetWaitingSearchBarText(string text)
+    {
+        ActualWaitingSearchBarText = text;
+        WaitingSearchBarText.text = ActualWaitingSearchBarText;
     }
 }

@@ -19,6 +19,7 @@ public class LogWindowController : MonoBehaviour
     [SerializeField] RectTransform panel;
     [SerializeField] GameObject Filter;
     [SerializeField] GameObject NoFilter;
+    [SerializeField] GameObject LoadScreen;
 
     public void AddEntry(Component sender, object obj)
     {
@@ -29,13 +30,13 @@ public class LogWindowController : MonoBehaviour
             if (FilterWith == data.word) NoEntriesText.text = "";
         }
         else NoEntriesText.text = "";
-    
+
 
         if (data.reportType)
         {
             AddReportLog(data);
         }
-        else if(data.callType)
+        else if (data.callType)
         {
             AddTranscriptionLog(data);
         }
@@ -43,12 +44,12 @@ public class LogWindowController : MonoBehaviour
 
     void AddReportLog(LogEntryData data)
     {
-         instanciateEntry(PrefabLogReport,data);
+        instanciateEntry(PrefabLogReport, data);
     }
 
     void AddTranscriptionLog(LogEntryData data)
     {
-        instanciateEntry(PrefabLogTranscript,data);
+        instanciateEntry(PrefabLogTranscript, data);
     }
 
     void instanciateEntry(GameObject prefab, LogEntryData data)
@@ -72,7 +73,7 @@ public class LogWindowController : MonoBehaviour
     public void OnPcUpdate(Component sender, object obj)
     {
         WordData word = (WordData)obj;
-        foreach(LogEntryController entry in LogEntries)
+        foreach (LogEntryController entry in LogEntries)
         {
             entry.OnUpdatePC(word);
         }
@@ -86,7 +87,7 @@ public class LogWindowController : MonoBehaviour
         SearchLogData data = (SearchLogData)obj;
 
         WordData word = data.word;
-        if(word == null) return;
+        if (word == null) return;
         LogFilterType actualFilter = data.filterType;
         ActiveAllEntries();
 
@@ -118,7 +119,7 @@ public class LogWindowController : MonoBehaviour
             }
         }
 
-        if(FilterEntries.Count == 0) NoEntriesText.text = "SUBJECT UNAPPROACHED YET.\nFIX THAT BY DOING SOMETHING ALREADY!";
+        if (FilterEntries.Count == 0) NoEntriesText.text = "SUBJECT UNAPPROACHED YET.\nFIX THAT BY DOING SOMETHING ALREADY!";
     }
 
     void ApplyTypeFilter(LogFilterType filterType)
@@ -133,7 +134,7 @@ public class LogWindowController : MonoBehaviour
     public void OnActiveAllEntries(Component sender, object obj)
     {
         if (isDeleting) return;
-        
+
         ActiveAllEntries();
     }
 
@@ -156,7 +157,7 @@ public class LogWindowController : MonoBehaviour
 
         if (!isFilter)
         {
-            if(LogEntries.Count != 0) NoFilter.SetActive(true);
+             NoFilter.SetActive(true);
             Filter.SetActive(false);
         }
         else
@@ -177,9 +178,9 @@ public class LogWindowController : MonoBehaviour
                  offsetMax.y = 0;
                  panel.offsetMax = offsetMax;
              }*/
-        }
+    }
 
-    public void ThereAreEntriesForWord(Component sender,object obj)
+    public void ThereAreEntriesForWord(Component sender, object obj)
     {
         WordData wordData = (WordData)obj;
 
@@ -188,7 +189,7 @@ public class LogWindowController : MonoBehaviour
         foreach (LogEntryController entry in LogEntries)
         {
             if (entry.GetWord() == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
-            
+
             if (WordsManager.WM.FindWordWithPhoneNum(entry.GetWord()) == wordData) OnActiveSubjectFilesBTN?.Invoke(this, null);
         }
 
@@ -210,11 +211,23 @@ public class LogWindowController : MonoBehaviour
     bool isDeleting;
     public void DeleteLog(Component Sender, object obj)
     {
-        foreach(LogEntryController entry in LogEntries)
+        foreach (LogEntryController entry in LogEntries)
         {
-           entry.gameObject.SetActive(false);
+            entry.gameObject.SetActive(false);
         }
         isDeleting = true;
+    }
+
+    public void RefreshScreen(Component sender, object obj)
+    {
+        StartCoroutine(RefresScreen());
+    }
+
+    IEnumerator RefresScreen()
+    {
+        LoadScreen.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        LoadScreen.SetActive(false);
     }
 
 }

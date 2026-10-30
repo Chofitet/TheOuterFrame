@@ -7,11 +7,13 @@ using UnityEditor.Experimental.GraphView;
 
 public class PCBackNavegationController : MonoBehaviour
 {
+    [Header("DB Navegation Buttons")]
     [SerializeField] Button BackBTN;
     [SerializeField] Button FrontBTN;
     [SerializeField] Button BackToDB;
     [SerializeField] GameEvent BackLastEntry;
     [SerializeField] GameEvent OnWikiWindow;
+    [SerializeField] GameEvent OnLogWindow;
     [SerializeField] GameEvent OnSearchWindow;
     List<WordData> SearchedWordsHistory = new List<WordData>();
     GameObject Back;
@@ -21,7 +23,6 @@ public class PCBackNavegationController : MonoBehaviour
     int index = -1;
     bool IsUsingBackFrontBTN;
     [SerializeField] WordData Irrelevant;
-
 
     private void OnEnable()
     {
@@ -177,4 +178,101 @@ public class PCBackNavegationController : MonoBehaviour
         FrontBTN.interactable = true;
     }
 
+    /// LOG and DB buttons
+
+    [Header("LOG and DB buttons")]
+
+    [SerializeField] Button DataBaseBTN;
+    [SerializeField] Button EventLogBTN;
+
+    [SerializeField] GameEvent OnPressBackToLogBTN;
+    [SerializeField] GameEvent OnPressToLogBTN;
+    [SerializeField] PCController PCController;
+
+    [SerializeField] GameEvent OnRefreshLogScreen;
+    [SerializeField] GameEvent OnRefreshDBScreen;
+
+    [SerializeField] Sprite hoverUnpressed;
+    [SerializeField] Sprite hoverSelected;
+    [SerializeField] Sprite Unpressed;
+    [SerializeField] Sprite Selected;
+
+    bool isOnWikiWindow = true;
+    bool isOnLogWindow;
+
+    public void PressDBButton()
+    {
+        if (!isOnWikiWindow)
+        {
+            PCController.ChangeWindow(OnWikiWindow);
+            OnPressBackToLogBTN?.Invoke(this, null);
+
+            ActivateDBButton();
+        }
+        else
+        {
+            OnRefreshDBScreen?.Invoke(this, null);
+        }
+    }
+
+    public void PressLogButton()
+    {
+        if (!isOnLogWindow)
+        {
+            PCController.ChangeWindow(OnLogWindow);
+            OnPressToLogBTN?.Invoke(this, null);
+
+            ActivateLogButton();
+        }
+        else
+        {
+            OnRefreshLogScreen.Invoke(this, null);
+        }
+    }
+
+    void ActivateDBButton()
+    {
+        DataBaseBTN.image.sprite = Selected;
+        EventLogBTN.image.sprite = Unpressed;
+
+        SpriteState StateSelected = EventLogBTN.spriteState;
+        StateSelected.highlightedSprite = hoverSelected;
+        DataBaseBTN.spriteState = StateSelected;
+
+        SpriteState StateUnselected = DataBaseBTN.spriteState;
+        StateUnselected.highlightedSprite = hoverUnpressed;
+        EventLogBTN.spriteState = StateUnselected;
+
+        isOnWikiWindow = true;
+        isOnLogWindow = false;
+
+    }
+
+    void ActivateLogButton()
+    {
+        EventLogBTN.image.sprite = Selected;
+        DataBaseBTN.image.sprite = Unpressed;
+
+        SpriteState StateSelected = EventLogBTN.spriteState;
+        StateSelected.highlightedSprite = hoverSelected;
+        EventLogBTN.spriteState = StateSelected;
+
+        SpriteState StateUnselected = DataBaseBTN.spriteState;
+        StateUnselected.highlightedSprite = hoverUnpressed;
+        DataBaseBTN.spriteState = StateUnselected;
+
+
+        isOnLogWindow = true;
+        isOnWikiWindow = false;
+    }
+
+    public void ActivateDBButton(Component sender, object obj)
+    {
+        ActivateDBButton();
+    }
+
+    public void ActivateLogButton(Component sender, object obj)
+    {
+        ActivateLogButton();
+    }
 }

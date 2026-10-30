@@ -19,12 +19,13 @@ public class PCWikiController : MonoBehaviour
     [SerializeField] GameEvent OnPresAutomaticGooIdentificatorBTN;
     List<GameObject> FIeldsInWikiInfo = new List<GameObject>();
     [SerializeField] GameObject LoadScreen;
+    [SerializeField] GameObject SearchMagnifier;
     DataBaseType input;
     bool once;
 
     private void Start()
     {
-        transform.GetChild(0).gameObject.SetActive(false);
+        //transform.GetChild(0).gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -45,7 +46,8 @@ public class PCWikiController : MonoBehaviour
     {
         if (_wordData == null)
         {
-            WikiData.text = "YOU SEARCH NOTHING YOU GET NOTHING";
+            WikiData.text = "- YOU SEARCH NOTHING, YOU GET NOTHING -\r\n\r\n\r\n\r\n> ENTER TASK RELATED TERM.\r\n\r\n> THEN    IT.\r\n\r\nIT'S A NEW NOVELTY CONCEPT.";
+            SearchMagnifier.SetActive(true);
             FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN, FindableComesFrom.PC);
 
             HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
@@ -54,7 +56,7 @@ public class PCWikiController : MonoBehaviour
             return;
         }
         WordData wordData = (WordData)_wordData;
-
+        SearchMagnifier.SetActive(false);
         input = WordsManager.WM.RequestBDWikiData(wordData);
         if(isInPCView) input.SetWasSearched();
 
@@ -241,5 +243,16 @@ public class PCWikiController : MonoBehaviour
         return true;
     }
 
+    public void RefreshScreen(Component sender, object obj)
+    {
+        StartCoroutine(RefresScreen());
+    }
+
+    IEnumerator RefresScreen()
+    {
+        LoadScreen.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        LoadScreen.SetActive(false);
+    }
 
 }
