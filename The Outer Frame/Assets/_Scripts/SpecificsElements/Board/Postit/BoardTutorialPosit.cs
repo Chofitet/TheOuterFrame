@@ -45,10 +45,12 @@ public class BoardTutorialPosit : MonoBehaviour
         if (isInTutorial) return;
         amountOfWordsTaked++;
 
-        if (amountOfWordsTaked == amountOfWordsToShowPosit) pendingToShowPosit = true;
+        bool viewCheck = ActualView == ViewStates.PCView || ActualView == ViewStates.TVView || ActualView == ViewStates.ProgressorView || ActualView == ViewStates.PinchofonoView;
+
+        if (amountOfWordsTaked == amountOfWordsToShowPosit && viewCheck) pendingToShowPosit = true;
 
         if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
-        if (ActualView == ViewStates.PCView || ActualView == ViewStates.TVView || ActualView == ViewStates.ProgressorView || ActualView == ViewStates.PinchofonoView) ActiveDesactivePosIt();
+        if (viewCheck) ActiveDesactivePosIt(true);
     }
 
     bool isChangingCam;
@@ -121,7 +123,7 @@ public class BoardTutorialPosit : MonoBehaviour
         ActiveDesactivePosIt();
     }
 
-    void ActiveDesactivePosIt()
+    void ActiveDesactivePosIt(bool NoCountCamChanges2 = false)
     {
         if (inactive) return;
         if (wordWasPlacedOnBoard >= amountOfWordsToShowPosit)
@@ -131,7 +133,7 @@ public class BoardTutorialPosit : MonoBehaviour
             return;
         }
 
-        AppearPosits(true);
+        AppearPosits(true,false, NoCountCamChanges2);
     }
     public void GetTrueConditionalIdeas(Component sender, object obj)
     {
@@ -244,11 +246,11 @@ public class BoardTutorialPosit : MonoBehaviour
     }
 
     int lastPositAppeared;
-    void AppearPosits(bool boolState, bool NoCountCamChanges = false)
+    void AppearPosits(bool boolState, bool NoCountCamChanges = false, bool NoCountCamChanges2 = false)
     {
         if (!NoCountCamChanges)
         {
-            CamChangesIndex++;
+            if(!NoCountCamChanges2 || CamChangesIndex < 1) CamChangesIndex++;
             if (posits.Count - 1 < lastPositAppeared) return;
             if (posits[lastPositAppeared].AmountOfCamChanges != CamChangesIndex) return;
         }
