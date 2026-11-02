@@ -37,6 +37,8 @@ public class PCBackNavegationController : MonoBehaviour
         if (IsUsingBackFrontBTN)
         {
             IsUsingBackFrontBTN = false;
+            if (SearchedWordsHistory.Count != 0) if (SearchedWordsHistory.Last() == null || SearchedWordsHistory.Last() == Irrelevant) SearchedWordsHistory.RemoveAt(SearchedWordsHistory.Count - 1);
+            ButtonsAppear();
             return;
         }
 

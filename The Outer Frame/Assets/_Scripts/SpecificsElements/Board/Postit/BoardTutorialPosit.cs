@@ -45,12 +45,10 @@ public class BoardTutorialPosit : MonoBehaviour
         if (isInTutorial) return;
         amountOfWordsTaked++;
 
-        bool viewCheck = ActualView == ViewStates.PCView || ActualView == ViewStates.TVView || ActualView == ViewStates.ProgressorView || ActualView == ViewStates.PinchofonoView;
-
-        if (amountOfWordsTaked == amountOfWordsToShowPosit && viewCheck) pendingToShowPosit = true;
+        if (amountOfWordsTaked == amountOfWordsToShowPosit) pendingToShowPosit = true;
 
         if (!thereIsAnIdeaPendingToPut || !pendingToShowPosit) return;
-        if (viewCheck) ActiveDesactivePosIt(true);
+        if (ActualView == ViewStates.PCView || ActualView == ViewStates.TVView || ActualView == ViewStates.ProgressorView || ActualView == ViewStates.PinchofonoView) ActiveDesactivePosIt(true);
     }
 
     bool isChangingCam;
