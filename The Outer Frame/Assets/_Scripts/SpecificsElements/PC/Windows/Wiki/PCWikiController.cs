@@ -20,6 +20,7 @@ public class PCWikiController : MonoBehaviour
     List<GameObject> FIeldsInWikiInfo = new List<GameObject>();
     [SerializeField] GameObject LoadScreen;
     [SerializeField] GameObject SearchMagnifier;
+    [SerializeField] GameObject VerticalScroll;
     DataBaseType input;
     bool once;
 
@@ -46,13 +47,16 @@ public class PCWikiController : MonoBehaviour
     {
         if (_wordData == null)
         {
-            WikiData.text = "- YOU SEARCH NOTHING, YOU GET NOTHING -\r\n\r\n\r\n\r\n> ENTER TASK RELATED TERM.\r\n\r\n> THEN    IT.\r\n\r\nIT'S A NEW NOVELTY CONCEPT.";
+            WikiData.text = "- YOU SEARCH NOTHING, YOU GET NOTHING -\r\n\r\n\r\n\r\n> ENTER TASK RELATED TERM.\r\n\r\n> THEN\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0IT.\r\n\r\nIT'S A NEW NOVELTY CONCEPT.";
             SearchMagnifier.SetActive(true);
             FindableWordsManager.FWM.InstanciateFindableWord(WikiData, FindableBtnType.FindableBTN, FindableComesFrom.PC);
 
             HyperlinksManager.HLM.InstanciateHyperLink(WikiData, FindableBtnType.HyperLink);
 
             InstanciateRedactedBlock.IRM.InstanciateRedactedBlocks(WikiData);
+
+            VerticalScroll.gameObject.SetActive(false);
+
             return;
         }
         WordData wordData = (WordData)_wordData;
