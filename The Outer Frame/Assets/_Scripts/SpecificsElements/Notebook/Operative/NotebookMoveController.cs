@@ -71,7 +71,9 @@ public class NotebookMoveController : MonoBehaviour
 
         if (isMoving)
         {
+            Debug.Log("starting delay");
             await Task.Delay(200);
+            Debug.Log("finishing delay");
         }
 
         if (pendingToGoDown)
@@ -80,11 +82,11 @@ public class NotebookMoveController : MonoBehaviour
             int target = pendingPosIndex;
             bool targetUp = pendingIsUp;
 
-            CutShakeSequence();
+           // CutShakeSequence();
             ForcePosition(target, false);
             pendingToGoDown = false;
             SetPos(target, targetUp);
-
+            Debug.Log("Notebook Go Down aaaa");
 
         }
 

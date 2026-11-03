@@ -73,7 +73,6 @@ public class ActionRowController : MonoBehaviour
 
         if (isPendigToErase)
         {
-            Debug.Log($"PendingTooo {ActionText.text}");
             if (ActionText.text == "Inspect") WordPendingToReplaceErased = WordSelectedInNotebook.Notebook.GetSelectedWord();
             else Word = WordSelectedInNotebook.Notebook.GetSelectedWord();
             return;
@@ -93,7 +92,6 @@ public class ActionRowController : MonoBehaviour
 
         if (isSpecialAction || !toggle.isOn || !once)
         {
-            Debug.Log($"PendingTooo {ActionText.text}");
             once = true;
         }
         
@@ -188,7 +186,6 @@ public class ActionRowController : MonoBehaviour
         if(PendingToEraseCoroutine != null  && ActionText.text != "Inspect" )
         {
             StopCoroutine(PendingToEraseCoroutine);
-            Debug.Log("Stop coroutine");
             PendingToEraseCoroutine = null;
             toggle.isOn = false;
             isPendigToErase = false;
@@ -223,7 +220,6 @@ public class ActionRowController : MonoBehaviour
 
     IEnumerator AnimEraseWriting(TMP_Text first, bool isTransparent1, TMP_Text second, bool isTransparent2, string txt = "")
     {
-        Debug.Log("AnimEraseWriting");
         FadeWordsEffect effect = first.gameObject.GetComponent<FadeWordsEffect>();
         if (!isTransparent1) effect.OnEraseProgress += eraseParticles;
         effect.StartEffect(isTransparent1);
@@ -425,12 +421,10 @@ public class ActionRowController : MonoBehaviour
         WordData _word = (WordData) obj;
         if (!Word) return;
 
-        Debug.Log($"Erase word {_word} from AP");
         btn.enabled = false;
 
         if(_word == Word)
         {
-            Debug.Log("OnInactiveReplaceWord");
             if (toggle.isOn) isPendigToErase = true;
 
         }
@@ -472,7 +466,6 @@ public class ActionRowController : MonoBehaviour
         }
         else
         {
-            Debug.Log("Pressing word");
             ResetRow();
             WordData newWord = WordsManager.WM.FindActualWordRetroactive(Word);
             WordSelectedInNotebook.Notebook.ForceSelectedWord(newWord);

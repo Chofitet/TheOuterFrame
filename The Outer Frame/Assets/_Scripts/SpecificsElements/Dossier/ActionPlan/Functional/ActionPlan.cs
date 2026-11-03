@@ -368,7 +368,6 @@ public class ActionPlan : MonoBehaviour
     {
         foreach (ActionRowController actions in Actions)
         {
-            Debug.Log("EnableButtons");
             actions.GetButton().enabled = x;
         }
     }
