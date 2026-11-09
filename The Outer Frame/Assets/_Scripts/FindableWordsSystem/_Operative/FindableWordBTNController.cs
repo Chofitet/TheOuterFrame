@@ -94,78 +94,99 @@ public class FindableWordBTNController : MonoBehaviour, IFindableBTN
     void ApplyShader(string MaterialName, bool eraceSpace = true)
     {
         if (isInactive) return;
-        string[] words = textField.text.Split(' ');
-        string auxText = "";
-        int i = 0;
-        int extraIndex = 0;
 
-        foreach (string w in words)
+        string originalText = textField.text;
+        StringBuilder result = new StringBuilder();
+
+        int currentIndex = 0;
+
+        while (currentIndex < originalText.Length)
         {
-            if (w == "")
-            {
-                i++;
-                continue;
-            }
-            int iaux = i;
-            string combinedWord = words[i];
+            int linkStart = originalText.IndexOf(
+                "<link>",
+                currentIndex,
+                StringComparison.OrdinalIgnoreCase
+            );
 
-            if (extraIndex > 0)
+            if (linkStart == -1)
             {
-                i++;
-                extraIndex--;
-                continue;
+                result.Append(originalText.Substring(currentIndex));
+                break;
             }
 
-            while (combinedWord.Contains("<link>") && !combinedWord.Contains("</link>") && iaux < words.Length - 1)
+            // Copiar el texto anterior sin modificarlo
+            result.Append(originalText.Substring(
+                currentIndex,
+                linkStart - currentIndex
+            ));
+
+            int contentStart = linkStart + "<link>".Length;
+
+            int linkEnd = originalText.IndexOf(
+                "</link>",
+                contentStart,
+                StringComparison.OrdinalIgnoreCase
+            );
+
+            if (linkEnd == -1)
             {
-                iaux++;
-                combinedWord += " " + words[iaux];
-                extraIndex++;
+                result.Append(originalText.Substring(linkStart));
+                break;
             }
 
-            string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(combinedWord)).ToLower();
-            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(combinedWord)), _comesFromDBTitle)).ToLower();
+            string content = originalText.Substring(
+                contentStart,
+                linkEnd - contentStart
+            );
 
-            combinedWordClean = RemoveNonWordChars(combinedWordClean.Trim());
+            string fullLink = originalText.Substring(
+                linkStart,
+                linkEnd + "</link>".Length - linkStart
+            );
 
-            if ((combinedWordClean == FoundAs) && combinedWord.Contains("link"))
+            // Comparar utilizando la lógica de identificación original
+            string cleanContent = RemoveNonWordChars(
+                NormalizeWord(content).ToLowerInvariant().Trim()
+            );
+
+            string foundAs = RemoveNonWordChars(
+                NormalizeWord(
+                    word.FindFindableName(
+                        NormalizeWord(content),
+                        _comesFromDBTitle
+                    )
+                ).ToLowerInvariant().Trim()
+            );
+
+            if (cleanContent == foundAs)
             {
-                if (combinedWord.StartsWith("<material")) combinedWord = RemoveMaterialTags(combinedWord);
-
-                string extraCharacters = GetExtraCharacters(combinedWord);
-                //Debug.Log(FoundAs + extraCharacters);
-                StringBuilder strBuilder = new StringBuilder(combinedWord);
-
-                string materialName = string.Empty;
-
-                if (MaterialName != "")
+                // Aplicar únicamente el material de este botón
+                if (!string.IsNullOrEmpty(MaterialName))
                 {
-                    try
-                    {
-                        materialName = "\"" + textField.font.name + "" + MaterialName;
-                        strBuilder = strBuilder.Replace(combinedWord, "<material=" + materialName + ">" + CleanUnnecessaryCharacter(combinedWord) + "</material>");
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.LogWarning("Error al obtener el path del material: " + ex.Message);
-                        strBuilder = strBuilder.Replace(combinedWord, CleanUnnecessaryCharacter(combinedWord));
-                    }
+                    string materialName = textField.font.name + MaterialName;
+
+                    result.Append(
+                        "<material=\"" + materialName + "\">" +
+                        fullLink +
+                        "</material>"
+                    );
                 }
-
-                string stringToAdd = strBuilder + extraCharacters + " ";
-                stringToAdd = stringToAdd.Replace(",,", ",");
-                stringToAdd = stringToAdd.Replace("..", ".");
-
-                auxText += stringToAdd;
+                else
+                {
+                    // Sin material: dejar solamente el link
+                    result.Append(fullLink);
+                }
             }
             else
             {
-                auxText += combinedWord + " ";
+                // Los otros Findables conservan su formato
+                result.Append(fullLink);
             }
-            i++;
+
+            currentIndex = linkEnd + "</link>".Length;
         }
 
-        textField.text = auxText;
+        textField.text = result.ToString();
     }
 
     #region ClearWord

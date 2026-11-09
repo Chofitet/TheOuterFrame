@@ -49,83 +49,142 @@ public class HyperlinksBTNController : MonoBehaviour
 
     public void ApplyEffectOnHover(string color)
     {
-        string[] words = textField.text.Split(' ');
-        string auxText = "";
-        int i = 0;
-        int extraIndex = 0;
+        textField.ForceMeshUpdate();
 
-        foreach (string w in words)
+        string originalText = textField.text;
+        StringBuilder result = new StringBuilder();
+
+        int currentIndex = 0;
+
+        while (currentIndex < originalText.Length)
         {
-            int iaux = i;
-            string combinedWord = words[i];
+            int underlineStart = originalText.IndexOf(
+                "<u>",
+                currentIndex,
+                StringComparison.OrdinalIgnoreCase
+            );
 
-            if (extraIndex > 0)
+            if (underlineStart == -1)
             {
-                i++;
-                extraIndex--;
-                continue;
+                result.Append(originalText.Substring(currentIndex));
+                break;
             }
 
-            while (combinedWord.Contains("<u>") && !combinedWord.Contains("</u>") && iaux < words.Length - 1)
-            {
-                iaux++;
-                combinedWord += " " + words[iaux];
-                extraIndex++;
-            }
-            string combinedWordClean = NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(combinedWord))).ToLower();
-            string FoundAs = NormalizeWord(word.FindFindableName(NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(combinedWord))))).ToLower();
+            int contentStart = underlineStart + "<u>".Length;
 
-            combinedWordClean = Regex.Replace(combinedWordClean.Trim(), @"[^\w]", "");
+            int underlineEnd = originalText.IndexOf(
+                "</u>",
+                contentStart,
+                StringComparison.OrdinalIgnoreCase
+            );
+
+            if (underlineEnd == -1)
+            {
+                result.Append(originalText.Substring(currentIndex));
+                break;
+            }
+
+            // Conservar exactamente lo que hay antes del hyperlink
+            result.Append(originalText.Substring(
+                currentIndex,
+                underlineStart - currentIndex
+            ));
+
+            string content = originalText.Substring(
+                contentStart,
+                underlineEnd - contentStart
+            );
+
+            string fullUnderline = originalText.Substring(
+                underlineStart,
+                underlineEnd + "</u>".Length - underlineStart
+            );
+
+            string cleanContent = RemoveMaterialTags(
+                CleanUnnecessaryCharacter(fullUnderline)
+            );
+
+            string combinedWordClean = NormalizeWord(cleanContent).ToLower();
+
+            string foundAs = NormalizeWord(
+                word.FindFindableName(
+                    NormalizeWord(cleanContent)
+                )
+            ).ToLower();
+
+            combinedWordClean = Regex.Replace(
+                combinedWordClean.Trim(),
+                @"[^\w]",
+                ""
+            );
+
+            foundAs = Regex.Replace(
+                foundAs.Trim(),
+                @"[^\w]",
+                ""
+            );
 
             bool areClose = false;
 
-            if ((combinedWordClean == FoundAs) && combinedWord.Contains("<u>"))
+            if (combinedWordClean == foundAs)
             {
-                // probar si esta cerca del boton
-                int currentIndex = 0;
-                while (currentIndex < textField.textInfo.wordCount)
+                for (int i = 0; i < textField.textInfo.wordCount; i++)
                 {
+                    TMP_WordInfo currentWord =
+                        textField.textInfo.wordInfo[i];
 
-                    int actualWordIndex = -1;
-                    TMP_WordInfo currentWord = textField.textInfo.wordInfo[currentIndex];
-                    string firstword = (NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(currentWord.GetWord())))).ToLower();
-                    string secondword = NormalizeWord(CleanUnnecessaryCharacter(RemoveMaterialTags(combinedWord))).ToLower();
+                    string firstWord = NormalizeWord(
+                        CleanUnnecessaryCharacter(
+                            RemoveMaterialTags(currentWord.GetWord())
+                        )
+                    ).ToLower();
 
-                    if (secondword.Contains(firstword))
+                    string secondWord = NormalizeWord(
+                        CleanUnnecessaryCharacter(
+                            RemoveMaterialTags(fullUnderline)
+                        )
+                    ).ToLower();
+
+                    if (secondWord.Contains(firstWord))
                     {
-                        Vector3 wordLocation = textField.transform.TransformPoint(textField.textInfo.characterInfo[textField.textInfo.wordInfo[currentIndex].firstCharacterIndex].topLeft);
-                        Vector3 btnLocation = transform.position;
-                        float distanceBtnWord = Vector3.Distance(wordLocation, btnLocation);
-                        float threshold = 0.00001f;
+                        Vector3 wordLocation =
+                            textField.transform.TransformPoint(
+                                textField.textInfo.characterInfo[
+                                    currentWord.firstCharacterIndex
+                                ].topLeft
+                            );
 
-                        if (distanceBtnWord < threshold)
+                        float distance = Vector3.Distance(
+                            wordLocation,
+                            transform.position
+                        );
+
+                        if (distance < 0.00001f)
                         {
                             areClose = true;
+                            break;
                         }
                     }
-                    currentIndex++;
                 }
             }
 
-            if (areClose) 
+            if (areClose)
             {
-                if (combinedWord.StartsWith("<color")) combinedWord = RemoveMaterialTags(combinedWord);
-
-                string extraCharacters = GetExtraCharacters(combinedWord);
-                StringBuilder strBuilder = new StringBuilder(combinedWord);
-                if (combinedWord == "") return;
-                strBuilder = strBuilder.Replace(combinedWord, "<color=" + color + ">" + CleanUnnecessaryCharacter(combinedWord) + "</color>");
-                auxText += strBuilder + extraCharacters + " ";
+                result.Append(
+                    "<color=" + color + ">" +
+                    fullUnderline +
+                    "</color>"
+                );
             }
             else
             {
-                auxText += combinedWord + " ";
+                result.Append(fullUnderline);
             }
 
-            i++;
-
+            currentIndex = underlineEnd + "</u>".Length;
         }
-        textField.text = auxText;
+
+        textField.text = result.ToString();
         textField.ForceMeshUpdate();
     }
 
