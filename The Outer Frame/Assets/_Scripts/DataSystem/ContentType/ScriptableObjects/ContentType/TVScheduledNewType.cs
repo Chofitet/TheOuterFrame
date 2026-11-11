@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New ScheduledNew", menuName = "News/ScheduledNew")]
-public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp, IAnalytics
+public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp, IAnalytics, ILocalizable
 {
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headline;
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
@@ -199,6 +199,33 @@ public class TVScheduledNewType : ContentType, INewType, IReseteableScriptableOb
     public void SetStremedTime(TimeData time)
     {
         //no implemented. Time Already schedule
+    }
+
+    public IEnumerable<LocalizationEntry> GetLocalizationEntries()
+    {
+        yield return new LocalizationEntry(
+            "Headline",
+            nameof(headline),
+            headline
+        );
+
+        yield return new LocalizationEntry(
+            "Headline Two Lines",
+            nameof(headlineTwoLines),
+            headlineTwoLines
+        );
+
+        yield return new LocalizationEntry(
+            "Text",
+            nameof(text),
+            text
+        );
+
+        yield return new LocalizationEntry(
+            "Custom Aclaration Alert",
+            nameof(CustomAclarationAlert),
+            CustomAclarationAlert
+        );
     }
 
     //POPUP implementation

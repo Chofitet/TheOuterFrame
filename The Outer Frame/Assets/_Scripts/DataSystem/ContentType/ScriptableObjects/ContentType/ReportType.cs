@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +12,8 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
     [SerializeField] StateEnum state;
     [SerializeField] bool isAutomatic;
     [SerializeField] int ChangeTimeOfAction;
-    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string Text;
-    [SerializeField] [TextArea(minLines: 3, maxLines: 10)] string TextForRepetition;
+    [SerializeField][TextArea(minLines: 3, maxLines: 10)] string Text;
+    [SerializeField][TextArea(minLines: 3, maxLines: 10)] string TextForRepetition;
     [SerializeField] string CustomStatus;
     [SerializeField] List<PhotoInfo> Photos = new List<PhotoInfo>();
     [SerializeField] List<ConditionalClass> Conditionals;
@@ -31,6 +32,7 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
     public StateEnum GetState() { return state; }
     public StateEnum GetAction() { return Action; }
     public override string GetText() { return Text; }
+
     public override string GetTextSecundary(){ return TextForRepetition;}
     public string GetTextForRepetition() { return TextForRepetition; }
     public int GetChangeTimeOfAction() { return ChangeTimeOfAction; }
@@ -171,6 +173,27 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
         }
 
         return true;
+    }
+
+    public override IEnumerable<LocalizationEntry> GetLocalizationEntries()
+    {
+        yield return new LocalizationEntry(
+           "text",
+           nameof(Text),
+           Text
+       );
+
+        yield return new LocalizationEntry(
+            "text_for_repetition",
+            nameof(TextForRepetition),
+            TextForRepetition
+        );
+
+        yield return new LocalizationEntry(
+            "custom_status",
+            nameof(CustomStatus),
+            CustomStatus
+        );
     }
 }
 [Serializable]

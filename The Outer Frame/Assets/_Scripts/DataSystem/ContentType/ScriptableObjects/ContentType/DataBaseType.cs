@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.CinemachineOrbitalTransposer;
 
 [CreateAssetMenu(fileName = "New BDEnter", menuName = "DB")]
-public class DataBaseType : ContentType,  IReseteableScriptableObject
+public class DataBaseType : ContentType,  IReseteableScriptableObject, ILocalizable
 {
     List<FindableWordData> hyperLinks = new();
     public IReadOnlyList<FindableWordData> HyperLinks => hyperLinks;
@@ -70,7 +71,14 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
 
 
     public WordData GetAccessWord() { return AccessWord; }
-    override public string GetText() { return text; }
+    override public string GetText() 
+        {
+            if(GetLocalizedText("Text","es") != null)
+            {
+                return GetLocalizedText("Text", "es");
+            }
+            return text; 
+        }
     public override string GetTextSecundary(){ return text; }
     public Sprite GetImage() { return image; }
 
@@ -179,8 +187,27 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject
         }
 
             return true;
-      
+
     }
 
-    
+    public IEnumerable<LocalizationEntry> GetLocalizationEntries()
+    {
+        yield return new LocalizationEntry(
+           "text",
+           nameof(text),
+           text
+       );
+
+        Dictionary<int, string> fields = GetDataFieldsInfo();
+
+        foreach (var field in fields)
+        {
+            yield return new LocalizationEntry(
+                 $"db_{field.Key}",
+                 field.Key.ToString(),
+                 field.Value
+             );
+        }
+
+    }
 }

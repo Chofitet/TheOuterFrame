@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNewRandom", menuName = "News/RandomNew")]
-public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp, IAnalytics
+public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObject, IPopUp, IAnalytics, ILocalizable
 {
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
     [TextArea(minLines: 3, maxLines: 10)][SerializeField] string headlineTwoLines;
@@ -13,19 +13,19 @@ public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObjec
     [SerializeField] int alertLevelIncrement;
     [SerializeField] int channel;
     [NonSerialized] bool wasStremed;
-    [NonSerialized]TimeData StartTime;
-    [NonSerialized]TimeData TimeStreamedEnds;
+    [NonSerialized] TimeData StartTime;
+    [NonSerialized] TimeData TimeStreamedEnds;
 
-   /* private void OnEnable()
-    {
-        ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
-    }*/
+    /* private void OnEnable()
+     {
+         ScriptableObjectResetter.instance?.RegisterScriptableObject(this);
+     }*/
 
     public void ResetScriptableObject()
     {
         wasStremed = false;
-        StartTime = new TimeData(0,0,0);
-        TimeStreamedEnds = new TimeData(0,0,0);
+        StartTime = new TimeData(0, 0, 0);
+        TimeStreamedEnds = new TimeData(0, 0, 0);
     }
 
     public int GetChannelNum()
@@ -130,5 +130,27 @@ public class TVRandomNewType : ContentType, INewType, IReseteableScriptableObjec
         {
             return PopUpType.None;
         }
+    }
+
+    public IEnumerable<LocalizationEntry> GetLocalizationEntries()
+    {
+        yield return new LocalizationEntry(
+            "Headline",
+            nameof(headline),
+            headline
+        );
+
+        yield return new LocalizationEntry(
+            "Headline Two Lines",
+            nameof(headlineTwoLines),
+            headlineTwoLines
+        );
+
+        yield return new LocalizationEntry(
+            "Text",
+            nameof(text),
+            text
+        );
+
     }
 }

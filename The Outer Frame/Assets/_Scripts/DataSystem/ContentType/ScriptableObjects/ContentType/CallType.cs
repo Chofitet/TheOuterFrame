@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using static Cinemachine.CinemachineOrbitalTransposer;
 
 [CreateAssetMenu(fileName = "New Call", menuName ="Calls")]
-public class CallType : ContentType, IStateComparable, IReseteableScriptableObject
+public class CallType : ContentType, IStateComparable, IReseteableScriptableObject,  ILocalizable
 {
     
     [Header("StartTime")]
@@ -224,5 +225,18 @@ public class CallType : ContentType, IStateComparable, IReseteableScriptableObje
         return true;
     }
 
-   
+    public IEnumerable<LocalizationEntry> GetLocalizationEntries()
+    {
+        yield return new LocalizationEntry(
+            "Dialogue",
+            nameof(Dialogue),
+            Dialogue
+        );
+
+        yield return new LocalizationEntry(
+            "Iterrupted Dialogue",
+            nameof(IterruptedDialogue),
+            IterruptedDialogue
+        );
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New TVNew", menuName = "News/ReactiveNew")]
-public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScriptableObject, IPopUp, IAnalytics
+public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScriptableObject, IPopUp, IAnalytics, ILocalizable
 {
     [HideInInspector][SerializeField] StateEnum state;
     [SerializeField][TextArea(minLines: 3, maxLines: 10)] string headline;
@@ -54,7 +54,7 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
     public void SetTimeStreamedEnds(TimeData time)
     {
         TimeWasStreamed = time;
-         MarkDirty();
+        MarkDirty();
     }
 
     public void AddConditional(ConditionalClass condition)
@@ -68,7 +68,8 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
     }
     public int GetIncreaseAlertLevel() { return alertLevelIncrement; }
     public override string GetText() { return text; }
-    public override string GetTextSecundary() {
+    public override string GetTextSecundary()
+    {
         if (headline != "") return headline;
         else return headlineTwoLines;
     }
@@ -224,7 +225,8 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
 
     public int GetPriority() { return priority; }
 
-    public void SetWasStreamed() {
+    public void SetWasStreamed()
+    {
         wasStremed = true;
         MarkDirty();
     }
@@ -267,5 +269,32 @@ public class TVNewType : ContentType, IStateComparable, INewType, IReseteableScr
             if (alertLevelIncrement < 0) return PopUpType.None;
             return PopUpType.common;
         }
+    }
+
+    public IEnumerable<LocalizationEntry> GetLocalizationEntries()
+    {
+        yield return new LocalizationEntry(
+            "Headline",
+            nameof(headline),
+            headline
+        );
+
+        yield return new LocalizationEntry(
+            "Headline Two Lines",
+            nameof(headlineTwoLines),
+            headlineTwoLines
+        );
+
+        yield return new LocalizationEntry(
+            "Text",
+            nameof(text),
+            text
+        );
+
+        yield return new LocalizationEntry(
+            "Custom Aclaration Alert",
+            nameof(CustomAclarationAlert),
+            CustomAclarationAlert
+        );
     }
 }
