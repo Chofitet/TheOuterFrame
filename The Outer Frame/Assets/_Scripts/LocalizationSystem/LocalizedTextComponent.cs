@@ -7,6 +7,7 @@ public class LocalizedTextComponent : MonoBehaviour
 {
     [SerializeField] private TMP_Text textField;
     [SerializeField] private InGameText content;
+    [SerializeField] string AssetName;
 
     public TMP_Text TextField => textField;
     public InGameText Content => content;
@@ -19,5 +20,11 @@ public class LocalizedTextComponent : MonoBehaviour
     private void Reset()
     {
         textField = GetComponent<TMP_Text>();
+    }
+
+    public string GetAssetName()
+    {
+        if (AssetName != null) return AssetName;
+        else return "";
     }
 }

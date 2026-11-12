@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New State", menuName = "State")]
-public class StateEnum : DataType, IReseteableScriptableObject
+public class StateEnum : DataType, IReseteableScriptableObject, ILocalizable
 {
     [Header("Action Fields")]
     [SerializeField] string InfinitiveVerb;
@@ -173,6 +173,57 @@ public class StateEnum : DataType, IReseteableScriptableObject
         InactiveConditionals = list;
     }
 
+    public IEnumerable<LocalizationEntry> GetLocalizationEntries()
+    {
+        yield return new LocalizationEntry(
+          "infinitive_verb",
+          nameof(InfinitiveVerb),
+          InfinitiveVerb
+      );
+
+        yield return new LocalizationEntry(
+         "actioning",
+         nameof(Actioning),
+         Actioning
+     );
+        yield return new LocalizationEntry(
+         "actioned",
+         nameof(Actioned),
+         Actioned
+     );
+        yield return new LocalizationEntry(
+         "observation",
+         nameof(observationtxt),
+         observationtxt
+     );
+
+        yield return new LocalizationEntry(
+         "idea_verb",
+         nameof(IdeaVerb),
+         IdeaVerb
+     );
+        yield return new LocalizationEntry(
+         "idea_infinitive_verb",
+         nameof(IdeaInfinitiveVerb),
+         IdeaInfinitiveVerb
+     );
+        yield return new LocalizationEntry(
+         "idea_word",
+         nameof(IdeaWord),
+         IdeaWord
+     );
+
+    }
+
+    public string GetLocalizedText(string key, string language)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetLocalizedText(string key, string language, string value)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 

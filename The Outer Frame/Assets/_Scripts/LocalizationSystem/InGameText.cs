@@ -21,4 +21,13 @@ public class InGameText : ContentType
         if (DatatService.instance != null)
             MarkDirty();
     }
-}
+
+    public override IEnumerable<LocalizationEntry> GetLocalizationEntries()
+    {
+        yield return new LocalizationEntry(
+           "text",
+           nameof(text),
+           text
+       );
+    }
+    }

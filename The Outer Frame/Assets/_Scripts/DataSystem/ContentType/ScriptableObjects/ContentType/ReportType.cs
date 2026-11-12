@@ -194,6 +194,15 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
             nameof(CustomStatus),
             CustomStatus
         );
+
+        foreach(PhotoInfo info in Photos)
+        {
+            yield return new LocalizationEntry(
+            "photo_text",
+            nameof(info.text),
+            info.text
+        );
+        }
     }
 }
 [Serializable]

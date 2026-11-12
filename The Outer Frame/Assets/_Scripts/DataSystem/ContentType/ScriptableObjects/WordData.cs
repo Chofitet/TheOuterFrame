@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "New Word", menuName = "Word")]
-public class WordData : DataType, IReseteableScriptableObject
+public class WordData : DataType, IReseteableScriptableObject, ILocalizable
 {
     [Header("Word General Data")]
     [SerializeField] string wordName;
@@ -797,8 +797,55 @@ public class WordData : DataType, IReseteableScriptableObject
         }
         return null;
     }
-   
 
+    public IEnumerable<LocalizationEntry> GetLocalizationEntries()
+    {
+        yield return new LocalizationEntry(
+            "word_name",
+            nameof(wordName),
+            wordName
+        );
+
+        foreach(string findableAs in FindableAs)
+        {
+            yield return new LocalizationEntry(
+            "findable_as",
+            nameof(FindableAs),
+            findableAs
+        );
+        }
+
+        yield return new LocalizationEntry(
+            "form_name_version",
+            nameof(FormNameVersion),
+            FormNameVersion
+        );
+        yield return new LocalizationEntry(
+            "data_base_name_version",
+            nameof(DatabaseNameVersion),
+            DatabaseNameVersion
+        );
+        yield return new LocalizationEntry(
+            "progressor_base_name_version",
+            nameof(ProgressorNameVersion),
+            ProgressorNameVersion
+        );
+        yield return new LocalizationEntry(
+            "ap_inform_location",
+            nameof(ApInformLocation),
+            ApInformLocation
+        );
+    }
+
+    public string GetLocalizedText(string key, string language)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetLocalizedText(string key, string language, string value)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 

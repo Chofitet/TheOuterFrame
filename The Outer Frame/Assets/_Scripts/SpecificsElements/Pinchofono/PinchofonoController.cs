@@ -34,6 +34,8 @@ public class PinchofonoController : MonoBehaviour
     [SerializeField] List<TMP_Text> PrintWords;
     [SerializeField] List<TMP_Text> CancelWords;
 
+    HardcodedTextReference ScreenTextList;
+
     int lastScreenNum = 0;
     WordData ActualWord;
     bool IsInView;
@@ -50,6 +52,7 @@ public class PinchofonoController : MonoBehaviour
 
     private void Start()
     {
+        ScreenTextList = GetComponent<HardcodedTextReference>();
         anim = GetComponent<Animator>();
         anim.SetFloat("tapeSpinSpeed", 0);
         ChangePhoneState(null, PhoneState.waitingNumber);
@@ -116,7 +119,7 @@ public class PinchofonoController : MonoBehaviour
     {
         refreshScreenCoroutine = StartCoroutine(RefreshScreen());
         currentState = PhoneState.dialingNumber;
-        txtPressRECtoStart.text = "DIALING NUMBER";
+        txtPressRECtoStart.text = ScreenTextList.GetHardcodedTextByIndex(2);
         yield return new WaitForSeconds(0.2f);
         txtNumber.GetComponent<TypingAnimText>().AnimateTyping();
         number = Regex.Replace(number, @"[()\-\s]", "");
@@ -132,7 +135,7 @@ public class PinchofonoController : MonoBehaviour
 
         BlinkWords(ref RECGlowWordSequence, RECWord);
         currentState = PhoneState.waitingRec;
-        txtPressRECtoStart.text = "PRESS REC TO START WIRETAPPING";
+        txtPressRECtoStart.text = ScreenTextList.GetHardcodedTextByIndex(3);
     }
     #endregion
 
@@ -147,7 +150,7 @@ public class PinchofonoController : MonoBehaviour
         if (currentState == PhoneState.waitingNumber)
         {
             PushGlow(RECGlowWordSequence, RECWord);
-            ShowPanel(3, "TO START WIRETAPPING \n ENTER A VALID PHONE NUMBER");
+            ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(1));
         }
         else if (currentState == PhoneState.dialingNumber)
         {
@@ -192,7 +195,7 @@ public class PinchofonoController : MonoBehaviour
         if (currentState == PhoneState.waitingNumber)
         {
             PushGlow(PrintGlowWordSequence, PrintWords);
-            ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
+            ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(6));
         }
         else if (currentState == PhoneState.dialingNumber)
         {
@@ -202,18 +205,18 @@ public class PinchofonoController : MonoBehaviour
         else if (currentState == PhoneState.waitingRec)
         {
             PushGlow(PrintGlowWordSequence, PrintWords);
-            ShowPanel(3, "TRANSCRIPT QUEUE EMPTY");
+            ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(6));
         }
         else if (currentState == PhoneState.recording)
         {
             PushGlow(PrintGlowWordSequence, PrintWords);
-            ShowPanel(3, "NOT YET, \n WIRETAPPING IN PROGRESS");
+            ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(4));
         }
         else if (currentState == PhoneState.waitingPrinting)
         {
             if (transcriptionInQueue)
             {
-                ShowPanel(3, "EMPTY THE PRINTING TRAY \n PLEASE");
+                ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(7));
                 return;
             }
 
@@ -273,14 +276,14 @@ public class PinchofonoController : MonoBehaviour
         if (refreshScreenCoroutine != null) StopCoroutine(refreshScreenCoroutine);
         StartCoroutine(RefreshScreen());
 
-        if (currentState == PhoneState.waitingNumber) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
+        if (currentState == PhoneState.waitingNumber) ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(5));
         else if (currentState == PhoneState.dialingNumber)
         {
             StartCoroutine(ShowEnterFullNumberFirst());
         }
-        else if (currentState == PhoneState.waitingRec) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
+        else if (currentState == PhoneState.waitingRec) ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(5));
         else if (currentState == PhoneState.recording) ShowPanel(4, "");
-        else if (currentState == PhoneState.waitingPrinting) ShowPanel(3, "THERE'S NOTHING TO CANCEL");
+        else if (currentState == PhoneState.waitingPrinting) ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(5));
     }
 
     public void ConfirmAbort()

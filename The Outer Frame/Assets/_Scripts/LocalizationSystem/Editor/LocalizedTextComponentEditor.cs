@@ -6,31 +6,44 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections.Generic;
 
 public static class LocalizedTextComponentEditor
 {
     private const string folder =
-         "Assets/ScriptableObjects/InGameTexts";
+       "Assets/ScriptableObjects/InGameTexts";
 
     [MenuItem("Tools/Localization/Synchronize InGameTexts")]
     public static void Synchronize()
     {
         EnsureFolder();
 
-        SynchronizePrefabs();
-        SynchronizeScenes();
+        int created = 0;
+        int updated = 0;
+        int unchanged = 0;
+
+        SynchronizePrefabs(ref created, ref updated, ref unchanged);
+        SynchronizeScenes(ref created, ref updated, ref unchanged);
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
 
-        Debug.Log("InGameText Synchronization Complete!");
+        Debug.Log(
+            $"InGameText Synchronization Complete!\n" +
+            $"Created: {created}\n" +
+            $"Updated: {updated}\n" +
+            $"Unchanged: {unchanged}"
+        );
     }
 
     // =====================================
     // PREFABS
     // =====================================
 
-    private static void SynchronizePrefabs()
+    private static void SynchronizePrefabs(
+        ref int created,
+        ref int updated,
+        ref int unchanged)
     {
         string[] guids = AssetDatabase.FindAssets(
             "t:Prefab",
@@ -40,21 +53,13 @@ public static class LocalizedTextComponentEditor
         foreach (string guid in guids)
         {
             string path = AssetDatabase.GUIDToAssetPath(guid);
-
             GameObject root = PrefabUtility.LoadPrefabContents(path);
 
             try
             {
-                bool changed = false;
-
-                LocalizedTextComponent[] components =
-                    root.GetComponentsInChildren<LocalizedTextComponent>(true);
-
-                foreach (LocalizedTextComponent component in components)
-                {
-                    if (ProcessComponent(component))
-                        changed = true;
-                }
+                bool changed = ProcessGameObject(
+                    root, ref created, ref updated, ref unchanged
+                );
 
                 if (changed)
                     PrefabUtility.SaveAsPrefabAsset(root, path);
@@ -70,7 +75,10 @@ public static class LocalizedTextComponentEditor
     // SCENES
     // =====================================
 
-    private static void SynchronizeScenes()
+    private static void SynchronizeScenes(
+        ref int created,
+        ref int updated,
+        ref int unchanged)
     {
         Scene scene = SceneManager.GetActiveScene();
 
@@ -81,15 +89,10 @@ public static class LocalizedTextComponentEditor
 
         foreach (GameObject root in scene.GetRootGameObjects())
         {
-            LocalizedTextComponent[] components =
-                root.GetComponentsInChildren<LocalizedTextComponent>(true);
-
-            foreach (LocalizedTextComponent component in components)
+            if (ProcessGameObject(
+                root, ref created, ref updated, ref unchanged))
             {
-               
-
-                if (ProcessComponent(component))
-                    changed = true;
+                changed = true;
             }
         }
 
@@ -101,64 +104,177 @@ public static class LocalizedTextComponentEditor
     }
 
     // =====================================
-    // PROCESS COMPONENT
+    // PROCESS GAME OBJECT
     // =====================================
 
-    private static bool ProcessComponent(
-        LocalizedTextComponent component)
+    private static bool ProcessGameObject(
+        GameObject root,
+        ref int created,
+        ref int updated,
+        ref int unchanged)
+    {
+        bool changed = false;
+
+        // Single texts
+        LocalizedTextComponent[] singleComponents =
+            root.GetComponentsInChildren<LocalizedTextComponent>(true);
+
+        foreach (var component in singleComponents)
+        {
+            if (ProcessSingleText(component, ref created, ref updated, ref unchanged))
+                changed = true;
+        }
+
+        // Lists of texts
+        LocalizedTextComponentList[] listComponents =
+            root.GetComponentsInChildren<LocalizedTextComponentList>(true);
+
+        foreach (var component in listComponents)
+        {
+            if (ProcessTextList(component, ref created, ref updated, ref unchanged))
+                changed = true;
+        }
+
+        return changed;
+    }
+
+    // =====================================
+    // SINGLE TEXT
+    // =====================================
+
+    private static bool ProcessSingleText(
+        LocalizedTextComponent component,
+        ref int created,
+        ref int updated,
+        ref int unchanged)
     {
         if (component == null || component.TextField == null)
             return false;
 
         TMP_Text tmp = component.TextField;
 
-        // Si el texto está vacío, no hacemos nada con este componente.
         if (string.IsNullOrWhiteSpace(tmp.text))
             return false;
 
-        InGameText content = component.Content;
+        InGameText content;
 
-        // Si todavía no tiene un InGameText, lo creamos.
-        if (content == null)
+        bool changed = GetOrCreateContent(
+            tmp.text,
+            component.Content,
+            component.GetAssetName(),
+            out content
+        );
+
+        if (component.Content != content)
         {
-            content = CreateContent(tmp);
-
             component.AssignContent(content);
-            EditorUtility.SetDirty(component);
+            MarkComponentDirty(component);
+            changed = true;
+        }
 
-            // Guardar el cambio si el componente pertenece a una instancia de prefab.
-            if (PrefabUtility.IsPartOfPrefabInstance(component))
-                PrefabUtility.RecordPrefabInstancePropertyModifications(component);
+        CountResult(changed, component.Content == content,
+            ref created, ref updated, ref unchanged);
 
+        return changed;
+    }
+
+    // =====================================
+    // TEXT LIST
+    // =====================================
+
+    private static bool ProcessTextList(
+        LocalizedTextComponentList component,
+        ref int created,
+        ref int updated,
+        ref int unchanged)
+    {
+        if (component == null || component.Reference == null)
+            return false;
+
+        List<string> texts = component.Reference.GetHardcodedTexts();
+
+        bool changed = false;
+
+        for (int i = 0; i < texts.Count; i++)
+        {
+            string text = texts[i];
+
+            if (string.IsNullOrWhiteSpace(text))
+                continue;
+
+            InGameText existing = i < component.Contents.Count
+                ? component.Contents[i]
+                : null;
+
+            InGameText content;
+
+            bool contentChanged = GetOrCreateContent(
+                text,
+                existing,
+                "",
+                out content
+            );
+
+            if (existing != content)
+            {
+                component.AssignContent(i, content);
+                MarkComponentDirty(component);
+                changed = true;
+            }
+
+            if (contentChanged)
+                changed = true;
+
+            CountResult(contentChanged, existing == null,
+                ref created, ref updated, ref unchanged);
+        }
+
+        return changed;
+    }
+
+    // =====================================
+    // SHARED CONTENT CREATION / UPDATE
+    // =====================================
+
+    private static bool GetOrCreateContent(
+        string text,
+        InGameText existing,
+        string assetName,
+        out InGameText content)
+    {
+        content = existing;
+
+        if (existing == null)
+        {
+            content = CreateContent(text, assetName);
             return true;
         }
 
-        // Si ya tiene un InGameText, comparamos y actualizamos si cambió.
-        if (content.GetText() != tmp.text)
+        if (existing.GetText() != text)
         {
-            content.SetText(tmp.text);
-            EditorUtility.SetDirty(content);
-
+            existing.SetText(text);
+            EditorUtility.SetDirty(existing);
             return true;
         }
 
         return false;
     }
 
-    private static InGameText CreateContent(TMP_Text tmp)
+    private static InGameText CreateContent(
+        string text,
+        string assetName)
     {
-        // Generamos el nombre y la ruta del asset.
-        string fileName = GetAssetName(tmp.text);
+        string fileName = GetAssetName(text, assetName);
 
         string path = AssetDatabase.GenerateUniqueAssetPath(
             $"{folder}/{fileName}.asset"
         );
 
-        // Creamos el ScriptableObject.
-        InGameText content = ScriptableObject.CreateInstance<InGameText>();
-        content.SetText(tmp.text);
+        InGameText content =
+            ScriptableObject.CreateInstance<InGameText>();
 
-        // Guardamos el asset y lo registramos en el directorio.
+        content.SetText(text);
+
         AssetDatabase.CreateAsset(content, path);
         DataServiceEditor.Register(content);
 
@@ -168,19 +284,56 @@ public static class LocalizedTextComponentEditor
     }
 
     // =====================================
+    // HELPERS
+    // =====================================
+
+    private static void MarkComponentDirty(Component component)
+    {
+        EditorUtility.SetDirty(component);
+
+        if (PrefabUtility.IsPartOfPrefabInstance(component))
+        {
+            PrefabUtility.RecordPrefabInstancePropertyModifications(
+                component
+            );
+        }
+    }
+
+    private static void CountResult(
+        bool changed,
+        bool wasCreated,
+        ref int created,
+        ref int updated,
+        ref int unchanged)
+    {
+        if (!changed)
+            unchanged++;
+        else if (wasCreated)
+            created++;
+        else
+            updated++;
+    }
+
+    // =====================================
     // ASSET NAME
     // =====================================
 
-    private static string GetAssetName(string text)
+    private static string GetAssetName(
+        string text,
+        string assetName)
     {
+        if (!string.IsNullOrEmpty(assetName))
+            return $"LocalizationText_{assetName}";
+
         if (string.IsNullOrWhiteSpace(text))
             return "LocalizationText_Empty";
 
-        string name = text.Trim()
-            .Replace("\n", "_")
-            .Replace("\r", "_")
-            .Replace("\t", "_")
-            .Replace(" ", "_");
+        string name = string.Join("_", text.Trim()
+            .Split(
+                new[] { ' ', '\n', '\r', '\t' },
+                StringSplitOptions.RemoveEmptyEntries
+            )
+            .Take(10));
 
         foreach (char c in Path.GetInvalidFileNameChars())
             name = name.Replace(c, '_');
