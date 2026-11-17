@@ -62,7 +62,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
                     go.SetActive(false);
             }
         }
-        FinalPosition = transform.position;
+        FinalPosition = transform.localPosition;
         FinalRotation = transform.rotation;
     }
 
@@ -134,10 +134,10 @@ public class MoveBoardElementsToPos : MonoBehaviour
 
         Content.SetActive(true);
 
-        transform.DOMove(FinalPosition, 1f).SetEase(Ease.InOutQuad).OnComplete(() => {
+        transform.DOLocalMove(FinalPosition, 1f).SetEase(Ease.InOutQuad).OnComplete(() => {
             isPlacedFinish = true;
             OnUpdatingBoardPlacedFinish?.Invoke(this, null);
-                  transform.position = FinalPosition;
+                  transform.localPosition = FinalPosition;
 
               });
         transform.DORotate(FinalRotation.eulerAngles, 0.3f).SetEase(Ease.InOutCirc).OnComplete(() => transform.rotation = FinalRotation);
@@ -175,7 +175,7 @@ public class MoveBoardElementsToPos : MonoBehaviour
     {
         isPlaced = true;
         isPlacedFinish = true;
-        transform.position = FinalPosition;
+        transform.localPosition = FinalPosition;
         transform.rotation = FinalRotation;
         Content.SetActive(true);
         if (conditions.GetWordData() != null) conditions.GetWordData().SetPlacedInBoard();
