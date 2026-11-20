@@ -33,7 +33,5 @@ public interface ILocalizable
 {
     IEnumerable<LocalizationEntry> GetLocalizationEntries();
 
-    string GetLocalizedText(string key, string language);
-    void SetLocalizedText(string key, string language, string value);
 
 }

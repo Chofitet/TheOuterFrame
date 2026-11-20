@@ -28,35 +28,7 @@ abstract public class ContentType : DataType, ILocalizable
     {
         yield break;
     }
-    public string GetLocalizedText(string key, string language)
-    {
-        LocalizedText entry = localizedTexts.Find(
-            x => x.key == key && x.language == language
-        );
-
-        return entry?.value;
-    }
-
-    public void SetLocalizedText(string key, string language, string value)
-    {
-        LocalizedText entry = localizedTexts.Find(
-            x => x.key == key && x.language == language
-        );
-
-        if (entry == null)
-        {
-            entry = new LocalizedText
-            {
-                key = key,
-                language = language
-            };
-
-            localizedTexts.Add(entry);
-        }
-
-        entry.value = value;
-    }
-
+  
     private void OnValidate()
     {
 #if UNITY_EDITOR

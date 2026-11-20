@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -198,12 +199,23 @@ public class ReportType : ContentType, IStateComparable, IReseteableScriptableOb
         foreach(PhotoInfo info in Photos)
         {
             yield return new LocalizationEntry(
-            "photo_text",
+             $"photo_text_{info.id}",
             nameof(info.text),
             info.text
         );
         }
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        foreach (PhotoInfo info in Photos)
+        {
+            info.EnsureID();
+        }
+    }
+#endif
+
 }
 [Serializable]
 public class ConditionalClass
@@ -232,8 +244,17 @@ public class ConditionalClass
 [Serializable]
 public class PhotoInfo
 {
-    public Sprite photo;
     public string text;
+    public Sprite photo;
+    public string id;
+
+#if UNITY_EDITOR
+    public void EnsureID()
+    {
+        if (string.IsNullOrEmpty(id))
+            id = Guid.NewGuid().ToString();
+    }
+#endif
 }
 
 public enum ObjectToPrint

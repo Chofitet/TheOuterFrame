@@ -100,11 +100,6 @@ public class LocalizationImporter : EditorWindow
 
                         Undo.RecordObject(data, "Import Localization");
 
-                        localizable.SetLocalizedText(
-                            key,
-                            "es",
-                            spanish
-                        );
 
                         EditorUtility.SetDirty(data);
 

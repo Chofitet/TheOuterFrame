@@ -73,10 +73,6 @@ public class DataBaseType : ContentType,  IReseteableScriptableObject, ILocaliza
     public WordData GetAccessWord() { return AccessWord; }
     override public string GetText() 
         {
-            if(GetLocalizedText("Text","es") != null)
-            {
-                return GetLocalizedText("Text", "es");
-            }
             return text; 
         }
     public override string GetTextSecundary(){ return text; }
