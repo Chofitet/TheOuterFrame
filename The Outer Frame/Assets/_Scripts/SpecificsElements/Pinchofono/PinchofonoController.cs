@@ -269,21 +269,37 @@ public class PinchofonoController : MonoBehaviour
     #region AbortLogic
     public void AbortBTNPressed(Component sender, object obj)
     {
-        PushGlow(CancelGlowWordSequence, CancelWords);
         canvas.enabled = true;
         anim.SetTrigger("abortPush");
         if (messagePanelCoroutine != null) StopCoroutine(messagePanelCoroutine);
         if (refreshScreenCoroutine != null) StopCoroutine(refreshScreenCoroutine);
-        StartCoroutine(RefreshScreen());
+        //StartCoroutine(RefreshScreen());
 
-        if (currentState == PhoneState.waitingNumber) ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(5));
+        if (currentState == PhoneState.waitingNumber)
+        {
+            PushGlow(CancelGlowWordSequence, CancelWords);
+            ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(5));
+        }
         else if (currentState == PhoneState.dialingNumber)
         {
+            PushGlow(CancelGlowWordSequence, CancelWords);
             StartCoroutine(ShowEnterFullNumberFirst());
         }
-        else if (currentState == PhoneState.waitingRec) ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(5));
-        else if (currentState == PhoneState.recording) ShowPanel(4, "");
-        else if (currentState == PhoneState.waitingPrinting) ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(5));
+        else if (currentState == PhoneState.waitingRec)
+        {
+            PushGlow(CancelGlowWordSequence, CancelWords);
+            ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(5));
+        }
+        else if (currentState == PhoneState.recording)
+        {
+            PushGlow(CancelGlowWordSequence, CancelWords);
+            ShowPanel(4, "");
+        }
+        else if (currentState == PhoneState.waitingPrinting)
+        {
+            PushGlow(CancelGlowWordSequence, CancelWords);
+            ShowPanel(3, ScreenTextList.GetHardcodedTextByIndex(5));
+        }
     }
 
     public void ConfirmAbort()

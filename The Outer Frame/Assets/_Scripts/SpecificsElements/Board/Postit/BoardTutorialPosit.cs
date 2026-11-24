@@ -30,8 +30,8 @@ public class BoardTutorialPosit : MonoBehaviour
     bool inactive;
     ViewStates LastView;
     ViewStates ActualView;
-    int CamChangesIndex = 0; 
-
+    int CamChangesIndex = 0;
+    bool isOutOfView;
 
     private void Start()
     {
@@ -168,6 +168,7 @@ public class BoardTutorialPosit : MonoBehaviour
 
     void movePosit(Transform MoveTo)
     {
+        if (isOutOfView) return;
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
         moveSequence = DOTween.Sequence();
@@ -186,6 +187,7 @@ public class BoardTutorialPosit : MonoBehaviour
 
     void MoveExtraPosit(Transform ToMove)
     {
+        if (isOutOfView) return;
         if (MoveExtraPositsSequence != null && MoveExtraPositsSequence.IsActive()) MoveExtraPositsSequence.Kill();
 
         MoveExtraPositsSequence = DOTween.Sequence();
@@ -228,7 +230,7 @@ public class BoardTutorialPosit : MonoBehaviour
 
     void MoveOutView(Transform toMove)
     {
-
+        isOutOfView = true;
         if (moveSequence != null && moveSequence.IsActive()) moveSequence.Kill();
 
         moveSequence = DOTween.Sequence();

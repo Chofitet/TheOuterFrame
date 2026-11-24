@@ -172,6 +172,14 @@ public class CursorManager : MonoBehaviour
 
     private bool IsPointerOverCanvas()
     {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, LayerMask.GetMask("BlockPCInput")))
+        {
+            return false;
+        }
+            
+
         if (!raycaster) return false;
 
         pointerEventData = new PointerEventData(eventSystem)
@@ -189,9 +197,13 @@ public class CursorManager : MonoBehaviour
 
         if (results[index].module.GetComponent<BlockingRaycasterForCanvas>())
         {
-           return !results[index].module.GetComponent<BlockingRaycasterForCanvas>().GetIsCanvasBlocking(ColliderToIngnoreBlockInput);
+            return !results[index].module.GetComponent<BlockingRaycasterForCanvas>().GetIsCanvasBlocking(ColliderToIngnoreBlockInput);
+
         }
-        else return results[index].module == raycaster;
+        else
+        {
+            return results[index].module == raycaster;
+        }
 
     }
 

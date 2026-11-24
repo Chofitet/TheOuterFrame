@@ -202,7 +202,7 @@ public class NotebookWordInstance : MonoBehaviour
     {
         processManager.RegisterProcess();
         fade.SetBlank(1);
-
+        isInWritingFade = true;
         await notebookPasspage.RequestPage(pageNum, 1f);
 
         if (isCross) EraseCrossWord();
@@ -214,6 +214,7 @@ public class NotebookWordInstance : MonoBehaviour
         if (first == second) first.text = txt;
         fade.gameObject.GetComponent<FadeWordsEffect>().StartEffect(isTransparent2);
         await Task.Delay(500);
+        isInWritingFade = false;
         processManager.UnregisterProcess();
     }
 
